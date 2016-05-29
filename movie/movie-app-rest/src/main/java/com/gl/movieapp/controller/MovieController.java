@@ -13,7 +13,7 @@ import java.util.List;
  * Created by gavin on 16-5-28.
  */
 @CrossOrigin(
-        value={"http://localhost:8888"},
+        value={"*"},
         methods = {
                 RequestMethod.GET,
                 RequestMethod.POST,

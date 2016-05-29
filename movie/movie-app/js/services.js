@@ -3,7 +3,7 @@
  */
 
 angular.module('movieApp.services',[]).factory('Movie',function($resource){
-    return $resource('http://localhost:8092/movie-app-rest/api/movies/:id',{id:'@_id'},{
+    return $resource('http://192.168.1.100:8092/movie-app-rest/api/movies/:id',{id:'@_id'},{
         // get:{
         //   method:'GET'
         // },
