@@ -1,0 +1,27 @@
+Pre-Built Packages for Stable version
+http://nginx.org/en/linux_packages.html#mainline
+
+1 download ssh key
+http://nginx.org/keys/nginx_signing.key
+
+2 sudo apt-key add nginx_signing.key
+
+3 append the following to the end of the /etc/apt/sources.list file
+deb http://nginx.org/packages/ubuntu/ codename nginx
+deb-src http://nginx.org/packages/ubuntu/ codename nginx
+
+trusty
+
+4 install
+sudo apt-get update
+sudo apt-get install nginx
+
+5 change default port
+/etc/nginx/conf.d/default.conf
+listen 10080;
+
+service nginx restart
+sudo nginx -s reload
+
+http://localhost:10080
+
