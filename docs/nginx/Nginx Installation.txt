@@ -25,3 +25,20 @@ sudo nginx -s reload
 
 http://localhost:10080
 
+PHP 7 Installation
+1 ./configure --enable-fpm
+2 sudo apt-get install libxml2-dev
+3 sudo make install
+4 
+sudo cp php.ini-development /usr/local/php/php.ini
+sudo cp /usr/local/etc/php-fpm.conf.default /usr/local/etc/php-fpm.conf
+sudo cp sapi/fpm/php-fpm /usr/local/bin
+
+5 sudo vim /usr/local/php/php.ini
+cgi.fix_pathinfo=0
+
+6 sudo vim /usr/local/etc/php-fpm.conf
+user = www-data
+group = www-data
+
+
