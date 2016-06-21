@@ -1,0 +1,31 @@
+<script type="text/javascript">
+	window.onload = callpay();
+    function jsApiCall(){
+		WeixinJSBridge.invoke(
+			'getBrandWCPayRequest',
+			<?php echo $gateway['gateway_url'];?>,
+			function(res){
+				if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+				 	window.location.href = "<?php echo $success_url?>";
+				}else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                    window.location.href = "<?php echo $error_url?>";
+				}else{
+                	window.location.href = "<?php echo $error_url?>";
+				}
+			}
+		);
+	}
+
+	function callpay(){
+		if (typeof WeixinJSBridge == "undefined"){
+		    if( document.addEventListener ){
+		        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+		    }else if (document.attachEvent){
+		        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+		        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+		    }
+		}else{
+		    jsApiCall();
+		}
+	}
+</script>

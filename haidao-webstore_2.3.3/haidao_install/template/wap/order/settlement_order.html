@@ -1,0 +1,35 @@
+{template header common}
+
+	<div class="mui-content">
+    	<div class="margin-top-15 padding-lr-15 bg-white hd-h5">
+    		<div class="order-lh-40 border-bottom">请选择订单促销</div>
+    		<div class="padding-top" data-id="order_box">
+    			loading...
+    		</div>
+    	</div>
+    	<div class="padding-15" data-id="order_prom">
+    		<a href="javascript:;" class="mui-btn mui-btn-primary full hd-h4">确定订单促销</a>
+    	</div>
+	</div>
+	{template footer common}
+</body>
+</html>
+
+<script type="text/javascript" src="{SKIN_PATH}statics/js/order.js?v={HD_VERSION}"></script>
+<script type="text/javascript">
+	var sellerid = parseInt(<?php echo $_GET['sellerid'] ?>);
+	hd_order._order_prom(sellerid);
+
+	/* 确定订单促销 */
+	$("[data-id='order_prom']").on("tap",function() {
+		// 读取localStorage已有数据
+		hdkey = localStorage.getItem('hdkey');
+		_hddatas = JSON.parse(localStorage.getItem('hddatas'));
+		var order_prom = {};
+		order_prom_id = $("[data-id='order_box']").find("input[type=radio]:checked").parent().data('order');
+		order_prom[sellerid] = (order_prom_id == undefined) ? 0 : order_prom_id;
+		_hddatas[hdkey]._order_prom_ = order_prom;		
+		localStorage.setItem('hddatas',JSON.stringify(_hddatas));
+		window.location.href = document.referrer;
+	})
+</script>

@@ -1,0 +1,54 @@
+{template header common}
+
+	<div class="mui-content">
+		<div class="padding-lr list-col-10 margin-none">
+			<div class="border-bottom mui-clearfix order-lh-40">
+				<span class="mui-pull-left margin-small-right margin-top padding-little-top"><img src="{SKIN_PATH}statics/images/ico_23.png" width="24" /></span>请选择支付方式
+			</div>
+			<div class="padding-tb" data-id="type_box">
+				loading...
+			</div>
+		</div>
+		<div class="padding-lr list-col-10 border-bottom">
+			<div class="border-bottom mui-clearfix order-lh-40">
+				<span class="mui-pull-left margin-small-right margin-top"><img src="{SKIN_PATH}statics/images/ico_24.png" width="24" /></span>请选择并确认您的配送方式
+			</div>
+			<div data-id="delivery_box">
+				loading...
+			</div>
+		</div>
+    	<div class="padding-big" data-id="delivery">
+    		<a href="javascript:;" class="mui-btn mui-btn-primary full hd-h4">确定支付配送方式</a>
+    	</div>
+	</div>
+	{template footer common}
+</body>
+</html>
+
+<script type="text/javascript" src="{SKIN_PATH}statics/js/order.js?v={HD_VERSION}"></script>
+<script type="text/javascript">
+	hd_order._delivery();
+
+	/* 确定 支付&配送 方式 */
+	$("[data-id='delivery']").on("tap",function() {
+		// 读取localStorage已有数据
+		hdkey = localStorage.getItem('hdkey');
+		_hddatas = JSON.parse(localStorage.getItem('hddatas'));
+		_hddatas[hdkey]._pay_type_ = $("[data-id='type_box']").find(".hd-btn-blue").data("id");
+		var deliverys = {};
+		$("[data-sellerid]").each(function(i , n){
+			var _sellerid = $(this).data('sellerid');
+			deliverys[_sellerid] = $("[data-id='delivery_box']").find(".hd-btn-blue").attr("delivery-district-id");
+		})
+		_hddatas[hdkey]._deliverys_ = deliverys;
+		localStorage.setItem('hddatas',JSON.stringify(_hddatas));
+		window.location.href = document.referrer;
+	})
+	$(".mui-btn").on("tap",function(){
+		if(!$(this).hasClass('hd-btn-blue') && !$(this).hasClass('full')){
+			$(this).addClass('hd-btn-blue').removeClass('hd-btn-gray');
+			$(this).siblings().removeClass('hd-btn-blue').addClass('hd-btn-gray');
+		}
+	})
+	
+</script>
