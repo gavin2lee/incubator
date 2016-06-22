@@ -124,3 +124,10 @@ while(false !== $char){
 fclose($fileMail);
 
 echo "<hr>";
+$lines = file("mail.txt");
+
+foreach($lines as $no=>$line){
+  echo $no."-".$line."<br/>";
+}
+
+echo "<hr>";
