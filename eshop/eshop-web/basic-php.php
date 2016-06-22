@@ -131,3 +131,8 @@ foreach($lines as $no=>$line){
 }
 
 echo "<hr>";
+echo "<h3>读取cookie</h3>";
+echo "Cookie phpCookieTest:".$_COOKIE['phpCookieTest'];
+
+
+echo "<hr>";
