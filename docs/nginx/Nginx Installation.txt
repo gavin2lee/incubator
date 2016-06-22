@@ -241,3 +241,8 @@ location ~* \.php$ {
 7)Rebound nginx
 sudo nginx -s reload 
 
+8)Php composer installing
+cd /usr/local/bin
+sudo curl -s https://getcomposer.org/installer | sudo /usr/local/php7/bin/php
+sudo chmod a+x composer.phar
+

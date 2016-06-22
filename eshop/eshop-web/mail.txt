@@ -1,0 +1,15 @@
+Dear Colleagues,
+
+As many of you will move to the new office(3F, Blk 5), we’d like to notify you some info regarding printers in the new office .
+For consistent user experience, we deployed 2 all-in-one printers in BLK5 office, which are the same model(RICOH Aficio MP C5000 PCL 6) as what we’re having now in BLK8 office.
+
+Please refer to attached instruction (Printer_Installation_Instruction_Shenzhen_Blk5.pdf)  to install the printers.
+·         For Windows Users, it’s just about unzipping and running attached script (inst_print_x64_Shenzhen_Blk5.zip).
+·         For Mac OS X Users, please follow steps in the instruction.
+
+We also provide user manual beside the printers.  If you have any questions or need help, please contact:
+
+Chunger Qin       Chunger_Qin@epam.com          185-6589-0668
+Amazin Ji              Amazin_Ji@epam.com                 135-9013-6636
+
+Thanks!

@@ -238,3 +238,10 @@ location ~* \.php$ {
     fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
 }
 
+7)Rebound nginx
+sudo nginx -s reload 
+
+8)Php composer installing
+cd /usr/local/bin
+sudo curl -s https://getcomposer.org/installer | sudo /usr/local/php7/bin/php
+
