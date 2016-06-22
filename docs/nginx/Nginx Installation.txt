@@ -246,3 +246,6 @@ cd /usr/local/bin
 sudo curl -s https://getcomposer.org/installer | sudo /usr/local/php7/bin/php
 sudo chmod a+x composer.phar
 
+9)SqLite3 installing
+sudo apt-get install sqlite3 libsqlite3-dev
+
