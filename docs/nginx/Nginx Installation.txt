@@ -28,7 +28,7 @@ http://localhost:10080
 
 OPENSSL installing
 sudo apt-get install libssl-dev openssl
-sudo apt-get install libcurl4-openssl-dev
+sudo apt-get install libssl-dev openssl libcurl4-openssl-dev libgd-dev libmcrypt-dev
 sudo apt-get install libgd-dev
 sudo apt-get install libmcrypt-dev
 
@@ -141,4 +141,103 @@ Installing man pages:             /usr/local/php/man/man1/
   page: php-config.1
 Installing PEAR environment:      /usr/local/lib/php/
 
+------
+Ubuntu 64 14.04 PHP7 Installation
+1)Extract the source files,
+tar -xzvf php-7.0.7.tar.gz 
+
+2)Execute configuration script:
+./configure --prefix=/usr/local/php7 \
+--with-config-file-path=/usr/local/php7/etc \
+--with-config-file-scan-dir=/usr/local/php7/etc/php.d \
+--with-mcrypt=/usr/include \
+--enable-mysqlnd \
+--with-mysqli \
+--with-pdo-mysql \
+--enable-fpm \
+--with-fpm-user=nginx \
+--with-fpm-group=nginx \
+--with-gd \
+--with-iconv \
+--with-zlib \
+--enable-xml \
+--enable-shmop \
+--enable-sysvsem \
+--enable-inline-optimization \
+--enable-mbregex \
+--enable-mbstring \
+--enable-ftp \
+--enable-gd-native-ttf \
+--with-openssl \
+--enable-pcntl \
+--enable-sockets \
+--with-xmlrpc \
+--enable-zip \
+--enable-soap \
+--without-pear \
+--with-gettext \
+--enable-session \
+--with-curl \
+--with-jpeg-dir \
+--with-freetype-dir \
+--enable-opcache
+
+3)Check the output and install libs needed:
+a:openssl
+sudo apt-get install libssl-dev openssl libcurl4-openssl-dev libgd-dev libmcrypt-dev
+
+4)Execute make command:
+make
+make test
+sudo make install
+-----------------
+installing logs
+Installing shared extensions:     /usr/local/php7/lib/php/extensions/no-debug-non-zts-20151012/
+Installing PHP CLI binary:        /usr/local/php7/bin/
+Installing PHP CLI man page:      /usr/local/php7/php/man/man1/
+Installing PHP FPM binary:        /usr/local/php7/sbin/
+Installing PHP FPM config:        /usr/local/php7/etc/
+Installing PHP FPM man page:      /usr/local/php7/php/man/man8/
+Installing PHP FPM status page:   /usr/local/php7/php/php/fpm/
+Installing phpdbg binary:         /usr/local/php7/bin/
+Installing phpdbg man page:       /usr/local/php7/php/man/man1/
+Installing PHP CGI binary:        /usr/local/php7/bin/
+Installing PHP CGI man page:      /usr/local/php7/php/man/man1/
+Installing build environment:     /usr/local/php7/lib/php/build/
+Installing header files:           /usr/local/php7/include/php/
+Installing helper programs:       /usr/local/php7/bin/
+  program: phpize
+  program: php-config
+Installing man pages:             /usr/local/php7/php/man/man1/
+  page: phpize.1
+  page: php-config.1
+/home/gavin/Dev/Softwares/php-7.0.7/build/shtool install -c ext/phar/phar.phar /usr/local/php7/bin
+ln -s -f phar.phar /usr/local/php7/bin/phar
+Installing PDO headers:           /usr/local/php7/include/php/ext/pdo/
+------------------------------------
+
+5)copy files
+sudo cp php.ini-production /usr/local/php7/etc/php.ini
+cd /usr/local/php7/etc
+sudo cp php-fpm.conf.default php-fpm.conf
+sudo cp php-fpm.d/www.conf.default php-fpm.d/www.conf
+
+sudo cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+sudo chmod +x /etc/init.d/php-fpm
+sudo update-rc.d php-fpm defaults 95
+#sudo update-rc.d -f php-fpm remove
+#sudo service --status-all
+#/etc/init.d/php-fpm start|stop|status
+
+6)Modify nginx
+location ~* \.php$ {
+    fastcgi_index   index.php;
+    fastcgi_pass    127.0.0.1:9000;
+    include         fastcgi_params;
+    fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+    fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+}
+
+7)Rebound nginx
+sudo nginx -s reload 
 
