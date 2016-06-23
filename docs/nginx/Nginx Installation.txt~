@@ -229,6 +229,10 @@ sudo update-rc.d php-fpm defaults 95
 #sudo service --status-all
 #/etc/init.d/php-fpm start|stop|status
 
+sudo vim /usr/local/php7/etc/php-fpm.d
+user = gavin
+group = gavin
+
 6)Modify nginx
 location ~* \.php$ {
     fastcgi_index   index.php;
@@ -245,4 +249,7 @@ sudo nginx -s reload
 cd /usr/local/bin
 sudo curl -s https://getcomposer.org/installer | sudo /usr/local/php7/bin/php
 sudo chmod a+x composer.phar
+
+9)SqLite3 installing
+sudo apt-get install sqlite3 libsqlite3-dev
 

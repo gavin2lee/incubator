@@ -229,6 +229,10 @@ sudo update-rc.d php-fpm defaults 95
 #sudo service --status-all
 #/etc/init.d/php-fpm start|stop|status
 
+sudo vim /usr/local/php7/etc/php-fpm.d
+user = gavin
+group = gavin
+
 6)Modify nginx
 location ~* \.php$ {
     fastcgi_index   index.php;
@@ -248,4 +252,7 @@ sudo chmod a+x composer.phar
 
 9)SqLite3 installing
 sudo apt-get install sqlite3 libsqlite3-dev
+
+10)check status of MYSQL
+netstat -talnp | grep 3306
 
