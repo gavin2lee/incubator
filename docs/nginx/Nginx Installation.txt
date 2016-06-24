@@ -256,3 +256,26 @@ sudo apt-get install sqlite3 libsqlite3-dev
 10)check status of MYSQL
 netstat -talnp | grep 3306
 
+11)Xdebug installation
+git clone git://github.com/xdebug/xdebug.git
+make sure phpize and php-config installed already.
+cd xdebug
+execute phpize
+phpize
+sudo apt-get install autoconf
+./configure --enable-xdebug
+make
+make test
+sudo make install
+----
+Installing shared extensions:     /usr/local/php7/lib/php/extensions/no-debug-non-zts-20151012/
+----
+cd /usr/local/php7
+vim /usr/local/php7/etc/php.ini
+zend_extension="/usr/local/php7/lib/php/extensions/no-debug-non-zts-20151012/xdebug.so"
+execute php -m to check if installed successfully.
+Xdebug should appear twice there (once under 'PHP Modules' and once under 'Zend Modules').
+
+
+
+
