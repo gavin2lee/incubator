@@ -15,4 +15,12 @@ class CellPhone{
 	public function __destruct(){
 		
 	}
+	
+	public function __toString(){
+		define('SP', ',');
+		return 'CellPhone:'.$this->brand.SP
+							.$this->model.SP
+							.$this->size.SP
+							.$this->color;
+	}
 }
