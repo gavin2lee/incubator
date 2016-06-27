@@ -1,5 +1,5 @@
 <?php
-class CellPhone{
+class CellPhone implements Phone{
 	public $brand;
 	public $model;
 	public $size;
@@ -17,10 +17,18 @@ class CellPhone{
 	}
 	
 	public function __toString(){
-		define('SP', ',');
-		return 'CellPhone:'.$this->brand.SP
-							.$this->model.SP
-							.$this->size.SP
+// 		define('SP', ',');
+		$separator = ',';
+		return 'CellPhone:'.$this->brand.$separator
+							.$this->model.$separator
+							.$this->size.$separator
 							.$this->color;
+	}
+	
+	public function call(){
+		echo $this->brand.'-'.$this->model.' is calling...';
+	}
+	public function detail(){
+		return $this->__toString();
 	}
 }

@@ -263,6 +263,7 @@ cd xdebug
 execute phpize
 phpize
 sudo apt-get install autoconf
+phpize
 ./configure --enable-xdebug
 make
 make test
@@ -271,7 +272,7 @@ sudo make install
 Installing shared extensions:     /usr/local/php7/lib/php/extensions/no-debug-non-zts-20151012/
 ----
 cd /usr/local/php7
-vim /usr/local/php7/etc/php.ini
+sudo vim /usr/local/php7/etc/php.ini
 zend_extension="/usr/local/php7/lib/php/extensions/no-debug-non-zts-20151012/xdebug.so"
 execute php -m to check if installed successfully.
 Xdebug should appear twice there (once under 'PHP Modules' and once under 'Zend Modules').
