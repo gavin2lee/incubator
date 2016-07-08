@@ -4,9 +4,13 @@
     <!-- specify the model version of current pom(Project Object Model) -->
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.gl.avs</groupId>
+    <parent>
+      <groupId>com.gl.avs</groupId>
+      <artifactId>com.gl.avs.parent</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <artifactId>com.gl.avs.web</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <name>Article Voting System - web</name>
 
     <packaging>jar</packaging>

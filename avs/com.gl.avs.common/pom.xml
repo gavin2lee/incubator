@@ -3,10 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <!-- specify the model version of current pom(Project Object Model) -->
     <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+      <groupId>com.gl.avs</groupId>
+      <artifactId>com.gl.avs.parent</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </parent>
 
-    <groupId>com.gl.avs</groupId>
     <artifactId>com.gl.avs.common</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <name>Article Voting System - common</name>
 
     <packaging>jar</packaging>
