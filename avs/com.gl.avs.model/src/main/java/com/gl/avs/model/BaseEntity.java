@@ -3,7 +3,7 @@ package com.gl.avs.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class BaseEntity implements Serializable{
+public abstract class BaseEntity implements Serializable{
 	/**
 	 * 
 	 */
