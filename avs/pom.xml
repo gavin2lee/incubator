@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- specify the model version of current pom(Project Object Model) -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.gl.avs</groupId>
+    <artifactId>avs</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>Article Voting System</name>
+
+    <packaging>pom</packaging>
+
+    <developers>
+        <developer>
+            <id>gavin2lee</id>
+            <name>Gavin</name>
+            <email>gavin2lee@163.com</email>
+        </developer>
+    </developers>
+
+    <properties>
+        <java.version>1.8</java.version>
+
+        <spring.data.version>1.10.1.RELEASE</spring.data.version>
+        <spring.version>4.2.6.RELEASE</spring.version>
+
+        <spring.boot.version>1.4.0.BUILD-SNAPSHOT</spring.boot.version>
+        <spring.boot.maven.plugin.version>1.4.0.M3</spring.boot.maven.plugin.version>
+
+        <hibernate.entitymanager.version>5.1.0.Final</hibernate.entitymanager.version>
+
+        <mysql-driver.version>5.1.36</mysql-driver.version>
+        <tomcat.jdbc.version>8.5.0</tomcat.jdbc.version>
+
+        <junit.version>4.12</junit.version>
+        <assertj.version>2.2.0</assertj.version>
+    </properties>
+
+    <modules>
+        <module>com.gl.avs.model</module>
+        <module>com.gl.avs.common</module>
+        <module>com.gl.avs.data</module>
+        <module>com.gl.avs.rest</module>
+        <module>com.gl.avs.web</module>
+    </modules>
+
+    <repositories>
+        <repository>
+            <id>maven-central</id>
+            <url>http://repo1.maven.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>jboss</id>
+            <url>http://repository.jboss.com/maven2/</url>
+        </repository>
+        <repository>
+            <id>spring-libs-snapsho</id>
+            <url>https://repo.spring.io/libs-snapshot</url>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <url>http://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>maven-central</id>
+            <url>http://repo1.maven.org/maven2/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>jboss</id>
+            <url>http://repository.jboss.com/maven2/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-libs-snapsho</id>
+            <url>https://repo.spring.io/libs-snapshot</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <url>http://repo.spring.io/milestone</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>
