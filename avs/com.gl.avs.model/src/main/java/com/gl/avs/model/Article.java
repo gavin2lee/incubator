@@ -16,6 +16,7 @@ public class Article extends BaseEntity {
 	private Date publishAt;
 	
 	private List<ArticleGroup> groups;
+	private List<KeyWord> keyWords;
 
 	public String getTitle() {
 		return title;
@@ -48,7 +49,13 @@ public class Article extends BaseEntity {
 	public void setGroups(List<ArticleGroup> groups) {
 		this.groups = groups;
 	}
-	
-	
+
+	public List<KeyWord> getKeyWords() {
+		return keyWords;
+	}
+
+	public void setKeyWords(List<KeyWord> keyWords) {
+		this.keyWords = keyWords;
+	}
 	
 }

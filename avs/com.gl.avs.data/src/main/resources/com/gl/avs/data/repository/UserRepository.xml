@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gl.avs.data.repository.UserRepository">
+	<select id="findByTemplate" resultType="com.gl.avs.vo.UserVO">
+		select 
+			u.oid,
+			u.first_name as firstName,
+			u.last_name as lastName,
+			u.gender,
+			u.birth,
+			u.active,
+			u.username,
+			u.passwd,
+			g.oid as userGroupId,
+			g.code as userGroupCode,
+			g.name as userGroupName
+		from user u, user_group g
+		where 1=1 
+		and u.user_group_id = g.oid
+		
+		<if test="firstName != null">
+			and first_name like #{firstName}
+		</if>
+		<if test="lastName != null">
+			and last_name like #{lastName}
+		</if>
+			
+	</select>
+</mapper>

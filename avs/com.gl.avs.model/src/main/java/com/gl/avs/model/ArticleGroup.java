@@ -5,13 +5,13 @@ public class ArticleGroup extends BaseEntity{
 	 * 
 	 */
 	private static final long serialVersionUID = 1222447009696075745L;
-	private Byte code;
+	private Integer code;
 	private String name;
 	private String description;
-	public Byte getCode() {
+	public Integer getCode() {
 		return code;
 	}
-	public void setCode(Byte code) {
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 	public String getName() {

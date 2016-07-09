@@ -2,6 +2,7 @@ package com.gl.avs.data.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -9,7 +10,7 @@ import com.gl.avs.model.UserGroup;
 import com.gl.avs.vo.UserGroupVO;
 
 public interface UserGroupRepository {
-	@Select("insert into user_group " + "(" + "create_at,update_at,code,name" + ")" + "values" + "("
+	@Insert("insert into user_group " + "(" + "create_at,update_at,code,name" + ")" + "values" + "("
 			+ "#{createAt},#{updateAt},#{code},#{name}" + ")")
 	void insertOne(UserGroup userGroup);
 
