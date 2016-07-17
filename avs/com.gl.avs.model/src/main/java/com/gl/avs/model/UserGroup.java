@@ -5,13 +5,13 @@ public class UserGroup extends BaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 5168271830272455864L;
-	private Byte code;
+	private Integer code;
 	private String name;
 	
-	public Byte getCode() {
+	public Integer getCode() {
 		return code;
 	}
-	public void setCode(Byte code) {
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 	public String getName() {

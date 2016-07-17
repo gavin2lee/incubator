@@ -49,7 +49,7 @@ public class UserRepositoryTest {
 		UserGroupVO ugVO = ugRepo.findByCode((byte)10);
 		UserGroup ug = new UserGroup();
 		ug.setOid(ugVO.getOid());
-		ug.setCode((byte)ugVO.getCode());
+		ug.setCode(ugVO.getCode());
 		ug.setName(ugVO.getName());
 		
 		u.setUserGroup(ug);

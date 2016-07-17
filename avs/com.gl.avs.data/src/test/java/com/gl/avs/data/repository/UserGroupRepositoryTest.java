@@ -34,7 +34,7 @@ public class UserGroupRepositoryTest {
 	public void insertOne() {
 		UserGroup ug = new UserGroup();
 		ug.setCreateAt(new Date());
-		ug.setCode((byte)1);
+		ug.setCode(1);
 		ug.setName("user-group-test");
 		
 		repo.insertOne(ug);

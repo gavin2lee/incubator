@@ -7,9 +7,7 @@ public class UserVO extends BaseVO {
 	private String firstName;
 	private String lastName;
 	
-	private Long userGroupId;
-	private Integer userGroupCode;
-	private String userGroupName;
+	private UserGroupVO userGroup;
 	private String gender;
 	private Date birth;
 	private Boolean active;
@@ -29,23 +27,12 @@ public class UserVO extends BaseVO {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public Long getUserGroupId() {
-		return userGroupId;
+	
+	public UserGroupVO getUserGroup() {
+		return userGroup;
 	}
-	public void setUserGroupId(Long userGroupId) {
-		this.userGroupId = userGroupId;
-	}
-	public Integer getUserGroupCode() {
-		return userGroupCode;
-	}
-	public void setUserGroupCode(Integer userGroupCode) {
-		this.userGroupCode = userGroupCode;
-	}
-	public String getUserGroupName() {
-		return userGroupName;
-	}
-	public void setUserGroupName(String userGroupName) {
-		this.userGroupName = userGroupName;
+	public void setUserGroup(UserGroupVO userGroup) {
+		this.userGroup = userGroup;
 	}
 	public String getGender() {
 		return gender;
