@@ -92,6 +92,7 @@
 			<id>mirrorId</id> <mirrorOf>repositoryId</mirrorOf> <name>Human Readable 
 			Name for this Mirror.</name> <url>http://my.repository.com/repo/path</url> 
 			</mirror> -->
+<!--
 		<mirror>
 			<id>nexus-osc</id>
 			<mirrorOf>central</mirrorOf>
@@ -110,6 +111,7 @@
 			<name>Nexus osc thirdparty</name>
 			<url>http://maven.oschina.net/content/repositories/thirdparty/</url>
 		</mirror>
+-->
 	</mirrors>
 
 
@@ -168,6 +170,7 @@
 			</activation>
 
 			<repositories>
+<!--
 				<repository>
 					<id>central-avatar</id>
 					<url>http://repo.maven.apache.org/maven2</url>
@@ -250,6 +253,7 @@
 					<layout>default</layout>
 					<snapshotPolicy>always</snapshotPolicy>
 				</repository>
+-->
 			</repositories>
 
 			<pluginRepositories>
