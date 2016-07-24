@@ -273,6 +273,41 @@ xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.o
   </activation>
 
   <repositories>
+<repository>
+   <id>maven1</id>
+   <name>maven1</name>
+   <url>http://repo1.maven.org/maven2</url>
+   <layout>default</layout>
+</repository>
+<repository>
+        <id>jboss</id>
+        <name>jboss</name>
+        <url>http://repository.jboss.org/nexus/content/groups/public</url>
+        <layout>default</layout>
+        <snapshotPolicy>always</snapshotPolicy>
+    </repository>
+
+     <repository>
+        <id>central-3</id>
+        <name>maven3</name>
+        <url>http://mvnrepository.com/</url>
+        <layout>default</layout>
+        <snapshotPolicy>always</snapshotPolicy>
+    </repository>
+    <repository>
+	<id>central-2</id>
+	<name>maven2</name>
+	<url>http://repo2.maven.org/maven2/</url>
+	<layout>default</layout>
+	<snapshotPolicy>always</snapshotPolicy>
+    </repository>
+    <repository>
+	<id>sonatype</id>
+	<name>sonatype</name>
+	<url>http://repository.sonatype.org/content/groups/public/</url>
+	<layout>default</layout>
+	<snapshotPolicy>always</snapshotPolicy>
+    </repository>
     <repository>
       <id>nexus-osc</id>
       <name>Nexus osc</name>
