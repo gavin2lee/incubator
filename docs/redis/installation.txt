@@ -13,3 +13,13 @@ sudo make install
 
 4)auth
 CONFIG get requirepass
+
+logs
+/var/log/redis
+data
+/var/lib/redis
+/var/lib/redis/server1
+/var/lib/redis/server2
+
+sudo mkdir -p /var/lib/redis
+sudo chmod -R 777 /var/lib/redis
