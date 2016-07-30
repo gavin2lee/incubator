@@ -25,6 +25,12 @@ sudo mkdir -p /var/lib/redis
 sudo chmod -R 777 /var/lib/redis
 
 5)install cluster
+sudo mkdir -p /var/lib/redis/cluster/7000
+sudo mkdir -p /var/lib/redis/cluster/7001
+sudo mkdir -p /var/lib/redis/cluster/7002
+sudo mkdir -p /var/lib/redis/cluster/7003
+sudo mkdir -p /var/lib/redis/cluster/7004
+sudo mkdir -p /var/lib/redis/cluster/7005
 sudo apt-get install ruby
 sudo apt-get install gem
 sudo gem install redis
