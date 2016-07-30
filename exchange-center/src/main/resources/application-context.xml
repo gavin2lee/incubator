@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/data/jpa
+     http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+     http://www.springframework.org/schema/tx
+     http://www.springframework.org/schema/tx/spring-tx.xsd
+     http://www.springframework.org/schema/aop
+     http://www.springframework.org/schema/aop/spring-aop.xsd
+     http://mybatis.org/schema/mybatis-spring
+     http://mybatis.org/schema/mybatis-spring.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context.xsd">
+     
+     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="12"/>
+        <property name="maxActive" value="15"/>
+        <property name="maxIdle" value="3"/>
+        <property name="minIdle" value="1"/>
+        <property name="maxWait" value="12"/>
+
+    </bean>
+    
+    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- enables scanning for @Transactional annotations -->
+    <tx:annotation-driven/>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="typeAliasesPackage" value="com.gl.roadaccidents.model" />
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+
+    <!--
+    <mybatis:scan base-package="com.gl.roadaccidents.mybatis.repository"
+                  factory-ref="sqlSessionFactory"
+                  template-ref="sqlSession"/>
+     -->
+
+    <!-- scan for mappers and let them be autowired -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.gl.roadaccidents.mybatis.repository" />
+    </bean>
+    
+    
+    <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="database" value="${jpa.database}"/>
+        <property name="showSql" value="${jpa.showSql}"/>
+        <property name="generateDdl" value="${jdbc.generateddl}" />
+    </bean>
+
+    <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+
+    <!-- JPA EntityManagerFactory -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+        <property name="jpaDialect" ref="jpaDialect" />
+        <!--
+        <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
+        <property name="persistenceUnitName" value="roadAccidents"/>
+        -->
+        <property name="packagesToScan" value="com.gl.roadaccidents.model"/>
+    </bean>
+
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+    <jpa:repositories base-package="com.gl.roadaccidents.repository"/>
+
+</beans>
