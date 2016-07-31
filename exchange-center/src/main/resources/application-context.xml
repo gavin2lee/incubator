@@ -66,8 +66,8 @@
     
     <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
         <property name="database" value="${jpa.database}"/>
-        <property name="showSql" value="${jpa.showSql}"/>
-        <property name="generateDdl" value="${jdbc.generateddl}" />
+        <property name="showSql" value="true"/>
+        <property name="generateDdl" value="true" />
     </bean>
 
     <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
