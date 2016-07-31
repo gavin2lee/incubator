@@ -28,6 +28,10 @@ public class SecurityAccount implements Serializable {
 	public void setShares(Integer shares) {
 		this.shares = shares;
 	}
+	@Override
+	public String toString() {
+		return "SecurityAccount [id=" + id + ", holder=" + holder + ", shares=" + shares + "]";
+	}
 	
 	
 }

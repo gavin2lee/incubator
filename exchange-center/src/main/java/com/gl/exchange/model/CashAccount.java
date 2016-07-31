@@ -33,6 +33,10 @@ public class CashAccount implements Serializable{
 	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
+	@Override
+	public String toString() {
+		return "CashAccount [id=" + id + ", holder=" + holder + ", balance=" + balance + "]";
+	}
 	
 	
 }
