@@ -3,6 +3,7 @@ package com.gl.exchange.service;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,14 @@ import com.gl.exchange.model.SecurityAccount;
 public class ExchangeServiceTest {
 	@Autowired
 	ExchangeService service;
+	
+	@Ignore
+	@Test
+	public void test(){
+		
+	}
 
+//	@Ignore
 	@Test
 	public void testTransferCash() {
 		String holder1 = "ca"+System.nanoTime();
@@ -54,6 +62,7 @@ public class ExchangeServiceTest {
 		MatcherAssert.assertThat(storedCa2.getBalance(), Matchers.greaterThan(ca2.getBalance()));
 	}
 
+//	@Ignore
 	@Test
 	public void testTransferSecurity() {
 		String holder1 = "ca"+System.nanoTime();
@@ -86,6 +95,7 @@ public class ExchangeServiceTest {
 		MatcherAssert.assertThat(storedSa2.getShares(), Matchers.greaterThan(sa2.getShares()));
 	}
 
+//	@Ignore
 	@Test
 	public void testTrade() {
 		String holder1 = "a-client-"+System.nanoTime();

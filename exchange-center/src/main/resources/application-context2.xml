@@ -83,46 +83,78 @@
 	</bean>
 
 
+	<!-- <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+		<property name="dataSource" ref="dataSource" /> </bean> -->
+
+
+	<!-- <tx:jta-transaction-manager/> -->
+
 	<!-- ########################################################## -->
-	<!-- For exchangetwo -->
-	<bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<!-- MyBatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="exchangeTwoXaDataSource" />
 		<property name="typeAliasesPackage" value="com.gl.exchange.model" />
 	</bean>
 
-	<bean id="sqlSession2" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSessionFactory2" />
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 
 	<!-- scan for mappers and let them be autowired -->
-	<bean id="mapperScannerConfigurer2" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.gl.exchange.dao" />
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory2"/>
-		<property name="sqlSessionTemplateBeanName" value="sqlSession2"/>
 	</bean>
 
 	<!-- ########################################################## -->
-	<!-- For exchangeone -->
-	<bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="exchangeOneXaDataSource" />
-		<property name="typeAliasesPackage" value="com.gl.exchange.model" />
+	<!-- Spring data JPA -->
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="database" value="MYSQL" />
+		<property name="showSql" value="true" />
+		<property name="generateDdl" value="true" />
 	</bean>
 
-	<bean id="sqlSession1" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSessionFactory1" />
+	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+
+<!-- 
+	<bean id="atomikosJtaPlatform" class="org.lmc.platform.jta.AtomikosJtaPlatform">
+		<property name="transactionManager" ref="atomikosTransactionManager" />
+		<property name="userTransaction" ref="atomikosUserTransaction" />
+	</bean>
+ -->
+
+	<!-- JPA EntityManagerFactory -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="jtaDataSource" ref="exchangeOneXaDataSource" />
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+		<property name="jpaDialect" ref="jpaDialect" />
+		<property name="packagesToScan" value="com.gl.exchange.model" />
+		<property name="jpaProperties">
+			<props>
+			<!-- 
+				<prop key="hibernate.connection.release_mode">after_statement</prop>
+				<prop key="hibernate.current_session_context_class">jta</prop>
+				<prop key="hibernate.transaction.factory_class">com.atomikos.icatch.jta.hibernate3.AtomikosJTATransactionFactory
+				</prop>
+				<prop key="hibernate.transaction.manager_lookup_class">com.atomikos.icatch.jta.hibernate3.TransactionManagerLookup 
+					</prop>
+			 -->
+				<prop key="hibernate.transaction.jta.platform">com.atomikos.icatch.jta.hibernate4.AtomikosJ2eePlatform</prop>
+
+			</props>
+		</property>
 	</bean>
 
-	<!-- scan for mappers and let them be autowired -->
-	<bean id="mapperScannerConfigurer1" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.gl.exchange.repository" />
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1"/>
-		<property name="sqlSessionTemplateBeanName" value="sqlSession1"/>
-	</bean>
-
+	<!-- <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"> 
+		<property name="entityManagerFactory" ref="entityManagerFactory" /> </bean> -->
 	<bean
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 	<context:component-scan base-package="com.gl.exchange" />
+	<jpa:repositories base-package="com.gl.exchange.repository"
+		transaction-manager-ref="transactionManager"
+		entity-manager-factory-ref="entityManagerFactory" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 </beans>
