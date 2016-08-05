@@ -8,8 +8,8 @@ select str_to_date('2013-01-01','%Y-%m-%d');
 
 use roadaccidents;
 
-explain SELECT r.oid FROM road_accident r 
-where r.occur_on <= str_to_date( '2013-12-31','%Y-%m-%d') 
+explain SELECT r.oid FROM road_accident r
+where r.occur_on <= str_to_date( '2013-12-31','%Y-%m-%d')
 and r.occur_on >= str_to_date('2013-12-01', '%Y-%m-%d') limit 10;
 
 create index ra_occur_on on roadaccidents.road_accident(occur_on asc);
@@ -24,20 +24,36 @@ create index ra_occur_on_longitude on road_accident(occur_on asc, longitude desc
 
 create index ra_occur_on_longitude_latitude on road_accident(occur_on asc, longitude desc,latitude desc);
 
-explain SELECT * FROM road_accident r 
-where r.occur_on <= str_to_date( '2013-12-31','%Y-%m-%d') 
-and r.occur_on >= str_to_date('2013-12-01', '%Y-%m-%d') 
+explain SELECT * FROM road_accident r
+where r.occur_on <= str_to_date( '2013-12-31','%Y-%m-%d')
+and r.occur_on >= str_to_date('2013-12-01', '%Y-%m-%d')
 and r.latitude >=50.4 and r.latitude <=50.6 limit 10;
 
-explain SELECT * FROM road_accident r 
+explain SELECT * FROM road_accident r
 where r.longitude >= -4.1
-and r.occur_on <= str_to_date( '2013-12-31','%Y-%m-%d') 
-and r.occur_on >= str_to_date('2013-12-01', '%Y-%m-%d') 
+and r.occur_on <= str_to_date( '2013-12-31','%Y-%m-%d')
+and r.occur_on >= str_to_date('2013-12-01', '%Y-%m-%d')
 and r.latitude >=50.4 and r.latitude <=50.6 limit 10;
 
-explain SELECT * FROM road_accident r 
-where 
-r.occur_on <= str_to_date( '2013-12-31','%Y-%m-%d') 
-and r.occur_on >= str_to_date('2013-12-01', '%Y-%m-%d') 
+explain SELECT * FROM road_accident r
+where
+r.occur_on <= str_to_date( '2013-12-31','%Y-%m-%d')
+and r.occur_on >= str_to_date('2013-12-01', '%Y-%m-%d')
 and r.longitude >= -4.1
 and r.latitude >=50.4 and r.latitude <=50.6 limit 10;
+
+
+
+
+查看是否自动提交：
+show variables like 'autocommit';
+set autocommit=0;
+select @@global.tx_isolation;
+select @@tx_isolation;
+
+set global transaction isolation level repeatable read;
+set tx_isolation='read committed';
+
+查看index
+select index_name,index_type from information_schema.statistics where table_name='';
+explain select * from CashAccount force index(cash_account_2) where holder = 'gavin' and balance = 1000;
