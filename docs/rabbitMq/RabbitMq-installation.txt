@@ -1,0 +1,12 @@
+Install Erlang
+sudo apt-get install
+
+tar -Jxvf rabbitmq-server-generic-unix-3.6.5.tar.xz
+sudo mv rabbitmq /opt/rabbitmq
+
+
+sudo mkdir -p /etc/rabbitmq
+sudo touch /etc/rabbitmq/rabbitmq
+sudo mkdir -p /var/log/rabbitmq
+sudo mkdir -p /var/lib/rabbitmq/mnesia
+sudo touch /etc/rabbitmq/enabled_plugins

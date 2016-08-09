@@ -2,3 +2,65 @@
 sudo vim /etc/resolv.conf
 nameserver 8.8.8.8
 nameserver 8.8.4.4
+
+sudo adduser xxx 这样的命令会在home目录下添加一个帐号
+sudo useradd xxx 仅仅是添加用户， 不会在home目录添加帐号
+1.Ubuntu 中 有图形界面增加的方法 在 系统(System) 菜单下 有 用户选项！ 打开 ，根据提示操作就可以了
+
+2.Linux 通过 命令行 增加用户 ，
+（1） 打开终端 输入 sudo -r useradd 用户名 /* -r 参数建立系统用户
+（2） 输入 sudo useradd -g root 用户名 /*这一行的命令是让你的刚刚建立的 用户 划分到 root 权限组下
+（3）sudo passwd 用户名 /*设置你刚刚建立的密码
+
+删除：
+终端方法：以下用newuser代替想要删除的用户账户
+在root用户下：userdel -r newuser
+在普通用户下：sudo userdel -r newuser
+因为你需要彻底删除用户，所以加上-r的选项，在删除用户的同时一起把这个用户的宿主目录和邮件目录删除。
+
+------------------------------分割线------------------------------
+
+ubuntu系统创建新用户「添加ROOT权限」「配置」「不能使用TAB键解决」
+
+一、新建用户  www.linuxidc.com
+adduser 新建用户的名字
+passwd  新建用户的名字即可添加新用户
+二、创建家目录
+# cd /home
+1.创建家目录：
+# mkdir 新建用户的名字
+
+2.拷贝环境变量模板文件：
+# cp /etc/skel/.b* support
+# cp /etc/skel/.p* support
+
+3.修改权限
+# chown -R support.support support
+# chmod 770 support
+  www.linuxidc.com
+三、赋予ROOT权限
+方法一： 修改 /etc/sudoers 文件，找到下面一行，把前面的注释（#）去掉
+## Allows people in group wheel to run all commands
+%wheel    ALL=(ALL)    ALL
+
+然后修改用户，使其属于root组（wheel），命令如下：
+#usermod -g root 用户名
+修改完毕，现在可以用新建的用户名帐号登录，然后用命令 su - ，即可获得root权限进行操作。
+
+方法二： 修改 /etc/sudoers 文件，找到下面一行，在root下面添加一行，如下所示：
+## Allow root to run any commands anywhere
+root    ALL=(ALL)    ALL
+新建用户的名字  ALL=(ALL)    ALL
+修改完毕，现在可以用新建的用户名字帐号登录，然后用命令 su -，即可获得root权限进行操作。
+
+四、不能使用TAB键、上下键，命令行不显示当前路径的解决
+因默认ubuntu创建的普通帐号，默认shell为/bin/sh，而这不支持tab等键的，所以将「指定用户」帐号的shell改为/bin/bash就可以了。
+
+1.查看当前的shell：
+# echo $SHELL
+/bin/sh
+2.修改shell为/bin/bash：
+# usermod -s /bin/bash 用户名
+
+dpkg --list
+apt-get --purge remove rabbitmq-server
