@@ -1,0 +1,142 @@
+1. struts2集成freemarker
+(1) struts2默认通过FreemarkerManager对freemarker进行管理，可以通过struts.xml中的配置struts.freemarker.manager.classname进行修改
+(2) FreemarkerManager中会读取classpath:/freemarker.properties文件作为全局freemarker配置
+(3) freemarker自定义函数
+(3.1) 扩展TemplateMethodModelEx创建新的函数，如CurrentUserGetter用于获取当前登录用户
+(3.2) 在自行扩展的FreemarkerManager#init()中追加
+config.setSharedVariable("currentUser", new CurrentUserGetter());
+(3.3) 使用时，直接调用
+${currentUser().username}
+
+2. freemarker中使用taglib
+(1) 首先在web.xml中增加
+    <servlet>
+        <servlet-name>JspSupportServlet</servlet-name>
+        <servlet-class>
+            org.apache.struts2.views.JspSupportServlet
+        </servlet-class>
+        <!--配置JspSupportServlet自启动-->
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+(2) 在ftl文件中，使用：
+<#assign pg = JspTaglibs["/WEB-INF/jsp/pager-taglib.tld"]/>
+这里的JspTagLibs只能是项目中可以找到的tld文件，不能是http://jsptags.com/tags/navigation/pager形式的URL
+
+3. freemarker中的map迭代
+    <#assign map = {'y':'启用','n':'禁用'}>
+    <select id="unit" name="e.openResponsive" class="input-medium">
+        <#list map?keys as key>
+            <option value="${key}" <#if e.openResponsive?? && e.openResponsive==key>selected="selected" </#if>>${map[key]}</option>
+        </#list>
+    </select>
+
+4. 在linux环境下，默认mysql的表名是区分大小写的，如果需要不区分大小写，需要在[mysqld]中追加配置：
+lower_case_table_names=1
+
+5. idea中使用正则查找替换功能，使<s:property name="name"/>形式的内容替换为${name!""}
+查找：<s:property value="(.+?)"\s?/>，替换为:\\${item.$1!""}
+查找：<s:textfield (.*?) name="(.+?)",替换为：<input type="text"  value="\\${$2!""}" name="$2" $1
+查找：<result\sname="(.*?)"\stype="freemarker"\s?>(.*?)\.ftl</result>
+替换为：private static final String page_$1 = "$2";
+查找： /(.*?)\!(.*?)\.action 替换为: /$1/$2
+查找：name="e\.(.+?)" 替换为: name="$1"
+
+6. maven启动时，出现com.sun.image.codec.jpeg找不到的问题解决：
+该包放在jre/lib/rt.jar中，默认的javac无法读取到该包，所以需要增加参数-XDignore.symbol.file=true，在maven的pom文件中配置如下：
+
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>2.3.2</version>
+    <configuration>
+        <source>1.6</source>
+        <target>1.6</target>
+        <encoding>utf8</encoding>
+        <compilerArgument>-XDignore.symbol.file=true -Xlint</compilerArgument>
+        <testCompilerArgument>-XDignore.symbol.file=true -Xlint</testCompilerArgument>
+    </configuration>
+</plugin>
+
+7. logback与p6spy的集成
+(1) 创建p6spy的P6Logger实现类net.jeeshop.core.p6spy.LogbackLogger
+(2) 修改spy.properties文件，修改appender为
+appender=net.jeeshop.core.p6spy.LogbackLogger
+
+8. datatables使用
+（1） style
+基本表格样式: display stripe row-border cell-border
+与bootstrap集成，分页条的样式有问题，增加样式表：
+
+div.dataTables_wrapper.dt-bootstrap .dataTables_paginate .paginate_button {
+    padding: 0;
+    margin-left: 0
+}
+div.dataTables_wrapper.dt-bootstrap div.a.btn, body.example div.dataTables_wrapper.dt-bootstrap button.btn,
+div.dataTables_wrapper.dt-bootstrap input.btn {
+    margin-right: 0;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em
+}
+div.dataTables_wrapper.dt-bootstrap th {
+    background: none !important
+}
+（2） 国际化配置
+"language": {
+                "lengthMenu": "每页 _MENU_ 条记录",
+                "zeroRecords": "没有找到记录",
+                //"info": "第 _PAGE_ / _PAGES_ 页， 共 _TOTAL_ 条记录，当前_START_ - _END_",
+                "info": "第 _PAGE_ / _PAGES_ 页， 共 _TOTAL_ 条",
+                "infoEmpty": "无记录",
+                "emptyTable": "无记录",
+                "infoFiltered": "(从 _MAX_ 条记录过滤)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "loadingRecords": "加载中...",
+                "processing": "处理中...",
+                "search": "搜索:",
+                "paginate": {
+                    "first": "|<",
+                    "last": ">|",
+                    "next": ">>",
+                    "previous": "<<"
+                },
+                "aria": {
+                    "sortAscending": ": 正向排序",
+                    "sortDescending": ": 反向排序"
+                },
+            }
+（3） 服务端数据请求参数
+附加参数有三种方式：
+第一种是配置serverParams参数，如：
+           serverParams:function(data){
+				$.each($("form").serializeArray(),function(ix,v){
+					data[v.name]= v.value;
+				})
+			},
+第二种是配置ajax的data属性(未经过验证)，如：
+ajax:{
+    url:"loadData",
+    type:"post",
+    data:function(params){
+        $.each($("form").serializeArray(),function(ix,v){
+            params[v.name]= v.value;
+        })
+    }
+}
+第三种是拦截ajax请求的preXhr.dt事件，如：
+table.on('preXhr.dt', function ( e, settings, data ) {
+			$.each($("form").serializeArray(),function(ix,v){
+				data[v.name]= v.value;
+			});
+		} );
+		table.ajax.reload();
+
+（4） 常用参数：
+searching: false,
+"serverSide": true,
+"processing": true,
+"ordering":false,
+pagingType:"full_numbers",//simple,simple_numbers,full,full_numbers
+lengthMenu:[1,10,20,50,100],
+pageLength:10,
+（5） 获取已经存在的table api : $("#tableId").DataTable({"retrieve":true})))

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- This should cause an error because sqlMapGenerator is required
+         if there is no javaClientGenerator -->
+    <context id="jsop" targetRuntime="MyBatis3" defaultModelType="flat">
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.ext.plugin.MapperFileOverwritePlugin">
+            <!-- 是否覆盖已经有的mapper文件，默认值为true -->
+            <!--<property name="mapperOverwrite" value="true"/>-->
+        </plugin>
+        <plugin type="org.mybatis.generator.ext.plugin.JshopCustomPlugin"/>
+        <commentGenerator type="org.mybatis.generator.ext.comment.CommentGeneratorExt"/>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/jeeshop"
+                        userId="root" password="root"/>
+
+        <javaModelGenerator targetPackage="net.jeeshop.model"
+                            targetProject="src/main/gen">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/gen"></sqlMapGenerator>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="net.jeeshop.client"
+                             targetProject="src/main/gen">
+        </javaClientGenerator>
+
+        <table tableName="t_article_catalog" domainObjectName="ArticleCatalog"/>
+    </context>
+
+</generatorConfiguration>
