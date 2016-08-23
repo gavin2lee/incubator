@@ -21,7 +21,7 @@ public class LinkQueue {
 		return null;
 	}
 	
-	public void addVisitedUrls(String url){
+	public void addUnvisitedUrls(String url){
 		if(url == null){
 			return;
 		}
