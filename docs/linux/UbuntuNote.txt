@@ -1,0 +1,12 @@
+1 list installed packages in ubuntu 14 or above
+sudo apt list --installed
+
+2 install golang
+sudo vim /etc/profile
+export GOROOT=/opt/golang
+export GOPATH=/home/gavin/Dev/godev
+export GO_BIN=$GOROOT/bin
+
+copy the archived file to /opt
+sudo tar -zvxf <filename>
+mv go golang

@@ -25,11 +25,11 @@ public class SystemListener implements ServletContextListener {
 
 	}
 
-	public void contextInitialized(ServletContextEvent arg0) {
+	public void contextInitialized(ServletContextEvent servletContextEvent) {
 		try {
 //			SystemManager.getInstance();
 
-			WebApplicationContext app = WebApplicationContextUtils.getWebApplicationContext(arg0.getServletContext());
+			WebApplicationContext app = WebApplicationContextUtils.getWebApplicationContext(servletContextEvent.getServletContext());
 			FrontCache frontCache = (FrontCache) app.getBean("frontCache");
 			ManageCache manageCache = (ManageCache) app.getBean("manageCache");
 			frontCache.loadAllCache();
