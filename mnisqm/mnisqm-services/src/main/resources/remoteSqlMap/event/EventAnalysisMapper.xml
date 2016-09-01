@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.event.dao.EventAnalysisMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.event.domain.EventAnalysis" >
+    <result column="ADVERSE_EVENT" property="adverseEvent" jdbcType="VARCHAR" />
+    <result column="NEARLY_DAY" property="nearlyDay" jdbcType="INTEGER" />
+    <result column="NEARLY_MONTH" property="nearlyMonth" jdbcType="INTEGER" />
+    <result column="YEAR" property="year" jdbcType="INTEGER" />
+    <result column="YESTER_YEAR_DAY" property="yesterYearDay" jdbcType="INTEGER" />
+    <result column="YESTER_YEAR_MONTH" property="yesterYearMonth" jdbcType="INTEGER" />
+    <result column="YESTER_YEAR" property="yesterYear" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.event.domain.EventAnalysis" >
+    insert into EVENT_ANALYSIS (ADVERSE_EVENT, NEARLY_DAY, NEARLY_MONTH, 
+      YEAR, YESTER_YEAR_DAY, YESTER_YEAR_MONTH, 
+      YESTER_YEAR)
+    values (#{adverseEvent,jdbcType=VARCHAR}, #{nearlyDay,jdbcType=INTEGER}, #{nearlyMonth,jdbcType=INTEGER}, 
+      #{year,jdbcType=INTEGER}, #{yesterYearDay,jdbcType=INTEGER}, #{yesterYearMonth,jdbcType=INTEGER}, 
+      #{yesterYear,jdbcType=INTEGER})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ADVERSE_EVENT, NEARLY_DAY, NEARLY_MONTH, YEAR, YESTER_YEAR_DAY, YESTER_YEAR_MONTH, 
+    YESTER_YEAR
+    from EVENT_ANALYSIS
+  </select>
+  <insert parameterType="com.lachesis.mnisqm.module.event.domain.EventAnalysis" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into EVENT_ANALYSIS (ADVERSE_EVENT, NEARLY_DAY, NEARLY_MONTH, 
+      YEAR, YESTER_YEAR_DAY, YESTER_YEAR_MONTH, 
+      YESTER_YEAR)
+    values (#{adverseEvent,jdbcType=VARCHAR}, #{nearlyDay,jdbcType=INTEGER}, #{nearlyMonth,jdbcType=INTEGER}, 
+      #{year,jdbcType=INTEGER}, #{yesterYearDay,jdbcType=INTEGER}, #{yesterYearMonth,jdbcType=INTEGER}, 
+      #{yesterYear,jdbcType=INTEGER})
+  </insert>
+  
+  <select id="getEventSumByNameAndDate" resultMap="BaseResultMap" parameterType="java.util.Map">
+    with temp as (
+    	select * from EVENT_REPORT where EVENT_TIME >= #{threeYL} and #{endTimeL} > EVENT_TIME
+    )
+    select 
+    (select count(*) from temp where EVENT_TYPE_NAME = #{eventName} and EVENT_TIME >= #{threeD} and #{endTime} > EVENT_TIME and EVENT_TYPE_NAME ) NEARLY_DAY,
+	(select count(*) from temp where EVENT_TYPE_NAME = #{eventName} and EVENT_TIME >= #{threeM} and #{endTime} > EVENT_TIME  and EVENT_TYPE_NAME ) NEARLY_MONTH,
+	(select count(*) from temp where EVENT_TYPE_NAME = #{eventName} and EVENT_TIME >= #{threeY} and #{endTime} > EVENT_TIME  and EVENT_TYPE_NAME ) YEAR,
+	(select count(*) from temp where EVENT_TYPE_NAME = #{eventName} and EVENT_TIME >= #{threeDL} and #{endTimeL} > EVENT_TIME and EVENT_TYPE_NAME ) YESTER_YEAR_DAY,
+	(select count(*) from temp where EVENT_TYPE_NAME = #{eventName} and EVENT_TIME >= #{threeML} and #{endTimeL} > EVENT_TIME and EVENT_TYPE_NAME ) YESTER_YEAR_MONTH,
+	(select count(*) from temp where EVENT_TYPE_NAME = #{eventName} and EVENT_TIME >= #{threeYL} and #{endTimeL} > EVENT_TIME and EVENT_TYPE_NAME ) YESTER_YEAR
+  </select>
+  
+  <select id="queryAllEventName" resultType="java.lang.String" >
+    select distinct EVENT_TYPE_NAME from EVENT_REPORT 
+  </select>
+</mapper>

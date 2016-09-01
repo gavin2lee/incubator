@@ -1,0 +1,49 @@
+<div class="baseinfo-wrapper">
+  <div class="page-left-menu" print-remove>
+    <div class="panel pull-left dept-wrapper panel-default" full-height>
+      <div class="panel-heading">
+        <i class="fa fa-bars"></i>
+        <!-- <span>科室列表</span> -->
+        <span>科室人员列表</span>
+      </div>
+      <div class="panel-body dept-list">
+        <div class="tool-wrapper hr-tool" ng-if="vm.isTopDept == 1">
+          <div class="col-md-4 no-padding"><button class="btn btn-default btn-sm" href="" ng-click="vm.openAdd()">
+            <i class="fa fa-user-plus"></i>
+            新增
+          </button></div>
+          <div class="col-md-4 no-padding"><button class="btn btn-default btn-sm" ng-click="vm.openUpload()">
+            <i class="fa fa-upload"></i> 导入
+          </button></div>
+          <div class="col-md-4 no-padding"><export-excel exsl-src="'/asdads'" class-list="'btn-sm btn-default'"></export-excel></div>
+        </div>
+        <div class="list-filter">
+          <!-- {{vm.selectedNode}} -->
+          <!-- <input type="text" class="form-control input-sm" ng-model="vm.filterText.deptName" placeholder="输入关键字搜索"> -->
+          <input type="text" class="form-control input-sm" ng-model="vm.filterText" placeholder="输入关键字搜索">
+        </div>
+        <div class="list-content">
+          <treecontrol ng-show="vm.isIncumbency" selected-node="vm.selectedNode" class="tree-light" tree-model="vm.treeData" on-selection="vm.select(node)" filter-expression="vm.filterText" expanded-nodes="vm.expandedNodes" options="vm.treeOption">
+            {{node.deptName || node.userName}}
+            <!-- {{node.deptName ? '(' + node.children.length + '人)' : ''}} -->
+          </treecontrol>
+          <treecontrol ng-show="!vm.isIncumbency" class="tree-light" tree-model="vm.dimissionData" on-selection="vm.select(node)" filter-expression="vm.filterText" expanded-nodes="vm.expandedNodes">
+            {{node.userName || node.userCode}}
+          </treecontrol>
+          <loading type="tree"></loading>
+        </div>
+        <div class="tool-wrapper hr-tool file-type-switch">
+          <div class="col-md-6 no-padding"><button ng-class="{'btn-info': vm.isIncumbency}" class="btn btn-default btn-sm" href="" ng-click="vm.switchType()">
+            在职
+          </button></div>
+          <div class="col-md-6 no-padding"><button ng-class="{'btn-info': !vm.isIncumbency}" class="btn btn-default btn-sm" ng-click="vm.switchType()">
+            离职
+          </button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-right-content">
+    <div ui-view></div>
+  </div>
+</div>

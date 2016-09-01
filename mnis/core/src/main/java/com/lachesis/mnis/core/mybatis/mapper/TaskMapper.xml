@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.TaskMapper">
+	<resultMap id="taskWhiteRecordItemMap" type="TaskWhiteRecordItem">
+		<id property="attId" column="attId" />
+		<result property="recordId" column="record_id" />
+		<result property="sendType" column="send_type" />
+	</resultMap>
+
+	<resultMap id="taskWhiteRecordItemMap2" type="TaskWhiteRecordItem">
+		<id property="attId" column="id" />
+		<result property="recordId" column="record_id" />
+		<result property="sendType" column="send_type" />
+		<result property="byteData" column="data" />
+	</resultMap>
+
+	<resultMap id="taskWhiteRecordMap" type="TaskWhiteRecord">
+		<result property="deptId" column="dept_id" />
+		<result property="itemCode" column="item_code" />
+		<result property="itemName" column="item_name" />
+		<result property="itemValue" column="item_value" />
+		<result property="showDate" column="show_date" />
+	</resultMap>
+
+	<resultMap type="com.lachesis.mnis.core.task.TaskEvent" id="taskEventMap">
+		<id property="eventId" column="rec_pat_event_id" />
+		<result property="problem" column="problem" />
+		<result property="interv" column="interv" />
+		<result property="recNurseCode" column="rec_nurse_code" />
+		<result property="eventTime" column="event_datetime" typeHandler="DateToStringYMDHMHandler" />
+		<result property="recNurseName" column="rec_nurse_name" />
+		<result property="diagName" column="diag_name"/>
+		<association property="inpatientInfo"
+			resultMap="com.lachesis.mnis.core.mybatis.mapper.PatientMapper.inpatientMap" />
+	</resultMap>
+
+	<select id="getWhiteList" parameterType="string" resultMap="taskWhiteRecordMap">
+		select m.*,i.item_name from nurse_white_board m left join nurse_white_board_item i on m.item_code=i.item_code
+		where m.dept_id=#{param1} and show_date=#{param2}
+	</select>
+	<select id="getWhiteBoard" parameterType="string" resultMap="taskWhiteRecordMap">
+		select m.* from nurse_white_board m 
+		where m.dept_id=#{param2} and m.show_date=#{param3} and m.item_code=#{param1}
+	</select>
+	
+	<delete id="deleteWhiteBoard">
+		delete from nurse_white_board where dept_id=#{param2} and show_date=#{param3} and item_code=#{param1}
+	</delete>
+	
+	<select id="getNoticeList" parameterType="string" resultMap="taskWhiteRecordMap">
+		select task_white_record.*,task_white_record_item.id as
+		attId,task_white_record_item.send_type,task_white_record_item.record_id
+		from
+		task_white_record left join task_white_record_item on
+		task_white_record.id = task_white_record_item.record_id where
+		(task_white_record.receive_area = 'A' or
+		(task_white_record.receive_area = 'D' and task_white_record.receive_id
+		in (#{param2})) or (task_white_record.receive_area = 'O' and
+		task_white_record.receive_id = #{param1})) and create_time &gt;
+		#{param3}
+		and create_time &lt;
+		#{param4}
+		order by create_time
+	</select>
+	
+	<select id="getWhiteAtt" parameterType="string" resultMap="taskWhiteRecordItemMap2">
+		select * from task_white_record_item
+		where id= #{attId}
+	</select>
+
+	<select id="selectPatientEvent" parameterType="string"
+		resultMap="taskEventMap">
+
+		SELECT
+		pevent.rec_pat_event_id,pevent.interv,pevent.event_datetime,pevent.rec_nurse_code,null
+		as
+		room_code,null as allergen_name,e.empl_name as rec_nurse_name,
+		pevent.problem, p.bed_code, p.dept_code, p.his_pat_no AS in_hosp_no,
+		p.admit_datetime, p.surgery_datetime, p.admit_diagnosis,
+		p.charge_type, p.fee_paid, p.fee_used,
+		p.fee_paid-p.fee_used as
+		balance, p.pat_id, p.duty_doc_code, p.duty_doc_name,
+		p.duty_nurse_code,
+		p.duty_nurse_name, p.diet_name,
+		isnull(p.tend_level,'4') as tend_level, p.tend_level,
+		pb.pat_name,
+		pb.gender, pb.birthday, dg.diag_name AS diag_name, dg.rec_diag_id AS
+		rec_diag_id,
+		attention.nurse_id AS nurse_id,
+      	au.name AS nurse_name		
+		FROM rec_pat_event pevent INNER JOIN pat_hosp p ON
+		pevent.pat_id =
+		p.pat_id
+		LEFT JOIN pat_base pb ON p.pat_id = pb.pat_id
+		LEFT JOIN rec_diag dg ON dg.pat_id = pb.pat_id AND dg.is_valid = 1
+		LEFT JOIN sys_employee AS e ON pevent.rec_nurse_code = e.empl_code		 
+        LEFT JOIN lx_task_nurse_attention attention ON attention.patient_id = pb.pat_id 
+        LEFT JOIN sys_user au ON attention.nurse_id = au.user_id 
+		WHERE 1=1
+		<if test="param1 != null">
+			AND
+			p.dept_code = #{param1}
+		</if>
+		<if test="param2 != null">
+			AND
+			pevent.event_datetime <![CDATA[>=]]>
+			#{param2}
+		</if>
+		<if test="param3 != null">
+			AND
+			pevent.event_datetime <![CDATA[<=]]>
+			#{param3}
+		</if>
+	</select>
+
+	<insert id="addWhiteBoardRecord" parameterType="TaskWhiteRecord">
+		INSERT INTO
+		nurse_white_board
+		(dept_id,item_code,item_value,operate_time,show_date)
+		values
+		(#{deptId},#{itemCode},#{itemValue},null,#{showDate})
+	</insert>
+
+	<insert id="addWhiteBoardRecordItem" parameterType="TaskWhiteRecordItem">
+		INSERT INTO
+		task_white_record_item
+		(record_id,send_type,data) values
+		(#{recordId},#{sendType},
+		#{byteData})
+	</insert>
+
+	<!-- 以下delete语句用于盛京医院演示时，清除测试数据 -->
+	<delete id="deleteInfuMonitor">
+		delete from lx_infu_monitor
+	</delete>
+	<delete id="deleteInfuMonitorItem">
+		delete from lx_infu_monitor_item
+	</delete>
+	<delete id="deleteLiquorTable">
+		delete from lx_liquor_table
+	</delete>
+	<delete id="deleteSkinTestItem">
+		delete from lx_skin_test_item
+	</delete>
+	<delete id="deleteWardPatrol">
+		delete from lx_ward_patrol
+	</delete>
+	<delete id="deleteOrderExec">
+		delete from lx_order_exec
+	</delete>
+	
+</mapper>

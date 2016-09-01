@@ -1,0 +1,448 @@
+<div class="col-md-12">
+  <div class="panel panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+    <form class="w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="addLevelForm">
+      <div class="panel-heading">
+        <i class="fa fa-list-alt"></i>
+        <span>填写调查表</span>
+        <div class="pull-right">
+          <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.saveReportDetail()">保存</button>
+          <button class="btn btn-sm btn-danger" type="button" w5c-form-submit="vm.saveReportDetail()">上报</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label class="control-label col-sm-5">日期类型</label>
+              <div class="col-sm-5">
+                <select class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK01_medicine_none.value">
+                  <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.dateType">{{item.dicName}}</option>
+                  <!-- <option value="01">工作日</option>
+                    <option value="02">周末</option>
+                    <option value="03">节日</option> -->
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label col-sm-5">不良事件发生地点</label>
+              <div class="col-sm-5">
+                <select class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK03_medicine_none.value">
+                  <option value="01">门诊</option>
+                  <option value="02">急诊</option>
+                  <option value="03">住院病房</option>
+                  <option value="04">监护室</option>
+                  <option value="05">留观察室</option>
+                  <option value="06">公共服务设施</option>
+                  <option value="07">卫生间</option>
+                  <option value="08">转运图中</option>
+                  <option value="09">手术室</option>
+                  <option value="10">走廊</option>
+                  <option value="11">其他</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label class="control-label col-sm-5">发生于何种服务</label>
+              <div class="col-sm-5">
+                <select class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK02_medicine_none.value">
+                  <option value="01">手术</option>
+                  <option value="02">分娩</option>
+                  <option value="03">治疗</option>
+                  <option value="04">护理</option>
+                  <option value="05">饮食</option>
+                  <option value="06">公共服务设施</option>
+                  <option value="07">卫生间</option>
+                  <option value="08">清扫</option>
+                  <option value="09">采集标本</option>
+                  <option value="10">服务项目不明</option>
+                  <option value="11">其他</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label col-sm-5">事件给患者带来的损害</label>
+              <div class="col-sm-5">
+                <select class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK04_medicine_none.value">
+                  <option value="01">死亡</option>
+                  <option value="02">植物人</option>
+                  <option value="03">严重</option>
+                  <option value="04">较重</option>
+                  <option value="05">重</option>
+                  <option value="06">中</option>
+                  <option value="07">轻</option>
+                  <option value="08">无</option>
+                  <option value="09">抢救中</option>
+                  <option value="10">不明</option>
+                  <option value="11">其他</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label class="control-label col-sm-5">当事人身份</label>
+              <div class="col-sm-5">
+                <select class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK05_medicine_none.value">
+                  <option value="01">注册护士</option>
+                  <option value="02">返聘护士</option>
+                  <option value="03">招聘护士</option>
+                  <option value="04">进修护士</option>
+                  <option value="05">见习护士</option>
+                  <option value="06">实习护士</option>
+                  <option value="07">护工</option>
+                  <option value="08">其他</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label col-sm-5">当事职务</label>
+              <div class="col-sm-5">
+                <select class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK06_medicine_none.value">
+                  <option value="01">护士长</option>
+                  <option value="02">负护士长</option>
+                  <option value="03">组长</option>
+                  <option value="04">护士</option>
+                  <option value="05">见习护士</option>
+                  <option value="06">实习护士</option>
+                  <option value="07">护工或陪护</option>
+                  <option value="08">其他</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label class="control-label col-sm-5">当事人年龄</label>
+              <div class="col-sm-5">
+                <input class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK07_medicine_none.value">
+              </div>
+            </div>
+            <div class="form-group col-md-6 ">
+              <label class="control-label col-sm-5">当事人所在科室</label>
+              <div class="col-sm-5">
+                <input class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK08_medicine_none.value">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label class="control-label col-sm-5">医院名称</label>
+              <div class="col-sm-5">
+                <input class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK09_medicine_none.value">
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label col-sm-5">医院级别</label>
+              <div class="col-sm-5">
+                <select class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK10_medicine_none.value">
+                  <option value="01">三级特等</option>
+                  <option value="02">三级甲等</option>
+                  <option value="03">三级乙等</option>
+                  <option value="04">三级丙等</option>
+                  <option value="05">二级级甲等</option>
+                  <option value="06">二级乙等</option>
+                  <option value="07">二级丙等</option>
+                  <option value="08">一级级甲等</option>
+                  <option value="09">一级乙等</option>
+                  <option value="10">一级丙等</option>
+                  <option value="11">未定级</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label class="control-label col-sm-5">报告者角色</label>
+              <div class="col-sm-5">
+                <select class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK11_medicine_none.value">
+                  <option value="01">事件当事人</option>
+                  <option value="02">同事</option>
+                  <option value="03">旁观者</option>
+                  <option value="04">其他</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label col-sm-5">报告者职务</label>
+              <div class="col-sm-5">
+                <select class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK12_medicine_none.value">
+                  <option value="01">注册护士</option>
+                  <option value="02">返聘护士</option>
+                  <option value="03">招聘护士</option>
+                  <option value="04">进修护士</option>
+                  <option value="05">见习护士</option>
+                  <option value="06">实习护士</option>
+                  <option value="07">护工</option>
+                  <option value="08">其他</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label class="control-label col-sm-5">报告者职称</label>
+              <div class="col-sm-5">
+                <select class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK13_medicine_none.value">
+                  <option value="01">主任护师</option>
+                  <option value="02">副主任护师</option>
+                  <option value="03">主管护师</option>
+                  <option value="04">护师</option>
+                  <option value="05">护士</option>
+                  <option value="06">见习护士</option>
+                  <option value="07">实习护士</option>
+                  <option value="08">其他</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label col-sm-5">联系电话</label>
+              <div class="col-sm-5">
+                <input class="form-control input-sm" ng-model="vm.formData.reportDetailList.malcase_XK14_medicine_none.value">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label class="control-label col-md-2">未尽补充事宜</label>
+              <div class="col-sm-9">
+                <textarea class="form-control" type="text" ng-model="vm.formData.reportDetailList.malcase_XK16_medicine_none.value" />
+              </div>
+            </div>
+          </div>
+          <p class="xk-title">与当事人可能相关的因素:</p>
+          <div class="row">
+            <div class="form-group ">
+              <label class="control-label col-sm-1">确认</label>
+              <div class="col-sm-11">
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_qr_01.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_qr_01.value"> 确认不认真
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_qr_02.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_qr_02.value"> 确认错误
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_qr_03.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_qr_03.value"> 没有执行确认程序
+                  </label>
+                </div>
+                <div class="col-sm-3 vert-box">
+                  <label>
+                    <input ng-checked="" ng-true-value="'1'" ng-false-value="'0'" type="checkbox"> 其他：
+                  </label>
+                  <input type="text" class="input-sm form-control flex" ng-model="vm.formData.reportDetailList.dsr_qr_04.value">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group ">
+              <label class="control-label col-sm-1">观察</label>
+              <div class="col-sm-11">
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_gc_01.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_gc_01.value"> 观察不仔细
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_gc_02.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_gc_02.value"> 没有进行观察
+                  </label>
+                </div>
+                <div class="col-sm-3 vert-box">
+                  <label>
+                    <input ng-checked="" ng-true-value="'1'" ng-false-value="'0'" type="checkbox"> 其他：
+                  </label>
+                  <input type="text" class="input-sm form-control flex" ng-model="vm.formData.reportDetailList.dsr_gc_03.value">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group ">
+              <label class="control-label col-sm-1">判断</label>
+              <div class="col-sm-11">
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_PJ_01.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_PJ_01.value"> 经验不足
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_PJ_02.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_PJ_02.value"> 判断有误
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_PJ_03.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_PJ_03.value"> 未执行诊疗常规
+                  </label>
+                </div>
+                <div class="col-sm-3 vert-box">
+                  <label>
+                    <input ng-checked="" ng-true-value="'1'" ng-false-value="'0'" type="checkbox"> 其他：
+                  </label>
+                  <input type="text" class="input-sm form-control flex" ng-model="vm.formData.reportDetailList.dsr_PJ_04.value">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group ">
+              <label class="control-label col-sm-1">诊断</label>
+              <div class="col-sm-11">
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_zj_01.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_zj_01.value"> 知识储备不足
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_zj_02.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_zj_02.value"> 应用知识有误
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_zj_03.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_zj_03.value"> 应急经验不足
+                  </label>
+                </div>
+                <div class="col-sm-3 vert-box">
+                  <label>
+                    <input ng-checked="" ng-true-value="'1'" ng-false-value="'0'" type="checkbox"> 其他：
+                  </label>
+                  <input type="text" class="input-sm form-control flex" ng-model="vm.formData.reportDetailList.dsr_zj_04.value">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group ">
+              <label class="control-label col-sm-1">技能</label>
+              <div class="col-sm-11">
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_jn_01.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_jn_01.value"> 不成熟技术
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_jn_02.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_jn_02.value"> 技术应用有误
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.dsr_jn_03.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.dsr_jn_03.value"> 未经卫生行政部门核准的技术
+                  </label>
+                </div>
+                <div class="col-sm-3 vert-box">
+                  <label>
+                    <input ng-checked="" ng-true-value="'1'" ng-false-value="'0'" type="checkbox"> 其他：
+                  </label>
+                  <input type="text" class="input-sm form-control flex" ng-model="vm.formData.reportDetailList.dsr_jn_04.value">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group ">
+              <label class="control-label col-sm-2">不良事件发生原因</label>
+              <div class="col-sm-10">
+                <div class="col-sm-7">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_physiological.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_physiological.value"> 病患生理因素
+                  </label>（
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_old.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_old.value"> 年老体弱
+                  </label>
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_longSick.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_longSick.value"> 久病不愈
+                  </label>
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_worsen.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_worsen.value"> 病情恶化
+                  </label>）
+                </div>
+                <div class="col-sm-5">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_mentality.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_mentality.value"> 病患心理因素
+                  </label>（
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_badMind.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_badMind.value"> 情绪不稳
+                  </label>
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_lostMind.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_lostMind.value"> 精神失常
+                  </label>）
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_artificia.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_artificia.value"> 人为因素
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_stuffStoppage.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_stuffStoppage.value"> 医疗材料故障
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_instrumentStoppage.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_instrumentStoppage.value"> 仪器故障
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_deviceStoppage.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_deviceStoppage.value"> 设备故障
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_yard.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_yard.value"> 场地
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_environment.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_environment.value"> 环境因素
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_winebowl.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_winebowl.value"> 酒瘾
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_drugster.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_drugster.value"> 毒瘾
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_aboutSystem.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_aboutSystem.value"> 与制度有关
+                  </label>
+                </div>
+                <div class="col-sm-3">
+                  <label>
+                    <input ng-checked="vm.formData.reportDetailList.malcase_reason_aboutFlow.value == '1'" ng-true-value="'1'" ng-false-value="'0'" type="checkbox" ng-model="vm.formData.reportDetailList.malcase_reason_aboutFlow.value"> 与流程有关
+                  </label>
+                </div>
+                <div class="col-sm-3 vert-box">
+                  <label>
+                    <input ng-checked="" ng-true-value="'1'" ng-false-value="'0'" type="checkbox"> 其他：
+                  </label>
+                  <input type="text" class="input-sm form-control flex" ng-model="vm.formData.reportDetailList.malcase_reason_else.value">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label">不良事件发生的事实（包括不良事件发生经过，发生后治疗，发生后护理及发生后检查结果等情况，由当事人或发现者填写）：</label>
+              <textarea name="name" ng-model="vm.formData.reportDetailList.malcase_truth.value" rows="3" cols="100" class="form-control input-sm"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

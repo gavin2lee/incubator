@@ -1,0 +1,1 @@
+bcp MNIS_V2.dbo.hosp_duty out d:\dbo.hosp_duty  -Slocalhost -Usa -P123456 -c -t"**$**" -r "**&**"

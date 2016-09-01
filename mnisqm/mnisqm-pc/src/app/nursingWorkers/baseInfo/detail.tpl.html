@@ -1,0 +1,1014 @@
+<div class="hr-wrapper baseinfo-detail-wrapper" loading-wrapper loading-type="content" loading-options="vm.load">
+  <div class="tool-wrapper">
+    <div class="row">
+      <div class="pull-left">
+        <i class="fa fa-user"></i>  {{vm.detail.comUser.userName}}
+      </div>
+      <div class="pull-right" ng-if="vm.isTopDept == 1">
+        <div class="btn-group" role="group" aria-label="...">
+          <button class="btn btn-danger btn-sm" ng-if="vm.detail.comUser.userType !== '06'" ng-click="vm.openConfirm(6)">
+            <i class="fa fa-smile-o"></i> 退休
+          </button>
+          <button class="btn btn-danger btn-sm" ng-if="vm.detail.comUser.userType !== '04'" ng-click="vm.openConfirm(4)">
+            <i class="fa fa-user-times"></i> 离职
+          </button>
+        </div>
+      </div>
+      <!-- <div class="pull-right">
+        <div class="btn-group" role="group" aria-label="...">
+          <button class="btn btn-primary btn-sm" ng-click="vm.openAdd()">
+            <i class="fa fa-user-plus"></i>
+            新增
+          </button>
+          <!-- <button class="btn btn-success btn-sm">保存</button>
+        </div>
+
+        <div class="btn-group" role="group" aria-label="...">
+          <button class="btn btn-default btn-sm" ng-click="vm.openUpload()">
+            <i class="fa fa-upload"></i> 导入
+          </button>
+          <export-excel exsl-src="'/asdads'" class-list="'btn-sm btn-default'"></export-excel>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <div class="tool-wrapper info-time-wrapper">
+    <div class="row">
+      <div class="col-md-3 info-time_item">
+        职务：<span class="editable-label">{{vm.detail.comUser.duty && (dicInfo.position | filter:vm.detail.comUser.duty)[0].dicName || '暂无'}}</span>
+
+        <a ng-click="vm.openInfo('duty', '职务', 'comUserNursing')" class="open-info-time" ng-if="vm.isTopDept == 1">
+          <i class="fa fa-edit"></i>
+        </a>
+        <!-- <input id="duty" name="duty" ng-model="vm.detail.comUser.duty" class="form-control input-sm" type="text"> -->
+      </div>
+      <div class="col-md-3 info-time_item">
+        职称：<span class="editable-label">{{vm.detail.comUser.technicalPost && (dicInfo.technicalPost | filter:vm.detail.comUser.technicalPost)[0].dicName || '暂无'}}</span>
+        <a ng-click="vm.openInfo('technicalPost', '职称', 'comUserPosition')" class="open-info-time" ng-if="vm.isTopDept == 1">
+          <i class="fa fa-edit"></i>
+        </a>
+      </div>
+      <div class="col-md-3 info-time_item">
+        带教：<span class="editable-label">{{vm.detail.comUser.teachLevel && (dicInfo.teaching | filter:vm.detail.comUser.teachLevel)[0].dicName || '暂无'}}</span>
+        <a ng-click="vm.openInfo('teachLevel', '带教')" class="open-info-time" ng-if="vm.isTopDept == 1">
+          <i class="fa fa-edit"></i>
+        </a>
+      </div>
+      <div class="col-md-3 info-time_item">
+        临床层级：<span class="editable-label">{{vm.detail.comUser.clinical && (dicInfo.clinical | filter:vm.detail.comUser.clinical)[0].dicName || '暂无'}}</span>
+        <a ng-click="vm.openInfo('clinical', '临床层级')" class="open-info-time" ng-if="vm.isTopDept == 1">
+          <i class="fa fa-edit"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <uib-tabset active="active">
+    <uib-tab index="0" heading="基本信息">
+      <form editable-form="vm" form-name="'userForm'" class="form-horizontal comUser-form w5c-form" role="form" novalidate w5c-form-validate="vm.validationOption" name="userForm">
+        <div class="tool-wrapper container-fluid" ng-if="vm.isTopDept == 1">
+          <div class="pull-right">
+            <button editable-start class="btn btn-default btn-sm btn-edit" ng-click="userForm.showEdit()">编辑</button>
+            <button editable-end w5c-form-submit="vm.save('comUser');userForm.endEdit()" class="btn btn-primary btn-sm">保存</button>
+            <button editable-end class="btn btn-default btn-sm btn-edit" ng-click="userForm.endEdit()">取消</button>
+          </div>
+        </div>
+        <div class="baseinfo-form container-fluid">
+          <div class="form-group col-md-4">
+            <label for="userName" class="col-sm-4 control-label">姓名：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.userName}}</span>
+            <div class="col-sm-8">
+              <input editable-input class="form-control input-sm editable-input" required ng-model="vm.detail.comUser.userName" id="userName" name="userName" type="text">
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="hisCode" class="col-sm-4 control-label">科室：</label>
+            <span class="editable-label">{{vm.detail.comUser.deptName || vm.stateParam.deptN}}</span>
+            <!-- <div class="col-sm-8">
+              <input editable-input class="form-control input-sm" disabled ng-model="vm.detail.comUser.deptName" type="text">
+            </div> -->
+          </div>
+          <div class="form-group col-md-4">
+            <label for="hisCode" class="col-sm-4 control-label">员工编号：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.hisCode}}</span>
+            <div class="col-sm-8">
+              <input editable-input class="form-control input-sm" required ng-model="vm.detail.comUser.hisCode" id="hisCode" name="hisCode" type="text">
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="male" class="col-sm-4 control-label">性别：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.gender && (vm.detail.comUser.gender == 1 ? '男' : '女')}}</span>
+            <!-- <span editable edit-ctrl="vm" edit-name="gender" edit-type="radio" edit-model="vm.detail.comUser.gender" class="editable-label">{{vm.detail.comUser.gender}}</span> -->
+            <div editable-input class="col-sm-8">
+              <label class="radio-inline">
+                <input type="radio" name="gender" ng-model="vm.detail.comUser.gender" checked id="male" value="1"> 男
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="gender" ng-model="vm.detail.comUser.gender" id="female" value="0"> 女
+              </label>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="birthday" class="col-sm-4  control-label">出生年月：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.birthday}}</span>
+            <div editable-input class="col-sm-8">
+              <span class="input-group">
+                    <input type="text" id="birthday" name="birthday" uib-datepicker-popup
+                           datepicker-options="vm.dateOptions" is-open="vm.birthdayOpen"
+                           ng-model="vm.detail.comUser.birthday" close-text="关闭" current-text="今天" clear-text="清除"
+                           class="form-control input-sm" timestamp-to-string>
+
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('birthdayOpen')">
+                        <i class="fa fa-calendar"></i>
+                      </button>
+                    </span>
+              </span>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="politacalStatus" class="col-sm-4 control-label">政治面貌：</label>
+            <span editable-label class="editable-label">{{dicInfo.politacalStatus[vm.detail.comUser.politacalStatus - 1].dicName}}</span>
+            <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+            <div editable-input class="col-sm-8">
+              <select id="politacalStatus" name="politacalStatus" ng-model="vm.detail.comUser.politacalStatus" class="form-control input-sm">
+                <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.politacalStatus">{{item.dicName}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="country" class="col-sm-4  control-label">国籍：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.country}}</span>
+            <div editable-input class="col-sm-8">
+              <input type="text" id="country" name="country" ng-model="vm.detail.comUser.country" class="form-control input-sm">
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="nativePlace" class="col-sm-4  control-label">籍贯：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.nativePlace}}</span>
+            <div editable-input class="col-sm-8">
+              <input type="text" id="nativePlace" name="nativePlace" ng-model="vm.detail.comUser.nativePlace" class="form-control input-sm">
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="nation" class="col-sm-4  control-label">民族：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.nation}}</span>
+            <div editable-input class="col-sm-8">
+              <input type="text" id="nation" name="nation" ng-model="vm.detail.comUser.nation" class="form-control input-sm">
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label class="col-sm-4  control-label">婚姻状态：</label>
+            <span editable-label class="editable-label">{{(vm.marrige | filter: vm.detail.comUser.marriage)[0].name}}</span>
+            <div editable-input class="col-sm-8">
+              <select ng-model="vm.detail.comUser.marriage" class="form-control input-sm">
+                <option value="{{item.code}}" ng-repeat="item in vm.marrige">{{item.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label class="col-sm-4 control-label">生育状态：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.birth}}</span>
+            <div editable-input editable-input class="col-sm-8">
+              <input ng-model="vm.detail.comUser.birth" class="form-control input-sm" type="text">
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="email" class="col-sm-4 control-label">邮箱：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.email}}</span>
+            <div editable-input class="col-sm-8">
+              <input id="email" class="form-control input-sm" name="email" ng-model="vm.detail.comUser.email" type="email">
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="phone" class="col-sm-4 control-label">联系电话：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.phone}}</span>
+            <div editable-input class="col-sm-8">
+              <input id="phone" class="form-control input-sm" name="phone" ng-model="vm.detail.comUser.phone" type="tel">
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="papersType" class="col-sm-4  control-label">证件类型：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.papersType && (dicInfo.papersType | filter: vm.detail.comUser.papersType)[0].dicName}}</span>
+            <div editable-input class="col-sm-8">
+              <select id="papersType" name="papersType" ng-model="vm.detail.comUser.papersType" class="form-control input-sm">
+                <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.papersType">{{item.dicName}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="papersNo" class="col-sm-4  control-label">证件号码：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.papersNo}}</span>
+            <div editable-input class="col-sm-8">
+              <input type="text" id="papersNo" name="papersNo" ng-model="vm.detail.comUser.papersNo" class="form-control input-sm">
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="practiceNo" class="col-sm-4  control-label">执业证书：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.practiceNo}}</span>
+            <div editable-input class="col-sm-8">
+              <input type="text" id="practiceNo" name="practiceNo" ng-model="vm.detail.comUser.practiceNo" class="form-control input-sm">
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="practiceApproveDate" class="col-sm-4  control-label">注册时间：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.practiceApproveDate}}</span>
+            <div editable-input class="col-sm-8">
+              <span class="input-group">
+                    <input type="text" id="practiceApproveDate" name="practiceApproveDate" uib-datepicker-popup
+                           datepicker-options="vm.dateOptions" is-open="vm.practiceApproveDateIsOpen"
+                           ng-model="vm.detail.comUser.practiceApproveDate" close-text="关闭" current-text="今天"
+                           clear-text="清除"
+                           class="form-control input-sm" timestamp-to-string>
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-default"
+                            ng-click="vm.openCalender('practiceApproveDateIsOpen')">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                    </span>
+              </span>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label class="col-sm-4 control-label">注册机构：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.institution}}</span>
+            <div editable-input class="col-sm-8">
+              <input ng-model="vm.detail.comUser.institution" class="form-control input-sm" type="text">
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="education" class="col-sm-4  control-label">原始学历：</label>
+
+            <span editable-label class="editable-label">{{vm.detail.comUser.education && (dicInfo.education | filter: vm.detail.comUser.education)[0].dicName}}</span>
+            <div editable-input class="col-sm-8">
+              <select id="education" name="education" ng-model="vm.detail.comUser.education" class="form-control input-sm">
+                <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.education">{{item.dicName}}</option>
+              </select>
+            </div>
+            <!-- <span editable-label class="editable-label">{{vm.detail.comUser.education}}</span>
+            <div editable-input class="col-sm-8">
+              <input type="text" id="education" name="education" ng-model="vm.detail.comUser.education" class="form-control input-sm">
+            </div> -->
+          </div>
+          <div class="form-group col-md-4">
+            <label for="graduationDate" class="col-sm-4  control-label">取得时间：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.graduationDate}}</span>
+            <div editable-input class="col-sm-8">
+              <span class="input-group">
+                    <input type="text" id="graduationDate" name="graduationDate" uib-datepicker-popup
+                           datepicker-options="vm.dateOptions" is-open="vm.graduationDateOpen"
+                           ng-model="vm.detail.comUser.graduationDate" close-text="关闭" current-text="今天" clear-text="清除"
+                           class="form-control input-sm" timestamp-to-string>
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-default"
+                            ng-click="vm.openCalender('graduationDateOpen')">
+                      <i class="fa fa-calendar"></i></button>
+                    </span>
+              </span>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="graduationSchool" class="col-sm-4  control-label">学校：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.graduationSchool}}</span>
+            <div editable-input class="col-sm-8">
+              <input type="text" id="graduationSchool" name="nativePlace" ng-model="vm.detail.comUser.graduationSchool" class="form-control input-sm">
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label class="col-sm-4  control-label" for="hEducation">最高学历：</label>
+
+            <span editable-label class="editable-label">{{vm.detail.comUser.hEducation && (dicInfo.education | filter: vm.detail.comUser.hEducation)[0].dicName}}</span>
+            <div editable-input class="col-sm-8">
+              <select id="hEducation" name="hEducation" ng-model="vm.detail.comUser.hEducation" class="form-control input-sm">
+                <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.education">{{item.dicName}}</option>
+              </select>
+            </div>
+
+            <!-- <span editable-label class="editable-label">{{vm.detail.comUser.hEducation && (dicInfo.education | filter: vm.detail.comUser.hEducation)[0].dicName}}</span>
+            <div editable-input class="col-sm-8">
+              <select id="hEducation" name="hEducation" ng-model="vm.detail.comUser.hEducation" class="form-control input-sm">
+                <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.education">{{item.dicName}}</option>
+              </select>
+            </div> -->
+
+          </div>
+          <div class="form-group col-md-4">
+            <label class="col-sm-4  control-label">取得时间：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.hGraduationDate}}</span>
+            <div editable-input class="col-sm-8">
+              <span class="input-group">
+                    <input type="text" uib-datepicker-popup datepicker-options="vm.dateOptions"
+                           is-open="vm.hGraduationDateOpen" ng-model="vm.detail.comUser.hGraduationDate" close-text="关闭"
+                           current-text="今天" clear-text="清除" class="form-control input-sm" timestamp-to-string>
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-default"
+                            ng-click="vm.openCalender('hGraduationDateOpen')">
+                      <i class="fa fa-calendar"></i></button>
+                    </span>
+              </span>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label class="col-sm-4  control-label">学校：</label>
+            <span editable-label class="editable-label">{{vm.detail.comUser.hGraduationSchool}}</span>
+            <div editable-input class="col-sm-8">
+              <input type="text" name="nativePlace" ng-model="vm.detail.comUser.hGraduationSchool" class="form-control input-sm">
+            </div>
+          </div>
+        </div>
+      </form>
+    </uib-tab>
+    <!-- 家庭成员 -->
+    <uib-tab index="1" heading="家属">
+      <form class="form-horizontal comUserFamily-form" editable-form w5c-form-validate="vm.user.validationOption" name="comUserFamilyForm">
+        <div class="tool-wrapper container-fluid" ng-if="vm.isTopDept == 1">
+          <div class="pull-right">
+            <button editable-start class="btn btn-default btn-sm btn-edit" ng-if="vm.detail.comUserFamily.length > 0" ng-click="comUserFamilyForm.showEdit();">编辑</button>
+            <button editable-end w5c-form-submit="vm.save('comUserFamily');comUserFamilyForm.endEdit()" class="btn btn-primary btn-sm">保存</button>
+            <button editable-start ng-click="vm.addItem('comUserFamily');comUserFamilyForm.showEdit()" class="btn btn-primary btn-sm">添加成员</button>
+            <button editable-end class="btn btn-default btn-sm btn-edit" ng-click="comUserFamilyForm.endEdit();vm.cancelEdit('comUserFamily')">取消</button>
+          </div>
+        </div>
+        <div class="baseinfo-form container-fluid">
+          <div class="detail-list-item" ng-repeat="item in vm.detail.comUserFamily">
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">姓名：</label>
+              <span editable-label class="editable-label">{{item.name}}</span>
+              <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+              <div editable-input class="col-sm-8">
+                <input type="text" required class="form-control input-sm" ng-model="item.name">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">亲属关系：</label>
+              <span editable-label class="editable-label">{{item.relation}}</span>
+              <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+              <div editable-input class="col-sm-8">
+                <input type="hidden" ng-model="item.userCode" ng-value="vm.comUser.userCode">
+                <input required class="form-control input-sm" ng-model="item.relation" type="text">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">联系电话：</label>
+              <span editable-label class="editable-label">{{item.phone}}</span>
+              <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+              <div editable-input class="col-sm-8">
+                <input required type="text" class="form-control input-sm" ng-model="item.phone">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">电子邮箱：</label>
+              <span editable-label class="editable-label">{{item.email}}</span>
+              <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+              <div editable-input class="col-sm-8">
+                <input type="text" class="form-control input-sm" ng-model="item.email">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">备注：</label>
+              <span editable-label class="editable-label">{{item.remark}}</span>
+              <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+              <div editable-input class="col-sm-8">
+                <textarea name="remark" class="form-control input-sm" rows="2" ng-model="item.remark"></textarea>
+              </div>
+            </div>
+            <div class="detail-list-item_del">
+              <button class="btn btn-sm btn-danger" ng-click="vm.removeItem('comUserFamily', $index)">删除</button>
+            </div>
+          </div>
+
+        </div>
+        <!-- <table class="table table-striped table-condensed table-no-border">
+          <tr>
+            <th>姓名</th>
+            <th>亲属关系</th>
+            <th>联系电话</th>
+            <th>邮件</th>
+            <th>备注</th>
+            <th></th>
+          </tr>
+          <tr ng-repeat="item in vm.detail.comUserFamily">
+            <td>
+              <input type="text" class="form-control input-sm" ng-model="item.name">
+            </td>
+            <td>
+              <input type="hidden" ng-model="item.userCode" ng-value="vm.comUser.userCode">
+              <input class="form-control input-sm" ng-model="item.relation" type="text">
+            </td>
+            <td>
+              <input type="text" class="form-control input-sm" ng-model="item.phone">
+            </td>
+            <td>
+              <input type="text" class="form-control input-sm" ng-model="item.email">
+            </td>
+            <td>
+              <input type="text" class="form-control input-sm" ng-model="item.remark">
+            </td>
+            <td>
+              <button ng-click="vm.removeItem('comUserFamily', $index,item.seqId)" class="btn btn-sm btn-danger">删除
+              </button>
+            </td>
+          </tr>
+        </table> -->
+      </form>
+    </uib-tab>
+    <!-- <uib-tab index="2" heading="职称变更" active="tab.active">
+      <form class="form-horizontal form-inline comUserPosition-form w5c-form" role="form" novalidate w5c-form-validate="vm.validationOption" name="comUserPositionForm">
+        <div class="tool-wrapper container-fluid">
+        <div class="pull-right">
+          <button ng-click="vm.addItem('comUserPosition')" class="btn btn-primary btn-sm">添加职称</button>
+          <button ng-click="vm.save('comUserPosition')" class="btn btn-success btn-sm">
+            保存
+          </button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="table table-striped table-condensed table-no-border">
+            <tr>
+              <th>职称</th>
+              <th>审批单位</th>
+              <th>开始日期</th>
+              <th>结束日期</th>
+              <th></th>
+            </tr>
+            <tr ng-repeat="item in vm.detail.comUserPosition track by $index">
+              <td>
+                <input class="form-control input-sm" required name="positionName" ng-model="item.positionName" placeholder="在职职称" type="text">
+              </td>
+              <td>
+                <input type="text" name="reviewUnit" required class="form-control input-sm" ng-model="item.reviewUnit">
+              </td>
+              <td>
+                <span class="input-group">
+                  <input type="text" id="comUserPosition_startDate_{{$index}}" required name="comUserPositionStartDate" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.startDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                    ng-model="item.startDate" timestamp-to-string>
+                  <span class="input-group-btn">
+                         <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('startDateIsOpen', item)">
+                           <i class="fa fa-calendar"></i>
+                         </button>
+                         </span>
+                </span>
+              </td>
+              <td>
+                <span class="input-group">
+                  <input type="text" on-open-focus="true" id="comUserPosition_endDate_{{$index}}" required name="comUserPositionEndDate" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.endDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除"
+                    class="form-control input-sm input-date" ng-model="item.endDate" timestamp-to-string>
+                  <span class="input-group-btn">
+                       <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('endDateIsOpen', item)">
+                         <i class="fa fa-calendar"></i>
+                       </button>
+                       </span>
+                </span>
+              </td>
+              <td>
+                <button ng-click="vm.removeItem('comUserPosition', $index,item.seqId)" class="btn btn-sm btn-danger">删除</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </form>
+    </uib-tab>
+    <uib-tab index="3" heading="职务变更">
+      <form class="form-horizontal form-inline comUserNursing-form" w5c-form-validate="vm.user.validationOption" name="comUserNursingForm">
+        <div class="tool-wrapper container-fluid">
+        <div class="pull-right">
+          <button ng-click="vm.addItem('comUserNursing')" class="btn btn-primary btn-sm">添加职务变更</button>
+          <button ng-click="vm.save('comUserNursing')" class="btn btn-success btn-sm">
+            保存
+          </button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="table table-striped table-condensed table-no-border">
+            <tr>
+              <th>工作单位</th>
+              <th>单位级别</th>
+              <th>所属部门</th>
+              <th>职务</th>
+              <th>起始日期</th>
+              <th>结束日期</th>
+              <th></th>
+            </tr>
+            <tr ng-repeat="item in vm.detail.comUserNursing">
+              <td>
+                <input class="form-control input-sm" ng-model="item.reviewUnit" type="text">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.unitLevel">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.deptName">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.position">
+              </td>
+              <td>
+                <span class="input-group">
+                  <input type="text" id="comUserNursing_startDate_{{$index}}" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.startDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                    ng-model="item.startDate" timestamp-to-string>
+                  <span class="input-group-btn">
+                       <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('startDateIsOpen', item)">
+                         <i class="fa fa-calendar"></i>
+                       </button>
+                       </span>
+                </span>
+              </td>
+              <td>
+                <span class="input-group">
+                  <input type="text" id="comUserNursing_endDate_{{$index}}" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.endDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                    ng-model="item.endDate" timestamp-to-string>
+                  <span class="input-group-btn">
+                       <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('endDateIsOpen', item)">
+                         <i class="fa fa-calendar"></i>
+                       </button>
+                       </span>
+                </span>
+              </td>
+              <td>
+                <button ng-click="vm.removeItem('comUserNursing', $index,item.seqId)" class="btn btn-sm btn-danger">删除</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </form>
+    </uib-tab> -->
+    <uib-tab index="4" heading="学历信息">
+      <form class="form-horizontal form-inline comUserLearning-form" editable-form w5c-form-validate="vm.user.validationOption" name="comUserLearningForm">
+        <!-- <div class="tool-wrapper container-fluid">
+          <div class="pull-right">
+            <button ng-click="vm.addItem('comUserLearning')" class="btn btn-primary btn-sm">添加学历</button>
+            <button ng-click="vm.save('comUserLearning')" class="btn btn-success btn-sm">
+              保存
+            </button>
+          </div>
+        </div> -->
+        <div class="tool-wrapper container-fluid" ng-if="vm.isTopDept == 1">
+          <div class="pull-right">
+            <button editable-start class="btn btn-default btn-sm btn-edit" ng-if="vm.detail.comUserLearning.length > 0" ng-click="comUserLearningForm.showEdit();">编辑</button>
+            <button editable-end w5c-form-submit="vm.save('comUserLearning');comUserLearningForm.endEdit()" class="btn btn-primary btn-sm">保存</button>
+            <button editable-start ng-click="vm.addItem('comUserLearning');comUserLearningForm.showEdit();" class="btn btn-primary btn-sm">添加学历</button>
+            <button editable-end class="btn btn-default btn-sm btn-edit" ng-click="comUserLearningForm.endEdit();vm.cancelEdit('comUserLearning')">取消</button>
+          </div>
+        </div>
+        <div class="baseinfo-form container-fluid">
+          <div class="detail-list-item" ng-repeat="item in vm.detail.comUserLearning">
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">学校：</label>
+              <span editable-label class="editable-label">{{item.school}}</span>
+              <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+              <div editable-input class="col-sm-8">
+                <input required type="text" class="form-control input-sm" ng-model="item.school">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">专业：</label>
+              <span editable-label class="editable-label">{{item.professional}}</span>
+              <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+              <div editable-input class="col-sm-8">
+                <input type="hidden" ng-model="item.userCode" ng-value="vm.comUser.userCode">
+                <input required class="form-control input-sm" ng-model="item.professional" type="text">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">学历：</label>
+              <span editable-label class="editable-label">{{item.diploma}}</span>
+              <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+              <div editable-input class="col-sm-8">
+                <input required type="text" class="form-control input-sm" ng-model="item.diploma">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">学历证书编号：</label>
+              <span editable-label class="editable-label">{{item.diplomaNo}}</span>
+              <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+              <div editable-input class="col-sm-8">
+                <input type="text" class="form-control input-sm" ng-model="item.diplomaNo">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">学位：</label>
+              <span editable-label class="editable-label">{{item.degree}}</span>
+              <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+              <div editable-input class="col-sm-8">
+                <input required type="text" class="form-control input-sm" ng-model="item.degree">
+              </div>
+            </div>
+            <!-- <div class="form-group col-md-4"></div> -->
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">开始时间：</label>
+              <span editable-label class="editable-label">{{item.startDate}}</span>
+              <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+              <div editable-input class="col-sm-8">
+                <span class="input-group">
+                    <input type="text" id="comUserLearning_startDate_{{$index}}" required
+                           uib-datepicker-popup
+                           datepicker-options="vm.dateOptions"
+                           is-open="item.startDateIsOpen"
+                           close-text="关闭" current-text="今天" clear-text="清除"
+                           class="form-control input-sm input-date"
+                           ng-model="item.startDate" timestamp-to-string>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-sm btn-default"
+                              ng-click="vm.openCalender('startDateIsOpen', item)">
+                        <i class="fa fa-calendar"></i>
+                      </button>
+                    </span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">结束时间：</label>
+              <span editable-label class="editable-label">{{item.endDate}}</span>
+              <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+              <div editable-input class="col-sm-8">
+                <span class="input-group">
+                    <input type="text" id="comUserLearning_endDate_{{$index}}" uib-datepicker-popup required
+                           datepicker-options="item.dateOptions" is-open="item.endDateIsOpen" close-text="关闭"
+                           current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                           ng-model="item.endDate" timestamp-to-string>
+                    <span class="input-group-btn">
+                         <button type="button" class="btn btn-sm btn-default"
+                                 ng-click="vm.openCalender('endDateIsOpen', item)">
+                           <i class="fa fa-calendar"></i>
+                         </button>
+                         </span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">描述：</label>
+              <span editable-label class="editable-label">{{item.describe}}</span>
+              <!-- <span editable edit-ctrl="vm" edit-name="politacalStatus" edit-type="select" edit-model="vm.detail.comUser.politacalStatus" class="editable-label">{{vm.detail.comUser.politacalStatus}}</span> -->
+              <div editable-input class="col-sm-8">
+                <textarea name="describe" class="form-control input-sm" rows="2" ng-model="item.describe"></textarea>
+              </div>
+            </div>
+            <div class="detail-list-item_del">
+              <button class="btn btn-sm btn-danger" ng-click="vm.removeItem('comUserLearning', $index)">删除</button>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="table-wrap">
+          <table class="table table-striped table-condensed table-no-border">
+            <tr>
+              <th>学校</th>
+              <th>专业</th>
+              <th>学历</th>
+              <th>学历证书编号</th>
+              <th>学位</th>
+              <th>学位证书编号</th>
+              <th>描述</th>
+              <th>开始时间</th>
+              <th>结束时间</th>
+              <th></th>
+            </tr>
+            <tr ng-repeat="item in vm.detail.comUserLearning">
+              <td>
+                <input class="form-control input-sm" ng-model="item.school" type="text">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.professional">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.diploma">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.diplomaNo">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.degree">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.degreeNo">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.describe">
+              </td>
+              <td>
+                <span class="input-group">
+                    <input type="text" id="comUserLearning_startDate_{{$index}}"
+                           uib-datepicker-popup
+                           datepicker-options="vm.dateOptions"
+                           is-open="item.startDateIsOpen"
+                           close-text="关闭" current-text="今天" clear-text="清除"
+                           class="form-control input-sm input-date"
+                           ng-model="item.startDate" timestamp-to-string>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-sm btn-default"
+                              ng-click="vm.openCalender('startDateIsOpen', item)">
+                        <i class="fa fa-calendar"></i>
+                      </button>
+                    </span>
+                </span>
+              </td>
+              <td>
+                <span class="input-group">
+                    <input type="text" id="comUserLearning_endDate_{{$index}}" uib-datepicker-popup
+                           datepicker-options="vm.dateOptions" is-open="item.endDateIsOpen" close-text="关闭"
+                           current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                           ng-model="item.endDate" timestamp-to-string>
+                    <span class="input-group-btn">
+                         <button type="button" class="btn btn-sm btn-default"
+                                 ng-click="vm.openCalender('endDateIsOpen', item)">
+                           <i class="fa fa-calendar"></i>
+                         </button>
+                         </span>
+                </span>
+              </td>
+              <td>
+                <button ng-click="vm.removeItem('comUserLearning', $index,item.seqId)" class="btn btn-sm btn-danger">删除
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div> -->
+      </form>
+    </uib-tab>
+    <uib-tab index="5" heading="继续教育">
+      <form class="form-horizontal form-inline comUserTraining-form" editable-form w5c-form-validate="vm.user.validationOption" name="comUserTrainingForm">
+        <div class="tool-wrapper container-fluid" ng-if="vm.isTopDept == 1">
+          <div class="pull-right">
+            <button editable-start class="btn btn-default btn-sm btn-edit" ng-if="vm.detail.comUserTraining.length > 0" ng-click="comUserTrainingForm.showEdit();">编辑</button>
+            <button editable-end w5c-form-submit="vm.save('comUserTraining');comUserTrainingForm.endEdit()" class="btn btn-primary btn-sm">保存</button>
+            <button editable-start ng-click="vm.addItem('comUserTraining');comUserTrainingForm.showEdit();" class="btn btn-primary btn-sm">添加继续教育经历</button>
+            <button editable-end class="btn btn-default btn-sm btn-edit" ng-click="comUserTrainingForm.endEdit();vm.cancelEdit('comUserTraining')">取消</button>
+          </div>
+        </div>
+        <div class="baseinfo-form container-fluid">
+          <div class="detail-list-item" ng-repeat="item in vm.detail.comUserTraining">
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">主办单位：</label>
+              <span editable-label class="editable-label">{{item.professional}}</span>
+              <div editable-input class="col-sm-8">
+                <input required type="text" class="form-control input-sm" ng-model="item.professional">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">学习内容：</label>
+              <span editable-label class="editable-label">{{item.learnContent}}</span>
+              <div editable-input class="col-sm-8">
+                <input type="hidden" ng-model="item.userCode" ng-value="vm.comUser.userCode">
+                <input required class="form-control input-sm" ng-model="item.learnContent" type="text">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">学时：</label>
+              <span editable-label class="editable-label">{{item.diploma}}</span>
+              <div editable-input class="col-sm-8">
+                <input type="text" class="form-control input-sm" ng-model="item.diploma">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">主讲：</label>
+              <span editable-label class="editable-label">{{item.speaker}}</span>
+              <div editable-input class="col-sm-8">
+                <input type="text" class="form-control input-sm" ng-model="item.speaker">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">学分类型：</label>
+              <span editable-label class="editable-label">{{item.creditType}}</span>
+              <div editable-input class="col-sm-8">
+                <input required type="text" class="form-control input-sm" ng-model="item.creditType">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">学分：</label>
+              <span editable-label class="editable-label">{{item.credit}}</span>
+              <div editable-input class="col-sm-8">
+                <input required type="text" class="form-control input-sm" ng-model="item.credit">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">经费：</label>
+              <span editable-label class="editable-label">{{item.funding}}</span>
+              <div editable-input class="col-sm-8">
+                <input type="text" class="form-control input-sm" ng-model="item.funding">
+              </div>
+            </div>
+            <!-- <div class="form-group col-md-4"></div> -->
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">开始时间：</label>
+              <span editable-label class="editable-label">{{item.startDate}}</span>
+              <div editable-input class="col-sm-8">
+                <span class="input-group">
+                    <input type="text" id="comUserTraining_startDate_{{$index}}" required=""
+                           uib-datepicker-popup
+                           datepicker-options="vm.dateOptions"
+                           is-open="item.startDateIsOpen"
+                           close-text="关闭" current-text="今天" clear-text="清除"
+                           class="form-control input-sm input-date"
+                           ng-model="item.startDate" timestamp-to-string>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-sm btn-default"
+                              ng-click="vm.openCalender('startDateIsOpen', item)">
+                        <i class="fa fa-calendar"></i>
+                      </button>
+                    </span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">结束时间：</label>
+              <span editable-label class="editable-label">{{item.endDate}}</span>
+              <div editable-input class="col-sm-8">
+                <span class="input-group">
+                    <input type="text" id="comUserTraining_endDate_{{$index}}" uib-datepicker-popup required=""
+                           datepicker-options="vm.dateOptions" is-open="item.endDateIsOpen" close-text="关闭"
+                           current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                           ng-model="item.endDate" timestamp-to-string>
+                    <span class="input-group-btn">
+                         <button type="button" class="btn btn-sm btn-default"
+                                 ng-click="vm.openCalender('endDateIsOpen', item)">
+                           <i class="fa fa-calendar"></i>
+                         </button>
+                         </span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">描述：</label>
+              <span editable-label class="editable-label">{{item.describe}}</span>
+              <div editable-input class="col-sm-8">
+                <textarea name="describe" class="form-control input-sm" rows="2" ng-model="item.describe"></textarea>
+              </div>
+            </div>
+            <div class="detail-list-item_del">
+              <button class="btn btn-sm btn-danger" ng-click="vm.removeItem('comUserTraining', $index)">删除</button>
+            </div>
+          </div>
+        </div>
+        <!--<div class="tool-wrapper container-fluid">
+          <div class="pull-right">
+            <button ng-click="vm.addItem('comUserTraining')" class="btn btn-primary btn-sm">添加继续教育</button>
+            <button ng-click="vm.save('comUserTraining')" class="btn btn-success btn-sm">
+              保存
+            </button>
+          </div>
+        </div>
+         <div class="table-wrap">
+          <table class="table table-striped table-condensed table-no-border">
+            <tr>
+              <th>学习内容</th>
+              <th>主办单位</th>
+              <th>学时</th>
+              <th>主讲</th>
+              <th>学分类型</th>
+              <th>学分</th>
+              <th>经费</th>
+              <th>描述</th>
+              <th>起始日期</th>
+              <th>结束日期</th>
+              <th></th>
+            </tr>
+            <tr ng-repeat="item in vm.detail.comUserTraining">
+              <td>
+                <input class="form-control input-sm" ng-model="item.learnContent" type="text">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.professional">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" style="width: 3em;" ng-model="item.diploma">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.speaker">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.creditType">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" style="width: 4em;" ng-model="item.credit">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" style="width: 4em;" ng-model="item.funding">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.describe">
+              </td>
+              <td>
+                <span class="input-group">
+                  <input type="text" id="comUserTraining_startDate_{{$index}}" uib-datepicker-popup
+                         datepicker-options="vm.dateOptions" is-open="item.startDateIsOpen" close-text="关闭"
+                         current-text="今天" clear-text="清除" class="form-control input-sm"
+                         ng-model="item.startDate" timestamp-to-string>
+                  <span class="input-group-btn">
+                         <button type="button" class="btn btn-sm btn-default"
+                                 ng-click="vm.openCalender('startDateIsOpen', item)">
+                           <i class="fa fa-calendar"></i>
+                         </button>
+                       </span>
+                </span>
+              </td>
+              <td>
+                <span class="input-group">
+                  <input type="text" id="comUserTraining_endDate_{{$index}}" uib-datepicker-popup
+                         datepicker-options="vm.dateOptions" is-open="item.endDateIsOpen" close-text="关闭"
+                         current-text="今天" clear-text="清除" class="form-control input-sm"
+                         ng-model="item.endDate" timestamp-to-string>
+                  <span class="input-group-btn">
+                       <button type="button" class="btn btn-sm btn-default"
+                               ng-click="vm.openCalender('endDateIsOpen', item)">
+                         <i class="fa fa-calendar"></i>
+                       </button>
+                       </span>
+                </span>
+              </td>
+              <td>
+                <button ng-click="vm.removeItem('comUserTraining', $index,item.seqId)" class="btn btn-sm btn-danger">删除
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div> -->
+      </form>
+    </uib-tab>
+    <uib-tab index="6" heading="教育工作">
+      <form class="form-horizontal form-inline comUserEducation-form" editable-form w5c-form-validate="vm.user.validationOption" name="comUserEducationForm">
+        <div class="tool-wrapper container-fluid" ng-if="vm.isTopDept == 1">
+          <div class="pull-right">
+            <button editable-start class="btn btn-default btn-sm btn-edit" ng-if="vm.detail.comUserEducation.length > 0" ng-click="comUserEducationForm.showEdit();">编辑</button>
+            <button editable-end w5c-form-submit="vm.save('comUserEducation');comUserEducationForm.endEdit()" class="btn btn-primary btn-sm">保存</button>
+            <button editable-start ng-click="vm.addItem('comUserEducation');comUserEducationForm.showEdit();" class="btn btn-primary btn-sm">添加学历</button>
+            <button editable-end class="btn btn-default btn-sm btn-edit" ng-click="comUserEducationForm.endEdit();vm.cancelEdit('comUserEducation')">取消</button>
+          </div>
+        </div>
+        <div class="baseinfo-form container-fluid">
+          <div class="detail-list-item" ng-repeat="item in vm.detail.comUserEducation">
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">代课类型：</label>
+              <span editable-label class="editable-label">{{item.educationType}}</span>
+              <div editable-input class="col-sm-8">
+                <input type="text" class="form-control input-sm" ng-model="item.educationType">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">学时数：</label>
+              <span editable-label class="editable-label">{{item.leaningTime}}</span>
+              <div editable-input class="col-sm-8">
+                <input type="hidden" ng-model="item.userCode" ng-value="vm.comUser.userCode">
+                <input class="form-control input-sm" required name="leaningTime" ng-model="item.leaningTime" type="text">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">课程专题：</label>
+              <span editable-label class="editable-label">{{item.courseTopics}}</span>
+              <div editable-input class="col-sm-8">
+                <input type="text" class="form-control input-sm" required ng-model="item.courseTopics">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">课程内容：</label>
+              <span editable-label class="editable-label">{{item.courseContent}}</span>
+              <div editable-input class="col-sm-8">
+                <input type="text" class="form-control input-sm" required ng-model="item.courseContent">
+              </div>
+            </div>
+            <!-- <div class="form-group col-md-4"></div> -->
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">开始时间：</label>
+              <span editable-label class="editable-label">{{item.startDate}}</span>
+              <div editable-input class="col-sm-8">
+                <span class="input-group">
+                        <input type="text" id="comUserEducation_startDate_{{$index}}" uib-datepicker-popup
+                               datepicker-options="vm.dateOptions" required is-open="item.startDateIsOpen" close-text="关闭"
+                               current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                               ng-model="item.startDate" timestamp-to-string>
+                        <span class="input-group-btn">
+                             <button type="button" class="btn btn-sm btn-default"
+                                     ng-click="vm.openCalender('startDateIsOpen', item)">
+                               <i class="fa fa-calendar"></i>
+                             </button>
+                        </span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4 control-label">结束时间：</label>
+              <span editable-label class="editable-label">{{item.endDate}}</span>
+              <div editable-input class="col-sm-8">
+                <span class="input-group">
+                        <input type="text" id="comUserEducation_endDate_{{$index}}" uib-datepicker-popup
+                               datepicker-options="vm.dateOptions" is-open="item.endDateIsOpen" close-text="关闭"
+                               current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                               ng-model="item.endDate" timestamp-to-string>
+                        <span class="input-group-btn">
+                             <button type="button" class="btn btn-sm btn-default"
+                                     ng-click="vm.openCalender('endDateIsOpen', item)">
+                               <i class="fa fa-calendar"></i>
+                             </button>
+                             </span>
+                </span>
+              </div>
+            </div>
+
+            <div class="detail-list-item_del">
+              <button class="btn btn-sm btn-danger" ng-click="vm.removeItem('comUserEducation', $index)">删除</button>
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </uib-tab>
+  </uib-tabset>
+</div>

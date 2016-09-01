@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.user.dao.ComUserNursingMapperExt" >
+  <select id="selectByUsercode" parameterType="java.lang.String" resultType="ComUserNursing">
+    SELECT SEQ_ID	seqId, STATUS	status, USER_CODE	userCode, 
+      START_DATE	startDate, END_DATE	endDate, REVIEW_UNIT	reviewUnit, 
+      UNIT_LEVEL	unitLevel, DEPT_NAME	deptName, POSITION	duty, 
+      CREATE_PERSON	createPerson, 
+      UPDATE_PERSON	updatePerson
+    FROM COM_USER_NURSING N
+    WHERE N.USER_CODE = #{userCode}
+    AND N.STATUS != '09'
+  </select>
+</mapper>

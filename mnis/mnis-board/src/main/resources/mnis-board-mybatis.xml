@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+		<setting name="cacheEnabled" value="true" />
+		<!-- 查询时，关闭关联对象即时加载以提高性能 -->
+		<setting name="lazyLoadingEnabled" value="true" />
+		<!-- 设置关联对象加载的形态，此处为按需加载字段(加载字段由SQL指定)，不会加载关联表的所有字段，以提高性能 -->
+		<setting name="aggressiveLazyLoading" value="false" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="false" />
+		<setting name="autoMappingBehavior" value="PARTIAL" />
+		<setting name="defaultExecutorType" value="SIMPLE" /> <!-- BATCH, REUSE -->
+		<setting name="defaultStatementTimeout" value="25000" />
+		<setting name="safeRowBoundsEnabled" value="false" />
+		<setting name="mapUnderscoreToCamelCase" value="false" />
+		<setting name="localCacheScope" value="SESSION" />
+		<setting name="jdbcTypeForNull" value="OTHER" />
+		<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString" />
+	</settings>
+    
+	<mappers>
+	</mappers>
+</configuration>	

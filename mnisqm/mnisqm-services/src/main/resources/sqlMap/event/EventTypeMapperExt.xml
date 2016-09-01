@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.event.dao.EventTypeMapperExt" >
+  <resultMap id="simpleEventType" type="com.lachesis.mnisqm.module.event.domain.SimpleEventType" extends="com.lachesis.mnisqm.module.event.dao.EventTypeMapper.BaseResultMap" />
+  
+  <!-- 不良事件类型查询 -->
+  <select id="selectEventTypeList" parameterType="java.util.Map" resultType="EventType">
+  	SELECT 
+  		SEQ_ID					seqId,
+	  	EVENT_TYPE_CODE			eventTypeCode,
+	  	EVENT_TYPE_NAME			eventTypeName,
+	  	STATUS				status,
+	  	CREATE_PERSON		createBy,
+	  	UPDATE_PERSON		lastUpdateBy
+	FROM EVENT_TYPE
+  </select>
+</mapper>

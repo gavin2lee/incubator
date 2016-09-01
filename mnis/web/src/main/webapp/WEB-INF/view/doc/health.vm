@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-health-table th, .doc-health-table td {
+	padding: 2px;
+}
+@media print{@page {size: portrait;}}
+</style>
+<title>住院患者健康教育及评估单</title>
+</head>
+<body class="doc">
+#docToolbar()
+<div class="doc-container">
+#health()
+<div class="doc-content doc-health">
+	<form>
+		<input type="hidden" name="cureNo" value="$!{patient.cureNo}">
+		<input type="hidden" name="hospitalNo" value="$!{patient.hospitalNo}">
+		<table class="doc-health-table">
+<!-- 		<col width="40"> -->
+<!-- 		<col width="300"> -->
+		<thead>
+			<tr>
+				<th>项目</th>
+				<th>健康教育内容</th>
+				<th>宣教日期</th>
+				<th>宣教方式</th>
+				<th>宣教对象</th>
+				<th>宣教者</th>
+				<th>效果评价</th>
+				<th>评价日期</th>
+				<th>评价者</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td rowspan="3">入院宣教</td>
+				<td class="align-left">介绍住院须知（作息、探视、陪客、电视开放时间、自带物品及贵重物品管理等）</td>
+				<td><input id="declareDate1" name="declareDate1" class="date"></td>
+				<td><input id="way1" name="way1" class="way"></td>
+				<td><input id="target1" name="target1" class="target"></td>
+				<td><input id="declarer1" name="declarer1" class="declarer"></td>
+				<td><input id="evaluate1" name="evaluate1" class="evaluate"></td>
+				<td><input id="evaluateDate1" name="evaluateDate1" class="date"></td>
+				<td><input id="evaluater1" name="evaluater1" class="evaluater"></td>
+				<input type="hidden" name="declarerCode1">
+				<input type="hidden" name="evaluaterCode1">
+			</tr>
+			<tr>
+				<td class="align-left">介绍主管医师、责任护士、护士长、科主任</td>
+				<td><input id="declareDate2" name="declareDate2" class="date"></td>
+				<td><input id="way2" name="way2" class="way"></td>
+				<td><input id="target2" name="target2" class="target"></td>
+				<td><input id="declarer2" name="declarer2" class="declarer"></td>
+				<td><input id="evaluate2" name="evaluate2" class="evaluate"></td>
+				<td><input id="evaluateDate2" name="evaluateDate2" class="date"></td>
+				<td><input id="evaluater2" name="evaluater2" class="evaluater"></td>
+				<input type="hidden" name="declarerCode2">
+				<input type="hidden" name="evaluaterCode2">
+			</tr>
+			<tr>
+				<td class="align-left">介绍病房环境及呼叫器、病床使用方法</td>
+				<td><input id="declareDate3" name="declareDate3" class="date"></td>
+				<td><input id="way3" name="way3" class="way"></td>
+				<td><input id="target3" name="target3" class="target"></td>
+				<td><input id="declarer3" name="declarer3" class="declarer"></td>
+				<td><input id="evaluate3" name="evaluate3" class="evaluate"></td>
+				<td><input id="evaluateDate3" name="evaluateDate3" class="date"></td>
+				<td><input id="evaluater3" name="evaluater3" class="evaluater"></td>
+				<input type="hidden" name="declarerCode3">
+				<input type="hidden" name="evaluaterCode3">
+			</tr>
+			<tr>
+				<td rowspan="6">疾病指导</td>
+				<td class="align-left">该病的特点及大致的治疗方案</td>
+				<td><input id="declareDate4" name="declareDate4" class="date"></td>
+				<td><input id="way4" name="way4" class="way"></td>
+				<td><input id="target4" name="target4" class="target"></td>
+				<td><input id="declarer4" name="declarer4" class="declarer"></td>
+				<td><input id="evaluate4" name="evaluate4" class="evaluate"></td>
+				<td><input id="evaluateDate4" name="evaluateDate4" class="date"></td>
+				<td><input id="evaluater4" name="evaluater4" class="evaluater"></td>
+				<input type="hidden" name="declarerCode4">
+				<input type="hidden" name="evaluaterCode4">
+			</tr>
+			<tr>
+				<td class="align-left">饮食注意点</td>
+				<td><input id="declareDate5" name="declareDate5" class="date"></td>
+				<td><input id="way5" name="way5" class="way"></td>
+				<td><input id="target5" name="target5" class="target"></td>
+				<td><input id="declarer5" name="declarer5" class="declarer"></td>
+				<td><input id="evaluate5" name="evaluate5" class="evaluate"></td>
+				<td><input id="evaluateDate5" name="evaluateDate5" class="date"></td>
+				<td><input id="evaluater5" name="evaluater5" class="evaluater"></td>
+				<input type="hidden" name="declarerCode5">
+				<input type="hidden" name="evaluaterCode5">
+			</tr>
+			<tr>
+				<td class="align-left">卧位、活动等相关知识及注意事项</td>
+				<td><input id="declareDate6" name="declareDate6" class="date"></td>
+				<td><input id="way6" name="way6" class="way"></td>
+				<td><input id="target6" name="target6" class="target"></td>
+				<td><input id="declarer6" name="declarer6" class="declarer"></td>
+				<td><input id="evaluate6" name="evaluate6" class="evaluate"></td>
+				<td><input id="evaluateDate6" name="evaluateDate6" class="date"></td>
+				<td><input id="evaluater6" name="evaluater6" class="evaluater"></td>
+				<input type="hidden" name="declarerCode6">
+				<input type="hidden" name="evaluaterCode6">
+			</tr>
+			<tr>
+				<td class="align-left">心理或心态调适指导</td>
+				<td><input id="declareDate7" name="declareDate7" class="date"></td>
+				<td><input id="way7" name="way7" class="way"></td>
+				<td><input id="target7" name="target7" class="target"></td>
+				<td><input id="declarer7" name="declarer7" class="declarer"></td>
+				<td><input id="evaluate7" name="evaluate7" class="evaluate"></td>
+				<td><input id="evaluateDate7" name="evaluateDate7" class="date"></td>
+				<td><input id="evaluater7" name="evaluater7" class="evaluater"></td>
+				<input type="hidden" name="declarerCode7">
+				<input type="hidden" name="evaluaterCode7">
+			</tr>
+			<tr>
+				<td class="align-left">本疾病特殊注意事项</td>
+				<td><input id="declareDate8" name="declareDate8" class="date"></td>
+				<td><input id="way8" name="way8" class="way"></td>
+				<td><input id="target8" name="target8" class="target"></td>
+				<td><input id="declarer8" name="declarer8" class="declarer"></td>
+				<td><input id="evaluate8" name="evaluate8" class="evaluate"></td>
+				<td><input id="evaluateDate8" name="evaluateDate8" class="date"></td>
+				<td><input id="evaluater8" name="evaluater8" class="evaluater"></td>
+				<input type="hidden" name="declarerCode8">
+				<input type="hidden" name="evaluaterCode8">
+			</tr>
+			<tr>
+				<td class="align-left">功能锻炼</td>
+				<td><input id="declareDate9" name="declareDate9" class="date"></td>
+				<td><input id="way9" name="way9" class="way"></td>
+				<td><input id="target9" name="target9" class="target"></td>
+				<td><input id="declarer9" name="declarer9" class="declarer"></td>
+				<td><input id="evaluate9" name="evaluate9" class="evaluate"></td>
+				<td><input id="evaluateDate9" name="evaluateDate9" class="date"></td>
+				<td><input id="evaluater9" name="evaluater9" class="evaluater"></td>
+				<input type="hidden" name="declarerCode9">
+				<input type="hidden" name="evaluaterCode9">
+			</tr>
+			<tr>
+				<td rowspan="2">检查指导</td>
+				<td class="align-left">化验检查及目的、注意事项</td>
+				<td><input id="declareDate10" name="declareDate10" class="date"></td>
+				<td><input id="way10" name="way10" class="way"></td>
+				<td><input id="target10" name="target10" class="target"></td>
+				<td><input id="declarer10" name="declarer10" class="declarer"></td>
+				<td><input id="evaluate10" name="evaluate10" class="evaluate"></td>
+				<td><input id="evaluateDate10" name="evaluateDate10" class="date"></td>
+				<td><input id="evaluater10" name="evaluater10" class="evaluater"></td>
+				<input type="hidden" name="declarerCode10">
+				<input type="hidden" name="evaluaterCode10">
+			</tr>
+			<tr>
+				<td class="align-left">特殊检查项目及目的、注意事项</td>
+				<td><input id="declareDate11" name="declareDate11" class="date"></td>
+				<td><input id="way11" name="way11" class="way"></td>
+				<td><input id="target11" name="target11" class="target"></td>
+				<td><input id="declarer11" name="declarer11" class="declarer"></td>
+				<td><input id="evaluate11" name="evaluate11" class="evaluate"></td>
+				<td><input id="evaluateDate11" name="evaluateDate11" class="date"></td>
+				<td><input id="evaluater11" name="evaluater11" class="evaluater"></td>
+				<input type="hidden" name="declarerCode11">
+				<input type="hidden" name="evaluaterCode11">
+			</tr>
+			<tr>
+				<td rowspan="5">术前指导</td>
+				<td class="align-left">术前指导戒烟</td>
+				<td><input id="declareDate12" name="declareDate12" class="date"></td>
+				<td><input id="way12" name="way12" class="way"></td>
+				<td><input id="target12" name="target12" class="target"></td>
+				<td><input id="declarer12" name="declarer12" class="declarer"></td>
+				<td><input id="evaluate12" name="evaluate12" class="evaluate"></td>
+				<td><input id="evaluateDate12" name="evaluateDate12" class="date"></td>
+				<td><input id="evaluater12" name="evaluater12" class="evaluater"></td>
+				<input type="hidden" name="declarerCode12">
+				<input type="hidden" name="evaluaterCode12">
+			</tr>
+			<tr>
+				<td class="align-left">术前指导有效咳嗽、如何床上使用便器</td>
+				<td><input id="declareDate13" name="declareDate13" class="date"></td>
+				<td><input id="way13" name="way13" class="way"></td>
+				<td><input id="target13" name="target13" class="target"></td>
+				<td><input id="declarer13" name="declarer13" class="declarer"></td>
+				<td><input id="evaluate13" name="evaluate13" class="evaluate"></td>
+				<td><input id="evaluateDate13" name="evaluateDate13" class="date"></td>
+				<td><input id="evaluater13" name="evaluater13" class="evaluater"></td>
+				<input type="hidden" name="declarerCode13">
+				<input type="hidden" name="evaluaterCode13">
+			</tr>
+			<tr>
+				<td class="align-left">术前准备项目及配合事项、包括术前饮食指导</td>
+				<td><input id="declareDate14" name="declareDate14" class="date"></td>
+				<td><input id="way14" name="way14" class="way"></td>
+				<td><input id="target14" name="target14" class="target"></td>
+				<td><input id="declarer14" name="declarer14" class="declarer"></td>
+				<td><input id="evaluate14" name="evaluate14" class="evaluate"></td>
+				<td><input id="evaluateDate14" name="evaluateDate14" class="date"></td>
+				<td><input id="evaluater14" name="evaluater14" class="evaluater"></td>
+				<input type="hidden" name="declarerCode14">
+				<input type="hidden" name="evaluaterCode14">
+			</tr>
+			<tr>
+				<td class="align-left">手术名称、麻醉方式</td>
+				<td><input id="declareDate15" name="declareDate15" class="date"></td>
+				<td><input id="way15" name="way15" class="way"></td>
+				<td><input id="target15" name="target15" class="target"></td>
+				<td><input id="declarer15" name="declarer15" class="declarer"></td>
+				<td><input id="evaluate15" name="evaluate15" class="evaluate"></td>
+				<td><input id="evaluateDate15" name="evaluateDate15" class="date"></td>
+				<td><input id="evaluater15" name="evaluater15" class="evaluater"></td>
+				<input type="hidden" name="declarerCode15">
+				<input type="hidden" name="evaluaterCode15">
+			</tr>
+			<tr>
+				<td class="align-left">术前心理指导</td>
+				<td><input id="declareDate16" name="declareDate16" class="date"></td>
+				<td><input id="way16" name="way16" class="way"></td>
+				<td><input id="target16" name="target16" class="target"></td>
+				<td><input id="declarer16" name="declarer16" class="declarer"></td>
+				<td><input id="evaluate16" name="evaluate16" class="evaluate"></td>
+				<td><input id="evaluateDate16" name="evaluateDate16" class="date"></td>
+				<td><input id="evaluater16" name="evaluater16" class="evaluater"></td>
+				<input type="hidden" name="declarerCode16">
+				<input type="hidden" name="evaluaterCode16">
+			</tr>
+			<tr>
+				<td rowspan="6">术后指导</td>
+				<td class="align-left">术后进食的时间及饮食种类</td>
+				<td><input id="declareDate17" name="declareDate17" class="date"></td>
+				<td><input id="way17" name="way17" class="way"></td>
+				<td><input id="target17" name="target17" class="target"></td>
+				<td><input id="declarer17" name="declarer17" class="declarer"></td>
+				<td><input id="evaluate17" name="evaluate17" class="evaluate"></td>
+				<td><input id="evaluateDate17" name="evaluateDate17" class="date"></td>
+				<td><input id="evaluater17" name="evaluater17" class="evaluater"></td>
+				<input type="hidden" name="declarerCode17">
+				<input type="hidden" name="evaluaterCode17">
+			</tr>
+			<tr>
+				<td class="align-left">术后卧位的选择、目的及配合</td>
+				<td><input id="declareDate18" name="declareDate18" class="date"></td>
+				<td><input id="way18" name="way18" class="way"></td>
+				<td><input id="target18" name="target18" class="target"></td>
+				<td><input id="declarer18" name="declarer18" class="declarer"></td>
+				<td><input id="evaluate18" name="evaluate18" class="evaluate"></td>
+				<td><input id="evaluateDate18" name="evaluateDate18" class="date"></td>
+				<td><input id="evaluater18" name="evaluater18" class="evaluater"></td>
+				<input type="hidden" name="declarerCode18">
+				<input type="hidden" name="evaluaterCode18">
+			</tr>
+			<tr>
+				<td class="align-left">床上活动的目的及方法</td>
+				<td><input id="declareDate19" name="declareDate19" class="date"></td>
+				<td><input id="way19" name="way19" class="way"></td>
+				<td><input id="target19" name="target19" class="target"></td>
+				<td><input id="declarer19" name="declarer19" class="declarer"></td>
+				<td><input id="evaluate19" name="evaluate19" class="evaluate"></td>
+				<td><input id="evaluateDate19" name="evaluateDate19" class="date"></td>
+				<td><input id="evaluater19" name="evaluater19" class="evaluater"></td>
+				<input type="hidden" name="declarerCode19">
+				<input type="hidden" name="evaluaterCode19">
+			</tr>
+			<tr>
+				<td class="align-left">各类导管放置目的及注意事项</td>
+				<td><input id="declareDate20" name="declareDate20" class="date"></td>
+				<td><input id="way20" name="way20" class="way"></td>
+				<td><input id="target20" name="target20" class="target"></td>
+				<td><input id="declarer20" name="declarer20" class="declarer"></td>
+				<td><input id="evaluate20" name="evaluate20" class="evaluate"></td>
+				<td><input id="evaluateDate20" name="evaluateDate20" class="date"></td>
+				<td><input id="evaluater20" name="evaluater20" class="evaluater"></td>
+				<input type="hidden" name="declarerCode20">
+				<input type="hidden" name="evaluaterCode20">
+			</tr>
+			<tr>
+				<td class="align-left">下床活动/早期锻炼的时间、目的及注意事项</td>
+				<td><input id="declareDate21" name="declareDate21" class="date"></td>
+				<td><input id="way21" name="way21" class="way"></td>
+				<td><input id="target21" name="target21" class="target"></td>
+				<td><input id="declarer21" name="declarer21" class="declarer"></td>
+				<td><input id="evaluate21" name="evaluate21" class="evaluate"></td>
+				<td><input id="evaluateDate21" name="evaluateDate21" class="date"></td>
+				<td><input id="evaluater21" name="evaluater21" class="evaluater"></td>
+				<input type="hidden" name="declarerCode21">
+				<input type="hidden" name="evaluaterCode21">
+			</tr>
+			<tr>
+				<td class="align-left">预防并发症须知、术后康复及功能锻炼</td>
+				<td><input id="declareDate22" name="declareDate22" class="date"></td>
+				<td><input id="way22" name="way22" class="way"></td>
+				<td><input id="target22" name="target22" class="target"></td>
+				<td><input id="declarer22" name="declarer22" class="declarer"></td>
+				<td><input id="evaluate22" name="evaluate22" class="evaluate"></td>
+				<td><input id="evaluateDate22" name="evaluateDate22" class="date"></td>
+				<td><input id="evaluater22" name="evaluater22" class="evaluater"></td>
+				<input type="hidden" name="declarerCode22">
+				<input type="hidden" name="evaluaterCode22">
+			</tr>
+			<tr>
+				<td rowspan="7">出院指导</td>
+				<td class="align-left">休息活动指导</td>
+				<td><input id="declareDate23" name="declareDate23" class="date"></td>
+				<td><input id="way23" name="way23" class="way"></td>
+				<td><input id="target23" name="target23" class="target"></td>
+				<td><input id="declarer23" name="declarer23" class="declarer"></td>
+				<td><input id="evaluate23" name="evaluate23" class="evaluate"></td>
+				<td><input id="evaluateDate23" name="evaluateDate23" class="date"></td>
+				<td><input id="evaluater23" name="evaluater23" class="evaluater"></td>
+				<input type="hidden" name="declarerCode23">
+				<input type="hidden" name="evaluaterCode23">
+			</tr>
+			<tr>
+				<td class="align-left">饮食注意点</td>
+				<td><input id="declareDate24" name="declareDate24" class="date"></td>
+				<td><input id="way24" name="way24" class="way"></td>
+				<td><input id="target24" name="target24" class="target"></td>
+				<td><input id="declarer24" name="declarer24" class="declarer"></td>
+				<td><input id="evaluate24" name="evaluate24" class="evaluate"></td>
+				<td><input id="evaluateDate24" name="evaluateDate24" class="date"></td>
+				<td><input id="evaluater24" name="evaluater24" class="evaluater"></td>
+				<input type="hidden" name="declarerCode24">
+				<input type="hidden" name="evaluaterCode24">
+			</tr>
+			<tr>
+				<td class="align-left">指导患者建立良好的生活健康行为</td>
+				<td><input id="declareDate25" name="declareDate25" class="date"></td>
+				<td><input id="way25" name="way25" class="way"></td>
+				<td><input id="target25" name="target25" class="target"></td>
+				<td><input id="declarer25" name="declarer25" class="declarer"></td>
+				<td><input id="evaluate25" name="evaluate25" class="evaluate"></td>
+				<td><input id="evaluateDate25" name="evaluateDate25" class="date"></td>
+				<td><input id="evaluater25" name="evaluater25" class="evaluater"></td>
+				<input type="hidden" name="declarerCode25">
+				<input type="hidden" name="evaluaterCode25">
+			</tr>
+			<tr>
+				<td class="align-left">出院带药指导</td>
+				<td><input id="declareDate26" name="declareDate26" class="date"></td>
+				<td><input id="way26" name="way26" class="way"></td>
+				<td><input id="target26" name="target26" class="target"></td>
+				<td><input id="declarer26" name="declarer26" class="declarer"></td>
+				<td><input id="evaluate26" name="evaluate26" class="evaluate"></td>
+				<td><input id="evaluateDate26" name="evaluateDate26" class="date"></td>
+				<td><input id="evaluater26" name="evaluater26" class="evaluater"></td>
+				<input type="hidden" name="declarerCode26">
+				<input type="hidden" name="evaluaterCode26">
+			</tr>
+			<tr>
+				<td class="align-left">出院后遵嘱按时随访指导</td>
+				<td><input id="declareDate27" name="declareDate27" class="date"></td>
+				<td><input id="way27" name="way27" class="way"></td>
+				<td><input id="target27" name="target27" class="target"></td>
+				<td><input id="declarer27" name="declarer27" class="declarer"></td>
+				<td><input id="evaluate27" name="evaluate27" class="evaluate"></td>
+				<td><input id="evaluateDate27" name="evaluateDate27" class="date"></td>
+				<td><input id="evaluater27" name="evaluater27" class="evaluater"></td>
+				<input type="hidden" name="declarerCode27">
+				<input type="hidden" name="evaluaterCode27">
+			</tr>
+			<tr>
+				<td class="align-left">带管出院的注意事项</td>
+				<td><input id="declareDate28" name="declareDate28" class="date"></td>
+				<td><input id="way28" name="way28" class="way"></td>
+				<td><input id="target28" name="target28" class="target"></td>
+				<td><input id="declarer28" name="declarer28" class="declarer"></td>
+				<td><input id="evaluate28" name="evaluate28" class="evaluate"></td>
+				<td><input id="evaluateDate28" name="evaluateDate28" class="date"></td>
+				<td><input id="evaluater28" name="evaluater28" class="evaluater"></td>
+				<input type="hidden" name="declarerCode28">
+				<input type="hidden" name="evaluaterCode28">
+			</tr>
+			<tr>
+				<td class="align-left">指导伤口的管理方法</td>
+				<td><input id="declareDate29" name="declareDate29" class="date"></td>
+				<td><input id="way29" name="way29" class="way"></td>
+				<td><input id="target29" name="target29" class="target"></td>
+				<td><input id="declarer29" name="declarer29" class="declarer"></td>
+				<td><input id="evaluate29" name="evaluate29" class="evaluate"></td>
+				<td><input id="evaluateDate29" name="evaluateDate29" class="date"></td>
+				<td><input id="evaluater29" name="evaluater29" class="evaluater"></td>
+				<input type="hidden" name="declarerCode29">
+				<input type="hidden" name="evaluaterCode29">
+			</tr>
+		</tbody>
+		</table>
+	</form>
+</div>
+#healthComment()
+</div>
+<div id="sc" class="easyui-calendar"></div>
+<!-- Diagnosis Window -->
+<div id="win"></div>
+<script type="text/javascript">
+function accept() {
+// 	console.log($('form').serialize());
+// 	return;
+   	var editable = '$!{doc.editable}' || true;
+   	if (editable) {
+        $.ajax({
+        	url: '#url("/doc/data?docType=HEALTH")',
+        	type: 'POST',
+        	data: $('form').serialize(),
+        	success: function(data, status) {
+        		if (data && data.code) {
+        			if ('1' == data.code) {
+		        		$.messager.alert('数据保存', data.message || '保存成功', 'info');
+	        		} else {
+		        		$.messager.alert('数据保存', data.message || '保存失败', 'error');
+        			}
+        		}
+        	},
+        	error: function(xhr, status, err) {
+        		$.messager.alert('数据保存', '保存失败', 'error');
+        	}
+        });
+   	} else {
+   		$.messager.alert('数据保存', '不允许修改', 'error');
+   	}
+}
+function initComponent() {
+	$('.declarer').add('.evaluater').attr('readonly', true);
+	$('.date').datebox({
+		sharedCalendar: '#sc',
+		editable: false,
+		onChange: function(newValue, oldValue) {
+			var name = $(this).attr('textboxname');
+			var strs = name.split('Date');
+			var targetName = strs[0] + 'r' + strs[1];
+			var target = $('[name=' + targetName + ']');
+			var codeName = strs[0] + 'rCode' + strs[1];
+			var code = $('[name=' + codeName + ']');
+			if (newValue) {
+				code.val('$!{currentUser.code}');
+				target.val('$!{currentUser.name}$!{currentUser.code}');
+			} else {
+				code.val('');
+				target.val('');
+			}
+		}
+	});
+	$('.way').combobox({
+		valueField:'id',
+		textField:'text',
+		multiple:true,
+		panelHeight: 'auto',
+		onLoadSuccess: function() {
+			var opts = $(this).combobox('options');
+			var text = $(this).combobox('getValues').join(opts.separator);
+			$(this).combobox('setText', text);
+		},
+		onSelect: function(row) {
+			var opts = $(this).combobox('options');
+			var text = $(this).combobox('getValues').join(opts.separator);
+			$(this).combobox('setText', text);
+		},
+		onUnselect: function(row) {
+			var opts = $(this).combobox('options');
+			var text = $(this).combobox('getValues').join(opts.separator);
+			$(this).combobox('setText', text);
+		},
+		keyHandler: $.extend({}, $.fn.combobox.defaults.keyHandler, {
+			enter: function(row) {
+				var opts = $(this).combobox('options');
+				var text = $(this).combobox('getValues').join(opts.separator);
+				$(this).combobox('setText', text);
+				$(this).combobox("hidePanel");
+			}
+		}),
+		data: [{
+		    "id":'①',
+		    "text":"口头讲解"
+		},{
+		    "id":'②',
+		    "text":"动作示范"
+		},{
+		    "id":'③',
+		    "text":"书面资料分发"
+		}]
+	});
+	$('.target').combobox({
+		valueField:'id',
+		textField:'text',
+		panelHeight: 'auto',
+		multiple:true,
+		onLoadSuccess: function() {
+			var opts = $(this).combobox('options');
+			var text = $(this).combobox('getValues').join(opts.separator);
+			$(this).combobox('setText', text);
+		},
+		onSelect: function(row) {
+			var opts = $(this).combobox('options');
+			$(this).combobox('setText', $(this).combobox('getValues').join(opts.separator));
+		},
+		onUnselect: function(row) {
+			var opts = $(this).combobox('options');
+			$(this).combobox('setText', $(this).combobox('getValues').join(opts.separator));
+		},
+		keyHandler: $.extend({}, $.fn.combobox.defaults.keyHandler, {
+			enter: function(row) {
+				var opts = $(this).combobox('options');
+				var text = $(this).combobox('getValues').join(opts.separator);
+				$(this).combobox('setText', text);
+				$(this).combobox("hidePanel");
+			}
+		}),
+		data: [{
+		    "id":'①',
+		    "text":"患者"
+		},{
+		    "id":'②',
+		    "text":"家属"
+		}]
+	});
+	$('.evaluate').combobox({
+		valueField:'id',
+		textField:'text',
+		panelWidth: 'auto',
+		panelHeight: 'auto',
+		onLoadSuccess: function() {
+			var opts = $(this).combobox('options');
+			var text = $(this).combobox('getValues').join(opts.separator);
+			$(this).combobox('setText', text);
+		},
+// 		filter: function(q, row){
+// 			var opts = $(this).combobox('options');
+// 			var value = row[opts.valueField].toLowerCase();
+// 			var text = row[opts.textField].toLowerCase();
+// 			var query = q.toLowerCase()
+// 			if (text == query || value == query) {
+// 				opts.finder.getEl(this, row[opts.valueField]).show().addClass('combobox-item-selected');
+// 				$(this).combobox('setValue', row[opts.valueField]);
+// 				$(this).combobox('setText', row[opts.valueField]);
+// 			}
+// 			return text.indexOf(query) >= 0 || value.indexOf(query) >= 0;
+// 		},
+		onSelect: function(row) {
+			var opts = $(this).combobox('options');
+			$(this).combobox('setText', $(this).combobox('getValues').join(opts.separator));
+		},
+		onUnselect: function(row) {
+			var opts = $(this).combobox('options');
+			$(this).combobox('setText', $(this).combobox('getValues').join(opts.separator));
+		},
+		keyHandler: $.extend({}, $.fn.combobox.defaults.keyHandler, {
+			enter: function(row) {
+				var opts = $(this).combobox('options');
+				var text = $(this).combobox('getValues').join(opts.separator);
+				$(this).combobox('setText', text);
+				$(this).combobox('hidePanel');
+			}
+		}),
+		data: [{
+		    "id":'A',
+		    "id2":'A',
+		    "text":"已掌握，配合好"
+		},{
+		    "id":'B',
+		    "id2":'A',
+		    "text":"能复述，能理解，或会演示"
+		},{
+		    "id":'C',
+		    "id2":'A',
+		    "text":"需强化"
+		}]
+	});
+	$.ajax({
+    	url: '#url("/user")',
+    	type: 'GET',
+    	success: function(data, status) {
+    		/*
+			$('.declarer').combobox({
+				valueField:'id',
+				textField:'name',
+// 				value: '$!{currentUser.name}$!{currentUser.code}',
+				data: data,
+				keyHandler: $.extend({}, $.fn.combobox.defaults.keyHandler, {
+					enter: function(row) {
+						var opts = $(this).combobox('options');
+						var text = $(this).combobox('getValues').join(opts.separator);
+						$(this).combobox('setText', text);
+						$(this).combobox("hidePanel");
+					}
+				}),
+				onSelect: function(row) {
+					var text = row['name'] + '' + row['code'];
+					$(this).combobox('setText', text);
+					$(this).combobox('setValue', text);
+				}
+			});
+			$('.evaluater').combobox({
+				valueField: 'id',
+				textField:'name',
+				data: data,
+				keyHandler: $.extend({}, $.fn.combobox.defaults.keyHandler, {
+					enter: function(row) {
+						var opts = $(this).combobox('options');
+						var text = $(this).combobox('getValues').join(opts.separator);
+						$(this).combobox('setText', text);
+						$(this).combobox("hidePanel");
+					}
+				}),
+				onSelect: function(row) {
+					var text = row['name'] + '' + row['code'];
+					$(this).combobox('setText', text);
+					$(this).combobox('setValue', text);
+				}
+			});
+			*/
+    	},
+    	error: function(xhr, status, err) {
+    		$.messager.alert('获取数据', '获取用户数据失败', 'error');
+    	}
+    });
+}
+function defaultValue() {
+	$('.date').each(function(index,element) {
+		var value = $(this).datebox('getValue') || dateToString(new Date());
+		$(this).datebox('setValue', value);
+	});
+}
+$(function() {
+	$('#save').click(accept);
+	$('#approve').click(function() {});
+	$('#print').val('预  览').click(function() {
+		var params = [
+   			'location=no',
+   			'height='+screen.availHeight,
+   			'width='+screen.availWidth,
+   			'scrollbars=yes',
+   			'resizable=yes',
+   			'fullscreen=yes' // only works in IE, but here for completeness
+   		].join(',');
+   		var new_window = window.open('#url("/doc/health/view?cureNo=$!{patient.cureNo}")', '', params);
+   		new_window.resizeTo(screen.availWidth, screen.availHeight);
+	});
+	// init datas
+	$.ajax({
+		url: '#url("/doc/data?docType=HEALTH")',
+    	type: 'GET',
+    	data: {cureNo:'$!{patient.cureNo}'},
+    	success: function(data, status) {
+    		// 设置值
+    		initDocData(data);
+    		// 初始化控件
+    		initComponent();
+    		// 设置默认值
+//     		defaultValue();
+    		// 控制权限
+    		$('[name^=declarerCode]').each(function(index,element) {
+    			var name = $(element).attr('name');
+    			var num = name.substring(12);
+    			var value = $(element).val();
+    			if (value && '$!{currentUser.code}' != value
+		    			&& 1 != $!{currentUser.purview}
+		    			&& 2 != $!{currentUser.purview}) {
+		    		#[[
+    				console.log(num);
+		            $('#declareDate' + num).datetimebox('readonly');
+		            $('#way' + num).combobox('readonly');
+		            $('#target' + num).combobox('readonly');
+					]]#
+		    	}
+    		});
+    		$('[name^=evaluaterCode]').each(function(index,element) {
+    			var name = $(element).attr('name');
+    			var num = name.substring(13);
+    			var value = $(element).val();
+    			if (value && '$!{currentUser.code}' != value
+		    			&& 1 != $!{currentUser.purview}
+		    			&& 2 != $!{currentUser.purview}) {
+		    		#[[
+    				console.log(num);
+		            $('#evaluate' + num).combobox('readonly');
+		            $('#evaluateDate' + num).datetimebox('readonly');
+					]]#
+		    	}
+    		});
+    	},
+    	error: function(xhr, status, err) {
+    		$.messager.alert('数据保存', '获取数据失败', 'error');
+    		initComponent();
+    	}
+    });
+	// 健康教育不修正诊断，且使用的是入院诊断
+	$.ajax({
+		url: '#url("/patient/getInpatientInfo")',
+    	type: 'GET',
+    	data: {patientId:'$!{patient.cureNo}'},
+    	success: function(data, status) {
+    		if (data && data['data'] && data['data']['admitDiagnosis']
+    				&& data['data']['admitDiagnosis'][0]) {
+    			$('#pDiagnosis').text(data['data']['admitDiagnosis'][0]);
+    		}
+    	},
+    	error: function(xhr, status, err) {
+//	    		$.messager.alert('数据', '获取数据失败', 'error');
+    	}
+    });
+	$('#diagnosisLabel').removeClass('diagnosisLabel');
+// 	$('#diagnosisLabel').click(function() {
+// 		$('#win').window({
+// 			title: '诊断修正列表',
+// 		    width: 700,
+// 		    height: 500,
+// 		    minimizable: false,
+// 			href: '#url("/doc/diagnosis")?cureNo=$!{patient.cureNo}',
+// 			onClose: function() {
+// 				var rows = $('#dDg').datagrid('getRows');
+// 				if (rows && rows.length > 0) {
+// 					$('#pDiagnosis').text(rows[rows.length - 1]['diagnosis']);
+// 				} else {
+// 					$('#pDiagnosis').text('$!{patient.diagnose}');
+// 				}
+// 			}
+// 		});
+// 	});
+});
+</script>
+</body>
+</html>

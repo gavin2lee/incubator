@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+	}
+}
+</style>
+<title>基础护理记录单</title>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper">
+	<div class="paper-content">
+		#baseNurse()
+		<div class="doc-content">
+			<table class="doc-table">
+				<colgroup>
+					<col width="85">
+					<col width="50">
+					<col width="40">
+					<col width="40">
+					<col width="40">
+					<col width="40">
+					<col width="40">
+					<col width="40">
+					<col width="40">
+					<col width="40">
+					<col width="40">
+					<col width="40">
+					<col width="40">
+					<col width="40">
+					<col width="80">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>日期</th>
+						<th>时间</th>
+			            <th>口腔护理</th>
+			            <th>会阴护理</th>
+			            <th style="width: 40px;">更换引流袋</th>
+			            <th>肺部扣打</th>
+			            <th style="width: 40px;">动静脉置管护理</th>
+			            <th>更换敷贴</th>
+			            <th>静脉置管冲洗</th>
+			            <th>气切/气插护理</th>
+			            <th>洗头</th>
+			            <th>膀胱冲洗</th>
+			            <th>$!{doc.hold1}</th>
+			            <th>$!{doc.hold2}</th>
+			            <th>签名</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		#baseNurseComment()
+	</div>
+	#pageFoot()
+</div>
+</div>
+<script type="text/javascript">
+function getRowDatas(row, isFirstRow, lastDate) {
+	return [
+		getDate(row['date'], isFirstRow, lastDate),
+		getTime(row['date']),
+		formatCheck(row['mouth']),
+		formatCheck(row['perineum']),
+		formatCheck(row['drainageBag']),
+		formatCheck(row['lungPunch']),
+		formatCheck(row['placePipe']),
+		formatCheck(row['application']),
+		formatCheck(row['pipeWash']),
+		formatCheck(row['tracheotomy']),
+		formatCheck(row['headWash']),
+		formatCheck(row['bladderWash']),
+		formatCheck(row['hold1']),
+		formatCheck(row['hold2']),
+		row['sign']
+	];
+}
+$(function() {
+	fillTable('#url("/doc/base/view/datas")', '$!{patient.cureNo}', 15, getRowDatas);
+});
+</script>
+</body>
+</html>

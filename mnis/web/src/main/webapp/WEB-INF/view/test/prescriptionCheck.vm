@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head runat="server">
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/inspection.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/prescriptionCheck.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')" />
+<script type="text/javascript" src="#url('/resources/js/nur/prescriptionCheck.js?1472534366479')"></script>
+<script type="text/javascript">
+  var _patientId = '$!patientId';
+</script>
+</head>
+<body>
+  <input type="hidden" id="patientId" value="">
+	<div class="wrapper f_yahei">
+		<div class="insp-top top-tools" style="height:40px">
+      <div class="top-tools-box">
+        <div class="top-title">
+            <span>医嘱审核</span>
+        </div>
+	    	<div class="btn-box fr mgr10">
+          <div class="time-box fl mgr10">
+            <input value="$!currentDate" id="startDate" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 85px;">
+            至
+            <input value="$!currentDate" id="endDate" name="endDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 85px;">
+          </div>
+          <select id="select1">
+              <option value="">全部</option>
+              <option value="CZ">长期</option>
+              <option value="LZ">临时</option>
+            </select>
+            <select id="select2">
+              <option value="">全部</option>
+              <option value="1">有效</option>
+              <option value="2">无效</option>
+            </select>
+          <input type="button" value="查询" onclick="getPatOrderDetail();">
+          <!-- <input type="button" value="医嘱分解"> -->
+          <input type="button" value="医嘱审核" onclick="decomposeOrder();">
+          <input type="button" value="设置" onclick="setTime();">
+          <!-- <div class="btn-nm" onclick="">
+                <span class="btm">查询</span>
+          </div>
+          <div class="btn-nm" onclick="">
+                <span class="btm">退回医嘱</span>
+          </div>
+          <div class="btn-nm" onclick="">
+                <span class="btm">审核通过</span>
+          </div>
+          <div class="btn-nm" onclick="setTime();">
+                <span class="btm">设置</span>
+          </div> -->
+        </div>
+      </div>
+		</div>
+		<div class="content">
+      		<table id="info-tab"></table>
+		</div>
+	</div>
+	<div id="setTimeBox" class="easyui-dialog" data-options="closed:true,title:'医嘱审核设置',width:520">
+        <div class="ua-b-content">
+            <div class="ua-b-c-toolbar">
+              <div class="toolbar-box">
+            	医嘱执行时间设置
+              </div>
+            </div> 
+            <div class="set-prescription-time">
+                  <ul>
+                        <li><span class="text" style="font-size:14px;height:20px;">频次</span></li>
+                        <li>
+                            <span class="text">QD</span>
+                            <input id="qdStartDate" name="startDate" class="Wdate" onclick="WdatePicker({isShowToday:true,readOnly:true,dateFmt:'HH:mm'})" readonly="" style="width: 70px;height:30px;padding-left: 5px;">
+                        </li>
+                        <li>
+                            <span class="text">BID</span>
+                            <input id="bidStartDate1" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm'})" readonly="" style="width: 70px;height: 30px;padding-left: 5px;">
+                            <input id="bidStartDate2" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm'})" readonly="" style="width: 70px;height: 30px;padding-left: 5px;">
+                        </li>
+                        <li>
+                            <span class="text">TID</span>
+                            <input id="tidStartDate1" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm'})" readonly="" style="width: 70px;height: 30px;padding-left: 5px;">
+                            <input id="tidStartDate2" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm'})" readonly="" style="width: 70px;height: 30px;padding-left: 5px;">
+                            <input id="tidStartDate3" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm'})" readonly="" style="width: 70px;height: 30px;padding-left: 5px;">
+                        </li>
+                        <li>
+                            <span class="text">QID</span>
+                            <input id="qidStartDate1" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm'})" readonly="" style="width: 70px;height: 30px;padding-left: 5px;">
+                            <input id="qidStartDate2" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm'})" readonly="" style="width: 70px;height: 30px;padding-left: 5px;">
+                            <input id="qidStartDate3" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm'})" readonly="" style="width: 70px;height: 30px;padding-left: 5px;">
+                            <input id="qidStartDate4" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm'})" readonly="" style="width: 70px;height: 30px;padding-left: 5px;">
+                        </li>
+                  </ul>
+            </div>
+        <div class="ua-b-bottom">
+          <input type="button" value="保存" onclick="getTime()">
+          <input type="button" value="取消" onclick="cancel()">
+        </div>
+	</div>
+	<div id="time1">
+    </div>
+	<script type="text/javascript">
+            document.body.removeChild(document.body.childNodes[0]);
+	</script>
+</body>
+</html>

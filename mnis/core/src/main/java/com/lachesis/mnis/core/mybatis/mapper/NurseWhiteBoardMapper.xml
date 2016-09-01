@@ -1,0 +1,995 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.NurseWhiteBoardMapper">
+	<resultMap id="nurseWhiteBoardMetadataMap" type="NurseWhiteBoardMetadata">
+		<id property="id" column="id" />
+		<result property="code" column="code" />
+		<result property="name" column="name" />
+		<result property="parentId" column="parent_id" />
+		<result property="level" column="level" />
+		<result property="inputType" column="input_type" />
+		<result property="showType" column="show_type" />
+		<result property="deptCode" column="dept_code" />
+		<result property="isAuto" column="is_auto" />
+		<result property="isBedCode" column="is_bed_code"/>
+		<result property="isEdit" column="is_edit" />
+		<result property="isExec" column="is_exec" />
+		<result property="isDosage" column="is_dosage" />
+		<result property="columnNo" column="column_no" />
+		<result property="rowNo" column="row_no" />
+		<result property="columnType" column="column_type" />
+		<result property="backgroundColor" column="background_color" />
+		<result property="width" column="width" />
+		<result property="titleWidth" column="title_width" />
+		<result property="height" column="height" />
+		<result property="isColspan" column="is_colspan"></result>
+		<result property="templateId" column="template_id" />
+		<result property="isShowTitle" column="is_show_title" />
+		<result property="isShowData" column="is_show_data" />
+		<result property="isShowLineR" column="is_show_line_r" />
+		<result property="isShowLineB" column="is_show_line_b" />
+		<result property="isShowLineT" column="is_show_line_t" />
+		<result property="includeRow" column="include_row" />
+		<result property="titleFontSize" column="title_font_size" />
+		<result property="contentFontSize" column="content_font_size" />
+		<collection property="nurseWhiteBoardEditTypes" resultMap="nurseWhiteBoardEditTypeMap"></collection>
+	</resultMap>
+	
+	<resultMap id="nurseWhiteBoardMetadataTVMap" type="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardMetadataTV">
+		<id property="id" column="id" />
+		<result property="code" column="code" />
+		<result property="name" column="name" />
+		<result property="deptCode" column="dept_code" />
+		<result property="columnNo" column="column_no" />
+		<result property="rowNo" column="row_no" />
+		<result property="width" column="width" />
+		<result property="titleWidth" column="title_width" />
+		<result property="templateId" column="template_id" />
+		<result property="isShowTitle" column="is_show_title" />
+		<result property="isShowData" column="is_show_data" />
+		<result property="isShowLineR" column="is_show_line_r" />
+		<result property="isShowLineB" column="is_show_line_b" />
+		<result property="isShowLineT" column="is_show_line_t" />
+		<result property="isDosage" column="is_dosage" />
+		<result property="isBedCode" column="is_bed_code" />
+		<result property="includeRow" column="include_row" />
+		<result property="titleFontSize" column="title_font_size" />
+		<result property="contentFontSize" column="content_font_size" />
+	</resultMap>
+	
+	<resultMap id="nurseWhiteBoardEditTypeMap" type="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardEditType">
+		<id property="id" column="et_id"></id>
+		<result property="type" column="et_type"></result>
+		<result property="code" column="et_code"></result>
+		<result property="isMulti" column="et_is_multi"></result>
+		<result property="isInner" column="et_is_inner"></result>
+		<result property="isBedCode" column="is_bed_code"></result>
+		<result property="templateId" column="et_template_id"></result>
+	</resultMap>
+
+	<resultMap id="nurseWhiteBoardRecordMap" type="NurseWhiteBoardRecord">
+		<id property="recordCode" column="record_code" />
+		<result property="recordName" column="record_name" />
+		<result property="deptCode" column="dept_code" />
+		<result property="isExec" column="is_exec" />
+		<collection property="nurseWhiteBoardRecordFreqInfos" 
+			resultMap="nurseWhiteBoardRecordFreqInfoMap"></collection>
+	</resultMap>
+	<resultMap id="nurseWhiteBoardRecordInfoMap" type="NurseWhiteBoardRecordInfo">
+		<id property="recordId" column="record_id" />
+		<result property="recordValue" column="record_value" />
+		<result property="orderNo" column="order_no" />
+		<result property="recordNurseCode" column="record_user_code" />
+		<result property="recordNurseName" column="record_user_name" />
+		<result property="recordDate" column="record_date" />
+		<result property="patInfo" column="pat_info" />
+		<result property="patId" column="pat_id" />
+		<result property="performSchedule" column="perform_schedule" />
+		<collection property="nurseWhiteBoardRecordItemInfos"
+			resultMap="nurseWhiteBoardRecordItemInfoMap"></collection>
+	</resultMap>
+	
+	<resultMap id="nurseWhiteBoardRecordItemMap" type="NurseWhiteBoardRecordItem">
+		<id property="recordCode" column="record_code" />
+		<result property="recordName" column="record_name" />
+		<result property="deptCode" column="dept_code" />
+		<collection property="nurseWhiteBoardRecordItemInfos"
+			resultMap="nurseWhiteBoardRecordItemInfoMap"></collection>
+	</resultMap>
+	<resultMap id="nurseWhiteBoardRecordItemInfoMap" type="NurseWhiteBoardRecordItemInfo">
+		<id property="recordItemId" column="item_id" />
+		<result property="recordId" column="record_id" />
+		<result property="recordItemCode" column="item_code" />
+		<result property="recordItemName" column="item_name" />
+		<result property="recordItemValue" column="item_value" />
+		<result property="recordItemDate" column="item_date" />
+		<result property="status" column="is_finish" />
+	</resultMap>
+	
+	<resultMap id="nurseWhiteBoardRecordFreqInfoMap" type="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardRecordFreqInfo">
+		<id property="randomId" column="random_id" />
+		<result property="performSchedule" column="perform_schedule" />
+		<result property="recordValue" column="record_value" />
+		<result property="orderNo" column="order_no" />
+		<collection property="nurseWhiteBoardRecordFreqPatInfos" ofType="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardRecordFreqPatInfo">
+			<id property="patId" column="pat_id" />
+			<result property="recordId" column="record_id" />
+			<result property="patInfo" column="pat_info" />
+		</collection>
+		<collection property="nurseWhiteBoardRecordFreqItems" ofType="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardRecordFreqItem">
+			<id property="recordItemCode" column="item_code" />
+			<result property="recordItemName" column="item_name" />
+			<result property="simpleRecordItemName" column="item_name" />
+		</collection>
+	</resultMap>
+	
+	<!-- 获取元数据的编号和名称对应 -->
+	<resultMap type="java.util.Map" id="metadataCodeName">
+		<result property="code" column="code"/>
+		<result property="name" column="name"/>
+	</resultMap>
+	
+	<!-- 小白板项目配置表 -->
+	<resultMap id="nwbMetadataDic" type="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardMetadataDic" >
+		<id property="code" column="code"/>
+		<result property="name" column="name"/>
+		<result property="isSelected" column="is_selected" />
+	</resultMap>
+	
+	<!-- 小白板项目配置表 -->
+	<resultMap id="nwbTemplateMap" type="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardTemplate" >
+		<id property="id" column="id"/>
+		<result property="deptCode" column="dept_code"/>
+		<result property="title" column="title" />
+		<result property="titleFontSize" column="title_font_size"/>
+		<result property="background" column="background"/>
+		<result property="rowCount" column="row_count"/>
+	</resultMap>
+	
+	<!-- 元数据 -->
+	<sql id="nwbMetadataSql">
+		nm.code,
+		nm.name,
+		nm.parent_id,
+		nm.dept_code,
+		nm.level,
+		nm.input_type,
+		nm.is_auto,
+		nm.is_exec,
+		nm.is_dosage,
+		nm.column_no,
+		nm.row_no,
+		nm.show_type,
+		nm.is_edit,
+		nm.column_type,
+		nm.background_color,
+		nm.is_bed_code,
+		nm.is_colspan,
+		nm.width,
+		nm.title_width,
+		nm.height,
+		nm.template_id,
+		nm.is_show_title,
+		nm.is_show_data,
+		nm.is_show_line_r,
+		nm.is_show_line_b,
+		nm.is_show_line_t,
+		nm.include_row,
+		nm.title_font_size,
+		nm.content_font_size
+	</sql>
+
+	<sql id="editTypeSql">
+		et.id et_id,
+		et.code et_code,
+		et.type et_type,
+		et.is_inner et_is_inner,
+		et.template_id et_template_id,
+		et.is_multi et_is_multi
+	</sql>
+	
+	<select id="getNwbMetadataDics" parameterType="String" resultMap="nwbMetadataDic">
+		SELECT wbt.item_code code,wbt.item_name name,
+		case when (nm.id is null or nm.id=0) then 0
+		else 1 end is_selected 
+		FROM WHITE_BOARD_ITEM wbt
+		left join NURSE_WHITE_BOARD_METADATA nm on nm.code=wbt.item_code
+		and nm.is_valid = '1' and nm.dept_code=#{param1}
+	</select>
+	
+	<select id="getNurseWhiteBoardTopMetadatas" parameterType="String"
+		resultMap="nurseWhiteBoardMetadataMap">
+		SELECT
+		nm.id,
+		<include refid="nwbMetadataSql"></include>,
+		<include refid="editTypeSql"/>
+		FROM NURSE_WHITE_BOARD_METADATA nm
+		left join NURSE_WHITE_BOARD_EDIT_TYPE_DIC et on et.metadata_code=nm.code 
+		and et.template_id = nm.template_id and et.is_valid='1'
+		WHERE
+		nm.is_valid = '1' and
+		(nm.parent_id is null or nm.parent_id = '') and
+		(nm.dept_code=#{param1} or nm.dept_code is null)
+	
+		<if test="param2 != null">
+			and nm.code = #{param2}
+		</if>
+		order by nm.level,nm.row_no,nm.column_no, nm.column_type
+	</select>
+	
+	<select id="getNurseWhiteBoardMetadatasByIds" parameterType="String"
+		resultMap="nurseWhiteBoardMetadataMap">
+		SELECT
+		nm.id,
+		<include refid="nwbMetadataSql"/>
+		FROM NURSE_WHITE_BOARD_METADATA nm
+		WHERE
+		nm.is_valid = '1' 
+		<if test="param1 != null">
+			AND nm.id = #{param1}
+		</if>
+		<if test="param2 != null">
+			AND nm.parent_id = #{param2}
+		</if>
+		ORDER BY nm.level
+	</select>
+	
+	<select id="getNurseWhiteBoardTVMetadatas" parameterType="String"
+		resultMap="nurseWhiteBoardMetadataTVMap">
+		SELECT
+			nm.id,
+			nm.code,
+			nm.name,
+			nm.dept_code,
+			nm.template_id,
+			nm.is_bed_code,
+			nm.is_show_title,
+			nm.is_show_data,
+			nm.is_show_line_r,
+			nm.is_show_line_b,
+			nm.is_show_line_t,
+			nm.column_no,
+			nm.row_no,
+			nm.include_row,
+			nm.width,
+			nm.title_width,
+			nm.title_font_size,
+			nm.is_dosage,
+			nm.content_font_size
+			FROM NURSE_WHITE_BOARD_METADATA nm
+		WHERE
+		nm.is_valid = '1' and
+		(nm.dept_code=#{param1} or nm.dept_code is null)
+		order by nm.level,nm.row_no,nm.column_no, nm.column_type
+	</select>
+	
+	
+	<!-- 获取所有元数据的编号和名称 -->
+	<select id="selectMetadataName" parameterType="String" resultMap="metadataCodeName">
+		select distinct code,name
+		from NURSE_WHITE_BOARD_METADATA
+		WHERE is_valid = '1'
+		and dept_code = #{param1}
+		<if test="param2 != null">
+			and parent_id=#{param2}
+		</if>
+	</select>
+	
+	<select id="getMetadataNameValue" parameterType="String" resultMap="metadataCodeName">
+		select mv_value as name,mv_code as code
+		from NURSE_WHITE_BOARD_METADATA_VALUE
+		WHERE is_valid='1'
+		and mv_type = #{param1}
+	</select>
+	
+	<select id="getFreqTypes" resultType="String">
+		select distinct mv_type
+		from NURSE_WHITE_BOARD_METADATA_VALUE
+		WHERE is_valid='1'
+	</select>
+	
+	<select id="getParentMetadatas" parameterType="String" resultType="String">
+		select m.parent_id from NURSE_WHITE_BOARD_METADATA m
+		where m.is_valid='1' and m.dept_code=#{param1} and m.parent_id is not null
+	</select>
+	
+	<!-- 获取所有元数据的编号和名称 -->
+	<select id="getSubMetadatas" parameterType="String" resultMap="metadataCodeName">
+		select m.code as code,m.name as name
+		from NURSE_WHITE_BOARD_METADATA m
+		where 
+		m.is_valid = '1'
+		and m.dept_code=#{param1} 
+		and m.parent_id is not null
+		and m.parent_id = #{param2}
+	</select>
+	
+	<select id="getFreqMetadataCodes" parameterType="String" resultType="String">
+		select m.code as code
+		from NURSE_WHITE_BOARD_METADATA m
+		where 
+		m.is_valid = '1'
+		and m.is_include_freq = '1'
+		and m.dept_code=#{deptCode} 
+	</select>
+	<select id="getNwbMetadataCount" parameterType="String" resultType="int">
+		select count(1) from NURSE_WHITE_BOARD_METADATA
+		where is_valid = '1' 
+		and dept_code = #{param1}
+		<choose>
+			<when test="param2 != null">
+				and code = #{param2}
+			</when>
+			<otherwise>
+				and row_no = #{param3}
+			</otherwise>
+		</choose>
+	</select>
+	<select id="getNwbMetadataRowNo" parameterType="String" resultType="String">
+		select top 1 row_no from NURSE_WHITE_BOARD_METADATA
+		where is_valid = '1' 
+		and dept_code = #{param1}
+		and code = #{param2}
+	</select>
+	
+	<select id="getNwbEditTypeCount" parameterType="String" resultType="int">
+		select count(1) from NURSE_WHITE_BOARD_EDIT_TYPE_DIC
+		where is_valid = '1' 
+		and type = #{param1}
+		<choose>
+			<when test="param2 != null ">
+				and code = #{param2}
+			</when>
+			<otherwise>
+				and (code = '' or code is null)
+			</otherwise>
+		</choose>
+		
+		and metadata_code = #{param3}
+		and template_id = #{param4}
+	</select>
+	
+	<select id="getMetadataCodes" parameterType="String" resultType="String">
+		select distinct code from NURSE_WHITE_BOARD_METADATA nm
+		where nm.is_valid = '1' 
+		and nm.dept_code = #{param1}
+		<choose>
+			<when test="param2 == 'edit'">
+				and nm.is_edit = '1'
+			</when>
+			<otherwise>
+				and nm.is_dosage = '1' 
+			</otherwise>
+		</choose>
+	</select>
+	
+	 <insert id="saveNwbMetadata" parameterType="NurseWhiteBoardMetadata">
+		INSERT INTO NURSE_WHITE_BOARD_METADATA(
+		code,name,parent_id,dept_code,
+		level,input_type,is_auto,
+		column_no,row_no,show_type,is_edit,is_exec,is_dosage,
+		column_type,background_color,
+		is_bed_code,is_colspan,height,width,title_width,create_date,is_valid,
+		template_id,is_show_title,is_show_data,is_show_line_r,is_show_line_b,
+		is_show_line_t,include_row,title_font_size,content_font_size)
+		VALUES
+		(#{code},#{name},#{parentId},#{deptCode},
+		#{level},#{inputType},#{isAuto},
+		#{columnNo},#{rowNo},#{showType},#{isEdit},#{isExec},#{isDosage},
+		#{columnType},#{backgroundColor},
+		#{isBedCode},#{isColspan},#{height},#{width},#{titleWidth},GETDATE(),'1',
+		#{templateId},#{isShowTitle},#{isShowData},#{isShowLineR},#{isShowLineB},
+		#{isShowLineT},#{includeRow},#{titleFontSize},#{contentFontSize})
+	</insert>
+	
+	<update  id="updateNwbMetadata" parameterType="NurseWhiteBoardMetadata">
+		UPDATE NURSE_WHITE_BOARD_METADATA
+		<set>
+			<if test="code != null">
+				code = #{code},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId},
+			</if>
+			<if test="deptCode != null">
+				dept_code = #{deptCode},
+			</if>
+			<if test="level != null">
+				level = #{level},
+			</if>
+			<if test="inputType != null">
+				input_type = #{inputType},
+			</if>
+			<if test="isAuto != null">
+				is_auto = #{isAuto},
+			</if>
+			<if test="isEdit != null">
+				is_edit = #{isEdit},
+			</if>
+			<if test="isExec != null">
+				is_exec = #{isExec},
+			</if>
+			<if test="isDosage != null">
+				is_dosage = #{isDosage},
+			</if>
+			<if test="isBedCode != null">
+				is_bed_code = #{isBedCode},
+			</if>
+			<if test="columnNo != null">
+				column_no = #{columnNo},
+			</if>
+			<if test="rowNo != null">
+				row_no = #{rowNo},
+			</if>
+			<if test="showType != null">
+				show_type = #{showType},
+			</if>
+			<if test="columnType != null">
+				column_type = #{columnType},
+			</if>
+			<if test="backgroundColor != null">
+				background_color = #{backgroundColor},
+			</if>
+			<if test="isColspan != null">
+				is_colspan = #{isColspan},
+			</if>
+			<if test="height != null">
+				height = #{height},
+			</if>
+			<if test="width != null">
+				width = #{width},
+			</if>
+			<if test="titleWidth != null ">
+				title_width = #{titleWidth},
+			</if>
+			<if test="templateId != null">
+				template_id = #{templateId},
+			</if>
+			<if test="isShowData != null">
+				is_show_data = #{isShowData},
+			</if>
+			<if test="isShowTitle != null">
+				is_show_title = #{isShowTitle},
+			</if>
+			<if test="isShowLineR != null">
+				is_show_line_r = #{isShowLineR},
+			</if>
+			<if test="isShowLineB != null">
+				is_show_line_b = #{isShowLineB},
+			</if>
+			<if test="isShowLineT != null">
+				is_show_line_t = #{isShowLineT},
+			</if>
+			<if test="includeRow != null">
+				include_row = #{includeRow},
+			</if>
+			<if test="contentFontSize != null">
+				content_font_size = #{contentFontSize},
+			</if>
+			<if test="titleFontSize != null">
+				title_font_size = #{titleFontSize},
+			</if>
+			
+		</set>
+		WHERE
+			IS_VALID = '1' and id = #{id}
+	</update>
+	
+	<update  id="updateNwbMetadataByRowNo" parameterType="java.util.HashMap">
+		UPDATE NURSE_WHITE_BOARD_METADATA
+		SET 
+			<choose>
+				<when test="oldRowNo > 0">
+					row_no = #{newRowNo}
+				</when>
+				<otherwise>
+					row_no = row_no + 1
+				</otherwise>
+			</choose>
+			
+		WHERE
+			is_valid = '1' 
+			and dept_code = #{deptCode}
+			<choose>
+				<when test="oldRowNo > 0">
+					and row_no = #{oldRowNo}
+				</when>
+				<otherwise>
+					and row_no >= #{newRowNo}
+				</otherwise>
+			</choose>
+			
+	</update>
+	
+	<update  id="deleteNwbMetadata" parameterType="String">
+		UPDATE NURSE_WHITE_BOARD_METADATA SET IS_VALID = '0'
+		WHERE IS_VALID = '1' 
+		<choose>
+			<when test="param2 != null and param2 != ''">
+				and code = #{param2}
+				and dept_code = #{param3}
+			</when>
+			<otherwise>
+				and id = #{param1}
+			</otherwise>
+		</choose>
+		
+	</update>
+	
+	<insert id="saveNwbEditType" parameterType="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardEditType">
+		INSERT INTO NURSE_WHITE_BOARD_EDIT_TYPE_DIC(type,code,is_multi,is_inner,metadata_code,is_valid,template_id)
+		VALUES(
+			#{type},#{code},#{isMulti},#{isInner},#{metadataCode},'1',#{templateId}
+		)
+	</insert>
+	
+	<update id="updateNwbEditType" parameterType="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardEditType">
+		UPDATE NURSE_WHITE_BOARD_EDIT_TYPE_DIC 
+		<set>
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="code != null">
+				code = #{code},
+			</if>
+			<if test="isMulti != null">
+				is_multi = #{isMulti},
+			</if>
+			<if test="isInner != null">
+				is_inner = #{isInner},
+			</if>
+			<if test="templateId != null">
+				template_id = #{templateId},
+			</if>
+			<if test="metadataCode != null">
+				metadata_code = #{metadataCode}
+			</if>
+		</set>
+		WHERE is_valid = '1' and id = #{id}
+	</update> 
+	
+	<update  id="deleteNwbEditType" parameterType="String">
+		UPDATE NURSE_WHITE_BOARD_EDIT_TYPE_DIC SET IS_VALID = '0'
+		WHERE IS_VALID = '1' 
+		and metadata_code = #{param1}
+		and template_id = #{param2}
+	</update>
+	
+	<select id="getNwbTemplates" parameterType="String" resultMap="nwbTemplateMap">
+		select * from NURSE_WHITE_BOARD_TEMPLATE m
+		where m.is_valid = '1' and m.dept_code = #{param1}
+		<if test="param2 != null">
+			and id=#{param2}
+		</if>
+	</select>
+	
+	<insert id="saveNwbTemplate" parameterType="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardTemplate"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into NURSE_WHITE_BOARD_TEMPLATE(dept_code,title,title_font_size,row_count,background,is_valid)
+		values(#{deptCode},#{title},#{titleFontSize},#{rowCount},#{background},'1')
+	</insert>
+	
+	<update id="updateNwbTemplate" parameterType="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardTemplate" >
+		update NURSE_WHITE_BOARD_TEMPLATE
+		<set>
+			<if test="deptCode != null">
+				dept_code=#{deptCode},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>
+			<if test="titleFontSize != null">
+				title_font_size=#{titleFontSize},
+			</if>
+			<if test="rowCount != null">
+				row_count=#{rowCount},
+			</if>
+			<if test="background != null">
+				background=#{background},
+			</if>
+		</set>
+		WHERE
+			is_valid = '1' and id=#{id}
+	</update>
+	
+	<update id="deleteNwbTemplate" parameterType="String" >
+		update NURSE_WHITE_BOARD_TEMPLATE set is_valid='0'
+		where m.is_valid = '1' and m.dept_code = #{param1}
+		<if test="param2 != null">
+			and id=#{param2}
+		</if>
+	</update>
+	
+	<!--************************ 小白板记录************************** -->
+	<sql id="nwbRecordSql">
+		nr.record_code,
+		nr.record_name,
+		nr.record_value,
+		nr.dept_code,
+		nr.order_no,
+		nr.record_user_code,
+		nr.record_user_name,
+		nr.record_date,
+		nr.pat_id,
+		nr.pat_info,
+		nr.is_valid,
+		nr.perform_schedule,
+		nr.random_id
+	</sql>
+
+	<sql id="nwbRecordItemSql">
+		nri.item_code,
+		nri.item_name,
+		nri.item_value,
+		nri.item_date,
+		nri.exec_date,
+		nri.item_pat_id,
+		nri.item_pat_info,
+		nri.start_item_date,
+		nri.end_item_date,
+		nri.is_finish,
+		nri.is_valid
+	</sql>
+
+	<sql id="insertNwbRecordSql">
+		insert into
+		NURSE_WHITE_BOARD_RECORD(
+		<include refid="nwbRecordSql" />
+		)
+		values(#{recordCode}, #{recordName}, #{recordValue},
+		#{deptCode},#{orderNo},#{recordNurseCode},#{recordNurseName},
+		#{recordDate},#{patId},#{patInfo},#{isValid},#{performSchedule},#{randomId})
+	</sql>
+ 	<select id="getNurseWhiteBoardRecords" parameterType="String"
+		resultMap="nurseWhiteBoardRecordMap">
+		SELECT
+		nr.random_id,
+		nr.record_id,
+		nr.record_code,
+		nr.record_name,
+		nr.record_value,
+		nr.dept_code,
+		nr.order_no,
+		nr.record_user_code,
+		nr.record_user_name,
+		nr.record_date,
+		nr.pat_id,
+		nr.pat_info,
+		nr.perform_schedule,
+		nri.item_id,
+		nri.item_code,
+		nri.item_name,
+		nri.item_value,
+		nri.item_date,
+		nri.is_finish,
+		m.is_exec
+		FROM NURSE_WHITE_BOARD_RECORD nr
+		inner join NURSE_WHITE_BOARD_METADATA m on nr.record_code = m.code
+		LEFT JOIN
+		NURSE_WHITE_BOARD_RECORD_ITEM nri ON nr.record_id = nri.record_id
+		and nri.is_finish = 1 and nri.is_valid = 1
+		WHERE
+		nr.is_valid = 1
+		AND
+		nr.dept_code = #{deptCode}
+		<if test="code != null">
+			AND nr.record_code = #{code}
+		</if>
+		<if test="patIds != null and patIds.size() >0">
+			AND nr.pat_id IN (
+			<foreach collection="patIds" item="patientId" separator=",">
+				#{patientId}
+			</foreach>
+			)
+		</if>
+		<if test="param4 != null and param5 != null">
+			AND nr.record_date BETWEEN #{param4} AND #{param5}
+		</if>
+		ORDER BY nr.record_date
+	</select> 
+	
+	<select id="isExistNwbRecord" parameterType="String" resultType="Integer">
+		select count(*) from NURSE_WHITE_BOARD_RECORD nr
+		where nr.record_code = #{param1}
+		and nr.is_valid = '1'
+		and nr.dept_code=#{param3}
+		<choose>
+			<when test="param2 != null">
+				and nr.pat_id = #{param2}
+			</when>
+			<otherwise>
+				and nr.record_value is not null
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="getExistNwbRecordCodes" parameterType="String" resultType="String">
+		SELECT DISTINCT 
+			CASE WHEN nr.pat_id is null THEN nr.record_code
+			ELSE nr.record_code + '-' + nr.pat_id
+			END record_code
+		FROM NURSE_WHITE_BOARD_RECORD nr
+		INNER JOIN NURSE_WHITE_BOARD_METADATA nm 
+		ON nr.record_code = nm.code and nr.DEPT_CODE = nm.DEPT_CODE and nm.is_valid = '1'
+		WHERE nr.dept_code = #{param1}
+	</select>
+	
+	<select id="getExistNwbViewRecordCodes" parameterType="String" resultType="String">
+		SELECT DISTINCT 
+			CASE WHEN nr.pat_id is null THEN nr.record_code
+			ELSE nr.record_code + '-' + nr.pat_id
+			END record_code
+		FROM VIEW_NURSE_WHITE_BOARD_RECORD nr
+		INNER JOIN NURSE_WHITE_BOARD_METADATA nm 
+		ON nr.record_code = nm.code and nr.DEPT_CODE = nm.DEPT_CODE and nm.is_valid = '1'
+		WHERE nr.dept_code = #{param1}
+		AND nr.record_date &lt;= #{param2}
+		AND nr.is_valid = '1' and nr.is_stop = '0'
+	</select>
+	
+	<select id="getNurseWhiteBoardDynamicRecords" parameterType="String"
+		resultMap="nurseWhiteBoardRecordMap">
+		select *
+  			from (select RANDOM_ID,
+               RECORD_ID,
+               RECORD_CODE,
+               RECORD_NAME,
+               RECORD_VALUE,
+               RECORD_DATE,
+               PERFORM_SCHEDULE,
+               DEPT_CODE,
+               BED_CODE,
+               PAT_ID,
+               PAT_INFO,
+               ITEM_ID,
+               ITEM_CODE,
+               ITEM_NAME,
+               ITEM_VALUE,
+               ITEM_DATE,
+               IS_FINISH,
+               IS_EXEC,
+               IS_VALID,
+               IS_STOP,
+               row_number() over(partition by random_id,pat_id,item_code order by record_date desc) as cn
+          from VIEW_NURSE_WHITE_BOARD_RECORD vr
+	      where vr.dept_code = #{param1}
+			<if test="param2 != null">
+				and vr.record_code = #{param2}
+			</if> ) v_record
+ 		  where v_record.cn = 1
+		  and (v_record.IS_VALID = '1' and v_record.IS_STOP = '0')
+ 		  order by LEN(v_record.BED_CODE), v_record.BED_CODE
+		
+	</select> 
+	
+	<select id="getNwbRecordLastRecordDate" resultType="String" parameterType="String">
+		select top 1 record_date from NURSE_WHITE_BOARD_RECORD 
+		where dept_code=#{param1}
+		order by record_date desc
+	</select>
+	
+	<select id="getNwbOrderDataMap" resultMap="metadataCodeName" parameterType="String">
+	select distinct tab.item_code name, tab.item_code + '-' + tab.pat_id code  from 
+	   (select d.ITEM_CODE,d.PAT_ID,d.IS_STOP ,
+			row_number() over(partition by d.pat_id,d.item_code order by d.item_date desc,d.is_stop ) cn
+			from WHITE_BOARD_DATA d
+			inner join NURSE_WHITE_BOARD_METADATA m on d.item_code = m.code 
+			inner join PAT_CURE_INFO p on p.pat_id = d.pat_id
+			where m.dept_code=#{param1} and
+			p.ward_code = #{param1} 
+			and (d.item_date >= #{param2}
+				or d.stop_date >= #{param2})
+		) tab where tab.cn=1 
+		and tab.IS_STOP='1'
+	
+	</select>
+
+	<insert id="insertNurseWhiteBoardRecordInfo" parameterType="NurseWhiteBoardRecordInfo"
+		useGeneratedKeys="true" keyProperty="recordId">
+		<include refid="insertNwbRecordSql"></include>
+	</insert>
+
+	<insert id="insertNurseWhiteBoardRecordInfoAndItems"
+		parameterType="NurseWhiteBoardRecordInfo">
+		<selectKey resultType="int" keyProperty="recordId" order="BEFORE">
+			<include refid="insertNwbRecordSql" />
+			select @@IDENTITY as id
+		</selectKey>
+		<if
+			test="nurseWhiteBoardRecordItemInfos!=null and nurseWhiteBoardRecordItemInfos.size!=0">
+			insert into
+			NURSE_WHITE_BOARD_RECORD_ITEM(
+			<include refid="nwbRecordItemSql" />
+			,nri.record_id
+			)
+			(
+			<foreach collection="nurseWhiteBoardRecordItemInfos" item="item"
+				index="index" separator="union all">
+				select
+				#{item.recordItemCode},#{item.recordItemName},#{item.recordItemValue},GETDATE(),#{item.execItemDate},
+				#{item.itemPatId},#{item.itemPatInfo},#{item.startRecordItemDate},#{item.endRecordItemDate},#{item.status},
+				1,#{recordId}
+
+			</foreach>
+			)
+		</if>
+	</insert>
+
+	<update id="updateNurseWhiteBoardRecordInfo" parameterType="NurseWhiteBoardRecordInfo">
+		update NURSE_WHITE_BOARD_RECORD
+		<set>
+			<if test="recordCode != null">
+				record_code = #{recordCode},
+			</if>
+			<if test="recordName != null">
+				record_name = #{recordName},
+			</if>
+			<if test="recordValue != null">
+				record_value = #{recordValue},
+			</if>
+			<if test="deptCode != null">
+				dept_code = #{deptCode},
+			</if>
+			<if test="orderNo != null">
+				order_no = #{orderNo},
+			</if>
+			<if test="recordNurseCode != null">
+				record_user_code = #{recordNurseCode},
+			</if>
+			<if test="recordNurseName != null">
+				record_user_name = #{recordNurseName},
+			</if>
+			<if test="recordDate != null">
+				record_date = #{recordDate},
+			</if>
+			<if test="patId != null">
+				pat_id = #{patId},
+			</if>
+			<if test="patInfo != null">
+				pat_info = #{patInfo},
+			</if>
+		</set>
+		where record_code = #{recordCode}
+		and dept_code = #{deptCode}
+		<if test="patId != null">
+			and pat_id = #{patId}
+		</if>
+		and is_valid = '1'
+	</update>
+
+	<delete id="deleteNurseWhiteBoardRecordInfoById" parameterType="String">
+		DELETE FROM NURSE_WHITE_BOARD_RECORD_ITEM WHERE RECORD_ID = #{param1}
+		DELETE FROM NURSE_WHITE_BOARD_RECORD WHERE RECORD_ID = #{param1}
+	</delete>
+
+	<select id="getNurseWhiteBoardRecordItems" parameterType="String"
+		resultMap="nurseWhiteBoardRecordItemMap">
+		SELECT
+		nr.record_id,
+		<include refid="nwbRecordSql"></include>
+		,
+		nri.item_id,
+		<include refid="nwbRecordItemSql"></include>
+		FROM NURSE_WHITE_BOARD_RECORD nr
+		INNER JOIN
+		NURSE_WHITE_BOARD_RECORD_ITEM nri ON nr.record_id = nri.record_id
+		WHERE
+		nr.dept_code = #{param1}
+		<if test="param2 != null">
+			AND nr.code = #{param2}
+		</if>
+		<!-- <if test="param3 != null and param4 != null">
+			AND nr.record_date BETWEEN #{param3} AND #{param4}
+		</if> -->
+	</select>
+
+	<insert id="insertNurseWhiteBoardRecordItemInfo" parameterType="NurseWhiteBoardRecordItemInfo"
+		useGeneratedKeys="true" keyProperty="recordItemId">
+		insert into
+		NURSE_WHITE_BOARD_RECORD_ITEM(
+		<include refid="nwbRecordItemSql" />
+		,
+		nri.record_id,nri.is_valid
+		)
+		VALUES(
+		#{recordItemCode},#{recordItemName},#{recordItemValue},#{recordItemDate},#{execItemDate}
+		#{itemPatId},#{itemPatInfo},#{startRecordItemDate},#{endRecordItemDate},#{status},#{recordId},1)
+	</insert>
+
+	<update id="updateNurseWhiteBoardRecordItemInfo" parameterType="NurseWhiteBoardRecordItemInfo">
+		update NURSE_WHITE_BOARD_RECORD_ITEM
+		<set>
+			<if test="recordItemCode != null">
+				item_code = #{recordItemCode},
+			</if>
+			<if test="recordItemName != null">
+				item_name = #{recordItemName},
+			</if>
+			<if test="recordItemValue != null">
+				item_value = #{recordItemValue},
+			</if>
+			<if test="recordItemDate != null">
+				item_date = #{recordItemDate},
+			</if>
+			<if test="execItemDate != null">
+				exec_date = #{execItemDate},
+			</if>
+			<if test="recordId != null">
+				record_id = #{recordId}
+			</if>
+			<if test="itemPatId != null">
+				item_pat_id = #{itemPatId}
+			</if>
+			<if test="itemPatInfo != null">
+				item_pat_info = #{itemPatInfo}
+			</if>
+			<if test="startRecordItemDate != null">
+				start_item_date = #{startRecordItemDate}
+			</if>
+			<if test="endRecordItemDate != null">
+				end_item_date = #{endRecordItemDate}
+			</if>
+		</set>
+		where item_id = #{recordItemId}
+	</update>
+
+	<delete id="deleteNurseWhiteBoardRecordItemInfoById"
+		parameterType="String">
+		DELETE FROM NURSE_WHITE_BOARD_RECORD_ITEM WHERE ITEM_ID
+		= #{param1}
+	</delete>
+	
+	<update id="delete" parameterType="String">
+		update NURSE_WHITE_BOARD_RECORD set is_valid = '0',
+		record_date = GETDATE()
+		where is_valid=1 and record_code=#{param1} 
+		and dept_code = #{param3}
+		<choose>
+			<when test="param2 != null">
+				and pat_id = #{param2}
+			</when>
+			<otherwise>
+				and record_value is not null
+			</otherwise>
+		</choose>
+	</update>
+	
+	<!-- 更新小白板明细记录-根据患者-->
+	<update id="updateNurseWhiteBoardRecordItem" parameterType="NurseWhiteBoardRecordItemInfo">
+		update NURSE_WHITE_BOARD_RECORD_ITEM set
+			is_finish = #{status},
+			END_ITEM_DATE = GETDATE()
+		where item_pat_id = #{itemPatId}
+			and	  exec_date = #{execItemDate}
+			and   item_code = #{recordItemCode}
+	</update>
+	
+	<update id="execWhiteBoardItem" parameterType="String">
+		update NURSE_WHITE_BOARD_RECORD set
+			is_valid='0'
+		where record_id=#{param1}
+	</update>
+	
+	<select id="getDosageByData" parameterType="String" resultType="String">
+		select top 1
+		case when w.dosage_unit is null then convert(varchar,cast(w.dosage as numeric(20,1)))
+		else convert(varchar,cast(w.dosage as numeric(20,1)))+w.dosage_unit
+		end dosage
+		from WHITE_BOARD_DATA w
+		inner join NURSE_WHITE_BOARD_METADATA nm
+		on nm.code = w.item_code and nm.is_valid = '1'
+		where w.is_stop = '0' and nm.dept_code = #{param1}
+		and w.pat_id = #{param2} and w.item_code = #{param3}
+		order by w.item_date desc
+	</select>
+	
+	<select id="getQueryOrderCodes" resultType="String">
+		select distinct item_code from WHITE_BOARD_ITEM
+		where query_order=1
+	</select>
+</mapper>

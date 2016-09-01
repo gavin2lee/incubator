@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.user.dao.AllocateMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.user.domain.Allocate" >
+    <result column="ALLOCATE_TIME" property="allocateTime" jdbcType="VARCHAR" />
+    <result column="ALLOCATE_DEPT" property="allocateDept" jdbcType="VARCHAR" />
+    <result column="THE_WORK_TIME" property="theWorkTime" jdbcType="VARCHAR" />
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="ALLOCATE_NAME" property="allocateName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryAllAllocate" resultMap="BaseResultMap" >
+    select 
+    IN_TIME ALLOCATE_TIME, 
+    IN_DEPT ALLOCATE_DEPT, 
+    IN_TIME THE_WORK_TIME, 
+    USER_CODE ID, 
+    USER_NAME NAME, 
+    UPDATE_PERSON ALLOCATE_NAME
+    from YIHUI.numas.dbo.COM_TRANSFERS_MANAGE
+    where status = '2'
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select * from ALLOCATE
+  </select>
+</mapper>

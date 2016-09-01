@@ -1,0 +1,41 @@
+<script type="text/javascript" src="#url('/resources/js/Math.uuid.js?1472534366479')"></script>
+<script type="text/javascript" src="#url('/resources/js/nur/allergyDrugPanel.js?1472534366479')"></script>
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/allergyDrugPanel.css')">
+<div class="easyui-dialog" id="allergyDrugDialog" style="" data-options="title:'选择过敏药物',closed:true,width:650,height:500,
+        buttons:[{
+                text:'保存',
+                handler:saveAllergyDrug
+            },{
+                text:'关闭',
+                handler:closeAllergyDrugDialog
+            }]">
+    <div style="width:100%;height:100%;overflow-y: scroll;" class="f_yahei" id="allergyDrugBox">
+        <div id="checkedAllergyDrug" class="checkedAllergyDrug">
+            <ul></ul>
+        </div>  
+    </div>
+</div>
+<div id="isAllergy" class="easyui-dialog" closed="true" data-options="title:'是否过敏',modal:true,
+        onBeforeClose:function(){},
+        buttons:[{
+                text:'确认',
+                handler:confirmAllergy
+            },
+            {
+                text:'取消',
+                handler:cancelAllergyDialog
+            }]">
+    <div style="height:55px;line-height:20px;padding:10px 10px 10px 15px;">
+        <div id="allergyDrug" style="float:left;width:100%;line-height:25px;font-size:14px;color:#f00;padding-right:10px;"></div>
+        
+        <div style="float:right;padding-right:10px;margin-top:5px;">
+            <input id="isa" type="radio" name="isa" value="阳"><labei for="isa1">是<label>
+            <input id="isa" type="radio" name="isa" value="阴" checked="true"><labei for="isa2">否<label>
+        </div>
+        <div style="float:left;margin-top:5px;line-height: 25px;font-size: 14px;">
+            批号&nbsp;&nbsp;<input type="text" id="bNo">
+        </div>
+        <input type="hidden" id="refid" value="">
+        <input type="hidden" id="cateid" value="">
+    </div>
+</div>

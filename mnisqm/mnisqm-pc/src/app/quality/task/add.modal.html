@@ -1,0 +1,58 @@
+<div class="quality-add-form-modal-wrapper">
+  <form class="form-inlne form-horizontal w5c-form"
+        name="addQualityForm"
+        role="form"
+        novalidate
+        w5c-form-validate="vm.role.validationOption"
+        form="addQualityForm">
+    <div class="modal-header">
+      <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h5 class="modal-title">
+        计划任务
+      </h5>
+    </div>
+    <!-- {{vm.metaData.qualityFormList}} -->
+    <div class="modal-body clearfix">
+      <div class="form-group col-xs-6">
+        <label for="cate" class="control-label col-xs-4 partial-label">时间：</label>
+        <div class="col-xs-8">
+          <span class="input-group">
+            <input ng-model="vm.formData.taskDate" type="text" id="taskDate" name="taskDate" required uib-datepicker-popup on-open-focus="true" is-open="vm.timeOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" timestamp-to-string readonly>
+
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-sm btn-default" ng-click="vm.timeOpen = true">
+                <i class="fa fa-calendar"></i>
+              </button>
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="form-group col-xs-6">
+        <label for="subcate" class="control-label col-xs-4 partial-label">调查人：</label>
+        <div class="col-xs-8">
+          <select class="form-control input-sm" ng-model="vm.formData.handUserCode" required>
+            <option value="{{item}}" ng-repeat="item in vm.userList track by $index">{{vm.user.getUserName(item)}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-xs-2 partial-label">病区：</label>
+        <div class="col-xs-9">
+          <select class="form-control input-sm" ng-model="vm.formData.deptCode" required>
+            <option value="{{item.deptCode}}" ng-repeat="item in vm.depts">{{item.deptName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-xs-2 partial-label">备注：</label>
+        <div class="col-xs-9">
+          <textarea class="form-control" ng-model="vm.formData.remark"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer clearfix">
+      <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok()">保存</button>
+      <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+    </div>
+  </form>
+</div>

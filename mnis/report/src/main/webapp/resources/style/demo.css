@@ -1,0 +1,263 @@
+*{margin: 0;padding: 0;}
+html,body{
+	width: 100%;
+	height: 100%;
+	font-family: 'Microsoft YaHei', Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.process{
+	position: absolute;
+	display: none;
+}
+.wrapper{height: 100%;}
+
+
+.top-tool{position: absolute;top:0;left:0;width: 99%;border: 1px solid #D4D4D4;background-color: #F2F2F2;background: linear-gradient(to bottom,#ffffff 0,#F2F2F2 100%);}
+.upload-box,.upload-type{width: 228px;margin: 0 auto;}
+.upload-type{
+	height: 28px;
+	line-height: 28px;
+}
+.upload-box > div{height: 28px;line-height: 28px;}
+.upload-box input{/*vertical-align: middle;*/}
+.upload-box input[type="text"]{width: 110px;}
+.upload-box input[type='file']{width: 200px;}
+.upload-box input[type='button']{margin-left: 10px;}
+.mid-tree{}
+
+.action-tool{position: absolute;top: 0;left: 0;width: 99%;height: 48px;border: 1px solid #D4D4D4;background-color: #F2F2F2;background: linear-gradient(to bottom,#ffffff 0,#F2F2F2 100%);}
+.action-box{width: 100%;height: 48px;line-height: 48px;margin: 0 auto;text-align: right;}
+
+.editView{display: none;width: 100%;height: 100%;}
+.viewBox{width: 100%;height: 100%;overflow: hidden;}
+.viewBox iframe{width: 100%;height:100%;}
+
+.editBox{display: none;width: 100%;height: 100%;overflow: auto;background-color: #ccc; }
+.editor{
+	width: 810px;
+	padding: 0 20px;
+	/*margin: 20px auto;*//*padding:15px;*/
+	font-size: 12px;
+	background-color: #fff;box-shadow: 0 0 5px #333;
+}
+
+/* editor */
+.doc-title{
+	height: 40px;
+	line-height: 40px;
+	font-size: 22px;
+	text-align: center;
+	color: #000;
+}
+
+/* style unit */
+.fwb{font-weight: bold;}
+
+
+/* /style unit */
+
+
+.band{position: relative;width: 100%;}
+.band .block{
+	position: absolute;
+	height: 25px;
+}
+.band .block input[type='text']{width: 100%;/*height: 90%;*/border:none;border-bottom: 1px solid #000;background-color: inherit;text-indent: .2em; }
+.band .block input[type='text'].disabled{border-bottom-color: #ccc;color: #ccc;}
+.band .block input[type='checkbox']{width:14px;height:14px;vertical-align: middle;margin:0 1px 1px 2px;}
+.band .block select{width: 100%;height: 100%;border:none;border-bottom: 1px solid #000;background-color: inherit;}
+
+/* cloumn-header style */
+.band[name='cloumn-header']{
+	border-bottom: 1px solid rgb(0, 0, 0);	
+}
+.band[name='cloumn-header'] .block{
+	box-sizing: border-box;
+	border-left: 1px solid #000;
+	border-top: 1px solid #000;
+}
+.band[name='detail']{
+	/*border-left:1px solid;
+	border-right:1px solid;
+	display: table;
+	border-collapse: collapse;*/
+}
+
+/* detail row style */
+
+.band[name='detail'] table{
+	width: 100%;
+	/*border-collapse:collapse;*/
+}
+.band[name='detail'] table tr{
+	border-bottom: 1px solid #000;
+}
+.band[name='detail'] table tr.edit{
+	background-color: #eee;
+}
+.band[name='detail'] table tr:hover{
+	background-color: #dedede;
+}
+.band[name='detail'] table tr:last-child{
+	border-bottom: none;
+}
+
+.band[name='detail'] table tr td{
+	height: 20px;
+	border-left:1px solid #000;
+	/*vertical-align: middle;*/
+	text-align: center;
+}
+.band[name='detail'] table tr td:first-child{
+	border-left:none;
+}
+/*.band[name='detail'] table tr td:first-child{ border-left:none; }*/
+.band[name='detail'] table tr td > div{
+	width: 100%;height: 100%;
+	word-break: break-all;
+	word-wrap: break-word;
+	display: table-cell;
+
+}
+.band[name='detail'] table tr td div input{
+	width: 95%;height: 95%;
+}
+.band[name='detail'] table tr td div input[type='text']{
+	border:none;
+	border-bottom: 1px solid #000;
+}
+.band[name='detail'] table tr td div input.swt{
+	max-width: 20px;
+	max-height: 20px;
+	vertical-align: top;
+}
+
+.tab-checkbox{
+	width: 200px;
+}
+.tab-checkbox span{
+	line-height: 25px;
+}
+.tab-checkbox span input[type='checkbox']{
+	vertical-align: middle;
+	margin-left: 5px;
+	margin-right: 2px;
+}
+.tab-checkbox div{text-align: right;}
+.tab-checkbox div button{
+	margin-left: 10px;
+	margin-right:5px;
+}
+
+.pagination{
+	position: absolute;
+	right: 15px;
+	bottom: 42px;
+	opacity:0.8;
+}
+.pagination:hover{
+	opacity: 1;
+}
+.pagination > div{
+	float: left;
+	width: 65px;line-height: 30px;
+	text-align: center;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	margin-right: 5px;
+	cursor: pointer;
+	color: #0e90d2;
+}
+.pagination > div.disabled{
+	background-color: #eee;
+}
+.pagination > div:hover{
+	background-color: #eee;	
+}
+.pagination .p-mid select{
+	display: block;
+	width: 65px;
+	height: 30px;
+	line-height: 30px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-color: #fff;
+	color: #0e90d2;
+	border: 0;
+	font-size: 14px;
+	text-align: center;
+	padding-left: 15px;
+}
+
+/*
+	覆盖datagrid样式
+*/
+.spinner{border:none;}
+
+/*
+	表头文本水平竖直居中
+*/
+
+.headrText{
+	display: inline-block; 
+	text-align: center;
+	vertical-align: middle;
+	word-break: break-all;
+	word-wrap:break-word;
+}
+.hBefore:before{
+	content: ''; 
+	display: inline-block; 
+	vertical-align: middle; 
+	height: 100%; 
+}
+/*
+	动态表格头 水平竖直居中
+*/
+.dynaTableHeader{
+	display: table;
+	text-align: center;
+}
+.dynaTableHeader > div{
+	height: 100%;
+	word-break: break-all;
+	word-wrap: break-word;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+/*
+	重置checkbox样式 使用label来模拟
+*/
+ .print .block.inputItem input[type='checkbox']{
+  display: none;
+ }
+ .print .block.inputItem input[type='checkbox'] + label{
+  background-color: #FFF;
+  border: 1px solid #000;
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  position: relative;
+  vertical-align: text-bottom;
+  margin: 0 2px 0 2px;
+ }
+ .print .block.inputItem input[type='checkbox']:checked + label {
+   background-color: #fff;
+   border: 1px solid #000;
+   color: #000;
+ }
+ .print .block.inputItem input[type='checkbox']:checked + label:after {
+  content: '\2713';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  color: #000;
+  width: 100%;
+  line-height: 9px;
+  text-align: center;
+  font-size: 14px;
+  padding: 1px 0 0 0;
+  vertical-align: text-top;
+ }

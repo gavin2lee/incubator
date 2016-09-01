@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.SkinTestMapper">
+	<resultMap type="SkinTestItem" id="skinTestItemMap">
+		<id property="skinTestItemId" column="st_item_id" />
+		<result property="skinTestId" column="order_exec_id" />
+		<result property="skinTestItemImgBefore" column="st_item_img_before"
+			jdbcType="BLOB" />
+		<result property="skinTestItemImgAfter" column="st_item_img_after"
+			jdbcType="BLOB" />
+		<result property="skinTestItemStatus" column="st_item_status" />
+		<result property="skinTestItemResult" column="st_item_result" />
+		<result property="skinTestItemDrugBatchNo" column="st_item_drug_batch_no" />
+		<result property="skinTestItemInputNurseId" column="st_item_input_nurse_id" />
+		<result property="skinTestItemInputNurseName" column="st_item_input_nurse_name" />
+		<result property="skinTestItemApproveNurseId" column="st_item_approve_nurse_id" />
+		<result property="skinTestItemApproveNurseName" column="st_item_approve_nurse_name" />
+		<result property="skinTestItemApproveDate" column="st_item_approve_date" />
+		<result property="skinTestItemExecNurseName" column="st_item_exec_nurse_name" />
+		<result property="skinTestItemExecNurseId" column="st_item_exec_nurse_id" />
+		<result property="skinTestItemExecDate" column="st_item_exec_date" />
+		<result property="patId" column="pat_id" />
+		<result property="deptCode" column="dept_code" />
+		<result property="hospNo" column="in_hosp_no" />
+		<result property="drugCode" column="drug_code" />
+		<result property="drugName" column="drug_name" />
+	</resultMap>
+
+	<resultMap type="SkinTestDrugInfo" id="SkinTestDrugInfoMap">
+		<id property="skinTestDrugInfoId" column="st_drug_info_id" />
+		<result property="skinTestId" column="order_exec_id" />
+		<result property="drugName" column="drug_name" />
+		<result property="drugCode" column="drug_code" />
+		<result property="testNurseId" column="test_nurse_code" />
+		<result property="testNurseName" column="test_nurse_name" />
+		<result property="testDate" column="test_datetime" />
+	</resultMap>
+	<!-- select="getSkinTestItemByStItemId" -->
+	<resultMap type="SkinTestGroup" id="skinTestGroupMap">
+		<id property="skinTestId" column="order_exec_id" />
+		<result property="stLxGroupId" column="pat_id" />
+		<result property="orderGroupNo" column="order_group_id" />
+
+		<result property="masterRecordId" column="body_sign_mas_id" />
+		<association property="skinTestItem" resultMap="skinTestItemMap" />
+		<association property="skinTestDrugInfo" resultMap="SkinTestDrugInfoMap" />
+	</resultMap>
+
+	<resultMap type="SkinTestInfoLx" id="skinTestInfoMap">
+		<id property="stLxGroupId" column="pat_id" />
+		<result property="patientId" column="pat_id" />
+		<result property="patientName" column="pat_name" />
+		<result property="bedNo" column="bed_code" />
+		<result property="inHospNo" column="in_hosp_no" />
+
+		<collection property="skinTestGroups" resultMap="skinTestGroupMap" />
+	</resultMap>
+
+	<sql id="sqlSkinTestItem">
+		st.id as st_item_id,
+		st.status as st_item_status,
+		st.result as st_item_result,
+
+		st.input_nurse_id as st_item_input_nurse_id,
+		st.input_nurse_name as st_item_input_nurse_name,
+		st.approve_nurse_id as st_item_approve_nurse_id,
+		st.approve_nurse_name as st_item_approve_nurse_name,
+		st.approve_date as st_item_approve_date,
+		st.exec_nurse_id as st_item_exec_nurse_id,
+		st.exec_nurse_name as st_item_exec_nurse_name,
+		st.exec_date as st_item_exec_date,
+
+		st.drug_batch_no as st_item_drug_batch_no,
+		st.body_sign_mas_id as body_sign_mas_id
+	</sql>
+	
+	<!-- 获取皮试中信息 -->
+	<select id="getPublishSkinTests" parameterType="Map" resultMap="skinTestInfoMap">
+		select
+			g.order_bar order_exec_id
+			,g.order_bar order_group_id
+			,p.bed_code bed_code
+			,p.pat_id pat_id
+			,p.name pat_name
+			,p.in_hosp_no
+			,p.ward_code dept_code
+	
+			,i.ORDER_GROUP_ID+'*' +CAST(i.ORDER_SUB_NO as varchar) st_drug_info_id
+			,i.ITEM_CODE drug_code
+			,i.ITEM_NAME drug_name
+			,g.create_doc_id test_nurse_code
+			,g.create_doc_name test_nurse_name
+			,g.create_datetime test_datetime
+			,<include refid="sqlSkinTestItem" />
+		FROM PAT_ORDER_GROUP g
+			inner join PAT_ORDER_ITEM i on g.order_no = i.order_no
+			and g.pat_id = i.pat_id and g.perform_no = i.perform_no
+			inner join PAT_CURE_INFO p on p.pat_id = g.pat_id  AND p.STATUS =1
+			inner join PAT_SKIN_TEST st on st.order_exec_id = g.order_bar
+			left join com_dic cd on cd.his_code = g.order_exec_type_code
+			left join SYS_MSG_PUBLISH mp on mp.oper_type=4 and mp.oper_id = g.order_bar
+		WHERE
+			p.WARD_CODE=#{wardCode}
+			<if test="startTime != null">
+				AND g.PLAN_TIME > #{startTime}
+			</if>
+			<if test="endTime != null"> 
+				AND g.PLAN_TIME &lt; #{endTime} 
+			</if>
+			AND st.status = 1
+			and cd.dic_type = 'USAGE'
+			AND cd.code = 'SKINTEST'
+			AND mp.seq_id is null
+			<if test="skinTestDrugCodes != null and skinTestDrugCodes.size > 0">
+				and i.item_code not IN (
+				<foreach collection="skinTestDrugCodes" item="item" index="index"
+					separator=",">
+					#{item}
+				</foreach>
+				)
+			</if>
+			<!-- 皮试不显示材料其他项目 -->
+			 and i.USAGE_CODE is not null  
+		order by LEN(p.BED_CODE),p.BED_CODE
+	</select>
+
+	<select id="getSkinTestInfos" parameterType="Map" resultMap="skinTestInfoMap">
+
+		select
+		g.order_bar as order_exec_id
+		,g.order_bar as
+		order_group_id
+		,p.bed_code as bed_code
+		,p.pat_id as pat_id
+		,p.name as pat_name
+		,p.in_hosp_no as in_hosp_no
+		,p.ward_code as dept_code
+
+		,i.ORDER_GROUP_ID+'*' +CAST(i.ORDER_SUB_NO as varchar) as
+		st_drug_info_id
+		,i.ITEM_CODE as drug_code
+		,i.ITEM_NAME as drug_name
+		,g.create_doc_id as test_nurse_code
+		,g.create_doc_name as
+		test_nurse_name
+		,g.create_datetime as test_datetime
+
+		,
+		<include refid="sqlSkinTestItem" />
+
+		from
+		PAT_ORDER_GROUP g
+		inner join PAT_ORDER_ITEM i on g.order_no = i.order_no
+		and g.pat_id = i.pat_id and g.perform_no = i.perform_no
+		inner join PAT_CURE_INFO p on p.pat_id = g.pat_id  AND p.STATUS =1
+		left
+		join PAT_SKIN_TEST st on st.order_exec_id = g.order_bar
+		left join com_dic cd on cd.his_code = g.order_exec_type_code
+		WHERE
+		cd.dic_type = 'USAGE'
+		AND
+		cd.code = 'SKINTEST'
+		
+		<if test="skinTestDrugCodes != null and skinTestDrugCodes.size > 0">
+			and i.item_code not IN (
+			<foreach collection="skinTestDrugCodes" item="item" index="index"
+				separator=",">
+				#{item}
+			</foreach>
+			)
+		</if>
+
+		<if test="minSelectDate != null">
+			AND g.PLAN_TIME > #{minSelectDate}
+		</if>
+		<if test="maxSelectDate != null"> 
+			AND g.PLAN_TIME &lt; #{maxSelectDate} 
+		</if>
+		
+		<!-- 全科室查询皮试根据科室编号查询 -->
+		<if test="wardCode!=null">
+			and p.WARD_CODE=#{wardCode}
+		</if>
+		
+		<if test="patients != null">
+			and g.pat_id IN (
+			<foreach collection="patients" item="item" index="index"
+				separator=",">
+				#{item}
+			</foreach>
+			)
+		</if>
+		<if test="patId != null"> and g.pat_id=#{patId} </if>
+		<!-- 皮试不显示材料其他项目 -->
+		 and i.USAGE_CODE is not null  
+		 order by LEN(p.BED_CODE),p.BED_CODE
+
+	</select>
+
+	<select id="getSkinTestInfoByStId" parameterType="String"
+		resultMap="skinTestInfoMap">
+
+		select
+		g.order_bar as order_exec_id
+		,g.order_bar as
+		order_group_id
+		,p.bed_code as bed_code
+		,p.pat_id as pat_id
+		,p.name as
+		pat_name
+		,p.in_hosp_no as in_hosp_no
+		,p.ward_code as dept_code
+
+		,i.ORDER_GROUP_ID+'*' +CAST(i.ORDER_SUB_NO as varchar) as
+		st_drug_info_id
+		,i.ITEM_CODE as drug_code
+		,i.ITEM_NAME as drug_name
+		,g.create_doc_id as test_nurse_code
+		,g.create_doc_name as
+		test_nurse_name
+		,g.create_datetime as test_datetime
+
+		,
+		<include refid="sqlSkinTestItem" />
+
+		from
+		PAT_ORDER_GROUP g
+		inner join PAT_ORDER_ITEM i on g.order_no = i.order_no
+		and g.pat_id = i.pat_id and g.perform_no = i.perform_no
+		inner join PAT_CURE_INFO p on p.pat_id = g.pat_id  AND p.STATUS =1
+		left join PAT_SKIN_TEST st on st.order_exec_id = g.order_bar
+		left join com_dic cd on cd.his_code = g.order_exec_type_code
+		WHERE
+		cd.dic_type = 'USAGE'
+		AND
+		cd.code = 'SKINTEST'
+		AND
+		i.usage_code is not null
+
+		<!-- AND g.PLAN_TIME > #{startDate} <if test="param4 != null"> AND g.PLAN_TIME 
+			&lt; #{endDate} </if> -->
+		and
+		st.order_exec_id=#{param1}
+
+	</select>
+
+	<select id="getSkinTestItemByStItemId" parameterType="String"
+		resultMap="skinTestItemMap">
+		Select
+		<include refid="sqlSkinTestItem" />
+		From
+		PAT_SKIN_TEST st
+		where
+		st.id=#{param1}
+	</select>
+
+	<select id="getSkinTestItemByStId" parameterType="String"
+		resultMap="skinTestItemMap">
+		Select
+		<include refid="sqlSkinTestItem" />
+		From
+		PAT_SKIN_TEST st
+		where
+		st.order_exec_id=#{param1}
+	</select>
+
+	<select id="getImgBeforeByStId" parameterType="String"
+		resultMap="skinTestItemMap">
+		Select
+		st.id as st_item_id,
+		st.img_before as
+		st_item_img_before
+		From
+		PAT_SKIN_TEST st
+		where
+		st.order_exec_id=#{param1}
+	</select>
+
+	<select id="getImgAfterByStId" parameterType="String" resultMap="skinTestItemMap">
+		Select
+		st.id as st_item_id,
+		st.img_after as st_item_img_after
+		From
+		PAT_SKIN_TEST st
+		where
+		st.order_exec_id=#{param1}
+	</select>
+
+	<insert id="saveSkinTestItem" parameterType="SkinTestItem"
+		useGeneratedKeys="true" keyProperty="skinTestItemId">
+		insert into
+		pat_skin_test
+		(
+		order_exec_id,
+		img_before,
+		img_after,
+		status,
+		drug_batch_no,
+		input_nurse_id,
+		input_nurse_name,
+		approve_nurse_id,
+		approve_nurse_name,
+		exec_nurse_id,
+		exec_nurse_name,
+		exec_date,
+		pat_id,
+		drug_code,
+		drug_name)
+		values
+		(
+		#{skinTestId},
+		#{skinTestItemImgBefore},
+		#{skinTestItemImgAfter},
+		#{skinTestItemStatus},
+		#{skinTestItemDrugBatchNo},
+		#{skinTestItemInputNurseId},
+		#{skinTestItemInputNurseName},
+		#{skinTestItemApproveNurseId},
+		#{skinTestItemApproveNurseName},
+		#{skinTestItemExecNurseId},
+		#{skinTestItemExecNurseName},
+		#{skinTestItemExecDate},
+		#{patId},
+		#{drugCode},
+		#{drugName})
+	</insert>
+	
+	<insert id="saveSkinTestItemImg" parameterType="SkinTestItem"
+		useGeneratedKeys="true" keyProperty="skinTestItemId">
+		insert into
+		pat_skin_test
+		(
+		order_exec_id,
+		img_before,
+		pat_id
+		)
+		values
+		(
+		#{skinTestId},
+		#{skinTestItemImgBefore},
+		#{patId})
+	</insert>
+	
+	<update id="updateSkinTestItem" parameterType="SkinTestItem">
+		update
+		pat_skin_test
+		<set>
+			<if test="skinTestItemImgBefore != null ">
+				img_before = #{skinTestItemImgBefore},
+			</if>
+			<if test="skinTestItemImgAfter != null">
+				img_after = #{skinTestItemImgAfter},
+			</if>
+			<if test="skinTestItemStatus != null and skinTestItemStatus !='0' ">
+				status = #{skinTestItemStatus},
+			</if>
+			<if test="skinTestItemResult != null">
+				result = #{skinTestItemResult},
+			</if>
+			<if test="skinTestItemDrugBatchNo != null">
+				drug_batch_no = #{skinTestItemDrugBatchNo},
+			</if>
+			<if test="skinTestItemInputNurseId != null">
+				input_nurse_id = #{skinTestItemInputNurseId},
+			</if>
+			<if test="skinTestItemInputNurseName != null">
+				input_nurse_name = #{skinTestItemInputNurseName},
+			</if>
+			<if test="skinTestItemApproveNurseId != null">
+				approve_nurse_id = #{skinTestItemApproveNurseId},
+			</if>
+			<if test="skinTestItemApproveNurseName != null">
+				approve_nurse_name = #{skinTestItemApproveNurseName},
+			</if>
+			<if test="skinTestItemApproveDate != null">
+				approve_date = #{skinTestItemApproveDate},
+			</if>
+			<if test="skinTestItemExecNurseId != null">
+				exec_nurse_id = #{skinTestItemExecNurseId},
+			</if>
+			<if test="skinTestItemExecNurseName != null">
+				exec_nurse_name = #{skinTestItemExecNurseName},
+			</if>
+			<if test="skinTestItemExecDate != null">
+				exec_date = #{skinTestItemExecDate},
+			</if>
+			<if test="patId != null">
+				pat_id = #{patId},
+			</if>
+			<if test="drugCode != null">
+				drug_code = #{drugCode},
+			</if>
+			<if test="drugName != null">
+				drug_name = #{drugName}
+			</if>
+		</set>
+		where
+		order_exec_id=#{skinTestId}
+	</update>
+	
+	<update id="updateSkinTestImg" parameterType="SkinTestItem">
+		update
+		pat_skin_test
+		<set>
+			<if test="skinTestItemImgAfter != null">
+				img_after =
+				#{skinTestItemImgAfter},
+			</if>
+			<if test="skinTestItemImgBefore != null">
+				img_before = #{skinTestItemImgBefore}
+			</if>
+		</set>
+		where
+		order_exec_id=#{skinTestId}
+
+	</update>
+	<!-- 删除皮试为阴性的过敏信息 -->
+	<update id="deleteAllergy" parameterType="String">
+		update pat_allergy set IS_VALID = '0',ALLERGY_DATE = GETDATE() 
+		where ALLERGY_ID in (
+		select a.ALLERGY_ID from pat_allergy a left join
+		 PAT_SKIN_TEST s on a.PAT_ID = s.PAT_ID and a.DRUG_CODE=s.DRUG_CODE and a.DRUG_NAME = s.DRUG_NAME
+		 where (s.PAT_ID is null or UPPER(s.RESULT)='N') and a.SKIN_TEST_ID is not null)
+		 and pat_id = #{param1} and IS_VALID='1'
+	</update>
+	
+	<update id="updateAllergy" parameterType="String">
+		update pat_allergy set SKIN_TEST_ID = (select max(ID) from PAT_SKIN_TEST where PAT_ID=#{param1}
+ 		and DRUG_CODE =#{param2}
+ 		),ALLERGY_DATE = GETDATE() 
+ 		where PAT_ID=#{param1} 
+ 		and DRUG_CODE =#{param2}
+ 		and IS_VALID = '1'
+	</update>
+	
+	<update id="updateAllergyByTestId" parameterType="String">
+		update pat_allergy set SKIN_TEST_ID = (select max(ID) from PAT_SKIN_TEST where PAT_ID=#{param1}
+ 		and DRUG_CODE =#{param2}
+ 		) ,ALLERGY_DATE = GETDATE()
+ 		where PAT_ID=#{param1} 
+ 		and DRUG_CODE =#{param2}
+ 		and IS_VALID = '1'
+	</update>
+</mapper>

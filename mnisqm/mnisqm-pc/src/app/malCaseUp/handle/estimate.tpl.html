@@ -1,0 +1,33 @@
+<form class="form-horizontal w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="addLevelForm">
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <ul class="list-group">
+          <li ng-click="vm.fillItem('measure', measure)" ng-class="{'active': vm.formData.measure.meaCode == measure.meaCode}" class="list-group-item" ng-repeat="measure in vm.formData.measureList track by $index">
+            {{$index + 1}}. {{measure.meaContent}}
+            <div class="pull-right">
+              <span style="margin-right:1em;">提出人：{{measure.userName}}</span>
+            </div>
+            <blockquote>{{!measure.resDescribe ? '暂无评估' : measure.resDescribe}}</blockquote>
+
+          </li>
+
+          <li class="list-group-item">
+            <div class="form-group">
+              <div class="col-sm-12">
+                <textarea class="form-control input-sm" cols="50" rows="3" ng-disabled="!vm.formData.measure.seqId" ng-model="vm.formData.measure.resDescribe" placeholder="请选择措施">
+                </textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <button ng-click="vm.saveListItem('estimate')" class="btn btn-primary btn-sm" ng-disabled="vm.formData.measure.resDescribe === '' || !vm.formData.measure.resDescribe">提交评估</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</form>

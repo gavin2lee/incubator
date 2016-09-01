@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.manualWork.dao.ManualWorkMapper" >
+  <resultMap id="BaseResultMap"
+	type="com.lachesis.mnisqm.module.manualWork.domain.ManualWork">
+	<id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+	<result column="WORK_CODE" property="workCode" jdbcType="VARCHAR" />
+	<result column="ITEM_CODE" property="itemCode" jdbcType="VARCHAR" />
+	<result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+	<result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+	<result column="USER_TYPE" property="userType" jdbcType="CHAR" />
+	<result column="PLAN_DATE" property="planDate" jdbcType="VARCHAR" />
+	<result column="MOUTH" property="mouth" jdbcType="VARCHAR" />
+	<result column="WEEK" property="week" jdbcType="VARCHAR" />
+	<result column="STATUS" property="status" jdbcType="VARCHAR" />
+	<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	<result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+	<result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+	<collection property="manualWorkDetailList" javaType="java.util.List"
+		ofType="com.lachesis.mnisqm.module.manualWork.domain.ManualWorkDetail"
+		column="WORK_CODE" >
+		<id column="SEQID" property="seqId" jdbcType="BIGINT" />
+		<result column="WORK_CODE" property="workCode" jdbcType="VARCHAR" />
+		<result column="WORK_ITEM" property="workItem" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="CREATE_PERSON" property="createPerson"
+			jdbcType="VARCHAR" />
+		<result column="UPDATE_PERSON" property="updatePerson"
+			jdbcType="VARCHAR" />
+	</collection>
+</resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from MANUAL_WORK
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.manualWork.domain.ManualWork" >
+    insert into MANUAL_WORK (WORK_CODE, ITEM_CODE, 
+      USER_CODE, DEPT_CODE, USER_TYPE, 
+      PLAN_DATE, MOUTH, WEEK, 
+      STATUS, CREATE_TIME, UPDATE_TIME, 
+      CREATE_PERSON, UPDATE_PERSON)
+    values (#{workCode,jdbcType=VARCHAR}, #{itemCode,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR}, #{userType,jdbcType=CHAR}, 
+      #{planDate,jdbcType=VARCHAR}, #{mouth,jdbcType=VARCHAR}, #{week,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.manualWork.domain.ManualWork" >
+    update MANUAL_WORK
+    set WORK_CODE = #{workCode,jdbcType=VARCHAR},
+      ITEM_CODE = #{itemCode,jdbcType=VARCHAR},
+      USER_CODE = #{userCode,jdbcType=VARCHAR},
+      DEPT_CODE = #{deptCode,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=CHAR},
+      PLAN_DATE = #{planDate,jdbcType=VARCHAR},
+      MOUTH = #{mouth,jdbcType=VARCHAR},
+      WEEK = #{week,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <update id="updateManualWorkForDelete" parameterType="com.lachesis.mnisqm.module.manualWork.domain.ManualWork" >
+	update MANUAL_WORK
+	set
+	STATUS = #{status,jdbcType=CHAR}
+	where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, WORK_CODE, ITEM_CODE, USER_CODE, DEPT_CODE, USER_TYPE, PLAN_DATE, 
+    MOUTH, WEEK, STATUS, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON
+    from MANUAL_WORK
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, WORK_CODE, ITEM_CODE, USER_CODE, DEPT_CODE, USER_TYPE, PLAN_DATE, 
+    MOUTH, WEEK, STATUS, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON
+    from MANUAL_WORK
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from MANUAL_WORK where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.manualWork.domain.ManualWork" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into MANUAL_WORK (WORK_CODE, ITEM_CODE, 
+      USER_CODE, DEPT_CODE, USER_TYPE, 
+      PLAN_DATE, MOUTH, WEEK, 
+      STATUS, CREATE_TIME, UPDATE_TIME, 
+      CREATE_PERSON, UPDATE_PERSON)
+    values (#{workCode,jdbcType=VARCHAR}, #{itemCode,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR}, #{userType,jdbcType=CHAR}, 
+      #{planDate,jdbcType=VARCHAR}, #{mouth,jdbcType=VARCHAR}, #{week,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <select id="queryByDeptCodeAndDate" resultMap="BaseResultMap" parameterType="Map">
+    select w.SEQ_ID, w.WORK_CODE, w.ITEM_CODE, w.USER_CODE, w.DEPT_CODE, w.USER_TYPE, w.PLAN_DATE, 
+    w.MOUTH, w.WEEK, w.STATUS, w.CREATE_TIME, w.UPDATE_TIME, w.CREATE_PERSON, w.UPDATE_PERSON,
+    d.SEQ_ID SEQID, d.WORK_CODE, d.WORK_ITEM, d.STATUS, d.CREATE_TIME, d.UPDATE_TIME, d.CREATE_PERSON, 
+    d.UPDATE_PERSON
+    from MANUAL_WORK w,MANUAL_WORK_DETAIL d
+    where w.WORK_CODE = d.WORK_CODE
+    and w.DEPT_CODE = #{deptCode}
+    <![CDATA[   
+    and w.PLAN_DATE >= #{beginTime}
+    and w.PLAN_DATE < #{endTime}
+    ]]>
+    and d.STATUS = '01'
+    
+  </select>
+</mapper>

@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.NurseShiftMapper">
+
+	<resultMap id="nurseShiftRecordMap" type="com.lachesis.mnis.core.nursing.NurseShiftRecordEntity">
+		<id property="shiftRecordId" column="record_id" />
+		<result property="nurseShiftId" column="nurse_shift_id" />
+		<result property="shiftRecordNurseId" column="record_nurse_id" />
+		<result property="shiftRecordNurseName" column="record_nurse_name" />
+		<result property="shiftRecordTime" column="record_time"/>
+		<result property="shiftRecordStartDate" column="record_start_date"/>
+		<result property="shiftRecordEndDate" column="record_end_date"/>
+		<result property="patientId" column="pat_id" />
+		<result property="deptCode" column="dept_code" />
+		<result property="shiftRecordData" column="record_data" />
+		<result property="valid" column="is_record_valid" typeHandler="com.lachesis.mnis.core.mybatis.handler.ValidStringToBoolHandler" />
+	</resultMap>
+
+	<resultMap id="nurseShiftMap" type="NurseShiftEntity">
+		<id property="nurseShiftId" column="nurse_shift_id" />
+		<result property="patientId" column="pat_id" />
+		<result property="patientName" column="pat_name" />
+		<result property="deptCode" column="dept_code" />
+		<result property="deptName" column="dept_name" />
+		<result property="hospNo" column="hosp_no" />
+		<result property="bedNo" column="bed_code" typeHandler="BedCodeHandler"/>
+		<result property="diagnose" column="diagnose" />
+		<result property="tend" column="tend_level" typeHandler="TendLevelHandler" />
+		<result property="criticalStatus" column="critical_status" />
+		<result property="shiftNurseId" column="shift_nurse_id" />
+		<result property="shiftNurseName" column="shift_nurse_name" />
+		<result property="shiftDate" column="shift_date" />
+		<result property="successionNurseId" column="succession_nurse_id" />
+		<result property="successionNurseName" column="succession_nurse_name" />
+		<result property="successionDate" column="succession_date"/>
+		<result property="shiftStartDate" column="shift_start_date"/>
+		<result property="shiftEndDate" column="shift_end_date"/>
+		<result property="shiftStatus" column="shift_status" />
+		<result property="valid" column="is_shift_valid" typeHandler="com.lachesis.mnis.core.mybatis.handler.ValidStringToBoolHandler" />
+		<collection property="nurseShiftRecordEntities" column="record_id" select="getShiftRecordById"/>
+	</resultMap>
+
+	<!-- nurseShiftRecord结果集 -->
+	<sql id="shiftRecordResultSet">
+		nr.record_id,
+		nr.nurse_shift_id ,
+		nr.record_nurse_id,
+		nr.record_nurse_name,
+		nr.record_time,
+		nr.start_date as
+		record_start_date,
+		nr.end_date as
+		record_end_date,
+		nr.record_data,
+		nr.record_valid as is_record_valid,
+		nr.pat_id,
+		nr.dept_code
+	</sql>
+
+	<sql id="patientInfoResultSet">
+		p.pat_id as pat_id,
+		p.name as pat_name,
+		p.ward_code as dept_code,
+		p.in_hosp_no as hosp_no,
+		p.bed_code as bed_code,
+		p.in_diag as
+		diagnose,
+		p.nurse_level as tend_level,
+		p.danger_level as critical_status
+	</sql>
+
+
+
+	<sql id="patientNurseShiftResultSet">
+		pat_id,
+		pat_name,
+		dept_code,
+		dept_name,
+		hosp_no,
+		bed_no,
+		clinic_diagnose,
+		tend,
+		critical_flag
+	</sql>
+
+	<sql id="nurseShiftResultSet">
+		ns.nurse_shift_id ,
+		ns.shift_nurse_id ,
+		ns.shift_nurse_name,
+		ns.shift_date,
+		ns.succession_nurse_id,
+		ns.succession_nurse_name,
+		ns.succession_date,
+		ns.start_date as
+		shift_start_date,
+		ns.end_date as
+		shift_end_date,
+		ns.shift_status,
+		ns.shift_valid as is_shift_valid
+	</sql>
+
+	<select id="getNurseShifts" parameterType="Map" resultMap="nurseShiftMap">
+		select
+		<include refid="nurseShiftResultSet" />
+		,
+		<include refid="patientInfoResultSet" />
+		,
+		<include refid="shiftRecordResultSet" />
+		from nurse_shift ns
+		left
+		join pat_cure_info p on
+		p.pat_id =
+		ns.pat_id
+		inner join
+		nurse_shift_record nr on
+		ns.nurse_shift_id =
+		nr.nurse_shift_id
+		where
+		ns.shift_valid = '1' and
+		p.out_date is not null
+		and
+		nr.record_valid = '1'
+
+
+		<if test="patId != null"> and ns.pat_id = #{patId}</if>
+		<if test="patients == null and deptCode != null"> and p.ward_code = #{deptCode}</if>
+		<if test="patients != null">
+			and p.pat_id IN (
+			<foreach collection="patients" item="item" index="index"
+				separator=",">
+				#{item}
+			</foreach>
+			)
+		</if>
+		<!-- rangeType为0查询时段间数据，rangeType为1查询一整天数据 -->
+		<choose>
+			<when test="rangeType == 0">
+				and
+				ns.start_date =
+				#{startDate}
+				and
+				ns.end_date =
+				#{endDate}
+			</when>
+			<otherwise>
+				and
+				nr.record_time <![CDATA[ > ]]>
+				#{startDate}
+				and
+				nr.record_time <![CDATA[ < ]]>
+				#{endDate}
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="getNurseShiftEntityById" parameterType="String"
+		resultMap="nurseShiftMap">
+		select
+		<include refid="nurseShiftResultSet" />
+
+		from nurse_shift ns
+
+		where ns.shift_valid = '1' and
+		ns.nurse_shift_id=#{param1}
+
+	</select>
+
+	<insert id="insertNurseShift" parameterType="nurseShiftEntity">
+		insert into
+		nurse_shift(
+		nurse_shift_id ,
+		shift_nurse_id ,
+		shift_nurse_name,
+		shift_date,
+		succession_nurse_id,
+		succession_nurse_name,
+		succession_date,
+		start_date,
+		end_date,
+		shift_status,
+		shift_valid,
+		<include refid="patientNurseShiftResultSet" />
+		) values
+		(
+		#{nurseShiftId},
+		#{shiftNurseId,jdbcType=VARCHAR},
+		#{shiftNurseName,jdbcType=VARCHAR},
+		#{shiftDate,jdbcType=TIMESTAMP},
+		#{successionNurseId,jdbcType=VARCHAR},
+		#{successionNurseName,jdbcType=VARCHAR},
+		#{successionDate,jdbcType=TIMESTAMP},
+		#{shiftStartDate},
+		#{shiftEndDate},
+		#{shiftStatus,jdbcType=VARCHAR},
+		'1',
+		#{patientId},
+		#{patientName,jdbcType=VARCHAR},
+		#{deptCode},
+		#{deptName,jdbcType=VARCHAR},
+		#{hospNo,jdbcType=VARCHAR},
+		#{bedNo,jdbcType=VARCHAR},
+		#{diagnose,jdbcType=VARCHAR},
+		#{tend,jdbcType=VARCHAR},
+		#{criticalStatus,jdbcType=VARCHAR}
+		)
+	</insert>
+	<update id="updateNurseShift" parameterType="nurseShiftEntity">
+		update
+		nurse_shift
+		set
+		shift_nurse_id = #{shiftNurseId,jdbcType=VARCHAR},
+		shift_nurse_name
+		= #{shiftNurseName,jdbcType=VARCHAR},
+		shift_date =
+		#{shiftDate,jdbcType=TIMESTAMP},
+		succession_nurse_id =
+		#{successionNurseId,jdbcType=VARCHAR},
+		succession_nurse_name =
+		#{successionNurseName,jdbcType=VARCHAR},
+		succession_date =
+		#{successionDate,jdbcType=TIMESTAMP},
+		shift_status =
+		#{shiftStatus,jdbcType=VARCHAR},
+		pat_name=#{patientName,jdbcType=VARCHAR},
+		dept_name=#{deptName,jdbcType=VARCHAR},
+		hosp_no=#{hospNo,jdbcType=VARCHAR},
+		bed_no=#{bedNo,jdbcType=VARCHAR},
+		clinic_diagnose=#{diagnose,jdbcType=VARCHAR},
+		tend=#{tend,jdbcType=VARCHAR},
+		critical_flag=#{criticalStatus,jdbcType=VARCHAR}
+		where
+		nurse_shift_id =
+		#{nurseShiftId} and shift_valid='1'
+	</update>
+
+	<delete id="deleteNurseShiftById" parameterType="String">
+		delete from
+		nurse_shift
+		where
+		nurse_shift_id = #{param1} and shift_valid = '1'
+	</delete>
+
+	<select id="getShiftRecordsByNurseShiftId" parameterType="String"
+		resultMap="nurseShiftRecordMap">
+		select
+		<include refid="shiftRecordResultSet" />
+		from nurse_shift_record nr
+		where
+		nr.record_valid = '1' and
+		nr.nurse_shift_id=#{param1,jdbcType=VARCHAR}
+
+
+	</select>
+
+	<select id="getShiftRecordById" parameterType="String"
+		resultMap="nurseShiftRecordMap">
+		select
+		<include refid="shiftRecordResultSet" />
+		from nurse_shift_record nr
+
+		where nr.record_valid = '1' and
+		nr.record_id = #{param1}
+
+	</select>
+
+	<insert id="insertShiftRecord" parameterType="com.lachesis.mnis.core.nursing.NurseShiftRecordEntity">
+		insert into
+		nurse_shift_record(
+		record_id,
+		nurse_shift_id,
+		record_nurse_id,
+		record_nurse_name,
+		record_time,
+		start_date,
+		end_date,
+		record_data,
+		pat_id,
+		dept_code
+		)
+		values(
+		#{shiftRecordId},
+		#{nurseShiftId},
+		#{shiftRecordNurseId,jdbcType=VARCHAR},
+		#{shiftRecordNurseName,jdbcType=VARCHAR},
+		#{shiftRecordTime,jdbcType=TIMESTAMP},
+		#{shiftRecordStartDate},
+		#{shiftRecordEndDate},
+		#{shiftRecordData,jdbcType=VARCHAR},
+		#{patientId},
+		#{deptCode}
+		)
+	</insert>
+
+	<update id="updateShiftRecord" parameterType="com.lachesis.mnis.core.nursing.NurseShiftRecordEntity">
+		update
+		nurse_shift_record set
+		record_nurse_id =
+		#{shiftRecordNurseId,jdbcType=VARCHAR},
+		record_nurse_name =
+		#{shiftRecordNurseName,jdbcType=VARCHAR},
+		record_time =
+		#{shiftRecordTime,jdbcType=TIMESTAMP},
+		start_date =
+		#{shiftRecordStartDate},
+		end_date =
+		#{shiftRecordEndDate},
+		record_data =
+		#{shiftRecordData,jdbcType=VARCHAR}
+		where
+		record_id =
+		#{shiftRecordId} and record_valid = '1'
+	</update>
+
+	<delete id="deleteShiftRecordById" parameterType="String">
+		delete from
+		nurse_shift_record
+		where
+		record_id =
+		#{shiftRecordId} and record_valid
+		= '1'
+	</delete>
+
+
+	<!-- <sql id="inpatientInfoResultSet"> <include refid="com.lachesis.mnis.core.mybatis.mapper.PatientMapper.sqlInpatientResult" 
+		/> FROM bed b INNER JOIN pat_hosp p ON b.bed_code = p.bed_code LEFT JOIN 
+		pat_base pb ON p.pat_id = pb.pat_id LEFT JOIN sys_dept d ON p.dept_code = 
+		d.dept_code LEFT JOIN rec_diag dg ON dg.pat_id = pb.pat_id AND dg.is_valid 
+		= 1 LEFT JOIN rec_allergy al ON al.pat_id = pb.pat_id LEFT JOIN lx_task_nurse_attention 
+		attention ON attention.patient_id = pb.pat_id LEFT JOIN sys_user au ON attention.nurse_id 
+		= au.user_id LEFT JOIN (SELECT r.pat_id, r.problem as illness_status,r.event_datetime 
+		FROM rec_pat_event AS r INNER JOIN ( SELECT pat_id,max(event_datetime) as 
+		rec_pat_event_id FROM rec_pat_event GROUP BY pat_id ) AS ra ON r.pat_id = 
+		ra.pat_id ) AS pevent ON p.pat_id = pevent.pat_id </sql> <select id="selectNurseShiftRecord" 
+		parameterType="Map" resultMap="patEventInfoMap"> SELECT s.rec_nurse_shift_id, 
+		s.event_info, s.rec_datetime, s.rec_nurse_code, e.empl_name as rec_nurse_name, 
+		pevent.illness_status, <include refid="inpatientInfoResultSet" /> INNER JOIN 
+		rec_nurse_shift s ON p.pat_id = s.pat_id LEFT JOIN sys_employee AS e ON s.rec_nurse_code 
+		= e.empl_code WHERE s.is_valid = 1 <if test="param1 != null"> AND s.rec_dept_code 
+		= #{param1} </if> <if test="param2 != null"> AND s.rec_datetime <![CDATA[>=]]> 
+		#{param2} </if> <if test="param3 != null"> AND s.rec_datetime <![CDATA[<=]]> 
+		#{param3} </if> </select> <select id="selectNurseShiftRecordForPatient" parameterType="Map" 
+		resultMap="patEventInfoMap"> SELECT s.rec_nurse_shift_id, s.event_info, s.rec_datetime, 
+		s.rec_nurse_code, e.empl_name as rec_nurse_name, pevent.illness_status, <include 
+		refid="inpatientInfoResultSet" /> INNER JOIN rec_nurse_shift s ON p.pat_id 
+		= s.pat_id LEFT JOIN sys_employee AS e ON s.rec_nurse_code = e.empl_code 
+		WHERE s.is_valid = 1 AND s.pat_id = #{param1} <if test="param2 != null"> 
+		AND s.rec_datetime <![CDATA[>=]]> #{param2} </if> <if test="param3 != null"> 
+		AND s.rec_datetime <![CDATA[<=]]> #{param3} </if> </select> <update id="updateNurseShiftRecord" 
+		parameterType="Map"> UPDATE rec_nurse_shift SET event_info = #{param2} WHERE 
+		rec_nurse_shift_id = #{param1} </update> <insert id="insertNurseShiftRecord" 
+		parameterType="NurseShiftEntity"> INSERT INTO rec_nurse_shift(event_info, 
+		rec_datetime, pat_id, rec_nurse_code, rec_dept_code) VALUES( #{problem}, 
+		#{recordDate}, #{patientId}, #{recorderId}, #{deptCode} ) <selectKey resultType="int" 
+		databaseId="rec_nurse_shift_id" keyProperty="recordId" order="AFTER"> SELECT 
+		@@IDENTITY AS ID </selectKey> </insert> <delete id="deleteNurseShift" parameterType="Map"> 
+		DELETE FROM rec_nurse_shift WHERE rec_nurse_shift_id = #{param1} </delete> 
+		<select id="selectPatientEventCount" resultMap="itemCountMap" parameterType="Map"> 
+		SELECT n.measure_note_code AS item_code, COUNT(DISTINCT re.pat_id) AS item_count 
+		FROM dict_measure_note n LEFT JOIN rec_pat_event re on n.measure_note_code 
+		= re.problem <if test="param2 != null"> AND re.event_datetime <![CDATA[ >= 
+		]]> #{param2} </if> <if test="param3 != null"> AND re.event_datetime <![CDATA[ 
+		<= ]]> #{param3} </if> LEFT JOIN sys_employee_serve s ON s.empl_code = re.rec_nurse_code 
+		AND s.dept_code = #{param1} WHERE n.in_nurse_shift = 1 GROUP BY n.measure_note_code 
+		</select> -->
+</mapper>

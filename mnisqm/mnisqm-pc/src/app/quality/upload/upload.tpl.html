@@ -1,0 +1,59 @@
+<!-- begin 质量检查 -->
+<div class="wrapper quality-check-wrapper padding-content">
+  <ul class="page-nav clearfix">
+    <li class="active"><a ui-sref="home.qualityUpload">任务上报</a></li>
+  </ul>
+      <!-- <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load"> -->
+      <div class="panel panel-layout panel-default">
+        <div class="tool-wrapper container-fluid form-inline">
+
+        </div>
+        <div class="panel-body">
+          <table class="table table-hover table-condensed table-bordered no-border">
+            <thead>
+              <tr class="header-export">
+                <th>检查日期</th>
+                <th>检查病区</th>
+                <th>检查模板</th>
+                <!-- <th>得分</th> -->
+                <th>状态</th>
+
+                <th print-remove>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-{{$index}}" ng-repeat="row in vm.list">
+                <td class="text-center">
+                  {{ row.taskDate }}
+                </td>
+                <td class="text-center">
+                  {{ vm.dept.getDeptName(row.deptCode) }}
+                </td>
+                <td class="text-center">
+                  {{ vm.getModelName(row.formCode) }}
+                </td>
+                <!-- <td class="text-center">
+                  {{ row.count }}
+                </td> -->
+                <td class="text-center">
+                  {{ row.status }}
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-primary btn-xs"
+                          ng-click="vm.open(row)">
+                    <span class="fa fa-edit"></span>编辑
+                  </button>
+                  <button class="btn btn-danger btn-xs"
+                          ng-click="vm.del(row.seqId)">
+                    <span class="fa fa-trash"></span>删除
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <none-data-info list="vm.list"></none-data-info>
+        </div>
+      </div>
+</div>
+<!-- end 质量检查 -->

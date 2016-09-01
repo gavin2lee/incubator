@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="#url('/resources/js/nur/liquorOrder.js?1472534366476')" charset="utf-8"></script>
+<style type="text/css">
+.long-medi,.tmp-medi{
+	position: relative;
+	float: left;
+	height: 38px;
+	line-height: 38px;
+	margin-left: 30px;
+	padding-right: 30px;
+	font-size: 16px;
+	cursor: pointer;
+	overflow: hidden;
+}
+.long-medi i,.tmp-medi i{
+	position: absolute;
+	top: 18px;
+	right: 5px;
+	width: 5px;
+	height: 5px;
+	background-color: #333;
+}
+.long-medi{padding-right:50px;border-right:1px dotted #fff;}
+.long-medi i{right: 25px;}
+.long-medi div {
+	position: absolute;
+	top: 40px;
+	left: 50%;
+	width: 115px;
+	background-color: #587c91;
+	color: #fff;
+	font-size: 14px;
+	z-index: 1111;
+}
+.long-medi div p {
+	height: 25px;
+	line-height: 25px;
+	padding: 5px 10px;
+}
+.circle2 {
+background-position: -20px -165px;
+}
+element.style {
+}
+
+.circle {
+display: inline-block;
+width: 18px;
+height: 19px;
+margin-right: 10px;
+background: url(../../../resources/img/MNIS.png) 0 -166px no-repeat;
+cursor: pointer;
+vertical-align: text-bottom;
+}
+.circle2 {
+	background-position: -20px -165px;
+}
+</style>
+<title>配液单</title>
+</head>
+
+<body id="medicalOrderLayout" class="easyui-layout">
+	
+	<div  data-options="region:'center',fit:true" style="height:934px;overflow: hidden;">
+		<div class="top-tools" style="height:39px">
+            <div class="top-tools-box">
+                 <input type="hidden" id="pid" value = "$!id" />
+                <div class="btn-box">
+                    <!-- <div style="float:left;margin-top: -1px;margin-right:14px;">
+                        <input type="radio" name="inspectType" value="WE" />未执行
+                        <input type="radio" name="inspectType" value="ENR" />已执行
+                        <input type="radio" name="inspectType" value="ALL" checked="checked" />全部
+                    </div> -->
+                    <!-- <select style="width:100px;margin-left:20px;">
+                          <option>输液单</option>
+                          <option>口服药单</option>
+                          <option>注射单</option>
+                          <option>治疗单</option>
+                          <option>全部</option>
+                          <option>检查单</option>
+                          <option>检验单</option>
+                    </select> -->
+                    <div class="btn-nm pdf-print-btn" onclick="">
+                        <span class="btm">打印</span>
+                    </div>
+                    <div class="btn-nm pdf-print-btn" onclick="">
+                        <span class="btm">续打</span>
+                    </div>
+                    <div class="btn-nm pdf-print-btn" onclick="">
+                        <span class="btm">打印全部</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<font size="4">科室配液</font>
+        <div  style="height:200px;">
+			<table id="deptTable" class="easyui-datagrid" style="height:200px;">
+	            <thead>
+	                <tr>
+	                     <th data-options="field:'prestype',width:360,align:'center'">医嘱内容</th>
+	                     <th data-options="field:'prescate',width:60,align:'left'">备药护士</th>
+	                     <th data-options="field:'planexedate',width:100,align:'center'">备药时间</th>
+	                     <th data-options="field:'presinfo',width:60,align:'center'">配液护士</th>
+	                     <th data-options="field:'norms',width:100,align:'left'">配液时间</th>
+	                </tr>
+	            </thead>
+	        </table>
+        </div>
+		
+		<br/><br/>
+		<font size="4">静配中心</font>
+        <div >
+			<table id="medicalOrderTable" class="easyui-datagrid" style="height:300px">
+	            <thead>
+	                <tr>
+	                     <th data-options="field:'prestype',width:360,align:'center'">医嘱内容</th>
+	                     <th data-options="field:'prescate',width:60,align:'left'">核对人</th>
+	                     <th data-options="field:'planexedate',width:100,align:'center'">核对时间</th>
+	                     <th data-options="field:'presinfo',width:100,align:'center'">配液护士</th>
+	                     <th data-options="field:'norms',width:100,align:'left'">配液时间</th>
+	                     <th data-options="field:'dosage',width:100,align:'left'">药物有效期</th>
+	                     <th data-options="field:'usage',width:100,align:'left'">收药护士</th>
+	                     <th data-options="field:'hz',width:100,align:'left'">收药时间</th>
+	                </tr>
+	            </thead>
+	        </table>
+        </div>
+	</div>
+</body>
+</html>

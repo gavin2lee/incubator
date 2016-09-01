@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html>
+<head runat="server">
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/bodyTempSheetCommon.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')" />
+<script type="text/javascript" src="#url('/resources/js/nur/bodyTempSheetCommon.js?1472534366479')"></script>
+</head>
+<body>
+
+	<div class="wrapper f_yahei">
+		<div class="insp-top top-tools" style="height:40px">
+	        <div class="top-tools-box">
+                <div class="top-title">
+                    <span>体温单录入</span>
+                </div>
+  		    	<div class="btn-box fr mgr10">
+                    <div class="time-box fl mgr10">
+                        <input id="startDate" name="startDate" class="Wdate"  onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})" readonly="readonly" style="width: 90px;">
+                        -
+                        <input id="endDate" name="endDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm:ss'})" readonly="readonly" style="width: 70px;">
+                    </div>
+                    <input type="button" value="保存" onclick="save();">
+                    <!-- <input type="button" value="重置">
+                    <input type="button" value="设置" onclick="showItemsEdit();"> -->
+                </div>
+	      </div>
+		</div>
+		<div class="content" style="height:80%;">
+      		<table id="info-tab" data-options="
+                iconCls: 'icon-edit',
+                method:'get',
+                onClickCell: onClickCell
+          ">
+            <thead>
+	            <tr>
+                <th sortable="true" data-options="field:'c1',width:45,align:'center'">床号</th>
+                <th sortable="true" data-options="field:'c2',width:65,align:'center'">患者</th>
+                <th sortable="true" data-options="field:'s1',width:65,align:'center'">住院号</th>
+                <th sortable="true" data-options="field:'s2',width:60,align:'center',editor:{type:'numberbox',options: {validType:'length[1,5]',precision:1}}">体温(°C)</th>
+                <th data-options="field:'cooled',width:60,align:'center',formatter:cooledCheckbox">是否降温</th>
+                <!-- <th data-options="field:'cooled',align:'center',checkbox:true,"></th> -->
+                <th sortable="true" data-options="field:'s3',width:70,align:'center',editor:{type:'numberbox',options: {validType:'length[1,3]',precision:0}}">脉搏(次/分)</th>
+                <th sortable="true" data-options="field:'s4',width:70,align:'center',editor:{type:'numberbox',options: {validType:'length[1,3]',precision:0}}">呼吸(次/分)</th>
+                <th sortable="true" data-options="field:'s31',width:70,align:'center',editor:{type:'numberbox',options: {validType:'length[1,3]',precision:0}}">心率(次/分)</th>
+                <th sortable="true" data-options="field:'s5',width:80,align:'center',editor:'numberbox'">血压(mmHg)</th>
+                <th sortable="true" data-options="field:'s6',width:60,align:'center',editor:{type:'numberbox',options: {validType:'length[1,5]',precision:0}}">出量(ml)</th>
+                <th sortable="true" data-options="field:'s7',width:60,align:'center',editor:{type:'numberbox',options: {validType:'length[1,5]',precision:0}}">入量(ml)</th>
+                <th sortable="true" data-options="field:'s8',width:60,align:'center',editor:{type:'numberbox',options: {validType:'length[1,5]',precision:0}}">尿量(ml)</th>
+                <th sortable="true" data-options="field:'s9',width:80,align:'center',editor:{type:'numberbox',options: {validType:'length[1,2]',precision:0}}">大便(次/天)</th>
+                <th sortable="true" data-options="field:'s10',width:60,align:'center',editor:{type:'numberbox',options: {validType:'length[1,5]',precision:1}}">身高(cm)</th>
+                <th sortable="true" data-options="field:'s11',width:60,align:'center',editor:{type:'numberbox',options: {validType:'length[1,6]',precision:1}}">体重(kg)</th>
+                <th sortable="true" data-options="field:'s12',width:150,align:'center',formatter:skin,styler:skinStyler">皮试</th>
+                <th sortable="true" data-options="field:'s13',width:150,align:'center',formatter:event">事件</th>
+            	</tr>
+            </thead>
+      		</table>
+		</div>
+	</div>
+    
+	<div id="box1" class="easyui-dialog" data-options="closed:true">
+        <div style="padding:15px;">
+            <div class="dlg-panel">
+                <p>
+                    <span class="dlg-title">药物名：</span>
+                    <input type="text" id="drugName" size="16"/>
+                </p>
+                <p>
+                    <span class="dlg-title">皮试结果：</span>
+                    <select id="testResult">
+                        <option >
+                            阴性
+                        </option>
+                        <option >
+                            阳性
+                        </option>
+                    </select>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="box2" class="easyui-dialog" data-options="closed:true">
+        <div style="padding:10px 15px;">
+            <div class="dlg-panel">
+                <p>
+                    <span class="dlg-title">
+                        事件：
+                    </span>
+                    <select id="problem">
+                        <option value ="">空</option>
+                        <option value ="ry">入院</option>
+                        <option value ="cy">出院</option>
+                        <option value ="zr">转入</option>
+                        <option value ="zc">转出</option>
+                        <option value ="ss">手术</option>
+                        <option value ="fm">分娩</option>
+                        <option value ="cs">出生</option>
+                        <option value ="bw">病危</option>
+                        <option value ="bz">病重</option>
+                        <option value ="sw">死亡</option>
+                    </select>
+                </p>
+                <!-- <p>
+                    <span class="dlg-title">
+                        干预措施：
+                    </span>
+                    <input type="text" id="intervention" size="16"/>
+                </p> -->
+                <p>
+                    <span class="dlg-title">
+                        时间：
+                    </span>
+                    <input class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm:ss'})" type="text" id="recordDate" size="16" style="margin-top:0px;width:95px;"/>
+                </p>
+            </div>
+        </div>
+    </div>
+	
+
+
+
+    <!-- <div class="hide" id="signsItemsEditor" title="" style="width:700px;">
+
+        <div class="ua-b-content">
+
+            <div class="ua-b-c-toolbar">
+            <div class="toolbar-box">
+                样式&nbsp;&nbsp;&nbsp;
+                <select>
+                    <option >样式一</option>
+                    <option>样式二</option>
+                    <option>样式三</option>
+                </select>
+                <input type="button" value="新增样式" onclick="">
+            </div>
+            </div>      
+            <div class="styleList">
+                 <div class="leftList list fl">
+                    <div class="fastFind">
+                        快速检索: <input type="text" style="width:160px;height:24px;border:none;background-color: #f8f8f8;">
+                    </div>
+                    <div class="listBox">
+                        <ul>
+                            <li>体温</li>
+                            <li>脉搏</li>
+                            <li>心率</li>
+                            <li>血压</li>
+                            <li>呼吸</li>
+                            <li>身高</li>
+                        </ul>
+                    </div>
+                 </div>
+
+                 <div class="operationBtn">
+                    <div class="leftBtn" id="leftBtn"><i></i></div>
+                    <div class="rightBtn" id="rightBtn"><i></i></div>
+                 </div>
+
+                 <div class="rightList list fr">
+                    <div class="listBox">
+                        <span class="cacheNode" id="cacheNode"></span>
+                        <ul>
+                        </ul>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div> -->
+    #parse("test/allergyDrugPanel.vm") 
+	<script type="text/javascript">
+            initTest();
+            $(function(){
+               initAllergyDrug(''); 
+            });
+            /*
+            function initTablePattern(tableId){
+                var params = {};
+                params.callbackObj = tableId;
+                params.title= "样式编辑";
+                params.loadPatterns = loadPatterns;
+                params.loadLeftList = loadAlternateItems;
+                params.loadRightList = loadPatternItems;
+                params.savePattern=savePatternAndItems;
+                initPatternDialog(params);
+            }*/
+	</script>
+
+</body>
+</html>

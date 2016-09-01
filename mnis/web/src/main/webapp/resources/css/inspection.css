@@ -1,0 +1,78 @@
+.insp-top div.top-tools-box .bg{
+	display: inline-block;
+	width: 18px;
+	height: 19px;
+	margin:10px 5px 0 10px ;
+	background: url(../img/MNIS.png) 0 -166px;;
+	cursor: pointer;
+}
+.insp-top div.top-tools-box .checkIn{background-position: -20px -166px;}
+.insp-top div.top-tools-box .item-text{vertical-align: super;}
+
+
+.related-report-info{height: 36px;line-height: 36px;padding:0 10px;border-bottom:1px solid #adbac3;background-color:#e0e4e8;font-size:14px;}
+.related-report-info ul li{float: left;}
+
+
+.related-report{display:block;position:relative;height: 19px;cursor: pointer;}
+.related-report-arrow{position:absolute;top:50%;right:3px;width: 10px;height: 5px;margin-top:-4px;background: url(../img/MNIS.png) 0 -1px no-repeat; }
+.related-report-box{
+	display: none;
+	position: absolute;
+	background-color: #587c91;
+	width:220px;
+}	
+.related-report-box ul{max-height:150px;padding:10px 5px;color: #fff;overflow-y:auto;}
+.related-report-box ul li{padding:8px 0;}
+.related-report-box ul li input{
+	position: relative;
+	top: 3px;
+	width: 16px;
+	height: 16px;
+}
+.related-report-box ul li span{margin-left: 10px;}
+.related-report-box input[type='button']{
+	width: 100%;
+	height:28px;
+}
+
+.related-report-compare{margin-top:-266px;margin-left:-400px;color: #1e3443;}
+.related-report-graph{width: 850px;height: 570px;margin-top:-285px;margin-left:-425px;}
+.related-report-graph div.ua-b-content,.related-report-compare div.ua-b-content{padding:0px;}
+.related-report-info{height: 36px;line-height: 36px;padding:0 10px;border-bottom:1px solid #adbac3;background-color:#e0e4e8;font-size:14px;}
+.related-report-info ul li{float: left;}
+
+/*
+*	检验报告tooltip panel样式
+*/
+.relationItem{  padding:3px 0;vertical-align: middle;text-align: center;}
+.relationItem input{    position: relative;top: 3px;width: 15px;height: 15px;}
+.relationItem span{    margin-left: 10px;font-size: 13px;}
+
+
+/**
+*	医嘱状态提示
+*
+*/
+.adviceState{
+	display:inline-block;
+	padding:0px 2px;
+	margin-right:5px;
+	color:#fff;
+}
+.bgcred{
+	background-color: #f00;
+}
+.bgcgreen{
+	background-color: #02d538;
+}
+.bgcblue{
+	background-color: #4d93c4;
+}
+.bgcgray{
+	background-color: #808080;
+}
+.bgcorg{
+	background-color: #ff8d20;
+	opacity:0.8;
+}

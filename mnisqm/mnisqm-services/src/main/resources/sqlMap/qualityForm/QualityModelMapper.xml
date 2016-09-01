@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.qualityForm.dao.QualityModelMapper" >
+<resultMap type="com.lachesis.mnisqm.module.qualityForm.domain.QualityModel" id="BaseResultMap">
+	<id column="SEQ_ID" property="seqId" jdbcType="BIGINT"/>
+	<result column="MODEL_NAME" property="modelName" jdbcType="VARCHAR"/>
+	<result column="IS_USED" property="isUsed" jdbcType="CHAR"/>
+	<result column="TOTAL_SCORE" property="totalScore"/>
+	<result column="STATUS" property="status" jdbcType="VARCHAR"/>
+	<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+	<result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR"/>
+	<collection property="qualityFormList" ofType="com.lachesis.mnisqm.module.qualityForm.domain.QualityForm">
+		<id column="SEQ_ID" property="seqId" jdbcType="BIGINT"/>
+		<result column="FORM_CODE" property="formCode" jdbcType="VARCHAR"/>
+		<result column="FORM_NAME" property="formName" jdbcType="VARCHAR"/>
+		<result column="FORM_TYPE" property="formType" jdbcType="VARCHAR"/>
+		<result column="PARENT_TYPE" property="parentType" jdbcType="VARCHAR"/>
+		<result column="STATUS" property="status" jdbcType="VARCHAR"/>
+	</collection>
+	<collection property="qualityFormDetailList" ofType="com.lachesis.mnisqm.module.qualityForm.domain.QualityFormDetail">
+			<id column="SEQ_ID" property="seqId" jdbcType="BIGINT"/>
+			<result column="DETAIL_CODE" property="detailCode" jdbcType="VARCHAR"/>
+			<result column="FORM_CODE" property="formCode" jdbcType="VARCHAR"/>
+			<result column="ITEM" property="item" jdbcType="VARCHAR"/>
+			<result column="POINTS" property="points"/>
+			<result column="STANTARD" property="stantard" jdbcType="VARCHAR"/>
+			<result column="DESCRIP" property="descrip" jdbcType="VARCHAR"/>
+			<result column="STATUS" property="status" jdbcType="VARCHAR"/>
+			<result column="DETAIL_NAME" property="detailName" jdbcType="VARCHAR"/>
+	</collection>
+</resultMap>
+	<insert id="insert" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityModel"
+	keyProperty="seqId" useGeneratedKeys="true">
+		insert into QUALITY_MODEL
+		(MODEL_NAME, IS_USED, TOTAL_SCORE,
+		STATUS, CREATE_TIME, UPDATE_TIME, 
+		CREATE_PERSON, UPDATE_PERSON)
+		values
+		(#{modelName}, #{isUsed}, #{totalScore},
+		#{status}, GETDATE(), GETDATE(),
+		#{createPerson}, #{updatePerson})
+	</insert>
+	<update id="update" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityModel">
+		update QUALITY_MODEL
+		set 
+		MODEL_NAME = #{modelName},
+		IS_USED	= #{isUsed},
+		TOTAL_SCORE = #{totalScore},
+		UPDATE_TIME = GETDATE(),
+		UPDATE_PERSON = #{updatePerson}
+		where
+		SEQ_ID = #{seqId}
+	</update>
+	<!-- 查询模板数据 -->
+	<select id="select" parameterType="QualityModel"
+	resultMap="BaseResultMap">
+		select 
+		m.SEQ_ID,m.MODEL_NAME,m.IS_USED,m.TOTAL_SCORE,m.STATUS,m.CREATE_PERSON,m.CREATE_TIME,
+		f.SEQ_ID,f.FORM_CODE,f.FORM_NAME,f.FORM_TYPE,f.PARENT_TYPE,f.STATUS,
+		d.SEQ_ID,d.DETAIL_CODE,d.FORM_CODE,d.ITEM,d.POINTS,d.STANTARD,d.DESCRIP, d.STATUS, d.DETAIL_NAME
+		from QUALITY_MODEL m , QUALITY_MODEL_DETAIL md, QUALITY_FORM f, QUALITY_FORM_DETAIL d 
+		where 
+		m.SEQ_ID=md.MODEL_ID and md.DETAIL_ID=d.SEQ_ID
+		and d.FORM_CODE=f.FORM_CODE
+		and m.STATUS != '09'
+		and f.STATUS != '09'
+		and d.STATUS != '09'
+		<if test="seqId!=null">
+		and m.SEQ_ID = #{seqId}
+		</if>
+		<if test="modelName!=null">
+		and m.MODEL_NAME like #{modelName}
+		</if>
+		<if test="isUsed!=null">
+		and m.IS_USED = #{isUsed}
+		</if>
+	</select>
+	
+	<update id="delete" parameterType="java.lang.Long">
+		update QUALITY_MODEL
+		set 
+		STATUS = '09'
+		where
+		SEQ_ID = #{seqId}
+	</update>
+	
+	<!-- 查询模板数据 -->
+	<select id="selectByCode" parameterType="QualityModel" resultType="QualityModel">
+		select 
+			m.SEQ_ID		seqId,
+			m.MODEL_NAME	modelName,
+			m.IS_USED		isUsed,
+			m.TOTAL_SCORE	totalScore,
+			m.STATUS		status,
+			m.CREATE_PERSON	createPerson,
+			m.CREATE_TIME	createTime
+			from QUALITY_MODEL m
+		where m.STATUS != '09' 
+		<if test="seqId != null">
+			and m.SEQ_ID = #{seqId}
+		</if>
+		<if test="modelName!=null">
+			and m.MODEL_NAME like #{modelName}
+		</if>
+		<if test="isUsed!=null">
+			and m.IS_USED = #{isUsed}
+		</if>
+	</select>
+	
+</mapper>

@@ -1,0 +1,62 @@
+<div class="sat-wrapper">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-tasks"></i>
+      <span>患者满意度调查</span>
+      <div class="result-filter row clearfix">
+        <span class="text">日期：从 </span>
+        <span class="input-group col-md-2">
+          <input  type="text" id="beginTime" name="beginTime" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.beginTimeOpen" ng-model="vm.params.beginTime" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" timestamp-to-string>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-sm btn-default" ng-click="vm.beginTimeOpen = true">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </span>
+        </span>
+        <span class="text"> 到 </span>
+        <span class="input-group col-md-2">
+          <input  type="text" id="endTime" name="endTime" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.endTimeOpen" ng-model="vm.params.endTime" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" timestamp-to-string>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-sm btn-default" ng-click="vm.endTimeOpen = true">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </span>
+        </span>
+        <span class="text">    类型</span>
+        <span class="col-md-2">
+          <select class="form-control" name="formType" id="formType" ng-model="vm.params.formType">
+            <option value="">全部</option>
+            <option ng-repeat="item in patientSatTypes" value="{{item}}">{{item}}</option>
+          </select>
+        </span>
+        <span class="text">    患者</span>
+        <span class="col-md-2">
+          <input type="text" class="form-control input-sm" name="patientName" id="patientName" ng-model="vm.params.patientName">
+        </span>
+        <span class="btn btn-info" ng-click="vm.load()">查询</span>
+        <span class="btn btn-success" ng-click="vm.open()">新增</span>
+      </div>
+    </div>
+    <div class="panel-body">
+      <table ng-table="vm.tableParams" class="table table-condensed table-bordered table-striped">
+        <tr ng-repeat="row in vm.lst">
+          <td data-title="'调查日期'">{{row.surverDate}}</td>
+          <td data-title="'类型'">{{ row.formType }}</td>
+          <td data-title="'表单名称'">{{ row.resultName }}</td>
+          <td data-title="'病区'">{{ vm.getDeptName(row.deptCode)}}</td>
+          <td data-title="'床号'">{{ row.bedCode }}</td>
+          <td data-title="'姓名'">{{ row.name }}</td>
+          <td data-title="'住院号'">{{ row.inHospNo }}</td>
+          <td data-title="'操作'" class="text-center">
+            <button class="btn btn-primary btn-xs classes-handler-btn" uib-tooltip="编辑" ng-click="vm.open(row)">
+              <span class="fa fa-edit"></span>
+            </button>
+            <button class="btn btn-danger btn-xs classes-handler-btn" uib-tooltip="删除" ng-click="vm.del(row.seqId)">
+              <span class="fa fa-trash"></span>
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

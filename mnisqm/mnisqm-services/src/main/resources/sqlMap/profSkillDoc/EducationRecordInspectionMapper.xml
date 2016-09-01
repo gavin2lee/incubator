@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.profSkillDoc.dao.EducationRecordInspectionMapper">
+	
+	<!-- 逻辑添加 -->
+	<insert id="insert"
+		parameterType="EducationRecordInspection">
+		insert into PTF_EDUCATION_RECORD_INSPECTION
+		(USER_CODE, USER_NAME,
+		BEGIN_TIME, END_TIME, RANK,
+		TRAIN_NAME, ASSESSMENT_RESULT,
+		STATUS, AUDITOR, REMARK,
+		CREATE_TIME, CREATE_PERSON,
+		UPDATE_TIME, UPDATE_PERSON)
+		values
+		(#{userCode},#{userName},
+		#{beginTime},#{endTime},
+		#{rank},#{trainName},
+		#{assessmentResult},
+		'01',#{auditor},
+		#{remark},GETDATE(),
+		#{createPerson},GETDATE(),
+		#{updatePerson})
+	</insert>
+	<!-- 逻辑删除 -->
+	<update id="deleteByPrimaryKey"
+		parameterType="EducationRecordInspection">
+		update
+		PTF_EDUCATION_RECORD_INSPECTION
+		set
+		STATUS=#{status},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑修改 -->
+	<update id="update"
+		parameterType="EducationRecordInspection">
+		update
+		PTF_EDUCATION_RECORD_INSPECTION
+		set
+		USER_CODE=#{userCode},
+		USER_NAME=#{userName},
+		BEGIN_TIME=#{beginTime},
+		END_TIME=#{endTime},
+		RANK=#{rank},
+		TRAIN_NAME=#{trainName},
+		ASSESSMENT_RESULT=#{assessmentResult},
+		AUDITOR=#{auditor},
+		REMARK=#{remark},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑查找 -->
+	<select id="select"
+		parameterType="EducationRecordInspection"
+		resultType="EducationRecordInspection">
+		select
+		SEQ_ID				as seqId, 
+		USER_CODE			as userCode, 
+		USER_NAME			as userName,
+		BEGIN_TIME			as beginTime, 
+		END_TIME			as endTime, 
+		RANK				as rank,
+		TRAIN_NAME			as trainName, 
+		ASSESSMENT_RESULT	as assessmentResult,
+		STATUS				as status, 
+		AUDITOR				as auditor, 
+		REMARK				as remark
+		from
+		PTF_EDUCATION_RECORD_INSPECTION
+		where STATUS='01'
+		<if test="userCode != null">
+			and USER_CODE=#{userCode}
+		</if>
+		<if test="userName != null">
+			and USER_NAME like #{userName}
+		</if>
+		<if test="beginTime != null">
+			and BEGIN_TIME >= #{beginTime}
+		</if>
+		<if test="endTime != null">
+			and #{endTime} >= END_TIME
+		</if>
+		<if test="rank != null">
+			and RANK = #{rank}
+		</if>
+		<if test="trainName != null">
+			and TRAIN_NAME like #{trainName}
+		</if>
+		<if test="assessmentResult != null">
+			and ASSESSMENT_RESULT = #{assessmentResult}
+		</if>
+		<if test="auditor != null">
+			and AUDITOR like #{auditor}
+		</if>
+	</select>
+</mapper>
+  

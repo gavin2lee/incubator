@@ -1,0 +1,47 @@
+/**
+ * description: 全网通样式模块
+ */
+
+//## 弹出框：带时间日期的排版
+.mod-pop-dateForm {
+  .partial-form-group {padding-top: 12px;}
+
+  .partial-input-sm {width: 100px;}
+
+  .partial-input-md {width: 150px;}
+
+  .partial-textarea {max-width: 100%;}
+
+  .partial-input {
+    float: left;
+    background-color: white;
+    font-family: arial;
+  }
+
+  .date-pick {margin-right: 6px;}
+
+  .timepick {
+    // margin-top: -19px;
+
+    a.btn {
+      padding: 0 !important;
+    }
+
+    td {padding-right: 6px;}
+
+    input {
+      height: 26px;
+      font-size: 12px;
+      font-family: arial;
+    }
+  }
+
+}
+
+//## 操作按钮
+.operation button{
+  margin: 0 4px;
+}
+
+//## 清除内边距
+.pd-none {padding: 0;}

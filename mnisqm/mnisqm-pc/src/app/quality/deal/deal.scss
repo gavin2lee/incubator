@@ -1,0 +1,28 @@
+.addDeal {
+  .form-group {
+    margin-right: 30px;
+    vertical-align: top;
+  }
+
+  select {min-width: 140px;}
+
+  .table-box {margin-top: 12px;}
+
+  .partial-table td {
+    width: 20% !important;
+    padding: 0;
+  }
+
+  .partial-table textarea {
+    max-width: 100%;
+    resize: none;
+    height: 160px;
+    width: 100%;
+    border: none;
+  }
+
+  .w5c-error {margin-left: 63px;}
+
+  .form-group:nth-child(2) .w5c-error {margin-left: 40px;}
+
+}

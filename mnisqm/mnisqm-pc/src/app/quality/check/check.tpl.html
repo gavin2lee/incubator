@@ -1,0 +1,96 @@
+<!-- begin 质量检查 -->
+<div class="wrapper quality-check-wrapper padding-content">
+  <uib-tabset active="active">
+    <uib-tab index="0" heading="质量检查">
+      <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+        <div class="tool-wrapper container-fluid form-inline">
+<!--           <div class="filter-item">
+            <label for="type">类型：</label>
+            <select class="input-sm" id="type" ng-model="vm.queryParams.type">
+              <option value="">全部</option>
+            </select>
+          </div> -->
+          <div class="filter-item">
+            <label >月份： </label>
+            <span class="input-group">
+              <input ng-model="vm.queryParams.month" type="text" id="month" name="month" required uib-datepicker-popup datepicker-options="vm.options.month" on-open-focus="true" is-open="vm.monthOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" common-picker="month" readonly>
+
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-sm btn-default" ng-click="vm.monthOpen = true">
+                  <i class="fa fa-calendar"></i>
+                </button>
+              </span>
+            </span>
+          </div>
+          <div class="filter-item">
+              <label for="area">科室：</label>
+              <select class="input-sm" id="area" ng-model="vm.queryParams.deptCode">
+                <option value="">全部</option>
+                <option ng-repeat="item in vm.deptData" value="{{item.deptCode}}">{{item.deptName}}</option>
+              </select>
+          </div>
+          <div class="filter-item">
+            <button class="btn btn-sm btn-primary" ng-click="vm.load.func()">查询</button>
+          </div>
+          <div class="pull-right">
+            <button class="btn btn-sm btn-primary" ng-click="vm.add()">新增检查</button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <table print-table="vm.list" st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered no-border">
+            <thead>
+              <tr class="header-export">
+                <th>检查日期</th>
+                <th>检查病区</th>
+                <!-- <th>检查类型</th> -->
+                <th>检查模板</th>
+                <th>得分</th>
+                <th>状态</th>
+
+                <th print-remove>操作</th>
+              </tr>
+            </thead>
+            <tbody ng-repeat="row in vm.list">
+              <tr class="row-{{$index}}">
+                <td class="text-center">
+                  {{ row.taskDate }}
+                </td>
+                <td class="text-center">
+                  {{ row.deptCode }}
+                </td>
+                <!-- <td data-title="'检查类型'"
+                    class="text-center">
+                  {{ row.formType }}
+                </td> -->
+                <td class="text-center">
+                  {{ row.formName }}
+                </td>
+                <td class="text-center">
+                  {{ row.count }}
+                </td>
+                <td class="text-center">
+                  {{ row.status }}
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-danger btn-xs"
+                          ng-click="vm.edit(row)"
+                          uib-tooltip="修改">
+                    <span class="fa fa-edit"></span>
+                  </button>
+                  <button class="btn btn-danger btn-xs"
+                          ng-click="vm.del(row.seqId)"
+                          uib-tooltip="删除">
+                    <span class="fa fa-trash"></span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <none-data-info list="vm.list"></none-data-info>
+        </div>
+      </div>
+    </uib-tab>
+  </uib-tabset>
+</div>
+<!-- end 质量检查 -->

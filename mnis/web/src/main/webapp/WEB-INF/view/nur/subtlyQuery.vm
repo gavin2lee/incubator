@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>工作量精细查询 - 联新</title>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/patientGlance.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/transfusionMonitor.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/js/easyui/themes/default/easyui.css')"/>
+    <script type="text/javascript">
+        var currCheckedPatientId = null;
+    </script>
+<body>
+
+<!--头部 start-->
+<div id="header" class="header" style="height:70px;">
+    <div class="top">
+        <div class="clearfix center">
+            <span class="fl bg"></span>
+            <span class="color font date">$!today</span><span class="font">$!deptName，</span>
+
+            <div class="font account">
+                <div id="user"><em>$!user.user.name</em><span></span></div>
+                <input type="hidden" id="deptId" value="$!deptCode"/>
+                <input type="hidden" id="nurseId" value="$!user.userId"/>
+
+                <div class="user-tools hide" style="height:62px;">
+                    <a href="javascript:void(0)" id="quit"><i></i>退出登录</a>
+                    <!--                   <a href="javascript:void(0)" id="changeKs"><i></i>切换科室</a>-->
+                    <a href="javascript:void(0)" id="changeAccount"><i></i>切换账户</a>
+                    <!--                    <a href="javascript:void(0)" id="modifyPsd"><i></i>修改密码</a> -->
+                </div>
+            </div>
+            <img id="logo" src="#url('/resources/img/logo.png')" class="fr" alt="LACHESIS联新设备管理"/>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="center">
+            <div class="coverBlock"></div>
+            <div class="hosTitle f_yahei">
+                $!hospitalName
+            </div>
+            #parse("nur/menu.vm")
+        </div>
+    </div>
+</div>
+<!--头部 end-->
+
+<!--主体 start-->
+<div class="wrapper-body">
+    <div class="main-body center">
+        <div class="panel-sub panel-sub-title clearfix">
+            <div class="fl subTitle">
+                <a href="#url('/nur/infusionmanager/showStatisticQuery.do')">工作量统计</a>
+                <a href="#url('/nur/infusionmanager/showInfusionStatisticQuery.do')">输液统计</a>
+                <a class="queryOn" href="#url('/nur/infusionmanager/showSubtlyQuery.do')">精细统计</a>
+            </div>
+            <div class="btn-box fr">
+                <div class="time-box fl mgr10">
+                    <select class="" name="a" id="departmentList">
+                        <option selected="selected" value="0">--患者列表--</option>
+                        <option value="1">内科</option>
+                        <option value="2">外科</option>
+                        <option value="3">五官科</option>
+                    </select>
+                    <select class="" name="a" id="departmentList">
+                        <option selected="selected" value="0">--药物列表--</option>
+                        <option value="1">内科</option>
+                        <option value="2">外科</option>
+                        <option value="3">五官科</option>
+                    </select>
+                    <select class="" name="a" id="departmentList">
+                        <option selected="selected" value="0">--选择科室--</option>
+                        <option value="1">内科</option>
+                        <option value="2">外科</option>
+                        <option value="3">五官科</option>
+                    </select>
+                    <input id="startDate" name="startDate" class="Wdate"
+                           onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}'})"
+                           readonly="readonly" style="width: 90px;">
+                    -
+                    <input id="endDate" name="endDate" class="Wdate"
+                           onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd', minDate:'#F{$dp.$D(\'startDate\')}'})"
+                           readonly="readonly" style="width: 90px;">
+                </div>
+
+                <a href="javascript:;" class="btn">查找</a>
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <div class="btn-box fr">
+                    <a href="javascript:;" class="btn">Excel导出</a>
+                </div>
+            </div>
+        </div>
+        <!--工作量统计图表 start-->
+        <div class="clearfix">
+            <img src="#url('/resources/img/sy/query-demo.png')" alt="精细统计"/>
+            #*<div id="medicine-use-scale" class="subtly-item fl">
+
+            </div>
+            <div id="unusual-scale" class="subtly-item fl">
+
+            </div>
+            <div id="unusual-use-scale" class="subtly-item fl">
+
+            </div>
+            <div id="user-age-scale" class="subtly-item fl">
+
+            </div>
+            <div id="peruse-vol-scale" class="subtly-item fl">
+
+            </div>
+            <div id="use-time" class="subtly-item fl">
+
+            </div>
+            <div id="use-speed" class="subtly-item fl">
+
+            </div>
+            <div id="use-total" class="subtly-item fl">
+
+            </div>*#
+        </div>
+
+        <!--工作量统计图表 end-->
+    </div>
+</div>
+<!--主体 end-->
+<script type="text/javascript" src="#url('/resources/js/map.js?1472534366479')"></script>
+<script type="text/javascript" src="#url('/resources/js/dictionary.js?1472534366479')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/Highcharts/js/highcharts.js?1472534366479')"></script>
+<script type="text/javascript" src="#url('/resources/js/main/main.js?1472534366479')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/nur/patientGlance.js?1472534366479')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/nur/subtlyQuery.js?1472534366479')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/easyui/plugins/jquery.datagrid-detailview.js?1472534366479')"
+        charset="utf-8"></script>
+</body>
+</html>

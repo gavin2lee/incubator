@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head runat="server">
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/inspection.css')" />
+<script type="text/javascript" src="#url('/resources/js/nur/inspectionRptMain.js?1472534366476')"></script>
+<script>
+    var _patientId = '$!id';
+</script>
+</head>
+<body>
+    <div class="wrapper f_yahei">
+        <div class="insp-top top-tools" style="height:40px">
+            <div class="top-tools-box">
+                <div class="top-title">
+                    <span>检查报告</span>
+                </div>
+                <div class="fl" style="position:relative;margin-left:20px;font-size:13px;overflow:hidden;white-space: nowrap;">
+                    <p id="nurPatientInfo" class="nurPatientInfo"></p>
+                    <div id="info-cover" class="info-cover">&lt;</div>
+                </div>
+                <div class="btn-box fr mgr10">
+                    <div class="time-box fl mgr10">
+                        <input id="startDate" value="" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 85px;">
+                        至
+                        <input id="endDate" value="" name="endDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 85px;">
+                    </div>
+                    <!-- <select id="status">
+                        <option value="">全部</option>
+                        <option value="WAIT">待执行</option>
+                        <option value="EXE">已执行未报告</option>
+                        <option value="RPT">已报告</option>
+                    </select> -->
+                    <div class="widget-wrap">
+                      <div class="btn-widget">
+                      <input class="_btn _btn-md middle" type="button" value="查询" onclick="getInspectionRpt();">
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+                    <table id="info-tab" class="easyui-datagrid" data-options="fitColumns:true,singleSelect:true,collapsible:true,remoteSort:false,onLoadSuccess:loadComplete,onSortColumn:loadComplete">
+                <thead>
+                    <tr>
+                        <th data-options="field:'status',width:80,align:'center',formatter:sta">状态</th>
+                        <th data-options="field:'inHospNo',width:80,align:'center'">住院号</th>
+                        <th data-options="field:'patName',width:80,align:'center'">姓名</th>
+                        <th sortable="true" data-options="field:'subject',width:110,align:'center'">检查项目</th>
+                        <th sortable="true" data-options="field:'bodyParts',width:150,align:'center'">检查部位</th>
+                        <th sortable="true" data-options="field:'inspectionTime',width:150,align:'center'">检查日期</th>
+                        <th sortable="true" data-options="field:'reportTime',width:150,align:'center'">报告日期</th>
+                        <!-- <th data-options="field:'reportTime',width:150,align:'center',formatter:relatedReport">关联报告</th> -->
+                        <!-- <th data-options="field:'priFlag',width:150,formatter:op">操作</th> -->
+                        <th data-options="field:'t',width:150,formatter:action">操作</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="related-report-box" id="related-report-box">
+        <ul>
+            <li><span>无对比数据</span></li>
+        </ul>
+        <input style="width:80%;float:left;" type="button" value="对比" onclick="compare();">
+        <input style="width:20%;" onclick="this.parentNode.style.display='none'" type="button" value="关闭">
+    </div>
+    <div id="report-info-box" class="easyui-dialog" data-options="title:'报告详情',
+                    width:800,
+                    height:533,
+                    closed:true,
+                    buttons:[
+                        {
+                            text:'转&nbsp;抄',
+                            size:'large',
+                            handler:function(){
+                                alert('转抄')
+                            }
+                        }
+                    ]">
+        <div class="ua-b-content">
+            <div class="related-report-info">
+                <ul>
+                    <li style="width:80px;" id="patientBedCode"></li>
+                    <li style="width:100px;" id="patName"></li>
+                    <li style="width:115px;" id="patientId"></li>
+                    <li style="overflow:hidden;white-space: nowrap;text-overflow: ellipsis;" id="checkItem"></li>
+                </ul>
+            </div>
+            <div class="related-report-data"  id="related-report-data" style="height:400px;width:800px;overflow-x:auto;">
+                <p id="reporterInfo" style="padding-left:30px;"></p>
+                <p style="padding:15px 35px 0;">
+                    <span style="float:left;margin-right:30px;">检查所见</span><textarea disabled id="inspectionResult" style="width:580px;height:115px;padding:10px;resize: none;"></textarea>       
+                </p>
+                <p style="padding:15px 35px 0;">
+                    <span style="float:left;margin-right:30px;">检查意见</span><textarea disabled id="inspSuggestion" style="width:580px;height:115px;padding:10px;resize: none;"></textarea>      
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div id="related-report-compare" class="easyui-dialog" data-options="title:'检查报告对比',closed:true,width:800,height:480,buttons:[
+            {
+                text:'关闭',
+                handler:closeReportCompare
+            }
+        ]">
+        <div class="ua-b-content">
+            <div class="related-report-info">
+                <ul>
+                    <li style="width:80px;" id="cPatientBedCode"></li>
+                    <li style="width:100px;" id="cPatientName"></li>
+                    <li style="width:115px;" id="cPatientId"></li>
+                    <li style="width:375px;overflow:hidden;white-space: nowrap;text-overflow: ellipsis;" id="cCheckItem"></li>
+                   <!--  <li style="" id="cBodyParts"></li> -->
+                </ul>
+            </div>
+            <table id="compare-tab" class="easyui-datagrid"></table>
+        </div>   
+    </div>
+    <script type="text/javascript">
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-table th, .doc-table td {
+	padding: 0px;
+	word-break: break-all;
+}
+.doc-table td {
+	width: 20px;
+	height: 35px;
+}
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+	}
+}
+</style>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper">
+	<div class="paper-content">
+		#adultFall()
+		<div class="doc-content">
+			<table class="doc-table">
+				<thead>
+					<tr>
+			            <th rowspan="3" style="width: 75px;">日期时间</th>
+						<th colspan="9">危险因素评估</th>
+			            <th rowspan="3">总<br>评<br>分</th>
+						<th colspan="5">护理措施</th>
+			            <th rowspan="3" style="width: 80px;">签<br><br><br>名</th>
+					</tr>
+					<tr>
+						<th>最近一年跌倒史</th>
+						<th>意识障碍</th>
+						<th style="width: 80px;">视力障碍（单盲、双盲、弱视、白内障、青光眼、眼底病、复视等）</th>
+						<th style="width: 40px;">活动障碍、肢体偏瘫、步态不稳</th>
+						<th>年龄≥65周岁</th>
+						<th>体能虚弱</th>
+						<th style="width: 40px;">头晕、眩晕、体位性低血压</th>
+						<th style="width: 130px;">服用影响意识或活动的药物：①散瞳剂 ②镇静催眠药 ③降压药 ④利尿脱水剂 ⑤麻醉止痛药 ⑥抗癫痫药 ⑦抗精神病及抗抑郁药 ⑧泻药</th>
+						<th style="width: 40px;">无家人或其他人员陪伴</th>
+			            <th rowspan="2">防<br>跌<br>安<br>全<br>宣<br>教</th>
+			            <th rowspan="2">予<br>以<br>警<br>示<br>标<br>识</th>
+			            <th rowspan="2">巡<br><br><br>视</th>
+			            <th rowspan="2">使<br>用<br>床<br>栏</th>
+			            <th rowspan="2">要<br>求<br>有<br>陪<br>人</th>
+					</tr>
+					<tr>
+			            <th>1</th>
+			            <th>1</th>
+			            <th>1</th>
+			            <th>3</th>
+			            <th>1</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            <th>1</th>
+			        </tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		#fallComment()
+	</div>
+	#pageFoot()
+</div>
+</div>
+<script type="text/javascript">
+function getRowDatas(row, isFirstRow, lastDate) {
+	return [
+		formatDate(row['date'], isFirstRow, lastDate),
+		row['history'],
+		row['aware'],
+		row['sight'],
+		row['move'],
+		row['age'],
+		row['weak'],
+		row['dizzy'],
+		row['drug'],
+		row['company'],
+		row['score'],
+		row['annouce'],
+		row['mark'],
+		row['patrol'],
+		row['fence'],
+		row['people'],
+		row['sign']
+	];
+}
+$(function() {
+	fillTable('#url("/doc/adultFall/view/datas")', '$!{patient.cureNo}', 17, getRowDatas);
+});
+</script>
+</body>
+</html>

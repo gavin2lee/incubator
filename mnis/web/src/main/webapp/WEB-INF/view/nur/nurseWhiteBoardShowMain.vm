@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>护理小白板</title>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/note_s.css')">
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/patientGlance.css')"/>
+    <script type="text/javascript" src="#url('/resources/js/handlebars-v3.0.3.js?1472534366478')"></script>
+</head>
+<body class="full">
+<input type="hidden" id="deptCode" value="$!deptCode"/>
+<header>
+    <h1 class="w-title">
+        $!deptName工作情况一览表
+        <div style="right: .7em;position: absolute;top: .5em;">
+            <span>$!today</span>
+        </div>
+    </h1>
+    <table>
+        <tbody id="head-tbody" style="font-size: 14px">
+
+        </tbody>
+    </table>
+    <script id="tbody-tpl" type="text/x-handlebars-template">
+        <tr>
+            <td width="14%">
+                <span class="text-label">
+                    病区总人数
+                </span>
+
+                <div class="content-wrapper">
+                    {{total}}
+                </div>
+            </td>
+            <td width="43%">
+                <span class="text-label danger">
+                    病危床号
+                </span>
+
+                <div class="content-wrapper" style="width: 80%">
+                    <ul class="clearfix">
+                        {{#each bw}}
+                        <li>{{this}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </td>
+            <td width="43%">
+                <span class="text-label bad">
+                    病重床号
+                </span>
+
+                <div class="content-wrapper" style="width: 80%">
+                    <ul class="clearfix">
+                        {{#each bz}}
+                        <li>{{this}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </script>
+</header>
+<section class="note">
+    <div id="bed-wrapper" class="main_r" data-title="床位列表">
+        <div class="middle auto-scroll__bedlist">
+            <ul class="patient-list clearfix">
+                #if ( $bedList && $bedList.size() > 0 )
+                    #foreach($bedPatient in $bedList)
+                        <li class="fl patientBox level-$bedPatient.tendLevel"
+                            data-patientName="$!bedPatient.patientName" data-bedCode="$!bedPatient.bedCode"
+                            data-inhospitalno="$!bedPatient.inHospitalNo" data-patientId="$bedPatient.patientId"
+                            data-searchBedCode="$!bedPatient.showBedCode">
+                            <a href="javascript:getInPatInfoById('$bedPatient.patientId');" class="color">
+                                <div class="clearfix bg">
+
+                                    <span class="tdl$bedPatient.tendLevel">$!bedPatient.showBedCode</span>.<span
+                                        style="display: inline-block;width: 70px;overflow: hidden;vertical-align: bottom;white-space: nowrap;text-overflow: ellipsis;">$!bedPatient.patientName</span>
+                                #* #if( $!bedPatient.dutyNurseCode == $!user.userId)
+                                     <span class="fr duty" data-dutyNurseCode="$bedPatient.dutyNurseCode" data-patientId="$bedPatient.patientId" data-bedCode="$!bedPatient.bedCode"></span>
+                                 #else
+                                     <span class="fr star" data-dutyNurseCode="$bedPatient.dutyNurseCode" data-patientId="$bedPatient.patientId" data-bedCode="$!bedPatient.bedCode"></span>
+                                 #end*#
+
+                                    #if($!bedPatient.chargeType && $!bedPatient.chargeType != "")
+                                        <em class="fr">$bedPatient.chargeType.substring(0,1)</em>
+                                    #else
+                                        <em class="fr">其他</em>
+                                    #end
+                                    #if($!bedPatient.ageDuration == "Y" && $!bedPatient.age != "")
+                                        <span class="fr bgcolor child"></span>
+                                    #end
+
+                                </div>
+                                <div class="clearfix age_number">
+                                    <div>
+                                        #if($!bedPatient.gender == "M")
+                                            <span class="fl span">男</span>
+                                        #elseif($!bedPatient.gender == "F")
+                                            <span class="fl span">女</span>
+                                        #else
+                                            <span class="fl span"></span>
+                                        #end
+                                        <span class="fl tar">$!bedPatient.age</span>
+                                        <span class="fr">$!bedPatient.admitDate</span>
+                                    </div>
+                                </div>
+                                <div class="clearfix disease">
+                                    <p class="fl p1">
+                                        #if($!bedPatient.diet)
+                                            <span class="diet" title="$bedPatient.diet">$bedPatient.diet</span>
+                                        #else
+                                            <span class="diet" title="">&nbsp;</span>
+                                        #end
+                                        #if($!bedPatient.admitDiagnosis )
+                                            <span class="diagnosis"
+                                                  title="$bedPatient.admitDiagnosis">$bedPatient.admitDiagnosis</span>
+                                        #end
+                                    </p>
+
+                                    <p class="fl p3">
+
+                                        <span style="color: red;font-size: 12px" title="$bedPatient.allergyDrugs">
+                                            $bedPatient.allergyDrugs
+                                        </span>
+                                        #*#if($!bedPatient.patientCondition)
+                                            <span>$bedPatient.patientCondition</span>
+                                        #end*#
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                    #end
+                #end
+            </ul>
+        </div>
+
+    </div>
+    <div id="wrapper" class="wrapper f_yahei" data-title="工作一览">
+    </div>
+    <script id="todoTpl" type="text/x-handlebars-template">
+        <div>
+            <div class="wrapper-1">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td width="50%">
+                            <span class="text-label">
+                                新入病人
+                            </span>
+                            <div class="content-wrapper" style="width: 80%">
+                                <ul class="clearfix">
+                                    {{#each this.newPatient}}
+                                    <li>{{patient}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </td>
+                        <td width="50%">
+                            <span class="text-label">
+                                出院病人
+                            </span>
+                            <div class="content-wrapper" style="width: 80%">
+                                <ul class="clearfix">
+                                    {{#each this.outPatient}}
+                                    <li>{{patient}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table id="table2">
+                    <tbody>
+                    <tr>
+                        <td width="33.3%">
+                            <span class="text-label">
+                                腹围/体重
+                            </span>
+                            <div class="content-wrapper">
+                                <ul>
+                                    {{#each this.stature}}
+                                    <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </td>
+                        <td width="33.3%">
+                            <span class="text-label">
+                                24h出入量
+                            </span>
+                            <div class="content-wrapper">
+                                <ul>
+                                    {{#each this.outIn}}
+                                    <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </td>
+                        <td width="33.3%">
+                            <span class="text-label">
+                                24h尿量
+                            </span>
+                            <div class="content-wrapper">
+                                <ul>
+                                    {{#each this.urine}}
+                                    <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="wrapper-2 clearfix">
+                <div>
+                    <h2 class="sub-title">生命体征</h2>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th width="8%">序号</th>
+                            <th width="40%">项目</th>
+                            <th width="20%">频次</th>
+                            <th width="32%">床号</th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <div id="body-table" class="auto-scroll">
+                        <table>
+                            <tbody>
+                            {{#each this.bodySign}}
+                            <tr>
+                                <td width="8%">{{sn}}</td>
+                                <td width="40%">{{itemName}}</td>
+                                <td width="20%">{{rate}}</td>
+                                <td width="32%">{{bedCode}}</td>
+                            </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="sub-title">重要提示</h2>
+                    <table>
+                        <tr>
+                            <th width="8%">序号</th>
+                            <th width="22%">床号</th>
+                            <th width="70%">提示内容</th>
+                        </tr>
+                    </table>
+                    <div class="auto-scroll">
+                        <ul class="subList">
+                            {{#each this.notes}}
+                            <li class="clearfix">
+                                <div class="fl subList_sn" style="width:8%;">{{sn}}</div>
+                                <div class="subList__bed fl" style="width:21%;">{{bedCode}}</div>
+                                <div class="fl" style="width:69%;">{{content}}</div>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="wrapper-2--1">
+                    <div class="wrapper-2--1__body-sign">
+                        <h2 class="sub-title">重要通知</h2>
+                        <table>
+                            <tr>
+                                <th width="8%">序号</th>
+                                <th width="22%">床号</th>
+                                <th width="70%">内容</th>
+                            </tr>
+                        </table>
+                        <div class="auto-scroll__child">
+                            <ul class="subList">
+                                {{#each this.confirms}}
+                                <li class="clearfix">
+                                    <div class="fl subList_sn" style="width:8%;">{{sn}}</div>
+                                    <div class="subList__bed fl" style="width:21%;">{{bedCode}}</div>
+                                    <div class="fl" style="width:69%;">{{content}}</div>
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="wrapper-2--1__blood-sugar">
+                        <h2 class="sub-title">血糖监测</h2>
+                        <table>
+                            <thead>
+                            <tr>
+                                <td width="8%">序号</td>
+                                <th width="22%">床号</th>
+                                <th width="10%">频次</th>
+                                <th width="60%">描述</th>
+                            </tr>
+                            </thead>
+                        </table>
+                        <div id="blood-table" class="auto-scroll__child">
+                            <ul class="subList">
+                                {{#each this.bloodSugar}}
+                                <li class="clearfix">
+                                    <div class="fl subList_sn" style="width:8%;">{{sn}}</div>
+                                    <div class="subList__bed fl" style="width:21%;">{{bedCode}}</div>
+                                    <div class="fl subList_rate" style="width:8%;">{{rate}}</div>
+                                    <div class="fl" style="width:60%;">{{content}}</div>
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wrapper-3">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td width="60%">
+                <span class="text-label">
+                    白班护士
+                </span>
+
+                            <div class="content-wrapper">
+                                {{#each this.dailyNurse}}
+                                <span class="baiban-block">{{this}}</span>
+                                {{/each}}
+                            </div>
+                        </td>
+                        <td width="20%">
+                <span class="text-label">
+                    值班医生
+                </span>
+
+                            <div class="content-wrapper">
+                                {{this.orderlyDoctor}}
+                            </div>
+                        </td>
+                        <td width="20%">
+                <span class="text-label">
+                    付班医生
+                </span>
+
+                            <div class="content-wrapper">
+                                {{this.fubanDoctor}}
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td width="60%">
+                <span class="text-label">
+                    值班护士
+                </span>
+
+                            <div class="content-wrapper">
+                                {{#each this.orderlyNurse}}
+                                <span class="fuban-block">{{this}}</span>
+                                {{/each}}
+                            </div>
+                        </td>
+                        <td width="20%">
+                <span class="text-label">
+                    二线医生
+                </span>
+
+                            <div class="content-wrapper">
+                                {{this.secondDoctor}}
+                            </div>
+                        </td>
+                        <td width="20%">
+                <span class="text-label">
+                    二线护士长
+                </span>
+
+                            <div class="content-wrapper">
+                                {{this.secondNurse}}
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </script>
+</section>
+<script type="text/javascript" src="#url('/resources/js/nur/note_s.js?1472534366478')"></script>
+</body>
+</html>

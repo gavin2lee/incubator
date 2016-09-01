@@ -1,0 +1,158 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+}
+
+.wrapper {
+    width: 100%;
+    margin: 0;
+    font-size: 16px;
+}
+
+.header {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
+    text-align: center;
+    color: #fff;
+    background-color: #273c4f;
+    letter-spacing: 0.5em;
+}
+
+.header p {
+    height: 100%;
+    font-size: 26px;
+}
+
+td > div {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+}
+
+#day_nurse .msg-text > span, #work_nurse .msg-text > span {
+    text-align: center;
+}
+
+table {
+    height: 100%;
+    width: 100%;
+}
+
+tr:nth-child(2n) {
+    background-color: #f3f3f3;
+}
+
+tr[class*='row-'] td {
+    border-bottom: 1px solid #a6a6a6;
+    border-right: 1px solid #a6a6a6;
+    border-left: 1px solid #a6a6a6;
+    border-top: 0px;
+}
+
+.table2 tr td {
+    border-right: none;
+    border-left: none;
+}
+
+.title-text {
+    float: left;
+    letter-spacing: 0.1em;
+    color: #000;
+    font-size: 14pt;
+}
+
+.msg-text {
+    float: left;
+}
+
+/*td > div{
+	padding-left:5px;
+}*/
+.pd5 {
+    padding: 5px;
+}
+
+.msg-text > span {
+    display: inline-block;
+    color: #41bd29;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: normal;
+}
+
+.day_nurse ul, .work_nurse ul {
+    overflow: hidden;
+}
+
+.day_nurse ul li, .work_nurse ul li {
+    float: left;
+}
+
+/*input:focus{border:1px solid #E74C3C;}*/
+textarea {
+    resize: none;
+    font-size: 1.2em;
+}
+
+.bigAreaTitle {
+    display: block;
+    width: 100%;
+    padding: 5px 0;
+    text-indent: 1em;
+    background-color: #e0e3e8;
+    border-bottom: 1px solid #a6a6a6;
+}
+
+.fontColor2 {
+    color: #41bd29;
+}
+
+.msg-text span.fontColor3 {
+    color: #1963c2;
+}
+
+.full:-webkit-full-screen,
+.full:-moz-full-screen {
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (max-height: 1200px) {
+    .header p {
+        font-size: 32px;
+    }
+
+    .wrapper {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    .header p {
+        font-size: 35px;
+    }
+
+    .wrapper {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .header p {
+        font-size: 26px;
+    }
+}
+

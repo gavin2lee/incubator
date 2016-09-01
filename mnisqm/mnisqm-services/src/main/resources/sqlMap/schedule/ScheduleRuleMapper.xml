@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.schedule.dao.ScheduleRuleMapper" >
+  <!-- 数据插入 -->
+  <insert id="insert" parameterType="ScheduleRule" >
+    insert into SCHEDULE_RULE (STATUS, RULE_CODE, 
+      RULE_NAME, DEPT_CODE, DATE_TYPE,CLASS_CODE,
+      USER_COUNT,USER_LEVEL,REMARK,CREATE_TIME, 
+      UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON)
+    values (#{status,jdbcType=VARCHAR}, #{ruleCode,jdbcType=VARCHAR}, 
+      #{ruleName,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR}, #{dateType},
+      #{classCode},#{userCount},#{userLevel},#{remark},
+      GETDATE(), GETDATE(), 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  
+  <!-- 更新排班规则 -->
+  <update id="updateRuleByKey" parameterType="ScheduleRule">
+  	update SCHEDULE_RULE set 
+  		RULE_NAME = #{ruleName},
+  		DATE_TYPE = #{dateType},
+  		CLASS_CODE = #{classCode},
+  		USER_COUNT = #{userCount},
+  		USER_LEVEL = #{userLevel},
+  		REMARK = #{remark},
+  		STATUS = #{status},
+  		UPDATE_TIME = GETDATE(),
+  		UPDATE_PERSON = #{updatePerson}
+  	where SEQ_ID = #{seqId}
+  </update>
+  <!-- 查询科室下面所有排班规则 -->
+  <select id="selectRuleByDept" resultType="ScheduleRule" parameterType="ScheduleRule">
+    select 
+		r.SEQ_ID					seqId, 
+		r.STATUS					status, 
+		r.RULE_CODE					ruleCode, 
+		r.CLASS_CODE				classCode, 
+		c.CLASS_NAME				className,
+		r.RULE_NAME					ruleName, 
+		r.DEPT_CODE					deptCode, 
+	    r.DATE_TYPE					dateType, 
+	    r.USER_COUNT				userCount,
+	    r.USER_LEVEL				userLevel,
+	    r.REMARK					remark
+    from SCHEDULE_RULE r
+    LEFT JOIN SCHEDULE_DEPT_CLASS c ON r.CLASS_CODE = c.CLASS_CODE
+    where r.status != '09'
+    	and r.DEPT_CODE =#{deptCode}
+  </select>
+  
+  <!-- 删除排班规则 -->
+  <update id="deleteRuleByKey" parameterType="ScheduleRule">
+  	update SCHEDULE_RULE set 
+  		STATUS = '09',
+  		UPDATE_TIME = GETDATE(),
+  		UPDATE_PERSON = #{updatePerson}
+  	where SEQ_ID = #{seqId}
+  </update>
+</mapper>

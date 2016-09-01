@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.system.dao.SysDateMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.system.domain.SysDate" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="DATE" property="date" jdbcType="VARCHAR" />
+    <result column="MONTH" property="month" jdbcType="VARCHAR" />
+    <result column="WEEKS" property="weeks" jdbcType="INTEGER" />
+    <result column="WEEK_DAY" property="weekDay" jdbcType="VARCHAR" />
+    <result column="IS_WEEKEND" property="isWeekend" jdbcType="CHAR" />
+    <result column="IS_HOLIDAY" property="isHoliday" jdbcType="CHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_DATE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.system.domain.SysDate" >
+    insert into SYS_DATE (DATE, MONTH, 
+      WEEKS, WEEK_DAY, IS_WEEKEND, 
+      IS_HOLIDAY, STATUS, CREATE_TIME, 
+      UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON
+      )
+    values (#{date,jdbcType=VARCHAR}, #{month,jdbcType=VARCHAR}, 
+      #{weeks,jdbcType=INTEGER}, #{weekDay,jdbcType=VARCHAR}, #{isWeekend,jdbcType=CHAR}, 
+      #{isHoliday,jdbcType=CHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.system.domain.SysDate" >
+    update SYS_DATE
+    set DATE = #{date,jdbcType=VARCHAR},
+      MONTH = #{month,jdbcType=VARCHAR},
+      WEEKS = #{weeks,jdbcType=INTEGER},
+      WEEK_DAY = #{weekDay,jdbcType=VARCHAR},
+      IS_WEEKEND = #{isWeekend,jdbcType=CHAR},
+      IS_HOLIDAY = #{isHoliday,jdbcType=CHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, DATE, MONTH, WEEKS, WEEK_DAY, IS_WEEKEND, IS_HOLIDAY, STATUS, CREATE_TIME, 
+    UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON
+    from SYS_DATE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, DATE, MONTH, WEEKS, WEEK_DAY, IS_WEEKEND, IS_HOLIDAY, STATUS, CREATE_TIME, 
+    UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON
+    from SYS_DATE
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from SYS_DATE where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.system.domain.SysDate" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into SYS_DATE (DATE, MONTH, 
+      WEEKS, WEEK_DAY, IS_WEEKEND, 
+      IS_HOLIDAY, STATUS, CREATE_TIME, 
+      UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON
+      )
+    values (#{date,jdbcType=VARCHAR}, #{month,jdbcType=VARCHAR}, 
+      #{weeks,jdbcType=INTEGER}, #{weekDay,jdbcType=VARCHAR}, #{isWeekend,jdbcType=CHAR}, 
+      #{isHoliday,jdbcType=CHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <select id="getByDateUseLike" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from SYS_DATE
+    <if test ="date != null">
+    	where DATE like #{date};
+    </if>
+    
+  </select>
+</mapper>

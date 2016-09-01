@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/context
+     			http://www.springframework.org/schema/context/spring-context-3.2.xsd
+     			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+     			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	    		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+
+	<context:component-scan base-package="com.lachesis.mnis.web" />
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:mnis.properties</value>
+				<value>classpath:mnis_his.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 启动任务注解 -->
+	<task:annotation-driven />
+	<!-- 添加定时任务 -->
+	<!-- <task:scheduled-tasks scheduler="mnisScheduler">
+		危急值读取数据到reids
+ 		<task:scheduled ref="criticalCacheDataTask" method="criticalCacheDataToRedis" cron="${task.critical.cache}"/>
+ 		护理文书入量自动统计到生命体征
+ 		<task:scheduled ref="docReportToTempSheetTask" method="synDocReport" cron="${doc.report.data.syn}"/>
+ 	</task:scheduled-tasks>
+ 	<task:scheduler id="mnisScheduler" pool-size="1"/>
+    <bean id="criticalCacheDataTask" class="com.lachesis.mnis.web.task.CriticalCacheDataTask" /> -->
+    <!-- <bean id="docReportToTempSheetTask" class="com.lachesis.mnis.web.task.DocReportToTempSheetTask" /> -->
+ 
+	<!-- notify -->
+	<bean id="nurseNotifyTask" class="com.lachesis.mnis.web.task.NurseNotifyTask">
+		<property name="notifyServices">
+			<list value-type="com.lachesis.mnis.web.task.notify.service.NotifyService">
+				<ref bean="orderChangeNotifyService" />
+				<ref bean="labTestNotifyService" />
+				<ref bean="inspectionNotifyService" /> 
+				<!-- <ref bean="criticalValueNotifyService" /> -->
+				<!-- <ref bean="orderChangeNotifyService" />
+				<ref bean="orderExecNotifyService" />
+				<ref bean="bodysignNotifyService" />
+				<ref bean="labTestNotifyService" />
+				<ref bean="inspectionNotifyService" />
+				<ref bean="taskNotifyService" /> -->
+			</list>
+		</property>
+	</bean>
+
+	<!--import -->
+	<import resource="classpath*:applicationContext.xml" />
+	<import resource="classpath*:/spring/application-config.xml" />
+	<import resource="classpath*:applicationContext-board.xml" />
+	<import resource="classpath*:applicationContext-board-data.xml" />	
+</beans>

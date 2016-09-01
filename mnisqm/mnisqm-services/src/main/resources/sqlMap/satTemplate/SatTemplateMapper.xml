@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.satTemplate.dao.SatTemplateMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.satTemplate.domain.SatTemplate" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="FORM_CODE" property="formCode" jdbcType="VARCHAR" />
+    <result column="FORM_NAME" property="formName" jdbcType="VARCHAR" />
+    <result column="FORM_TYPE" property="formType" jdbcType="VARCHAR" />
+    <result column="USER_TYPE" property="userType" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <collection property="satTempDetailList" javaType="java.util.List"
+		ofType="com.lachesis.mnisqm.module.satTemplate.domain.SatTemplateDetail"
+		column="FORM_CODE" >
+		<id column="SEQID" property="seqId" jdbcType="BIGINT" />
+    	<result column="DETAIL_CODE" property="detailCode" jdbcType="VARCHAR" />
+    	<result column="FORM_CODE" property="formCode" jdbcType="VARCHAR" />
+    	<result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    	<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    	<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    	<result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    	<collection property="satOptionList" javaType="java.util.List"
+		ofType="com.lachesis.mnisqm.module.satTemplate.domain.SatOption"
+		column="DETAIL_CODE" >
+			<id column="SEQID2" property="seqId" jdbcType="BIGINT" />
+    		<result column="DETAIL_CODE" property="detailCode" jdbcType="VARCHAR" />
+    		<result column="OPTION_CODE" property="optionCode" jdbcType="VARCHAR" />
+    		<result column="OPTION_CONTENT" property="optionContent" jdbcType="VARCHAR" />
+    		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    		<result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    		<result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+		</collection>
+	</collection>
+  </resultMap>
+  <resultMap id="ResultMap" type="com.lachesis.mnisqm.module.satTemplate.domain.SatTemplate" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="FORM_CODE" property="formCode" jdbcType="VARCHAR" />
+    <result column="FORM_NAME" property="formName" jdbcType="VARCHAR" />
+    <result column="FORM_TYPE" property="formType" jdbcType="VARCHAR" />
+    <result column="USER_TYPE" property="userType" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SAT_TEMPLATE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatTemplate" >
+    insert into SAT_TEMPLATE (FORM_CODE, FORM_NAME, 
+      FORM_TYPE, USER_TYPE, STATUS, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+      UPDATE_PERSON)
+    values (#{formCode,jdbcType=VARCHAR}, #{formName,jdbcType=VARCHAR}, 
+      #{formType,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatTemplate" >
+    update SAT_TEMPLATE
+    set FORM_CODE = #{formCode,jdbcType=VARCHAR},
+      FORM_NAME = #{formName,jdbcType=VARCHAR},
+      FORM_TYPE = #{formType,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, FORM_CODE, FORM_NAME, FORM_TYPE, USER_TYPE, STATUS, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from SAT_TEMPLATE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+   <select id="getByTemplateName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select SEQ_ID, FORM_CODE, FORM_NAME, FORM_TYPE, USER_TYPE, STATUS, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from SAT_TEMPLATE
+    where FORM_NAME = #{formName}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, FORM_CODE, FORM_NAME, FORM_TYPE, USER_TYPE, STATUS, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from SAT_TEMPLATE
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from SAT_TEMPLATE where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatTemplate" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into SAT_TEMPLATE (FORM_CODE, FORM_NAME, 
+      FORM_TYPE, USER_TYPE, STATUS, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+      UPDATE_PERSON)
+    values (#{formCode,jdbcType=VARCHAR}, #{formName,jdbcType=VARCHAR}, 
+      #{formType,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateForDelete" parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatTemplate" >
+	update SAT_TEMPLATE
+	set
+	UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}, 
+    UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+	STATUS = #{status,jdbcType=CHAR}
+	where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="queryByFormTypeAndUserType" resultMap="BaseResultMap" parameterType="Map">
+    select st.SEQ_ID, st.FORM_CODE, st.FORM_NAME, st.FORM_TYPE, st.USER_TYPE, st.STATUS, st.CREATE_TIME, st.CREATE_PERSON, 
+    st.UPDATE_TIME, st.UPDATE_PERSON, std.SEQ_ID SEQID, std.DETAIL_CODE, std.FORM_CODE, std.CONTENT, std.CREATE_TIME, std.CREATE_PERSON, std.UPDATE_TIME, 
+    std.UPDATE_PERSON, so.SEQ_ID SEQID2, so.DETAIL_CODE, so.OPTION_CODE, so.OPTION_CONTENT, so.CREATE_TIME, so.CREATE_PERSON, 
+    so.UPDATE_TIME, so.UPDATE_PERSON
+    from SAT_TEMPLATE st, SAT_TEMPLATE_DETAIL std, SAT_OPTION so
+    where 
+    st.USER_TYPE = #{userType}
+    <if test="formType != null">
+        and st.FORM_TYPE = #{formType}
+    </if>
+    and st.FORM_CODE = std.FORM_CODE
+    and std.DETAIL_CODE = so.DETAIL_CODE
+  </select>
+  <select id="getByFormCode" resultMap="BaseResultMap" parameterType="String">
+    select st.SEQ_ID, st.FORM_CODE, st.FORM_NAME, st.FORM_TYPE, st.USER_TYPE, st.STATUS, st.CREATE_TIME, st.CREATE_PERSON, 
+    st.UPDATE_TIME, st.UPDATE_PERSON, std.SEQ_ID SEQID, std.DETAIL_CODE, std.FORM_CODE, std.CONTENT, std.CREATE_TIME, std.CREATE_PERSON, std.UPDATE_TIME, 
+    std.UPDATE_PERSON, so.SEQ_ID SEQID2, so.DETAIL_CODE, so.OPTION_CODE, so.OPTION_CONTENT, so.CREATE_TIME, so.CREATE_PERSON, 
+    so.UPDATE_TIME, so.UPDATE_PERSON
+    from SAT_TEMPLATE st, SAT_TEMPLATE_DETAIL std, SAT_OPTION so
+    where st.FORM_CODE = #{formCode}
+    and st.FORM_CODE = std.FORM_CODE
+    and std.DETAIL_CODE = so.DETAIL_CODE
+  </select>
+  <select id="queryAllCodeAndFormName" resultMap="ResultMap" >
+    select FORM_CODE, FORM_NAME
+    from SAT_TEMPLATE
+    where STATUS = '01'
+  </select>
+</mapper>

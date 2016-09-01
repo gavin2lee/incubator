@@ -1,0 +1,16 @@
+.tr-expand {
+  background: #fff;
+  .table-hover > tbody &:hover {
+    background: #fff;
+  }
+
+  .table {
+    margin-bottom: 0;
+  }
+}
+
+.td-expand {
+  cursor: pointer;
+  text-align: center;
+  color: $base-color2;
+}

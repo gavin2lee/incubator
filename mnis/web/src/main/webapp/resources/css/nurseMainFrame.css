@@ -1,0 +1,63 @@
+.combo-p div.panel-body {
+  /* 模版维护左侧科室选择下拉框垂直方向滚动条 */
+  overflow-y: scroll;
+}
+
+
+/*
+    体温单查看窗口
+*/
+
+#showtempSheetPanel {
+  height: 100%;
+  position: relative;
+}
+
+#showPanel {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+#showPanel::-webkit-scrollbar {
+  width: 7px;
+  height: 5px;
+}
+
+#showPanel::-webkit-scrollbar-thumb {
+  background-color: #666;
+  height: 50px;
+  /* outline-offset: -2px; */
+  /* outline: 2px solid #fff; */
+  -webkit-border-radius: 4px;
+  /* border: 2px solid #fff; */
+}
+
+.drawTempBox {
+  padding: 10px 0;
+  padding-top: 35px;
+}
+
+
+/* 体温单查看窗口按钮样式 */
+
+#showTempSheetBtn {
+  position: absolute;
+  width: 100%;
+  height: 31px;
+  background-color: #e0e4e8;
+}
+
+#showTempSheetBtn input[type="button"] {
+  min-width: 35px;
+  height: 25px;
+  line-height: 25px;
+  margin-top: -2px;
+}
+
+#showTempSheetBtn select {
+  margin-top: 2px;
+}
+
+#printSheet {
+  width: 85px;
+}

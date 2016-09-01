@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lachesis.mnisqm.module.remote.user.dao.BusyDeptInfoMapper">
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.user.domain.BusyDeptInfo">
+    <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+    <result column="PATIENT_SUM" jdbcType="INTEGER" property="patientSum" />
+    <result column="CRITICAL_PATIENT_SUM" jdbcType="INTEGER" property="criticalPatientSum" />
+    <result column="SURGERY_PATIENT_SUM" jdbcType="INTEGER" property="surgeryPatientSum" />
+    <result column="ON_JOB_NURSE_SUM" jdbcType="INTEGER" property="onJobNurseSum" />
+    <result column="ON_LEAVE_NURSE_SUM" jdbcType="INTEGER" property="onLeaveNurseSum" />
+    <result column="BED_RATE" jdbcType="VARCHAR" property="bedRate" />
+    <result column="BED_SUM" jdbcType="INTEGER" property="bedSum" />
+    <result column="BED_NURSE_RATE" jdbcType="VARCHAR" property="bedNurseRate" />
+    <result column="HIGH_RISK_PATIENT_SUM" jdbcType="INTEGER" property="highRiskPatientSum" />
+  </resultMap>
+  <select id="queryBusyDeptInfo" resultMap="BaseResultMap">
+    select patient.DEPT_NAME,patient.PATIENT_SUM, patient.CRITICAL_PATIENT_SUM,
+    n1.ON_JOB_NURSE_SUM, n1.ON_LEAVE_NURSE_SUM
+    from
+    	(select pci.WARD_CODE DEPT_NAME,
+   		 	sum(1) PATIENT_SUM,
+         	sum(case when DANGER_LEVEL in ('病重','重危') then 1 else 0 end) CRITICAL_PATIENT_SUM
+    	from PAT_CURE_INFO pci
+    	group by pci.WARD_CODE) as patient,
+    	(select  sdc.DEPT_CODE DEPT_NAME, 
+			sum(1) ON_JOB_NURSE_SUM,
+			sum(case when sl.APPROVE_USER is not null and #{dateTime} >= sl.START_TIME and sl.END_TIME > #{dateTime} then 1 else 0 end) ON_LEAVE_NURSE_SUM
+		from YIHUI.numas.dbo.SCHEDULE_RECORD_DETAIL srd left join YIHUI.numas.dbo.SCHEDULE_DEPT_CLASS sdc on sdc.CLASS_CODE = srd.CLASS_CODE
+			left join YIHUI.numas.dbo.SCHEDULE_LEAVE sl on srd.USER_CODE = sl.USER_CODE
+		where  #{time} >= sdc.START_TIME 
+			and sdc.END_TIME > #{time}
+			group by sdc.DEPT_CODE) as n1
+	where patient.DEPT_NAME = n1.DEPT_NAME
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from BUSY_DEPT_INFO
+  </select>
+  
+</mapper>

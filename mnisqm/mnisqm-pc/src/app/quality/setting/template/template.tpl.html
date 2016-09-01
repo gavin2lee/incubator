@@ -1,0 +1,78 @@
+<!-- begin 质控检查表单管理 -->
+<div class="wrapper quality-check-wrapper padding-content">
+  <ul class="page-nav clearfix">
+    <li><a ui-sref="home.qualityForm">质控组设置</a></li>
+    <li class="active"><a ui-sref="home.qualityModel">模板设置</a></li>
+  </ul>
+      <div class="quality-template-wrapper" ng-controller="QualityFormController as vm">
+        <div class="panel panel-layout panel-default">
+          <div class="tool-wrapper container-fluid form-inline">
+            <div class="filter-item">
+              <label for="name">名字：</label>
+              <input type="text" class="form-control input-sm" id="name" ng-model="vm.filter.modelName">
+            </div>
+            <div class="filter-item">
+                <label for="use">启用：</label>
+                <select class="input-sm" id="use" ng-model="vm.filter.isUsed">
+                  <option value="">全部</option>
+                  <option value="1">是</option>
+                  <option value="0">否</option>
+                </select>
+            </div>
+            <!-- <div class="filter-item">
+              <button class="btn btn-sm btn-primary" ng-click="vm.load.func()">查询</button>
+            </div> -->
+            <div class="pull-right">
+              <a class="btn btn-sm btn-primary" ui-sref="home.qualityFormAdd">新增模板</a>
+            </div>
+          </div>
+          <div class="panel-body" loading-wrapper loading-type="content" loading-options="vm.load">
+            <table print-table="vm.list" class="table table-hover table-condensed table-bordered no-border">
+              <thead>
+                <tr class="header-export">
+                  <th>名称</th>
+                  <th>创建人</th>
+                  <th>创建时间</th>
+                  <th>是否启用</th>
+                  <th>总分</th>
+                  <th print-remove>操作</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="row in vm.list | filter: {modelName: vm.filter.modelName, isUsed: vm.filter.isUsed}">
+                <tr class="row-{{$index}}">
+                  <td class="text-center">
+                    {{ row.modelName }}
+                  </td>
+                  <td class="text-center">
+                    {{ row.creator }}
+                  </td>
+                  <td class="text-center">
+                    {{ row.createTime | date: 'yyyy-MM-dd HH:mm' }}
+                  </td>
+                  <td class="text-center">
+                    {{ +row.isUsed ? '是': '否' }}
+                  </td>
+                  <td class="text-center">
+                    {{ row.totalScore || 0 }}
+                  </td>
+                  <td class="text-center">
+                    <a class="btn btn-primary btn-xs" ui-sref="home.qualityFormAdd({id: row.seqId})">
+                      <span class="fa fa-pencil"></span>编辑
+                    </a>
+                    <a class="btn btn-success btn-xs" ui-sref="home.qualityFormAdd({from: row.seqId})">
+                      <span class="fa fa-copy"></span>复制
+                    </a>
+                    <button class="btn btn-danger btn-xs" ng-click="vm.del(row.seqId)">
+                      <span class="fa fa-trash"></span>删除
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <none-data-info list="vm.list"></none-data-info>
+          </div>
+        </div>
+      </div>
+</div>
+<!-- end 质控检查表单管理 -->

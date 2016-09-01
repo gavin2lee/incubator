@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.lachesis.mnisqm.module.profSkillDoc.dao.SpecialistNursesExperienceMapper">
+	
+	<!-- 逻辑添加 -->
+	<insert id="insert"
+		parameterType="SpecialistNursesExperience">
+		insert into PTF_SPECIALIST_NURSES_EXPERIENCE
+		(USER_CODE,
+		USER_NAME, WARD_CODE,
+		BEGIN_TIME, END_TIME, RANK,
+		JUNIOR_COLLEGE,
+		STATUS, AUDITOR,
+		REMARK, CREATE_TIME, CREATE_PERSON,
+		UPDATE_TIME, UPDATE_PERSON)
+		values
+		(#{userCode},
+		#{userName},
+		#{wardCode},
+		#{beginTime},
+		#{endTime},
+		#{rank},
+		#{juniorCollege},
+		'01',
+		#{auditor},
+		#{remark},
+		GETDATE(),
+		#{createPerson},
+		GETDATE(),
+		#{updatePerson})
+	</insert>
+	<!-- 逻辑删除 -->
+	<update id="deleteByPrimaryKey"
+		parameterType="SpecialistNursesExperience">
+		update
+		PTF_SPECIALIST_NURSES_EXPERIENCE
+		set
+		STATUS=#{status},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑修改 -->
+	<update id="update"
+		parameterType="SpecialistNursesExperience">
+		update
+		PTF_SPECIALIST_NURSES_EXPERIENCE
+		set
+		USER_CODE=#{userCode},
+		USER_NAME=#{userName},
+		WARD_CODE=#{wardCode},
+		BEGIN_TIME=#{beginTime},
+		END_TIME=#{endTime},
+		RANK=#{rank},
+		JUNIOR_COLLEGE=#{juniorCollege},
+		AUDITOR=#{auditor},
+		REMARK=#{remark},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑查找 -->
+	<select id="select"
+		parameterType="SpecialistNursesExperience"
+		resultType="SpecialistNursesExperience">
+		select
+		SEQ_ID				as seqId, 
+		USER_CODE			as userCode, 
+		USER_NAME			as userName,
+		WARD_CODE			as wardCode, 
+		BEGIN_TIME			as beginTime, 
+		END_TIME			as endTime,
+		RANK				as rank, 
+		JUNIOR_COLLEGE		as juniorCollege, 
+		STATUS				as status,
+		AUDITOR				as auditor, 
+		REMARK				as remark
+		from
+		PTF_SPECIALIST_NURSES_EXPERIENCE
+		where STATUS='01'
+		<if test="userCode != null">
+			and USER_CODE=#{userCode}
+		</if>
+		<if test="userName != null">
+			and USER_NAME like #{userName}
+		</if>
+		<if test="wardCode != null">
+			and WARD_CODE like #{wardCode}
+		</if>
+		<if test="beginTime != null">
+			and BEGIN_TIME >= #{beginTime}
+		</if>
+		<if test="endTime != null">
+			and #{endTime} >= END_TIME
+		</if>
+		<if test="rank != null">
+			and RANK = #{rank}
+		</if>
+		<if test="juniorCollege != null">
+			and JUNIOR_COLLEGE like #{juniorCollege}
+		</if>
+		<if test="auditor != null">
+			and AUDITOR like #{auditor}
+		</if>
+	</select>
+</mapper>
+  

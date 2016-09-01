@@ -1,0 +1,31 @@
+
+<div class="uib-timepicker">
+  <div class="form-input">
+    <div class="form-group uib-time hours" ng-class="{'has-error': invalidHours}">
+      <input type="text" placeholder="HH" ng-model="hours" ng-change="updateHours()" class="form-control text-center" ng-readonly="::readonlyInput" maxlength="2" tabindex="{{::tabindex}}" ng-disabled="noIncrementHours()" ng-blur="blur()">
+      <div class="time-spinner" ng-show="::showSpinners">
+        <a ng-click="incrementHours()" ng-class="{disabled: noIncrementHours()}" class="btn btn-link time-spinner_btn" ng-disabled="noIncrementHours()" tabindex="-1"><span class="fa fa-chevron-up"></span></a>
+        <a ng-click="decrementHours()" ng-class="{disabled: noDecrementHours()}" class="btn btn-link time-spinner_btn" ng-disabled="noDecrementHours()" tabindex="-1"><span class="fa fa-chevron-down"></span></a>
+      </div>
+    </div>
+    <div class="uib-separator" ng-show="showMinutes">:</div>
+    <div class="form-group uib-time minutes" ng-class="{'has-error': invalidMinutes}" ng-show="showMinutes">
+      <input type="text" placeholder="MM" ng-model="minutes" ng-change="updateMinutes()" class="form-control text-center" ng-readonly="::readonlyInput" maxlength="2" tabindex="{{::tabindex}}" ng-disabled="noIncrementMinutes()" ng-blur="blur()">
+      <div class="time-spinner" ng-show="::showSpinners">
+        <a ng-click="incrementMinutes()" ng-class="{disabled: noIncrementMinutes()}" class="btn btn-link time-spinner_btn" ng-disabled="noIncrementMinutes()" tabindex="-1"><span class="fa fa-chevron-up"></span></a>
+        <a ng-click="decrementMinutes()" ng-class="{disabled: noDecrementMinutes()}" class="btn btn-link time-spinner_btn" ng-disabled="noDecrementMinutes()" tabindex="-1"><span class="fa fa-chevron-down"></span></a>
+      </div>
+    </div>
+    <div class="uib-separator" ng-show="showSeconds">:</div>
+    <div class="form-group uib-time seconds" ng-class="{'has-error': invalidSeconds}" ng-show="showSeconds">
+      <input type="text" placeholder="SS" ng-model="seconds" ng-change="updateSeconds()" class="form-control text-center" ng-readonly="readonlyInput" maxlength="2" tabindex="{{::tabindex}}" ng-disabled="noIncrementSeconds()" ng-blur="blur()">
+      <div class="time-spinner" ng-show="::showSpinners">
+        <a ng-click="incrementSeconds()" ng-class="{disabled: noIncrementSeconds()}" class="btn btn-link time-spinner_btn" ng-disabled="noIncrementSeconds()" tabindex="-1"><span class="fa fa-chevron-up"></span></a>
+        <a ng-click="decrementSeconds()" ng-class="{disabled: noDecrementSeconds()}" class="btn btn-link time-spinner_btn" ng-disabled="noDecrementSeconds()" tabindex="-1"><span class="fa fa-chevron-down"></span></a>
+      </div>
+    </div>
+    <div ng-show="showMeridian" class="uib-time am-pm">
+      <button type="button" ng-class="{disabled: noToggleMeridian()}" class="btn btn-default text-center" ng-click="toggleMeridian()" ng-disabled="noToggleMeridian()" tabindex="{{::tabindex}}">{{meridian}}</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnis.core.identity.entity.SysRole" >
+    <id column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="role_code" property="roleCode" jdbcType="VARCHAR" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="modify_user_id" property="modifyUserId" jdbcType="INTEGER" />
+    <result column="modify_datetime" property="modifyDatetime" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap type="com.lachesis.mnis.core.identity.entity.Permission" id="PermissionMap">
+      <result column="valid_time" property="validTime" jdbcType="INTEGER" />
+	  <association property="module" resultMap="com.lachesis.mnis.core.mybatis.mapper.DictModuleMapper.BaseResultMap"></association>
+	  <association property="operate" resultMap="com.lachesis.mnis.core.mybatis.mapper.DictOperateMapper.BaseResultMap"></association>
+  </resultMap>
+  <resultMap id="RolePermissionMap" type="com.lachesis.mnis.core.identity.entity.RolePermission" >
+      <id column="role_id" />
+      <association property="role" resultMap="BaseResultMap"></association>
+      <collection property="listPermission" resultMap="PermissionMap"></collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    role_id,role_code, role_name, create_user_id, create_datetime, modify_user_id, modify_datetime, 
+    description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+    <select id="getAllRole" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnis.core.identity.entity.SysRole" >
+    insert into sys_role  (role_code,role_name, create_user_id, 
+      create_datetime, modify_user_id, modify_datetime, 
+      description)
+    values (#{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{createUserId,jdbcType=INTEGER}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=INTEGER}, #{modifyDatetime,jdbcType=TIMESTAMP}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lachesis.mnis.core.identity.entity.SysRole" >
+    insert into sys_role <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleCode != null" >
+        role_code,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="modifyUserId != null" >
+        modify_user_id,
+      </if>
+      <if test="modifyDatetime != null" >
+        modify_datetime,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="roleCode != null" >
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDatetime != null" >
+        #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lachesis.mnis.core.identity.entity.SysRole" >
+    update sys_role <set >
+       <if test="roleCode != null" >
+        roleCode = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDatetime != null" >
+        modify_datetime = #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnis.core.identity.entity.SysRole" >
+    update sys_role set
+      role_code = #{roleName,jdbcType=VARCHAR}, 
+      role_name = #{roleName,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+      modify_datetime = #{modifyDatetime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR}
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+  <insert id="insertUserRole" parameterType="Map">
+      insert into sys_user_role(role_id,user_id)
+      (
+			<foreach collection="roleId" item="item" separator="union all">
+				select #{item},#{userId}
+			</foreach>
+			)
+  </insert>
+  <delete id="deleteUserRole" parameterType="Map">
+      delete sys_user_role where user_id=#{userId}
+      <if test="roleId !=null">
+            and role_id in 
+		    <foreach collection="roleId" item="item"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+      </if>
+  </delete>
+  <select id="getUserRoles" parameterType="Integer" resultMap="BaseResultMap">
+      select r.* from sys_user_role ur
+      inner join sys_role r on ur.role_id=r.role_id
+      inner join sys_user u on ur.user_id=u.user_id
+      where ur.user_id=#{userId}
+  </select>
+  <insert id="insertRolePermission" parameterType="Map">
+      insert into sys_role_permission(role_id,module_id,operate_code,valid_time)
+      (
+      <foreach collection="operateCode" item="item" separator="union all">
+			select #{roleId},#{moduleId},#{item},#{validTime}
+	   </foreach>
+      )
+  </insert>
+    <delete id="deleteRolePermission" parameterType="Map">
+      delete sys_role_permission where role_id=#{roleId}
+       <if test="operateCode !=null">
+           and operate_code in 
+		    <foreach collection="operateCode" item="item"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+       </if>
+        <if test="moduleId !=null">
+           and module_id in 
+		    <foreach collection="moduleId" item="item"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+       </if>	
+  </delete>
+  <select id="getRolePermissions" parameterType="Integer" resultMap="RolePermissionMap">
+      select r.*,m.*,o.*,rp.valid_time from sys_role_permission rp
+      left join sys_role r on rp.role_id=r.role_id
+      left join sys_module m on rp.module_id=m.module_id
+      left join sys_operate o on rp.operate_code=o.operate_code
+      where rp.role_id=#{roleId}
+  </select>
+</mapper>

@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hljld-v" language="groovy" pageWidth="1010" pageHeight="700" orientation="Landscape" columnWidth="970" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2f42722-42e5-4f4e-a6a3-2031f2d22235">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="707"/>
+	<property name="ireport.y" value="159"/>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="DE08_10_054_00" class="java.lang.String"/>
+	<parameter name="PTNT_BED" class="java.lang.String"/>
+	<parameter name="PTNT_NAM" class="java.lang.String"/>
+	<parameter name="PTNT_HOSPITAL_NO" class="java.lang.String"/>
+	<parameter name="PTNT_SEX" class="java.lang.String"/>
+	<parameter name="PTNT_AGE" class="java.lang.String"/>
+	<parameter name="DE06_00_092_00" class="java.lang.String"/>
+	<parameter name="PTNT_DIAGNOSE" class="java.lang.String"/>
+	<parameter name="BE_HOSPITALIZED_TIME" class="java.lang.String"/>
+	<parameter name="PRESSURE_SORE_POSITION" class="java.lang.String"/>
+	<parameter name="PRESSURE_SORE_HIGH_RISK" class="java.lang.String"/>
+	<parameter name="PRESSURE_SORE_REPORT_EXIST" class="java.lang.String"/>
+	<parameter name="PRESSURE_SORE_GRADE" class="java.lang.String"/>
+	<parameter name="PRESSURE_SORE_BASE_CONDITION" class="java.lang.String"/>
+	<parameter name="PRESSURE_SORE_BASE_ANNEX" class="java.lang.String"/>
+	<parameter name="CREATE_PERSON2" class="java.lang.String"/>
+	<parameter name="APPROVE_PERSON2" class="java.lang.String"/>
+	<parameter name="CREATE_TIME2" class="java.lang.String"/>
+	<parameter name="PRESSURE_SORE_PART" class="java.lang.String"/>
+	<parameter name="PRESSURE_SORE_FILE" class="java.lang.String"/>
+	<parameter name="PRESSURE_SORE_MEMBER_SIGN" class="java.lang.String"/>
+	<parameter name="PRESSURE_SORE_HEADMAN_SIGN" class="java.lang.String"/>
+	<parameter name="CREATE_TIME3" class="java.lang.String"/>
+	<parameter name="CREATE_TIME4" class="java.lang.String"/>
+	<field name="DATE_LIST" class="java.lang.String"/>
+	<field name="NORTON_COOPERATE" class="java.lang.String"/>
+	<field name="NORTON_AGE" class="java.lang.String"/>
+	<field name="NORTON_SKN" class="java.lang.String"/>
+	<field name="NORTON_OTHER_DISEASE" class="java.lang.String"/>
+	<field name="NORTON_PHYSIOLOGY" class="java.lang.String"/>
+	<field name="NORTON_SPIRIT" class="java.lang.String"/>
+	<field name="NORTON_MOVE" class="java.lang.String"/>
+	<field name="NORTON_FLEXBLE" class="java.lang.String"/>
+	<field name="NORTON_INCONTINENCE" class="java.lang.String"/>
+	<field name="PRESSURE_SORE" class="java.lang.String"/>
+	<field name="CREATE_PERSON" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="110">
+			<staticText>
+				<reportElement x="0" y="0" width="970" height="35" uuid="2319e4df-022a-46d1-b068-e4e17d7d4d0f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[深圳市第三人民医院]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="35" width="970" height="35" uuid="ae4aff8c-43bd-4dc6-9f57-93d3699e25ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[压疮风险预警报告表（改良式norton压疮风险评估表）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="70" width="45" height="20" uuid="71dd4632-7576-4d7a-9ec8-01eb5e58cc42"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[病区：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="45" y="70" width="120" height="20" uuid="f05e287b-bba3-4669-8690-77c3255b2c78"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DE08_10_054_00}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="179" y="70" width="45" height="20" uuid="8e6d5a98-e13d-4604-bfbf-50058702c4cd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[床号：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="224" y="70" width="100" height="20" uuid="3952e3fb-41c6-4d26-b8d4-0a94c5eafb64"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_BED}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="333" y="70" width="45" height="20" uuid="825a940f-973c-48a5-83fe-7006fcb70849"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[姓名：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="378" y="70" width="100" height="20" uuid="7eaaf748-fc1f-487c-acfd-25759005cf4f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_NAM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="487" y="70" width="56" height="20" uuid="3790b48b-276d-46b0-811b-5f8b2b337a8a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[住院号：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="543" y="70" width="120" height="20" uuid="6342019d-4c85-4e74-bc5d-a96f063cb3f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_HOSPITAL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="678" y="70" width="45" height="20" uuid="6308c312-6c7a-4f34-8353-3dcaa7df56df"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[性别：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="723" y="70" width="70" height="20" uuid="7d737b68-5472-4e80-b882-34f0a7f34aad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_SEX}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="798" y="70" width="45" height="20" uuid="f55358d0-3fb0-46b8-bae6-058131a7ea7b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[年龄：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="843" y="70" width="75" height="20" uuid="b55f3508-62ab-4676-9053-ddbac07504b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_AGE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="90" width="70" height="20" uuid="9eb85c96-f62a-4ff7-872c-fc5794d97cac"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[入院时间：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="90" width="130" height="20" uuid="db91da07-f5af-4e1f-ae0e-7f18b775bcce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BE_HOSPITALIZED_TIME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="90" width="45" height="20" uuid="8fc593c4-1bc3-40da-913b-7d8cbe9b82f4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[诊断：]]></text>
+			</staticText>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="246" y="90" width="725" height="20" uuid="5a020d30-839a-444c-8a86-216b39b77b80"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12" isStrikeThrough="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_DIAGNOSE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="140" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="20" width="99" height="20" uuid="d6130f6d-1b64-4ef6-b80d-2f77c906b960"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[难免压疮申报]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="99" y="20" width="86" height="20" uuid="865cd818-bffb-4d26-b810-ed90bc326999"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PRESSURE_SORE_REPORT_EXIST}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="185" y="20" width="39" height="20" uuid="f3bf68d4-86ce-47e8-9538-28c406a0d10b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[评分]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="224" y="20" width="47" height="20" uuid="87a0009f-1bac-4fb5-a999-c9cac3a77280"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PRESSURE_SORE_GRADE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="271" y="20" width="14" height="20" uuid="dfada47d-1314-471d-a1e3-e5b8f3d08a43"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="70" height="20" uuid="13faae3c-7204-4df9-9b13-d8a0f5096b71"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[基本条件：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="40" width="665" height="20" uuid="3f8ecfc9-9ad2-4138-a93f-abd59e37401d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PRESSURE_SORE_BASE_CONDITION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="60" width="70" height="20" uuid="507be826-2b17-47d5-ba92-82b3b5896670"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[附加条件：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="72" y="60" width="665" height="20" uuid="a22648ac-f04d-4db7-9028-3c4cfb50a686"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PRESSURE_SORE_BASE_ANNEX}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="80" width="97" height="20" uuid="3809e62f-8366-482a-a1a6-581fce309d94"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[责任护士签名：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="97" y="80" width="86" height="20" uuid="adc95e71-8b67-49d8-a717-e5a7962ec519"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CREATE_PERSON2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="183" y="80" width="156" height="20" uuid="25d86912-0d69-4797-9a79-0759c7957d4d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[高责护士/护士长签名：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="340" y="80" width="86" height="20" uuid="5cb55294-082d-4aaf-b9da-b5d779d78766"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{APPROVE_PERSON2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="447" y="80" width="46" height="20" uuid="b7f1c833-1288-4fdf-8287-861bd1af7e4e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[时间：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="493" y="80" width="113" height="20" uuid="2f94dda3-85ed-4ddb-bf89-a37e0215cba0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CREATE_TIME2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="225" height="20" uuid="f0ffa405-8213-45c6-84a3-f1eebebebc8c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[压疮小组（组长及组员双人签字）：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="447" y="100" width="46" height="20" uuid="3028347b-af7e-494b-9c54-fdd9adaa8164"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[时间：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="120" width="97" height="20" uuid="b3bbadc0-d0a1-47c1-85bd-be687674f046"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[难免压疮转归：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="97" y="120" width="320" height="20" uuid="5603fc26-bc52-4f61-84b3-40c29b3c5717"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PRESSURE_SORE_FILE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="447" y="120" width="46" height="20" uuid="8e516304-cdff-494e-b5e7-5d5410bdfb24"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[时间：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="493" y="120" width="115" height="20" uuid="cf77da1d-cbe3-411a-9ccd-08f9a178e61e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CREATE_TIME3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="299" y="103" width="15" height="17" uuid="47dfbf41-81e7-4445-9aae-4b5c919d2860"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="87" height="20" uuid="6b21ec06-3bdf-4cb0-864c-eeb1858f8cdb"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[患者体位]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="87" y="0" width="391" height="20" uuid="e8343008-3e07-4543-8a8d-84c01df52f3c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PRESSURE_SORE_POSITION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="478" y="0" width="87" height="20" uuid="da5e414b-3ff3-4db0-ac0c-61a88dce5fde"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[高危部位]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="565" y="0" width="403" height="20" uuid="d6abf9ec-718d-4880-a524-359ec778386d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PRESSURE_SORE_HIGH_RISK}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="324" y="20" width="39" height="20" uuid="3ddee7e3-4ac8-4daa-ba4d-9549372d645e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[部位]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="363" y="20" width="202" height="20" uuid="30832e65-8773-41fd-b682-6c73109c944d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PRESSURE_SORE_PART}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="225" y="100" width="74" height="20" uuid="f191b706-f500-4971-8db8-df4eee2f5b7f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PRESSURE_SORE_MEMBER_SIGN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="314" y="100" width="74" height="20" uuid="01890429-e8ad-43fa-b33d-703179c8a84c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PRESSURE_SORE_HEADMAN_SIGN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="493" y="100" width="113" height="20" uuid="a1486180-e10c-4964-8278-05a1eee1a783"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CREATE_TIME4}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="120" splitType="Stretch">
+			<staticText>
+				<reportElement x="75" y="0" width="82" height="120" uuid="af87373d-a0d3-40d9-b541-428ca44a3ed2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[1、配合程度：<br>完全 4分，<br>较少 3分，<br>部分 2分，<br>不能 1分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="890" y="0" width="80" height="120" forecolor="#000000" backcolor="#FFFFFF" uuid="87144061-fe4f-481f-883e-17064d30e97b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[签名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="0" width="68" height="120" uuid="025a8e4d-9645-40c4-b336-cc22308115b8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[2、年龄：<br><10 4分，<br><30 3分，<br><60 2分，<br>>60 1分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="225" y="0" width="94" height="120" uuid="3e891c6f-b4de-414b-b915-1904a7765884"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[3、皮肤状况：<br>尚好 4分，<br>干燥脱屑 3分，<br>潮湿 2分，<br>伤口过敏破口1分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="436" y="0" width="86" height="120" uuid="c09ce355-4d59-4629-a36f-ffd3b681477d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[5、生理状况：<br>好 4分，<br>一般 3分，<br>较差 2分，<br>很差 1分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="522" y="0" width="86" height="120" uuid="45238dc6-f821-48ca-8dbc-31e64328f36e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[6、精神状况：<br>警觉 4分，<br>情感平淡 3分，<br>情绪烦躁  2分，<br>昏迷 1分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="608" y="0" width="96" height="120" uuid="38085a73-362c-427d-a92d-0f9d44407692"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[7、活动程度：<br>走动 4分，<br>帮助下走动 3分，<br>轮椅范围 2分，<br>昏迷 1分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="850" y="0" width="40" height="120" uuid="620825b7-c99a-4b62-9bdf-7868b1fa1b15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[总<br>评<br>分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="704" y="0" width="86" height="120" uuid="bcc5a19d-7823-4e0c-94e6-52dd118ca5c9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[8、灵活程度：<br>完全 4分，<br>轻微受限 3分，<br>非常受限 2分，<br>固定 1分
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="0" y="0" width="75" height="120" forecolor="#000000" backcolor="#FFFFFF" uuid="eedc3e9a-4fb2-4879-9de4-90054d1ac856"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[日期]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="0" width="117" height="120" uuid="1e04bb2c-cef3-42b8-baee-9615b7598399"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[4、其它疾病：<br>无 4分，<br>抵抗力下降、<br>发烧、糖尿病 3分，<br>多发性肝硬化、<br>肥胖病2分，<br>动脉栓塞 1分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="790" y="0" width="60" height="120" uuid="41fcaa6a-a555-4ce7-9ff7-ba0772e4d706"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[9、失禁：<br>无 4分，<br>偶有 3分，<br>常常 2分，<br>完全 1 分]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Prevent">
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="75" height="20" backcolor="#FFFFFF" uuid="73578e1e-ed02-4fa5-a258-4c88785f09ad"/>
+				<textFieldExpression><![CDATA[$F{DATE_LIST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="75" y="0" width="82" height="20" backcolor="#FFFFFF" uuid="8c33d34a-a860-4362-aa7f-35c784bbea82"/>
+				<textFieldExpression><![CDATA[$F{NORTON_COOPERATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="157" y="0" width="68" height="20" backcolor="#FFFFFF" uuid="3d85d185-f90b-4264-bf3d-8aeb4d75b4b0"/>
+				<textFieldExpression><![CDATA[$F{NORTON_AGE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="225" y="0" width="94" height="20" backcolor="#FFFFFF" uuid="9e357c3a-c572-41e3-b402-5b2cc228c969"/>
+				<textFieldExpression><![CDATA[$F{NORTON_SKN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="319" y="0" width="117" height="20" backcolor="#FFFFFF" uuid="322850de-ec1f-471a-afc4-56d5e74002c1"/>
+				<textFieldExpression><![CDATA[$F{NORTON_OTHER_DISEASE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="436" y="0" width="86" height="20" backcolor="#FFFFFF" uuid="cd66694c-8458-4772-a8b8-d196d548702e"/>
+				<textFieldExpression><![CDATA[$F{NORTON_PHYSIOLOGY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="522" y="0" width="86" height="20" backcolor="#FFFFFF" uuid="c67cdae0-785a-4f46-80a4-1ab61c2d0ca2"/>
+				<textFieldExpression><![CDATA[$F{NORTON_SPIRIT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="608" y="0" width="96" height="20" backcolor="#FFFFFF" uuid="4547399e-f36e-4c7c-9a20-a24d1d0a36bb"/>
+				<textFieldExpression><![CDATA[$F{NORTON_MOVE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="704" y="0" width="86" height="20" backcolor="#FFFFFF" uuid="5fd3c9d7-d900-4c46-b2a1-6d28ca2e1a13"/>
+				<textFieldExpression><![CDATA[$F{NORTON_FLEXBLE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="790" y="0" width="60" height="20" backcolor="#FFFFFF" uuid="e10e3cc1-6ed4-4763-a121-3cea83e6e319"/>
+				<textFieldExpression><![CDATA[$F{NORTON_INCONTINENCE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="850" y="0" width="40" height="20" backcolor="#FFFFFF" uuid="a1558f63-1ed6-4699-9cb4-5440fa7066cc"/>
+				<textFieldExpression><![CDATA[$F{PRESSURE_SORE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="890" y="0" width="80" height="20" backcolor="#FFFFFF" uuid="bd1dd918-3adc-41a4-8291-96a0c2378847"/>
+				<textFieldExpression><![CDATA[$F{CREATE_PERSON}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="968" height="18" uuid="d9f5c4d5-fb9c-4ad6-aa39-fd779cf72714"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[备注：次表格参考《临床护理文书规范》（专科篇）第109-127页]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="54" width="968" height="18" uuid="3b075a53-5640-4aa7-927a-d9cd416fc1ae"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[3、当评分<=13分时或申请难免压疮时，签署《压疮相关风险知情同意书》]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="36" width="968" height="18" uuid="28ca4b34-4072-4692-b8fa-3b6538c2842d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[2、评估时机：入院，病情变化，手术时，出院。当评分<=13分，至少3天1次；>=14分，3-5天1次；患者转科/手术时，此表随病历走，确保评估延续]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="18" width="968" height="18" uuid="33958775-4db2-4323-ad6d-c539f1c712b5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[1、评估对象：危重病人，手术>4h，术后、卧床或活动受限，严重营养不良，水肿，失禁，或预计可能发生压疮的病人.难免压疮申报条件：<=13分，基本/附加条件各至少满足1项]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="72" width="968" height="18" uuid="156b9bd4-7a57-4354-9979-327053790cda"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[4、结案时（当评分<=13 分时或难免压疮），本表需一式三份，原件存入病历，复印一份科室存档，一份交压疮小组]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

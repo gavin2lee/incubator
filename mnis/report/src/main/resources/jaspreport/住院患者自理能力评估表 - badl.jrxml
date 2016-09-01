@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hljld-v" language="groovy" pageWidth="1010" pageHeight="700" orientation="Landscape" columnWidth="970" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2f42722-42e5-4f4e-a6a3-2031f2d22235">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="24"/>
+	<property name="ireport.y" value="77"/>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="DE08_10_054_00" class="java.lang.String"/>
+	<parameter name="PTNT_BED" class="java.lang.String"/>
+	<parameter name="PTNT_NAM" class="java.lang.String"/>
+	<parameter name="PTNT_HOSPITAL_NO" class="java.lang.String"/>
+	<parameter name="PTNT_SEX" class="java.lang.String"/>
+	<parameter name="PTNT_AGE" class="java.lang.String"/>
+	<parameter name="BE_HOSPITALIZED_TIME" class="java.lang.String"/>
+	<parameter name="PTNT_DIAGNOSE" class="java.lang.String"/>
+	<parameter name="TITLE_ONE" class="java.lang.String"/>
+	<parameter name="TITLE_TWO" class="java.lang.String"/>
+	<parameter name="TITLE_THREE" class="java.lang.String"/>
+	<field name="DATE_LIST" class="java.lang.String"/>
+	<field name="SZS_BADL_SHIT" class="java.lang.String"/>
+	<field name="SZS_BADL_PEE" class="java.lang.String"/>
+	<field name="SZS_BADL_BRUSH" class="java.lang.String"/>
+	<field name="SZS_BADL_TOILET" class="java.lang.String"/>
+	<field name="SZS_BADL_EAT" class="java.lang.String"/>
+	<field name="SZS_BADL_CHANGE" class="java.lang.String"/>
+	<field name="SZS_BADL_MOVE" class="java.lang.String"/>
+	<field name="SZS_BADL_DRESS" class="java.lang.String"/>
+	<field name="SZS_BADL_UPDOWN_STAIRS" class="java.lang.String"/>
+	<field name="SZS_BADL_SHOWER" class="java.lang.String"/>
+	<field name="BDAL_SCORE" class="java.lang.String"/>
+	<field name="SELF_CARE_LEVEL" class="java.lang.String"/>
+	<field name="CREATE_PERSON" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="120" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="970" height="35" uuid="2319e4df-022a-46d1-b068-e4e17d7d4d0f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[深圳市第三人民医院]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="45" width="970" height="35" uuid="ae4aff8c-43bd-4dc6-9f57-93d3699e25ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[患者基本生活活动能力（BADL）评估（Barthel）量表]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="45" height="20" uuid="71dd4632-7576-4d7a-9ec8-01eb5e58cc42"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[病区：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="45" y="80" width="120" height="20" uuid="f05e287b-bba3-4669-8690-77c3255b2c78"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DE08_10_054_00}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="165" y="80" width="45" height="20" uuid="8e6d5a98-e13d-4604-bfbf-50058702c4cd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[床号：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="210" y="80" width="100" height="20" uuid="3952e3fb-41c6-4d26-b8d4-0a94c5eafb64"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_BED}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="80" width="45" height="20" uuid="825a940f-973c-48a5-83fe-7006fcb70849"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[姓名：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="355" y="80" width="100" height="20" uuid="7eaaf748-fc1f-487c-acfd-25759005cf4f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_NAM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="455" y="80" width="56" height="20" uuid="3790b48b-276d-46b0-811b-5f8b2b337a8a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[住院号：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="511" y="80" width="120" height="20" uuid="6342019d-4c85-4e74-bc5d-a96f063cb3f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_HOSPITAL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="631" y="80" width="45" height="20" uuid="6308c312-6c7a-4f34-8353-3dcaa7df56df"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[性别：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="746" y="80" width="45" height="20" uuid="f55358d0-3fb0-46b8-bae6-058131a7ea7b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[年龄：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="676" y="80" width="70" height="20" uuid="7d737b68-5472-4e80-b882-34f0a7f34aad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_SEX}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="791" y="80" width="75" height="20" uuid="b55f3508-62ab-4676-9053-ddbac07504b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_AGE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="70" height="20" uuid="9eb85c96-f62a-4ff7-872c-fc5794d97cac"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[入院时间：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="100" width="130" height="20" uuid="db91da07-f5af-4e1f-ae0e-7f18b775bcce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BE_HOSPITALIZED_TIME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="100" width="45" height="20" uuid="8fc593c4-1bc3-40da-913b-7d8cbe9b82f4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[诊断：]]></text>
+			</staticText>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="245" y="100" width="725" height="20" uuid="5a020d30-839a-444c-8a86-216b39b77b80"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12" isStrikeThrough="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_DIAGNOSE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="180" splitType="Stretch">
+			<staticText>
+				<reportElement style="table_TH" x="0" y="0" width="80" height="180" forecolor="#000000" backcolor="#FFFFFF" uuid="eedc3e9a-4fb2-4879-9de4-90054d1ac856"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[日期]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="0" width="54" height="20" uuid="af87373d-a0d3-40d9-b541-428ca44a3ed2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[大便]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="20" width="18" height="140" uuid="33235546-dad2-45de-a5e2-f24efd791843"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[失
+禁
+或
+昏
+迷]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="98" y="20" width="18" height="140" uuid="61aa7ba2-b5fd-4ee8-ab4a-1c74b55d7dfe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[失
+禁
+每
+周
+<
+1次]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="116" y="20" width="18" height="140" uuid="48bc93fe-ca3b-4356-83d3-088ce8094ffc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[控
+制]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="134" y="0" width="70" height="20" uuid="397d4ba7-2f85-4993-bfe1-aa8cd2fc5071"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[小便]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="204" y="0" width="36" height="20" uuid="5a4c3381-f27d-4a04-998f-4815c574f9ed"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[修饰]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="0" width="126" height="20" uuid="f99cd597-9852-409d-adac-2b7da5adda2a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[转移]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="160" width="18" height="20" uuid="b4a06984-3b79-4abf-b471-217fb47ff7ce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="134" y="160" width="25" height="20" uuid="a0cef01c-9a1a-41c3-adc0-b27b092377c6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="160" width="27" height="20" uuid="e16ae4ab-da17-4096-b3b7-9c81cd5ac5eb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="160" width="18" height="20" uuid="fd0e1e83-ba03-4147-913c-a71d19656b1a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="134" y="20" width="25" height="140" uuid="efe452bd-bc4c-4d91-8bc9-65f74ab07b2c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[失禁<br>昏迷<br>或由<br>他人<br>导尿]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="20" width="27" height="140" uuid="e4c8f992-0bf9-483d-ae4d-25c0ed0f58d1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[偶有<br>失禁<br>24h<br><<br>1次]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="20" width="18" height="140" uuid="dd272d60-caa8-48d9-a08c-21c6cff4df34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[控
+制]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="204" y="160" width="18" height="20" uuid="77a88bca-24df-4365-bfb8-0af26fd4094f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="160" width="18" height="20" uuid="bf8d0a29-80ee-4277-bf6b-b4bf7e56989d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="160" width="18" height="20" uuid="674ce499-4bc9-42de-ac4b-e09ee9ccfcde"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="258" y="160" width="18" height="20" uuid="4875a072-c55c-4af2-b1e3-664c1928c8db"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="204" y="20" width="18" height="140" uuid="3a7fbf4b-f6a4-4427-a3ea-7db16d0ff634"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[需
+要
+帮
+助]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="20" width="18" height="140" uuid="8851a595-8f2b-4ab0-a3b0-37c82c409aa8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[自理:洗脸梳头刷牙]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="20" width="18" height="140" uuid="b01e2ab1-ae54-4570-8882-4a6548491d7d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[依
+赖
+他
+人]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="258" y="20" width="18" height="140" uuid="ba38858f-33e4-4716-97dd-b7d0dcf8be9c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[需
+要
+部
+分
+帮
+助]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="20" width="47" height="140" uuid="f1434a1d-7644-4afd-804b-3bdf1166cdaa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[需部分<br>帮助：<br>切面包<br>抹黄油<br>夹菜<br>盛饭]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="160" width="47" height="20" uuid="272fe81f-e261-4e04-b078-1bb61e38fbaa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="20" width="49" height="140" uuid="53ba217f-4b62-41a9-b615-41b89ec7b9e9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[自理（去和离开厕所，使用厕纸，穿脱裤子）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="160" width="27" height="20" uuid="2d5160db-4d16-4f35-9879-3423e8659bd3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="498" y="160" width="37" height="20" uuid="245770e3-d19e-47b7-9b89-c38199fc3db8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="160" width="44" height="20" uuid="382de861-7f3a-4df4-922d-b680de846361"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="20" width="37" height="140" uuid="86fda9f9-83ae-40d9-88fb-06b4d01881b4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[完全自理（能进食各种食物，但不包括取饭做饭）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="20" width="27" height="140" uuid="c8ceca69-144a-484e-8570-9004db72b55a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[完全依赖<br>无坐位平衡]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="20" width="44" height="140" uuid="de91a579-4e67-4d8b-93bc-30dab2e9692d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[需大量<br>帮助：<br>1-2人<br>身体<br>帮助<br>能坐]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="553" y="20" width="18" height="140" uuid="846430b5-208d-425e-891c-54f52cf8e47e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[不
+能
+步
+行]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="20" width="18" height="140" uuid="1cd132a4-71d9-4623-a9af-6414b7f169eb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[较
+大
+或
+完
+全
+依
+赖]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="553" y="160" width="18" height="20" uuid="c183f7d9-6edd-4bd9-8f0e-431840111d3f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="589" y="160" width="18" height="20" uuid="dabd0bb0-3e93-435a-8d0b-a15fcd28cbbb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="643" y="160" width="18" height="20" uuid="b024bbe1-c892-4844-b138-773fd151b82e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="661" y="160" width="18" height="20" uuid="48a4e59f-8840-4eec-8a30-b1ed698acdc2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="697" y="160" width="18" height="20" uuid="4dafaf8e-d63c-4eb7-b23d-7be02fca9353"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="847" y="0" width="46" height="180" uuid="b240fdb0-2e33-466f-ada2-152cf716885d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[自<br>理<br>能<br>力<br>等<br>级]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="893" y="0" width="77" height="180" forecolor="#000000" backcolor="#FFFFFF" uuid="87144061-fe4f-481f-883e-17064d30e97b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[签名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="0" width="85" height="20" uuid="4a145e32-073b-4d81-aa99-91683995584a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[如厕]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="0" width="102" height="20" uuid="39338a26-1e9f-4a95-ba13-fda9522ae02a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[进食]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="553" y="0" width="72" height="20" uuid="cbf0d949-7a38-4a7c-a3bb-9f618514ec5d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[活动]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="625" y="0" width="54" height="20" uuid="f100c610-c7ba-4481-a0e3-308ae79d0e5a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[穿衣]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="679" y="0" width="54" height="20" uuid="854e39a9-e194-454e-aaff-35f8af5d8b9f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[上下楼梯]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="733" y="0" width="64" height="20" uuid="3143df3b-c3ce-4b6e-b836-3af7ce5f017e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[洗澡]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="498" y="20" width="37" height="140" uuid="67b3824b-08dd-41da-a561-1df6c7c828fd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[需少量<br>帮助：<br>言语或<br>身体<br>帮助]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="571" y="20" width="18" height="140" uuid="e715ea8f-27f6-4b7c-84a1-b3b5df00ba29"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[在
+轮
+椅
+上
+独
+立
+行
+动]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="589" y="20" width="18" height="140" uuid="f497230a-e104-494d-ab49-3b75d7629cc1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[需
+1
+人
+帮
+助
+步
+行]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="607" y="20" width="18" height="140" uuid="4e5d3862-20ab-4997-b202-8ad4fc4b764c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[独立步行]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="625" y="20" width="18" height="140" uuid="9b492bf4-d41f-4ac0-b67f-4bf1fb1fac93"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[依
+赖
+他
+人]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="643" y="20" width="18" height="140" uuid="d35ef7b7-fd5f-42e7-b6e9-8ac4983a2b7d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[需
+一
+半
+帮
+助]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="661" y="20" width="18" height="140" uuid="12eb6b4f-7267-4b40-877c-f9346c43d0e8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[自
+理]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="679" y="20" width="18" height="140" uuid="989f1ab2-9f82-44fb-aadb-e336870ebe64"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[不
+能]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="697" y="20" width="18" height="140" uuid="9dd9cfa5-3ccc-40a6-b249-abc161d5503f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[需
+要
+帮
+助]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="715" y="20" width="18" height="140" uuid="c93760e1-1d28-44b9-9b6d-81db7548c6a7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[独
+立
+上
+下
+楼
+下]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="733" y="20" width="18" height="140" uuid="abb2ad2e-c561-4bb1-99b4-352e28321074"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[依
+赖]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="751" y="20" width="46" height="140" uuid="1ab5591e-0585-445f-b2e0-c2b6113d8a1c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[自理（无人指导能进出浴池并自理洗澡）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="733" y="160" width="18" height="20" uuid="42bb1d03-f246-4edb-9656-e5907c619e14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="715" y="160" width="18" height="20" uuid="898251ac-ad67-46e6-821c-1b0876c2e100"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="751" y="160" width="46" height="20" uuid="76d8359b-3787-4f92-8e01-0206913f44ee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="535" y="20" width="18" height="140" uuid="6c59212c-5e6b-4ffa-99a7-905e287401ac"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[自
+理]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="98" y="160" width="18" height="20" uuid="343fd385-20b4-4ff0-a157-ded00fcb4cc6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="116" y="160" width="18" height="20" uuid="d713a40d-7004-4b46-a362-0a1071d512b8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="160" width="49" height="20" uuid="f44500c6-51d8-4bb0-96c0-684da8621ced"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="160" width="18" height="20" uuid="3bb5dc80-02d1-4821-a2f7-998f7c99a8a3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="571" y="160" width="18" height="20" uuid="b8167427-7002-46ed-869b-c64c2eeda362"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="160" width="37" height="20" uuid="7e04f2d6-a0c5-4d1b-80fd-a774d71b740b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="625" y="160" width="18" height="20" uuid="eb1c6666-c668-4e69-b2af-224e8f8d484b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="535" y="160" width="18" height="20" uuid="a9d1f94a-8bb3-4323-9598-151279833b45"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[15]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="607" y="160" width="18" height="20" uuid="6d520ce4-c737-48e3-a365-b43a8e06df91"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[15]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="679" y="160" width="18" height="20" uuid="d7a27955-279d-435c-8bb1-7933a0a9eb04"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="797" y="0" width="50" height="180" uuid="85524bff-b0e2-4d5b-8249-cb2237d7154c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[总<br>评<br>分]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Prevent">
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="0" y="0" width="80" height="20" backcolor="#FFFFFF" uuid="73578e1e-ed02-4fa5-a258-4c88785f09ad"/>
+				<textFieldExpression><![CDATA[$F{DATE_LIST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="80" y="0" width="54" height="20" backcolor="#FFFFFF" uuid="2653555e-904c-40e3-97eb-7e93a52d5970"/>
+				<textFieldExpression><![CDATA[$F{SZS_BADL_SHIT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="134" y="0" width="70" height="20" backcolor="#FFFFFF" uuid="ae17bd85-d100-4412-9873-a9b105e1a040"/>
+				<textFieldExpression><![CDATA[$F{SZS_BADL_PEE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="204" y="0" width="36" height="20" backcolor="#FFFFFF" uuid="5f9821f5-32fe-4d8c-b782-b4421cd11369"/>
+				<textFieldExpression><![CDATA[$F{SZS_BADL_BRUSH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="240" y="0" width="85" height="20" backcolor="#FFFFFF" uuid="039d0397-9bf5-4daf-b5b3-691a9561ebe2"/>
+				<textFieldExpression><![CDATA[$F{SZS_BADL_TOILET}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="325" y="0" width="102" height="20" backcolor="#FFFFFF" uuid="35060f22-b57a-4202-a6c5-1064a00b13de"/>
+				<textFieldExpression><![CDATA[$F{SZS_BADL_EAT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="427" y="0" width="126" height="20" backcolor="#FFFFFF" uuid="e9b5c9a2-5a3b-4527-a64e-4dad28cd95d1"/>
+				<textFieldExpression><![CDATA[$F{SZS_BADL_CHANGE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="553" y="0" width="72" height="20" backcolor="#FFFFFF" uuid="24f26b32-3d3e-4113-acbb-80f3881a77aa"/>
+				<textFieldExpression><![CDATA[$F{SZS_BADL_MOVE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="625" y="0" width="54" height="20" backcolor="#FFFFFF" uuid="1c962a6a-4a71-4b6b-b3a7-15cd2c0f8e65"/>
+				<textFieldExpression><![CDATA[$F{SZS_BADL_DRESS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="679" y="0" width="54" height="20" backcolor="#FFFFFF" uuid="b6a4c2aa-f831-4f81-b6cd-353f9616aa01"/>
+				<textFieldExpression><![CDATA[$F{SZS_BADL_UPDOWN_STAIRS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="733" y="0" width="64" height="20" backcolor="#FFFFFF" uuid="afa2694f-577f-4bc9-be2e-03d3eee5760c"/>
+				<textFieldExpression><![CDATA[$F{SZS_BADL_SHOWER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="797" y="0" width="50" height="20" backcolor="#FFFFFF" uuid="507d58aa-4cd2-4729-9ade-8f1f9f16174a"/>
+				<textFieldExpression><![CDATA[$F{BDAL_SCORE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="847" y="0" width="46" height="20" backcolor="#FFFFFF" uuid="49c10b7f-42f7-46bc-9cb6-ab2491ffa333"/>
+				<textFieldExpression><![CDATA[$F{SELF_CARE_LEVEL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="893" y="0" width="77" height="20" uuid="b925c8e1-941d-4578-8f28-31eab65a881f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CREATE_PERSON}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="72" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="726" height="18" uuid="33958775-4db2-4323-ad6d-c539f1c712b5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[评分结果：A（100分，无需依赖）；B（61-99分，轻度依赖）；C（41-60分，中度依赖）；D（0-40分，重度依赖）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="18" width="726" height="18" uuid="67a952cf-fe63-4137-8347-f1095f313c70"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[备注：1、相关知识请参考《临床护理技术规范》（基础版）第二版，P81-84]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="36" width="726" height="18" uuid="19b4f8c3-3f6d-477d-9720-eb6223813c0a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[2、此表由责任护士入院时，住院期间每周复评，自理能力改变时，出院时对患者进行评估并给予相应的护理]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="54" width="726" height="18" uuid="f66e53ae-c994-4f82-993b-44b9aa03c89a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[3、医护人员根据 患者病情（或）自理能力的变化动态调整患者护理等级]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

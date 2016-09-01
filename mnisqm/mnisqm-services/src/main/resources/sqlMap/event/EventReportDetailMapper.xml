@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.event.dao.EventReportDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.event.domain.EventReportDetail" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="REPORT_CODE" property="reportCode" jdbcType="VARCHAR" />
+    <result column="ITEM_CODE" property="itemCode" jdbcType="VARCHAR" />
+    <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR" />
+    <result column="ITEM_VALUE" property="itemValue" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from EVENT_REPORT_DETAIL
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  
+  <!-- 调查信息录入 -->
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.event.domain.EventReportDetail" >
+    insert into EVENT_REPORT_DETAIL (REPORT_CODE, ITEM_CODE, 
+      ITEM_NAME, ITEM_VALUE, STATUS, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+      UPDATE_PERSON)
+    values (#{reportCode,jdbcType=VARCHAR}, #{itemCode,jdbcType=VARCHAR}, 
+      #{itemName,jdbcType=VARCHAR}, #{itemValue,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      GETDATE(), #{createPerson,jdbcType=VARCHAR}, GETDATE(), 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.event.domain.EventReportDetail" >
+    update EVENT_REPORT_DETAIL
+    set REPORT_CODE = #{reportCode,jdbcType=VARCHAR},
+      ITEM_CODE = #{itemCode,jdbcType=VARCHAR},
+      ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      ITEM_VALUE = #{itemValue,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, REPORT_CODE, ITEM_CODE, ITEM_NAME, ITEM_VALUE, STATUS, CREATE_TIME, 
+    CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+    from EVENT_REPORT_DETAIL
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  
+  <!-- 查询所有的上报明细 -->
+  <select id="selectReportDetailByCode" resultMap="BaseResultMap" parameterType="EventReportDetail">
+    select SEQ_ID, REPORT_CODE, ITEM_CODE, ITEM_NAME, ITEM_VALUE, STATUS, 
+    CREATE_PERSON, UPDATE_PERSON
+    from EVENT_REPORT_DETAIL
+    WHERE REPORT_CODE =#{reportCode} and STATUS != '09'
+  </select>
+</mapper>

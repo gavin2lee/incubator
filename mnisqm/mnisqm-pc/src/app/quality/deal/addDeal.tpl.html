@@ -1,0 +1,100 @@
+<div class="mod-pop-dateForm addDeal">
+  <form class="form-inline w5c-form"
+        name="addDealForm"
+        role="form"
+        novalidate
+        w5c-form-validate="vm.role.validationOption"
+        form="addDealForm">
+    <div class="modal-header">
+      <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h5 class="modal-title">
+        <!-- <i class="fa fa-edit"></i> -->
+        质量检查问题处理
+      </h5>
+    </div>
+    <!-- {{vm.formData.checkDetail}} -->
+    <div class="modal-body clearfix">
+      <div class="form-group">
+        <label for="code" class="control-label">检查日期：</label>
+        <input type="text"
+               class="form-control input-sm"
+               uib-datepicker-popup="yyyy-MM-dd"
+               is-open="popup1"
+               id="date"
+               name="date"
+               placeholder="年-月-日"
+               clear-text = "清除"
+               close-text = "关闭"
+               current-text = "今天"
+               ng-click="popup1 = true"
+               ng-model="vm.formData.checkDetail.taskDate"
+               required
+               readonly />
+      </div>
+      <div class="form-group">
+        <label for="form_name" class="control-label">病区：</label>
+        <input type="text"
+               value=""
+               class="form-control input-sm"
+               id="form_name"
+               name="form_name"
+               ng-model="vm.formData.checkDetail.deptCode"
+               required
+               autocomplete="off"/>
+      </div>
+      <div class="form-group">
+        <label for="form_type" class="control-label">检查表单：</label>
+        <select class="form-control input-sm"
+                id="select_form"
+                name="select_form"
+                required
+                ng-model="vm.formData.checkDetail.selectForm"
+                ng-options="x.formName for x in vm.metaData.qualityFormList"></select>
+        </select>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-xs btn-primary" ng-click="vm.checkDetail()">查看检查情况</button>
+      </div>
+      <div class="table-box">
+        <table ng-table="vm.tableParams" class="table table-condensed table-bordered table-striped partial-table">
+          <tr>
+            <td data-title="'存在问题'">
+              <textarea class="form-control input-sm"
+                        placeholder="点击填写"
+                        ng-model="vm.formData.issueContent"
+                        ></textarea>
+            </td>
+            <td data-title="'原因分析'">
+              <textarea class="form-control input-sm"
+                        placeholder="点击填写"
+                        ng-model="vm.formData.reasonAnalysis"
+                        ></textarea>
+            </td>
+            <td data-title="'整改要求'">
+              <textarea class="form-control input-sm"
+                        placeholder="点击填写"
+                        ng-model="vm.formData.resDescribe"
+                        ></textarea>
+            </td>
+            <td data-title="'整改措施'">
+              <textarea class="form-control input-sm"
+                        placeholder="点击填写"
+                        ng-model="vm.formData.resPlan"
+                        ></textarea>
+            </td>
+            <td data-title="'效果评估'">
+              <textarea class="form-control input-sm"
+                        placeholder="点击填写"
+                        ng-model="vm.formData.evaluation"
+                        ></textarea>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer clearfix">
+      <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok()">保存</button>
+      <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+    </div>
+  </form>
+</div>

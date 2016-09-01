@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/normalize.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/smartMenu.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/docMain.css?1231241231235123')"/>
+    <script type="text/javascript" src="#url('/resources/js/nur/docValidate.js?1472534366473')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/jquery-smartMenu-min.js?1472534366473')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/nur/docMain.js?1472534366473')" charset="utf-8"></script>
+    <style>
+        .doc-tool ._btn {
+            line-height: 25px;
+            height: 25px;
+            padding: 0 8px;
+        }
+        #editBox ._btn {
+            line-height: 16px;
+            height: 16px;
+            padding: 0 3px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<iframe id="printFrame" src="" style="position: absolute; left: -100%; top: -100%;display:block;border:none;width:600px;height:400px;"></iframe>
+<div class="process"></div>
+<div id="wrapper" class="easyui-layout wrapper">
+    <!-- <div data-options="region:'east',collapsible:false,title:''" style="width:100px;padding:10px;">
+        <div class="action-tool">
+            <div class="action-box">
+                <input type="text" list="statement_list">
+                <input type="button" id="addNewLine" value="新增">
+                <input type="button" id="save" value="保存">
+                <input type="button" id="print" value="打印">
+            </div>
+        </div>
+    </div> -->
+    <div data-options="region:'center',title:''">
+        <div class="editBox" id="editBox"></div>
+        <div class="m-panel doc-tool" id="docTool">
+            <!-- <div class="status-btn">></div> -->
+            <!-- <div class="head">文书工具栏<span class="h-status-btn" id="docStatusBtn">></span></div> -->
+            <div class="body">
+                <div class="action-box">
+                    <a href="javascript:;" class="_btn" id="addNewLine">新增</a>
+                    <a href="javascript:;" class="_btn" id="save">保存</a>
+                    <a href="javascript:;" class="_btn" id="smartPrint">智能打印</a>
+                    <a href="javascript:;" class="_btn" id="print">打印</a>
+                    <a href="javascript:;" class="_btn" id="verify">审核</a>
+                    <a href="javascript:;" class="_btn" id="showPrintTool">编辑打印列</a>
+                    <a href="javascript:;" class="_btn" id="editPrintRow">编辑打印行</a>
+                    <a href="javascript:;" class="_btn" id="set-start-btn" style="display: none;">设置起始页码</a>
+                    <a href="javascript:;" class="_btn" id="highCheck" data-type="1">高责查房</a>
+                    <a href="javascript:;" class="_btn" id="masterCheck" data-type="2">护士长查房</a>
+                </div>
+            </div>
+            <div class="foot"></div>
+
+        </div>
+        <div id="dataElm" style="display:none;"></div>
+        <div id="mm" class="easyui-menu" style="width:120px;">
+            <div onclick="parser.removeTreeNode()" data-options="iconCls:'icon-remove'">移除该条记录</div>
+        </div>
+    </div>
+
+    <div id="comboMenu" class="easyui-menu" style="display:none;" data-options=""></div>
+    <div id="calTotalInput" style="display:none"></div>
+    <div id="printTool" style="display:none;">
+        <div id="printToolHeader" style="overflow:hidden;"></div>
+        <table id="printToolTable" style="border-bottom:1px solid #000; width: 100%;"></table>
+    </div>
+
+    <div id="print-row-wrapper" style="display:none;">
+        <table id="print-row__table" style="border-bottom:1px solid #000;"></table>
+        <div class="check-wrapper">
+            <input type="checkbox" id="check-all" checked="checked"/>
+            <label for="check-all">全选/反选</label>
+        </div>
+    </div>
+    <div id="smart-print-dialog" class="easyui-dialog">
+            页码区间:
+            <input id="smart-start-num" value="" style="width: 3em" type="text" placeholder="起始页">
+            -
+            <input id="smart-end-num" value="" style="width: 3em" type="text" placeholder="结束页">
+            <br>
+            <br>
+            <label for="printType">打印类型: </label>
+            <input type="radio" checked name="printType" value="0" id="printTypeNormal">
+            <label for="printTypeNormal">全部</label>
+            <input type="radio" name="printType" value="1" id="printTypeOdd">
+            <label for="printTypeOdd">奇数</label>
+            <input type="radio" name="printType" value="2" id="printTypeEven">
+            <label for="printTypeEven">偶数</label>
+            <br>
+            <br>
+            选择日期:
+            <input type="text" id="printStartDate" style="width: 100px;" placeholder="起始日期"></input>
+            至
+            <input type="text" id="printEndDate" style="width: 100px;" placeholder="结束日期"></input>
+
+            <div class="batch-tips" style="position: absolute; width: 100%; left: 0;bottom: 60px;box-sizing: border-box;">
+                <strong>提示: </strong>护记起始页码显示为2，填写页码时请填写实际护理记录页码.
+            </div>
+    </div>
+    <div id="set-page-start">
+        <div style="padding: 10px;">
+            起始页码: <input id="page-start-num" value="1" style="width: 5em" type="text">
+        </div>
+    </div>
+
+    <div id="prev-page-dialog">
+        <div style="padding: 10px;">
+            护理记录总页码: <input id="prev-page-num" value="0" style="width: 5em" type="text">
+        </div>
+    </div>
+
+    <div id="set-illness-state">
+        <div style="padding: 10px;">
+            <textarea id="state-content" cols="40" rows="10"></textarea>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.WardPatrolMapper">
+	<resultMap id="wardPatrolMap" type="WardPatrolInfo">
+		<id property="patrolId" column="ward_patrol_id" />
+		<result property="patientId" column="PAT_ID" />
+		<result property="patientName" column="PAT_NAME" />
+		<result property="patrolDate" column="PATROL_DATE" />
+		<result property="nextPatrolDate" column="NEXT_PATROL_DATE" />
+		<result property="nurseName" column="empl_name" />
+		<result property="nurseEmplCode" column="empl_code" />
+		<result property="tendLevel" column="tend_Level" />
+		<result property="deptId" column="dept_code" />
+		<result property="bedCode" column="bed_code" />
+	</resultMap>
+
+	<sql id="sqlSaveWardPatrol">
+		PAT_ID,USER_CODE,WARD_CODE,BED_CODE,
+		TEND_LEVEL,PATROL_DATE,NEXT_PATROL_DATE
+	</sql>
+
+	<sql id="sqlSelectWardPatrol">
+		p.id as ward_patrol_id,
+		p.pat_id as PAT_ID,
+		p.ward_code as dept_code,
+		p.bed_code as bed_code,
+		p.tend_level as tend_Level,
+		p.user_code as empl_code,
+		p.patrol_date as PATROL_DATE,
+		p.next_patrol_date as NEXT_PATROL_DATE
+		
+
+	</sql>
+
+	<select id="getWardPatrolPlan" resultMap="wardPatrolMap"
+		parameterType="java.util.Map">
+		SELECT *
+		FROM (SELECT
+		<include refid="sqlSelectWardPatrol"></include>
+		,row_number() over(partition by p.pat_id order by p.patrol_date desc) as cn
+		,u.name as empl_name,pi.name pat_name
+		FROM nurse_ward_patrol p
+		INNER JOIN com_user u ON p.user_code = u.code
+		inner join dbo.PAT_CURE_INFO  pi on p.PAT_ID=pi.PAT_ID and pi.STATUS=1  
+		<where>
+			<if test="deptCode != null">
+				  p.ward_code= #{deptCode}
+			</if>
+			<if test="patientIds != null">
+				and p.pat_id in
+				<foreach item="item" index="index" collection="patientIds"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="tendLevel != null">
+				and p.tend_level=#{tendLevel}
+			</if>
+			<if test="startTime != null">
+				AND p.PATROL_DATE <![CDATA[ >= #{startTime} ]]>
+			</if>
+			<if test="endTime != null">
+				AND p.PATROL_DATE <![CDATA[ <= #{endTime} ]]>
+			</if>
+		</where>
+		) record
+		where record.cn=1
+		order by record.patrol_date desc
+	</select>
+
+	<select id="selectWardPatrolByPatId" resultMap="wardPatrolMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="sqlSelectWardPatrol"></include>
+		,u.name as empl_name
+		from nurse_ward_patrol p
+		inner join com_user u on p.user_code =
+		u.code
+		<where>
+			<if test="patientIds != null">
+				and p.pat_id in
+				<foreach item="item" index="index" collection="patientIds"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="startDate != null">
+				AND p.PATROL_DATE <![CDATA[ >= #{startDate} ]]>
+			</if>
+			<if test="endDate != null">
+				AND p.PATROL_DATE <![CDATA[ <= #{endDate} ]]>
+			</if>
+		</where>
+		order by p.patrol_date desc
+	</select>
+	
+	<insert id="saveWardPatrolInfo" parameterType="WardPatrolInfo">
+		INSERT INTO NURSE_WARD_PATROL(
+		<include refid="sqlSaveWardPatrol" />
+		)
+		VALUES(#{patientId},#{nurseEmplCode},#{deptId},#{bedCode},#{tendLevel},
+		#{patrolDate},#{nextPatrolDate,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="getPublishWardPatrols" resultMap="wardPatrolMap"
+		parameterType="java.util.Map">
+		SELECT *
+		FROM (SELECT
+		<include refid="sqlSelectWardPatrol"></include>
+		,row_number() over(partition by p.pat_id order by p.patrol_date desc) as cn
+		,u.name as empl_name
+		FROM nurse_ward_patrol p
+		INNER JOIN com_user u ON p.user_code = u.code
+		inner join dbo.PAT_CURE_INFO  pi on p.PAT_ID=pi.PAT_ID and pi.STATUS=1  
+		left join sys_msg_publish ep on ep.oper_type=5 and ep.oper_id = p.id
+		where
+			p.ward_code= #{deptCode}
+			AND ep.seq_id is null
+			<if test="startTime != null">
+				AND p.PATROL_DATE <![CDATA[ >= #{startTime} ]]>
+			</if>
+			<if test="endTime != null">
+				AND p.PATROL_DATE <![CDATA[ <= #{endTime} ]]>
+			</if>
+		) record
+		where record.cn=1
+		order by record.patrol_date desc
+	</select>
+</mapper>

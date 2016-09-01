@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+   		http://www.springframework.org/schema/aop
+   		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+   		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+
+	<!-- 数据源创建 -->
+	<bean id="remoteDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${dbremote.driverClassName}" />
+		<property name="url" value="${dbremote.url}" />
+		<property name="username" value="${dbremote.username}" />
+		<property name="password" value="${dbremote.password}" />
+		<property name="validationQuery">
+			<value>SELECT 1</value>
+		</property>
+		<property name="defaultAutoCommit" value="false" />
+	</bean>
+
+	
+	<!-- 连接池 -->
+	<bean id="remoteSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="remoteDataSource" />
+		<property name="configLocation" value="classpath:mnisqm-remote-mybatis.xml" />
+		<!-- mapper xml文件自动扫描 -->
+		<property name="mapperLocations" value="classpath*:remoteSqlMap/**/*.xml"></property>
+	</bean>
+	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <property name="basePackage" value="com.lachesis.mnisqm.module.remote.*.dao" />  
+        <property name="sqlSessionFactoryBeanName" value="remoteSqlSessionFactory" />
+    </bean> 
+    
+    
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+    	<property name="maxUploadSize" value="10485760" />  
+	</bean>
+	
+</beans>

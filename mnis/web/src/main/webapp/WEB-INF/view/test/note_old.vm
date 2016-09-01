@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>护理小白板</title>
+	<link rel="stylesheet" type="text/css" href="#url('/resources/css/note_s_old.css')">
+	<script type="text/javascript" src="#url('/resources/js/nur/note_s_old.js?1472534366479')" ></script>
+</head>
+<body class="full">
+	<input type="hidden" id="deptCode" value="$!deptCode" />
+	<div id="wrapper" class="wrapper f_yahei">
+		<table>
+			<tr class="row-1 rowspan2">
+				<td colspan="4">
+					<div>
+						<div class="header" style="padding-left:8px;">
+							<p>$!deptName工作情况一览表</p>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr class="row-1">
+				<td class="editor_1" width="30%">
+					<div>
+						<span class="title-text">日期：</span>
+						<div class="msg-text">
+							<span id="date"  data-editor="false" class="fontColor3"></span>
+						</div>
+					</div>
+				</td>
+                <td width="40%">
+                    <div>
+                        <span class="title-text" >血氧饱和度</span>
+                    </div>
+                </td>
+				<td width="28%">
+                    <div>
+                        <span class="title-text" >特殊交班</span>
+                    </div>
+				</td>
+			</tr>
+			<tr class="row-1">
+                <td>
+                    <div>
+                        <span class="title-text" >患者总数：</span>
+                        <div class="msg-text">
+                            <span id="total_patient" data-editor="false" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+				<td class="editor_1">
+                    <div>
+                        <span class="title-text" >qd：</span>
+                        <div class="msg-text">
+                            <span id="hypoxemia_qd" class="fontColor3"></span>
+                        </div>
+                    </div>
+				</td>
+                <td class="editor_1" rowspan="16">
+                    <div>
+                        <span class="title-text" ></span>
+                        <div class="msg-text">
+                            <span id="exchange_content" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+			</tr>
+			<tr class="row-1">
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">病危：</span>
+                        <div class="msg-text">
+                            <span id="crisis_patient" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+				<td class="editor_1" rowspan="4">
+					<div>
+						<span class="title-text">bid：</span>
+						<div class="msg-text">
+							<span id="hypoxemia_bid"></span>
+						</div>
+					</div>
+				</td>
+				#*<td colspan="3" class="editor_1">
+					<div id="day_nurse" class="day_nurse">
+						<span class="title-text">日班护士：</span>
+						<div class="msg-text" >
+							<ul>
+								 <li style="width:20%">
+									<span class="title-text fontColor3">A1</span>
+									<div class="msg-text">
+										<span id="day_nurse_a1"></span>
+									</div>
+								</li>
+								<li style="width:20%">
+									<span class="title-text fontColor3">A2</span>
+									<div class="msg-text">
+										<span id="day_nurse_a2"></span>
+									</div>
+								</li>
+								<li style="width:20%">
+									<span class="title-text fontColor3">A3</span>
+									<div class="msg-text">
+										<span id="day_nurse_a3"></span>
+									</div>
+								</li>
+								<li style="width:20%">
+									<span class="title-text fontColor3">A4</span>
+									<div class="msg-text">
+										<span id="day_nurse_a4"></span>
+									</div>
+								</li>
+								<li style="width:20%">
+									<span class="title-text fontColor3">B</span>
+									<div class="msg-text">
+										<span id="day_nurse_b"></span>
+									</div>
+								</li> 
+							</ul>
+						</div>
+					</div>
+				</td>*#
+			</tr>
+			<tr class="row-1">
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">病重：</span>
+                        <div class="msg-text">
+                            <span id="hard_patient" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+				#*<td class="editor_1">
+					<div>
+						<span class="title-text">值班医生：</span>
+						<div class="msg-text" >
+							<span id="work_doctor"></span>
+						</div>
+					</div>
+				</td>*#
+				#*<td colspan="3" class="editor_1">
+					<div id="work_nurse" class="work_nurse">
+						<span class="title-text">值班护士：</span>
+						<div class="msg-text" >
+							<ul>
+								 <li style="width:33.3%">
+									<span class="title-text fontColor3">P</span>
+									<div class="msg-text">
+										<span id="work_nurse_p"></span>
+									</div>
+								</li>
+								<li style="width:33.3%">
+									<span class="title-text fontColor3">N</span>
+									<div class="msg-text">
+										<span id="work_nurse_n"></span>
+									</div>
+								</li>
+								<li style="width:33.3%">
+									<span class="title-text fontColor3">辅</span>
+									<div class="msg-text">
+										<span id="work_nurse_f"></span>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</td>*#
+			</tr>
+			<tr class="row-1">
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">新入患者：</span>
+                        <div class="msg-text">
+                            <span id="new_patient" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+				#*<td colspan="2" class="editor_1">
+					<div>
+						<span class="title-text">二线医生：</span>
+						<div class="msg-text" >
+							<span id="back_doctor"></span>
+						</div>
+					</div>
+				</td>*#
+				#*<td colspan="2" class="editor_1">
+					<div>
+						<span class="title-text">二线护士长：</span>
+						<div class="msg-text" >
+							<span id="back_nurse"></span>
+						</div>
+					</div>
+				</td>*#
+			</tr>
+			<tr class="row-1">
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">出院患者：</span>
+                        <div class="msg-text">
+                            <span id="out_patient" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+
+				#*<td colspan="2" style="border-left:1px solid #a6a6a6;border-right:1px solid #a6a6a6;">
+					<table>
+						<tr>
+							<td style="border-right:1px solid #a6a6a6;width:50%" class="editor_2">
+								<div class="areaInput" style=" -webkit-user-select: none;">
+									<span class="title-text bigAreaTitle">重要提示</span>
+									<div class="msg-text" style="width:100%;white-space: normal;">
+										<span id="important"></span>
+									</div>
+								</div>
+							</td>
+							<td style="border-left:1px solid #a6a6a6;width:50%；white-space: normal;" class="editor_2">
+								<div class="areaInput"  style=" -webkit-user-select: none;">
+									<span class="title-text bigAreaTitle">重要通知</span>
+									<div class="msg-text" style="width:100%;white-space: normal;">
+										<span id="message"></span>
+									</div>0
+								</div>
+							</td>
+						</tr>
+					</table>
+				</td>*#
+			</tr>
+            <tr class="row-1">
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">转出：</span>
+                        <div class="msg-text">
+                            <span id="switch_out_patient" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+                <td class="editor_1" rowspan="3">
+                    <div>
+                        <span class="title-text">tid：</span>
+                        <div class="msg-text">
+                            <span id="hypoxemia_tid"></span>
+                        </div>
+                    </div>
+                </td>
+			</tr>
+            <tr class="row-1">
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">转入：</span>
+                        <div class="msg-text">
+                            <span id="switch_in_patient" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="row-1">
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">BP  qd：</span>
+                        <div class="msg-text">
+                            <span id="BP_qd" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="row-1">
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">bid：</span>
+                        <div class="msg-text">
+                            <span id="BP_bid" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">雾化吸入</span>
+                    </div>
+                </td>
+            </tr>
+            <tr class="row-1">
+                <td class="editor_1" rowspan="2">
+                    <div>
+                        <span class="title-text">tid：</span>
+                        <div class="msg-text">
+                            <span id="BP_tid" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">qd：</span>
+                        <div class="msg-text">
+                            <span id="pulverization_qd"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="row-1">
+                <td class="editor_1" rowspan="2">
+                    <div>
+                        <span class="title-text">bid：</span>
+                        <div class="msg-text">
+                            <span id="pulverization_bid" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="row-1">
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">心电监护：</span>
+                        <div class="msg-text">
+                            <span id="heart_care" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="row-1">
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">口腔护理：</span>
+                        <div class="msg-text">
+                            <span id="mouth_care" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+                <td class="editor_1" rowspan="2">
+                    <div>
+                        <span class="title-text">tid：</span>
+                        <div class="msg-text">
+                            <span id="pulverization_tid"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="row-1">
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">胸腔引流管：</span>
+                        <div class="msg-text">
+                            <span id="chest_pie" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="row-1">
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">尿道口护理：</span>
+                        <div class="msg-text">
+                            <span id="urine_care" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">记尿量：</span>
+                        <div class="msg-text">
+                            <span id="urine"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="row-1">
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">褥疮护理：</span>
+                        <div class="msg-text">
+                            <span id="bedsore" class="fontColor3"></span>
+                        </div>
+                    </div>
+                </td>
+                <td class="editor_1">
+                    <div>
+                        <span class="title-text">24h出入量：</span>
+                        <div class="msg-text">
+                            <span id="24hinout"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+		</table>
+	</div>
+</body>
+</html>

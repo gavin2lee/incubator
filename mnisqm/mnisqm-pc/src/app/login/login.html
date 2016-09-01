@@ -1,0 +1,74 @@
+<div class="login-wrapper">
+    <div class="header">
+        <div class="container">
+            <img src="../../assets/images/logo2.png" alt="">
+        </div>
+    </div>
+    <div class="content">
+        <div class="form-box">
+            <div class="form-title">
+                <!-- <img src="../../assets/images/mnis2.png'" alt=""> -->
+                <span class="title-text">用户登录</span>
+            </div>
+            <div class="form-content">
+                <form class="clearfix w5c-form" id="loginForm" novalidate w5c-form-validate="vm.validationOption" name="loginForm">
+                    <div class="form-unit">
+                        <label for="userName">用户名</label>
+                        <div class="form-input">
+                            <input type="text" id="userName"  autocomplete="off" ng-pattern="/^[0-9A-Za-z_]{1,19}$/" required ng-model="vm.formData.loginName" name="loginName" placeholder="用户名"/>
+                        </div>
+                    </div>
+                    <div class="form-unit">
+                        <label for="userName">密&nbsp;&nbsp;码</label>
+                        <div class="form-input">
+                            <input type="password" name="password" id="password" autocomplete="off" required  ng-model="vm.formData.password" placeholder="密码"/>
+                            <span class="reset" ng-click="vm.reset()">重置</span>
+                        </div>
+                    </div>
+                    <div class="form-btn">
+                        <input class="_btn" id="loginBtn" type="button" value="登 录" w5c-form-submit="vm.login(vm.formData)"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>深圳市联新移动医疗科技有限公司版权所有</p>
+        <p>当前版本：v3</p>
+    </div>
+</div>
+<!-- <div class="center-bg" ng-controller="LoginController as vm">
+    <div class="left-bg"></div>
+    <div class="w">
+        <div class="login-wrapper">
+            <div class="logo-nurse"></div>
+            <div class="login-box">
+                <div class="login-box__header">
+                    用户登录
+                </div>
+                <form class="login-box__form form-wrapper w5c-form" novalidate w5c-form-validate="vm.validationOption" name="loginForm">
+                    <div class="err-wrapper">
+                    </div>
+                    <div class="form-item form-item__sm">
+                        <label class="name-label">
+                            <span class="fa fa-user"></span>
+                        </label>
+                        <input autocomplete="off" ng-pattern="/^[0-9A-Za-z_]{1,19}$/" required type="text" ng-model="vm.formData.loginName" name="loginName" class="form-ctr input" id="user-name" placeholder="用户名">
+                    </div>
+                    <div class="form-item form-item__sm">
+                        <label class="name-label" for="password">
+                            <span class="fa fa-lock"></span>
+                        </label>
+                        <input autocomplete="off" type="password" required name="password" ng-model="vm.formData.password" class="form-ctr input" id="password" placeholder="密码">
+                    </div>
+                    <div class="submit-wrapper form-item">
+                        <button w5c-form-submit="vm.login(vm.formData)" class="btn login-btn btn-default {{vm.loginBtnStatus.state}}">{{vm.loginBtnStatus.title}} </button>
+                    </div>
+                    <div class="reset-password">
+                        <a href="javascript:;">重置</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->

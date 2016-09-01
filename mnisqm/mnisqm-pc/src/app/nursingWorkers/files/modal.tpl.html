@@ -1,0 +1,682 @@
+<div>
+  <div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+      <!-- <i class="fa fa-edit"></i> -->
+      填写用户信息
+    </h5>
+  </div>
+  <div class="modal-body">
+    <uib-tabset active="active">
+      <uib-tab index="0" heading="基本信息">
+        <form class="form-horizontal comUser-form w5c-form" role="form" novalidate w5c-form-validate="vm.validationOption" name="userForm">
+          <div class="static-form-item container-fluid">
+            <div class="form-group col-md-4">
+              <label for="hisCode" class="col-sm-4 control-label">科室：</label>
+              <div class="col-sm-8">
+                <input class="form-control input-sm" disabled ng-model="vm.count.comUser.deptName" type="text">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="hisCode" class="col-sm-4 control-label">员工编号：</label>
+              <div class="col-sm-8">
+                <input class="form-control input-sm" required ng-model="vm.count.comUser.hisCode" id="hisCode" name="hisCode" type="text">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="userName" class="col-sm-4 control-label">姓名：</label>
+              <div class="col-sm-8">
+                <input class="form-control input-sm" required ng-model="vm.count.comUser.userName" id="userName" name="userName" type="text">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="male" class="col-sm-4 control-label">性别：</label>
+              <div class="col-sm-8">
+                <label class="radio-inline">
+                  <input type="radio" name="gender" ng-model="vm.count.comUser.gender" checked id="male" value="1"> 男
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="gender" ng-model="vm.count.comUser.gender" id="female" value="0"> 女
+                </label>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="birthday" class="col-sm-4  control-label">出生年月：</label>
+              <div class="col-sm-8">
+                <span class="input-group">
+                    <input  type="text" id="birthday" name="birthday" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.birthdayOpen" ng-model="vm.count.comUser.birthday" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm">
+
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('birthdayOpen')">
+                          <i class="fa fa-calendar"></i>
+                      </button>
+                    </span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="politacalStatus" class="col-sm-4  control-label">政治面貌：</label>
+              <div class="col-sm-8">
+                <select id="politacalStatus" name="politacalStatus" ng-model="vm.count.comUser.politacalStatus" class="form-control input-sm">
+                  <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.politacalStatus">{{item.dicName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="country" class="col-sm-4  control-label">国籍：</label>
+              <div class="col-sm-8">
+                <input type="text" id="country" name="country" ng-model="vm.count.comUser.country" class="form-control input-sm">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="nativePlace" class="col-sm-4  control-label">籍贯：</label>
+              <div class="col-sm-8">
+                <input type="text" id="nativePlace" name="nativePlace" ng-model="vm.count.comUser.nativePlace" class="form-control input-sm">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="nation" class="col-sm-4  control-label">民族：</label>
+              <div class="col-sm-8">
+                <input type="text" id="nation" name="nation" ng-model="vm.count.comUser.nation" class="form-control input-sm">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="col-sm-4  control-label">婚姻状态：</label>
+              <div class="col-sm-8">
+                <select ng-model="vm.count.comUser.marriage" class="form-control input-sm">
+                  <option value="01" label="已婚"></option>
+                  <option value="02" label="未婚"></option>
+                  <option value="03" label="离异"></option>
+                  <option value="04" label="丧偶"></option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="col-sm-4  control-label">生育状态：</label>
+              <div class="col-sm-8">
+                <input ng-model="vm.count.comUser.birth" class="form-control input-sm" type="text">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="email" class="col-sm-4 control-label">邮箱：</label>
+              <div class="col-sm-8">
+                <input id="email" class="form-control input-sm" name="email" ng-model="vm.count.comUser.email" type="email">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="phone" class="col-sm-4 control-label">联系电话：</label>
+              <div class="col-sm-8">
+                <input id="phone" class="form-control input-sm" name="phone" ng-model="vm.count.comUser.phone" type="tel">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="papersType" class="col-sm-4  control-label">身份证件类型：</label>
+              <div class="col-sm-8">
+                <select id="papersType" name="papersType" ng-model="vm.count.comUser.papersType" class="form-control input-sm">
+                  <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.papersType">{{item.dicName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="papersNo" class="col-sm-4  control-label">身份证件号码：</label>
+              <div class="col-sm-8">
+                <input type="text" id="papersNo" name="papersNo" ng-model="vm.count.comUser.papersNo" class="form-control input-sm">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="practiceNo" class="col-sm-4  control-label">执业证书编号：</label>
+              <div class="col-sm-8">
+                <input type="text" id="practiceNo" name="practiceNo" ng-model="vm.count.comUser.practiceNo" class="form-control input-sm">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="practiceApproveDate" class="col-sm-4  control-label">首次注册时间：</label>
+              <div class="col-sm-8">
+                <span class="input-group">
+                    <input type="text" id="practiceApproveDate" name="practiceApproveDate" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.practiceApproveDateIsOpen" ng-model="vm.count.comUser.practiceApproveDate" close-text="关闭" current-text="今天" clear-text="清除"
+                           class="form-control input-sm">
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('practiceApproveDateIsOpen')">
+                        <i class="fa fa-calendar"></i>
+                    </button>
+                    </span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="col-sm-4 control-label">注册机构：</label>
+              <div class="col-sm-8">
+                <input ng-model="vm.count.comUser.duty" class="form-control input-sm" type="text">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="education" class="col-sm-4  control-label">原始学历：</label>
+              <div class="col-sm-8">
+                <input type="text" id="education" name="education" ng-model="vm.count.comUser.education" class="form-control input-sm">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="graduationDate" class="col-sm-4  control-label">取得时间：</label>
+              <div class="col-sm-8">
+                <span class="input-group">
+                    <input type="text" id="graduationDate" name="graduationDate" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.graduationDateOpen" ng-model="vm.count.comUser.graduationDate" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm">
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('graduationDateOpen')">
+                        <i class="fa fa-calendar"></i></button>
+                    </span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="graduationSchool" class="col-sm-4  control-label">学校：</label>
+              <div class="col-sm-8">
+                <input type="text" id="graduationSchool" name="nativePlace" ng-model="vm.count.comUser.graduationSchool" class="form-control input-sm">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="col-sm-4  control-label">最高学历：</label>
+              <div class="col-sm-8">
+                <input type="text" ng-model="vm.count.comUser.hEducation" class="form-control input-sm">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="col-sm-4  control-label">取得时间：</label>
+              <div class="col-sm-8">
+                <span class="input-group">
+                    <input type="text" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.hGraduationDateOpen" ng-model="vm.count.comUser.hGraduationDate" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm">
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('hGraduationDateOpen')">
+                        <i class="fa fa-calendar"></i></button>
+                    </span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="col-sm-4  control-label">学校：</label>
+              <div class="col-sm-8">
+                <input type="text" name="nativePlace" ng-model="vm.count.comUser.hGraduationSchool" class="form-control input-sm">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="duty" class="col-sm-4 control-label">职务：</label>
+              <div class="col-sm-8">
+                <input id="duty" name="duty" ng-model="vm.count.comUser.duty" class="form-control input-sm" type="text">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="technicalPost" class="col-sm-4  control-label">职称：</label>
+              <div class="col-sm-8">
+                <input type="text" id="technicalPost" name="technicalPost" ng-model="vm.count.comUser.technicalPost" class="form-control input-sm">
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="col-sm-4  control-label">临床层级：</label>
+              <div class="col-sm-8">
+                <input type="text" ng-model="vm.count.comUser.clinical" class="form-control input-sm">
+              </div>
+            </div>
+            <!--<div class="form-group col-md-4">
+                <label for="nature" class="col-sm-4  control-label">员工性质：</label>
+                <div class="col-sm-8">
+                  <select id="nature" name="nature" ng-model="vm.count.comUser.nature" class="form-control input-sm">
+                    <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.nature">{{item.dicName}}</option>
+                  </select>
+                </div>
+              </div>-->
+            <!--<div class="form-group col-md-4">
+                <label for="degree" class="col-sm-4  control-label">学分类型：</label>
+                <div class="col-sm-8">
+                  <input type="text" id="degree" name="degree" ng-model="vm.count.comUser.degree" class="form-control input-sm">
+                </div>
+              </div>-->
+            <!--<div class="form-group col-md-4">
+                <label for="language" class="col-sm-4  control-label">外语水平：</label>
+                <div class="col-sm-8">
+                  <input type="text" id="language" name="language" ng-model="vm.count.comUser.language" class="form-control input-sm">
+                </div>
+              </div>-->
+            <!--<div class="form-group col-md-4">
+                <label for="health" class="col-sm-4  control-label">健康状态：</label>
+                <div class="col-sm-8">
+                  <input type="text" id="health" name="health" ng-model="vm.count.comUser.health" class="form-control input-sm">
+                </div>
+              </div>-->
+            <!--<div class="form-group col-md-4">
+                <label for="inductionDate" class="col-sm-4  control-label">到院日期：</label>
+                <div class="col-sm-8">
+                  <span class="input-group">
+                    <input type="text" id="inductionDate" name="inductionDate" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.inductionDateOpen" ng-model="vm.count.comUser.inductionDate " close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm">
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('inductionDateOpen')">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                    </span>
+                  </span>
+                </div>
+              </div>-->
+            <!--<div class="form-group col-md-4">
+                <label for="profession" class="col-sm-4  control-label">所学专业：</label>
+                <div class="col-sm-8">
+                  <input type="text" id="profession" name="profession" ng-model="vm.count.comUser.profession" class="form-control input-sm">
+                </div>
+              </div>-->
+            <!--<div class="form-group col-md-4">
+                <label for="educationNo" class="col-sm-4  control-label">学历证书编号：</label>
+                <div class="col-sm-8">
+                  <input type="text" id="educationNo" name="educationNo" ng-model="vm.count.comUser.educationNo" class="form-control input-sm">
+                </div>
+              </div>-->
+            <!--<div class="form-group col-md-4">
+                <label for="degreeNo" class="col-sm-4  control-label">学分：</label>
+                <div class="col-sm-8">
+                  <input type="text" id="degreeNo" name="degreeNo" ng-model="vm.count.comUser.degreeNo" class="form-control input-sm">
+                </div>
+              </div>-->
+            <!--<div class="form-group col-md-4">
+                <label for="practiceType" class="col-sm-4  control-label">执业类型：</label>
+                <div class="col-sm-8">
+                  <select id="practiceType" name="practiceType" ng-model="vm.count.comUser.practiceType" class="form-control input-sm">
+                    <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.practiceType">{{item.dicName}}</option>
+                  </select>
+                </div>
+              </div>-->
+            <!--<div class="form-group col-md-4">
+                <label for="practiceValidDate" class="col-sm-4  control-label">执业有效期致：</label>
+                <div class="col-sm-8">
+                  <span class="input-group">
+                    <input type="text" id="practiceValidDate" name="practiceValidDate" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.practiceValidDateIsOpen" ng-model="vm.count.comUser.practiceValidDate" close-text="关闭" current-text="今天" clear-text="清除"
+                      class="form-control input-sm">
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('practiceValidDateIsOpen')">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                    </span>
+                  </span>
+                </div>
+              </div>-->
+          </div>
+          <div class="container-fluid">
+            <div class="form-group col-md-2 pull-right">
+              <button data-type="comUser" w5c-form-submit="vm.save('comUser', $event)" class="btn btn-success btn-sm">
+                保存
+              </button>
+            </div>
+          </div>
+        </form>
+      </uib-tab>
+      <uib-tab index="1" heading="家属" disable="!vm.accessible">
+        <form class="form-horizontal comUserFamily-form" w5c-form-validate="vm.user.validationOption" name="comUserFamilyForm">
+          <table class="table table-striped table-condensed table-no-border">
+            <tr>
+              <th>姓名</th>
+              <th>亲属关系</th>
+              <th>联系电话</th>
+              <th>邮件</th>
+              <th>备注</th>
+              <th></th>
+            </tr>
+            <tr ng-repeat="item in vm.count.comUserFamily">
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.name">
+              </td>
+              <td>
+                <input type="hidden" ng-model="item.userCode" ng-value="vm.comUser.userCode">
+                <input class="form-control input-sm" ng-model="item.relation" type="text">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.phone">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.email">
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="item.remark">
+              </td>
+              <td>
+                <button ng-click="vm.removeItem('comUserFamily', $index,item.seqId)" class="btn btn-sm btn-danger">删除</button>
+              </td>
+            </tr>
+          </table>
+          <div class="container-fluid">
+            <button ng-click="vm.addItem('comUserFamily')" class="btn btn-primary btn-sm">添加成员</button>
+            <button data-type="comUserFamily" ng-click="vm.save('comUserFamily')" class="btn btn-success btn-sm">保存
+            </button>
+          </div>
+        </form>
+      </uib-tab>
+      <uib-tab index="2" heading="职称变更" disable="!vm.accessible" active="tab.active">
+        <form class="form-horizontal form-inline comUserPosition-form w5c-form" role="form" novalidate w5c-form-validate="vm.validationOption" name="comUserPositionForm">
+          <div class="table-wrap">
+            <table class="table table-striped table-condensed table-no-border">
+              <tr>
+                <th>职称</th>
+                <th>审批单位</th>
+                <th>开始日期</th>
+                <th>结束日期</th>
+                <th></th>
+              </tr>
+              <tr ng-repeat="item in vm.count.comUserPosition track by $index">
+                <td>
+                  <input class="form-control input-sm" required name="positionName" ng-model="item.positionName" placeholder="在职职称" type="text">
+                </td>
+                <td>
+                  <input type="text" name="reviewUnit" required class="form-control input-sm" ng-model="item.reviewUnit">
+                </td>
+                <td>
+                  <span class="input-group">
+                  <input type="text" id="comUserPosition_startDate_{{$index}}" required name="comUserPositionStartDate" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.startDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                    ng-model="item.startDate">
+                  <span class="input-group-btn">
+                         <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('startDateIsOpen', item)">
+                           <i class="fa fa-calendar"></i>
+                         </button>
+                         </span>
+                  </span>
+                </td>
+                <td>
+                  <span class="input-group">
+                  <input type="text" on-open-focus="true" id="comUserPosition_endDate_{{$index}}" required name="comUserPositionEndDate" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.endDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除"
+                    class="form-control input-sm input-date" ng-model="item.endDate">
+                  <span class="input-group-btn">
+                       <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('endDateIsOpen', item)">
+                         <i class="fa fa-calendar"></i>
+                       </button>
+                       </span>
+                  </span>
+                </td>
+                <td>
+                  <button ng-click="vm.removeItem('comUserPosition', $index,item.seqId)" class="btn btn-sm btn-danger">删除</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="container-fluid">
+            <button ng-click="vm.addItem('comUserPosition')" class="btn btn-primary btn-sm">添加职称</button>
+            <button data-type="comUserPosition" w5c-form-submit="vm.save('comUserPosition', $event)" class="btn btn-success btn-sm">保存</button>
+          </div>
+        </form>
+      </uib-tab>
+      <uib-tab index="3" heading="职务变更" disable="!vm.accessible">
+        <form class="form-horizontal form-inline comUserNursing-form" w5c-form-validate="vm.user.validationOption" name="comUserNursingForm">
+          <div class="table-wrap">
+            <table class="table table-striped table-condensed table-no-border">
+              <tr>
+                <th>工作单位</th>
+                <th>单位级别</th>
+                <th>所属部门</th>
+                <th>职务</th>
+                <th>起始日期</th>
+                <th>结束日期</th>
+                <th></th>
+              </tr>
+              <tr ng-repeat="item in vm.count.comUserNursing">
+                <td>
+                  <input class="form-control input-sm" ng-model="item.reviewUnit" type="text">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.unitLevel">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.deptName">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.position">
+                </td>
+                <td>
+                  <span class="input-group">
+                  <input type="text" id="comUserNursing_startDate_{{$index}}" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.startDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                    ng-model="item.startDate">
+                  <span class="input-group-btn">
+                       <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('startDateIsOpen', item)">
+                         <i class="fa fa-calendar"></i>
+                       </button>
+                       </span>
+                  </span>
+                </td>
+                <td>
+                  <span class="input-group">
+                  <input type="text" id="comUserNursing_endDate_{{$index}}" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.endDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                    ng-model="item.endDate">
+                  <span class="input-group-btn">
+                       <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('endDateIsOpen', item)">
+                         <i class="fa fa-calendar"></i>
+                       </button>
+                       </span>
+                  </span>
+                </td>
+                <td>
+                  <button ng-click="vm.removeItem('comUserNursing', $index,item.seqId)" class="btn btn-sm btn-danger">删除</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="container-fluid">
+            <button ng-click="vm.addItem('comUserNursing')" class="btn btn-primary btn-sm">添加教育信息</button>
+            <button data-type="comUserNursing" w5c-form-submit="vm.save('comUserNursing')" class="btn btn-success btn-sm">保存</button>
+          </div>
+        </form>
+      </uib-tab>
+      <uib-tab index="4" heading="学历信息" disable="!vm.accessible">
+        <form class="form-horizontal form-inline comUserLearning-form" w5c-form-validate="vm.user.validationOption" name="comUserLearningForm">
+          <div class="table-wrap">
+            <table class="table table-striped table-condensed table-no-border">
+              <tr>
+                <th>学校</th>
+                <th>专业</th>
+                <th>学历</th>
+                <th>学历证书编号</th>
+                <th>学位</th>
+                <th>学位证书编号</th>
+                <th>描述</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th></th>
+              </tr>
+              <tr ng-repeat="item in vm.count.comUserLearning">
+                <td>
+                  <input class="form-control input-sm" ng-model="item.school" type="text">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.professional">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.diploma">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.diplomaNo">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.degree">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.degreeNo">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.describe">
+                </td>
+                <td>
+                  <span class="input-group">
+                    <input type="text" id="comUserLearning_startDate_{{$index}}"
+                           uib-datepicker-popup
+                           datepicker-options="vm.dateOptions"
+                           is-open="item.startDateIsOpen"
+                           close-text="关闭" current-text="今天" clear-text="清除"
+                           class="form-control input-sm input-date"
+                           ng-model="item.startDate">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('startDateIsOpen', item)">
+                          <i class="fa fa-calendar"></i>
+                      </button>
+                    </span>
+                  </span>
+                </td>
+                <td>
+                  <span class="input-group">
+                    <input type="text" id="comUserLearning_endDate_{{$index}}" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.endDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                           ng-model="item.endDate">
+                    <span class="input-group-btn">
+                         <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('endDateIsOpen', item)">
+                             <i class="fa fa-calendar"></i>
+                         </button>
+                         </span>
+                  </span>
+                </td>
+                <td>
+                  <button ng-click="vm.removeItem('comUserLearning', $index,item.seqId)" class="btn btn-sm btn-danger">删除
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="container-fluid">
+            <button ng-click="vm.addItem('comUserLearning')" class="btn btn-primary btn-sm">添加学历</button>
+            <button data-type="comUserLearning" ng-click="vm.save('comUserLearning')" class="btn btn-success btn-sm">
+              保存
+            </button>
+          </div>
+        </form>
+      </uib-tab>
+      <uib-tab index="5" heading="继续教育" disable="!vm.accessible">
+        <form class="form-horizontal form-inline comUserTraining-form" w5c-form-validate="vm.user.validationOption" name="comUserTrainingForm">
+          <div class="table-wrap">
+            <table class="table table-striped table-condensed table-no-border">
+              <tr>
+                <th>学习内容</th>
+                <th>主办单位</th>
+                <th>学时</th>
+                <th>主讲</th>
+                <th>学分类型</th>
+                <th>学分</th>
+                <th>经费</th>
+                <th>描述</th>
+                <th>起始日期</th>
+                <th>结束日期</th>
+                <th></th>
+              </tr>
+              <tr ng-repeat="item in vm.count.comUserTraining">
+                <td>
+                  <input class="form-control input-sm" ng-model="item.learnContent" type="text">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.professional">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" style="width: 3em;" ng-model="item.diploma">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.speaker">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.creditType">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" style="width: 4em;" ng-model="item.credit">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" style="width: 4em;" ng-model="item.funding">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.describe">
+                </td>
+                <td>
+                  <span class="input-group">
+                  <input type="text" id="comUserTraining_startDate_{{$index}}" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.startDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                    ng-model="item.startDate">
+                  <span class="input-group-btn">
+                         <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('startDateIsOpen', item)">
+                         <i class="fa fa-calendar"></i>
+                       </button>
+                       </span>
+                  </span>
+                </td>
+                <td>
+                  <span class="input-group">
+                  <input type="text" id="comUserTraining_endDate_{{$index}}" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.endDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                    ng-model="item.endDate">
+                  <span class="input-group-btn">
+                       <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('endDateIsOpen', item)">
+                         <i class="fa fa-calendar"></i>
+                       </button>
+                       </span>
+                  </span>
+                </td>
+                <td>
+                  <button ng-click="vm.removeItem('comUserTraining', $index,item.seqId)" class="btn btn-sm btn-danger">删除
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="container-fluid">
+            <button ng-click="vm.addItem('comUserTraining')" class="btn btn-primary btn-sm">添加继续教育</button>
+            <button data-type="comUserTraining" ng-click="vm.save('comUserTraining')" class="btn btn-success btn-sm">
+              保存
+            </button>
+          </div>
+        </form>
+      </uib-tab>
+      <uib-tab index="6" heading="教育工作" disable="!vm.accessible">
+        <form class="form-horizontal form-inline comUserEducation-form" w5c-form-validate="vm.user.validationOption" name="comUserEducationForm">
+          <div class="table-wrap">
+            <table class="table table-striped table-condensed table-no-border">
+              <tr>
+                <th>代课类型</th>
+                <th>学时数</th>
+                <th>课程专题</th>
+                <th>课程内容</th>
+                <th>起始日期</th>
+                <th>结束日期</th>
+                <th></th>
+              </tr>
+              <tr ng-repeat="item in vm.count.comUserEducation">
+                <td>
+                  <input class="form-control input-sm" ng-model="item.educationType" type="text">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.leaningTime">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.courseTopics">
+                </td>
+                <td>
+                  <input type="text" class="form-control input-sm" ng-model="item.courseContent">
+                </td>
+                <td>
+                  <span class="input-group">
+                        <input type="text" id="comUserEducation_startDate_{{$index}}" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.startDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                          ng-model="item.startDate">
+                        <span class="input-group-btn">
+                             <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('startDateIsOpen', item)">
+                               <i class="fa fa-calendar"></i>
+                             </button>
+                        </span>
+                  </span>
+                </td>
+                <td>
+                  <span class="input-group">
+                        <input type="text" id="comUserEducation_endDate_{{$index}}" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.endDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                          ng-model="item.endDate">
+                        <span class="input-group-btn">
+                             <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('endDateIsOpen', item)">
+                               <i class="fa fa-calendar"></i>
+                             </button>
+                             </span>
+                  </span>
+                </td>
+                <td>
+                  <button ng-click="vm.removeItem('comUserEducation', $index,item.seqId)" class="btn btn-sm btn-danger">删除</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="container-fluid">
+            <button ng-click="vm.addItem('comUserEducation')" class="btn btn-primary btn-sm">添加教育信息</button>
+            <button data-type="comUserEducation" ng-click="vm.save('comUserEducation')" class="btn btn-success btn-sm">
+              保存
+            </button>
+          </div>
+        </form>
+      </uib-tab>
+    </uib-tabset>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.user.dao.ComUserTrainingMapperExt" >
+  <resultMap id="simpleComUserTraining" type="com.lachesis.mnisqm.module.user.domain.SimpleComUserTraining" extends="com.lachesis.mnisqm.module.user.dao.ComUserTrainingMapper.BaseResultMap" />
+  <select id="selectByUsercode" parameterType="java.lang.String" resultMap="simpleComUserTraining">
+    SELECT SEQ_ID, USER_CODE, STATUS, START_DATE, END_DATE, LEARN_CONTENT, PROFESSIONAL, DIPLOMA, 
+    SPEAKER, CREDIT_TYPE, CREDIT, FUNDING, DESCRIBE, CREATE_PERSON,
+    UPDATE_PERSON
+    FROM COM_USER_TRAINING T
+    WHERE T.USER_CODE = #{userCode}
+    AND T.STATUS != '09'
+  </select>
+</mapper>

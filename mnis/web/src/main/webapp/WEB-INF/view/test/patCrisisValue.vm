@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head runat="server">
+
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/patCrisisValue.css')" />
+<script type="text/javascript" src="#url('/resources/js/patCrisisValue.js?1472534366479')"></script>
+</head>
+<body>
+	<div class="wrapper f_yahei">
+		<div class="insp-top top-tools" style="height:40px">
+	      <div class="top-tools-box">
+  		    	<div class="btn-box fr mgr10">
+                <div class="time-box fl mgr10">
+                    <input id="startDate" name="startDate" class="Wdate" value="2014-08-15" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" style="width: 120px;">
+                    至
+                    <input id="endDate" name="endDate" class="Wdate" value="2014-08-15" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" style="width: 120px;">
+                </div>
+                <input type="button" value="查询">
+                <input type="button" value="打印">
+                <input type="button" value="Excel导出">
+            </div>
+	      </div>
+		</div>
+		<div class="content">
+      		<table id="info-tab"></table>
+		</div>
+	</div>
+	<script type="text/javascript">
+            document.body.removeChild(document.body.childNodes[0]);
+	</script>
+</body>
+</html>

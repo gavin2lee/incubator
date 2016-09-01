@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.event.dao.EventMeasuresMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.event.domain.EventMeasures" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="REPORT_CODE" property="reportCode" jdbcType="VARCHAR" />
+    <result column="MEA_CODE" property="meaCode" jdbcType="VARCHAR" />
+    <result column="MEA_TIME" property="meaTime" jdbcType="TIMESTAMP" />
+    <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="MEA_TYPE_CODE" property="meaTypeCode" jdbcType="VARCHAR" />
+    <result column="MEA_TYPE_NAME" property="meaTypeName" jdbcType="VARCHAR" />
+    <result column="MEA_CONTENT" property="meaContent" jdbcType="VARCHAR" />
+    <result column="HEAD_USER_CODE" property="headUserCode" jdbcType="VARCHAR" />
+    <result column="RES_STATUS" property="resStatus" jdbcType="CHAR" />
+    <result column="RES_PLAN" property="resPlan" jdbcType="INTEGER" />
+    <result column="RES_DESCRIBE" property="resDescribe" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  	 update EVENT_MEASURES
+		set
+			status = '09',
+			UPDATE_TIME = GETDATE()
+		where SEQ_ID = #{seqId}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.event.domain.EventMeasures" >
+    insert into EVENT_MEASURES (REPORT_CODE, MEA_CODE, 
+      MEA_TIME, USER_CODE, STATUS, 
+      MEA_TYPE_CODE, MEA_TYPE_NAME, MEA_CONTENT, 
+      HEAD_USER_CODE, RES_STATUS, RES_PLAN, 
+      RES_DESCRIBE, REMARK, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{reportCode,jdbcType=VARCHAR}, #{meaCode,jdbcType=VARCHAR}, 
+      GETDATE(), #{userCode,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{meaTypeCode,jdbcType=VARCHAR}, #{meaTypeName,jdbcType=VARCHAR}, #{meaContent,jdbcType=VARCHAR}, 
+      #{headUserCode,jdbcType=VARCHAR}, #{resStatus,jdbcType=CHAR}, #{resPlan,jdbcType=INTEGER}, 
+      #{resDescribe,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, GETDATE(), 
+      #{createPerson,jdbcType=VARCHAR}, GETDATE(), #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="EventMeasures" >
+    update EVENT_MEASURES
+    set 
+      MEA_CONTENT = #{meaContent,jdbcType=VARCHAR},
+      HEAD_USER_CODE = #{headUserCode,jdbcType=VARCHAR},
+      RES_STATUS = #{resStatus,jdbcType=CHAR},
+      RES_PLAN = #{resPlan,jdbcType=INTEGER},
+      RES_DESCRIBE = #{resDescribe,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, REPORT_CODE, MEA_CODE, MEA_TIME, USER_CODE, STATUS, MEA_TYPE_CODE, 
+    MEA_TYPE_NAME, MEA_CONTENT, HEAD_USER_CODE, RES_STATUS, RES_PLAN, RES_DESCRIBE, REMARK, 
+    CREATE_TIME, CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+    from EVENT_MEASURES
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <!-- 查询措施 -->
+  <select id="selectEventMeasuresList" resultType="EventMeasures" parameterType="EventMeasures">
+    select m.SEQ_ID	seqId, m.REPORT_CODE	reportCode, m.MEA_CODE	meaCode, m.MEA_TIME	meaTime,
+	m.USER_CODE	userCode, m.STATUS	status, m.MEA_TYPE_CODE	meaTypeCode, 
+    m.MEA_TYPE_NAME	meaTypeName, m.MEA_CONTENT	meaContent, m.HEAD_USER_CODE	headUserCode,
+    m.RES_STATUS	resStatus, m.RES_PLAN	resPlan, m.RES_DESCRIBE	resDescribe,
+    u.USER_NAME	userName
+    from EVENT_MEASURES m
+    left join COM_USER u
+    on m.USER_CODE = u.USER_CODE
+    where m.status !='09' and m.REPORT_CODE = #{reportCode}
+  </select>
+</mapper>

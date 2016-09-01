@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnis.board.nurse.mapper.NurseWhiteBoardNurseMapper" >
+
+	<!-- **********************项目配置********************************** -->
+	<resultMap type="com.lachesis.mnis.board.entity.NwbWhiteBoardItem" id="nwbWhiteBoardItem">
+		<id property="id" column="ID"/>
+		<result property="itemCode" column="ITEM_CODE" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="hisCode" column="HIS_CODE" />
+		<result property="hisName" column="HIS_NAME" />
+		<result property="searchKey" column="SEARCH_KEY" />
+		<result property="queryOrder" column="QUERY_ORDER" />
+		<result property="freq" column="FREQ" />
+	</resultMap>
+	<resultMap type="com.lachesis.mnis.board.entity.NwbHisCodeItem" id="nwbHisCodeItemMap">
+		<id property="id" column="id"/>
+		<result property="templateId" column="template_id" />
+		<result property="code" column="code" />
+		<result property="name" column="name" />
+		<result property="hisCode" column="his_code" />
+		<result property="hisCodeName" column="his_code_name" />
+		<result property="freq" column="freq" />
+	</resultMap>
+	
+	<resultMap type="com.lachesis.mnis.board.entity.NwbHisCode" id="nwbHisCodeMap">
+		<id property="templateId" column="template_id" />
+		<result property="deptCode" column="dept_code" />
+		<collection property="nwbHisCodeItems" resultMap="nwbHisCodeItemMap" />
+	</resultMap>
+	
+	<resultMap type="com.lachesis.mnis.board.dto.NwbCodeDto" id="nwbCodeDtoMap">
+		<id property="code" column="code"/>
+		<result property="name" column="name"/>
+		<result property="isSelected" column="is_selected" />
+	</resultMap>
+	
+	<select id="getHisCodeMapping" parameterType="String" resultMap="nwbHisCodeMap">
+		SELECT  m.DEPT_CODE ,
+		        m.CODE ,
+		        m.NAME ,
+		        m.ID ,
+		        m.template_id,
+		        i.HIS_CODE ,
+		        i.HIS_NAME,
+		        i.FREQ
+		FROM    dbo.NURSE_WHITE_BOARD_METADATA m
+		        INNER JOIN dbo.WHITE_BOARD_ITEM i ON m.CODE = i.ITEM_CODE
+		        WHERE m.IS_VALID = 1 AND i.QUERY_ORDER = 1
+		        	  AND m.template_id is not null
+	</select>
+	
+	<select id="getNwbCodeDto" parameterType="String" resultMap="nwbCodeDtoMap">
+		SELECT  
+		        i.ITEM_CODE code ,
+		        i.ItEM_NAME name,
+		        case when m.id is null then 0
+		        else 1
+		        end is_selected
+		FROM    dbo.WHITE_BOARD_ITEM i
+		        LEFT JOIN dbo.NURSE_WHITE_BOARD_METADATA m 
+		        ON m.CODE = i.ITEM_CODE 
+		        AND m.IS_VALID = 1
+		        AND m.DEPT_CODE = #{param1}
+		        AND	m.TEMPLATE_ID = #{param2}
+	</select>
+	<!-- **********************项目模板********************************** -->
+	<resultMap type="com.lachesis.mnis.board.entity.NwbTemplate" id="nwbTemplateMap">
+		<id property="id" column="id"/>
+		<result property="deptCode" column="dept_code"/>
+		<result property="rowCount" column="row_count"/>
+		<result property="title" column="title"/>
+		<result property="titleFontSize" column="title_font_size"/>
+		<result property="background" column="background"/>
+	</resultMap>
+	
+	<select id="getNwbTemplates" parameterType="String" resultMap="nwbTemplateMap">
+		select * from NURSE_WHITE_BOARD_TEMPLATE m
+		where m.is_valid = '1' and m.dept_code = #{param1}
+	</select>
+	
+	<select id="getNwbTemplateCountById" parameterType="String" resultType="Integer">
+		select count(1) from NURSE_WHITE_BOARD_TEMPLATE m
+		where m.is_valid = '1' and m.id=#{param1}
+	</select>
+	
+	<insert id="insertNwbTemplate" parameterType="com.lachesis.mnis.board.entity.NwbTemplate"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into NURSE_WHITE_BOARD_TEMPLATE(dept_code,title,title_font_size,row_count,background,is_valid)
+		values(#{deptCode},#{title},#{titleFontSize},#{rowCount},#{background},'1')
+	</insert>
+	
+	<update id="updateNwbTemplate" parameterType="com.lachesis.mnis.board.entity.NwbTemplate" >
+		update NURSE_WHITE_BOARD_TEMPLATE
+		<set>
+			<if test="deptCode != null">
+				dept_code=#{deptCode},
+			</if>
+			<if test="title != null">
+				title=#{title},
+			</if>
+			<if test="titleFontSize != null">
+				title_font_size=#{titleFontSize},
+			</if>
+			<if test="rowCount != null">
+				row_count=#{rowCount},
+			</if>
+			<if test="background != null">
+				background=#{background},
+			</if>
+		</set>
+		WHERE
+			is_valid = '1' and id=#{id}
+	</update>
+	
+	<!-- **********************各科室项目配置********************************** -->
+	<resultMap id="nwbMetadataMap" type="com.lachesis.mnis.board.entity.NwbMetadata">
+		<id property="id" column="id" />
+		<result property="code" column="code" />
+		<result property="name" column="name" />
+		<result property="parentId" column="parent_id" />
+		<result property="level" column="level" />
+		<result property="inputType" column="input_type" />
+		<result property="showType" column="show_type" />
+		<result property="deptCode" column="dept_code" />
+		<result property="isAuto" column="is_auto" />
+		<result property="isBedCode" column="is_bed_code"/>
+		<result property="isEdit" column="is_edit" />
+		<result property="isExec" column="is_exec" />
+		<result property="isDosage" column="is_dosage" />
+		<result property="columnNo" column="column_no" />
+		<result property="rowNo" column="row_no" />
+		<result property="columnType" column="column_type" />
+		<result property="backgroundColor" column="background_color" />
+		<result property="width" column="width" />
+		<result property="titleWidth" column="title_width" />
+		<result property="height" column="height" />
+		<result property="isColspan" column="is_colspan"></result>
+		<result property="templateId" column="template_id" />
+		<result property="isShowTitle" column="is_show_title" />
+		<result property="isShowData" column="is_show_data" />
+		<result property="isShowLineR" column="is_show_line_r" />
+		<result property="isShowLineB" column="is_show_line_b" />
+		<result property="isShowLineT" column="is_show_line_t" />
+		<result property="includeRow" column="include_row" />
+		<result property="titleFontSize" column="title_font_size" />
+		<result property="contentFontSize" column="content_font_size" />
+	</resultMap>
+	<select id="getNwbMetadatas" parameterType="String" resultMap="nwbMetadataMap">
+		select * from NURSE_WHITE_BOARD_METADATA m
+		where m.is_valid = 1 and m.dept_code = #{param1}
+		and m.template_id = #{param2}
+	</select>
+	
+	<select id="getNwbMetadataCountById" parameterType="String" resultType="Integer">
+		select count(1) from NURSE_WHITE_BOARD_METADATA m
+		where m.is_valid = 1 and m.id=#{param1}
+	</select>
+	
+	<insert id="insertNwbMetadata" parameterType="com.lachesis.mnis.board.entity.NwbMetadata">
+		INSERT INTO NURSE_WHITE_BOARD_METADATA(
+		code,name,parent_id,dept_code,
+		level,input_type,is_auto,
+		column_no,row_no,show_type,is_edit,is_exec,is_dosage,
+		column_type,background_color,
+		is_bed_code,is_colspan,height,width,title_width,create_date,is_valid,
+		template_id,is_show_title,is_show_data,is_show_line_r,is_show_line_b,
+		is_show_line_t,include_row,title_font_size,content_font_size)
+		VALUES
+		(#{code},#{name},#{parentId},#{deptCode},
+		#{level},#{inputType},#{isAuto},
+		#{columnNo},#{rowNo},#{showType},#{isEdit},#{isExec},#{isDosage},
+		#{columnType},#{backgroundColor},
+		#{isBedCode},#{isColspan},#{height},#{width},#{titleWidth},GETDATE(),'1',
+		#{templateId},#{isShowTitle},#{isShowData},#{isShowLineR},#{isShowLineB},
+		#{isShowLineT},#{includeRow},#{titleFontSize},#{contentFontSize})
+	</insert>
+	
+	<update  id="updateNwbMetadata" parameterType="com.lachesis.mnis.board.entity.NwbMetadata">
+		UPDATE NURSE_WHITE_BOARD_METADATA
+		<set>
+			<if test="code != null">
+				code = #{code},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId},
+			</if>
+			<if test="deptCode != null">
+				dept_code = #{deptCode},
+			</if>
+			<if test="level != null">
+				level = #{level},
+			</if>
+			<if test="inputType != null">
+				input_type = #{inputType},
+			</if>
+			<if test="isAuto != null">
+				is_auto = #{isAuto},
+			</if>
+			<if test="isEdit != null">
+				is_edit = #{isEdit},
+			</if>
+			<if test="isExec != null">
+				is_exec = #{isExec},
+			</if>
+			<if test="isDosage != null">
+				is_dosage = #{isDosage},
+			</if>
+			<if test="isBedCode != null">
+				is_bed_code = #{isBedCode},
+			</if>
+			<if test="columnNo != null">
+				column_no = #{columnNo},
+			</if>
+			<if test="rowNo != null">
+				row_no = #{rowNo},
+			</if>
+			<if test="showType != null">
+				show_type = #{showType},
+			</if>
+			<if test="columnType != null">
+				column_type = #{columnType},
+			</if>
+			<if test="backgroundColor != null">
+				background_color = #{backgroundColor},
+			</if>
+			<if test="isColspan != null">
+				is_colspan = #{isColspan},
+			</if>
+			<if test="height != null">
+				height = #{height},
+			</if>
+			<if test="width != null">
+				width = #{width},
+			</if>
+			<if test="titleWidth != null ">
+				title_width = #{titleWidth},
+			</if>
+			<if test="templateId != null">
+				template_id = #{templateId},
+			</if>
+			<if test="isShowData != null">
+				is_show_data = #{isShowData},
+			</if>
+			<if test="isShowTitle != null">
+				is_show_title = #{isShowTitle},
+			</if>
+			<if test="isShowLineR != null">
+				is_show_line_r = #{isShowLineR},
+			</if>
+			<if test="isShowLineB != null">
+				is_show_line_b = #{isShowLineB},
+			</if>
+			<if test="isShowLineT != null">
+				is_show_line_t = #{isShowLineT},
+			</if>
+			<if test="includeRow != null">
+				include_row = #{includeRow},
+			</if>
+			<if test="contentFontSize != null">
+				content_font_size = #{contentFontSize},
+			</if>
+			<if test="titleFontSize != null">
+				title_font_size = #{titleFontSize},
+			</if>
+			
+		</set>
+		WHERE
+			IS_VALID = '1' and id = #{id}
+	</update>
+	
+	<update id="deleteNwbMetadata" parameterType="String">
+		update NURSE_WHITE_BOARD_METADATA set is_valid = 0
+		where is_valid = 1 and id = #{param1}
+	</update>
+	
+	<!-- **********************各科室项目记录********************************** -->
+	<select id="getNwbRecordCountById" parameterType="String" resultType="Integer">
+		select count(1) from NURSE_WHITE_BOARD_RECORD m
+		where m.is_valid = 1 and m.record_id=#{param1}
+	</select>
+	
+	<insert id="insertNwbRecord" parameterType="com.lachesis.mnis.board.entity.NwbRecord">
+		INSERT INTO NURSE_WHITE_BOARD_RECORD(
+		record_code,record_name,record_value,dept_code,
+		record_user_code,record_user_name,record_date,pat_id,pat_info,is_valid)
+		VALUES
+		(#{code},#{name},#{value},#{deptCode},
+		#{nurseCode},#{nurseName},#{createTime},#{patId},#{bedCode},'1')
+	</insert>
+	
+	<update  id="updateNwbRecord" parameterType="com.lachesis.mnis.board.entity.NwbRecord">
+		UPDATE NURSE_WHITE_BOARD_RECORD
+		<set>
+			<if test="code != null">
+				record_code = #{code},
+			</if>
+			<if test="name != null">
+				record_name = #{name},
+			</if>
+			<if test="value != null">
+				record_value = #{value},
+			</if>
+			<if test="deptCode != null">
+				dept_code = #{deptCode},
+			</if>
+			<if test="nurseCode != null">
+				record_user_code = #{nurseCode},
+			</if>
+			<if test="nurseName != null">
+				record_user_name = #{nurseName},
+			</if>
+			<if test="createTime != null">
+				record_date = #{createTime},
+			</if>
+			<if test="patId != null">
+				pat_id = #{patId},
+			</if>
+			<if test="bedCode != null">
+				pat_info = #{bedCode},
+			</if>
+			
+		</set>
+		WHERE
+			IS_VALID = '1' and record_id = #{recordId}
+	</update>
+	
+	<update id="deleteNwbRecord" parameterType="String">
+		update NURSE_WHITE_BOARD_RECORD set is_valid = 0
+		where is_valid = 1 and record_id = #{param1}
+	</update>
+	
+	<!-- ************************记录处理********************************** -->
+	<resultMap type="com.lachesis.mnis.board.dto.NwbRecordItemDto" id="nwbRecordItemDtoMap">
+		<id property="itemId" column="item_id"/>
+		<result property="code" column="code"/>
+		<result property="recordId" column="record_id"/>
+		<result property="patId" column="pat_id"/>
+<!-- 		<result property="patName" column="pat_name"/>
+		<result property="bedCode" column="bed_code"/> -->
+		<result property="patInfo" column="pat_info"/>
+		<result property="value" column="value"/>
+	</resultMap>
+	<resultMap type="com.lachesis.mnis.board.dto.NwbRecordDto" id="nwbRecordDtoMap">
+		<id property="code" column="code"/>
+		<result property="name" column="name"/>
+		<result property="freq" column="freq"/>
+		<result property="deptCode" column="dept_code"/>
+		<collection property="nwbRecordItemDtos" resultMap="nwbRecordItemDtoMap" />
+	</resultMap>
+	
+	<select id="getNwbRecordDtosByDeptCode" parameterType="String" resultMap="nwbRecordDtoMap">
+			SELECT 
+					nr.RECORD_ID ,
+					nwbm.CODE code,
+					nwbm.NAME name,
+					nr.DEPT_CODE,
+					nr.PAT_ID,
+					nr.pat_info,
+					nr.RECORD_VALUE value,
+					CASE WHEN nr.RECORD_VALUE IS NULL
+					THEN nr.PAT_ID
+					ELSE convert(varchar(10),nr.RECORD_ID)
+					END ITEM_ID,
+					i.FREQ
+		         FROM NURSE_WHITE_BOARD_METADATA nwbm left join   
+		         dbo.NURSE_WHITE_BOARD_RECORD nr on nwbm.DEPT_CODE = nr.DEPT_CODE and nwbm.CODE = nr.RECORD_CODE
+		         <!-- and nr.template_id = nwbm.template_id --> left join dbo.WHITE_BOARD_ITEM i ON nwbm.CODE = i.ITEM_CODE
+		        WHERE nwbm.DEPT_CODE=#{param1} AND nwbm.template_id = #{param2}
+		        <!-- AND nr.IS_VALID = 1 -->
+	</select>
+	
+	<select id="queryAllWhiteBoardItem" resultMap="nwbWhiteBoardItem">
+		SELECT  ID, ITEM_CODE, ITEM_NAME, HIS_CODE, HIS_NAME, SEARCH_KEY, QUERY_ORDER, FREQ
+		FROM  WHITE_BOARD_ITEM
+	</select>
+	
+	<select id="queryTempIdByDeptCode" parameterType="String" resultType="java.lang.String">
+		SELECT distinct template_id
+		FROM  NURSE_WHITE_BOARD_METADATA
+		where DEPT_CODE = #{deptCode}
+	</select>
+</mapper>

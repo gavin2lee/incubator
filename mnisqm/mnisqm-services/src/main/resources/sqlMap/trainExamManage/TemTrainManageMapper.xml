@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.trainExamManage.dao.TemTrainManageMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.trainExamManage.domain.TemTrainManage" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="TRAIN_CODE" property="trainCode" jdbcType="VARCHAR" />
+    <result column="COURSE_NAME" property="courseName" jdbcType="VARCHAR" />
+    <result column="LECTURER" property="lecturer" jdbcType="VARCHAR" />
+    <result column="BEGIN_TIME" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="PLACE" property="place" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <collection property="temAttendanceManageList" javaType="java.util.List"
+		ofType="com.lachesis.mnisqm.module.trainExamManage.domain.TemAttendanceManage"
+		column="TRAIN_CODE" >
+		<id column="SEQID" property="seqId" jdbcType="BIGINT" />
+    	<result column="TRAIN_CODE" property="trainCode" jdbcType="VARCHAR" />
+    	<result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    	<result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    	<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    	<result column="ATTENDANCE_SITUATION" property="attendanceSituation" jdbcType="INTEGER" />
+    	<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    	<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    	<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    	<result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+	</collection>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from TEM_TRAIN_MANAGE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.trainExamManage.domain.TemTrainManage" >
+    insert into TEM_TRAIN_MANAGE (TRAIN_CODE, COURSE_NAME, 
+      LECTURER, BEGIN_TIME, END_TIME, 
+      PLACE, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_TIME, UPDATE_PERSON)
+    values (#{trainCode,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, 
+      #{lecturer,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{place,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.trainExamManage.domain.TemTrainManage" >
+    update TEM_TRAIN_MANAGE
+    set TRAIN_CODE = #{trainCode,jdbcType=VARCHAR},
+      COURSE_NAME = #{courseName,jdbcType=VARCHAR},
+      LECTURER = #{lecturer,jdbcType=VARCHAR},
+      BEGIN_TIME = #{beginTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      PLACE = #{place,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, TRAIN_CODE, COURSE_NAME, LECTURER, BEGIN_TIME, END_TIME, PLACE, CREATE_TIME, 
+    CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+    from TEM_TRAIN_MANAGE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, TRAIN_CODE, COURSE_NAME, LECTURER, BEGIN_TIME, END_TIME, PLACE, CREATE_TIME, 
+    CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+    from TEM_TRAIN_MANAGE
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from TEM_TRAIN_MANAGE where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.trainExamManage.domain.TemTrainManage" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into TEM_TRAIN_MANAGE (TRAIN_CODE, COURSE_NAME, 
+      LECTURER, BEGIN_TIME, END_TIME, 
+      PLACE, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_TIME, UPDATE_PERSON)
+    values (#{trainCode,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, 
+      #{lecturer,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{place,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <select id="queryByTimeOrDeptCodeOrCourseName" resultMap="BaseResultMap" parameterType="Map">
+    select tm.SEQ_ID, tm.TRAIN_CODE, tm.COURSE_NAME, tm.LECTURER, tm.BEGIN_TIME, tm.END_TIME, tm.PLACE, tm.CREATE_TIME, 
+    tm.CREATE_PERSON, tm.UPDATE_TIME, tm.UPDATE_PERSON, ta.SEQ_ID SEQID, ta.TRAIN_CODE, ta.DEPT_CODE, ta.USER_CODE, ta.USER_NAME, ta.ATTENDANCE_SITUATION, 
+    ta.REMARK, ta.CREATE_TIME, ta.CREATE_PERSON, ta.UPDATE_TIME, ta.UPDATE_PERSON
+    from TEM_TRAIN_MANAGE tm,TEM_ATTENDANCE_MANAGE ta
+    where tm.TRAIN_CODE = ta.TRAIN_CODE
+    and tm.BEGIN_TIME >= #{beginTime}
+    and #{endTime} > tm.BEGIN_TIME
+    <if test="deptCode != null">
+        and ta.DEPT_CODE = #{deptCode}
+    </if>
+    <if test="courseName != null">
+        and tm.COURSE_NAME = #{courseName}
+    </if>
+  </select>
+</mapper>

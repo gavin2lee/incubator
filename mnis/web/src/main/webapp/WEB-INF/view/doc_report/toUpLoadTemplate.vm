@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/normalize.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/docMain.css')" />
+<script type="text/javascript" src="#url('/resources/js/nur/upLoadTemplate.js?1472534366474')" charset="utf-8"></script>
+</head> 
+	<body>
+		<iframe id="printFrame" src="" style="display:none;width:800px;height:600px;"></iframe>
+		<div class="process"></div>
+		<div id="wrapper" class="easyui-layout wrapper">
+			<div data-options="region:'west',collapsible:false,title:''" style="width:220px;padding-left:5px;">
+				
+				<form action="upload?inpatient_no=34361890_1" method="post" enctype="multipart/form-data" style="height:118px;margin-left: -5px;">
+				<div class="top-tool">
+					<div class="upload-box">
+						<div><input type="file" id="temFile" name="temFile"></div>
+						<div>
+						名称：<input type="text" id="fName" name="fName">
+						<input type="submit" value="上传" style="height: 20px;line-height: 16px;margin-left:10px;"></div>
+					</div>
+					<div class="upload-type">
+						科室：<select id="dept_code" name="dept_code" style="width:65px;"></select>
+						分类：<select id="doc_type" name="doc_type" style="width:65px;"></select>
+						<br>
+						二级分类：<select id="report_type" name="report_type" style="width:140px;">
+						<option value="">无</option>
+						<option value="1">护理记录单</option>
+						<option value="2">跌倒</option>
+						<option value="3">压疮norton</option>
+						<option value="4">压疮waterlow</option>
+					</select>
+					</div>
+                    <div>
+                        原模板ID：<input placeholder="原模板ID" type="text" name="templateId">
+                    </div>
+                    <div>
+                        <br>分类中显示顺序：<input placeholder="顺序" type="text" name="showOrder">
+                    </div>
+                    <div>
+					<div>
+                        <br><input type="checkbox" name="bDefaultTemplate">设为默认护理记录单
+					</div>
+				</div>
+				</form>
+				<div class="mid-tree">
+					<ul id="statement" class="easyui-tree"></ul>
+				</div>
+			</div>
+			<div data-options="region:'center',title:''">
+				<div class="viewBox" id="viewBox">
+					<iframe id="viewDoc" src="" frameborder=0 scrolling=no></iframe>
+				</div>
+
+				<div id="dataElm" style="display:none;"></div>
+			</div>
+	</body>
+</html>

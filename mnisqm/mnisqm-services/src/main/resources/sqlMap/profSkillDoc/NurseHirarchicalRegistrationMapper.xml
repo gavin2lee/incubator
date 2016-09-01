@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.lachesis.mnisqm.module.profSkillDoc.dao.NurseHirarchicalRegistrationMapper">
+	
+	<!-- 逻辑添加 -->
+	<insert id="insert"
+		parameterType="NurseHirarchicalRegistration">
+		insert into PTF_NURSE_HIERARCHICAL_REGISTRATION
+		(USER_CODE, USER_NAME, WARD_CODE,
+		BEGIN_TIME, END_TIME, HIERARCHY,
+		STATUS, AUDITOR, 
+		REMARK, CREATE_TIME, CREATE_PERSON, 
+		UPDATE_TIME, UPDATE_PERSON)
+		values
+		(#{userCode},#{userName},
+		#{wardCode},#{beginTime},
+		#{endTime},#{hierarchy},
+		'01',#{auditor},
+		#{remark},GETDATE(),
+		#{createPerson},GETDATE(),
+		#{updatePerson})
+	</insert>
+	<!-- 逻辑删除 -->
+	<update id="deleteByPrimaryKey"
+		parameterType="NurseHirarchicalRegistration">
+		update
+		PTF_NURSE_HIERARCHICAL_REGISTRATION
+		set
+		STATUS=#{status},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑修改 -->
+	<update id="update"
+		parameterType="NurseHirarchicalRegistration">
+		update
+		PTF_NURSE_HIERARCHICAL_REGISTRATION
+		set
+		USER_CODE=#{userCode},
+		USER_NAME=#{userName},
+		WARD_CODE=#{wardCode},
+		BEGIN_TIME=#{beginTime},
+		END_TIME=#{endTime},
+		HIERARCHY=#{hierarchy},
+		AUDITOR=#{auditor},
+		REMARK=#{remark},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑查找 -->
+	<select id="select"
+		parameterType="NurseHirarchicalRegistration"
+		resultType="NurseHirarchicalRegistration">
+		select
+		SEQ_ID			as seqId, 
+		USER_CODE		as userCode, 
+		USER_NAME		as userName,
+		WARD_CODE		as wardCode, 
+		BEGIN_TIME		as beginTime, 
+		END_TIME		as endTime, 
+		HIERARCHY		as hierarchy, 
+		STATUS			as status, 
+		AUDITOR			as auditor, 
+		REMARK			as remark
+		from
+		PTF_NURSE_HIERARCHICAL_REGISTRATION
+		where STATUS='01'
+		<if test="userCode != null">
+			and USER_CODE=#{userCode}
+		</if>
+		<if test="userName != null">
+			and USER_NAME like #{userName}
+		</if>
+		<if test="wardCode != null">
+			and WARD_CODE = #{wardCode}
+		</if>
+		<if test="beginTime != null">
+			and BEGIN_TIME >= #{beginTime}
+		</if>
+		<if test="endTime != null">
+			and #{endTime} >= END_TIME
+		</if>
+		<if test="hierarchy != null">
+			and HIERARCHY = #{hierarchy}
+		</if>
+		<if test="auditor != null">
+			and AUDITOR like #{auditor}
+		</if>
+	</select>
+</mapper>
+  

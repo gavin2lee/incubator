@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>病人出入管理 ｜ $!{hospitalName} </title>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/patientGlance.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/bodyTempSheetCommon.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/patientInOut.css')"/>
+    <script type="text/javascript" src="#url('/resources/js/common.js?1472534366478')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/jsPlugin.js?1472534366478')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/main/main.js?1472534366478')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/map.js?1472534366478')"></script>
+    <script type="text/javascript" src="#url('/resources/js/dictionary.js?1472534366478')" charset="utf-8"></script>
+</head>
+
+<script type="text/javascript" language="javascript">
+    contextPath = "#url('')";
+    var menuId = "$!menuId";
+</script>
+<style type="text/css">
+    .top-title .btn-nm {
+        padding: 0px 16px;
+        height: 26px;
+        line-height: 26px;
+    }
+
+    ::-webkit-scrollbar {
+        /*display: none;*/
+        width: 3px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        background-color: #999;
+    }
+
+    .btn-box input {
+        margin: 0 !important;
+    }
+
+    .btn-box {
+        font-size: 14px;
+    }
+
+    .table-wrapper .btn {
+        padding: 3px 6px;
+    }
+
+    .btn.disabled {
+        cursor: not-allowed;
+    }
+
+    .exec-content ul {
+        display: table;
+        width: 100%;
+    }
+
+    .filter-wrapper > div, .show-style {
+        padding: 0 10px;
+        height: 28px !important;
+        line-height: 28px !important;
+        background: #fff;
+        border: 1px #ccc solid;
+        font-size: 12px !important;
+    }
+
+    .show-style {
+        margin-top: 4px;
+        margin-bottom: 4px;
+        font-size: 12px;
+    }
+
+    .filter-wrapper {
+        padding: 6px;
+        background: #EFF2F2;
+        font-size: 12px;
+        border-bottom: 1px #ABBBC1 solid;
+    }
+
+    .exec-wrapper .top-tools-box .top-title {
+        padding: 0 10px;
+        margin: 4px 0 4px 10px;
+        border-right: 1px solid #ccc;
+    }
+
+    .input-middle input[type="radio"], input[type="checkbox"] {
+        vertical-align: middle;
+        margin-bottom: 4px;
+    }
+</style>
+
+<body id="nurseLayout">
+<div id="header">
+    #parse("nur/header.vm")
+</div>
+
+<div class="f_yahei">
+    <div class="insp-top top-tools" style="height:40px">
+        <div class="top-tools-box input-middle">
+            <div class="center">
+                <div class="btn-box fl mgl10">
+                    <div class="time-box fl mgr10">
+                        时间：
+                        <input id="startDate" type="text" class="easyui-datebox"
+                               style="width: 90px;height:24px;"></input>
+                        -
+                        <input id="endDate" type="text" class="easyui-datebox" style="width: 90px;height:24px;"></input>
+
+
+                    </div>
+                </div>
+                <div class="top-title show-style">
+                    <span>行为：</span>
+                    <input type="radio" id="action_0" value="" name="action" checked="checked">
+                    <label for="action_0" class="mgr10">全部</label>
+
+                    <input type="radio" id="action_1" value="ss" name="action">
+                    <label for="action_1" class="mgr10">手术</label>
+
+                    <input type="radio" id="action_2" value="cry" name="action">
+                    <label for="action_2" class="mgr10">出入院</label>
+
+                    <input type="radio" id="action_3" value="jcwc" name="action">
+                    <label for="action_3" class="mgr10">检查外出</label>
+
+                    <input type="radio" id="action_4" value="wc" name="action">
+                    <label for="action_4" class="mgr10">外出</label>
+
+                </div>
+                <div class="btn-box fl mgl10" style="padding: 5px 0;">
+                    <button class="_btn _btn-md" id="refresh" style="height:26px;line-height:26px;">查询</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main center out-content clearfix">
+        <div class="out-grid">
+            <table id="work-table">
+            </table>
+        </div>
+        <div class="out-detail">
+            <div class="list-header">
+              详情
+            </div>
+           <ul class="out-list">
+             <li>
+             <div style="padding: 0 10px 10px 10px; text-align: center;">暂无信息</div>
+             </li>
+           </ul>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="#url('/resources/js/nur/patientInOutMain.js?1472534366478')"></script>
+</body>
+
+</html>

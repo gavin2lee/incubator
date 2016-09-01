@@ -1,0 +1,78 @@
+<div class="col-md-12">
+  <div class="panel panel-layout panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-user"></i>
+      <span>系统日历</span>
+      <div class="pull-right">
+        <button ng-click="vm.open()" class="btn btn-default btn-xs">新建日历</button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="calendar-wrapper calendar">
+        <div class="calendar-header">
+          <div class="calendar_ctrl">
+            <button class="btn btn-default btn-xs" ng-click="vm.previousMonth()">
+              <i class="fa fa-angle-left"></i>
+            </button>
+            <span class="calendar_current">
+              {{vm.loadParams.year}}年 {{vm.loadParams.month}}月
+            </span>
+
+            <button class="btn btn-default btn-xs" ng-click="vm.nextMonth()">
+              <i class="fa fa-angle-right"></i>
+            </button>
+
+            <button class="btn btn-default btn-xs" ng-click="vm.resetCalendar()">
+              今天
+            </button>
+          </div>
+          <div class="calendar_weeks">
+            <div class="weeks-item" ng-repeat="weekItem in vm.weeks">{{weekItem[1]}}</div>
+          </div>
+        </div>
+        <div class="calendar-body">
+          <!-- <div class="calendar_week-count">
+          </div> -->
+          <div class="calendar_empty" ng-if="vm.isEmpty">
+            暂无日历～
+          </div>
+          <div class="calendar_grid" ng-if="!vm.isEmpty">
+            <div class="calendar-row" ng-repeat="weekRow in vm.dataList">
+              <div class="calendar_week-count">{{weekRow[0].weeks}}
+                <br />周</div>
+              <div class="calendar_day calendar_diable-day" ng-repeat="num in vm.placeholderArr track by $index" ng-if="$parent.$index == 0">
+              </div>
+              <div class="calendar_day" ng-repeat="day in weekRow">
+
+                <div class="day-container">
+                  <div class="calendar_day-text" ng-class="{'current-day': day.date == vm.currentDate}">
+                    {{day.day}}
+                  </div>
+                  <div class="calendar-setting">
+                    <a href ng-click="vm.openSetting(day)">
+                      <i class="fa fa-pencil-square-o"></i>
+                    </a>
+                    <!-- 下拉 -->
+                    <!-- <span uib-dropdown on-toggle="toggled(open)">
+                      <a href id="simple-dropdown" uib-dropdown-toggle>
+                        <i class="fa fa-cog"></i>
+                      </a>
+                      <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                        <li ng-repeat="choice in items">
+                          <a href></a>
+                        </li>
+                      </ul>
+                    </span> -->
+
+                  </div>
+                  <span class="label label-holiday label-success" ng-if="day.isHoliday">假</span>
+                  <span class="label label-weekend label-default" ng-if="day.isWeekend">周末</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

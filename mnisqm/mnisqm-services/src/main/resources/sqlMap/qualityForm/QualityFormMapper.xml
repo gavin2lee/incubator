@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.qualityForm.dao.QualityFormMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.qualityForm.domain.QualityForm" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="FORM_CODE" property="formCode" jdbcType="VARCHAR" />
+    <result column="FORM_NAME" property="formName" jdbcType="VARCHAR" />
+    <result column="FORM_TYPE" property="formType" jdbcType="CHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <result column="PARENT_TYPE" property="parentType" jdbcType="VARCHAR"/>
+    <collection property="qualityFormDetailList"
+		ofType="com.lachesis.mnisqm.module.qualityForm.domain.QualityFormDetail"
+		column="FORM_TYPE" >
+		<id column="SEQID" property="seqId" jdbcType="BIGINT" />
+    	<result column="DETAIL_CODE" property="detailCode" jdbcType="VARCHAR" />
+    	<result column="FORM_CODE" property="formCode" jdbcType="VARCHAR" />
+    	<result column="ITEM" property="item" jdbcType="VARCHAR" />
+    	<result column="POINTS" property="points" jdbcType="INTEGER" />
+    	<result column="STANTARD" property="stantard" jdbcType="VARCHAR" />
+    	<result column="STATUS" property="status" jdbcType="VARCHAR" />
+    	<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    	<result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    	<result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    	<result column="DESCRIP" property="descrip" jdbcType="VARCHAR"/>
+    	<result column="DETAIL_NAME" property="detailName" jdbcType="VARCHAR"/>
+	</collection>
+  </resultMap>
+  <resultMap id="ResultMap" type="com.lachesis.mnisqm.module.qualityForm.domain.QualityForm" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="FORM_CODE" property="formCode" jdbcType="VARCHAR" />
+    <result column="FORM_NAME" property="formName" jdbcType="VARCHAR" />
+    <result column="FORM_TYPE" property="formType" jdbcType="CHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <result column="PARENT_TYPE" property="parentType" jdbcType="VARCHAR"/>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from QUALITY_FORM
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityForm" 
+  keyProperty="seqId" useGeneratedKeys="true">
+    insert into QUALITY_FORM ( FORM_CODE, 
+      FORM_NAME, FORM_TYPE, STATUS, 
+      CREATE_TIME, UPDATE_TIME, CREATE_PERSON, 
+      UPDATE_PERSON, PARENT_TYPE)
+    values (#{formCode,jdbcType=VARCHAR}, 
+      #{formName,jdbcType=VARCHAR}, #{formType,jdbcType=CHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updatePerson,jdbcType=VARCHAR}, #{parentType, jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityForm" >
+    update QUALITY_FORM
+    set 
+      FORM_CODE = #{formCode,jdbcType=VARCHAR},
+      FORM_NAME = #{formName,jdbcType=VARCHAR},
+      FORM_TYPE = #{formType,jdbcType=CHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      PARENT_TYPE	= #{parentType,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, FORM_CODE, FORM_NAME, FORM_TYPE, STATUS, CREATE_TIME, UPDATE_TIME, 
+    CREATE_PERSON, UPDATE_PERSON, PARENT_TYPE
+    from QUALITY_FORM
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="ResultMap" >
+    select SEQ_ID, FORM_CODE, FORM_NAME, FORM_TYPE, STATUS, CREATE_TIME, UPDATE_TIME, 
+    CREATE_PERSON, UPDATE_PERSON, PARENT_TYPE
+    from QUALITY_FORM
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from QUALITY_FORM where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityForm" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into QUALITY_FORM (FORM_CODE, 
+      FORM_NAME, FORM_TYPE, STATUS, 
+      CREATE_TIME, UPDATE_TIME, CREATE_PERSON, 
+      UPDATE_PERSON, PARENT_TYPE)
+    values (#{formCode,jdbcType=VARCHAR}, 
+      #{formName,jdbcType=VARCHAR}, #{formType,jdbcType=CHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updatePerson,jdbcType=VARCHAR}, #{parentType,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateForDelete" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityForm" >
+	update QUALITY_FORM
+	set
+	UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}, 
+    UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+	STATUS = #{status,jdbcType=CHAR}
+	where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="queryByDeptCodeAndType" resultMap="BaseResultMap" parameterType="Map">
+    select qf.SEQ_ID, qf.FORM_CODE, qf.FORM_NAME, qf.FORM_TYPE, qf.STATUS, qf.CREATE_TIME, qf.UPDATE_TIME, 
+    qf.CREATE_PERSON, qf.UPDATE_PERSON, qf.PARENT_TYPE, qfd.SEQ_ID SEQID, qfd.DETAIL_CODE, qfd.FORM_CODE, qfd.ITEM, qfd.POINTS, qfd.STANTARD, qfd.STATUS, qfd.CREATE_TIME, 
+    qfd.UPDATE_TIME, qfd.CREATE_PERSON, qfd.UPDATE_PERSON, qfd.DESCRIP, qfd.DETAIL_NAME
+    from QUALITY_FORM qf,QUALITY_FORM_DETAIL qfd
+    where qf.FORM_CODE = qfd.FORM_CODE
+    <if test="type != null">
+        and qf.FORM_TYPE = #{type}
+    </if>
+    and qf.STATUS = '01'
+  </select>
+  <select id="getByFormCode" resultMap="BaseResultMap" parameterType="String">
+    select qf.SEQ_ID, qf.FORM_CODE, qf.FORM_NAME, qf.FORM_TYPE, qf.STATUS, qf.CREATE_TIME, qf.UPDATE_TIME, 
+    qf.CREATE_PERSON, qf.UPDATE_PERSON, qf.PARENT_TYPE, qfd.SEQ_ID SEQID, qfd.DETAIL_CODE, qfd.FORM_CODE, qfd.ITEM, qfd.POINTS, qfd.STANTARD, qfd.STATUS, qfd.CREATE_TIME, 
+    qfd.UPDATE_TIME, qfd.CREATE_PERSON, qfd.UPDATE_PERSON, qfd.DESCRIP, qfd.DETAIL_NAME
+    from QUALITY_FORM qf,QUALITY_FORM_DETAIL qfd
+    where qf.FORM_CODE = qfd.FORM_CODE
+    and qf.FORM_CODE = #{formCode,jdbcType=VARCHAR}
+  </select>
+</mapper>

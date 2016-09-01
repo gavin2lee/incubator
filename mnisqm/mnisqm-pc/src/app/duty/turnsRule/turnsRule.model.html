@@ -1,0 +1,65 @@
+<div class="modal-header">
+  <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h5 class="modal-title">
+        填写排班规则
+    </h5>
+</div>
+<form class="w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="addLevelForm">
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="form-group col-sm-6">
+          <label class="control-label col-sm-5">规则名称</label>
+          <div class="col-sm-7">
+            <input class="form-control input-sm" ng-model="vm.formData.ruleName">
+          </div>
+        </div>
+        <div class="form-group col-sm-6">
+          <label class="control-label col-sm-5">日期类型</label>
+          <div class="col-sm-7">
+            <select class="form-control input-sm" ng-model="vm.formData.dateType">
+              <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.dateType">{{item.dicName}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-6">
+          <label class="control-label col-sm-5">班次</label>
+          <div class="col-sm-7">
+            <select class="form-control input-sm" ng-model="vm.formData.classCode">
+              <option ng-repeat="c in vm.metaData.classList" value="{{c.classCode}}">{{c.className}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-sm-6">
+          <label class="control-label col-sm-5">班次次数</label>
+          <div class="col-sm-7">
+            <input class="form-control input-sm" ng-model="vm.formData.userCount">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-6">
+          <label class="control-label col-sm-5">护理人员级别</label>
+          <div class="col-sm-7">
+            <select class="input-sm" ng-model="vm.formData.userLevel">
+              <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.level">{{item.dicName}}</option>
+            </select>
+            <!-- <input class="form-control input-sm" ng-model="vm.formData.userLevel"> -->
+          </div>
+        </div>
+        <div class="form-group col-sm-6">
+          <label class="control-label col-sm-5">备注</label>
+          <div class="col-sm-7">
+            <input class="form-control input-sm" ng-model="vm.formData.remark">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok()">保存</button>
+    <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+  </div>
+</form>

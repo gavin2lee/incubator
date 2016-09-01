@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.WorkLoadMapper">
+	<resultMap id="workLoadInfoMap" type="com.lachesis.mnis.core.workload.entity.WorkLoadInfo">
+		<result property="nurseCode" column="nurse_code" />
+		<result property="nurseName" column="nurse_name" />
+		<result property="deptCode" column="dept_code" />
+		<collection property="workLoadDetialInfos" resultMap="workLoadDetailInfoMap"></collection>
+	</resultMap>
+	
+	<resultMap id="workLoadDetailInfoMap" type="com.lachesis.mnis.core.workload.entity.WorkLoadDetailInfo">
+		<result property="nurseCode" column="nurse_code" />
+		<result property="workLoadType" column="workload_type" />
+		<result property="workLoadTypeName" column="workload_type_name" />
+		<result property="statisticCount" column="statistic_count" />
+	</resultMap>
+	
+	<resultMap id="workLoadTypeMap" type="com.lachesis.mnis.core.workload.entity.WorkLoadType" >
+		<id property="id" column="id"/>
+		<result property="type" column="type"/>
+		<result property="name" column="name"/>
+	</resultMap>
+	
+	<select id="getTopWorkLoadTypes" resultMap="workLoadTypeMap">
+		select id,local_type type,local_name name from com_local_dic
+		where dic_type='WORKLOAD' and is_valid=1 and local_parent_type is null
+		order by sort_no;
+	</select>
+	<select id="getChildrenWorkLoadTypes" resultMap="workLoadTypeMap" parameterType="String">
+		select id,local_type type,local_name name from com_local_dic
+		where dic_type='WORKLOAD' and is_valid=1  and local_parent_type = #{param1}
+		order by sort_no;
+	</select>
+	
+	<!-- 指定时间(当天)-科室,各个护士每一天按大类型统计 -->
+	<select id="getTodayWorkLoadInfosByNurse" parameterType="java.util.Map" resultMap="workLoadInfoMap">
+		SELECT  W.WORKLOAD_TYPE ,
+		        CLD.LOCAL_NAME WORKLOAD_TYPE_NAME ,
+		        W.USER_CODE NURSE_CODE ,
+		        W.USER_NAME NURSE_NAME ,
+		        SUM(W.STATISTIC_COUNT) STATISTIC_COUNT
+		FROM    VIEW_NUSER_WORKLOAD_STATISTIC W
+		INNER JOIN COM_LOCAL_DIC CLD ON CLD.DIC_TYPE='WORKLOAD' AND CLD.LOCAL_TYPE=W.WORKLOAD_TYPE
+				AND CLD.LOCAL_PARENT_TYPE IS NULL		
+		WHERE   W.DEPT_CODE = #{deptCode}
+		<if test="nurseCode != null">
+			AND w.USER_CODE = #{nurseCode}
+		</if>
+		<if test="types != null and types.size>0">
+			AND w.WORKLOAD_TYPE in 
+				<foreach collection="workLoadTypes" item="item" index="index"
+				separator=",">
+				#{item}
+			</foreach>
+		</if>
+		GROUP BY W.WORKLOAD_TYPE,W.USER_CODE,W.USER_NAME,CLD.LOCAL_NAME
+	</select>
+	
+	<!-- 指定时间(当天以前统计)-科室,各个护士每一天按大类型统计 -->
+	<select id="getPreTodayWorkLoadInfosByNurse" parameterType="java.util.Map" resultMap="workLoadInfoMap">
+		SELECT  W.WORKLOAD_TYPE ,
+		        CLD.LOCAL_NAME WORKLOAD_TYPE_NAME ,
+		        W.USER_CODE NURSE_CODE ,
+		        W.USER_NAME NURSE_NAME ,
+		        SUM(W.STATISTIC_COUNT) STATISTIC_COUNT
+		FROM    NURSE_WORKLOAD_STATISTICS W
+		INNER JOIN COM_LOCAL_DIC CLD ON CLD.DIC_TYPE='WORKLOAD' AND CLD.LOCAL_TYPE=W.WORKLOAD_TYPE
+				AND CLD.LOCAL_PARENT_TYPE IS NULL		
+		WHERE  W.DEPT_CODE = #{deptCode}
+		<if test="nurseCode != null">
+			AND w.USER_CODE = #{nurseCode}
+		</if>
+		AND w.STATISTIC_DATE >= #{startDate}
+		AND w.STATISTIC_DATE &lt; #{endDate}
+		<if test="types != null and types.size>0">
+			AND w.WORKLOAD_TYPE in 
+				<foreach collection="workLoadTypes" item="item" index="index"
+				separator=",">
+				#{item}
+			</foreach>
+		</if>
+		GROUP BY W.WORKLOAD_TYPE,W.USER_CODE,W.USER_NAME,CLD.LOCAL_NAME
+	</select>
+	<!-- 指定时间(当天和当天以前统计)-科室,各个护士每一天按大类型统计 -->
+	<select id="getWorkLoadInfosByNurse" parameterType="java.util.Map" resultMap="workLoadInfoMap">
+	SELECT 
+			tt.WORKLOAD_TYPE ,
+	        tt.WORKLOAD_TYPE_NAME ,
+	        tt.NURSE_CODE ,
+	        tt.NURSE_NAME ,
+	        SUM(tt.STATISTIC_COUNT) STATISTIC_COUNT
+	FROM(
+			SELECT  W.WORKLOAD_TYPE ,
+			        CLD.LOCAL_NAME WORKLOAD_TYPE_NAME ,
+			        W.USER_CODE NURSE_CODE ,
+			        W.USER_NAME NURSE_NAME ,
+			        SUM(W.STATISTIC_COUNT) STATISTIC_COUNT
+			FROM    VIEW_NUSER_WORKLOAD_STATISTIC W
+			INNER JOIN COM_LOCAL_DIC CLD ON CLD.DIC_TYPE='WORKLOAD' AND CLD.LOCAL_TYPE=W.WORKLOAD_TYPE
+				AND CLD.LOCAL_PARENT_TYPE IS NULL		
+			WHERE   W.DEPT_CODE = #{deptCode}
+			<if test="nurseCode != null">
+				AND w.USER_CODE = #{nurseCode}
+			</if>
+			<if test="types != null and types.size>0">
+				AND w.WORKLOAD_TYPE in 
+					<foreach collection="workLoadTypes" item="item" index="index"
+					separator=",">
+					#{item}
+				</foreach>
+			</if>
+			GROUP BY W.WORKLOAD_TYPE,W.USER_CODE,W.USER_NAME,CLD.LOCAL_NAME
+			UNION ALL
+			SELECT  W.WORKLOAD_TYPE ,
+			        CLD.LOCAL_NAME WORKLOAD_TYPE_NAME ,
+			        W.USER_CODE NURSE_CODE ,
+			        W.USER_NAME NURSE_NAME ,
+			        SUM(W.STATISTIC_COUNT) STATISTIC_COUNT
+			FROM    NURSE_WORKLOAD_STATISTICS W
+			INNER JOIN COM_LOCAL_DIC CLD ON CLD.DIC_TYPE='WORKLOAD' AND CLD.LOCAL_TYPE=W.WORKLOAD_TYPE
+				AND CLD.LOCAL_PARENT_TYPE IS NULL		
+			WHERE  W.DEPT_CODE = #{deptCode}
+			<if test="nurseCode != null">
+				AND w.USER_CODE = #{nurseCode}
+			</if>
+			AND w.STATISTIC_DATE >= #{startDate}
+			AND w.STATISTIC_DATE &lt; #{endDate}
+			<if test="types != null and types.size>0">
+				AND w.WORKLOAD_TYPE in 
+					<foreach collection="workLoadTypes" item="item" index="index"
+					separator=",">
+					#{item}
+				</foreach>
+			</if>
+			GROUP BY W.WORKLOAD_TYPE,W.USER_CODE,W.USER_NAME,CLD.LOCAL_NAME
+			) tt
+		GROUP BY tt.WORKLOAD_TYPE,tt.WORKLOAD_TYPE_NAME,tt.NURSE_CODE,tt.NURSE_NAME
+	</select>
+	
+	<!-- 指定时间(当天)-科室,各个护士每一天按大类型,小类型统计 -->
+	<select id="getTodayWorkLoadInfosByNurseType" parameterType="java.util.Map" resultMap="workLoadInfoMap">
+		SELECT  W.STATISTIC_TYPE WORKLOAD_TYPE ,
+		        CLD.LOCAL_NAME WORKLOAD_TYPE_NAME ,
+		        W.USER_CODE NURSE_CODE ,
+		        W.USER_NAME NURSE_NAME ,
+		        SUM(W.STATISTIC_COUNT) STATISTIC_COUNT
+		FROM    VIEW_NUSER_WORKLOAD_STATISTIC W
+		        INNER JOIN COM_LOCAL_DIC CLD ON CLD.DIC_TYPE = 'WORKLOAD'
+		                                        AND CLD.LOCAL_TYPE = W.STATISTIC_TYPE
+		                                        AND CLD.LOCAL_PARENT_TYPE = W.WORKLOAD_TYPE
+		WHERE   W.DEPT_CODE = #{deptCode}
+		<if test="nurseCode != null">
+			AND w.USER_CODE = #{nurseCode}
+		</if>
+		<if test="types != null and types.size>0">
+			AND w.WORKLOAD_TYPE in 
+				<foreach collection="workLoadTypes" item="item" index="index"
+				separator=",">
+				#{item}
+			</foreach>
+		</if>
+		GROUP BY W.WORKLOAD_TYPE,W.STATISTIC_TYPE,W.USER_CODE,W.USER_NAME,CLD.LOCAL_NAME
+	</select>
+	
+	<!-- 指定时间(当天以前统计)-科室,各个护士每一天按大类型,小类型统计 -->
+	<select id="getPreTodayWorkLoadInfosByNurseType" parameterType="java.util.Map" resultMap="workLoadInfoMap">
+		SELECT  W.STATISTIC_TYPE WORKLOAD_TYPE ,
+		        CLD.LOCAL_NAME WORKLOAD_TYPE_NAME ,
+		        W.USER_CODE NURSE_CODE ,
+		        W.USER_NAME NURSE_NAME ,
+		        SUM(W.STATISTIC_COUNT) STATISTIC_COUNT
+		FROM    NURSE_WORKLOAD_STATISTICS W
+		        INNER JOIN COM_LOCAL_DIC CLD ON CLD.DIC_TYPE = 'WORKLOAD'
+		                                        AND CLD.LOCAL_TYPE = W.STATISTIC_TYPE
+		                                        AND CLD.LOCAL_PARENT_TYPE = W.WORKLOAD_TYPE
+		WHERE  W.DEPT_CODE = #{deptCode}
+		<if test="nurseCode != null">
+			AND w.USER_CODE = #{nurseCode}
+		</if>
+		AND w.STATISTIC_DATE >= #{startDate}
+		AND w.STATISTIC_DATE &lt; #{endDate}
+		<if test="types != null and types.size>0">
+			AND w.WORKLOAD_TYPE in 
+				<foreach collection="workLoadTypes" item="item" index="index"
+				separator=",">
+				#{item}
+			</foreach>
+		</if>
+		GROUP BY W.WORKLOAD_TYPE,W.STATISTIC_TYPE,W.USER_CODE,W.USER_NAME,CLD.LOCAL_NAME
+	</select>
+	<!-- 指定时间(当天和当天以前统计)-科室,各个护士每一天按大类型,小类型统计 -->
+	<select id="getWorkLoadInfosByNurseType" parameterType="java.util.Map" resultMap="workLoadInfoMap">
+	SELECT 
+			tt.WORKLOAD_TYPE ,
+	        tt.WORKLOAD_TYPE_NAME ,
+	        tt.NURSE_CODE ,
+	        tt.NURSE_NAME ,
+	        SUM(tt.STATISTIC_COUNT) STATISTIC_COUNT
+	FROM(
+			SELECT  W.STATISTIC_TYPE WORKLOAD_TYPE ,
+			        CLD.LOCAL_NAME WORKLOAD_TYPE_NAME ,
+			        W.USER_CODE NURSE_CODE ,
+			        W.USER_NAME NURSE_NAME ,
+			        SUM(W.STATISTIC_COUNT) STATISTIC_COUNT
+			FROM    VIEW_NUSER_WORKLOAD_STATISTIC W
+			        INNER JOIN COM_LOCAL_DIC CLD ON CLD.DIC_TYPE = 'WORKLOAD'
+			                                        AND CLD.LOCAL_TYPE = W.STATISTIC_TYPE
+			                                        AND CLD.LOCAL_PARENT_TYPE = W.WORKLOAD_TYPE
+			WHERE   W.DEPT_CODE = #{deptCode}
+			<if test="nurseCode != null">
+				AND w.USER_CODE = #{nurseCode}
+			</if>
+			<if test="types != null and types.size>0">
+				AND w.WORKLOAD_TYPE in 
+					<foreach collection="workLoadTypes" item="item" index="index"
+					separator=",">
+					#{item}
+				</foreach>
+			</if>
+			GROUP BY W.WORKLOAD_TYPE,W.STATISTIC_TYPE,W.USER_CODE,W.USER_NAME,CLD.LOCAL_NAME
+			UNION ALL
+			SELECT  W.STATISTIC_TYPE WORKLOAD_TYPE ,
+			        CLD.LOCAL_NAME WORKLOAD_TYPE_NAME ,
+			        W.USER_CODE NURSE_CODE ,
+			        W.USER_NAME NURSE_NAME ,
+			        SUM(W.STATISTIC_COUNT) STATISTIC_COUNT
+			FROM    NURSE_WORKLOAD_STATISTICS W
+			        INNER JOIN COM_LOCAL_DIC CLD ON CLD.DIC_TYPE = 'WORKLOAD'
+			                                        AND CLD.LOCAL_TYPE = W.STATISTIC_TYPE
+			                                        AND CLD.LOCAL_PARENT_TYPE = W.WORKLOAD_TYPE
+			WHERE  W.DEPT_CODE = #{deptCode}
+			<if test="nurseCode != null">
+				AND w.USER_CODE = #{nurseCode}
+			</if>
+			AND w.STATISTIC_DATE >= #{startDate}
+			AND w.STATISTIC_DATE &lt; #{endDate}
+			<if test="types != null and types.size>0">
+				AND w.WORKLOAD_TYPE in 
+					<foreach collection="workLoadTypes" item="item" index="index"
+					separator=",">
+					#{item}
+				</foreach>
+			</if>
+			GROUP BY W.WORKLOAD_TYPE,W.STATISTIC_TYPE,W.USER_CODE,W.USER_NAME,CLD.LOCAL_NAME
+			) tt
+		GROUP BY tt.WORKLOAD_TYPE,tt.WORKLOAD_TYPE_NAME,tt.NURSE_CODE,tt.NURSE_NAME
+	</select>
+</mapper>

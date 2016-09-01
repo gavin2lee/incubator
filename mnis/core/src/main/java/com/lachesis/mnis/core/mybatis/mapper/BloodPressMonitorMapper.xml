@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.BloodPressMonitorMapper">
+
+	<!-- 查询血压监控 -->
+	<select id="selectBloodPressList" parameterType="PatBloodPressMonitor" resultType="PatBloodPressMonitor">
+		SELECT 
+			m.ID					as id,
+			m.PAT_ID				as patId,
+			p.NAME					as name,
+			m.ITEM_CODE				as itemCode,
+			m.ITEM_VALUE			as itemValue,
+			m.RECORD_TIME			as recordTime,
+			m.STATUS				as status,
+			m.OPERATE_CODE			as operateCode,
+			m.OPERATE_NAME			as operateName,
+			m.OPERATE_TIME			as operateTime,
+			m.CREATE_TIME			as createTime
+		FROM PAT_BLOODPRESS_MONITORING m
+			INNER JOIN PAT_CURE_INFO p ON p.PAT_ID=m.PAT_ID
+		WHERE P.WARD_CODE=#{deptCode}
+		<if test="patId != null and patId != ''">
+			and m.PAT_ID = #{patId}
+		</if>
+		<if test="provisions == true">
+			and m.ITEM_CODE IS NOT NULL
+		</if>
+		AND CONVERT(VARCHAR(100),m.RECORD_TIME,23) = #{recordTime}
+	</select>
+	
+	<!-- 保存血压监控数据 -->
+	<insert id="insertBloodPressMonitor" parameterType="PatBloodPressMonitor">
+		INSERT INTO PAT_BLOODPRESS_MONITORING(
+			PAT_ID,
+			ITEM_CODE,
+			ITEM_VALUE,
+			RECORD_TIME,
+			STATUS,
+			OPERATE_CODE,
+			OPERATE_NAME,
+			OPERATE_TIME,
+			CREATE_TIME
+			)
+		VALUES(
+			#{patId},
+			#{itemCode},
+			#{itemValue},
+			#{recordTime},
+			#{status},
+			#{operateCode},
+			#{operateName},
+			GETDATE(),
+			GETDATE()
+		)
+	</insert>
+	
+	<!-- 更新血压监控数据 -->
+	<update id="updateBloodPressById" parameterType="PatBloodPressMonitor">
+		UPDATE PAT_BLOODPRESS_MONITORING SET
+			ITEM_VALUE = #{itemValue},
+			STATUS = #{status},
+			OPERATE_CODE = #{operateCode},
+			OPERATE_NAME = #{operateName},
+			OPERATE_TIME = GETDATE()
+		WHERE ID = #{id}
+	</update>
+	
+	<!-- 查询血压监控 -->
+	<select id="selectBloodPress" parameterType="PatBloodPressMonitor" resultType="PatBloodPressMonitor">
+		SELECT 
+			m.ID					as id,
+			m.PAT_ID				as patId,
+			p.NAME					as name,
+			m.ITEM_CODE				as itemCode,
+			m.ITEM_VALUE			as itemValue,
+			m.RECORD_TIME			as recordTime,
+			m.STATUS				as status,
+			m.OPERATE_CODE			as operateCode,
+			m.OPERATE_NAME			as operateName,
+			m.OPERATE_TIME			as operateTime,
+			m.CREATE_TIME			as createTime
+		FROM PAT_BLOODPRESS_MONITORING m
+			INNER JOIN PAT_CURE_INFO p ON p.PAT_ID=m.PAT_ID
+		WHERE P.WARD_CODE=#{deptCode}
+			AND m.PAT_ID = #{patId}
+			AND CONVERT(VARCHAR(100),m.RECORD_TIME,120) = #{recordTime}
+	</select>
+</mapper>

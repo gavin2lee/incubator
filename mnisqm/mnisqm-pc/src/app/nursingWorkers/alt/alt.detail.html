@@ -1,0 +1,341 @@
+<div class="hr-wrapper alt-wrapper">
+  <loading type="content"></loading>
+  <uib-tabset active="active">
+    <uib-tab index="0" heading="职称变更" active="tab.active">
+      <form class="form-horizontal comUserPosition-form w5c-form" role="form" novalidate
+            w5c-form-validate="vm.validationOption" name="comUserPositionForm">
+        <!-- <div class="tool-wrapper container-fluid">
+          <button ng-click="vm.addItem('comUserPosition')" class="btn btn-primary btn-sm">添加职称</button>
+          <button ng-click="vm.save('comUserPosition')" class="btn btn-success btn-sm">
+            保存
+          </button>
+        </div> -->
+        <div class="panel panel-default">
+          <div class="panel-body">
+
+            <div class="form-group">
+              <label class="col-sm-1 control-label">职称：</label>
+              <div class="col-sm-2">
+                <select id="technicalPost" name="technicalPost" required ng-model="vm.detail.comUser.technicalPost"
+                        class="form-control input-sm">
+                  <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.technicalPost">{{item.dicName}}</option>
+                </select>
+              </div>
+              <label class="col-sm-1 control-label">审批单位：</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control input-sm" required name="reviewUnit" ng-model="vm.detail.comUser.reviewUnit">
+              </div>
+              <label class="col-sm-1 control-label">开始时间：</label>
+              <div class="col-sm-2">
+                <span class="input-group">
+                      <input type="text" id="positionStartDate" name="positionStartDate" uib-datepicker-popup required
+                             datepicker-options="vm.dateOptions" is-open="vm.positionStartDateIsOpen"
+                             ng-model="vm.detail.comUser.positionStartDate" close-text="关闭" current-text="今天"
+                             clear-text="清除"
+                             class="form-control input-sm" timestamp-to-string>
+                      <span class="input-group-btn">
+                      <button type="button" class="btn btn-sm btn-default"
+                              ng-click="vm.openCalender('positionStartDateIsOpen')">
+                        <i class="fa fa-calendar"></i>
+                      </button>
+                      </span>
+                </span>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.save('comUserPosition', 'technicalPost')">保存
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table st-table="vm.displayPosition" st-safe-src="vm.detail.comUserPosition" class="table table-striped table-hover table-condensed">
+            <thead>
+            <tr>
+              <th>职称</th>
+              <th>审批单位</th>
+              <th st-sort="startDate" st-sort-default="reverse">获取日期</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in vm.displayPosition track by $index">
+              <td>{{ row.technicalPost && (dicInfo.technicalPost | filter:row.technicalPost)[0].dicName  || '无'}}</td>
+              <td>{{row.reviewUnit || '无'}}</td>
+              <td>{{row.startDate || '无'}}</td>
+            </tr>
+            <tr ng-show="vm.detail.comUserPosition.length === 0 || !vm.detail.comUserPosition">
+              <td colspan="3">
+                <i class="fa fa-info-circle text-success"></i> 暂无记录
+              </td>
+            </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3">
+                  <div st-pagination="" st-items-by-page="15" st-displayed-pages="5"></div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+          <!-- <table class="table table-striped table-condensed table-no-border">
+
+            <tr>
+              <th>职称</th>
+              <th>审批单位</th>
+              <th>开始日期</th>
+              <th>结束日期</th>
+              <th></th>
+            </tr>
+            <tr ng-repeat="item in vm.detail.comUserPosition track by $index">
+              <td>
+                <input class="form-control input-sm" required name="positionName" ng-model="item.positionName" placeholder="在职职称" type="text">
+              </td>
+              <td>
+                <input type="text" name="reviewUnit" required class="form-control input-sm" ng-model="item.reviewUnit">
+              </td>
+              <td>
+                <span class="input-group">
+                  <input type="text" id="comUserPosition_startDate_{{$index}}" required name="comUserPositionStartDate" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.startDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm input-date"
+                    ng-model="item.startDate" timestamp-to-string>
+                  <span class="input-group-btn">
+                         <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('startDateIsOpen', item)">
+                           <i class="fa fa-calendar"></i>
+                         </button>
+                         </span>
+                </span>
+              </td>
+              <td>
+                <span class="input-group">
+                  <input type="text" on-open-focus="true" id="comUserPosition_endDate_{{$index}}" required name="comUserPositionEndDate" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="item.endDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除"
+                    class="form-control input-sm input-date" ng-model="item.endDate" timestamp-to-string>
+                  <span class="input-group-btn">
+                       <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('endDateIsOpen', item)">
+                         <i class="fa fa-calendar"></i>
+                       </button>
+                       </span>
+                </span>
+              </td>
+              <td>
+                <button ng-click="vm.removeItem('comUserPosition', $index,item.seqId)" class="btn btn-sm btn-danger">删除</button>
+              </td>
+            </tr>
+          </table> -->
+        </div>
+      </form>
+    </uib-tab>
+    <uib-tab index="1" heading="职务变更">
+      <form class="form-horizontal comUserNursing-form" w5c-form-validate="vm.user.validationOption"
+            name="comUserNursingForm">
+        <!-- <div class="tool-wrapper container-fluid">
+          <button ng-click="vm.addItem('comUserNursing')" class="btn btn-primary btn-sm">添加职务变更</button>
+          <button ng-click="vm.save('comUserNursing')" class="btn btn-success btn-sm">
+            保存
+          </button>
+        </div> -->
+        <div class="table-wrap">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="form-group">
+                <label class="col-sm-1 control-label">职务：</label>
+                <div class="col-sm-2">
+                  <select id="duty" name="duty" required ng-model="vm.detail.comUser.duty" class="form-control input-sm">
+                    <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.position">{{item.dicName}}</option>
+                  </select>
+                  <!-- <input class="form-control input-sm" required name="duty" ng-model="vm.formData.duty" placeholder="当前职务" type="text"> -->
+                </div>
+                <label class="col-sm-1 control-label">开始时间：</label>
+                <div class="col-sm-2">
+                  <span class="input-group">
+                        <input type="text" id="dutyStartDate" name="dutyStartDate" uib-datepicker-popup required
+                               datepicker-options="vm.dateOptions" is-open="vm.dutyStartDateIsOpen"
+                               ng-model="vm.detail.comUser.dutyStartDate" close-text="关闭" current-text="今天"
+                               clear-text="清除"
+                               class="form-control input-sm" timestamp-to-string>
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-sm btn-default"
+                                ng-click="vm.openCalender('dutyStartDateIsOpen')">
+                          <i class="fa fa-calendar"></i>
+                        </button>
+                        </span>
+                  </span>
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.save('comUserNursing', 'duty')">保存
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <table st-table="vm.displayNursing" st-safe-src="vm.detail.comUserNursing" class="table table-striped table-hover table-condensed">
+            <thead>
+            <tr>
+              <th>职务</th>
+              <th>开始日期</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in vm.displayNursing">
+              <td>{{row.duty && (dicInfo.position | filter:row.duty)[0].dicName || '无'}}</td>
+              <td>{{row.startDate || '无'}}</td>
+            </tr>
+            <tr ng-show="vm.detail.comUserNursing.length === 0 || !vm.detail.comUserNursing">
+              <td colspan="3">
+                <i class="fa fa-info-circle text-success"></i> 暂无记录
+              </td>
+            </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">
+                  <div st-pagination="" st-items-by-page="15" st-displayed-pages="5"></div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+
+        </div>
+      </form>
+    </uib-tab>
+    <uib-tab index="2" heading="带教历史" active="tab.active">
+      <form class="form-horizontal comUserPosition-form w5c-form" role="form" novalidate
+            w5c-form-validate="vm.validationOption" name="comUserPositionForm">
+        <div class="table-wrap">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="form-group">
+                <label class="col-sm-1 control-label">带教：</label>
+                <div class="col-sm-2">
+                  <select id="teaching" name="teaching" ng-model="vm.detail.comUser.teachLevel"
+                          class="form-control input-sm">
+                    <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.teaching">{{item.dicName}}</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.saveChange(2)">保存</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <table class="table table-striped table-hover table-condensed">
+            <thead>
+            <tr>
+              <th>变更前</th>
+              <th>变更后</th>
+              <th>变更日期</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in vm.teachingList">
+              <td>{{row.foreName || '无'}}</td>
+              <td>{{row.rearName || '无'}}</td>
+              <td>{{row.changeTime || '无'}}</td>
+
+            </tr>
+            <tr ng-show="vm.teachingList.length === 0 || !vm.teachingList">
+              <td colspan="3">
+                <i class="fa fa-info-circle text-success"></i> 暂无记录
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+    </uib-tab>
+    <uib-tab index="3" heading="临床层级变更" active="tab.active">
+      <form class="form-horizontal w5c-form" role="form" novalidate w5c-form-validate="vm.validationOption"
+            name="comUserClinicalForm">
+        <div class="table-wrap">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="form-group">
+                <label class="col-sm-1 control-label">临床层级：</label>
+                <div class="col-sm-2">
+                  <select id="clinical" name="clinical" ng-model="vm.detail.comUser.clinical"
+                          class="form-control input-sm">
+                    <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.clinical">{{item.dicName}}</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.saveChange(1)">保存</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <table class="table table-striped table-hover table-condensed">
+            <thead>
+            <tr>
+              <th>变更前</th>
+              <th>变更后</th>
+              <th>变更日期</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in vm.clinicalList">
+              <td>{{row.foreName || '无'}}</td>
+              <td>{{row.rearName || '无'}}</td>
+              <td>{{row.changeTime || '无'}}</td>
+
+            </tr>
+            <tr ng-show="vm.clinicalList.length === 0 || !vm.clinicalList">
+              <td colspan="3">
+                <i class="fa fa-info-circle text-success"></i> 暂无记录
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+    </uib-tab>
+    <uib-tab index="4" heading="分科" active="tab.active">
+      <form class="form-horizontal comUserPosition-form w5c-form" role="form" novalidate
+            w5c-form-validate="vm.validationOption" name="comUserTeachingForm">
+        <div class="table-wrap">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="form-group">
+                <div class="col-sm-1 control-label">原来科室: </div>
+                <div class="col-sm-1">
+                  <span class="label editable-label label-primary">{{vm.originalDetail.comUser.deptName}}</span></div>
+                <label class="col-sm-1 control-label">科室：</label>
+                <!-- <label ng-if="vm.metaData.name === 'clinical'" class="col-sm-2 control-label">临床层级：</label> -->
+                <div class="col-sm-2">
+                  <select ui-select2 id="deptCode" name="deptCode" ng-model="vm.detail.comUser.deptCode"
+                          class="form-control input-sm">
+                    <option value="{{item.deptCode}}" ng-repeat="item in vm.deptList">{{item.deptName}}</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.saveUserDept()">保存</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <table class="table table-striped table-hover table-condensed">
+            <thead>
+            <tr>
+              <th>变更前</th>
+              <th>变更后</th>
+              <th>变更时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in vm.splitedDeptList">
+              <td>{{row.foreName || '无'}}</td>
+              <td>{{row.rearName || '无'}}</td>
+              <td>{{row.changeTime || '无'}}</td>
+
+            </tr>
+            <tr ng-show="vm.splitedDeptList.length === 0 || !vm.splitedDeptList">
+              <td colspan="3">
+                <i class="fa fa-info-circle text-success"></i> 暂无记录
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+    </uib-tab>
+  </uib-tabset>
+</div>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>护理小白板</title>
+	<link rel="stylesheet" type="text/css" href="#url('/resources/css/note.css')">
+	<link rel="stylesheet" type="text/css" href="#url('/resources/css/noteMemo.css')">
+	<script type="text/javascript" src="#url('/resources/js/nur/noteMemoMain.js?1472534366478')" ></script>
+</head>
+<body>
+	<div class="wrapper" style="">
+		<div class="w-box">
+			<div class="topBox">
+				<div class="myheader">
+					<h1 class="title">心内科护理白板</h1>
+					<div class="whiteplace"></div>
+					<div class="coverblock"></div>
+				</div>
+				<div class="w-top" id="information">
+				</div>
+			</div>
+			<div class="mainBox">
+				<div class="mainBoxWrapper" id="mainBoxWrapper">
+					<script type="text/javascript">
+						// 修改ID=mainBoxWrapper高度
+						var winH = document.body.clientHeight;
+						document.getElementById('mainBoxWrapper').style.height = (winH-102) + 'px';
+					</script>
+					<div class="w-left" id="w-left">
+						<div class="w-l-title">
+							<h4 class="fl color">治疗项目</h4>
+							<!--<span class="fl edit" title="编辑" id="edit" style="display: block;"></span>-->
+						</div>
+						<div class="w-l-content" id="w-l-content">
+							<script type="text/javascript">
+
+								// 修改ID=w-l-content高度
+								fixSize('w-left','w-l-content',[['height',75]]);
+							</script>
+							<div class="items" id="treatmentItem"></div>
+						</div>
+					</div>
+					<div class="w-center">
+						<div class="w-r-mid">
+							<div class="data-list" id="dateList" style="overflow:hidden;">
+								<div class="data-list-box" id="listBox">
+									<div class="into-hospital">
+										<div class="title">
+											<h3>入院</h3>
+										</div>
+										<div class="content">
+											<table>
+												<thead>
+													<th width="73">床号</th>
+													<th width="100">姓名</th>
+													<th width="481">入院诊断</th>
+													<th width="403">护理交班</th>
+												</thead>
+												<tbody class="ruyuan">
+													
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="into-hospital">
+										<div class="title">
+											<h3>手术</h3>
+										</div>
+										<div class="content">
+											<table>
+												<thead>
+													<th width="73">床号</th>
+													<th width="100">姓名</th>
+													<th width="300">手术名称</th>
+													<th width="200">手术状态</th>
+													<th width="200">手术时间</th>
+													<th width="184">护理交班</th>
+												</thead>
+												<tbody class="shoushu">
+													
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="into-hospital">
+										<div class="title">
+											<h3>出院</h3>
+										</div>
+										<div class="content">
+											<table>
+												<thead>
+													<th width="73">床号</th>
+													<th width="100">姓名</th>
+													<th width="300">诊断</th>
+													<th width="281">出院时间</th>
+													<th width="303">护理交班</th>
+												</thead>
+												<tbody class="chuyuan">
+													
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div class="data-list-box" id="listBox1">
+									<div class="into-hospital">
+										<div class="title">
+											<h3>入院</h3>
+										</div>
+										<div class="content">
+											<table>
+												<thead>
+													<th width="73">床号</th>
+													<th width="100">姓名</th>
+													<th width="481">入院诊断</th>
+													<th width="403">护理交班</th>
+												</thead>
+												<tbody class="ruyuan">
+													
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="into-hospital">
+										<div class="title">
+											<h3>手术</h3>
+										</div>
+										<div class="content">
+											<table>
+												<thead>
+													<th width="73">床号</th>
+													<th width="100">姓名</th>
+													<th width="300">手术名称</th>
+													<th width="200">手术状态</th>
+													<th width="200">手术时间</th>
+													<th width="184">护理交班</th>
+												</thead>
+												<tbody class="shoushu">
+													
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="into-hospital">
+										<div class="title">
+											<h3>出院</h3>
+										</div>
+										<div class="content">
+											<table>
+												<thead>
+													<th width="73">床号</th>
+													<th width="100">姓名</th>
+													<th width="300">诊断</th>
+													<th width="281">出院时间</th>
+													<th width="303">护理交班</th>
+												</thead>
+												<tbody class="chuyuan">
+													
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<!-- <div style="float:left;width:33.33%;height:100%;">
+									<table id="hospitalinfo1"></table>
+								</div>
+								<div style="float:left;width:33.33%;height:100%;">
+									<table id="hospitalinfo2"></table>
+								</div>
+								<div style="float:left;width:33.33%;height:100%;">
+									<table id="hospitalinfo3"></table>
+								</div> -->
+							</div>
+						</div>
+						
+					</div>
+					<div class="w-right">
+						<div class="msg-box" id="msg-box" style="width:100%">
+							<div class="msg-panel fl" id="messageDiv" style="overflow:hidden;">
+								<script type="text/javascript">
+									fixSize('msg-box','messageDiv',[['height',31],['width',30]]);
+								</script>
+								<ul id="messageList">
+		                        </ul>
+								
+							</div>
+							
+						</div>
+						<div class="w-r-bottom" id="w-r-bottom">
+							<div class="tel-info" id="tel-info">
+								<script type="text/javascript">
+									fixSize('w-r-bottom','tel-info',[['height',10],['width',16]]);
+								</script>
+							</div>
+							<!--<div class="tel-edit" id="telEdit">
+								<span></span>
+							</div>-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ua-box hide" id="edit-treatment-items" style="margin-left: -389px; margin-top: -243px; ">
+	        <div class="ua-b-top">
+	            <span class="title">治疗项目</span>
+	            <span class="close btn-close" onclick="this.parentNode.parentNode.style.display='none';"></span>
+	        </div>
+	        <div class="ua-b-content">
+	            <form id="patientInfoForm">
+	                <table>
+	                    <tbody id="tableBody"> 
+	                        
+	                    </tbody>    
+	                </table>
+	            </form>
+	        </div>
+	        <div class="ua-b-bottom">
+	            <div class="btn-nm btn-save" id="savePatientBtn">
+	                <span class="btm " id="pationSaveBtn">保存</span>
+	            </div>
+	            <div class="btn-nm btn-close">
+	                <span class="btm" id="pationCancelBtn">取消</span>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="ua-box hide" id="edit-useful-tel" style="margin-left: -305px; margin-top: -160px; ">
+	        <div class="ua-b-top">
+	            <span class="title">科室常用电话</span>
+	            <span class="close btn-close" onclick="this.parentNode.parentNode.style.display='none';"></span>
+	        </div>
+	        <div class="ua-b-content">
+	            <form id="patientInfoForm">
+	                <table>
+	                    <tbody> 
+	                        <tr>
+	                            <td>
+	                            	<span class="text">值班医生：</span>
+	                                <input id="d_dc" name="" type="text">
+	                            </td>
+	                            <td>
+	                            	<span class="text">电话：</span>
+	                                <input id="d_dc_tel" name="" type="text">
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td>
+	                            	<span class="text">值班护士：</span>
+	                                <input id="d_nr" name="" type="text">
+	                            </td>
+	                            <td>
+	                            	<span class="text">电话：</span>
+	                                <input id="d_nr_tel" name="" type="text">
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td>
+	                                <span class="text">值班护士长电话：</span>
+	                                <input id="d_nL_tel" name="" type="text">
+	                            </td>
+	                            <td>
+	                            	<span class="text">护理部电话：</span>
+	                                <input id="h_nd_tel" name="" type="text">
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td>
+	                            	<span class="text">保卫科电话：</span>
+	                                <input id="h_pt_tel" name="" type="text">
+	                            </td>
+	                            <td>
+	                            	<span class="text">手术室电话：</span>
+	                                <input id="h_op_tel" name="" type="text">
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td colspan="2">
+	                            	<span class="text">行政值班电话：</span>
+	                                <input id="h_ad_tel" name="" type="text">
+	                            </td>
+	                        </tr>
+	                    </tbody>    
+	                </table>
+	            </form>
+	        </div>
+	        <div class="ua-b-bottom">
+	            <div class="btn-nm btn-save" id="savePatientBtn1">
+	                <span class="btm " id="phoneSaveBtn">保存</span>
+	            </div>
+	            <div class="btn-nm btn-close">
+	                <span class="btm" id="phoneCancelBtn">取消</span>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</body>
+</html>

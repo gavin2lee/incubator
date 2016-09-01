@@ -1,0 +1,1135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.BodySignMapper">
+	<resultMap id="bodySignDictMap" type="BodySignDict">
+		<result property="itemCode" column="item_code" />
+		<result property="itemName" column="item_name" />
+		<result property="itemUnit" column="item_unit" />
+	</resultMap>
+	<resultMap id="eventMap" type="PatientEvent">
+		<id property="id" column="event_id" />
+		<result property="patientId" column="pat_id" />
+		<result property="patientName" column="pat_name" />
+		<result property="masterRecordId" column="body_sign_mas_id" />
+		<result property="recordDate" column="event_date" />
+		<result property="chineseEventDate" column="chinese_event_date" />
+		<result property="eventCode" column="event_code" />
+		<result property="eventName" column="event_name" />
+		<result property="recorderId" column="record_user_code" />
+		<result property="recorderName" column="record_user_name" />
+		<result property="index" column="event_index" />
+		<result property="record_date" column="record_date" />
+	</resultMap>
+	<resultMap id="eventDetailMap" type="com.lachesis.mnis.core.patient.entity.PatientEventDetail">
+		<id property="id" column="event_id" />
+		<result property="patientId" column="pat_id" />
+		<result property="patientName" column="pat_name" />
+		<result property="masterRecordId" column="body_sign_mas_id" />
+		<result property="recordDate" column="event_date" />
+		<result property="chineseEventDate" column="chinese_event_date" />
+		<result property="eventCode" column="event_code" />
+		<result property="eventName" column="event_name" />
+		<result property="recorderId" column="record_user_code" />
+		<result property="recorderName" column="record_user_name" />
+		<result property="index" column="event_index" />
+		<result property="record_date" column="record_date" />
+		<result property="bedNo" column="BED_NO" />
+		<result property="age" column="AGE" />
+		<result property="sex" column="SEX" />
+		<result property="phone" column="PHONE" />
+	</resultMap>
+	<resultMap id="skinTestMap" type="PatientSkinTest">
+		<id property="id" column="test_id" />
+		<result property="patientId" column="pat_id" />
+		<result property="patientName" column="pat_name" />
+		<result property="masterRecordId" column="body_sign_mas_id" />
+		<result property="status" column="status" />
+		<result property="testResult" column="result" />
+		<result property="testNurseId" column="input_nurse_id" />
+		<result property="testNurseName" column="input_nurse_name" />
+		<result property="approveNurseId" column="approve_nurse_id" />
+		<result property="approveNurseName" column="approve_nurse_name" />
+		<result property="approveDate" column="approve_date" />
+		<result property="execNurseId" column="exec_nurse_id" />
+		<result property="execNurseName" column="exec_nurse_name" />
+		<result property="execDate" column="exec_date" />
+		<result property="drugBatchNo" column="drug_batch_no" />
+		<result property="drugCode" column="drug_code" />
+		<result property="drugName" column="drug_name" />
+		<result property="index" column="test_index" />
+	</resultMap>
+	<resultMap id="bodySignItemMap" type="BodySignItem">
+		<id property="detailRecordId" column="body_sign_detail_id" />
+		<result property="masterRecordId" column="mas_id" />
+		<result property="itemValue" column="item_value" />
+		<result property="ryHourDiff" column="ry_hour_diff" />
+		<result property="measureNoteCode" column="measure_note_code" />
+		<result property="measureNoteName" column="measure_note_name" />
+		<!-- typeHandler="com.lachesis.mnis.core.mybatis.handler.ItemMeasureNoteNameHandler" -->
+		<result property="abnormalFlag" column="abnormal_flag" />
+		<result property="specMark" column="spec_mark" />
+		<result property="index" column="item_index" />
+		<result property="patId" column="pat_id" />
+		<result property="recordDate" column="record_date" />
+		<result property="unit" column="unit"/>
+		<association property="bodySignDict" resultMap="bodySignDictMap" />
+	</resultMap>
+	<resultMap id="bodySignRecordMap" type="BodySignRecord">
+		<id property="masterRecordId" column="body_sign_mas_id" />
+		<result property="patientId" column="pat_id" />
+		<result property="patientName" column="pat_name" />
+		<result property="bedCode" column="bed_code" />
+		<result property="inHospNo" column="in_hosp_no" />
+		<result property="deptCode" column="ward_code" />
+		<result property="fullDateTime" column="record_date" />
+		<result property="recordDay" column="record_date"
+			typeHandler="com.lachesis.mnis.core.mybatis.handler.String2DateYMDHandler" />
+		<result property="recordTime" column="record_date"
+			typeHandler="com.lachesis.mnis.core.mybatis.handler.String2DateHMSHandler" />
+		<result property="recordNurseCode" column="record_user_code" />
+		<result property="recordNurseName" column="record_user_name" />
+		<result property="remark" column="remark" />
+		<result property="cooled" column="cooled" />
+		<result property="firstDate" column="first_date" />
+		<result property="patStatus" column="pat_status"/>
+		<association property="skinTestInfo" resultMap="skinTestMap" />
+		<association property="event" resultMap="eventMap" />
+		<collection property="bodySignItemList" resultMap="bodySignItemMap" />
+	</resultMap>
+	
+	<resultMap id="bodySignListMap" type="BodySignRecord">
+		<id property="masterRecordId" column="id" />
+		<result property="patientId" column="pat_id" />
+		<result property="patientName" column="pat_name" />
+		<result property="bedCode" column="bed_code" />
+		<result property="inHospNo" column="in_hosp_no" />
+		<result property="deptCode" column="ward_code" />
+		<result property="fullDateTime" column="record_date" />
+		<result property="recordDay" column="record_date"
+			typeHandler="com.lachesis.mnis.core.mybatis.handler.String2DateYMDHandler" />
+		<result property="recordTime" column="record_date"
+			typeHandler="com.lachesis.mnis.core.mybatis.handler.String2DateHMSHandler" />
+		<result property="recordNurseCode" column="record_user_code" />
+		<result property="recordNurseName" column="record_user_name" />
+		<result property="remark" column="remark" />
+		<result property="cooled" column="cooled" />
+		<result property="firstDate" column="first_date" />
+		<collection property="bodySignItemList" resultMap="bodySignItemMap" />
+	</resultMap>
+	<resultMap id="bodySignItemCountMap"
+		type="com.lachesis.mnis.core.bodysign.entity.BodySignItemCodeCount">
+		<result property="itemCode" column="item_code" />
+		<result property="times" column="times" />
+	</resultMap>
+	<resultMap id="bodySignMsmentRuleMap" type="BodySignMsmentRule">
+		<id property="id" column="rule_id" />
+		<result property="ruleCode" column="rule_code" />
+		<result property="ruleName" column="rule_name" />
+		<result property="ruleType" column="rule_type" />
+		<result property="ruleValue" column="rule_value" />
+		<result property="ruleTime" column="rule_time" />
+	</resultMap>
+	
+	<!-- 获取第一次录入生命体征数据  created by qingzhi.liu 2015.07.23-->
+	<resultMap type="com.lachesis.mnis.core.bodysign.entity.SpecialVo" id="specialMap">
+		<result property="record_key" column="record_key" />
+		<result property="record_value" column="record_value" />
+	</resultMap>
+	
+	<resultMap type="com.lachesis.mnis.core.bodysign.entity.BodySignDeleteRecord" id="bodySignDeleteRecordMap">
+		<id property="id" column="id" />
+		<result property="code" column="code" />
+		<result property="patId" column="pat_id" />
+		<result property="deptCode" column="deptCode" />
+		<result property="recordDate" column="record_date" />
+		<result property="operDate" column="oper_date" />
+	</resultMap>
+	
+	<resultMap type="com.lachesis.mnis.core.bodysign.entity.BodySignItemConfig" id="bodySignItemConfigMap">
+		<id property="id" column="id" />
+		<result property="code" column="code" />
+		<association property="bodySignItemConfigItem" resultMap="bodySignItemConfigItemMap"/>
+		<collection property="bodySignItemConfigOpts" resultMap="bodySignItemConfigOptsMap"/>
+	</resultMap>
+	
+	<resultMap type="com.lachesis.mnis.core.bodysign.entity.BodySignItemConfig$BodySignItemConfigItem" id="bodySignItemConfigItemMap">
+		<id property="code" column="code" />
+		<result property="name" column="name" />
+		<result property="unit" column="unit" />
+		<result property="index" column="ind" />
+		<result property="typeName" column="type_name" />
+		<result property="validType" column="valid_type" />
+		<result property="validFunction" column="valid_function" />
+		<result property="invalidMsg" column="valid_msg" />
+	</resultMap>
+	
+	<resultMap type="com.lachesis.mnis.core.bodysign.entity.BodySignItemConfig$BodySignItemConfigOpts" id="bodySignItemConfigOptsMap">
+		<id property="code" column="opt_code" />
+		<result property="parentCode" column="code" />
+		<result property="text" column="text" />
+		<result property="editFlag" column="is_edit" />
+		<result property="isSelected" column="is_selected" />
+	</resultMap>
+	<sql id="eventProperties">
+		e.body_sign_mas_id,
+		e.event_code,
+		e.event_name,
+		e.pat_id,
+		e.pat_name,
+		e.event_date,
+		e.chinese_event_date,
+		e.record_user_code,
+		e.record_user_name,
+		e.event_index,
+		e.record_date
+	</sql>
+	<sql id="skinTestProperties">
+		s.body_sign_mas_id,
+		s.pat_id,
+		s.pat_name,
+		s.drug_batch_no,
+		s.drug_code,
+		s.drug_name,
+		s.status,
+		s.result,
+		s.input_nurse_id,
+		s.input_nurse_name,
+		s.approve_nurse_id,
+		s.approve_nurse_name,
+		s.approve_date,
+		s.exec_nurse_id,
+		s.exec_nurse_name,
+		s.exec_date,
+		s.test_index
+	</sql>
+	<sql id="bodySignMasterProperties">
+		m.pat_id,
+		m.pat_name,
+		m.ward_code,
+		m.bed_code,
+		m.record_date,
+		m.record_user_code,
+		m.record_user_name,
+		m.first_date,
+		m.modify_date,
+		m.modify_user_code,
+		m.modify_user_name,
+		m.pat_status
+	</sql>
+	<sql id="bodySignDetailProperties">
+		d.mas_id,
+		d.item_code,
+		d.item_value,
+		d.ry_hour_diff,
+		d.measure_note_code,
+		d.measure_note_name,
+		d.abnormal_flag,
+		d.spec_mark,
+		d.item_index,
+		d.pat_id,
+		d.record_date,
+		d.unit
+	</sql>
+
+	<!-- 查询bodysign item字典数据 -->
+	<select id="getBodysignDicts" resultMap="bodySignDictMap">
+		select * from
+		dic_body_sign
+	</select>
+
+	<select id="getBodySignRecords" parameterType="Map"
+		resultMap="bodySignRecordMap">
+		
+		select m.id as body_sign_mas_id,
+		m.pat_id,
+		m.pat_name,
+		m.ward_code,
+		m.bed_code,
+		m.record_date,
+		m.record_user_code,
+		m.record_user_name,
+		m.first_date,
+		m.modify_date,
+		m.modify_user_code,
+		m.modify_user_name,
+		m.pat_status,
+		d.id as body_sign_detail_id,
+		d.mas_id,
+		d.item_code,
+		d.item_value,
+		d.ry_hour_diff,
+		d.measure_note_code,
+		d.measure_note_name,
+		d.abnormal_flag,
+		d.spec_mark,
+		d.item_index,
+		d.unit,
+		e.id as event_id,
+		e.body_sign_mas_id,
+		e.event_code,
+		e.event_name,
+		e.pat_name,
+		e.event_date,
+		e.chinese_event_date,
+		e.record_user_code,
+		e.record_user_name,
+		e.event_index,
+		<include refid="skinTestProperties" />
+		,
+		dict.*
+		from pat_bodysign_mas m
+		left join pat_bodysign_detail d on m.pat_id=d.pat_id and m.record_date=d.record_date
+		left join dic_body_sign dict on d.item_code = dict.item_code
+		left join pat_event e on m.pat_id=e.pat_id and m.record_date=e.record_date
+		left join pat_skin_test s on m.id = s.body_sign_mas_id
+		where m.pat_id in
+		<foreach collection="param2" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+		and convert(varchar(10), m.record_date, 120) = convert(varchar(10), #{param1}, 120)
+		and (d.PAT_ID is not null or e.PAT_ID is not null or s.PAT_ID is not null)  <!-- 没有具体项目，不返回主记录数据 -->
+		order by m.record_date
+	</select>
+	
+	<select id="getFixTimeBodySignRecords" parameterType="Map"
+		resultMap="bodySignRecordMap">
+		select m.id as body_sign_mas_id,
+		m.pat_id,
+		m.pat_name,
+		m.ward_code,
+		m.bed_code,
+		m.record_date,
+		m.record_user_code,
+		m.record_user_name,
+		m.first_date,
+		m.modify_date,
+		m.modify_user_code,
+		m.modify_user_name,
+		m.pat_status,
+		d.id as body_sign_detail_id,
+		d.mas_id,
+		d.item_code,
+		d.item_value,
+		d.ry_hour_diff,
+		d.measure_note_code,
+		d.measure_note_name,
+		d.abnormal_flag,
+		d.spec_mark,
+		d.item_index,
+		e.id as event_id,
+		e.body_sign_mas_id,
+		e.event_code,
+		e.event_name,
+		e.pat_name,
+		e.event_date,
+		e.chinese_event_date,
+		e.record_user_code,
+		e.record_user_name,
+		e.event_index,
+		<include refid="skinTestProperties" />
+		,
+		dict.*
+		from pat_bodysign_mas m
+		left join pat_bodysign_detail d on m.pat_id=d.pat_id and m.record_date=d.record_date
+		left join dic_body_sign dict on d.item_code = dict.item_code
+		left join pat_event e on m.pat_id=e.pat_id and m.record_date=e.record_date
+		left join pat_skin_test s on m.id = s.body_sign_mas_id
+		where 
+		(d.PAT_ID is not null or e.PAT_ID is not null or s.PAT_ID is not null)
+		<if test="patIds != null and patIds.length>0">
+			and m.pat_id in
+			<foreach collection="patIds" item="item" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="recordDates != null and recordDates.size()>0">
+			and m.record_date in 
+			<foreach collection="recordDates" item="item" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="itemCodes != null and itemCodes.size()>0">
+			and d.item_code in
+			<foreach collection="itemCodes" item="item" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		order by m.record_date
+	</select>
+	
+	<select id="getBodySignRecordsByPatIdAndDate" parameterType="Map"
+		resultMap="bodySignRecordMap">
+		select m.id as body_sign_mas_id,
+		m.pat_id,
+		m.pat_name,
+		m.ward_code,
+		m.bed_code,
+		m.record_date,
+		m.record_user_code,
+		m.record_user_name,
+		m.first_date,
+		m.modify_date,
+		m.modify_user_code,
+		m.modify_user_name,
+		m.pat_status,
+		d.id as body_sign_detail_id,
+		d.mas_id,
+		d.item_code,
+		d.item_value,
+		d.ry_hour_diff,
+		d.measure_note_code,
+		d.measure_note_name,
+		d.abnormal_flag,
+		d.spec_mark,
+		d.item_index,
+		d.unit,
+		e.id as event_id,
+		e.body_sign_mas_id,
+		e.event_code,
+		e.event_name,
+		e.pat_name,
+		e.event_date,
+		e.chinese_event_date,
+		e.record_user_code,
+		e.record_user_name,
+		e.event_index,
+		<include refid="skinTestProperties" />
+		,
+		dict.*
+		from pat_bodysign_mas m
+		left join pat_bodysign_detail d on m.pat_id=d.pat_id and m.record_date=d.record_date
+		left join dic_body_sign dict on d.item_code = dict.item_code
+		left join pat_event e on m.pat_id=e.pat_id and m.record_date=e.record_date
+		left join pat_skin_test s on m.id = s.body_sign_mas_id
+		where m.pat_id in
+		<foreach collection="param2" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+		and  m.record_date =  #{param1}
+		and (d.PAT_ID is not null or e.PAT_ID is not null or s.PAT_ID is not null)  <!-- 没有具体项目，不返回主记录数据 -->
+		order by m.bed_code
+	</select>
+	
+
+	<select id="getBodySignRecordById" parameterType="int"
+		resultMap="bodySignRecordMap">
+		select m.id as body_sign_mas_id,
+		<include refid="bodySignMasterProperties" />
+		,
+		d.id as body_sign_detail_id,
+		<include refid="bodySignDetailProperties" />
+		,
+		e.id as event_id,
+		<include refid="eventProperties" />
+		,
+		s.id as test_id,
+		<include refid="skinTestProperties" />
+		,
+		dict.*
+		from pat_bodysign_mas m
+		left join pat_bodysign_detail d on m.pat_id=d.pat_id and m.record_date=d.record_date
+		left join dic_body_sign dict on d.item_code = dict.item_code
+		left join pat_event e on m.pat_id=e.pat_id and m.record_date=e.record_date
+		left join pat_skin_test s on m.id = s.body_sign_mas_id
+		where m.id =
+		#{param1}
+	</select>
+
+	<select id="getBodySignRecordByRecordDate" parameterType="String"
+		resultMap="bodySignRecordMap">
+		select m.id as body_sign_mas_id,
+		<include refid="bodySignMasterProperties" />
+		,
+		d.id as body_sign_detail_id,
+		<include refid="bodySignDetailProperties" />
+		,
+		e.id as event_id,
+		<include refid="eventProperties" />
+		,
+		s.id as test_id,
+		<include refid="skinTestProperties" />
+		,
+		dict.*
+		from pat_bodysign_mas m
+		left join pat_bodysign_detail d on m.pat_id=d.pat_id and m.record_date=d.record_date
+		left join dic_body_sign dict on d.item_code = dict.item_code
+		left join pat_event e on m.pat_id=e.pat_id and m.record_date=e.record_date
+		left join pat_skin_test s on m.id = s.body_sign_mas_id
+		where m.record_date = #{param1}
+		and m.pat_id = #{param2}
+		<if test="param3 != null">
+			and m.ward_code = #{param3}
+		</if>
+	</select>
+
+	<select id="getBodySignRecordCountForPatient" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT (ID)
+		FROM PAT_BODYSIGN_MAS
+		WHERE PAT_ID = #{patID}
+	</select>
+
+	<select id="getLastTemperatureItem" parameterType="Map"
+		resultMap="bodySignRecordMap">
+		select top 1 m.id as body_sign_mas_id,
+		<include refid="bodySignMasterProperties" />
+		,
+		d.id as body_sign_detail_id,
+		<include refid="bodySignDetailProperties" />
+		,
+		dict.*
+		from pat_bodysign_mas m
+		left join pat_bodysign_detail d on m.pat_id=d.pat_id and m.record_date=d.record_date
+		left join dic_body_sign dict on d.item_code = dict.item_code
+		where m.pat_id = #{param1}
+		and d.item_code = #{param2}
+		order by m.record_date
+	</select>
+
+	<select id="getEventInfosByPatIdAndEventCode" parameterType="java.util.HashMap"
+		resultMap="eventMap">
+		SELECT
+		e.id as event_id,
+		<include refid="eventProperties" />
+		from pat_bodysign_mas m
+		left join pat_event e on m.pat_id=e.pat_id and m.record_date=e.record_date
+		where m.pat_id=#{param1}
+		<if test="param2 != null">
+			and e.event_code=#{param2}
+		</if>
+		
+		<if test="param3 != null">
+			and e.record_date=#{param3}
+		</if>
+	
+		order by m.record_date
+	</select>
+	
+	<select id="getRyEventCount" parameterType="java.util.HashMap" resultType="Integer">
+		SELECT COUNT(e.id) FROM pat_event e
+		WHERE e.pat_id = #{patId}
+		and e.event_code = #{eventCode}
+		and e.record_date >= #{startDate}
+		and e.record_date &lt; #{endDate}
+	</select>
+
+	<select id="getBodySignItemsByTimeAndPatient" parameterType="Map"
+		resultMap="bodySignItemMap">
+		select d.id as body_sign_detail_id,
+		<include refid="bodySignDetailProperties" />
+		,
+		dict.*
+		from pat_bodysign_detail d 
+		left join pat_bodysign_mas m on m.pat_id=d.pat_id and m.record_date=d.record_date
+		left join dic_body_sign dict on d.item_code = dict.item_code
+		where m.pat_id
+		= #{param2}
+		and m.record_date = #{param1}
+		order by m.record_date
+	</select>
+
+	<select id="getBodySignItemInDayByItemCode" parameterType="Map"
+		resultMap="bodySignItemCountMap">
+		select d.item_code, COUNT(d.item_code) as times
+		from
+		pat_bodysign_mas m
+		left join pat_bodysign_detail d on m.pat_id=d.pat_id and m.record_date=d.record_date
+		where m.pat_id =
+		#{param2}
+		and convert(varchar(10), m.record_date, 120) = convert(varchar(10),
+		#{param1}, 120)
+		group by d.item_code
+	</select>
+	
+	<select id="getBodySignItemByCode" parameterType="java.util.HashMap"
+		resultMap="bodySignItemMap">
+		select 
+			d.id as body_sign_detail_id,
+			<include refid="bodySignDetailProperties"></include>
+		from pat_bodysign_detail d
+		inner join pat_bodysign_mas m on m.id = d.mas_id
+		where d.item_code = #{itemCode}
+		<if test="recordDate != null">
+			and convert(varchar, d.record_date, 120) = convert(varchar,
+			#{recordDate}, 120)
+		</if>
+		and m.ward_code = #{deptCode}
+		<if test="startDate != null">
+			and d.record_date >= #{startDate}
+		</if>
+		<if test="endDate != null">
+			and d.record_date &lt; #{endDate}
+		</if>
+		<if test="patId != null">
+			and d.pat_id = #{patId}
+		</if>
+	</select>
+
+	<delete id="delete" parameterType="BodySignRecord">
+		delete pat_event where
+		body_sign_mas_id = #{id}
+		delete pat_skin_test where body_sign_mas_id =
+		#{id}
+		delete pat_bodysign_detail where mas_id = #{id}
+		delete
+		pat_bodysign_mas where id = #{id}
+	</delete>
+	
+	<delete id="deleteBodySignRecord"  parameterType="BodySignRecord">
+	delete pat_skin_test where body_sign_mas_id in (select id from PAT_BODYSIGN_MAS where PAT_ID=#{patientId} and RECORD_DATE=#{fullDateTime})
+		<if test="1==1">
+			delete from PAT_EVENT where PAT_ID=#{patientId} and RECORD_DATE=#{fullDateTime}
+		</if>
+		<if test="1==1">
+			delete from PAT_BODYSIGN_MAS where PAT_ID=#{patientId} and RECORD_DATE=#{fullDateTime}
+		</if>
+		<if test="1==1">
+			delete from dbo.PAT_BODYSIGN_DETAIL where PAT_ID=#{patientId} and RECORD_DATE=#{fullDateTime}
+		</if>
+		
+	</delete>
+
+	<delete id="deleteBodySignItemBackup"  parameterType="BodySignRecord">
+		delete from dbo.PAT_BODYSIGN_DETAIL_COPY
+		where PAT_ID=#{patientId}
+		and RECORD_DATE=#{fullDateTime}
+	</delete>
+
+	<sql id="insertBodySignMaster">
+		insert into
+		pat_bodysign_mas(
+		<include refid="bodySignMasterProperties" />
+		)
+		values(#{patientId}, #{patientName}, #{deptCode}, #{bedCode},
+		#{fullDateTime},#{recordNurseCode},#{recordNurseName},#{firstDate},getdate(),
+		#{modifyNurseCode},#{modifyNurseName},#{patStatus})
+	</sql>
+	
+	<insert id="saveBodySignMaster" parameterType="BodySignRecord" 
+			useGeneratedKeys="true" keyProperty="masterRecordId">
+		<include refid="insertBodySignMaster" />
+	</insert>
+
+	<insert id="save" parameterType="BodySignRecord">
+	    <selectKey resultType="int" keyProperty="masterRecordId" order="BEFORE">
+	        <include refid="insertBodySignMaster" />
+   	 		select @@IDENTITY as id
+  		</selectKey>
+ 		<if test="bodySignItemList!=null and bodySignItemList.size!=0">
+			insert into
+			pat_bodysign_detail(
+			<include refid="bodySignDetailProperties" />
+			)
+			(
+			<foreach collection="bodySignItemList" item="item" index="index"
+				separator="union all">
+				select
+				#{masterRecordId},#{item.bodySignDict.itemCode},#{item.itemValue},#{item.ryHourDiff},
+				#{item.measureNoteCode},#{item.measureNoteName},
+				#{item.abnormalFlag} ,#{item.specMark},#{item.index},#{item.patId},#{item.recordDate},
+				#{item.unit}
+			</foreach>
+			)
+		</if>
+		<if test="event != null">
+			insert into pat_event(
+			<include refid="eventProperties" />
+			)
+			values(#{masterRecordId},
+			#{event.eventCode},#{event.eventName},#{event.patientId},#{event.patientName},
+			#{event.recordDate},
+			#{event.chineseEventDate},#{event.recorderId},#{event.recorderName},#{event.index},#{event.record_date})
+		</if>
+		
+			<!-- 体征不需要反写到皮试、皮试需要反写到体征中 end by Qingzhi.Liu 20151029 -->
+		<if test="skinTestInfo != null">   
+			insert into pat_skin_test(
+			<include refid="skinTestProperties" />
+			)
+			values(
+			#{masterRecordId},
+			#{skinTestInfo.patientId},
+			#{skinTestInfo.patientName},
+			#{skinTestInfo.drugBatchNo},
+			#{skinTestInfo.drugCode},
+			#{skinTestInfo.drugName},
+			#{skinTestInfo.status},
+			#{skinTestInfo.testResult},
+			#{skinTestInfo.testNurseId},
+			#{skinTestInfo.testNurseName},
+			#{skinTestInfo.approveNurseId},
+			#{skinTestInfo.approveNurseName},
+			#{skinTestInfo.approveDate},
+			#{skinTestInfo.execNurseId},
+			#{skinTestInfo.execNurseName},
+			#{skinTestInfo.execDate},
+			#{skinTestInfo.index}
+			)
+		</if>
+	</insert>
+	
+	<insert id="saveItemList" parameterType="java.util.List">
+		insert into
+		pat_bodysign_detail(
+		<include refid="bodySignDetailProperties" />
+		)
+		<foreach collection="list" item="item" index="index"
+			separator="union all">
+			select
+			#{item.masterRecordId},#{item.bodySignDict.itemCode},#{item.itemValue},#{item.ryHourDiff},
+			#{item.measureNoteCode},#{item.measureNoteName}, #{item.abnormalFlag}
+			,#{item.specMark},#{item.index},#{item.patId},#{item.recordDate},#{item.unit}
+		</foreach>
+	</insert>
+
+	<insert id="saveBodySignItemBackup" parameterType="java.util.List">
+		insert into
+		pat_bodysign_detail_copy(
+		<include refid="bodySignDetailProperties" />
+		)
+		<foreach collection="list" item="item" index="index"
+				 separator="union all">
+			select
+			#{item.masterRecordId},#{item.bodySignDict.itemCode},#{item.itemValue},#{item.ryHourDiff},
+			#{item.measureNoteCode},#{item.measureNoteName}, #{item.abnormalFlag}
+			,#{item.specMark},#{item.index},#{item.patId},#{item.recordDate},#{item.unit}
+		</foreach>
+	</insert>
+
+	<update id="updateSkinTestMasterRecordIdByOrderId" parameterType="java.util.HashMap">
+		update pat_skin_test set
+			body_sign_mas_id = #{masterRecordId}
+		where
+			order_exec_id = #{orderId}
+	</update>
+	
+	<!-- 获取第一次录入生命体征数据  created by qingzhi.liu 2015.07.23-->
+	<select id="getFirstBodySigns" parameterType="string" resultMap="specialMap">
+		select * from (
+		select ITEM_CODE as record_key,ITEM_VALUE as record_value,ROW_NUMBER() over(PARTITION by 
+		item_code order by item_code,RECORD_DATE ) rn,RECORD_DATE  from dbo.PAT_BODYSIGN_DETAIL 
+		where pat_id=#{param1} ) tt where tt.rn =1 
+	</select>
+	
+	<!-- 如果返回大于0，则该人在该时间点已经录入过体征项目，请选择该时间点进行修改 -->
+	<select id="getPatBodySign" parameterType="BodySignRecord" resultType="int">
+		select count(1) from dbo.PAT_BODYSIGN_MAS t where t.PAT_ID=#{patientId} and t.RECORD_DATE=#{fullDateTime}
+	</select>
+	
+	<delete id="deleteBodySignItemByCode" parameterType="String">
+		delete from PAT_BODYSIGN_DETAIL 
+		where pat_id = #{param2} and item_code = #{param1}
+	</delete>
+	
+	<!-- 查询科室/患者的生命体征列表 -->
+	<select id="queryBodySignList" parameterType="java.util.Map" resultMap="bodySignListMap">
+		select m.ID,m.PAT_ID,m.PAT_NAME,p.WARD_CODE,p.BED_CODE,m.RECORD_DATE,m.pat_status,
+		d.ID body_sign_detail_id,d.ITEM_VALUE,d.RY_HOUR_DIFF,d.MEASURE_NOTE_CODE,d.MEASURE_NOTE_NAME,
+		d.ITEM_CODE,s.ITEM_NAME,s.ITEM_UNIT,d.ITEM_INDEX
+		from PAT_BODYSIGN_MAS m
+		inner join PAT_BODYSIGN_DETAIL d on m.pat_id =d.pat_id and m.RECORD_DATE = d.RECORD_DATE
+		inner join pat_cure_info p on p.pat_id = m.pat_id
+		left join DIC_BODY_SIGN s on s.ITEM_CODE = d.ITEM_CODE
+		where p.WARD_CODE = #{deptCode}
+		and m.RECORD_DATE = #{recordDate}
+		<if test="patId != null">
+			and m.pat_id = #{patId}
+		</if>
+		and d.ITEM_CODE in (''
+		<foreach collection="items" item="item">
+			,#{item}
+		</foreach>
+		)
+		order by m.BED_CODE
+	</select>
+	
+	<!-- 查询科室/患者指定时间段的生命体征明细列表 -->
+	<select id="queryBodySignItemList" parameterType="java.util.Map" resultMap="bodySignListMap">
+		select m.ID,m.PAT_ID,m.PAT_NAME,p.WARD_CODE,p.BED_CODE,m.RECORD_DATE,m.pat_status,
+		d.ID body_sign_detail_id,d.ITEM_VALUE,d.ry_hour_diff,d.MEASURE_NOTE_CODE,d.MEASURE_NOTE_NAME,
+		d.ITEM_CODE,s.ITEM_NAME,s.ITEM_UNIT,d.ITEM_INDEX
+		from PAT_BODYSIGN_MAS m
+		inner join PAT_BODYSIGN_DETAIL d on m.pat_id =d.pat_id and m.RECORD_DATE = d.RECORD_DATE
+		inner join pat_cure_info p on p.pat_id = m.pat_id
+		left join DIC_BODY_SIGN s on s.ITEM_CODE = d.ITEM_CODE
+		where p.WARD_CODE = #{deptCode}
+		<if test="patId != null">
+			and m.pat_id = #{patId}
+		</if>
+		<if test="items != null and items.size>0">
+			and d.ITEM_CODE in 
+			<foreach collection="items" item="item" separator="," open="(" close=")">
+				#{item}
+			</foreach>
+		</if>
+		and m.record_date in 
+		<foreach collection="recordDates" item="recordDate" separator="," open="(" close=")">
+			#{recordDate}
+		</foreach>
+		order by m.MODIFY_DATE desc
+	</select>
+	
+	<!-- 生命体征明细删除 -->
+	<delete id="deleteBodysingItemByTime" parameterType="java.util.Map">
+		delete PAT_BODYSIGN_DETAIL
+		where pat_id=#{patId}
+		and record_date in 
+		<foreach collection="recordDates" item="recordDate" separator="," open="(" close=")">
+			#{recordDate}
+		</foreach>
+		and ITEM_CODE in
+		<foreach collection="items" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<!-- 数据查询，生命体征主表查询 -->
+	<select id="queryBodySignRecord" parameterType="BodySignRecord" resultType="BodySignRecord">
+		SELECT 
+			ID						masterRecordId,
+			PAT_ID					patientId,
+			PAT_NAME				patientName,
+			WARD_CODE				deptCode,
+			BED_CODE				bedCode,
+			RECORD_DATE				fullDateTime,
+			RECORD_USER_CODE		recordNurseCode,
+			RECORD_USER_NAME		recordNurseName
+		FROM PAT_BODYSIGN_MAS
+		WHERE PAT_ID = #{patientId} 
+			AND RECORD_DATE = #{fullDateTime}
+	</select>
+	
+	<!-- 查询生命体征明细信息 -->
+	<select id="queryBodySignItem" parameterType="BodySignItem" resultMap="bodySignItemMap">
+		SELECT 
+			d.ID						body_sign_detail_id,
+			d.MAS_ID					mas_id,
+			d.PAT_ID					patId,
+			d.RECORD_DATE				recordDate,
+			d.ITEM_CODE					item_code,
+			d.ITEM_VALUE				item_value,
+			d.RY_HOUR_DIFF				ry_hour_diff,
+			d.MEASURE_NOTE_CODE			measure_note_code,
+			d.MEASURE_NOTE_NAME			measure_note_name,
+			d.ITEM_INDEX				item_index,
+			s.ITEM_NAME					item_name,
+			s.ITEM_UNIT					item_unit
+		FROM PAT_BODYSIGN_DETAIL d LEFT JOIN DIC_BODY_SIGN s on s.ITEM_CODE = d.ITEM_CODE
+		WHERE PAT_ID= #{patId}
+			<if test="itemCode != null and itemCode != ''">
+				AND d.ITEM_CODE=#{itemCode}
+			</if>
+			AND RECORD_DATE=#{recordDate}
+	</select>
+	
+	<!-- 查询患者事件信息 -->
+	<select id="queryEvent" parameterType="PatientEvent" resultMap="eventMap">
+		SELECT ID					event_id,
+			PAT_ID					pat_id,
+			RECORD_DATE				record_date,
+			PAT_NAME				pat_name,
+			BODY_SIGN_MAS_ID		body_sign_mas_id,
+			EVENT_DATE				event_date,
+			RECORD_USER_CODE		record_user_code,
+			RECORD_USER_NAME		record_user_name,
+			EVENT_CODE				event_code,
+			EVENT_NAME				event_name,
+			EVENT_INDEX				event_index
+		FROM PAT_EVENT
+		WHERE PAT_ID = #{patientId}
+		AND   RECORD_DATE = #{record_date}
+		<if test="eventCode != null and eventCode !=''">
+		AND	  EVENT_CODE = #{eventCode}
+		</if>
+	</select>
+	
+	<select id="getEventDate" parameterType="String" resultType="String">
+		SELECT TOP 1 tab.record_date from (
+		SELECT E.RECORD_DATE RECORD_DATE FROM PAT_EVENT E 
+		WHERE E.PAT_ID=#{param1} AND E.EVENT_CODE=#{param2}
+		<if test="param2 == 'ry'">
+			UNION ALL
+			SELECT P.IN_DATE RECORD_DATE FROM PAT_CURE_INFO P 
+			WHERE P.PAT_ID=#{param1}
+		</if>) tab
+		order by tab.record_date desc
+	</select>
+	
+	<!-- 数据录入,生命体征主表 -->
+	<insert id="insertBodySignRecord" parameterType="BodySignRecord" >
+		insert into
+		pat_bodysign_mas(
+			pat_id,
+			pat_name,
+			ward_code,
+			bed_code,
+			record_date,
+			record_user_code,
+			record_user_name,
+			first_date,
+			modify_date,
+			modify_user_code,
+			modify_user_name,
+			pat_status
+		)values(#{patientId}, #{patientName}, #{deptCode}, #{bedCode},
+		#{fullDateTime},#{recordNurseCode},#{recordNurseName},#{firstDate},getdate(),
+		#{modifyNurseCode},#{modifyNurseName},#{patStatus})
+		<selectKey resultType="int" keyProperty="masterRecordId" >  
+          SELECT @@IDENTITY AS id  
+	    </selectKey> 
+	</insert>
+	
+	<!-- 数据更新,生命体征主表 -->
+	<update id="updateBodySignMaster" parameterType="BodySignRecord">
+		update pat_bodysign_mas
+			set 
+				modify_date=getdate(),
+				pat_status=#{patStatus},
+				modify_user_code=#{modifyNurseCode},
+				modify_user_name=#{modifyNurseName}
+		where 	pat_id=#{patientId}
+			and	record_date=#{fullDateTime}
+	</update>
+	
+	<!-- 批量插入生命体征明细 -->
+	<insert id="insertBodySignItems" parameterType="java.util.Map">
+		insert into
+		pat_bodysign_detail(
+			mas_id,
+			item_code,
+			item_value,
+			ry_hour_diff,
+			measure_note_code,
+			measure_note_name,
+			abnormal_flag,
+			spec_mark,
+			item_index,
+			pat_id,
+			record_date,
+			status,
+			unit
+		)
+		(
+		<foreach collection="itemList" item="item" index="index"
+			separator="union all">
+			select
+			#{item.masterRecordId},#{item.bodySignDict.itemCode},#{item.itemValue},#{item.ryHourDiff},
+			#{item.measureNoteCode},#{item.measureNoteName},
+			#{item.abnormalFlag} ,#{item.specMark},#{item.index},#{item.patId},#{item.recordDate},
+			#{item.status},#{item.unit}
+		</foreach>
+		)
+	</insert>
+	
+	<!-- 更新生命体征item信息 -->
+	<update id="updateBodysignItem" parameterType="BodySignItem">
+		update pat_bodysign_detail set 
+			item_value = #{itemValue},
+			ry_hour_diff = #{ryHourDiff},
+			unit = #{unit},
+			status = #{status}
+		where pat_id = #{patId}
+		and record_date = #{recordDate}
+		and item_code = #{bodySignDict.itemCode}
+	</update>
+	
+	<!-- 保存事件 -->
+	<insert id="insertPatEvent" parameterType="PatientEvent">
+		insert into pat_event(
+			body_sign_mas_id,
+			event_code,
+			event_name,
+			pat_id,
+			pat_name,
+			event_date,
+			chinese_event_date,
+			record_user_code,
+			record_user_name,
+			event_index,
+			record_date,
+			status
+		)
+		values
+		(#{masterRecordId},#{eventCode},#{eventName},#{patientId},#{patientName},
+			#{recordDate},#{chineseEventDate},#{recorderId},#{recorderName},
+			#{index},#{record_date},#{status})
+	</insert>
+	
+	<!-- 更新事件 -->
+	<update id="updatePatEvent" parameterType="PatientEvent">
+		update pat_event
+			set 
+			event_date = #{recordDate},
+			chinese_event_date = #{chineseEventDate},
+			record_user_code = #{recorderId},
+			record_user_name = #{recorderName},
+			status = #{status},
+			EVENT_INDEX = #{index}
+		where pat_id = #{patientId}
+		and   record_date = #{record_date}
+		and   event_code = #{eventCode}
+	</update>
+	
+	<!-- 数据录入，皮试信息 -->
+	<insert id="insertPatientSkinTest" parameterType="PatientSkinTest">
+		insert into pat_skin_test(
+			body_sign_mas_id,
+			pat_id,
+			pat_name,
+			drug_batch_no,
+			drug_code,
+			drug_name,
+			status,
+			result,
+			input_nurse_id,
+			input_nurse_name,
+			approve_nurse_id,
+			approve_nurse_name,
+			approve_date,
+			exec_nurse_id,
+			exec_nurse_name,
+			exec_date,
+			test_index
+			)
+			values(
+			#{masterRecordId},
+			#{patientId},
+			#{patientName},
+			#{drugBatchNo},
+			#{drugCode},
+			#{drugName},
+			#{status},
+			#{testResult},
+			#{testNurseId},
+			#{testNurseName},
+			#{approveNurseId},
+			#{approveNurseName},
+			#{approveDate},
+			#{execNurseId},
+			#{execNurseName},
+			#{execDate},
+			#{index}
+			)
+		<selectKey resultType="long" keyProperty="id" >  
+          SELECT @@IDENTITY AS id  
+	    </selectKey> 
+	</insert>
+	
+	<!-- 查询皮试信息 -->
+	<select id="querySkinTest" resultMap="skinTestMap" parameterType="PatientSkinTest">
+		SELECT
+			PAT_ID,
+			PAT_NAME,
+			BODY_SIGN_MAS_ID,
+			STATUS,
+			RESULT,
+			INPUT_NURSE_ID,
+			INPUT_NURSE_NAME,
+			APPROVE_NURSE_ID,
+			APPROVE_NURSE_NAME,
+			APPROVE_DATE,
+			EXEC_NURSE_ID,
+			EXEC_NURSE_NAME,
+			EXEC_DATE,
+			DRUG_BATCH_NO,
+			DRUG_CODE,
+			DRUG_NAME,
+			TEST_INDEX
+		FROM PAT_SKIN_TEST
+		WHERE BODY_SIGN_MAS_ID = #{masterRecordId}
+	</select>
+	
+	<update id="updateSkinTest" parameterType="PatientSkinTest">
+		UPDATE PAT_SKIN_TEST
+		SET RESULT =#{testResult},
+			STATUS =#{status},
+			TEST_INDEX =#{index}
+		WHERE BODY_SIGN_MAS_ID = #{masterRecordId}
+	</update>
+	
+	<insert id="insertBodySignDeleteRecord" parameterType="com.lachesis.mnis.core.bodysign.entity.BodySignDeleteRecord">
+		insert into pat_bodysign_delete(pat_id,dept_code,code,record_date,oper_date)
+		values(#{patId},#{deptCode},#{code},#{recordDate},#{operDate})
+	</insert>
+	
+	<select id="getBodySignConfigByDeptCode" parameterType="String" resultMap="bodySignItemConfigMap">
+		SELECT  c1.id,
+				c1.code ,
+		        c1.name ,
+		        c1.unit ,
+		        c1.ind,
+		        c1.type_name ,
+		        c1.valid_type ,
+		        c1.valid_function ,
+		        c1.valid_msg ,
+		        c2.code opt_code ,
+		        c2.name text ,
+		        c2.is_edit ,
+		        c2.is_default_selected is_selected
+		FROM    SYS_BODYSIGN_ITEM_CONFIG c1 
+		LEFT JOIN 
+		        SYS_BODYSIGN_ITEM_CONFIG c2
+		        ON c1.code = c2.parent_code and c2.is_valid=1
+		        AND c2.parent_code is not null and c2.parent_code != ''
+		WHERE   (c1.parent_code is null or c1.parent_code = '')
+		        AND ( c1.dept_code = 0
+		              OR c1.dept_code = #{param1}
+		            )
+		        AND ( c2.dept_code = 0
+		              OR c2.dept_code = #{param1}
+		            )
+		        AND c1.is_valid=1 
+		        order by c1.SORT_NO
+	</select>
+	
+	<!-- 查询药转抄到生命体征的文书数据 -->
+	<select id="selectBodysignFromDoc" parameterType="java.util.Map" 
+		resultType="com.lachesis.mnis.core.bodysign.entity.BodySignItem">
+		SELECT 
+			i.RECORD_ID 			recordId,
+			i.TEMPLATE_ITEM_ID		itemCode,
+			i.RECORD_VALUE			itemValue,
+			d.INPATIENT_NO			patId,
+			CONVERT(varchar(100), d.DATE_LIST, 23) + ' ' + CONVERT(varchar(100), d.TIME_LIST, 24) as recordDate 
+		FROM DOC_REPORT_DATA_ITEM i 
+		INNER JOIN DOC_REPORT_DATA d on d.RECORD_ID = i.RECORD_ID
+		INNER JOIN PAT_BODYSIGN_DOC_COPY_CONFIG c ON d.TEMPLATE_ID = c.TEMPLATE_ID and i.TEMPLATE_ITEM_ID = c.DOC_ITEM_NAME
+		WHERE d.TEMPLATE_ID= #{templateId}
+			and d.RECORD_ID= #{recordId}
+	</select>
+	
+	<select id="queryInOutEventByTime" parameterType="Map" resultMap="eventDetailMap">
+		SELECT pe.ID					event_id,
+			pe.PAT_ID					pat_id,
+			pe.RECORD_DATE				record_date,
+			pe.PAT_NAME				pat_name,
+			pe.BODY_SIGN_MAS_ID		body_sign_mas_id,
+			pe.EVENT_DATE				event_date,
+			pe.RECORD_USER_CODE		record_user_code,
+			pe.RECORD_USER_NAME		record_user_name,
+			pe.EVENT_CODE				event_code,
+			pe.EVENT_NAME				event_name,
+			pe.EVENT_INDEX				event_index,
+			pci.BED_CODE				BED_NO,
+			pci.BIRTH_DATE				AGE,
+			pci.GENDER					SEX,
+			pci.CONTACT_PHONE			PHONE
+		FROM PAT_EVENT pe, PAT_CURE_INFO pci
+		WHERE RECORD_DATE >= #{beginTime}
+		AND	  #{endTime} > RECORD_DATE
+		AND pe.PAT_ID = pci.PAT_ID
+		<if test="eventCode != null">
+			AND EVENT_CODE = #{eventCode}
+		</if>
+		<if test="eventCode == null">
+			AND EVENT_CODE in ('cy','ry')
+		</if>
+	</select>
+	
+</mapper>

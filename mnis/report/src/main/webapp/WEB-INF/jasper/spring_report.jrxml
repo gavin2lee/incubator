@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="spring_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9e89b7df-9b5d-4d02-80af-2b1fded595c9">
+	<property name="ireport.zoom" value="0.9090909090909091"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="sex" class="java.lang.String"/>
+	<field name="age" class="java.lang.Integer"/>
+	<field name="hometown" class="java.lang.String"/>
+	<field name="phone" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="554" height="40" uuid="77313ff5-b9b9-446e-b415-b35885e73361"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Integrate Jasper reporting with a simple Spring 3 MVC application]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="0b3a54b3-b8ea-44c8-879b-ee92ab60ee41"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="ddc1db2b-4a98-4ab3-8160-0c40f192b052"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[sex]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="31abaa5b-3bde-4e11-8b26-957e146a3438"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[age]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="100" height="20" uuid="5927a66b-71f9-4cd1-ae1d-4c340d6b975d"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[hometown]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="100" height="20" uuid="5fff1f35-8aed-47df-b724-194236949035"/>
+				<text><![CDATA[phone]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="ff1f5807-7ca0-40d0-8dc1-24aa9bfcfcb0"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="461fc451-d6f0-4b05-8c5f-b1533a3a0fcd"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{sex}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="20" uuid="b5eb353f-77da-4bf8-8fd6-5a5ee877d4aa"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{age}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="100" height="20" uuid="79833268-1830-47b8-b276-baaccd5c4715"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{hometown}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="100" height="20" uuid="56b2dd64-c530-4d6d-8fb0-3a2738a20a97"/>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

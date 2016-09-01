@@ -1,0 +1,159 @@
+<div class="turns-wrapper wrapper">
+  <div class="page-left-menu" print-remove full-height>
+    <div class="selector-wrapper">
+      <select class="form-control input-sm" ng-model="vm.params.deptCode" ng-change="vm.load.func()">
+        <option ng-repeat="item in vm.deptData" value="{{item.deptCode}}">{{item.deptName}}</option>
+      </select>      
+    </div>
+    <div class="panel pull-left dept-wrapper panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-calendar"></i>
+        <!-- <span>科室列表</span> -->
+        <span>排版时间表</span>
+      </div>
+      <div class="panel-body dept-list">
+        <div class="list-content">
+          <treecontrol class="tree-light" tree-model="vm.treeData" on-selection="vm.select(node)" expanded-nodes="vm.expandedNodes" selected-node="vm.selectedNode" options="vm.treeOption">
+          {{node.text}}
+          </treecontrol>
+          <loading type="tree"></loading>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-right-content">
+    <uib-tabset active="active">
+      <uib-tab index="0" heading="排班管理">
+        <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+          <div class="tool-wrapper container-fluid">
+              <button class="btn btn-sm btn-default" ng-click="vm.backWeek()">上一周</button>
+              <span>
+                  第{{vm.params.weeks}}周
+              </span>
+              <button class="btn btn-sm btn-default" ng-click="vm.nextWeek()">下一周</button>
+            <div class="pull-right">
+              <button class="btn btn-sm btn-primary" ng-click="vm.newTurns()">重新排班</button>
+              <button class="btn btn-sm btn-primary" ng-click="vm.copyWeek()">复制上周</button>
+              <button class="btn btn-sm btn-success" ng-click="vm.saveTurns()">保存</button>
+              <button class="btn btn-sm btn-success" print-landscape print-btn>打印</button>
+            </div>
+          </div>
+          <!-- <div class="panel-heading text-center">
+              <div class="pull-left">
+                <i class="fa fa-eye-slash"></i>
+                <span >排班管理</span>
+              </div>
+              <span>
+                <button class="btn btn-xs btn-default" ng-click="vm.backWeek()">上一周</button>
+                <span>
+                    第{{vm.params.weeks}}周
+                </span>
+                <button class="btn btn-xs btn-default" ng-click="vm.nextWeek()">下一周</button>
+              </span>
+              <div class="week-switch pull-right">
+                <button class="btn btn-sm btn-primary" ng-click="vm.newTurns()">重新排班</button>
+                <button class="btn btn-sm btn-primary" ng-click="vm.copyWeek()">复制上周</button>
+                <button class="btn btn-sm btn-success" ng-click="vm.saveTurns()">保存</button>
+                <button class="btn btn-sm btn-success" print-landscape print-btn>打印</button>
+              </div>
+          </div> -->
+          <div class="panel-body">
+              <table print-table="vm.lst" class="table table-condensed table-bordered table-striped no-border">
+                <thead>
+                  <tr>
+                    <!--<th>员工编号</th>-->
+                    <th>分组</th>
+                    <th>分层</th>
+                    <th>员工姓名</th>
+                    <th>床位</th>
+                    <th>{{vm.data.week1.replace(vm.exp, '')}}</th>
+                    <th>{{vm.data.week2.replace(vm.exp, '')}}</th>
+                    <th>{{vm.data.week3.replace(vm.exp, '')}}</th>
+                    <th>{{vm.data.week4.replace(vm.exp, '')}}</th>
+                    <th>{{vm.data.week5.replace(vm.exp, '')}}</th>
+                    <th>{{vm.data.week6.replace(vm.exp, '')}}</th>
+                    <th>{{vm.data.week7.replace(vm.exp, '')}}</th>
+                    <th>积假</th>
+                    <!--<th>本周欠休</td>
+                      <th>累计欠休</td>
+                        <th>统计</td>-->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="row in vm.lst">
+                    <td class="grey-td" ng-if="vm.tableLayout(row.userCode, row.groupName)" ng-attr-rowspan="{{vm.tableLayout(row.userCode, row.groupName)}}">{{row.groupName}}</td>
+                    <td class="grey-td" ng-if="vm.tableLayout(row.userCode, row.groupName, row.clinical)" ng-attr-rowspan="{{vm.tableLayout(row.userCode, row.groupName, row.clinical)}}">{{getDicName('clinical', row.clinical)}}</td>
+                    <td>{{row.userName}}</td>
+                    <td class="edit-cell-dir">
+                      <div class="edit-text-dir">
+                        {{row.beds}}
+                      </div>
+                      <input class="form-control input-sm edit-input-dir" ng-model="row.beds">
+                    </td>
+                    <td class="edit-cell-dir" ng-class="{dirty: !vm.compare(row, 1)}">
+                        <div class="edit-text-dir class-text-wrapper">
+                            <div class="class-text" ng-repeat="item in row.week1class" ng-style="{'background-color': vm.getClassColor(item)}">{{vm.getClassName(item)}}</div>
+                        </div>
+                          <select class="form-control input-sm edit-input-dir" ng-model="row.week1class" ui-select2 multiple="multiple">
+                            <option ng-repeat="c in vm.classList" value="{{c.classCode}}">{{c.className}}</option>
+                          </select>
+                    </td>
+                    <td class="edit-cell-dir" ng-class="{dirty: !vm.compare(row, 2)}">
+                        <div class="edit-text-dir class-text-wrapper">
+                          <div class="class-text" ng-repeat="item in row.week2class" ng-style="{'background-color': vm.getClassColor(item)}">{{vm.getClassName(item)}}</div>
+                        </div>
+                        <select class="form-control input-sm edit-input-dir" ng-model="row.week2class" ui-select2 multiple="multiple">
+                            <option ng-repeat="c in vm.classList" value="{{c.classCode}}">{{c.className}}</option>
+                        </select>
+                    </td>
+                    <td class="edit-cell-dir" ng-class="{dirty: !vm.compare(row, 3)}">
+                        <div class="edit-text-dir class-text-wrapper">
+                          <div class="class-text" ng-repeat="item in row.week3class" ng-style="{'background-color': vm.getClassColor(item)}">{{vm.getClassName(item)}}</div>
+                        </div>
+                        <select class="form-control input-sm edit-input-dir" ng-model="row.week3class" ui-select2 multiple="multiple">
+                            <option ng-repeat="c in vm.classList" value="{{c.classCode}}">{{c.className}}</option>
+                        </select>
+                    </td>
+                    <td class="edit-cell-dir" ng-class="{dirty: !vm.compare(row, 4)}">
+                        <div class="edit-text-dir class-text-wrapper">
+                          <div class="class-text" ng-repeat="item in row.week4class" ng-style="{'background-color': vm.getClassColor(item)}">{{vm.getClassName(item)}}</div>
+                        </div>
+                        <select class="form-control input-sm edit-input-dir" ng-model="row.week4class" ui-select2 multiple="multiple">
+                            <option ng-repeat="c in vm.classList" value="{{c.classCode}}">{{c.className}}</option>
+                        </select>
+                    </td>
+                    <td class="edit-cell-dir" ng-class="{dirty: !vm.compare(row, 5)}">
+                        <div class="edit-text-dir class-text-wrapper">
+                          <div class="class-text" ng-repeat="item in row.week5class" ng-style="{'background-color': vm.getClassColor(item)}">{{vm.getClassName(item)}}</div>
+                        </div>
+                        <select class="form-control input-sm edit-input-dir" ng-model="row.week5class" ui-select2 multiple="multiple">
+                            <option ng-repeat="c in vm.classList" value="{{c.classCode}}">{{c.className}}</option>
+                        </select>
+                    </td>
+                    <td class="edit-cell-dir" ng-class="{dirty: !vm.compare(row, 6)}">
+                        <div class="edit-text-dir class-text-wrapper">
+                          <div class="class-text" ng-repeat="item in row.week6class" ng-style="{'background-color': vm.getClassColor(item)}">{{vm.getClassName(item)}}</div>
+                        </div>
+                        <select class="form-control input-sm edit-input-dir" ng-model="row.week6class" ui-select2 multiple="multiple">
+                            <option ng-repeat="c in vm.classList" value="{{c.classCode}}">{{c.className}}</option>
+                        </select>
+                      </select>
+                    </td>
+                    <td class="edit-cell-dir" ng-class="{dirty: !vm.compare(row, 7)}">
+                        <div class="edit-text-dir class-text-wrapper">
+                          <div class="class-text" ng-repeat="item in row.week7class" ng-style="{'background-color': vm.getClassColor(item)}">{{vm.getClassName(item)}}</div>
+                        </div>
+                        <select class="form-control input-sm edit-input-dir" ng-model="row.week7class" ui-select2 multiple="multiple">
+                            <option ng-repeat="c in vm.classList" value="{{c.classCode}}">{{c.className}}</option>
+                        </select>
+                    </td>
+                    <td>{{row.leave}}</td>
+                  </tr>            
+                </tbody>
+              </table>
+          </div>
+        </div>
+      </uib-tab>
+    </uib-tabset>
+  </div>
+</div>

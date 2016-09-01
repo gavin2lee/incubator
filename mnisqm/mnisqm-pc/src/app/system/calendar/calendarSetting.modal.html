@@ -1,0 +1,36 @@
+<div>
+  <div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+      编辑日历信息
+    </h5>
+  </div>
+  <form class="calendar-form w5c-form" role="form" novalidate w5c-form-validate="vm.metaData.validationOption" name="yearForm">
+
+    <div class="modal-body">
+      <div class="calendar-form_date-info row">
+        <div class="col-md-4">{{vm.formData.date}}</div>
+        <div class="col-md-4">{{vm.formData.weekText}}</div>
+        <div class="col-md-4">第{{vm.formData.weeks}}周</div>
+      </div>
+
+        <div class="form-group">
+          <input type="checkbox" ng-true-value="1"
+    ng-false-value="0"  id="isWeekend" ng-model="vm.formData.isWeekend" ng-checked="vm.formData.isWeekend == 1">
+          <label for="isWeekend">是否周末</label>
+        </div>
+        <div class="form-group">
+          <input type="checkbox" ng-true-value="1"
+    ng-false-value="0"  id="isHoliday" ng-model="vm.formData.isHoliday" ng-checked="vm.formData.isHoliday == 1">
+          <label for="isHoliday">是否节假日</label>
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok()">保存</button>
+      <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+    </div>
+  </form>
+
+</div>

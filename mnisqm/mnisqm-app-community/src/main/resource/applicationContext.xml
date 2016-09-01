@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/context
+     			http://www.springframework.org/schema/context/spring-context-3.2.xsd
+     			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+     			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	    		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+
+	<context:component-scan base-package="com.lachesis.mnisqm" />
+	
+	<!-- 启动任务注解 -->
+    <!-- <task:annotation-driven />
+    <task:scheduled-tasks scheduler="mnisqmScheduler">
+    	<task:scheduled ref="acquireBeiDaHisBedAndPatientInfo" method="job" cron="0 * * * * ?"/>
+		同步webService（his的床位）数据任务,60分钟一次
+ 		<task:scheduled ref="acquireBeiDaHisBedAndPatientInfo" method="acquireBedDateByDeptCode" cron="0 0/60 * * * ?"/>
+ 		同步webService（his的入院患者）数据任务,20分钟一次
+ 		<task:scheduled ref="acquireBeiDaHisBedAndPatientInfo" method="acqurieInPatientDate" cron="0 0/20 * * * ?"/>
+ 		同步webService（his的出院患者）数据任务,30分钟一次
+ 		<task:scheduled ref="acquireBeiDaHisBedAndPatientInfo" method="acqurieOutPatientDate" cron="0 0/30 * * * ?"/>
+ 	</task:scheduled-tasks>
+ 	<task:scheduler id="mnisqmScheduler" pool-size="3"/> -->
+ 	<bean id="acquireBeiDaHisBedAndPatientInfo" class="com.lachesis.mnisqm.task.AcquireBeiDaHisBedAndPatientInfo"/>
+
+	<import resource="classpath*:applicationContext-service.xml"/>
+	
+	
+</beans>

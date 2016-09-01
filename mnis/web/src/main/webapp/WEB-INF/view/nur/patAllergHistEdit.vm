@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>修改患者过敏信息</title>
+</head>
+<body id="popupAllergLayout">
+	<div style="overflow: auto;">
+	#set($count=0)
+	#if( $totalRows > 0) 
+		#foreach( $drug in $drugList )
+			<input id="$drug.code" type="checkbox" value="$drug.name" />
+			<label for="$drug.code" >$drug.name</label>
+			#set($count = $count + 1)
+			#if ($count > 0 && $count % 5 == 0)
+			<br>
+			#end
+			
+		#end
+	#end
+	</div>
+	<div style="margin-bottom:0px;height: 30px; overflow: hidden;">
+		<center><input type="button" id="selectAllergBtn" value="确定" style="width:60px;height:28px;"/></center>
+	</div>
+	
+</body>
+</html>

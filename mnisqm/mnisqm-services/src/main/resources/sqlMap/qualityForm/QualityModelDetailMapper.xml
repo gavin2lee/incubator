@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.qualityForm.dao.QualityModelDetailMapper" >
+	<insert id="insert" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityModelDetail">
+		insert into QUALITY_MODEL_DETAIL
+		(MODEL_ID, DETAIL_ID)
+		values
+		(#{modelId}, #{detailId})
+	</insert>
+	<select id="select" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityModelDetail"
+	resultType="com.lachesis.mnisqm.module.qualityForm.domain.QualityModelDetail">
+		select 
+		MODEL_ID 	modelId,
+		DETAIL_ID	detailId
+		from QUALITY_MODEL_DETAIL
+		where 
+		MODEL_ID = #{modelId}
+		<if test="detailId != null">
+		and DETAIL_ID = #{detailId}
+		</if>
+	</select>
+	<delete id="delete" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityModelDetail">
+		delete from QUALITY_MODEL_DETAIL
+		where
+		MODEL_ID = #{modelId}
+		<if test="detailId!=null">
+		and DETAIL_ID = #{detailId}
+		</if>
+	</delete>
+	<!-- 查询项目列表通过模板id -->
+	<select id="selectModelById" parameterType="QualityModelDetail" resultType="QualityFormDetail">
+		SELECT 
+			fd.DETAIL_CODE	detailCode,
+			fd.SEQ_ID		seqId,
+			fd.FORM_CODE	formCode,
+			fd.STANTARD		stantard,
+			fd.DESCRIP		descrip,
+			fd.DETAIL_NAME	detailName,
+			fd.POINTS	points
+			FROM QUALITY_MODEL_DETAIL md
+			INNER JOIN QUALITY_FORM_DETAIL fd on md.DETAIL_ID = fd.SEQ_ID
+		WHERE md.MODEL_ID=#{modelId}
+		AND STATUS !='09'
+	</select>
+	<!-- 查询项目查找类型 -->
+	<select id="selectFormByCode" parameterType="QualityFormDetail" resultType="QualityForm">
+		SELECT 
+			SEQ_ID			seqId,
+			FORM_CODE		formCode,
+			FORM_NAME		formName,
+			FORM_TYPE		formType,
+			STATUS			status,
+			PARENT_TYPE 	parentType
+			FROM QUALITY_FORM
+		WHERE FORM_CODE=#{formCode}
+		AND STATUS !='09'
+	</select>
+	<!-- 查询项目查找类型 -->
+	<select id="selectFormByPCode" parameterType="QualityForm" resultType="QualityForm">
+		SELECT 
+			SEQ_ID			seqId,
+			FORM_CODE		formCode,
+			FORM_NAME		formName,
+			FORM_TYPE		formType,
+			STATUS			status,
+			PARENT_TYPE 	parentType
+			FROM QUALITY_FORM
+		WHERE FORM_CODE=#{parentType}
+		AND STATUS !='09'
+	</select>
+</mapper>

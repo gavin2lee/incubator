@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/context
+     			http://www.springframework.org/schema/context/spring-context-3.2.xsd
+     			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+     			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	    		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+
+<context:component-scan base-package="com.anyi.*" />
+	<!-- 
+	<bean
+		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="locations">
+			<list>
+			    <value>classpath*:/db/doc_jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+ -->
+	<!-- Uncomment and add your base-package here: <context:component-scan base-package="org.springframework.samples.service"/> -->
+	<!-- 
+	<bean id="baseDataSource2" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${doc.jdbc.driverClassName}" />
+		<property name="url" value="${doc.jdbc.url}" />
+		<property name="username" value="${doc.jdbc.username}" />
+		<property name="password" value="${doc.jdbc.password}" />
+		<property name="defaultAutoCommit" value="${doc.jdbc.defaultAutoCommit}" />
+	</bean>	
+	 -->
+	
+
+
+	<!-- define the SqlSessionFactory -->
+	<bean id="sqlSessionFactoryBase" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- transaction manager, use JtaTransactionManager for global tx -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- DAO Mapper 层 -->
+	<bean id="baseMapper2" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		abstract="true" lazy-init="true">
+		<property name="sqlSessionFactory" ref="sqlSessionFactoryBase" />
+	</bean>
+	<bean id="reportMapper" parent="baseMapper2">
+		<property name="mapperInterface" value="com.anyi.report.db.ReportMapper" />
+	</bean>
+	<bean id="metadataMapper" parent="baseMapper2">
+		<property name="mapperInterface" value="com.anyi.report.db.MetadataMapper" />
+	</bean>
+	<bean id="actionMapper" parent="baseMapper2">
+		<property name="mapperInterface" value="com.anyi.report.db.ActionMapper" />
+	</bean>
+
+</beans>

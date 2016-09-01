@@ -1,0 +1,65 @@
+<div class="col-md-12">
+  <div class="panel panel-layout panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-balance-scale"></i>
+      <span>科研项目管理</span>
+      <div class="pull-right">
+        <button class="btn btn-default btn-xs" ng-click="vm.open()">
+          新增
+        </button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <table print-table="vm.list" st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered">
+        <thead>
+          <tr class="header-export">
+            <th>课题名称</th>
+            <th>项目来源</th>
+            <th>起始日期</th>
+            <th>结束日期</th>
+            <th>经费</th>
+            <th>课题负责人</th>
+            <th>课题参与人</th>
+
+            <th print-remove>操作</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="row in vm.list">
+          <tr class="row-{{$index}}">
+            <td class="text-center">
+              {{ row.subjectName }}
+            </td>
+            <td class="text-center">
+              {{ row.itemSource }}
+            </td>
+            <td class="text-center">
+              {{ row.startDate }}
+            </td>
+            <td class="text-center">
+              {{ row.endDate }}
+            </td>
+            <td class="text-center">
+              {{ row.cost }}
+            </td>
+            <td class="text-center">
+              {{ row.subjectHead }}
+            </td>
+            <td class="text-center">
+              {{ row.subjectParticipant }}
+            </td>
+            <td class="text-center">
+              <button class="btn btn-default btn-xs" ng-click="vm.edit(row)" uib-tooltip="编辑" ng-if="!row.isEditing">
+                <span class="fa fa-pencil"></span>
+              </button>
+                <button class="btn btn-danger btn-xs" ng-click="vm.deleteGroup(row.seqId)" uib-tooltip="删除" ng-if="!row.isEditing">
+                    <span class="fa fa-trash"></span>
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <none-data-info list="vm.list"></none-data-info>
+    </div>
+  </div>
+</div>

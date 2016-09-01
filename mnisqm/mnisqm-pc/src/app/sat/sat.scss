@@ -1,0 +1,48 @@
+.sat-table {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  td,
+  th {
+    border: 1px solid #ccc;
+    padding: 3px 5px;
+  }
+}
+
+.result-filter {
+  $height: 26px;
+  margin: 20px 0;
+  > span {
+    float: left!important;
+    line-height: $height;
+    &.text {
+      white-space: pre;
+    }
+    select {
+      height: $height;
+    }
+  }
+  .btn {
+    padding: 0 10px;
+    height: $height;
+    line-height: $height;
+    + .btn {
+      margin-left: 10px;
+    }
+  }
+}
+
+.sat-wrapper {
+    select {
+      padding-top: 0;
+      padding-bottom: 0;
+      height: 26px;
+      font-size: 14px;
+    }
+  input[type=radio].col-md-2 {
+    position: relative;
+    top: 7px;
+  }
+}

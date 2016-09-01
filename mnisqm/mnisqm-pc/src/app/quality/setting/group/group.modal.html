@@ -1,0 +1,67 @@
+<div class="quality-add-group-wrapper">
+  <div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+      <!-- <i class="fa fa-edit"></i> -->
+      新增质控组
+    </h5>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="addbedForm" form="addbedForm">
+        <div class="form-wrapper">
+          <div class="text-input clearfix">
+            <div class="col-xs-5">
+              <label for="teamName" class="control-label col-xs-2">组名</label>
+              <div class="col-xs-10 no-padding">
+                <input class="form-control input-sm" name="teamName" required autocomplete="off" ng-model="vm.formData.teamName" type="text" id="teamName" />
+              </div>
+            </div>
+            <div class="col-xs-2"></div>
+            <div class="col-xs-5" ng-class="{disappear: !vm.grouped.yes.length}">
+              <label for="area" class="control-label col-xs-2">组长</label>
+              <div class="col-xs-10 no-padding">
+                <select class="form-control input-sm" id="area" ng-model="vm.formData.teamLeader" required>
+                  <option ng-repeat="item in vm.grouped.yes" value="{{item.userCode}}">{{item.userName}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+            <div class="select-input">
+              <div class="col-xs-5">
+                <div class="panel panel-danger">
+                  <div class="panel-heading">
+                    <i class="fa fa-bars"></i>
+                    <span>未添加的组员</span>
+                  </div>
+                  <input class="form-control input-sm user-filter" type="text" ng-model="vm.userFilter">
+                  <ul class="user-list unchoosed-user-list">
+                    <li ng-repeat="item in vm.grouped.no | filter: {userName: vm.userFilter} | orderBy: 'userCode'" ng-click="vm.choose(item)">{{item.userName}}</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-2 exchange-icon">
+                <div class="text-center">
+                  <i class="fa fa-exchange">
+                  </i>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="panel panel-success">
+                  <div class="panel-heading">
+                    <i class="fa fa-bars"></i>
+                    <span>已添加的组员</span>
+                  </div>
+                  <ul class="user-list choosed-user-list">
+                    <li ng-repeat="item in vm.grouped.yes | orderBy: 'userCode'" ng-click="vm.remove(item)">{{item.userName}}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok()">保存</button>
+                <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+            </div>
+        </div>
+      </form>
+  </div>
+</div>

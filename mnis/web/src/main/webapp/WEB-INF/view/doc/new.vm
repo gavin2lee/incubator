@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<title>翻身记录单</title>
+</head>
+<body class="doc">
+<form action="#url("/nda/doc/save")" method="post" style="width: 90%; text-align: center; margin: 20px;">
+	<textarea rows="10" style="width: 100%;" name="docJson"></textarea>
+	<textarea rows="20" style="width: 100%;" name="datasJson"></textarea>
+	<input type="submit" value="save">
+</form>
+</body>
+</html>

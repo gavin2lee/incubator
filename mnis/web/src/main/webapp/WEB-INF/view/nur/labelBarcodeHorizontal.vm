@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>打印腕带</title>
+<script type="text/javascript" src="#url('/resources/js/nur/labelBarcode.js?1472534366476')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/handlebars-v3.0.3.js?1472534366476')"></script>
+<script type="text/javascript" src="#url('/resources/js/jquery.qrcode-0.12.0.min.js?1472534366476')"></script>
+<script type="text/javascript">
+    var _patientId = '$!id';
+</script>
+</head>
+<body id="patCrisValueLayout" class="easyui-layout">
+    <iframe id="printFrame" src="" style="display:none;width:170px;height:270px;"></iframe>
+    <div data-options="region:'north'" style="height: 39px; overflow: hidden;border-bottom:none;" >
+        <div class="top-tools">
+            <div class="top-tools-box">
+                <div class="top-title">
+                    <span>打印瓶签</span>
+                </div>
+                <div class="fl" style="position:relative;margin-left:20px;font-size:13px;overflow:hidden;white-space: nowrap;">
+                    <p id="nurPatientInfo" class="nurPatientInfo"></p>
+                    <div id="info-cover" class="info-cover">&lt;</div>
+                </div> 
+                <input type="hidden" id="pid" value = "$!id" />
+                <div class="btn-box fr mgr10">
+	                 <select id="select1" onchange="orderTypeFunc(this.value)">
+	                  <option value="CZ">长嘱</option>
+	                  <option value="LZ">临嘱</option>
+	                </select>
+	                <select id="select2" onchange="orderExecTypeFunc(this.value)">
+	                	<option value="">全部分类</option>
+	                    <option value="INFUSION">输液</option>
+	                    <option value="INJECT">注射</option>
+	                    <option value="ORAL">口服药</option>
+	                </select>
+                    <input id="printLabelBarcode" type="button" value="打印瓶签">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="wristBarcodeContent" data-options="region:'center'" style="overflow: hidden;">
+        <div id="printPreviewList" style="display:none;position:absolute;bottom:0;left:0;width:500px;height:300px;z-index:999;"></div>
+        <img id="qrImg" src="" style="display:none;">
+        <table id="labelBarcodeTable" class="easyui-datagrid" data-options="fit:true,fitColumns:true"></table>
+
+        <img id="qrImg" src="" style="display:none;">
+        <div id="transCardList" style="position:absolute;display:none;left:0px;top:0px;width:400px;height:400px;background-color:#fff;"></div>
+    </div>
+
+    <script id="transCardTpl" type="text/x-handlebars-template">
+    {{#data}} 
+    <div class="transfusion-horizontal">
+      <div class="header">
+		   <div class="p-info" >
+		   	  <div class="base-info">
+		   	  	<span class="bednum">{{bednum}}</span>
+              	<span class="name">{{name}}</span>
+              </div>
+              <div class="padding">
+              	<span class="name">住院号: {{inHospNo}}</span>
+              </div>
+	          <div class="padding">
+	            <span >日&nbsp;&nbsp;期: {{date}}</span>
+	          </div>  
+            </div>
+            <div class="barcode-info">
+	            <div class="qr" >
+	       		   <img src="{{qr}}">
+	      		</div>
+	      		 <div class="order-info">
+		            <span >{{orderType}}</span>
+		          </div>  
+	      	</div>
+      </div>
+      
+      <hr class="hr" >
+      
+      <div class="body">
+        <div class="drug-list">
+          <ul>
+          {{#drugList}}
+            <li>
+              <span class="standard">{{standard}}</span>
+              <span class="drugname">{{drugname}}</span>
+            </li>
+          {{/drugList}}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {{/data}}
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head runat="server">
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/inspection.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/prescriptionCheck.css')" />
+
+    <style>
+
+    </style>
+</head>
+<body>
+  <input type="hidden" id="patientId" value="">
+	<div class="wrapper f_yahei">
+		<div class="insp-top top-tools" style="height:40px">
+      <div class="top-tools-box">
+        <div id="topBtnItems" class="top-btn-items">
+          <div id="CZ" data-type="CZ" class="btn-item checked">长期医嘱</div>
+          <div id="LZ" data-type="LZ" class="btn-item">临时医嘱</div>
+        </div>
+        <div class="fl" style="position:relative;margin-left:20px;font-size:13px;overflow:hidden;white-space: nowrap;">
+          <p id="nurPatientInfo" class="nurPatientInfo"></p>
+          <div id="info-cover" class="info-cover">&lt;</div>
+        </div> 
+	    	<div class="btn-box fr mgr10">
+          <div class="tool-widget">
+
+            <div class="widget-wrap" id="orderDateWrap">
+              <div class="date-widget" style="line-height: 28px;">
+                  <input id="startDate" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}'})" readonly="readonly" style="width: 90px;">
+                  -
+                  <input id="endDate" name="endDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd', minDate:'#F{$dp.$D(\'startDate\')}'})" readonly="readonly" style="width: 90px;">
+##                <input id="date" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;">
+              </div>
+            </div>
+
+            <div class="widget-wrap">
+              <div class="select-widget">
+                <select class="selector" id="orderExecTypeCode">
+                    <option value="">全部分类</option>
+                    <option value="INFUSION">输液</option>
+                    <option value="ORAL">口服药</option>
+                    <option value="UZ">治疗</option>
+                    <option value="SKINTEST">皮试</option>
+                    <option value="LAB">检验</option>
+                    <option value="UC">检查</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="widget-wrap">
+              <div class="btn-widget">
+                <button class="_btn _btn-md" id="searchOrderBtn">查询</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+		</div>
+
+		<div class="content">
+        <table id="viewTable"></table>
+        <table id="viewLzTable" style="display:none"></table>
+		</div>
+	</div>
+	<script type="text/javascript">
+    document.body.removeChild(document.body.childNodes[0]);
+	</script>
+  <script type="text/javascript" src="#url('/resources/js/easyui/plugins/jquery.datagrid-detailview.js?1472534366478')"></script>
+  <script type="text/javascript" src="#url('/resources/js/nur/prescriptionAll.js?1472534366478')"></script>
+</body>
+</html>

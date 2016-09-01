@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="schljld" language="groovy" pageWidth="760" pageHeight="1010" columnWidth="720" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dbe2fbcf-67cb-4f9f-8305-84f819facf16">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="50"/>
+	<parameter name="PTNT_NAM" class="java.lang.String"/>
+	<parameter name="DE08_10_054_00" class="java.lang.String"/>
+	<parameter name="PTNT_HOSPITAL_NO" class="java.lang.String"/>
+	<parameter name="PTNT_BED" class="java.lang.String"/>
+	<parameter name="SZS_LEAVE_HIS_EDUCATION" class="java.lang.String"/>
+	<parameter name="SZS_HAPPEN_IN_HIS" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_600" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_601" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_602" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_603" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_604" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_605" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_606" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_607" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_608" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_609" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_610" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_611" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_612" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_613" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_614" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_615" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_616" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_617" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_618" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_619" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_620" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_621" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_622" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_623" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_624" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_625" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_626" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_627" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_628" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_629" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_630" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_631" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_632" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_633" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_634" class="java.lang.String"/>
+	<parameter name="LX_SZSANYUAN_635" class="java.lang.String"/>
+	<parameter name="remark1" class="java.lang.String"/>
+	<parameter name="remark4" class="java.lang.String"/>
+	<parameter name="SZS_END" class="java.lang.String"/>
+	<parameter name="LEAVE_HIS_EDUCATION" class="java.lang.String"/>
+	<parameter name="CREATE_TIME" class="java.lang.String"/>
+	<parameter name="CREATE_PERSON" class="java.lang.String"/>
+	<parameter name="APPROVE_TIME" class="java.lang.String"/>
+	<parameter name="APPROVE_PERSON" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="720" height="35" uuid="ad12c4ae-1331-44e5-af35-2a79794a00d0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[深圳市第三人民医院]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="35" width="720" height="35" uuid="4ca93c91-bdf2-480d-bd04-cd1d6601e823"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[出院记录]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="70" width="45" height="20" uuid="09e94523-c984-4860-aa49-1b7da5e220f8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[姓名：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="45" y="70" width="65" height="20" uuid="06a9d184-479d-48f3-b0ff-c169755c101b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_NAM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="117" y="70" width="45" height="20" uuid="d656e238-5182-4dbc-af6d-9f9dc78cfd3c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[科别：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="162" y="70" width="135" height="20" uuid="79f9603b-8c8b-4f9c-ac4e-01252f293de9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DE08_10_054_00}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="303" y="70" width="45" height="20" uuid="26da82e7-536a-4efc-a143-dd4e0ddc0cb4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[床号：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="348" y="70" width="100" height="20" uuid="e9f1fe0d-b4f1-4b82-8093-c01c6f627f2e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_BED}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="455" y="70" width="121" height="20" uuid="0979636e-4740-4f89-812c-b89041a8af61"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[住院号/Id号：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="577" y="70" width="115" height="20" uuid="5098653d-80ea-4418-b517-ceb3cdeee350"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_HOSPITAL_NO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="880" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="190" height="25" uuid="de630d4f-8509-4469-9004-8bb4601de0a7"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[五、护理过程与结局]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="25" width="94" height="18" uuid="b4768225-7752-4fa2-8c09-1470177f49d1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1、健康宣教：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="94" y="25" width="626" height="35" uuid="c1491e2a-8c2c-4615-936e-f998148453e0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SZS_LEAVE_HIS_EDUCATION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="60" width="142" height="18" uuid="50029d6b-9573-4116-b3b8-f0d7ca977943"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2、住院期间发生情况：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="142" y="60" width="578" height="40" uuid="bc2b4ef1-f7ae-45b0-b096-4a8585c068ed"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SZS_HAPPEN_IN_HIS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="102" width="94" height="18" uuid="2421392d-8408-495c-a447-04ea11ce5100"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[3、管道植入：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="94" y="102" width="228" height="18" uuid="648c44bd-7176-4434-8ac7-27c830a0545d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_600}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="17" y="134" width="693" height="1" uuid="ee82cd7d-9ef3-43f7-b8f8-792366cd9ba9"/>
+			</line>
+			<line>
+				<reportElement x="16" y="135" width="1" height="132" uuid="d27ca98f-7073-42a7-a5ed-08608219324e"/>
+			</line>
+			<line>
+				<reportElement x="17" y="266" width="693" height="1" uuid="50271879-7a38-4ad3-ad2b-9a3f4b449f50"/>
+			</line>
+			<line>
+				<reportElement x="709" y="135" width="1" height="131" uuid="b3159d11-95bb-44eb-8eb1-aadd8d18e385"/>
+			</line>
+			<line>
+				<reportElement x="17" y="156" width="693" height="1" uuid="6a37f69b-ff08-4be8-b8d9-2a95d12b1782"/>
+			</line>
+			<line>
+				<reportElement x="17" y="200" width="693" height="1" uuid="3c10e686-e45c-457d-9759-715e49f9c8da"/>
+			</line>
+			<line>
+				<reportElement x="17" y="222" width="693" height="1" uuid="a3316f9d-d479-4db1-b507-e6624c1e73cb"/>
+			</line>
+			<line>
+				<reportElement x="17" y="244" width="693" height="1" uuid="502eb7b7-a702-4ff7-8083-9604f7630ff7"/>
+			</line>
+			<line>
+				<reportElement x="17" y="178" width="693" height="1" uuid="c5daf8a8-6ea7-4568-b858-a5c73a294cad"/>
+			</line>
+			<line>
+				<reportElement x="133" y="135" width="1" height="132" uuid="d958d9da-5ea1-4e2f-861e-4d0cbb9b9fb7"/>
+			</line>
+			<line>
+				<reportElement x="230" y="135" width="1" height="132" uuid="bc9211b1-fb84-4881-8d5c-947d76902037"/>
+			</line>
+			<line>
+				<reportElement x="326" y="135" width="1" height="131" uuid="6a01b6e6-1e79-4ba7-822c-bdb52031b925"/>
+			</line>
+			<line>
+				<reportElement x="412" y="135" width="1" height="131" uuid="32e2f570-de61-43ad-8c7e-8fbe7b357fe5"/>
+			</line>
+			<line>
+				<reportElement x="512" y="135" width="1" height="131" uuid="83fc8f75-3816-47e0-a89f-6cbe55e0d168"/>
+			</line>
+			<line>
+				<reportElement x="613" y="135" width="1" height="131" uuid="53828a80-06ca-49bb-bbdc-3ceaf5d20e63"/>
+			</line>
+			<staticText>
+				<reportElement x="37" y="135" width="96" height="21" uuid="05596b98-885a-4fcb-bc27-e8c4752937a4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[名称]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="135" width="95" height="21" uuid="95d82bb4-afd4-43d6-b4cd-d3960e939b88"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[部位]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="231" y="135" width="95" height="21" uuid="208ec23e-78f6-449d-b5ee-76915b2dc8f2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[植入时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="135" width="85" height="21" uuid="d49c6658-4e43-4763-a86a-b00b8cfb09ee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[植入长度CM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="413" y="135" width="99" height="21" uuid="902b89db-f3d2-40cd-9bc6-b900f1c32db3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[外露长度CM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="513" y="135" width="100" height="21" uuid="d211ace9-4d7d-4251-afc8-251445d4766b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[拔管时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="614" y="135" width="95" height="21" uuid="99b7f04b-2612-4c3b-ab6e-cbcaa178efff"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[拔管原因]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="157" width="19" height="21" uuid="aeb98f03-ae8d-48bf-ab5b-ee6fa81d3874"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1、]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="179" width="19" height="21" uuid="8af6cb84-c621-4ed1-9ee2-347a455a327d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2、]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="201" width="19" height="21" uuid="fc3869c8-8a56-4817-abfe-76a234db0909"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[3、]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="223" width="19" height="21" uuid="79cfa4d5-f724-412f-8575-9b7b01d75f4d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[4、]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="245" width="19" height="21" uuid="08a20167-0265-400b-83f5-c2f74dbae59b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[5、]]></text>
+			</staticText>
+			<line>
+				<reportElement x="36" y="135" width="1" height="132" uuid="763eb3f8-0ee5-4085-bc07-80fd28dd63e2"/>
+			</line>
+			<textField>
+				<reportElement x="37" y="157" width="95" height="21" uuid="4bd0ad90-16a1-4fde-8e1f-043d260aa823"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_606}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="157" width="95" height="21" uuid="d464768a-7a2b-4fb2-b374-f097ccbfa19a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_601}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="157" width="95" height="21" uuid="b34eb16c-9475-4333-828f-48b2e90efb83"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_611}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="157" width="85" height="21" uuid="44040122-d654-4629-892e-443a3a1b0685"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_616}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="157" width="99" height="21" uuid="a74dac13-120e-422a-8262-59623c93eae0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_621}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="513" y="157" width="100" height="21" uuid="58628db7-2eac-4735-a70f-c085afa51955"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_626}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="614" y="157" width="95" height="21" uuid="eecc7eef-46fe-4c55-899b-04444bb48cc5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_631}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="37" y="179" width="95" height="21" uuid="50bcaef6-2e0f-4646-be88-34a70e8b4aa2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_607}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="179" width="95" height="21" uuid="c86dba85-bad3-4a80-9c3f-f3db66c6e181"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_602}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="179" width="95" height="21" uuid="24f4f467-d31b-4a7a-a4f7-d85b78f4affa"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_612}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="179" width="85" height="21" uuid="687ea720-1793-4be9-93cc-8353a943b066"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_617}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="179" width="99" height="21" uuid="9f2ffc2d-422c-4e38-9392-cbe92d19359d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_622}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="513" y="179" width="100" height="21" uuid="d42a6b30-fd24-4e8c-b07c-f58df395ff80"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_627}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="614" y="179" width="95" height="21" uuid="7ea0d34b-b88c-48ae-8252-644a84e75211"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_632}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="37" y="201" width="95" height="21" uuid="6fd74c65-3974-4219-85c3-ada63373e445"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_608}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="201" width="95" height="21" uuid="9c1ee63e-8680-4f30-a849-74a677e9b955"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_603}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="201" width="95" height="21" uuid="1e25eea4-4161-416f-a700-2747cd9d9db9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_613}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="201" width="85" height="21" uuid="9459fac3-d2e7-4791-ae12-20554524784a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_618}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="201" width="99" height="21" uuid="8ce70bec-466c-4e2c-a0ec-a95f0773883f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_623}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="513" y="201" width="100" height="21" uuid="c2ecab71-c8f8-45e6-b63d-9b9745e72ea7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_628}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="614" y="201" width="95" height="21" uuid="a43c53b1-d5fe-4a12-a3fc-28e91c97aaad"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_633}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="37" y="223" width="95" height="21" uuid="65ef8682-7daf-4918-a695-f72fee649b36"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_609}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="223" width="95" height="21" uuid="2f98147f-e6bd-4b35-ae5f-adfefa339171"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_604}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="223" width="95" height="21" uuid="96d44894-919d-4d0d-a9a4-385c7d4f7c22"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_614}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="223" width="85" height="21" uuid="a4b3ac4e-5402-42c6-ae15-24608441a4ed"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_619}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="223" width="99" height="21" uuid="7b4452ae-c276-4ec6-bd8d-e0857c1db663"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_624}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="513" y="223" width="100" height="21" uuid="ab3f38fb-351c-48db-bd7a-93f9ef30ecd0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_629}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="614" y="223" width="95" height="21" uuid="db4bf2ec-9c98-4876-922d-2fe1084dad5f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_634}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="37" y="245" width="95" height="21" uuid="a2f3a630-8ce3-4f7a-87ef-acf823e62cee"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_610}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="245" width="95" height="21" uuid="029e50e0-8ced-4217-845d-159186c8a479"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_605}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="245" width="95" height="21" uuid="9f64c78d-2aa8-4322-b768-f0f07d78368d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_615}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="245" width="85" height="21" uuid="f2bdc05d-7b1c-4e3e-ae6a-cded1f5f9762"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_620}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="245" width="99" height="21" uuid="002c7519-2144-4b5c-96cc-fca73f070a61"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_625}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="513" y="245" width="100" height="21" uuid="e7ec36a5-4ce8-4dbb-9e71-993dcc5a6d66"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_630}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="614" y="245" width="95" height="21" uuid="596609e1-1b63-4b99-8248-bd7f6bcb426c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LX_SZSANYUAN_635}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="278" width="718" height="18" uuid="637e6b8d-a5dc-42d6-a169-f74011474cf0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{remark4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="303" width="17" height="18" uuid="e0f562f4-9f73-4d87-9913-24db42085b43"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[4、]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="17" y="303" width="701" height="18" uuid="581fef3a-2278-4558-9f5c-18a39e53a158"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{remark1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="331" width="57" height="18" uuid="c68d7dd7-e258-4da1-958a-a614486ac866"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[5、结局]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="57" y="331" width="650" height="18" uuid="9e3b092e-1e80-415e-b17a-195d4325775d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SZS_END}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="358" width="110" height="25" uuid="6711d884-abc8-4df8-933a-8ead94f5f52b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[六、出院宣教]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="358" width="608" height="48" uuid="0314795b-fea0-4d30-88af-e76d2c365ffe"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LEAVE_HIS_EDUCATION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="423" width="70" height="18" uuid="84af6629-2aa4-49a8-94cf-11507aaef050"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[记录时间：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="423" width="138" height="18" uuid="664d0ede-cbd8-4749-9085-1307075aef77"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CREATE_TIME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="423" width="94" height="18" uuid="9859bc59-fe0b-49f0-b15a-1b629f2d8dab"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[责任护士签名：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="464" y="423" width="155" height="18" uuid="093e55f5-2ce2-4c58-bc11-0e485ffb4831"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CREATE_PERSON}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="441" width="70" height="18" uuid="49b990e5-1881-42b7-a08b-91b45b4c8c03"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[审核时间：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="441" width="138" height="18" uuid="e5684c1d-ad88-42a3-b5f1-97e7ed17044b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{APPROVE_TIME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="384" y="441" width="80" height="18" uuid="824c7237-5ea2-4776-bb5f-cdcfc30f57a3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[审核者签名：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="464" y="441" width="155" height="18" uuid="bedcdf48-debd-4f09-91b3-f937df225091"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{APPROVE_PERSON}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

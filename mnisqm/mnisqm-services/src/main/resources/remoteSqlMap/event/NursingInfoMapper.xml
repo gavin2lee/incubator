@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.event.dao.NursingInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.event.domain.NursingInfo" >
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="NUTRITION_SUM" property="nutritionSum" jdbcType="INTEGER" />
+    <result column="FALL_SUM" property="fallSum" jdbcType="INTEGER" />
+    <result column="PRESSURE_SORES_SUM" property="pressureSoresSum" jdbcType="INTEGER" />
+    <result column="NUTRITION_RATE" property="nutritionRate" jdbcType="VARCHAR" />
+    <result column="FALL_RATE" property="fallRate" jdbcType="VARCHAR" />
+    <result column="PRESSURE_SORES_RATE" property="pressureSoresRate" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.event.domain.NursingInfo" >
+    insert into NURSING_INFO (DEPT_NAME, NUTRITION_SUM, FALL_SUM, 
+      PRESSURE_SORES_SUM, NUTRITION_RATE, FALL_RATE, 
+      PRESSURE_SORES_RATE)
+    values (#{deptName,jdbcType=VARCHAR}, #{nutritionSum,jdbcType=INTEGER}, #{fallSum,jdbcType=INTEGER}, 
+      #{pressureSoresSum,jdbcType=INTEGER}, #{nutritionRate,jdbcType=VARCHAR}, #{fallRate,jdbcType=VARCHAR}, 
+      #{pressureSoresRate,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select DEPT_NAME, NUTRITION_SUM, FALL_SUM, PRESSURE_SORES_SUM, NUTRITION_RATE, FALL_RATE, 
+    PRESSURE_SORES_RATE
+    from NURSING_INFO
+  </select>
+  <insert parameterType="com.lachesis.mnisqm.module.event.domain.NursingInfo" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into NURSING_INFO (DEPT_NAME, NUTRITION_SUM, FALL_SUM, 
+      PRESSURE_SORES_SUM, NUTRITION_RATE, FALL_RATE, 
+      PRESSURE_SORES_RATE)
+    values (#{deptName,jdbcType=VARCHAR}, #{nutritionSum,jdbcType=INTEGER}, #{fallSum,jdbcType=INTEGER}, 
+      #{pressureSoresSum,jdbcType=INTEGER}, #{nutritionRate,jdbcType=VARCHAR}, #{fallRate,jdbcType=VARCHAR}, 
+      #{pressureSoresRate,jdbcType=VARCHAR})
+  </insert>
+</mapper>

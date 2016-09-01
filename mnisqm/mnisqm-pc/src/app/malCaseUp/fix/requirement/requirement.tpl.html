@@ -1,0 +1,34 @@
+<form class="form-horizontal w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="addLevelForm">
+
+  <div class="container-fluid">
+    <div class="row">
+      <ul class="list-group">
+        <li class="list-group-item" ng-class="{'item-active': vm.formData.reqCode == requirement.reqCode}" ng-click="vm.fillItem(requirement)" ng-repeat="requirement in vm.requirementList track by $index">
+          {{$index + 1}}. {{requirement.reqContent}}
+          <div class="pull-right">
+            <span style="margin-right:1em;">提出人：{{requirement.userName}}</span>
+            <button class="btn btn-xs btn-danger" uib-tooltip="删除" ng-click="vm.del({index: $index, listName: 'requirement', seqId: requirement.seqId})"><span class="fa fa-trash"></span></button>
+          </div>
+        </li>
+
+        <li class="list-group-item">
+          <div class="form-group">
+            <!-- <label for="email" class="col-sm-2 control-label">整改要求：</label> -->
+            <div class="col-sm-12">
+              <textarea class="form-control input-sm" cols="50" rows="3" ng-model="vm.formData.reqContent" placeholder="填写整改要求">
+              </textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <!-- <label for="email" class="col-sm-2 control-label"></label> -->
+            <div class="col-sm-12">
+              <button ng-click="vm.resetForm()" class="btn btn-primary btn-sm">清空</button>
+              <button ng-click="vm.save()" class="btn btn-success btn-sm" ng-disabled="vm.formData.reqContent === '' || !vm.formData.reqContent">保存</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</form>

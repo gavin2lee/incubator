@@ -1,0 +1,60 @@
+<div class="left-nav" print-remove ng-class="{'left-min': vm.minMode, 'left-sub-min': !vm.isSubNavShow}">
+  <div class="nav-container" print-remove print-hide>
+    <div class="nav-wrapper" ng-class="{'left-nav-min': vm.minMode}">
+      <ul class="nav-menu" print-remove>
+        <li class="nav-menu_item nav-view-trigger">
+          <a href="javascript:;" ng-click="vm.toggleNavView()">
+            <i class="fa nav-menu_item-icon" ng-class="{'fa-list': !vm.minMode, 'fa-square': vm.minMode}"></i>
+          </a>
+        </li>
+        <!-- <li class="nav-menu_item" ng-class="{'active': $index === vm.currentIndex, 'current': $index === vm.lastIndex}" ng-repeat="item in vm.navData track by $index" data-title="{{item.funUrl}}">
+          <a href="javascript:;" ng-click="vm.showSubNav($index)" tooltip-enable="vm.minMode" uib-tooltip="{{item.funName}}" tooltip-placement="right" tooltip-append-to-body="true">
+            <i class="fa icomoon-{{item.icoName}} nav-menu_item-icon"></i>
+            <span class="nav-menu_item-text" ng-if="!vm.minMode">{{item.funName}}</span>
+          </a>
+        </li> -->
+      </ul>
+      <uib-accordion class="nav-menu">
+        <uib-accordion-group panel-class="no-panel" ng-repeat="item in vm.navData" data-title="{{item.funUrl}}" is-open="item.isOpen">
+          <uib-accordion-heading>
+            <div class="nav-menu_item" ng-click="vm.showSubNav($index)" ng-class="{'active': $index === vm.currentIndex, 'current': $index === vm.lastIndex}">
+              <a href="javascript:;" tooltip-enable="vm.minMode" uib-tooltip="{{item.funName}}" tooltip-placement="right" tooltip-append-to-body="true">
+                <i class="fa icomoon icomoon-{{item.icoName}} nav-menu_item-icon"></i>
+                <span class="nav-menu_item-text">{{item.funName}}</span>
+                <i class="pull-right fa nav-menu_item-arrow" ng-class="{'fa-angle-down': item.isOpen, 'fa-angle-right': !item.isOpen}"></i>
+              </a>
+            </div>
+
+          </uib-accordion-heading>
+          <ul class="nav-menu_sub-item">
+            <li ng-repeat="subItem in item.child" tooltip-enable="vm.minMode" uib-tooltip="{{subItem.funName}}" tooltip-placement="right" tooltip-append-to-body="true">
+              <a ui-sref-active="active" class="nav-menu_sub-item-text" ng-click="vm.setActiveIndex()" data-id="{{subItem.funUrl}}" data-name="{{subItem.funName}}" ui-sref=".{{subItem.funUrl}}" ui-sref-opts="{ reload: true }">
+                <i class="fa fa-caret-square-o-right nav-menu_item-icon"></i>
+                {{subItem.funName}}</a>
+            </li>
+          </ul>
+        </uib-accordion-group>
+      </uib-accordion>
+    </div>
+
+    <!-- <div class="sub-nav" print-remove ng-class="{'sub-nav-min': !vm.isSubNavShow, 'nav-min': vm.minMode}">
+      <ul class="sub-nav-list nav-menu">
+        <li class="nav-title sub-nav-list_item">
+          <i class="nav-menu_item-icon"></i>
+          <span class="nav-menu_item-text">{{vm.navData[vm.currentIndex].funName}}</span>
+        </li>
+          <li class="sub-nav-list_item nav-menu_item" ng-repeat="subItem in vm.navData[vm.currentIndex].child">
+              <a ui-sref-active="active" ng-click="vm.setActiveIndex()" ng-class="{active: vm.isActive('{{subItem.funUrl}}')}" data-id="{{subItem.funUrl}}" data-name="{{subItem.funName}}" ui-sref=".{{subItem.funUrl}}">
+                <i class="nav-menu_item-icon"></i>
+                <span class="nav-menu_item-text">{{subItem.funName}}</span>
+              </a>
+          </li>
+      </ul>
+
+      <a class="sub-nav-trigger" href="javascript:;" ng-click="vm.toggleSubNavView()" ng-class="{'outer': !vm.isSubNavShow}" ng-mouseenter="vm.triggerHover = {'width': '20px'}">
+        <i class="fa" ng-class="{'fa-angle-left': vm.isSubNavShow, 'fa-angle-right': !vm.isSubNavShow}"></i>
+      </a>
+    </div> -->
+  </div>
+
+</div>

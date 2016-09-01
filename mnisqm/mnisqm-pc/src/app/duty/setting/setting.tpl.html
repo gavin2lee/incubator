@@ -1,0 +1,154 @@
+<div class="wrapper" ng-controller="DeptTreeCtrl as vm">
+  <div class="page-left-menu" print-remove ng-if="vm.treeData[0].children && vm.treeData[0].children.length">
+    <div class="panel pull-left dept-wrapper panel-default" full-height>
+      <div class="panel-heading">
+        <i class="fa fa-sitemap"></i>
+        <span>科室列表</span>
+      </div>
+      <div class="panel-body dept-list">
+        <div class="list-filter">
+          <input type="text" class="form-control input-sm" ng-model="vm.filterText" placeholder="输入关键字搜索">
+        </div>
+        <div class="list-content">
+          <treecontrol class="tree-light" tree-model="vm.treeData" on-selection="vm.select(node)" filter-expression="vm.filterText" expanded-nodes="vm.expandedNodes" selected-node="vm.selectedNode" options="vm.treeOption">
+          {{node.deptName}}
+          </treecontrol>
+          <loading type="tree"></loading>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-class="{'page-right-content': vm.treeData[0].children && vm.treeData[0].children.length, 'padding-content': !(vm.treeData[0].children && vm.treeData[0].children.length)}">
+  <uib-tabset active="active">
+    <uib-tab index="0" heading="人员分组">
+        <div class="endemic-wrapper" ng-controller="DepartmentManagerEndemicAreaController as vm">
+          <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+            <div class="tool-wrapper container-fluid">
+              <div class="pull-right">
+                <button class="btn btn-sm btn-success" ng-click="vm.saveArea()">保存</button>
+              </div>
+            </div>
+            <div class="panel-body">
+              <table print-table="vm.list" st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered table-striped no-border">
+                <thead>
+                  <tr class="header-export">
+                    <th class="index-cell">序号</th>
+                    <th>工号</th>
+                    <th>姓名</th>
+                    <th class="fixed-cell">床位</th>
+                    <th>所属护理组</th>
+                    <th>是否参与排班</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="row-{{$index}}" ng-repeat="row in vm.list">
+                    <td class="index-cell">{{$index + 1}}</td>
+                    <td>{{row.hisCode}}</td>
+                    <td>{{row.userName}}</td>
+                    <td><input class="form-control input-sm" type="text" placeholder="使用;分割" ng-model="row.beds"></td>
+                    <td>
+                      <select class="input-sm" ng-model="row.groupCode">
+                        <option ng-repeat="group in vm.groupLst" value="{{group.groupCode}}">{{group.groupName}}</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="checkbox" ng-model="row.isSchedule" ng-true-value="'1'" ng-false-value="'0'">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <none-data-info list="vm.list"></none-data-info>
+            </div>
+          </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1" heading="班次定义">
+      <div class="class-wrapper" ng-controller="DepartmentManagerClassesController as vm">
+        <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+          <div class="tool-wrapper container-fluid">
+            <div class="pull-right">
+              <button class="btn btn-sm btn-primary" ng-click="vm.addClasses()">新增班次</button>
+            </div>
+          </div>
+            <div class="panel-body">
+              <table print-table="vm.list" st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered table-striped no-border">
+                <thead>
+                  <tr class="header-export">
+                    <th>班次</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>颜色区分</th>
+                    <th print-remove>操作</th>
+                  </tr>
+                </thead>
+                <tbody ng-repeat="row in vm.list">
+                  <tr class="row-{{$index}}">
+                    <td>{{ row.className }}</td>
+                    <td>{{ row.startTime }}</td>
+                    <td>{{ row.endTime }}</td>
+                    <td class="space-ignore">
+                      <color-picker ng-model="row.color"></color-picker>
+                    </td>
+                    <td class="print-remove" data-title="'操作'">
+                      <button class="btn btn-primary btn-xs classes-handler-btn"
+                              ng-click="vm.edit(row)">
+                        <span class="fa fa-edit"></span>编辑
+                      </button>
+                      <button class="btn btn-danger btn-xs classes-handler-btn"
+                              ng-click="vm.del(row.seqId)">
+                        <span class="fa fa-trash"></span>删除
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <none-data-info list="vm.list"></none-data-info>
+            </div>
+        </div>
+      </div>
+    </uib-tab>
+    <uib-tab index="2" heading="分组定义">
+      <div class="bed-wrapper" ng-controller="DepartmentManagerBedController as vm">
+        <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+          <div class="tool-wrapper container-fluid">
+            <div class="pull-right">
+              <button class="btn btn-sm btn-primary" ng-click="vm.open()">新增分组</button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <table print-table="vm.list" st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered table-striped no-border">
+              <thead>
+                <tr class="header-export">
+                  <th class="index-cell">序号</th>
+                  <th>组名</th>
+                  <th>床位</th>
+                  <th print-remove>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="row-{{$index}}" ng-repeat="row in vm.list">
+                  <td class="index-cell">{{ $index + 1 }}</td>
+                  <td>{{ row.groupName }}</td>
+                  <td>{{ row.beds }}</td>
+                  <td class="print-remove" data-title="'操作'">
+                    <button class="btn btn-primary btn-xs classes-handler-btn"
+                            ng-click="vm.open(row)">
+                      <span class="fa fa-edit"></span>编辑
+                    </button>
+                    <button class="btn btn-danger btn-xs" ng-click="vm.deleteGroup(row.seqId)" ng-if="!row.isEditing">
+                      <span class="fa fa-trash"></span>删除
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <none-data-info list="vm.list"></none-data-info>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+  </uib-tabset>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.event.dao.EventAssessmentMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.event.domain.EventAssessment" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="ASSESS_CODE" property="assessCode" jdbcType="VARCHAR" />
+    <result column="MEA_CODE" property="meaCode" jdbcType="VARCHAR" />
+    <result column="ASSESS_TIME" property="assessTime" jdbcType="TIMESTAMP" />
+    <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="ASSESS_TYPE_CODE" property="assessTypeCode" jdbcType="VARCHAR" />
+    <result column="ASSESS_TYPE_NAME" property="assessTypeName" jdbcType="VARCHAR" />
+    <result column="ASSESS_CONTENT" property="assessContent" jdbcType="VARCHAR" />
+    <result column="ASSESS_SCORE" property="assessScore" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <!-- 逻辑删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    update EVENT_ASSESSMENT
+		set
+			status = '09',
+			UPDATE_TIME = GETDATE()
+		where SEQ_ID = #{seqId}
+  </delete>
+  <insert id="insert" parameterType="EventAssessment" >
+    insert into EVENT_ASSESSMENT (ASSESS_CODE, MEA_CODE, 
+      ASSESS_TIME, USER_CODE, STATUS, 
+      ASSESS_TYPE_CODE, ASSESS_TYPE_NAME, ASSESS_CONTENT, 
+      ASSESS_SCORE, REMARK, CREATE_PERSON, 
+      UPDATE_PERSON, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{assessCode,jdbcType=VARCHAR}, #{meaCode,jdbcType=VARCHAR}, 
+      GETDATE(), #{userCode,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{assessTypeCode,jdbcType=VARCHAR}, #{assessTypeName,jdbcType=VARCHAR}, #{assessContent,jdbcType=VARCHAR}, 
+      #{assessScore,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updatePerson,jdbcType=VARCHAR}, GETDATE(), GETDATE()
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="EventAssessment" >
+    update EVENT_ASSESSMENT
+    set ASSESS_CODE = #{assessCode,jdbcType=VARCHAR},
+      MEA_CODE = #{meaCode,jdbcType=VARCHAR},
+      ASSESS_TIME = #{assessTime,jdbcType=TIMESTAMP},
+      USER_CODE = #{userCode,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      ASSESS_TYPE_CODE = #{assessTypeCode,jdbcType=VARCHAR},
+      ASSESS_TYPE_NAME = #{assessTypeName,jdbcType=VARCHAR},
+      ASSESS_CONTENT = #{assessContent,jdbcType=VARCHAR},
+      ASSESS_SCORE = #{assessScore,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE()
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, ASSESS_CODE, MEA_CODE, ASSESS_TIME, USER_CODE, STATUS, ASSESS_TYPE_CODE, 
+    ASSESS_TYPE_NAME, ASSESS_CONTENT, ASSESS_SCORE, REMARK, CREATE_PERSON, UPDATE_PERSON, 
+    CREATE_TIME, UPDATE_TIME
+    from EVENT_ASSESSMENT
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <!--根据不良事件措施查询评估  -->
+  <select id="selectEventAssessmentList" resultType="EventAssessment" parameterType="EventAssessment">
+	select 
+	a.SEQ_ID seqId, 
+	a.ASSESS_CODE assessCode,
+	a.MEA_CODE meaCode, 
+	a.ASSESS_TIME assessTime,
+	a.USER_CODE userCode, 
+	a.STATUS status,
+	a.ASSESS_CONTENT assessContent, 
+	a.ASSESS_SCORE assessScore, 
+	a.REMARK remark,
+	m.MEA_CONTENT meaContent
+	from EVENT_ASSESSMENT a
+	inner join EVENT_MEASURES m
+	on a.MEA_CODE=m.MEA_CODE
+	where a.status!='09'
+	<if test="meaCode!=null and meaCode!=''">
+		and MEA_CODE=#{meaCode}
+	</if>
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from EVENT_ASSESSMENT where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="EventAssessment" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into EVENT_ASSESSMENT (SEQ_ID, ASSESS_CODE, MEA_CODE, 
+      ASSESS_TIME, USER_CODE, STATUS, 
+      ASSESS_TYPE_CODE, ASSESS_TYPE_NAME, ASSESS_CONTENT, 
+      ASSESS_SCORE, REMARK, CREATE_PERSON, 
+      UPDATE_PERSON, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{seqId,jdbcType=BIGINT}, #{assessCode,jdbcType=VARCHAR}, #{meaCode,jdbcType=VARCHAR}, 
+      #{assessTime,jdbcType=TIMESTAMP}, #{userCode,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{assessTypeCode,jdbcType=VARCHAR}, #{assessTypeName,jdbcType=VARCHAR}, #{assessContent,jdbcType=VARCHAR}, 
+      #{assessScore,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updatePerson,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+</mapper>

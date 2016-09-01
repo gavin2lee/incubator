@@ -1,0 +1,15 @@
+CREATE TABLE SYS_DATE
+(
+SEQ_ID bigint identity(1,1) primary key,
+DATE varchar(10),
+MONTH varchar(10),
+WEEKS int,
+WEEK_DAY varchar(10),
+IS_WEEKEND char(2),
+IS_HOLIDAY char(2),
+STATUS varchar(10),
+CREATE_TIME datetime,
+UPDATE_TIME datetime,
+CREATE_PERSON varchar(20),
+UPDATE_PERSON varchar(20)
+)

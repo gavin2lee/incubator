@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.user.dao.DeptSchedulInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.user.domain.DeptSchedulInfo" >
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="HEAD_NURSE" property="headNurse" jdbcType="VARCHAR" />
+    <result column="ON_JOB_NURSE_SUM" property="nurseSum" jdbcType="INTEGER" />
+    <result column="PATIENT_SUM" property="patientSum" jdbcType="INTEGER" />
+    <result column="CRITICAL_PATIENT_SUM" property="criticalPatientSum" jdbcType="INTEGER" />
+    <result column="SURGERY_PATIENT_SUM" property="surgeryPatientSum" jdbcType="INTEGER" />
+    <result column="A_SHIFT" property="aShift" jdbcType="VARCHAR" />
+    <result column="P_SHIFT" property="pShift" jdbcType="VARCHAR" />
+    <result column="N_SHIFT" property="nShift" jdbcType="VARCHAR" />
+    <result column="ON_LEAVE_NURSE_SUM" property="onLeaveNurseSum" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="queryDeptSchedulInfo" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select patient.DEPT_NAME,patient.PATIENT_SUM, patient.CRITICAL_PATIENT_SUM,
+    n1.ON_JOB_NURSE_SUM, n1.ON_LEAVE_NURSE_SUM, n2.HEAD_NURSE
+    from
+    	(select pci.WARD_CODE DEPT_NAME,
+   		 	sum(1) PATIENT_SUM,
+         	sum(case when DANGER_LEVEL in ('病重','重危') then 1 else 0 end) CRITICAL_PATIENT_SUM
+    	from PAT_CURE_INFO pci
+    	where pci.WARD_CODE = #{deptCode}) as patient,
+    	(select  sdc.DEPT_CODE DEPT_NAME, 
+			sum(1) ON_JOB_NURSE_SUM,
+			sum(case when sl.APPROVE_USER is not null and #{dateTime} >= sl.START_TIME and sl.END_TIME > #{dateTime} then 1 else 0 end) ON_LEAVE_NURSE_SUM
+		from YIHUI.numas.dbo.SCHEDULE_RECORD_DETAIL srd left join YIHUI.numas.dbo.SCHEDULE_DEPT_CLASS sdc on sdc.CLASS_CODE = srd.CLASS_CODE
+			left join YIHUI.numas.dbo.SCHEDULE_LEAVE sl on srd.USER_CODE = sl.USER_CODE
+		where  #{time} >= sdc.START_TIME 
+			and sdc.END_TIME > #{time}
+			and sdc.DEPT_CODE = #{deptCode}) as n1,
+		(select vcu.user_name HEAD_NURSE,
+			vcu.DEPT_CODE
+		from YIHUI.numas.dbo.v_COM_USER vcu, YIHUI.numas.dbo.COM_USER_POSITION cup 
+		where vcu.user_code = cup.USER_CODE
+			and cup.POSITION_NAME = '护士长'
+			and vcu.DEPT_CODE = #{deptCode}) as n2
+	where patient.DEPT_CODE = n1.DEPT_CODE
+	 and n2.DEPT_CODE = n1.DEPT_CODE
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from DEPT_SCHEDUL_INFO
+  </select>
+</mapper>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<title>跌倒风险评估量表</title>
+</head>
+<body class="doc">
+#docToolbar()
+<div class="doc-container">
+#fall()
+<div class="doc-content">
+    <div id="tb">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+<!--         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">保存</a> -->
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">还原</a>
+<!-- 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">GetChanges</a> -->
+    </div>
+    <table id="dg" style="height: 400px;width: 100%;" class="easyui-datagrid" data-options="
+    	nowrap: false,
+		singleSelect: true,
+		autoRowHeight: true,
+		fitColumns: true,
+		toolbar: '#tb',
+		showFooter: true,
+		onClickRow: onClickRow,
+		onBeginEdit: onBeginEdit,
+		onLoadSuccess: function(data) {
+		},
+		url: '#url("/doc/fall/datas")',
+		queryParams: {
+			cureNo: '$!{patient.cureNo}'
+		},
+		method: 'get',
+		idField: 'id'">
+	    <thead>
+	        <tr>
+	            <th rowspan="3" data-options="field:'date',
+					align:'center',
+					resizable: false,
+					width:80,
+					formatter: function(value,row,index){
+						if (!value) {
+							return '';
+						}
+						if (index == 0) {
+	    					return value;
+						}
+						return formatDate(value, false, $('#dg').datagrid('getRows')[index-1]['date']);
+	    			},
+					editor: {
+						type: 'datetimebox',
+						options: {
+							showSeconds: false,
+							editable: false,
+							validType:{
+								length:[0,16]
+							}
+						}
+					}">日期时间</th>
+				<th colspan="2">年龄</th>
+				<th rowspan="2">最近一<br>年有跌<br>倒(坠<br>床)史</th>
+				<th colspan="2">活动能力</th>
+				<th rowspan="2">主诉眩晕、<br>头晕、乏力<br>、虚弱感、<br>高估或忘记<br>自己的限制</th>
+				<th rowspan="2">视<br>觉<br>障<br>碍</th>
+				<th rowspan="2">使用下列药物：①镇静、镇<br>痛药②麻醉、肌松弛药③利<br>尿剂④缓泻剂⑤降压药⑥降<br>糖药⑦抗抑郁药⑧抗惊厥药<br>⑨扩血管药⑩抗心律失常药</th>
+				<th rowspan="2">排泄障碍<br>(腹泻/<br>便秘/尿<br>频/失禁)</th>
+				<th rowspan="2">睡眠<br>形态<br>紊乱</th>
+				<th rowspan="2">有下列诊断：①中风②痴呆/<br>精神错乱③颅脑外伤后④帕金<br>森综合征⑤知觉障碍⑥体位性<br>低血压⑦关节肌肉疾病⑧内环<br>境紊乱⑨心力衰竭、心律失常</th>
+				<th rowspan="2">特殊治疗：①手<br>术②治疗性管路<br>/造瘘③透析④<br>有创检查治疗⑤<br>分娩⑥其它</th>
+	            <th rowspan="3" data-options="field:'score',align:'center',resizable: false">总<br>评<br>分</th>
+	            <th rowspan="3" data-options="width:60,field:'sign',align:'center',resizable: false">签名</th>
+			</tr>
+			<tr>
+				<th>65-<br>75岁</th>
+				<th>><br>75<br>岁</th>
+				<th>完全丧失活动<br>能力，改变体<br>位需他人协助</th>
+				<th>活动障碍、肢体残缺<br>、偏瘫、步态不稳，<br>需他人或辅助器协助</th>
+			</tr>
+			<tr>
+	            <th data-options="field:'age65To75',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            <th data-options="field:'ageGt75',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">2</th>
+	            <th data-options="field:'history',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            <th data-options="field:'moveLoss',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            <th data-options="field:'moveAssist',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">2</th>
+	            <th data-options="field:'dizzy',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">2</th>
+	            <th data-options="field:'sight',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            <th data-options="field:'drug',align:'center',resizable: false,editor:{type:'combobox',options:{
+	            	valueField:'id',
+					textField:'text',
+					panelHeight: 'auto',
+					editable:false,
+					multiple:true,
+					onSelect: function(row) {
+						var opts = $(this).combobox('options');
+						$(this).combobox('setText', $(this).combobox('getValues').join(opts.separator));
+					},
+					onUnselect: function(row) {
+						var opts = $(this).combobox('options');
+						$(this).combobox('setText', $(this).combobox('getValues').join(opts.separator));
+					},
+					keyHandler: $.extend({}, $.fn.combobox.defaults.keyHandler, {
+						enter: function(row) {
+							var opts = $(this).combobox('options');
+							var text = $(this).combobox('getValues').join(opts.separator);
+							$(this).combobox('setText', text);
+							$(this).combobox('hidePanel');
+						}
+					}),
+					data: [{
+					    id:'①',
+					    text:'镇静、镇痛药'
+					},{
+					    id:'②',
+					    text:'麻醉、肌松弛药'
+					},{
+					    id:'③',
+					    text:'利尿剂'
+					},{
+					    id:'④',
+					    text:'缓泻剂'
+					},{
+					    id:'⑤',
+					    text:'降压药'
+					},{
+					    id:'⑥',
+					    text:'降糖药'
+					},{
+					    id:'⑦',
+					    text:'抗抑郁药'
+					},{
+					    id:'⑧',
+					    text:'抗惊厥药'
+					},{
+					    id:'⑨',
+					    text:'扩血管药'
+					},{
+					    id:'⑩',
+					    text:'抗心律失常药'
+					}]
+	            }}">2</th>
+	            <th data-options="field:'excretion',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            <th data-options="field:'sleep',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            <th data-options="field:'ill',align:'center',resizable: false,editor:{type:'combobox',options:{
+	            	valueField:'id',
+					textField:'text',
+					panelHeight: 'auto',
+					editable:false,
+					multiple:true,
+					onSelect: function(row) {
+						var opts = $(this).combobox('options');
+						$(this).combobox('setText', $(this).combobox('getValues').join(opts.separator));
+					},
+					onUnselect: function(row) {
+						var opts = $(this).combobox('options');
+						$(this).combobox('setText', $(this).combobox('getValues').join(opts.separator));
+					},
+					keyHandler: $.extend({}, $.fn.combobox.defaults.keyHandler, {
+						enter: function(row) {
+							var opts = $(this).combobox('options');
+							var text = $(this).combobox('getValues').join(opts.separator);
+							$(this).combobox('setText', text);
+							$(this).combobox('hidePanel');
+						}
+					}),
+					data: [{
+					    id:'①',
+					    text:'中风'
+					},{
+					    id:'②',
+					    text:'痴呆/精神错乱'
+					},{
+					    id:'③',
+					    text:'颅脑外伤后'
+					},{
+					    id:'④',
+					    text:'帕金森综合征'
+					},{
+					    id:'⑤',
+					    text:'知觉障碍'
+					},{
+					    id:'⑥',
+					    text:'体位性低血压'
+					},{
+					    id:'⑦',
+					    text:'关节肌肉疾病'
+					},{
+					    id:'⑧',
+					    text:'内环境紊乱'
+					},{
+					    id:'⑨',
+					    text:'心力衰竭、心律失常'
+					}]
+	            }}">1</th>
+	            <th data-options="field:'cure',align:'center',resizable: false,editor:{type:'combobox',options:{
+	            	valueField:'id',
+					textField:'text',
+					panelWidth: 'auto',
+					panelHeight: 'auto',
+					editable:false,
+					multiple:true,
+					onSelect: function(row) {
+						var opts = $(this).combobox('options');
+						$(this).combobox('setText', $(this).combobox('getValues').join(opts.separator));
+					},
+					onUnselect: function(row) {
+						var opts = $(this).combobox('options');
+						$(this).combobox('setText', $(this).combobox('getValues').join(opts.separator));
+					},
+					keyHandler: $.extend({}, $.fn.combobox.defaults.keyHandler, {
+						enter: function(row) {
+							var opts = $(this).combobox('options');
+							var text = $(this).combobox('getValues').join(opts.separator);
+							$(this).combobox('setText', text);
+							$(this).combobox('hidePanel');
+						}
+					}),
+					data: [{
+					    id:'①',
+					    text:'手术'
+					},{
+					    id:'②',
+					    text:'治疗性管路/造瘘'
+					},{
+					    id:'③',
+					    text:'透析'
+					},{
+					    id:'④',
+					    text:'有创检查治疗'
+					},{
+					    id:'⑤',
+					    text:'分娩'
+					},{
+					    id:'⑥',
+					    text:'其它'
+					}]
+	            }}">1</th>
+	        </tr>
+	    </thead>
+	</table>
+</div>
+#fallComment2()
+</div>
+<!-- Diagnosis Window -->
+<div id="win"></div>
+<script type="text/javascript">
+var editIndex = undefined;
+function endEditing(index) {
+	if (editIndex == undefined) {
+		return true;
+	}
+	if ($("#dg").datagrid('validateRow', editIndex)) {
+		$("#dg").datagrid('endEdit', editIndex);
+		editIndex = undefined;
+		return true;
+	} else {
+		return false;
+	}
+}
+function onClickRow(index){
+    if (editIndex != index){
+        if (endEditing()) {
+        	// 本人,护理组长和护士长能修改
+        	var rows = $('#dg').datagrid('getRows');
+        	if ('$!{currentUser.code}' == rows[index]['userCode']
+        			|| 1 == $!{currentUser.purview}
+        			|| 2 == $!{currentUser.purview}) {
+	            $('#dg').datagrid('selectRow', index)
+	                    .datagrid('beginEdit', index);
+	            editIndex = index;
+        	}
+        } else {
+            $('#dg').datagrid('selectRow', editIndex);
+        }
+    }
+}
+function append(){
+    if (endEditing()){
+        $('#dg').datagrid('appendRow',{
+        	date: datetimeToString(new Date()),
+        	sign: '$!{currentUser.name}',
+        	userCode: '$!{currentUser.code}',
+        	deptCode: '$!{currentUser.deptCode}',
+        	deptName: '$!{currentUser.deptName}'
+        });
+        editIndex = $('#dg').datagrid('getRows').length-1;
+        $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+    }
+}
+function removeit() {
+    var row = $('#dg').datagrid('getSelected');
+    if (!row){return}
+    var index = $('#dg').datagrid('getRowIndex', row);
+    if (index == undefined){return}
+    if ('$!{currentUser.code}' == row['userCode']) {
+	    $('#dg').datagrid('cancelEdit', index)
+	            .datagrid('deleteRow', index);
+	    editIndex = undefined;
+    } else {
+    	$.messager.alert('数据删除', '只有本人才允许删除', 'info');
+    }
+}
+function accept(){
+    if (endEditing()){
+    	var editable = '$!{doc.editable}' || true;
+    	if (editable) {
+	        $.ajax({
+	        	url: '#url("/doc/fall")',
+	        	type: 'POST',
+	        	data: {
+	        		cureNo: '$!{patient.cureNo}',
+	        		hospitalNo: '$!{patient.hospitalNo}',
+	        		inserted: JSON.stringify($('#dg').datagrid('getChanges', 'inserted')),
+	        		updated: JSON.stringify($('#dg').datagrid('getChanges', 'updated')),
+	        		deleted: JSON.stringify($('#dg').datagrid('getChanges', 'deleted'))
+	        	},
+	        	success: function(data, status) {
+	        		if (data && data.code) {
+	        			if ('1' == data.code) {
+				        	$('#dg').datagrid('acceptChanges').datagrid('reload').datagrid('unselectAll');
+		        		} else {
+			        		$.messager.alert('数据保存', data.message || '保存失败', 'error');
+	        			}
+	        		}
+	        	},
+	        	error: function(xhr, status, err) {
+	        		$.messager.alert('数据保存', '保存失败', 'error');
+	        	}
+	        });
+    	} else {
+    		$.messager.alert('数据保存', '不允许修改', 'error');
+    	}
+    }
+}
+function reject(){
+    $('#dg').datagrid('rejectChanges').datagrid('unselectAll');
+    editIndex = undefined;
+}
+var scores = {
+	age65To75: 1,
+	ageGt75: 2,
+	history: 1,
+	moveLoss: 1,
+	moveAssist: 2,
+	dizzy: 2,
+	sight: 1,
+	drug: 2,
+	excretion: 1,
+	sleep: 1,
+	ill: 1,
+	cure: 1
+};
+var groups = {
+	age65To75: 1,
+	ageGt75: 1,
+	moveLoss: 2,
+	moveAssist: 2
+};
+function groupSiblings(field) {
+	var siblings = [];
+	for (var key in groups) {
+		if (key != field && groups[key] == groups[field]) {
+			siblings.push(key);
+		}
+	}
+	return siblings;
+}
+function onBeginEdit(index,row){
+	#[[
+    row.score = row.score || 0;
+    var editors = $('#dg').datagrid('getEditors', index);
+	// drug
+    var $drug = $(editors[8].target)
+    var drugOpts = $drug.combobox('options');
+    var drugValues = $drug.combobox('getValues');
+	$drug.combobox($.extend(true, {}, drugOpts, {
+    	onChange: function(newValue, oldValue) {
+        	if (oldValue.length == 0 && newValue.length > 0 &&
+        			drugValues.join(drugOpts.separator) != newValue.join(drugOpts.separator)) {
+       			row.score = parseInt(row.score) + scores['drug'];
+       		}
+        	if (oldValue.length > 0 && newValue.length == 0) {
+       			row.score = parseInt(row.score) - scores['drug'];
+       		}
+        	$(this).parents('td[field]').siblings('td[field=score]').children('div').text(row.score);
+        	//重新赋值, 重新初始化drugValues, 以防止多次点击页面默认值时出现score<0的情况
+        	drugValues = $drug.combobox('getValues');
+        }
+    }));
+	$drug.combobox('setValues', drugValues);
+	$drug.combobox('setText', drugValues.join(drugOpts.separator));
+    // ill
+    var $ill = $(editors[11].target)
+    var illOpts = $ill.combobox('options');
+    var illValues = $ill.combobox('getValues');
+	$ill.combobox($.extend(true, {}, illOpts, {
+    	onChange: function(newValue, oldValue) {
+        	if (oldValue.length == 0 && newValue.length > 0 &&
+        			illValues.join(illOpts.separator) != newValue.join(illOpts.separator)) {
+       			row.score = parseInt(row.score) + scores['ill'];
+       		}
+        	if (oldValue.length > 0 && newValue.length == 0) {
+       			row.score = parseInt(row.score) - scores['ill'];
+       		}
+        	$(this).parents('td[field]').siblings('td[field=score]').children('div').text(row.score);
+        	//重新赋值, 重新初始化illValues, 以防止多次点击页面默认值时出现score<0的情况
+        	illValues = $ill.combobox('getValues');
+        }
+    }));
+	$ill.combobox('setValues', illValues);
+	$ill.combobox('setText', illValues.join(illOpts.separator));
+    // cure
+    var $cure = $(editors[12].target)
+    var cureOpts = $cure.combobox('options');
+    var cureValues = $cure.combobox('getValues');
+	$cure.combobox($.extend(true, {}, cureOpts, {
+    	onChange: function(newValue, oldValue) {
+        	if (oldValue.length == 0 && newValue.length > 0 &&
+        			cureValues.join(cureOpts.separator) != newValue.join(cureOpts.separator)) {
+       			row.score = parseInt(row.score) + scores['cure'];
+       		}
+        	if (oldValue.length > 0 && newValue.length == 0) {
+       			row.score = parseInt(row.score) - scores['cure'];
+       		}
+        	$(this).parents('td[field]').siblings('td[field=score]').children('div').text(row.score);
+        	//重新赋值, 重新初始化cureValues, 以防止多次点击页面默认值时出现score<0的情况
+        	cureValues = $cure.combobox('getValues');
+        }
+    }));
+	$cure.combobox('setValues', cureValues);
+	$cure.combobox('setText', cureValues.join(cureOpts.separator));
+	// others
+    for (var i = 1; i < 13; i++) {
+    	if (i == 8) {
+    		continue;
+    	}
+    	$(editors[i].target).change(function() {
+    		var $td = $(this).parents('td[field]');
+    		var field = $td.attr('field');
+    		if ($(this).is(':checked')) {
+	    		$.each(groupSiblings(field), function(idx, value) {
+	    			var editor = $('#dg').datagrid('getEditor', {index:index, field: value});
+	    			var $editor = $(editor.target);
+	    			if ($editor.is(':checked')) {
+	    				$editor.attr('checked', false);
+	    				row.score = parseInt(row.score) - scores[value];
+	    			}
+	    		});
+    			row.score = parseInt(row.score) + scores[field];
+    		} else {
+    			row.score = parseInt(row.score) - scores[field];
+    		}
+    		$td.siblings('td[field=score]').children('div').text(row.score);
+    	});
+    }
+	]]#
+}
+// initialize page when loaded
+$(function() {
+	$('#save').click(accept);
+	$('#approve').click(function() {});
+	$('#print').val('预  览').click(function() {
+		var params = [
+  			'location=no',
+  			'height='+screen.availHeight,
+  			'width='+screen.availWidth,
+  			'scrollbars=yes',
+  			'resizable=yes',
+  			'fullscreen=yes' // only works in IE, but here for completeness
+  		].join(',');
+  		var new_window = window.open('#url("/doc/fall/view?cureNo=$!{patient.cureNo}")', '', params);
+  		new_window.resizeTo(screen.availWidth, screen.availHeight);
+	});
+	$('#diagnosisLabel').click(function() {
+		$('#win').window({
+			title: '诊断修正列表',
+		    width: 700,
+		    height: 500,
+		    minimizable: false,
+			href: '#url("/doc/diagnosis")?cureNo=$!{patient.cureNo}',
+			onClose: function() {
+				var rows = $('#dDg').datagrid('getRows');
+				if (rows && rows.length > 0) {
+					$('#pDiagnosis').text(rows[rows.length - 1]['diagnosis']);
+				} else {
+					$('#pDiagnosis').text('$!{patient.diagnose}');
+				}
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

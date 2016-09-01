@@ -1,0 +1,35 @@
+.color-picker-wrapper {
+  $width: 50px;
+  $height: 26px;
+  position: relative;
+  display: inline-block;
+  .color-picker-item {
+    width: $width;
+    height: $height;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+  }
+  .color-picker-selector {
+    $margin: 5px;
+    $selector-width: ($width + $margin * 2) * 4 + 2;
+    position: absolute;
+    display: none;
+    height: ($height + $margin * 2) * 2;
+    width: $selector-width;
+    top: $height + 5;
+    left: ($width -  $selector-width) / 2;
+    border: 1px solid #ddd;
+    background-color: white;
+    z-index: 999;
+    .color-picker-box {
+      float: left;
+      width: 25%;
+      padding: $margin;
+      .color-picker-item {
+        width: auto;
+      }
+    }
+    
+  }
+}

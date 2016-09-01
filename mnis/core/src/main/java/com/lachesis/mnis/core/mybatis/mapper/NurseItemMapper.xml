@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.NurseItemMapper">
+	<resultMap type="NurseItem" id="nurseItemMap">
+		<id property="itemCode" column="nurse_item_code"/>
+		<result property="itemName" column="nurse_item_name"/>
+	</resultMap>
+	<resultMap type="NurseItemCategory" id="nurseItemClassMap">
+		<id property="code" column="nurse_item_type_code"/>
+		<result property="name" column="nurse_item_type_name"/>
+		<collection property="nurseItemList" resultMap="nurseItemMap"/>
+	</resultMap>
+	<resultMap type="NurseItemRecordEntity" id="nurseItemRecordMap">
+		<id property="masterRecordId" column="nurse_item_mas_id"/>
+		<result property="recordDate" column="rec_datetime"/>
+		<result property="recordNurseCode" column="rec_nurse_code"/>
+		<result property="recordNurseName" column="rec_nurse_name"/>
+		<result property="patientId" column="pat_id"/>
+		<collection property="nurseItemList" resultMap="nurseItemMap"></collection>
+	</resultMap>
+	
+	<select id="selectNurseItemCategory" parameterType="String" resultMap="nurseItemClassMap">
+		SELECT d.nurse_item_type_code,
+				d.nurse_item_type_name,
+				d.nurse_item_code,
+				d.nurse_item_name
+		FROM dict_nurse_item d
+		WHERE d.is_valid=1
+	</select>
+	
+	<select id="selectNurseItemRecords" parameterType="String" resultMap="nurseItemRecordMap">
+		  SELECT 	m.nurse_item_mas_id,
+		  			m.rec_datetime,
+		  			m.rec_nurse_code,
+		  			e.empl_name as rec_nurse_name,
+		  			m.pat_id,
+		  			d.nurse_item_code,
+		  			dict.nurse_item_name as nurse_item_name
+		  FROM rec_nurse_item_mas m
+		  INNER JOIN rec_nurse_item_detail d
+		  ON m.nurse_item_mas_id = d.nurse_item_mas_id
+		  INNER JOIN dict_nurse_item dict
+		  ON d.nurse_item_code = dict.nurse_item_code
+		  LEFT JOIN sys_employee AS e
+		  ON m.rec_nurse_code = e.empl_code	
+		  WHERE
+		  	m.is_valid = 1
+		  AND
+		  	m.pat_id = #{param1}
+		  <if test="param2 != null">
+		  	AND m.rec_datetime <![CDATA[ >= #{param2} ]]>
+		  </if> 
+		  <if test="param3 != null">
+		  	AND m.rec_datetime <![CDATA[ <= #{param3} ]]>
+		  </if> 	
+	</select>
+	
+	<insert id="insertNurseItemRecord" parameterType="NurseItemRecordEntity">
+		<selectKey resultType="int" keyProperty="masterRecordId" order="BEFORE">
+			INSERT INTO rec_nurse_item_mas
+				(rec_datetime,rec_nurse_code,pat_id)
+				values(
+					#{recordDate},#{recordNurseCode},#{patientId})
+			
+			SELECT SCOPE_IDENTITY() AS ID
+		</selectKey>
+		INSERT INTO rec_nurse_item_detail
+			(nurse_item_mas_id, nurse_item_code)
+			(
+			<foreach collection="nurseItemList" item="item" index="index" separator="union all">
+				select #{masterRecordId},#{item.itemCode}
+			</foreach>
+			)
+	</insert>
+</mapper>

@@ -1,0 +1,531 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.PatientMapper">
+
+	<resultMap id="bedMap" type="com.lachesis.mnis.core.patient.entity.Bed">
+		<id property="id" column="bed_id" />
+		<result property="code" column="bed_code" />
+		<result property="wardCode" column="ward_code" />
+		<result property="bedType" column="bed_type" />
+		<result property="bedTypeName" column="bed_type_name" />
+		<result property="bedPrice" column="bed_price" />
+		<result property="tags" column="tags" />
+		<result property="flag" column="flag" />
+	</resultMap>
+	<resultMap id="diagnosisMap" type="com.lachesis.mnis.core.patient.entity.PatientDiagnosis">
+		<id property="id" column="diagnosis_id" />
+		<result property="patId" column="pat_id" />
+		<result property="info" column="diagnosis_info" />
+		<result property="date" column="diagnosis_date" />
+		<result property="isInDiag" column="is_in_diag" />
+		<result property="recordUser" column="record_user" />
+		<result property="recordDate" column="record_date" />
+		<result property="flag" column="flag" />
+	</resultMap>
+	<resultMap id="allergyMap" type="com.lachesis.mnis.core.patient.entity.PatientAllergy">
+		<id property="allergyId" column="allergy_id" />
+		<result property="patientId" column="pat_id" />
+		<result property="drugCode" column="drug_code" />
+		<result property="drugName" column="drug_name" />
+		<result property="allergyDate" column="allergy_date" />
+    </resultMap>
+	<resultMap id="transferMap" type="com.lachesis.mnis.core.patient.entity.PatientTransfer">
+		<id property="id" column="transfer_id" />
+		<result property="patId" column="pat_id" />
+		<result property="executeDate" column="execute_date" />
+		<result property="executor" column="executor" />
+		<result property="wardCode" column="ward_code" />
+		<result property="bedCode" column="bed_code" />
+		<result property="newWardCode" column="new_ward_code" />
+		<result property="newBedCode" column="new_bed_code" />
+		<result property="flag" column="flag" />
+	</resultMap>
+	<resultMap id="patientPrintMap" type="PatientPrint">
+		<id property="printId" column="print_id" />
+		<result property="printDataId" column="print_data_id" />
+		<result property="printType" column="print_type" />
+		<result property="isPrintBarcode" column="is_print_barcode" />
+		<result property="isPrintBed" column="is_print_bed" />
+		<result property="isPrintLabel" column="is_print_label" />
+		<result property="printDate" column="print_date" />
+	</resultMap>
+	<resultMap id="patientMap" type="com.lachesis.mnis.core.patient.entity.Patient">
+		<id property="id" column="id" />
+		<result property="patId" column="pat_id" />
+		<result property="name" column="pat_name" />
+		<result property="inHospNo" column="in_hosp_no" />
+		<result property="inpNo" column="inp_no" />
+		<result property="bedCode" column="bed_code" />
+		<result property="deptCode" column="dept_code" />
+		<result property="deptName" column="dept_name" />
+		<result property="barCode" column="bar_code" />
+		<result property="age" column="age"/> 
+		<result property="ageDuration" column="birth_date" typeHandler="com.lachesis.mnis.core.mybatis.handler.PatientAgeDurationHandler"/>
+		<result property="gender" column="gender" />
+		<result property="personId" column="person_id" />
+		<result property="birthday" column="birth_date" />
+		<result property="contactPerson" column="contact_person" />
+		<result property="contactPhone" column="contact_phone" />
+		<result property="contactAddress" column="contact_address" />
+		<result property="isBaby" column="is_baby" />
+		<result property="dangerLevel" column="danger_level" />
+		<result property="tendLevel" column="nurse_level" />
+		<result property="chargeType" column="charge_type" />
+		<result property="chargeTypeName" column="charge_type_name" />
+		<result property="doctorCode" column="doctor_code" />
+		<result property="doctorName" column="doctor_name" />
+		<result property="dutyNurseCode" column="duty_nurse_code" />
+		<result property="dutyNurseName" column="duty_nurse_name" />
+		<result property="inDate" column="in_date" />
+		<result property="inDiag" column="in_diag" />
+		<result property="outDate" column="out_date" />
+		<result property="outDiag" column="out_diag" />
+		<result property="status" column="status" />
+		<result property="diet" column="diet_name" />
+		<result property="prepayCost" column="prepay_cost" />
+		<result property="ownCost" column="own_cost" />
+		<result property="balance" column="balance" />
+		<result property="remark" column="remark" />
+		<result property="adverseReactionDrugs" column="adverse_reaction_drugs" />
+		
+		<result property="isSeparate" column="is_separate" />
+		<result property="isOperation" column="is_operation" />
+		<result property="isHot" column="is_hot" />
+		<result property="isFall" column="is_fall" />
+		<result property="isPressure" column="is_pressure" />
+		
+		<result property="isPrintBarcode" column="is_print_barcode" />
+		<result property="isPrintBed" column="is_print_bed" />
+		<result property="appeal" column="appeal"/>
+		<collection property="patientAllergies" resultMap="allergyMap"/>
+		<!-- <collection property="transfers" resultMap="transferMap"/> 
+			<collection property="diagnosis" resultMap="diagnosisMap" /> -->
+	</resultMap>
+	
+	<resultMap id="patientBaseInfoMap" type="com.lachesis.mnis.core.patient.entity.PatientBaseInfo">
+		<id property="patId" column="pat_id" />
+		<result property="name" column="pat_name" />
+		<result property="inHospNo" column="in_hosp_no" />
+		<result property="inpNo" column="inp_no" />
+		<result property="bedCode" column="bed_code" />
+		<result property="status" column="status"/>
+ 		<result property="deptCode" column="dept_code" />
+ 		<result property="sex" column="sex" />
+ 		<result property="age" column="age" />
+ 		<result property="patBarcode" column="barcode" />
+ 		<result property="inDate" column="in_date" />
+ 		<result property="outDate" column="out_date" />
+	</resultMap>
+
+	<resultMap id="patientStatisticMap" type="com.lachesis.mnis.core.patient.entity.WorkUnitStat" >
+		<result property="inpatientCount" column="inpatient_count"></result>
+		<result property="emptyBedCount" column="empty_count"></result>
+		<result property="tendLevelSuperCount" column="tend_supe_count"></result>
+		<result property="tendLevelOneCount" column="tend_one_count"></result>
+		<result property="tendLevelTwoCount" column="tend_two_count"></result>
+		<result property="tendLevelThreeCount" column="tend_three_count"></result>
+		<result property="newPatientCount" column="new_count"></result>
+		<result property="dischargeCount" column="discharge_count"></result>
+		<result property="highTempCount" column="high_temp_count"></result>
+		<result property="criticalPatientCount" column="critical_count"></result>
+		<result property="seriousPatientCount" column="serious_count"></result>
+		<result property="deadPatientCount" column="dead_count"></result>
+	</resultMap>
+	
+	<resultMap type="com.lachesis.mnis.core.patient.entity.PatientDiagnosis" id="patientDiagnosisMap">
+		<id property="id" column="id" />
+		<result property="patId" column="pat_id" />
+		<result property="info" column="diagnosis_info" />
+		<result property="date" column="diagnosis_date" />
+		<result property="dataType" column="datatype" />
+		<result property="recordUser" column="record_user"/>
+		<result property="recordDate" column="record_date" />
+		<result property="flag" column="flag" />
+	</resultMap>
+	<sql id="patientProperties">
+		p.id,
+		p.pat_id,
+		p.name as pat_name,
+		p.in_hosp_no,
+		p.inp_no,
+		case when p.bed_code is null then ''
+		else p.bed_code end bed_code,
+		p.ward_code as dept_code,
+		w.name as dept_name,
+		p.barcode as bar_code, 
+		<!-- age, -->
+		p.gender,
+		p.person_id,
+		p.birth_date,
+		p.contact_person,
+		p.contact_phone,
+		p.contact_address,
+		p.is_baby,
+		p.danger_level,
+		p.nurse_level,
+	<!-- 	p.charge_type_name as charge_type, -->
+		d.name as charge_type,
+		p.charge_type_name,
+		p.doctor_code,
+		p.doctor_name,
+		p.duty_nurse_code,
+		p.duty_nurse_name,
+		p.in_date,
+		p.in_diag,
+		p.out_date,
+		p.out_diag,
+		p.status,
+		p.diet_name,
+		p.prepay_cost,
+		p.own_cost,
+		p.balance,
+		p.remark,
+		p.allergen,
+		p.adverse_reaction_drugs,
+		p.appeal,
+		dbo.fun_get_Age(p.birth_date,p.in_date) age,
+		
+		pi.is_print_barcode,
+		pi.is_print_bed
+		
+	</sql>
+	
+	<sql id="patInfoStatSql">
+		pis.IF_OPERATION as is_separate,
+		pis.IF_SEPARATE as is_operation,
+		pis.IF_FEVER as is_hot,
+		pis.FALL_SCORE as is_fall,
+		pis.PRESSURE_SORE as is_pressure
+	</sql>
+	<!-- 病人在院的查询条件 -->
+	<sql id="patientCondition">
+		p.STATUS=1 and p.bed_code is not null
+	</sql>
+	<!-- 病人查询需要关联的表 -->
+	<sql id="patientWhere">
+		pat_cure_info p
+		left join com_ward w on w.code = p.ward_code
+		left join com_dic d on d.his_code = p.CHARGE_TYPE AND
+			d.dic_type='CHARGE'
+		left join pat_print_info pi on p.pat_id = pi.print_data_id and pi.print_type='patient'
+		left join pat_allergy pa on p.pat_id = pa.pat_id and pa.IS_VALID = '1'
+		left join pat_info_stat pis on p.pat_id = pis.pat_id
+	</sql>
+	
+	<sql id="allergySql">
+		pa.allergy_id,
+    	pa.allergy_date,
+    	pa.drug_code,
+    	pa.drug_name
+	</sql>
+	
+	<select id="getPatientBaseInfoByDeptCode" resultMap="patientBaseInfoMap">
+		select
+		p.pat_id,
+		p.name as pat_name,
+		p.in_hosp_no,
+		p.inp_no,
+		case when p.bed_code is null then ''
+		else p.bed_code end bed_code,
+		p.ward_code as dept_code,
+		p.status,
+		p.barcode,
+		p.gender sex
+		from pat_cure_info p
+		where 	
+		p.STATUS=1 and p.bed_code is not null
+		<if test="param1 != null">
+			and p.ward_code=#{param1}
+		</if>
+		<if test="param2 != null">
+			and p.pat_id=#{param2}
+		</if>
+		order  by len(p.BED_CODE),p.BED_CODE
+	</select>
+	
+	<!-- 获取患者信息,在当前科室呆过的患者的信息 -->
+	<select id="getPatientBaseInfoByPatInfo" resultMap="patientBaseInfoMap">
+		select distinct
+		p.pat_id,
+		p.name as pat_name,
+		p.in_hosp_no,
+		case when p.bed_code is null then ''
+		else p.bed_code end bed_code,
+		p.ward_code as dept_code,
+		p.status,
+		p.in_date,
+		p.out_date
+		from pat_cure_info p
+		LEFT JOIN PAT_TRANSFER t on p.PAT_ID= t.PAT_ID
+		where 
+		(p.ward_code = #{param4} or t.WARD_CODE=#{param4} or t.NEW_WARD_CODE=#{param4})
+		<if test="param1 != null">
+			and p.pat_id=#{param1}
+		</if>
+		<if test="param2 != null">
+			and p.name=#{param2}
+		</if>
+		<if test="param3 != null">
+			and p.in_hosp_no=#{param3}
+		</if>
+		order  by p.in_date desc
+	</select>
+
+	<select id="getPatientByPatId" parameterType="String" resultMap="patientMap">
+		select
+		<include refid="patientProperties" />,
+		<include refid="allergySql" />,
+		<include refid="patInfoStatSql"/>
+		from
+		<include refid="patientWhere" />
+		where
+		<!-- <include refid="patientCondition" />
+		and --> p.pat_id = #{patId}
+	</select>
+
+	<select id="getPatientByDeptCodeAndBedCode" parameterType="String" resultMap="patientMap">
+		select
+		<include refid="patientProperties" />
+		,
+		<include refid="allergySql" />
+		,
+		<include refid="patInfoStatSql"/>
+		from
+		<include refid="patientWhere" />
+		where
+		<include refid="patientCondition" />
+		and p.ward_code = #{param1} and p.bed_code= #{param2} 
+	</select>
+
+	<!-- 多个用户关注同一患者，取全部去重复 -->
+	<select id="getWardPatientList" parameterType="String" resultMap="patientMap">
+			select
+			<include refid="patientProperties" />
+			,
+			<include refid="allergySql" />
+			,
+			<include refid="patInfoStatSql"/> from
+			<include refid="patientWhere" />
+			<choose>
+				<when test="param1 == 0">
+					left join COM_USER_BED ub on ub.BED_CODE = p.BED_CODE and ub.WARD_CODE = p.WARD_CODE  
+					left join COM_USER u on ub.USER_CODE = u.CODE 
+				</when>
+			</choose>
+			left join dbo.PAT_INFO_STAT ps on p.PAT_ID = ps.PAT_ID 
+			where <include refid="patientCondition" />
+			<choose>
+				<when test="param1 == 0">
+					and u.CODE = #{param2}
+				</when>
+				<otherwise>
+					and  p.ward_code = #{param2}
+				</otherwise>
+			</choose>
+			order  by len(p.BED_CODE),p.BED_CODE
+	</select>
+	
+	<!-- 查询出院转科的患者 -->
+	<select id="getTransferPatientList" resultMap="patientMap">
+		select 	distinct
+			p.id,
+				p.pat_id,
+				p.name as pat_name,
+				p.in_hosp_no,
+				p.inp_no,
+				p.bed_code,
+				p.ward_code as dept_code,
+				p.barcode as bar_code,
+				p.out_date
+		from pat_cure_info p
+		left join PAT_TRANSFER t on p.PAT_ID=t.PAT_ID
+		inner join DOC_REPORT_DATA d on d.INPATIENT_NO = p.PAT_ID
+		where 
+		(p.ward_code = #{param2} and p.STATUS=0) or t.WARD_CODE=#{param2} or t.NEW_WARD_CODE=#{param2}
+		
+	</select>
+
+	<select id="getWardBedList" parameterType="String" resultMap="bedMap">
+	    select ID as bed_id, CODE as bed_code, WARD_CODE,FLAG from COM_BED where WARD_CODE = #{wardCode}
+	</select>
+
+	<update id="updateInPatientInfo" parameterType="com.lachesis.mnis.core.patient.entity.Patient">
+		UPDATE pat_cure_info
+		SET
+		name = #{name},
+		birthday = #{birthday},
+		diet_name = #{diet},
+		nurse_level = #{tendLevel},
+		ward_code = #{deptCode},
+		doctor_code = #{doctorCode},
+		doctor_name = #{doctorName}
+		WHERE
+		pat_id = #{patId}
+	</update>
+
+	<select id="getAttention" parameterType="string" resultType="string">
+		SELECT P.PAT_ID
+		FROM COM_USER_BED B
+		INNER JOIN PAT_CURE_INFO P ON B.BED_CODE = P.BED_CODE AND B.WARD_CODE = P.WARD_CODE AND <include refid="patientCondition" />
+		WHERE B.USER_CODE = #{param1} AND B.WARD_CODE=#{param2}
+		UNION
+		SELECT P.PAT_ID 
+		FROM PAT_CURE_INFO P 
+		WHERE <include refid="patientCondition" /> AND P.DUTY_NURSE_CODE = #{param1}
+	</select>
+	
+	<select id="isExistAttention" parameterType="string" resultType="boolean">
+		SELECT COUNT(ID)
+		FROM COM_USER_BED
+		WHERE USER_CODE =#{param1} AND WARD_CODE =#{param2} AND BED_CODE=#{param3}
+	</select>
+	
+	<insert id="addAttention" parameterType="string">
+		INSERT INTO COM_USER_BED(USER_CODE,WARD_CODE,BED_CODE)
+		VALUES (#{param1},#{param2},#{param3})
+	</insert>
+	
+	<delete id="deleteAttention" parameterType="string">
+		DELETE FROM COM_USER_BED
+		WHERE USER_CODE =#{param1} AND WARD_CODE = #{param2} AND BED_CODE=#{param3}
+	</delete>
+	
+	<select id="getDiagRecord" parameterType="String" resultMap="diagnosisMap">
+    	SELECT ID AS diagnosis_id, PAT_ID, DIAGNOSIS_INFO, DIAGNOSIS_DATE, IS_IN_DIAG, RECORD_USER, RECORD_DATE, FLAG
+  		FROM PAT_DIAGNOSIS
+		WHERE PAT_ID = #{patientId} AND FLAG = 1
+		ORDER BY DIAGNOSIS_DATE
+    </select>    
+    
+    <insert id="saveDiagRecordList" parameterType="List">
+    	INSERT INTO PAT_DIAGNOSIS(PAT_ID, DIAGNOSIS_INFO, DIAGNOSIS_DATE, IS_IN_DIAG, RECORD_USER, RECORD_DATE, FLAG)
+    	(
+    	<foreach collection="list" item="item" separator="union all">
+    	 <![CDATA[
+		 SELECT #{item.patId}, #{item.info}, #{item.date}, #{item.isInDiag}, #{item.recordUser}, #{item.recordDate}, #{item.flag}
+    	 ]]>
+	   </foreach>
+	   )
+    </insert>  
+	
+	<delete id="deleteDiagByPatientId" parameterType="String">
+    	DELETE FROM PAT_DIAGNOSIS WHERE PAT_ID = #{patientId}
+    </delete>
+    
+    <!-- 过敏表信息 -->
+    <insert id="saveAllergyRecordList" parameterType="java.util.List">
+     INSERT INTO pat_allergy(drug_code, drug_name, pat_id,allergy_date,is_valid)
+      (
+      <foreach collection="list" item="item" index="index"
+				separator="union all">
+		 SELECT #{item.drugCode}, #{item.drugName}, #{item.patientId},#{item.allergyDate},'1'
+	   </foreach>
+	   )
+	</insert>
+	  
+    <select id="getPatAllergenByPatId" parameterType="String" resultMap="allergyMap">
+    	SELECT 
+    		pa.pat_id,
+			<include refid="allergySql" />
+    	FROM PAT_ALLERGY pa
+    	WHERE pa.pat_id = #{param1} and is_valid='1'
+    	ORDER BY pa.allergy_date
+    </select>
+    
+    <select id="getAllergyByPatIdAndDrugName" parameterType="String" resultMap="allergyMap">
+    	SELECT 
+    		pa.pat_id,
+			<include refid="allergySql" />
+    	FROM PAT_ALLERGY pa
+    	WHERE pa.pat_id = #{param1}
+    	and pa.drug_name = #{param2} and is_valid='1'
+    	ORDER BY pa.allergy_date
+    </select>
+    
+    <delete id="deleteAllergyByPatientId" parameterType="String">
+    	DELETE FROM PAT_ALLERGY
+    	WHERE pat_id = #{patientId} and is_valid='1'
+    </delete>
+    
+    <!-- 瓶签，条码，床头卡打印 -->
+    <insert id="insertPatientPrint" parameterType="PatientPrint">
+    	INSERT INTO PAT_PRINT_INFO(print_data_id,print_type,is_print_barcode,is_print_bed,is_print_label,print_date)
+    	values(#{printDataId},#{printType},#{isPrintBarcode},#{isPrintBed},#{isPrintLabel},#{printDate})
+    </insert>
+    
+     <select id="seletePatientPrintByPrintDataId" parameterType="String" resultMap="patientPrintMap">
+    	select top 1 * from pat_print_info
+    	WHERE
+    	  print_data_id=#{param1};
+    </select>
+    
+    <update id="updatePatientPrintByPrintDataId" parameterType="PatientPrint">
+    	UPDATE PAT_PRINT_INFO SET
+    		is_print_barcode = #{isPrintBarcode},
+    		is_print_bed = #{isPrintBed}
+    	WHERE
+    		print_data_id = #{printDataId}
+    </update>
+    
+    <select id="getPatientCount" parameterType="String" resultType="int">
+    	select count(pat_id) from pat_cure_info
+    	where
+    	status = 1 and
+    		ward_code = #{param1}
+    </select>
+    
+    <select id="getPatientStatisticByDeptCode"  resultMap="patientStatisticMap" parameterType="String">
+    	SELECT * FROM PAT_STATISTIC p WHERE p.ward_code=#{param1}
+    </select>
+    
+    <!-- 取最新入院诊断、主诉 01：入院诊断  02：主诉 -->
+    <select id="getDiagnosis" resultMap="patientDiagnosisMap"  parameterType="String">
+    	select PAT_ID, DIAGNOSIS_INFO, DIAGNOSIS_DATE, DATATYPE, RECORD_USER, RECORD_DATE 
+		from dbo.PAT_DIAGNOSIS where PAT_ID=#{param1} 
+		and DIAGNOSIS_DATE=
+		(select MAX(DIAGNOSIS_DATE) from dbo.PAT_DIAGNOSIS where PAT_ID=#{param1} and DATATYPE='01' )
+		and DATATYPE='01'
+		union all
+		select PAT_ID, DIAGNOSIS_INFO, DIAGNOSIS_DATE, DATATYPE,RECORD_USER, RECORD_DATE 
+		from dbo.PAT_DIAGNOSIS where PAT_ID=#{param1} 
+		and DIAGNOSIS_DATE=
+		(select MAX(DIAGNOSIS_DATE) from dbo.PAT_DIAGNOSIS where PAT_ID=#{param1} and DATATYPE='02' )
+		and DATATYPE='02'
+    </select>
+    
+   <!--  取科室诊断、主诉数据 -->
+    <select id="getWardDiagnosis"  resultMap="patientDiagnosisMap"  parameterType="String">
+    	select D.PAT_ID,D.DIAGNOSIS_INFO,d.DIAGNOSIS_DATE,d.DATATYPE,d.RECORD_USER,d.RECORD_DATE  
+		from dbo.PAT_DIAGNOSIS d 
+		inner join 
+		(select PAT_ID,ID from (select p.PAT_ID,max(d.DIAGNOSIS_DATE) oper_time,MAX(D.ID) ID  from dbo.PAT_CURE_INFO p 
+		inner join dbo.PAT_DIAGNOSIS d on p.PAT_ID = d.PAT_ID and p.STATUS=1
+		where p.WARD_CODE=#{param1} and d.DATATYPE='01'
+		group by p.PAT_ID) a  group by PAT_ID,ID )b
+		on d.ID=b.ID AND D.DATATYPE='01'
+		union all
+		select D.PAT_ID,D.DIAGNOSIS_INFO,d.DIAGNOSIS_DATE,d.DATATYPE,d.RECORD_USER,d.RECORD_DATE  
+		from dbo.PAT_DIAGNOSIS d 
+		inner join 
+		(select PAT_ID,ID from (select p.PAT_ID,max(d.DIAGNOSIS_DATE) oper_time,MAX(D.ID) ID  from dbo.PAT_CURE_INFO p 
+		inner join dbo.PAT_DIAGNOSIS d on p.PAT_ID = d.PAT_ID and p.STATUS=1
+		where p.WARD_CODE=#{param1} and d.DATATYPE='02'
+		group by p.PAT_ID) a  group by PAT_ID,ID )b
+		on d.ID=b.ID AND D.DATATYPE='02'
+    </select>
+    
+    <select id="getPatIdsByInHospNo" parameterType="String" resultType="String">
+    	select pat_id from pat_cure_info 
+    	<where>
+    		<if test="param1 != null">
+    			ward_code = #{param1}
+    		</if>
+    		<if test="param2 != null">
+    			and in_hosp_no = #{param2}
+    		</if>
+    	</where>
+    	order by in_date desc
+    </select>
+</mapper>

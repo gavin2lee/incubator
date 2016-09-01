@@ -1,0 +1,48 @@
+<div class="panel panel-layout panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-users"></i>
+    <span>员工列表</span>
+  </div>
+  <div class="panel-body no-padding" loading-wrapper loading-type="content" loading-options="vm.load">
+    <table st-table="vm.displayList" st-safe-src="vm.userDataList"  class="table table-hover table-condensed table-bordered">
+      <thead>
+        <tr class="header-export">
+          <th st-sort="hisCode">编号</th>
+          <th>姓名</th>
+          <th>性别</th>
+          <th>职务</th>
+          <th>职称</th>
+          <th>临床层级</th>
+          <th>学历</th>
+          <th>电话</th>
+          <th print-remove>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="row in vm.displayList" class="row-{{$index}}">
+          <td>{{row.hisCode}}</td>
+          <td>{{row.userName}}</td>
+          <td>{{row.gender && (row.gender == 1 ? '男' : '女')}}</td>
+          <td>{{row.duty && (dicInfo.position | filter:row.duty)[0].dicName}}</td>
+          <td>{{row.technicalPost && (dicInfo.technicalPost | filter:row.technicalPost)[0].dicName }}</td>
+          <td>{{ row.clinical && (dicInfo.clinical | filter:row.clinical)[0].dicName}}</td>
+          <td>{{row.education}}</td>
+          <td>{{row.phone}}</td>
+          <td class="print-remove" data-title="'操作'">
+            <i class="fa fa-female" ng-if="row.isDeptNurseHeader == '1'" uib-tooltip="护士长"></i>
+            <button type="button" class="btn btn-default btn-xs" ng-click="vm.openConfirm(row)" ng-if="row.isDeptNurseHeader != '1'">设为科护长</button>
+          </td>
+        </tr>
+        <tr grid-expand tpl-src="app/nursingWorkers/files/files.detail.html" ng-show="vm.expanedIndex == $index && vm.expanded"></tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="9">
+            <div st-pagination="" st-items-by-page="15" st-displayed-pages="5"></div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    <none-data-info list="vm.userDataList"></none-data-info>
+  </div>
+</div>

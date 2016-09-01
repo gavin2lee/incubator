@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-table th, .doc-table td {
+	padding: 0px;
+	word-break: break-all;
+}
+.doc-table td {
+	width: 20px;
+	height: 35px;
+}
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+	}
+}
+</style>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper">
+	<div class="paper-content">
+		#fall()
+		<div class="doc-content">
+			<table class="doc-table">
+				<thead>
+					<tr>
+			            <th rowspan="3" style="width: 75px;">日期时间</th>
+						<th colspan="2">年龄</th>
+						<th rowspan="2">最近一年有跌倒(坠床)史</th>
+						<th colspan="2">活动能力</th>
+						<th rowspan="2">主诉眩晕、头晕、乏力、虚弱感、高估或忘记自己的限制</th>
+						<th rowspan="2">视觉障碍</th>
+						<th rowspan="2">使用下列药物：①镇静、镇痛药②麻醉、肌松弛药③利尿剂④缓泻剂⑤降压药⑥降糖药⑦抗抑郁药⑧抗惊厥药⑨扩血管药⑩抗心律失常药</th>
+						<th rowspan="2">排泄障碍(腹泻/便秘/尿频/失禁)</th>
+						<th rowspan="2">睡眠形态紊乱</th>
+						<th rowspan="2">有下列诊断：①中风②痴呆/精神错乱③颅脑外伤后④帕金森综合征⑤知觉障碍⑥体位性低血压⑦关节肌肉疾病⑧内环境紊乱⑨心力衰竭、心律失常</th>
+						<th rowspan="2">特殊治疗：①手术②治疗性管路/造瘘③透析④有创检查治疗⑤分娩⑥其它</th>
+			            <th rowspan="3">总<br>评<br>分</th>
+			            <th rowspan="3" style="width: 60px;">签名</th>
+					</tr>
+					<tr>
+						<th>65<br>-<br>75<br>岁</th>
+						<th>><br>75<br>岁</th>
+						<th>完全丧失活动能力，改变体位需他人协助</th>
+						<th>活动障碍、肢体残缺、偏瘫、步态不稳，需他人或辅助器协助</th>
+					</tr>
+					<tr>
+			            <th>1</th>
+			            <th>2</th>
+			            <th>1</th>
+			            <th>1</th>
+			            <th>2</th>
+			            <th>2</th>
+			            <th>1</th>
+			            <th>2</th>
+			            <th>1</th>
+			            <th>1</th>
+			            <th>1</th>
+			            <th>1</th>
+			        </tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		#fallComment2()
+	</div>
+	#pageFoot()
+</div>
+</div>
+<script type="text/javascript">
+function getRowDatas(row, isFirstRow, lastDate) {
+	return [
+		formatDate(row['date'], isFirstRow, lastDate),
+		row['age65To75'],
+		row['ageGt75'],
+		row['history'],
+		row['moveLoss'],
+		row['moveAssist'],
+		row['dizzy'],
+		row['sight'],
+		row['drug'],
+		row['excretion'],
+		row['sleep'],
+		row['ill'],
+		row['cure'],
+		row['score'],
+		row['sign']
+	];
+}
+$(function() {
+	fillTable('#url("/doc/fall/view/datas")', '$!{patient.cureNo}', 15, getRowDatas);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.user.dao.DeptAllocateApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.user.domain.DeptAllocateApply" >
+    <result column="APPLY_TIME" property="applyTime" jdbcType="VARCHAR" />
+    <result column="APPLY_DEPT" property="applyDept" jdbcType="VARCHAR" />
+    <result column="NUM" property="num" jdbcType="INTEGER" />
+    <result column="THE_WORK_TIME" property="theWorkTime" jdbcType="VARCHAR" />
+    <result column="HIERARCHY" property="hierarchy" jdbcType="CHAR" />
+    <result column="SPECIAL_QUALIFICATIONS" property="specialQualifications" jdbcType="VARCHAR" />
+    <result column="COLLEGE_EXPERIENCE" property="collegeExperience" jdbcType="VARCHAR" />
+    <result column="OTHER" property="other" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- <select id="selectAll" resultMap="BaseResultMap" >
+    select APPLY_TIME, 
+    APPLY_DEPT_NAME APPLY_DEPT, 
+    NUM, 
+    IN_DEPT_TIME THE_WORK_TIME, 
+    HIERARCHY, 
+    SPECIAL_QUALIFICATIONS, 
+    COLLEGE_EXPERIENCE, 
+    REMARK OTHER
+    from YIHUI.numas.dbo.COM_DEPT_TRANSFERS_MANAGE
+    where STATUS = '1'
+    
+  </select> -->
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select *
+    from DEPT_ALLOCATE_APPLY
+    
+  </select>
+</mapper>

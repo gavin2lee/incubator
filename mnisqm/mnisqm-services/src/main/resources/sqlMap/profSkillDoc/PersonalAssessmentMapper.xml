@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.lachesis.mnisqm.module.profSkillDoc.dao.PersonalAssessmentMapper">
+	
+	<!-- 逻辑添加 -->
+	<insert id="insert"
+		parameterType="PersonalAssessment">
+		insert into PTF_PERSONAL_ASSESSMENT
+		(USER_CODE, USER_NAME, WARD_CODE,
+		ASSESSMENT_TIME, ASSESSMENT_ITEM, 
+		ASSESSMENT_RESULT, STATUS, AUDITOR, 
+		REMARK, CREATE_TIME, CREATE_PERSON, 
+		UPDATE_TIME, UPDATE_PERSON)
+		values
+		(#{userCode},#{userName},
+		#{wardCode},#{assessmentTime},
+		#{assessmentItem},#{assessmentResult},
+		'01',#{auditor},
+		#{remark},GETDATE(),
+		#{createPerson},GETDATE(),
+		#{updatePerson})
+	</insert>
+	<!-- 逻辑删除 -->
+	<update id="deleteByPrimaryKey"
+		parameterType="PersonalAssessment">
+		update
+		PTF_PERSONAL_ASSESSMENT
+		set
+		STATUS=#{status},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑修改 -->
+	<update id="update"
+		parameterType="PersonalAssessment">
+		update
+		PTF_PERSONAL_ASSESSMENT
+		set
+		USER_CODE=#{userCode},
+		USER_NAME=#{userName},
+		WARD_CODE=#{wardCode},
+		ASSESSMENT_TIME=#{assessmentTime},
+		ASSESSMENT_ITEM=#{assessmentItem},
+		ASSESSMENT_RESULT=#{assessmentResult},
+		AUDITOR=#{auditor},
+		REMARK=#{remark},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑查找 -->
+	<select id="select"
+		parameterType="PersonalAssessment"
+		resultType="PersonalAssessment">
+		select
+		SEQ_ID				as seqId, 
+		USER_CODE			as userCode, 
+		USER_NAME			as userName,
+		WARD_CODE			as wardCode, 
+		ASSESSMENT_TIME		as assessmentTime, 
+		ASSESSMENT_ITEM		as assessmentItem, 
+		ASSESSMENT_RESULT	as assessmentResult, 
+		STATUS				as status, 
+		AUDITOR				as auditor, 
+		REMARK				as remark
+		from
+		PTF_PERSONAL_ASSESSMENT
+		where STATUS='01'
+		<if test="userCode != null">
+			and USER_CODE=#{userCode}
+		</if>
+		<if test="userName != null">
+			and USER_NAME like #{userName}
+		</if>
+		<if test="wardCode != null">
+			and WARD_CODE = #{wardCode}
+		</if>
+		<if test="assessmentTime != null">
+			and ASSESSMENT_TIME = #{assessmentTime}
+		</if>
+		<if test="assessmentItem != null">
+			and ASSESSMENT_ITEM like #{assessmentItem}
+		</if>
+		<if test="assessmentResult != null">
+			and ASSESSMENT_RESULT = #{assessmentResult}
+		</if>
+		<if test="auditor != null">
+			and AUDITOR like #{auditor}
+		</if>
+	</select>
+</mapper>
+  

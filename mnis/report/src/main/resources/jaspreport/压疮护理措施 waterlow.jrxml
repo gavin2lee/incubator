@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hljld-v" language="groovy" pageWidth="990" pageHeight="700" orientation="Landscape" columnWidth="950" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2f42722-42e5-4f4e-a6a3-2031f2d22235">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="7"/>
+	<property name="ireport.y" value="366"/>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="DE08_10_054_00" class="java.lang.String"/>
+	<parameter name="PTNT_BED" class="java.lang.String"/>
+	<parameter name="PTNT_NAM" class="java.lang.String"/>
+	<parameter name="PTNT_HOSPITAL_NO" class="java.lang.String"/>
+	<parameter name="PTNT_SEX" class="java.lang.String"/>
+	<parameter name="PTNT_AGE" class="java.lang.String"/>
+	<parameter name="BE_HOSPITALIZED_TIME" class="java.lang.String"/>
+	<parameter name="PTNT_DIAGNOSE" class="java.lang.String"/>
+	<field name="DATE_LIST" class="java.lang.String"/>
+	<field name="WATERLOW_MEASURE_01" class="java.lang.String"/>
+	<field name="WATERLOW_MEASURE_02" class="java.lang.String"/>
+	<field name="WATERLOW_MEASURE_03" class="java.lang.String"/>
+	<field name="WATERLOW_MEASURE_04" class="java.lang.String"/>
+	<field name="WATERLOW_MEASURE_05" class="java.lang.String"/>
+	<field name="WATERLOW_MEASURE_06" class="java.lang.String"/>
+	<field name="WATERLOW_MEASURE_07" class="java.lang.String"/>
+	<field name="WATERLOW_MEASURE_08" class="java.lang.String"/>
+	<field name="WATERLOW_MEASURE_09" class="java.lang.String"/>
+	<field name="WATERLOW_MEASURE_10" class="java.lang.String"/>
+	<field name="WATERLOW_MEASURE_11" class="java.lang.String"/>
+	<field name="remark1" class="java.lang.String"/>
+	<field name="CREATE_PERSON" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="140" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="950" height="35" uuid="2319e4df-022a-46d1-b068-e4e17d7d4d0f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[深圳市第三人民医院]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="45" width="950" height="35" uuid="ae4aff8c-43bd-4dc6-9f57-93d3699e25ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[压疮预警护理措施(Waterlow)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="45" height="20" uuid="71dd4632-7576-4d7a-9ec8-01eb5e58cc42"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[病区：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="45" y="80" width="120" height="20" uuid="f05e287b-bba3-4669-8690-77c3255b2c78"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DE08_10_054_00}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="165" y="80" width="45" height="20" uuid="8e6d5a98-e13d-4604-bfbf-50058702c4cd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[床号：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="210" y="80" width="100" height="20" uuid="3952e3fb-41c6-4d26-b8d4-0a94c5eafb64"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_BED}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="80" width="45" height="20" uuid="825a940f-973c-48a5-83fe-7006fcb70849"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[姓名：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="355" y="80" width="100" height="20" uuid="7eaaf748-fc1f-487c-acfd-25759005cf4f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_NAM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="455" y="80" width="56" height="20" uuid="3790b48b-276d-46b0-811b-5f8b2b337a8a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[住院号：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="511" y="80" width="120" height="20" uuid="6342019d-4c85-4e74-bc5d-a96f063cb3f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_HOSPITAL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="631" y="80" width="45" height="20" uuid="6308c312-6c7a-4f34-8353-3dcaa7df56df"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[性别：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="746" y="80" width="45" height="20" uuid="f55358d0-3fb0-46b8-bae6-058131a7ea7b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[年龄：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="676" y="80" width="70" height="20" uuid="7d737b68-5472-4e80-b882-34f0a7f34aad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_SEX}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="791" y="80" width="75" height="20" uuid="b55f3508-62ab-4676-9053-ddbac07504b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_AGE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="70" height="20" uuid="9eb85c96-f62a-4ff7-872c-fc5794d97cac"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[入院时间：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="100" width="130" height="20" uuid="db91da07-f5af-4e1f-ae0e-7f18b775bcce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BE_HOSPITALIZED_TIME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="100" width="45" height="20" uuid="8fc593c4-1bc3-40da-913b-7d8cbe9b82f4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[诊断：]]></text>
+			</staticText>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="245" y="100" width="705" height="20" uuid="5a020d30-839a-444c-8a86-216b39b77b80"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12" isStrikeThrough="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_DIAGNOSE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="120" width="549" height="20" uuid="b9808ea9-9b5a-4179-963a-2e7b511b8a6f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[护理措施（>=10分时需要填写）]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="220" splitType="Stretch">
+			<staticText>
+				<reportElement style="table_TH" x="0" y="0" width="70" height="220" forecolor="#000000" backcolor="#FFFFFF" uuid="eedc3e9a-4fb2-4879-9de4-90054d1ac856"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[日期]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="880" y="0" width="70" height="220" forecolor="#000000" backcolor="#FFFFFF" uuid="87144061-fe4f-481f-883e-17064d30e97b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[签名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="0" width="20" height="220" uuid="304ff8c5-9a89-4c5e-9cd0-0fd2550ff93c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[3、
+床
+单
+位
+及
+病
+人
+整
+洁]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="451" y="0" width="87" height="220" uuid="8ae46d27-db3b-4f51-8930-a46ea5d30d9d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[8、营养管理：加强营养支持，请营养师会诊，给予合适的热量和蛋白质的摄入；必要时通过鼻饲静脉高营养以纠正低蛋白血症，监测饮食的摄入和排除]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="538" y="0" width="98" height="220" uuid="586cf87e-6982-40a5-a257-e430635a5cd5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[9、手术室：正确评估手术时间，注意术中患者的低氧血症、低体温、潮湿，摆放患者体位或术后搬运病人时防拖、拉、拽；高危部位使用泡沫/水胶体敷料减压，并使用软枕、软垫、减压垫保护]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="770" y="0" width="40" height="220" uuid="1507d3a0-bb53-4bf5-b4d2-952c47f10dc9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[11、健康教育：向患者及家属介绍压疮发生、发展及预防、治疗护理的一般知识。]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="0" width="66" height="220" uuid="ad8fe30c-2816-4e9b-8bc6-149816e6c84b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[7、预防器械相关性压疮：如固定带、管道、骨折后小夹板/石膏外固定/皮牵引等压迫所致压疮，注意保护肌肤及减压]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="0" width="37" height="220" uuid="e4a71968-d61d-46c1-b470-a6e3a7d486b7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[1、床头挂“放压疮”预警牌，定时翻身]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="810" y="0" width="70" height="220" uuid="c4cb755a-89a2-49c1-8b5d-b38302a0e7de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[补充措施]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="636" y="0" width="134" height="220" uuid="9099573e-617c-482e-80a4-2c0f008bb0ef"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[10、手术室：正确摆放手术体位，注意保护高危部位，如仰卧位，需保护头、肩部、骶尾部、肘部、足跟、双膝下应功能位、双上肢外展托手架；侧卧位，需保护头部、肘部、肩部、髋部、膝部、足部；仰卧位，应保护头部、双眼、面颊、肘部、腋窝神经、胸部、髂前上棘、膝部、会阴部、踝部等。]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="0" width="78" height="220" uuid="b503815e-77b5-45ca-b618-4181927f44c4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[2、使用减压装置：全身性减压装置；局部减压装置；使用减压敷料（泡沫辅料/水胶体敷料）保护骨突处/易受压部位；不建议使用气垫圈。]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="205" y="0" width="55" height="220" uuid="09245590-4358-4ed0-9e7b-21f713e59985"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[4、正确搬动病人，减少摩擦力和剪切力，侧卧位<=30度。半卧位<=30度，每次<=30分钟]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="0" width="85" height="220" uuid="9511b45b-54f0-4214-b5a7-670013e7e985"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[5、皮肤护理：每天定时检查皮肤情况，特别是骨突受压部位，避免按摩受压处皮肤；大小便失禁、呕吐、出汗者、应及时擦洗干净，必要时使用皮肤保护剂]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="0" width="40" height="220" uuid="9d48851b-7e61-4dbe-8459-b6dc405cc2d2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[6、足跟部压疮预防：使用枕头、水垫、足跟保护器具，减压敷料]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Prevent">
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="20" backcolor="#FFFFFF" uuid="73578e1e-ed02-4fa5-a258-4c88785f09ad"/>
+				<textFieldExpression><![CDATA[$F{DATE_LIST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="37" height="20" uuid="64a80499-7c28-430c-9e6d-a62cd212ef5c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{WATERLOW_MEASURE_01}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="0" width="78" height="20" uuid="8a86d3bd-be89-40a9-9d84-b2a47f153515"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{WATERLOW_MEASURE_02}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="0" width="20" height="20" uuid="fb02bf8f-6de3-4d28-999a-90957648c612"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{WATERLOW_MEASURE_03}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="205" y="0" width="55" height="20" uuid="635f0ba8-6286-4b5b-9953-9578109dab04"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{WATERLOW_MEASURE_04}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="0" width="85" height="20" uuid="28bab49c-c825-4a0d-b56c-0c999f310bf3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{WATERLOW_MEASURE_05}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="345" y="0" width="40" height="20" uuid="554e9787-9e3d-4a33-b314-10da05a2d633"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{WATERLOW_MEASURE_06}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="0" width="66" height="20" uuid="c5adac43-296f-4dfa-806b-64e10a0c94f8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{WATERLOW_MEASURE_07}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="451" y="0" width="87" height="20" uuid="650b991b-56b9-4948-9474-9909937359e8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{WATERLOW_MEASURE_08}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="538" y="0" width="98" height="20" uuid="c05bee82-a3d3-4841-b82d-f5b6c9505967"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{WATERLOW_MEASURE_09}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="636" y="0" width="134" height="20" uuid="c155d898-f67c-49f6-becc-42e25a154a2f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{WATERLOW_MEASURE_10}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="770" y="0" width="40" height="20" uuid="57572b67-3024-461c-aeca-1dc8f1083362"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{WATERLOW_MEASURE_11}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="810" y="0" width="70" height="20" uuid="c8c29cea-7b99-4604-b64b-37c0b34baa13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{remark1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="880" y="0" width="70" height="20" uuid="b925c8e1-941d-4578-8f28-31eab65a881f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CREATE_PERSON}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="77" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="726" height="15" uuid="d1f7f6d4-92ac-4d20-b5e9-68660a974872"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[填写说明：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="15" width="897" height="15" uuid="bf41811a-7f30-497b-b2eb-b0615aa3170d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[1、评估对象：危重病人，手术>4h，术后、卧床或活动受限，严重营养不良，水肿，大小便失禁，或预计可能发生压疮的病人]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="899" height="15" uuid="fb68635e-117f-49c7-8b8a-3d7520a89b93"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[2、评估时机：入院，病情变化，手术时，出院。当评分>=20分，非常危险，至少3天1次；15-19分，高度危险，3-5天1次；10-14分，低度危险，每周1次。]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="45" width="896" height="15" uuid="5eec6feb-b594-4f40-bdfe-b49a94ea896a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[3、患者转科/手术时此表应随病历走，确保评估连续性]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="896" height="15" uuid="f7d7dc97-3112-47d5-bcfe-6dbbf3da9bd7"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[4、难免压疮申报条件：评分>=20时，基本/附加调价各符合一条；评分>=20或难免压疮时，签署 《压疮相关风险知情书》]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,33 @@
+<td colspan="{{tdLen}}">
+
+    <table st-table="vm.userRoleList" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered">
+      <thead>
+        <tr class="header-export">
+          <th>角色编号</th>
+          <th>所属部门</th>
+          <th>角色名称</th>
+
+          <th>操作</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr class="row-{{$index}}" ng-repeat="row in vm.userRoleList">
+          <td>
+            {{row.roleCode}}
+          </td>
+          <td>
+            {{row.deptName}}
+          </td>
+          <td>
+            {{row.roleName}}
+          </td>
+          <td>
+            <button class="btn btn-danger btn-xs" uib-tooltip="删除角色" ng-click="vm.delUserRole(row.seqId)" ng-if="!row.isEditing"><span class="fa fa-trash"></span></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <none-data-info list="vm.userRoleList"></none-data-info>
+</td>

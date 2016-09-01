@@ -1,0 +1,221 @@
+
+.search-widget-1{
+	position: relative;
+	width: 165px;
+	height: 26px;
+	margin-right: 20px;
+	border:1px solid #abbbc1;
+	background-color: #fff;
+	border-radius: 20px;
+}
+.search-widget-1 input{ position:absolute;top:0;left:20px;width: 120px;height: 26px;line-height: 26px; border:none;}
+.search-widget-1 button{position: absolute;right: 6px;top:4px;width: 16px;height: 16px;border: none;  background: url(../img/sy/search.png) no-repeat; cursor: pointer;}
+
+.monitor-window{
+	width: 100%;
+	max-width: 1280px;
+	height: 100%;
+	padding:  0 15px;
+	margin: 0 auto;
+	/*border-left:1px solid #d2d2d2;
+	border-right:1px solid #d2d2d2;*/
+	overflow: hidden;
+	overflow-y: auto;
+}
+.monitor-wrap{
+	height: 100%;
+	/*margin-top: 15px;*/
+	/*background-color: #eef1f2;*/
+}
+.monitor-list{
+	padding-bottom: 10px;
+	overflow: hidden;
+}
+.monitor-item{
+	float: left;
+	width: 213px;
+	height: 150px;
+	margin-top: 10px;
+	cursor: not-allowed;
+}
+
+.monitor-item.clickAble{
+	cursor: pointer;
+}
+
+.monitor-item > div{
+	width: 180.5px;
+	height: 100%;
+	margin: 0 5px;
+	padding: 0 10px;
+	background-color: #eef1f2;
+	box-shadow: 0px 0px 2px #999;
+}
+.monitor-item .top > div,.monitor-item .bottom > div{
+	position: absolute;
+	font-size: 13px;
+}
+.monitor-item .top{
+	position: relative;
+	height: 104px;
+	margin-bottom: 10px;
+}
+.monitor-item .top .pIcon{
+	bottom: 0;
+	left:0;
+	width: 12px;
+	height: 20px;
+	background: url(../img/sy/sy-icon.png) no-repeat; 
+}
+.monitor-item .top .pIcon.no{
+	display: none;
+}
+.monitor-item .top .infusion-bottle{
+	left: 50%;
+	bottom: 0;
+	width: 87px;
+	height: 94px;
+	margin-left: -43.5px;
+	
+}
+.infusion-bottle > div{
+	position: absolute;
+}
+.infusion-bottle .bottle{
+	width: 100%;
+	height: 100%;
+	background: url(../img/sy/bottle.png) no-repeat;
+	/*background: url(../img/sy/bottle-alarm.gif) no-repeat;*/
+	z-index: 5;
+}
+.infusion-bottle .bottle{
+	
+}
+.infusion-bottle .tranStatus{
+	bottom: 6px;
+	left: 1px;
+	width: 86px;
+	height: 83px;
+	border-radius: 0 0 10px 10px;
+	/*background-color: #eff2f4; 背景色*/
+	background-color: #74bfff; /*余量*/
+	/*background-color:#f75983;警告*/
+	z-index: 3;
+}
+.tranStatus.low-1{
+	width:67px;left:10px;background-color:#f75983;
+}
+.tranStatus.low-2{
+	background-color:#f75983;
+}
+/*.empty{
+	background: url(../img/sy/out-line.png) no-repeat center center;
+}*/
+.empty .tranStatus{
+	background-color: #eff2f4;
+	background: url(../img/sy/bottle.png) no-repeat center center;
+	/*background: url(../img/sy/bottle-empty.png) no-repeat center center;*/
+}
+
+.alarm .tranStatus {
+    background: url(../img/sy/bottle-alarm.gif) no-repeat;
+	z-index: 6;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%!important;
+}
+
+.infusion-bottle .panel-msg{
+	left: 5px;
+	top: 50%;
+	width: 77px;
+	height: 53px;
+	margin-top: -28px;
+	background: url(../img/sy/scale.png) no-repeat;
+	z-index: 4;
+}
+.transfusion-msg{
+	width: 55px;
+	height: 100%;
+	margin: 0 auto;
+
+}
+.outline .transfusion-msg{
+	background: url(../img/sy/out-line.png) no-repeat center center;
+}
+.pause .transfusion-msg{
+	background: url(../img/sy/syjk_icons_syd_stop.png) no-repeat center center;
+}
+.outline .tranStatus{
+	background-color: #eff2f4;
+}
+.outline .transfusion-msg .tran-msg{
+	display: none;
+}
+.pause .transfusion-msg .tran-msg{
+	opacity: 0.3;
+}
+.tran-msg{
+	line-height: 26px;
+}
+.tran-msg .liquid{
+	text-align: center;
+	font-size: 18px;
+}
+.tran-msg .liquid span:last-child{
+	font-size: 13px;
+}
+.tran-msg .time{
+	padding-left: 20px;
+	border-top: 1px solid #767b84;
+	font-size: 12px;
+	background: url(../img/sy/time-icon.png) 4px 7px no-repeat ;
+}
+
+.monitor-item .top .percent{
+	bottom: 0;
+	right: 0;
+	width: 35px;
+	text-align: right;
+	color: #288ee5;
+}
+
+.monitor-item .bottom{
+	position: relative;
+	height: 35px;
+	line-height: 35px;
+	border-top: 1px solid #d1d8da;
+}
+
+.monitor-item .bottom .bedNo{
+	left: 0;
+	width: 55px;
+}
+.monitor-item .bottom .pName{
+	left: 55px;
+	width: 80px;
+	text-align: center;
+}
+.monitor-item .bottom .index{
+	right: 0;
+	width: 45px;
+	text-align: right;
+	color: #288ee5;
+}
+
+/*
+	导航样式修改
+*/
+.scrollbar-style-1::-webkit-scrollbar-thumb{  
+   background-color:#a9a9aa;  
+   height:50px;  
+   /*outline-offset:-2px; */ 
+   /*outline:2px solid #fff; */ 
+   -webkit-border-radius:4px;  
+   /*border: 2px solid #fff; */ 
+}  
+.scrollbar-style-1::-webkit-scrollbar{  
+   width:5px;  
+   height:5px;  
+}  

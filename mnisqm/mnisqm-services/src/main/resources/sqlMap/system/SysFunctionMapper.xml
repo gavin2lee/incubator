@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lachesis.mnisqm.module.system.dao.SysFunctionMapper">
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.system.domain.SysFunction">
+    <result column="SEQ_ID" jdbcType="BIGINT" property="seqId" />
+    <result column="FUN_CODE" jdbcType="VARCHAR" property="funCode" />
+    <result column="FUN_NAME" jdbcType="VARCHAR" property="funName" />
+    <result column="VIEW_NAME" jdbcType="VARCHAR" property="viewName" />
+    <result column="FATHER_FUN_CODE" jdbcType="VARCHAR" property="fatherFunCode" />
+    <result column="FUN_URL" jdbcType="VARCHAR" property="funUrl" />
+    <result column="IS_MENU" jdbcType="VARCHAR" property="isMenu" />
+    <result column="ICO_NAME" jdbcType="VARCHAR" property="icoName" />
+    <result column="FUN_INDEX" jdbcType="INTEGER" property="funIndex" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_PERSON" jdbcType="VARCHAR" property="createPerson" />
+    <result column="UPDATE_PERSON" jdbcType="VARCHAR" property="updatePerson" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.system.domain.SysFunction">
+    insert into SYS_FUNCTION (SEQ_ID, FUN_CODE, FUN_NAME, 
+      VIEW_NAME, FATHER_FUN_CODE, FUN_URL, 
+      IS_MENU, ICO_NAME, FUN_INDEX, 
+      UPDATE_TIME, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_PERSON)
+    values (#{seqId,jdbcType=BIGINT}, #{funCode,jdbcType=VARCHAR}, #{funName,jdbcType=VARCHAR}, 
+      #{viewName,jdbcType=VARCHAR}, #{fatherFunCode,jdbcType=VARCHAR}, #{funUrl,jdbcType=VARCHAR}, 
+      #{isMenu,jdbcType=VARCHAR}, #{icoName,jdbcType=VARCHAR}, #{funIndex,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select SEQ_ID, FUN_CODE, FUN_NAME, VIEW_NAME, FATHER_FUN_CODE, FUN_URL, IS_MENU, 
+    ICO_NAME, FUN_INDEX, UPDATE_TIME, CREATE_TIME, CREATE_PERSON, UPDATE_PERSON
+    from SYS_FUNCTION
+  </select>
+  <insert id="insertAndReturnKey" keyProperty="id" parameterType="com.lachesis.mnisqm.module.system.domain.SysFunction" useGeneratedKeys="true">
+    insert into SYS_FUNCTION (SEQ_ID, FUN_CODE, FUN_NAME, 
+      VIEW_NAME, FATHER_FUN_CODE, FUN_URL, 
+      IS_MENU, ICO_NAME, FUN_INDEX, 
+      UPDATE_TIME, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_PERSON)
+    values (#{seqId,jdbcType=BIGINT}, #{funCode,jdbcType=VARCHAR}, #{funName,jdbcType=VARCHAR}, 
+      #{viewName,jdbcType=VARCHAR}, #{fatherFunCode,jdbcType=VARCHAR}, #{funUrl,jdbcType=VARCHAR}, 
+      #{isMenu,jdbcType=VARCHAR}, #{icoName,jdbcType=VARCHAR}, #{funIndex,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+</mapper>

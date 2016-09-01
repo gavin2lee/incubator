@@ -1,0 +1,258 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>联新移动护理</title>
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/patientMain.css')" />
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/patientGlance.css')" />
+<script type="text/javascript" src="#url('/resources/js/jsPlugin.js?1472534366474')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/main/patientMainFrame2.js?1472534366474')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/common.js?1472534366474')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/main/main.js?1472534366474')" charset="utf-8"></script>
+<style type="text/css">
+    .panel-body{overflow:visible;}
+    .three li{
+        list-style:none;
+        overflow: hidden;
+    }
+    .smsg{
+        width:345px;
+        overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
+    }
+</style>
+</head>
+
+<body id="mainLayout" class="easyui-layout">
+	<div id="test"></div>
+<script type="text/javascript">
+	function Patient(){
+		this.patientId = "$!patient.patId";
+		this.patientName="$!patient.name";
+		this.patientNo= "$!patient.barCode";
+		this.departmentId="$!patient.deptCode";
+		this.hospitalNo="$!patient.inHospNo"
+	}
+	var patient = new Patient();
+	var isLeave = true;
+    $(document).ready(function () {
+        function loadMenu(){
+            jsPlugin.doPlugin('patientMenu',{'patientId':patient.patientId,'hospitalNo':patient.hospitalNo,'departmentId':patient.departmentId, 'isLeave': isLeave});
+        }
+    	jsPlugin.loadPlugin(ay.contextPath+'/resources/js/main/patientMenu.js?1472534366474',function(){
+    		loadMenu();
+    	});
+	});
+</script>
+	<div data-options="region:'north',href:''" style="border:none;" >
+##		<div class="bg_header"></div>
+##        <div class="bg_header2">
+	#parse("/nur/header.vm")
+##        </div>
+##    	<div class="bg_header bg_header3"></div>
+
+    	<!-- tool-btn and info  -->
+
+		<div class="toolsBtnAndInfo">
+			<div class="toolsBtn">
+				<div class="_btn _btn-lg" style="position:relative;top: 8px;">
+					<a href="#url('/nur/patientGlance/patientGlanceMain.do')">
+					<span>返回床位列表</span>
+					</a>
+				</div>
+                <select class="selector" id="patientList" style="position:absolute;top: 8px;min-width:111px; width: auto!important;height:33px;box-shadow: 0px 1px 0px #ccc;margin-left: 10px;">
+                    <option value="">出院</option>
+                </select>
+				<!-- <div class="btn-nm btn-select">
+					<span class="btm">患者列表</span>
+					<span class="bt-ico-d"></span>
+				</div> -->
+				<!-- <div class="btn-nm">
+					<span class="btl"></span>
+					<span class="btm">返回床位列表</span>
+					<span class="btr"></span>
+				</div>
+				<div class="btn-nm select-btn">
+					<span class="btl"></span>
+					<span class="btm">患者列表</span>
+					<span class="btr"></span>
+					<span class="bt-ico-d"></span>
+				</div> -->
+			</div>
+			<div class="info">
+				<div class="info-content">
+					<div class="info-cover">></div>
+					<div style="width:1000px;height:52px;overflow:hidden;">
+					<ul class="clearfix">
+						<input type="hidden" id="patientId" value="$!id" />
+						<li>
+							<p>$!currPatient.bedCode床</p>
+						</li>
+						<li>
+							<p id="patientName">$!currPatient.name</p>
+						</li>
+						<li style="max-width:100px;">
+							<span>住院号</span>
+							<span>$!currPatient.inHospNo</span>
+						</li>
+						<li style="width:60px;">
+							<span>性别</span>
+							<span>
+								#if($currPatient.gender == "M")
+									男
+								#elseif($currPatient.gender == "F")
+									女
+								#else
+									其它
+								#end
+							</span>
+						</li>
+						<li style="width:60px;">
+							<span>年龄</span>
+							<span>$!currPatient.age</span>
+						</li>
+						<li style="max-width:100px;">
+							<span>入院诊断</span>
+							<span>$!currPatient.inDiag</span>
+						</li>
+						<li>
+							<span>护理等级</span>
+							#if ( $!currPatient.tendLevel == 0)
+								<span>特级护理</span>
+							#elseif ($!currPatient.tendLevel == 1)
+								<span>一级护理</span>
+							#elseif ($!currPatient.tendLevel == 2)
+								<span>二级护理</span>
+							#elseif ($!currPatient.tendLevel == 3)
+								<span>三级护理</span>
+							#end
+
+							<span>$!currPatient.tendLevel</span>
+						</li>
+						<li>
+							<span>入院时间</span>
+							<span>$!date.format('yyyy-MM-dd HH:mm:ss', $!currPatient.inDate)</span>
+						</li>
+						<li style="max-width:100px;">
+							<span>饮食</span>
+							<span title="$!currPatient.diet">$!currPatient.diet</span>
+						</li>
+						<li style="max-width:100px;">
+							<span>药物过敏</span>
+							<span title="$!currPatient.allergen"  class="red">$!currPatient.allergen</span>
+						</li>
+					</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- end tool and info -->
+
+
+	</div>
+
+	<div id="panel-west" data-options="region:'west',href:''" title="患者列表" style="width: 200px; padding: 10px 0 0 10px;padding-bottom:40px;background-color:#eff2f2;overflow:hidden;overflow-y:auto;">
+		<ul id="mainMenu">
+			<li onclick="openSubTab(1);" class="user">医嘱单</li>
+			<li onclick="openSubTab(2);" class="user">医嘱执行单</li>
+			<li onclick="openSubTab(3);" class="user">检验报告</li>
+			<li onclick="openSubTab(4);" class="user">检查报告</li>
+		</ul>
+	</div>
+	<div data-options="region:'center'" style="overflow: hidden;border-top: none;" id="fixcenterheight">
+		<div id="mainTabs" style="height:100%;">
+			<div data-options="iconCls:'ext-icon-heart'" style="height:100%">
+				<iframe id="mainFrame" src="" allowTransparency="true" style="border: 0; width: 100%; height: 100%;" frameBorder="0"></iframe>
+            </div>
+		</div>
+	</div>
+	<div data-options="region:'south',href:'',border:false" style="display:none;height: 30px; overflow: hidden;"></div>
+
+	 <div class="easyui-dialog" id="prompt1" data-options="title:'切换账户',width:300,height:180,modal:true,closed:true,buttons : [ {
+                text : '确定',
+                handler :confirmPrompt1
+            },{
+                text : '取消',
+                handler : closePrompt1
+            }]">
+            <div style="padding:15px;">
+                <div class="dlg-panel">
+                    <p>
+                        <span class="dlg-title">用户名：</span>
+                        <select>
+                            <option>李娟</option>
+                            <option>王晴</option>
+                            <option>刘小晴</option>
+                        </select>
+                    </p>
+                    <p>
+                        <span class="dlg-title">密码：</span>
+                        <input type="password">
+                    </p>
+                </div>
+            </div>
+    </div>
+
+    <!-- 退出登录弹出框 -->
+    <div class="easyui-dialog" id="quitBox" data-options="title:'退出登录',width:200,height:150,modal:true,closed:true,buttons : [ {
+            text : '确定',
+                handler :confirmQuitBox
+            },{
+                text : '取消',
+                handler : closeQuitBox
+            }]">
+        <div style="padding:15px;">
+        <form class="f_yahei" id="prompt2">
+            <div class="dlg-panel">
+                <p style="font-size:14px;">确定退出当前账号？</p>
+            </div>
+        </form>
+        </div>
+    </div>
+
+    <!-- 修改密码弹出框 -->
+    <div class="easyui-dialog" id="changePsw" data-options="title:'修改密码',width:300,height:230,modal:true,closed:true,buttons : [ {
+            text : '确定',
+                handler :confirmChangePsw
+            },{
+                text : '取消',
+                handler : closeChangePsw
+            }]">
+        <div style="padding:15px;">
+            <div class="dlg-panel">
+                <p>
+                    <span class="dlg-title">当前密码：</span>
+                    <input type="password" id="password2" class="easyui-validatebox" data-options="required:true">
+                </p>
+                <p>
+                    <span class="dlg-title">新密码：</span>
+                    <input type="password" id="password3" class="easyui-validatebox" data-options="required:true">
+                </p>
+                <p>
+                    <span class="dlg-title" >确认密码：</span>
+                    <input type="password" id="password4" class="easyui-validatebox" required="required" validType="equals['#password3']">
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="easyui-dialog" id="change-ks" data-options="title:'切换科室',width:250,height:150,modal:true,closed:true,buttons : [ {
+            text : '确定',
+                handler :confirmChangeKs
+            },{
+                text : '取消',
+                handler : closeChangeKs
+            }]">
+        <div style="padding:15px;">
+            <div class="dlg-panel">
+                <p>
+                    <span class="dlg-title">科室</span>
+                    <select>
+                        <option>心内科</option>
+                        <option>外科</option>
+                    </select>
+                </p>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript" src="#url('/resources/js/nur/msgBox.js?1472534366474')" charset="utf-8"></script>
+</body>
+</html>

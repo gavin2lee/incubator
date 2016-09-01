@@ -1,0 +1,48 @@
+<div>
+  <div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+      <!-- <i class="fa fa-edit"></i> -->
+      切换角色
+    </h5>
+  </div>
+  <div class="modal-body">
+    您的现有角色：
+    <table class="table table-condensed table-bordered table-striped">
+      <tr>
+        <th></th>
+        <th>
+          角色编号
+        </th>
+        <th>
+          角色名称
+        </th>
+        <th>
+          所属部门
+        </th>
+      </tr>
+      <tr ng-repeat="row in vm.userRoleList " ng-class="{success: row.seqId === vm.currentRole.seqId, active: row.seqId === vm.selectedRole.seqId}">
+        <td>
+          <input id="{{row.seqId}}" name="userRole" ng-click="vm.showRole(row)" type="radio" value="{{row.seqId}}" ng-model="vm.selectedRole.seqId">
+        </td>
+
+        <td data-title="'角色编号'">
+          <label for="{{row.seqId}}">{{row.roleCode}}</label>
+        </td>
+        <td data-title="'角色名称'">
+          <label for="{{row.seqId}}">{{row.roleName}}</label>
+        </td>
+        <td data-title="'所属部门'">
+          <label for="{{row.seqId}}">{{ row.deptName }}</label>
+        </td>
+      </tr>
+    </table>
+    <!-- <select class="form-controll input-sm" ng-options="role.roleName for role in vm.userRoleList track by role.roleCode" ng-model="vm.selectedRole">
+    </select> -->
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-success {{vm.roleBtnStatus.state}}" type="button" {{vm.loginBtnStatus.state}} ng-click="vm.changeRole()">{{vm.roleBtnStatus.title}}</button>
+    <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+  </div>
+</div>

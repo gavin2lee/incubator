@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.event.dao.EventLevelMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.event.domain.EventLevel" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="DAMAGE_LEVEL" property="damageLevel" jdbcType="VARCHAR" />
+    <result column="DAMAGE_LEVEL_NAME" property="damageLevelName" jdbcType="VARCHAR" />
+    <result column="FLOW" property="flow" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR"/>
+  </resultMap>
+  
+  <!-- 逻辑删除 -->
+  <update id="logicDelete" parameterType="EventLevel" >
+    update EVENT_LEVEL
+    set 
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      STATUS = #{status}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 数据插入 -->
+  <insert id="insert" parameterType="EventLevel" >
+    insert into EVENT_LEVEL (DAMAGE_LEVEL, DAMAGE_LEVEL_NAME, 
+      FLOW, REMARK, CREATE_TIME, STATUS,
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{damageLevel,jdbcType=VARCHAR}, #{damageLevelName,jdbcType=VARCHAR}, 
+      #{flow,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, GETDATE(), #{status,jdbcType=CHAR},
+      #{createPerson,jdbcType=VARCHAR},GETDATE(), #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.event.domain.EventLevel" >
+    update EVENT_LEVEL
+    set DAMAGE_LEVEL = #{damageLevel,jdbcType=VARCHAR},
+      DAMAGE_LEVEL_NAME = #{damageLevelName,jdbcType=VARCHAR},
+      FLOW = #{flow,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      STATUS = #{status}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, DAMAGE_LEVEL, DAMAGE_LEVEL_NAME, FLOW, REMARK, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from EVENT_LEVEL
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  
+  <!-- 查询所有的分级 -->
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, DAMAGE_LEVEL, DAMAGE_LEVEL_NAME, FLOW, REMARK, CREATE_PERSON, 
+    UPDATE_PERSON,STATUS
+    from EVENT_LEVEL
+    WHERE STATUS != '09'
+  </select>
+  
+</mapper>

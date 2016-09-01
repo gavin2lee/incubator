@@ -1,0 +1,52 @@
+<div class="mod-pop-dateForm">
+  <div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+      <!-- <i class="fa fa-edit"></i> -->
+      新增分组
+    </h5>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="addbedForm" form="addbedForm">
+        <div class="form-wrapper">
+            <!-- <div class="form-group">
+              <label for="groupCode" class="control-label col-xs-3">组号</label>
+              <div class="col-xs-9">
+                <input class="form-control input-sm" autocomplete="off" ng-model="vm.formData.groupCode" name="groupCode" type="text" id="groupCode" />
+              </div>
+            </div> -->
+            <div class="form-group">
+              <label for="groupName" class="control-label col-xs-3">组名</label>
+              <div class="col-xs-9">
+                <input class="form-control input-sm" name="groupName" required autocomplete="off" ng-model="vm.formData.groupName" type="text" id="groupName" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="bedCode" class="control-label col-xs-3">床位</label>
+              <div class="col-xs-9">
+                <ul class="flow-list">
+                  <li ng-repeat="flowItem in vm.formData.bedList track by $index">
+                    <span>{{ flowItem }}</span>
+                    <a ng-click="vm.removeFlow($index)" href="javascript:;" class="text-danger">
+                      <i class="fa fa-times-circle"></i>
+                    </a>
+                  </li>
+                </ul>
+                <div class="input-group">
+                  <input type="text" class="form-control input-sm" ng-model="vm.flowText" placeholder="新增床位" autocomplete="off" name="bedCode" id="bedCode" />
+                  <span class="input-group-btn">
+                        <button ng-click="vm.addFlow()"
+                                class="btn btn-primary btn-sm"
+                                ng-disabled="addbedForm.bedCode.$invalid || addbedForm.bedCode.$pristine"><span class="fa fa-plus"></span></button>
+                      </span>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok()">保存</button>
+                <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+            </div>
+        </div>
+      </form>
+  </div>
+</div>

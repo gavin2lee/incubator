@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<title>防跌倒护理单</title>
+</head>
+<body class="doc">
+#docToolbar()
+<div class="doc-container">
+#fallNurse()
+<div class="doc-content">
+    <div id="tb">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+<!--         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">保存</a> -->
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">还原</a>
+<!-- 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">GetChanges</a> -->
+    </div>
+    <table id="dg" style="height: 400px;width: 100%;" class="easyui-datagrid" data-options="
+    	nowrap: false,
+		singleSelect: true,
+		autoRowHeight: true,
+		fitColumns: true,
+		toolbar: '#tb',
+		showFooter: true,
+		onClickRow: onClickRow,
+		onBeginEdit: function(index,row) {
+			$('textarea.datagrid-editable-input').autosize({
+				append: '',
+				callback: function() {
+					$('#dg').datagrid('resize');
+				}
+			});
+		},
+		onLoadSuccess: function(data) {
+			$('textarea').autosize({
+				append: '',
+				callback: function() {
+					$('#dg').datagrid('resize');
+				}
+			});
+		},
+		url: '#url("/doc/fallNurse/datas")',
+		queryParams: {
+			cureNo: '$!{patient.cureNo}'
+		},
+		method: 'get',
+		idField: 'id'">
+	    <thead>
+	        <tr>
+	            <th rowspan="2" data-options="field:'date',
+					align:'center',
+					resizable: false,
+					width:100,
+					formatter: function(value,row,index){
+						if (!value) {
+							return '';
+						}
+						if (index == 0) {
+	    					return value;
+						}
+						return formatDate(value, false, $('#dg').datagrid('getRows')[index-1]['date']);
+	    			},
+					editor: {
+						type: 'datetimebox',
+						options: {
+							showSeconds: false,
+							editable: false,
+							validType:{
+								length:[0,16]
+							}
+						}
+					}">日期时间</th>
+				<th colspan="8">常规措施</th>
+				<th colspan="8">加强措施</th>
+				<th colspan="2">补充措施</th>
+	            <th rowspan="2" data-options="width:80,field:'sign',align:'center',resizable: false">签名</th>
+			</tr><tr>
+	            <th data-options="field:'dry',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">病房内<br>光线充<br>足，地<br>面干净<br>不潮湿<br>，保持<br>道路通<br>畅</th>
+	            <th data-options="field:'familiar',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">引导患<br>者熟悉<br>病房环<br>境，危<br>险环境<br>有警示<br>标识</th>
+	            <th data-options="field:'warn',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">悬挂<br>跌倒<br>风险<br>警示<br>牌</th>
+	            <th data-options="field:'staff',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">把患者需<br>要的物品<br>（水杯、<br>眼镜、纸<br>巾、尿壶<br>等）放置<br>在易取用<br>的地方</th>
+	            <th data-options="field:'bed',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">放低床<br>身，固<br>定床刹<br>，加床<br>栏，指<br>导患者<br>勿跨越<br>床栏</th>
+	            <th data-options="field:'call',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">提供呼<br>叫器并<br>教会使<br>用，放<br>在易于<br>取得的<br>位置</th>
+	            <th data-options="field:'method',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">指导家属、陪人、病人预防跌倒的<br>方法及注意事项：a当患者头晕时<br>，确保其在床上休息。注意做到“<br>起床三部曲”：醒后卧床1分钟，<br>坐起1分钟后再站起，站起1分钟<br>后再行走；b穿大小合适的鞋及长<br>短合适的衣裤，鞋底应防滑；c切<br>勿靠在不稳定的家具上，善用扶手</th>
+	            <th data-options="field:'patrol',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">加强<br>巡视<br>，晚<br>上使<br>用夜<br>灯</th>
+	            <th data-options="field:'company',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">留陪护<br>，陪同<br>患者入<br>厕，及<br>时换尿<br>片，给<br>便盆、<br>尿壶</th>
+	            <th data-options="field:'assist',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">患者在<br>行走或<br>功能训<br>练过程<br>中给予<br>帮助、<br>监督</th>
+	            <th data-options="field:'belt',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">轮椅<br>/座<br>椅，<br>使用<br>安全<br>腰带</th>
+	            <th data-options="field:'watch',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">对于烦躁<br>、谵妄的<br>患者，调<br>床位至靠<br>近护士站<br>的病房，<br>便于观察</th>
+	            <th data-options="field:'treat',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">对于烦<br>躁、谵<br>妄的患<br>者，通<br>知医生<br>进一步<br>处理</th>
+	            <th data-options="field:'with',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">离床活动、<br>外出检查必<br>须有人陪同<br>。无人陪伴<br>的情况下，<br>不要擅自下<br>床，不要随<br>意离开病房</th>
+	            <th data-options="field:'restraint',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">给予<br>安全<br>背心<br>或约<br>束</th>
+	            <th data-options="field:'observe',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">观察药物<br>的反应及<br>副作用（<br>如镇静催<br>眠、降压<br>、降糖、<br>利尿等药<br>物）</th>
+	            <th data-options="width:60,field:'hold1',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}"><textarea id="hold1" rows="1" style="width: 95%; height: 100%; text-align: center;">$!{doc.hold1}</textarea></th>
+	            <th data-options="width:60,field:'hold2',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}"><textarea id="hold2" rows="1" style="width: 95%; height: 100%; text-align: center;">$!{doc.hold2}</textarea></th>
+	        </tr>
+	    </thead>
+	</table>
+</div>
+#fallNurseComment()
+</div>
+<!-- Diagnosis Window -->
+<div id="win"></div>
+<script type="text/javascript">
+var editIndex = undefined;
+function endEditing(index) {
+	if (editIndex == undefined) {
+		return true;
+	}
+	if ($("#dg").datagrid('validateRow', editIndex)) {
+		$("#dg").datagrid('endEdit', editIndex);
+		editIndex = undefined;
+		return true;
+	} else {
+		return false;
+	}
+}
+function onClickRow(index){
+    if (editIndex != index){
+        if (endEditing()) {
+        	// 本人,护理组长和护士长能修改
+        	var rows = $('#dg').datagrid('getRows');
+        	if ('$!{currentUser.code}' == rows[index]['userCode']
+        			|| 1 == $!{currentUser.purview}
+        			|| 2 == $!{currentUser.purview}) {
+	            $('#dg').datagrid('selectRow', index)
+	                    .datagrid('beginEdit', index);
+	            editIndex = index;
+        	}
+        } else {
+            $('#dg').datagrid('selectRow', editIndex);
+        }
+    }
+}
+function append(){
+    if (endEditing()){
+        $('#dg').datagrid('appendRow',{
+        	date: datetimeToString(new Date()),
+        	sign: '$!{currentUser.name}',
+        	userCode: '$!{currentUser.code}',
+        	deptCode: '$!{currentUser.deptCode}',
+        	deptName: '$!{currentUser.deptName}'
+        });
+        editIndex = $('#dg').datagrid('getRows').length-1;
+        $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+    }
+}
+function removeit() {
+    var row = $('#dg').datagrid('getSelected');
+    if (!row){return}
+    var index = $('#dg').datagrid('getRowIndex', row);
+    if (index == undefined){return}
+    if ('$!{currentUser.code}' == row['userCode']) {
+	    $('#dg').datagrid('cancelEdit', index)
+	            .datagrid('deleteRow', index);
+	    editIndex = undefined;
+    } else {
+    	$.messager.alert('数据删除', '只有本人才允许删除', 'info');
+    }
+}
+function accept(){
+    if (endEditing()){
+    	var editable = '$!{doc.editable}' || true;
+    	if (editable) {
+	        $.ajax({
+	        	url: '#url("/doc/fallNurse")',
+	        	type: 'POST',
+	        	data: {
+	        		cureNo: '$!{patient.cureNo}',
+	        		hospitalNo: '$!{patient.hospitalNo}',
+	        		// TODO: 点击才编辑,点击其他地方则以文本显示,类似于行编辑
+	        		hold1: $('#hold1').val(),
+	        		hold2: $('#hold2').val(),
+	        		inserted: JSON.stringify($('#dg').datagrid('getChanges', 'inserted')),
+	        		updated: JSON.stringify($('#dg').datagrid('getChanges', 'updated')),
+	        		deleted: JSON.stringify($('#dg').datagrid('getChanges', 'deleted'))
+	        	},
+	        	success: function(data, status) {
+	        		if (data && data.code) {
+	        			if ('1' == data.code) {
+				        	$('#dg').datagrid('acceptChanges').datagrid('reload');
+		        		} else {
+			        		$.messager.alert('数据保存', data.message || '保存失败', 'error');
+	        			}
+	        		}
+	        	},
+	        	error: function(xhr, status, err) {
+	        		$.messager.alert('数据保存', '保存失败', 'error');
+	        	}
+	        });
+    	} else {
+    		$.messager.alert('数据保存', '不允许修改', 'error');
+    	}
+    }
+}
+function reject(){
+    $('#dg').datagrid('rejectChanges').datagrid('unselectAll');
+    editIndex = undefined;
+}
+// initialize page when loaded
+$(function() {
+	#[[
+	function hold() {
+		var $this = $(this);
+		var $input = $('<input type="text">');
+		$input.val($(this).text());
+		$input.outerWidth($this.innerWidth());
+		$input.blur(function() {
+			$this.text($input.val());
+		});
+		$(this).html($input.get());
+	}
+// 	$('td[field="hold1"]').click(hold);
+// 	$('td[field="hold2"]').click(hold);
+	]]#
+	$('#save').click(accept);
+	$('#approve').click(function() {});
+	$('#print').val('预  览').click(function() {
+		var params = [
+   			'location=no',
+   			'height='+screen.availHeight,
+   			'width='+screen.availWidth,
+   			'scrollbars=yes',
+   			'resizable=yes',
+   			'fullscreen=yes' // only works in IE, but here for completeness
+   		].join(',');
+   		var new_window = window.open('#url("/doc/fallNurse/view?cureNo=$!{patient.cureNo}")', '', params);
+   		new_window.resizeTo(screen.availWidth, screen.availHeight);
+	});
+	$('#diagnosisLabel').click(function() {
+		$('#win').window({
+			title: '诊断修正列表',
+		    width: 700,
+		    height: 500,
+		    minimizable: false,
+			href: '#url("/doc/diagnosis")?cureNo=$!{patient.cureNo}',
+			onClose: function() {
+				var rows = $('#dDg').datagrid('getRows');
+				if (rows && rows.length > 0) {
+					$('#pDiagnosis').text(rows[rows.length - 1]['diagnosis']);
+				} else {
+					$('#pDiagnosis').text('$!{patient.diagnose}');
+				}
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.qualityForm.dao.QualityPlanMapper" >
+<resultMap type="com.lachesis.mnisqm.module.qualityForm.domain.QualityPlan" id="BaseResultMap">
+	<id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="TEAM_NAME" property="teamName"/>
+    <result column="START_DATE" property="startDate"/>
+    <result column="END_DATE" property="endDate"/>
+    <result column="MODEL_NAME" property="modelName"/>
+    <result column="STATUS" property="status"/>
+    <result column="MODEL_ID" property="modelId"/>
+    <result column="TEAM_CODE" property="teamCode"/>
+    <collection property="qualityTaskList" ofType="com.lachesis.mnisqm.module.qualityForm.domain.QualityTask">
+    	<id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    	<result column="TASK_CODE" property="taskCode" jdbcType="VARCHAR" />
+	    <result column="TASK_DATE" property="taskDate" jdbcType="CHAR" />
+	    <result column="FORM_CODE" property="formCode" jdbcType="VARCHAR" />
+	    <result column="HAND_USER_NAME" property="handUserName" jdbcType="VARCHAR" />
+	    <result column="JOIN_USER_NAME" property="joinUserName" jdbcType="VARCHAR" />
+	    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+	    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+	    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+	    <result column="FORM_NAME" property="formName" jdbcType="VARCHAR" />
+	    <result column="FORM_TYPE" property="formType" jdbcType="VARCHAR" />
+	    <result column="IS_DONE" property="isDone"/>
+	    <result column="PLAN_ID" property="planId"/>
+    </collection>
+</resultMap>
+	<insert id="insert" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityPlan"
+	keyProperty="seqId" useGeneratedKeys="true">
+		insert into QUALITY_PLAN
+		(TEAM_NAME, START_DATE, END_DATE, MODEL_NAME,
+		TASK_NUM, STATUS, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON, MODEL_ID, TEAM_CODE)
+		values
+		(#{teamName},#{startDate},#{endDate},#{modelName},
+		#{taskNum},#{status},GETDATE(),GETDATE(),
+		#{createPerson},#{updatePerson}, #{modelId}, #{teamCode})
+	</insert>
+	<update id="update" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityPlan">
+		update QUALITY_PLAN
+		set
+		TEAM_NAME = #{teamName},
+		START_DATE = #{startDate},
+		END_DATE = #{endDate},
+		MODEL_NAME = #{modelName},
+		TASK_NUM = #{taskNum},
+		UPDATE_TIME = GETDATE(),
+		UPDATE_PERSON = #{updatePerson},
+		MODEL_ID = #{modelId},
+		TEAM_CODE = #{teamCode}
+		where
+		SEQ_ID = #{seqId}
+	</update>
+	<select id="select" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityPlan"
+	resultType="com.lachesis.mnisqm.module.qualityForm.domain.QualityPlan" >
+		select 
+		SEQ_ID		seqId,
+		TEAM_NAME	teamName,
+		START_DATE	startDate,
+		END_DATE	endDate,
+		MODEL_NAME	modelName,
+		TASK_NUM	taskNum,
+		MODEL_ID	modelId,
+		TEAM_CODE	teamCode
+		from QUALITY_PLAN
+		where
+		STATUS != '09'
+		<if test="seqId!=null">
+		and SEQ_ID = #{seqId}
+		</if>
+		<if test="teamName!=null">
+		and TEAM_NAME like '%'+ #{teamName!=null}+'%'
+		</if>
+		<if test="startDate!=null and endDate!=null">
+		and CONVERT(DATETIME,START_DATE)>=CONVERT(DATETIME,#{startDate}) 
+		and CONVERT(DATETIME,#{endDate})>=CONVERT(DATETIME,END_DATE)
+		</if>
+	</select>
+	<delete id="delete" parameterType="java.lang.Long">
+		update QUALITY_PLAN
+		set
+		STATUS = '09'
+		where
+		SEQ_ID = #{seqId}
+	</delete>
+</mapper>

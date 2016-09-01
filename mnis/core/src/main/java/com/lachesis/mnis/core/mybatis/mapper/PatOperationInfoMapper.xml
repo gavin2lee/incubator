@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.PatOperationInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnis.core.patientManage.entity.PatOperationInfo" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="OPERATION_ID" property="operationId" jdbcType="VARCHAR" />
+    <result column="OPERATION_NAME" property="operationName" jdbcType="VARCHAR" />
+    <result column="PAT_ID" property="patId" jdbcType="VARCHAR" />
+    <result column="BED_CODE" property="bedNo" jdbcType="VARCHAR" />
+    <result column="NAME" property="patientName" jdbcType="VARCHAR" />
+    <result column="BIRTH_DATE" property="age" jdbcType="VARCHAR"/>
+    <result column="GENDER" property="sex" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="PRE_OPERATION_DIAGNOSIS" property="preOperationDiagnosis" jdbcType="VARCHAR" />
+    <result column="POST_OPERATION_DIAGNOSIS" property="postOperationDiagnosis" jdbcType="VARCHAR" />
+    <result column="OPERATION_NO" property="operationNo" jdbcType="VARCHAR" />
+    <result column="INSTRUMENT_NURSE" property="instrumentNurse" jdbcType="VARCHAR" />
+    <result column="ANESTHESIA_METHODS" property="anesthesiaMethods" jdbcType="VARCHAR" />
+    <result column="SURGEON" property="surgeon" jdbcType="VARCHAR" />
+    <result column="ANESTHESIA_DOCTOR" property="anesthesiaDoctor" jdbcType="VARCHAR" />
+    <result column="OPERATION_ONE" property="operationOne" jdbcType="VARCHAR" />
+    <result column="OPERATION_TWO" property="operationTwo" jdbcType="VARCHAR" />
+    <result column="SCRUB_NURSE" property="scrubNurse" jdbcType="VARCHAR" />
+    <result column="CIRCULATING_NURSE" property="circulatingNurse" jdbcType="VARCHAR" />
+    <result column="IS_ANESTHESIA_CONSULTATION" property="isAnesthesiaConsultation" jdbcType="INTEGER" />
+    <result column="IS_EMERGENCY_TREATMENT" property="isEmergencyTreatment" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <result column="OPERATION_TIME" property="operationTime" jdbcType="TIMESTAMP" />
+    <collection property="patOperationStatusList" javaType="java.util.List"
+		ofType="com.lachesis.mnis.core.patientManage.entity.PatOperationStatus"
+		column="OPERATION_ID" >
+		<id column="SEQID" property="seqId" jdbcType="BIGINT" />
+    	<result column="OPERATION_ID" property="operationId" jdbcType="VARCHAR" />
+    	<result column="PAT_ID" property="patId" jdbcType="VARCHAR" />
+    	<result column="STATUS" property="status" jdbcType="INTEGER" />
+    	<result column="STATUS_NAME" property="statusName" jdbcType="VARCHAR" />
+    	<result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    	<result column="CREATETIME" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="CREATEPERSON" property="createPerson" jdbcType="VARCHAR" />
+    	<result column="UPDATETIME" property="updateTime" jdbcType="TIMESTAMP" />
+    	<result column="UPDATEPERSON" property="updatePerson" jdbcType="VARCHAR" />
+	</collection>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PAT_OPERATION_INFO
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnis.core.patientManage.entity.PatOperationInfo" >
+    insert into PAT_OPERATION_INFO (OPERATION_ID, OPERATION_NAME, PAT_ID, 
+      PRE_OPERATION_DIAGNOSIS, POST_OPERATION_DIAGNOSIS, 
+      OPERATION_NO, INSTRUMENT_NURSE, ANESTHESIA_METHODS, 
+      SURGEON, ANESTHESIA_DOCTOR, OPERATION_ONE, 
+      OPERATION_TWO, SCRUB_NURSE, CIRCULATING_NURSE, 
+      IS_ANESTHESIA_CONSULTATION, IS_EMERGENCY_TREATMENT, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+      UPDATE_PERSON,OPERATION_TIME)
+    values (#{operationId,jdbcType=VARCHAR},#{operationName,jdbcType=VARCHAR}, #{patId,jdbcType=VARCHAR}, 
+      #{preOperationDiagnosis,jdbcType=VARCHAR}, #{postOperationDiagnosis,jdbcType=VARCHAR}, 
+      #{operationNo,jdbcType=VARCHAR}, #{instrumentNurse,jdbcType=VARCHAR}, #{anesthesiaMethods,jdbcType=VARCHAR}, 
+      #{surgeon,jdbcType=VARCHAR}, #{anesthesiaDoctor,jdbcType=VARCHAR}, #{operationOne,jdbcType=VARCHAR}, 
+      #{operationTwo,jdbcType=VARCHAR}, #{scrubNurse,jdbcType=VARCHAR}, #{circulatingNurse,jdbcType=VARCHAR}, 
+      #{isAnesthesiaConsultation,jdbcType=INTEGER}, #{isEmergencyTreatment,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updatePerson,jdbcType=VARCHAR},#{operationTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnis.core.patientManage.entity.PatOperationInfo" >
+    update PAT_OPERATION_INFO
+    set OPERATION_ID = #{operationId,jdbcType=VARCHAR},
+      OPERATION_NAME = #{operationName,jdbcType=VARCHAR},
+      PAT_ID = #{patId,jdbcType=VARCHAR},
+      PRE_OPERATION_DIAGNOSIS = #{preOperationDiagnosis,jdbcType=VARCHAR},
+      POST_OPERATION_DIAGNOSIS = #{postOperationDiagnosis,jdbcType=VARCHAR},
+      OPERATION_NO = #{operationNo,jdbcType=VARCHAR},
+      INSTRUMENT_NURSE = #{instrumentNurse,jdbcType=VARCHAR},
+      ANESTHESIA_METHODS = #{anesthesiaMethods,jdbcType=VARCHAR},
+      SURGEON = #{surgeon,jdbcType=VARCHAR},
+      ANESTHESIA_DOCTOR = #{anesthesiaDoctor,jdbcType=VARCHAR},
+      OPERATION_ONE = #{operationOne,jdbcType=VARCHAR},
+      OPERATION_TWO = #{operationTwo,jdbcType=VARCHAR},
+      SCRUB_NURSE = #{scrubNurse,jdbcType=VARCHAR},
+      CIRCULATING_NURSE = #{circulatingNurse,jdbcType=VARCHAR},
+      IS_ANESTHESIA_CONSULTATION = #{isAnesthesiaConsultation,jdbcType=INTEGER},
+      IS_EMERGENCY_TREATMENT = #{isEmergencyTreatment,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      OPERATION_TIME = #{operationTime,jdbcType=TIMESTAMP}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, OPERATION_ID, OPERATION_NAME, PAT_ID, PRE_OPERATION_DIAGNOSIS, POST_OPERATION_DIAGNOSIS, 
+    OPERATION_NO, INSTRUMENT_NURSE, ANESTHESIA_METHODS, SURGEON, ANESTHESIA_DOCTOR, OPERATION_ONE, 
+    OPERATION_TWO, SCRUB_NURSE, CIRCULATING_NURSE, IS_ANESTHESIA_CONSULTATION, IS_EMERGENCY_TREATMENT, 
+    CREATE_TIME, CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON, OPERATION_TIME
+    from PAT_OPERATION_INFO
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select poi.SEQ_ID, poi.OPERATION_ID, poi.OPERATION_NAME, poi.PAT_ID, poi.PRE_OPERATION_DIAGNOSIS, poi.POST_OPERATION_DIAGNOSIS, 
+    poi.OPERATION_NO, poi.INSTRUMENT_NURSE, poi.ANESTHESIA_METHODS, poi.SURGEON, poi.ANESTHESIA_DOCTOR, poi.OPERATION_ONE, 
+    poi.OPERATION_TWO, poi.SCRUB_NURSE, poi.CIRCULATING_NURSE, poi.IS_ANESTHESIA_CONSULTATION, poi.IS_EMERGENCY_TREATMENT, 
+    poi.CREATE_TIME, poi.CREATE_PERSON, poi.UPDATE_TIME, poi.UPDATE_PERSON, pos.SEQ_ID SEQID, pos.OPERATION_ID, pos.PAT_ID, 
+    pos.STATUS, poi.OPERATION_TIME, pos.CREATE_TIME, pos.CREATE_PERSON, pos.UPDATE_TIME, pos.UPDATE_PERSON
+    from PAT_OPERATION_INFO poi, PAT_OPERATION_STATUS pos
+    where poi.OPERATION_ID = pos.OPERATION_ID
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from PAT_OPERATION_INFO where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnis.core.patientManage.entity.PatOperationInfo" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into PAT_OPERATION_INFO (OPERATION_ID, OPERATION_NAME, PAT_ID, 
+      PRE_OPERATION_DIAGNOSIS, POST_OPERATION_DIAGNOSIS, 
+      OPERATION_NO, INSTRUMENT_NURSE, ANESTHESIA_METHODS, 
+      SURGEON, ANESTHESIA_DOCTOR, OPERATION_ONE, 
+      OPERATION_TWO, SCRUB_NURSE, CIRCULATING_NURSE, 
+      IS_ANESTHESIA_CONSULTATION, IS_EMERGENCY_TREATMENT, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+      UPDATE_PERSON,OPERATION_TIME)
+    values (#{operationId,jdbcType=VARCHAR}, #{operationName,jdbcType=VARCHAR}, #{patId,jdbcType=VARCHAR}, 
+      #{preOperationDiagnosis,jdbcType=VARCHAR}, #{postOperationDiagnosis,jdbcType=VARCHAR}, 
+      #{operationNo,jdbcType=VARCHAR}, #{instrumentNurse,jdbcType=VARCHAR}, #{anesthesiaMethods,jdbcType=VARCHAR}, 
+      #{surgeon,jdbcType=VARCHAR}, #{anesthesiaDoctor,jdbcType=VARCHAR}, #{operationOne,jdbcType=VARCHAR}, 
+      #{operationTwo,jdbcType=VARCHAR}, #{scrubNurse,jdbcType=VARCHAR}, #{circulatingNurse,jdbcType=VARCHAR}, 
+      #{isAnesthesiaConsultation,jdbcType=INTEGER}, #{isEmergencyTreatment,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updatePerson,jdbcType=VARCHAR},#{operationTime,jdbcType=TIMESTAMP})
+  </insert>
+  <select id="getByPatId" resultMap="BaseResultMap" parameterType="Map" >
+    select poi.SEQ_ID, poi.OPERATION_ID, poi.OPERATION_NAME, poi.PAT_ID, poi.PRE_OPERATION_DIAGNOSIS, poi.POST_OPERATION_DIAGNOSIS, 
+    poi.OPERATION_NO, poi.INSTRUMENT_NURSE, poi.ANESTHESIA_METHODS, poi.SURGEON, poi.ANESTHESIA_DOCTOR, poi.OPERATION_ONE, 
+    poi.OPERATION_TWO, poi.SCRUB_NURSE, poi.CIRCULATING_NURSE, poi.IS_ANESTHESIA_CONSULTATION, poi.IS_EMERGENCY_TREATMENT, 
+    poi.CREATE_TIME, poi.CREATE_PERSON, poi.UPDATE_TIME, poi.UPDATE_PERSON, pos.SEQ_ID SEQID, pos.OPERATION_ID, pos.PAT_ID, 
+    pos.STATUS, poi.OPERATION_TIME, pos.CREATE_TIME CREATETIME, pos.CREATE_PERSON CREATEPERSON, pos.UPDATE_TIME UPDATETIME, pos.UPDATE_PERSON UPDATEPERSON, pci.NAME, 
+    pci.BIRTH_DATE, pci.GENDER, cw.NAME DEPT_NAME, cu.PHONE, pci.BED_CODE, poc.DESCRIBE STATUS_NAME
+    from PAT_OPERATION_INFO poi, PAT_OPERATION_STATUS pos, PAT_CURE_INFO pci, COM_WARD cw, COM_USER cu, PAT_ORDER_CONFIGURATION poc
+    where poi.PAT_ID = #{patId}
+    and poi.OPERATION_ID = pos.OPERATION_ID
+    and pci.PAT_ID = poi.PAT_ID
+    and pci.WARD_CODE = cw.CODE
+    and cu.CODE = pos.EXEC_NURSE_ID
+    and poc.MODULENAME = #{moduleName}
+    and poc.STATUS = pos.STATUS
+    order by poi.OPERATION_TIME DESC
+  </select>
+  <select id="queryByStatusOrDate" resultMap="BaseResultMap" parameterType="Map">
+    select poi.SEQ_ID, poi.OPERATION_ID, poi.OPERATION_NAME, poi.PAT_ID, poi.PRE_OPERATION_DIAGNOSIS, poi.POST_OPERATION_DIAGNOSIS, 
+    poi.OPERATION_NO, poi.INSTRUMENT_NURSE, poi.ANESTHESIA_METHODS, poi.SURGEON, poi.ANESTHESIA_DOCTOR, poi.OPERATION_ONE, 
+    poi.OPERATION_TWO, poi.SCRUB_NURSE, poi.CIRCULATING_NURSE, poi.IS_ANESTHESIA_CONSULTATION, poi.IS_EMERGENCY_TREATMENT, 
+    poi.CREATE_TIME, poi.CREATE_PERSON, poi.UPDATE_TIME, poi.UPDATE_PERSON, pos.SEQ_ID SEQID, pos.OPERATION_ID, pos.PAT_ID, 
+    pos.STATUS, poi.OPERATION_TIME, pos.CREATE_TIME CREATETIME, pos.CREATE_PERSON CREATEPERSON, pos.UPDATE_TIME UPDATETIME, pos.UPDATE_PERSON UPDATEPERSON, pci.NAME, 
+    pci.BIRTH_DATE, pci.GENDER, cw.NAME DEPT_NAME, cu.PHONE, pci.BED_CODE, poc.DESCRIBE STATUS_NAME
+    from PAT_OPERATION_INFO poi, PAT_OPERATION_STATUS pos, PAT_CURE_INFO pci, COM_WARD cw, COM_USER cu, PAT_ORDER_CONFIGURATION poc
+    where poi.OPERATION_ID = pos.OPERATION_ID
+    	and pci.PAT_ID = poi.PAT_ID
+    	and pci.WARD_CODE = cw.CODE
+    	and cu.CODE = pos.EXEC_NURSE_ID
+    	and poc.MODULENAME = #{moduleName}
+    and poc.STATUS = pos.STATUS
+    <if test="status != null">
+        and pos.STATUS = #{status}
+    </if>
+    <if test="startDate != null">
+        and poi.OPERATION_TIME >= #{startDate}
+    </if>
+    <if test="endDate != null">
+        and #{endDate} > poi.OPERATION_TIME
+    </if>
+  </select>
+</mapper>

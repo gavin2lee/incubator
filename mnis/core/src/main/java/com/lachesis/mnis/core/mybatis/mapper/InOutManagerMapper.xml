@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.InOutManagerMapper">
+	<resultMap type="InOutManager" id="inOutManagerMap">
+		<id property="id" column="id" />
+		<result property="patId" column="pat_id" />
+		<result property="deptCode" column="dept_code" />
+		<result property="inItemCode" column="in_item_code" />
+		<result property="inItemName" column="in_item_name" />
+		<result property="inItemVal" column="in_item_val" />
+		<result property="inItemUnit" column="in_item_unit" />
+		<result property="outItemCode" column="out_item_code" />
+		<result property="outItemName" column="out_item_name" />
+		<result property="outItemVal" column="out_item_val" />
+		<result property="outItemUnit" column="out_item_unit" />
+		<result property="createDate" column="create_date" />
+		<result property="createUserCode" column="create_user_code" />
+		<result property="createUserName" column="create_user_name" />
+		<result property="updateDate" column="update_date" />
+		<result property="updateUserCode" column="update_user_code" />
+		<result property="updateUserName" column="update_user_name" />
+		<result property="outShapeCode" column="out_shape_code" />
+		<result property="outShapeName" column="out_shape_name" />
+		<result property="outColorCode" column="out_color_code" />
+		<result property="outColorName" column="out_color_name" />
+	</resultMap>
+	
+	<resultMap id="inOutManagerStatisticMap" type="InOutManagerStatistic">
+		<result property="inTotalCount" column="in_total_count"></result>
+		<result property="outTotalCount" column="out_total_count"></result>
+	</resultMap>
+
+	<resultMap id="outDicMap" type="java.util.Map">
+		<id property="code" column="code"></id>
+		<result property="name" column="name"></result>
+	</resultMap>
+
+	<sql id="inOutManagerSql">
+		m.pat_id,
+		m.dept_code,
+		m.in_item_code,
+		m.in_item_name,
+		m.in_item_val,
+		m.in_item_unit,
+		m.out_item_code,
+		m.out_item_name,
+		m.out_item_val,
+		m.out_item_unit,
+		m.create_date,
+		m.create_user_code,
+		m.create_user_name,
+		m.update_date,
+		m.update_user_code,
+		m.update_user_name,
+		m.out_shape_code,
+		m.out_shape_name,
+		m.out_color_code,
+		m.out_color_name
+	</sql>
+	
+	<select id="getInOutManagers" parameterType="java.util.HashMap" resultMap="inOutManagerMap">
+		SELECT
+			m.id,
+			<include refid="inOutManagerSql" />
+		FROM pat_in_out_manager m
+		WHERE
+			m.dept_code = #{param2}
+			<if test="param1 != null">
+				AND m.pat_id = #{param1}
+			</if>
+			<if test="param3 != null or param4 != null">
+				AND m.update_date  between #{param3} and #{param4}
+			</if>
+	</select>
+	
+	<select id="getInOutManagerById" parameterType="Integer" resultMap="inOutManagerMap">
+		SELECT
+			m.id,
+			<include refid="inOutManagerSql" />
+		FROM pat_in_out_manager m
+		WHERE
+			m.id = #{param1}
+	</select>
+	
+	<insert id="insertInOutManager" parameterType="InOutManager" 
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO 
+		pat_in_out_manager(
+			<include refid="inOutManagerSql" />
+		)
+		VALUES(#{patId},#{deptCode},#{inItemCode},#{inItemName},#{inItemVal},#{inItemUnit},
+		#{outItemCode},#{outItemName},#{outItemVal},#{outItemUnit},#{createDate},
+		#{createUserCode},#{createUserName},#{updateDate},#{updateUserCode},#{updateUserName},
+		#{outShapeCode},#{outShapeName},#{outColorCode},#{outColorName})
+	</insert>
+	<update id="updateInOutManager" parameterType="InOutManager">
+		UPDATE pat_in_out_manager
+		<set>
+			<if test="patId != null">
+				pat_id = #{patId},
+			</if>
+			<if test="deptCode != null">
+				dept_code = #{deptCode},
+			</if>
+			<if test="inItemCode != null">
+				in_item_code = #{inItemCode},
+			</if>
+			<if test="inItemName != null">
+				in_item_name = #{inItemName},
+			</if>
+			<if test="inItemVal != null">
+				in_item_val = #{inItemVal},
+			</if>
+			<if test="inItemUnit != null">
+				in_item_unit = #{inItemUnit},
+			</if>
+			<if test="outItemCode != null">
+				out_item_code = #{outItemCode},
+			</if>
+			<if test="outItemName != null">
+				out_item_name = #{outItemName},
+			</if>
+			<if test="outItemVal != null">
+				out_item_val = #{outItemVal},
+			</if>
+			<if test="outItemUnit != null">
+				out_item_unit = #{outItemUnit},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate},
+			</if>
+			<if test="createUserCode != null">
+				create_user_code = #{createUserCode},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate},
+			</if>
+			<if test="updateUserCode != null">
+				update_user_code = #{updateUserCode},
+			</if>
+			<if test="updateUserName != null">
+				update_user_name = #{updateUserName}
+			</if>
+			<if test="outShapeCode != null">
+				out_shape_code = #{outShapeCode}
+			</if>
+			<if test="outShapeName != null">
+				out_shape_name = #{outShapeName}
+			</if>
+			<if test="outColorCode != null">
+				out_color_code = #{outColorCode}
+			</if>
+			<if test="outColorName != null">
+				out_color_name = #{outColorName}
+			</if>
+		</set>
+		WHERE
+			id = #{id}
+	</update>
+	<delete id="deleteById" parameterType="Integer">
+		DELETE FROM pat_in_out_manager
+		WHERE id = #{param1}
+	</delete>
+	
+	<select id="getInOutManagerStatistic" parameterType="java.util.HashMap" resultMap="inOutManagerStatisticMap">
+		SELECT 
+			sum(case when m.in_item_val is not null and  m.in_item_unit='ml'
+			then m.in_item_val
+			else 0
+			end)
+			as in_total_count,
+			sum(case when m.out_item_val is not null and  m.out_item_unit='ml'
+			then m.out_item_val
+			else 0
+			end)
+			as out_total_count
+		 FROM pat_in_out_manager m
+		 WHERE
+			m.dept_code = #{param2}
+			<if test="param1 != null">
+				AND m.pat_id = #{param1}
+			</if>
+			<if test="param3 != null or param4 != null">
+				AND m.update_date  between #{param3} and #{param4}
+			</if>
+	</select>
+	
+	<select id="getOutDics" parameterType="java.util.HashMap" resultMap="outDicMap">
+		select METADATA_NAME name,METADATA_CODE code from DOC_METADATA
+		where 
+			<choose>
+				<when test="dicType == 0">
+					METADATA_CODE like 'out_shape_%'
+				</when>
+				<otherwise>
+				    METADATA_CODE like 'out_color_%'
+				</otherwise>
+			</choose>
+		order by ORD
+	</select>
+</mapper>

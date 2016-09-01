@@ -1,0 +1,26 @@
+<form role="form"
+      form="addDealForm">
+      <!-- {{vm.metaData.checkDetailList[0].qualityResultDetailList[0].resultCode}} -->
+  <table ng-table="vm.tableParams" class="table table-condensed table-bordered table-striped">
+    <tr ng-repeat="row in vm.metaData.checkDetailList[0].qualityResultDetailList">
+      <td data-title="'序号'" class="text-center">
+        {{ $index }}
+      </td>
+      <td data-title="'检查内容及要求'" class="text-center">
+        {{ row.item }}
+      </td>
+      <td data-title="'分值'" class="text-center">
+        {{ row.points }}
+      </td>
+      <td data-title="'得分'" class="text-center">
+        {{ row.count }}
+      </td>
+      <td data-title="'扣分原因'" class="text-center">
+        {{ row.cause }}
+      </td>
+    </tr>
+  </table>
+  <div class="text-center">
+      <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">关闭</button>
+  </div>
+</form>

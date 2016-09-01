@@ -1,0 +1,457 @@
+@CHARSET "UTF-8";
+
+* {
+	line-height: 1.5;
+	font-family: "SimSun";
+	font-size: 12px;
+}
+textarea {
+	resize: none;
+}
+/* strong { */
+/* 	font-family: "Microsoft YaHei"; */
+/* 	font-weight: 500; */
+/* } */
+.align-left {
+	text-align: left;
+}
+.doc, .doc-view {
+	margin: 0px;
+}
+.doc .diagnosisLabel {
+	cursor: pointer;
+}
+.diagnosis {
+	width: 580px;
+	text-align: left !important;
+}
+.paper-landscape .diagnosis {
+	width: 940px;
+}
+.restraint .diagnosis {
+	width: 320px;
+}
+.doc-view {
+	background-color: #989697;
+}
+.doc-view * {
+	font-size: 12pt;
+/* 	font-size: 10.5pt; barthel 表字大小*/
+/* 	position: relative; */
+	page-break-inside: avoid;
+	page-break-before: avoid;
+	page-break-after: avoid;
+}
+/* 入院评估单 */
+.hospitalize {
+	margin: 0px;
+	background-color: #989697;
+}
+.hospitalize * {
+	font-size: 12pt;
+}
+.toolbar-container {
+	position: fixed;
+	z-index: 1;
+	border: 1px solid #abbbc1;
+	background-color: #e0e4e8;
+	width: 100%;
+	height: 38px;
+}
+.toolbar {
+	padding-right: 30px;
+}
+.toolbar > * {
+	float: right;
+	cursor: pointer;
+	height: 25px;
+	min-width: 70px;
+	margin-top: 7px;
+	margin-right: 4px;
+	padding: 0 3px;
+	font-size: 14px;
+}
+.doc-container, .paper-container {
+	padding: 50px 8px 8px 8px;
+}
+.paper {
+	background-color: #FFF;
+	width: 860px;
+	height: 1200px;
+/* 	height: 1165px; */
+/* 	height: 1220px; */
+/* 	width: 210mm; */
+/* 	height: 297mm; */
+	margin: auto;
+	padding: 30px 30px 10px 30px;
+/* 	padding-bottom: 60px; */
+/* 	padding-bottom: 50px; */
+/* 	padding-top: 20mm; */
+}
+.paper-content {
+/* 	border: 1px solid black; */
+	width: 100%;
+/* 	height: 100%; */
+}
+/* TODO: 调好此宽高 */
+.paper-landscape {
+	width: 1200px;
+	height: 850px;
+/* 	width: 297mm; */
+/* 	height: 190mm; */
+/* 	size: landscape; */
+/* 	width: 247mm; */
+/* 	height: 150mm; */
+}
+.page-foot {
+	width: 860px;
+	text-align: center;
+	position: absolute;
+	margin-top: 15px;
+}
+.paper-landscape .page-foot {
+	width: 1200px;
+}
+.break-page {
+	visibility: hidden;
+	page-break-after: always;
+}
+/* .pageNumber:before { */
+/* 	counter-increment: section; */
+/* 	content: counter(section); */
+/* } */
+.doc-content input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+}
+.doc-content input[type='text'] {
+	text-align: center;
+}
+/************************************/
+.doc-hospital {
+	width: 100%;
+	text-align: center;
+	font-size: 14pt;
+}
+.doc-title {
+	width: 100%;
+	text-align: center;
+/* 	font-size: 16pt; */
+	font-size: 22px;
+	font-weight: bolder;
+/* 	font-weight: 100; */
+/* 	font-family: "SimSun"; */
+/* 	font-family: "STZhongsong"; */
+	font-family: "STZhongsong","SimSun";
+	padding-bottom: 10px;
+}
+.doc-patient {
+	width: 100%;
+}
+.doc-patient * {
+	display: inline-block;
+	vertical-align: top;
+	text-align: center;
+}
+.doc-patient > * {
+	margin-right: 12px;
+}
+.doc-patient > *:last-child, .doc-patient-last {
+	margin-right: 0px;
+}
+.doc-patient .value {
+/* 	margin-left: 5px; */
+	border: none;
+/* 	border-bottom: 1px solid; */
+}
+.doc-patient .last-value {
+	display: inline;
+}
+.doc-content {
+/* 	border: 1px solid black; */
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 100%;
+}
+.doc-table {
+	border: 1px solid black;
+	width: 100%;
+/* 	height: 100%; */
+	border-collapse: collapse;
+	text-align: center;
+}
+.doc-table th, .doc-table td {
+	border: 1px solid black;
+	height: 20px;
+	padding: 2px;
+}
+.doc-table th {
+	word-break: break-all;
+}
+.doc-header-hold {
+	display: inline-block;
+	width: 90%;
+}
+.doc-header-hold > input {
+	width: 100%;
+	text-align: center;
+}
+.doc-hold-text, .doc-hold-text2 {
+/* 	display: inline-block; */
+	border: none;
+	border-bottom: 1px solid black;
+	width: 60px;
+}
+.doc-hold-text2 {
+	width: 40px;
+}
+.doc-comment {
+	padding-top: 2px;
+}
+.doc-comment, .doc-comment * {
+	font-size: 10pt;
+}
+
+/* 单个文书 */
+.doc-only * {
+/* 	font-size: 14px; */
+/* 	line-height: 1.8; */
+/* 	letter-spacing: 1px; */
+/* 	vertical-align: middle; */
+}
+.doc-only .grid, .doc-only .grid td {
+	border: none;
+	margin: 0px;
+	padding: 0px;
+}
+.doc-only table {
+	border: 1px solid black;
+	width: 100%;
+	border-collapse: collapse;
+}
+.doc-only table td {
+	border: 1px solid black;
+	padding: 6px;
+}
+.doc-only .head {
+	text-align: center;
+	font-size: 16px;
+	font-weight: bolder;
+}
+.doc-only .title,
+.doc-only .title > *,
+/* .doc-only .content, */
+.doc-only .content > * {
+	display: inline-block;
+}
+.doc-only .title {
+	font-weight: bold;
+}
+.doc-only .item {
+	display: inline-block;
+	margin-right: 10px;
+}
+.doc-only .item:last-child {
+	display: inline-block;
+	margin-right: 0px;
+}
+.doc-only input[type='text'] {
+	border: none;
+	border-bottom: 1px solid black;
+	text-align: center;
+	height: 20px;
+}
+.doc-only input[type='radio'],
+.doc-only input[type='checkbox'] {
+	display: none;
+}
+.doc-only label {
+	cursor: pointer;
+	position: relative;
+	padding-left: 20px;
+/* 	margin-right: 10px; */
+}
+.doc-only label:before {
+	content: "";
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	position: absolute;
+	left: 0;
+	top: 5px;
+	border: 1px solid #000;
+/* 	border-radius: 1px; */
+}
+.doc-only input[type=radio]:checked + label:before,
+.doc-only input[type=checkbox]:checked + label:before {
+	content: "\2713";
+	text-align: center;
+	line-height: 12px;
+}
+/*
+.doc-only label:before {
+	content: "";
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	left: 0;
+	top: 5px;
+	border: 1px solid #000;
+}
+.doc-only input[type=radio]:checked + label:before,
+.doc-only input[type=checkbox]:checked + label:before {
+	content: "\2713";
+	text-align: center;
+	font-size: 10px;
+	line-height: 8px;
+}
+*/
+.doc-only .year {
+	width: 40px;
+}
+.doc-only .datetime {
+	width: 25px;
+}
+.doc-only .data1 {
+	width: 40px;
+}
+.doc-only .data2 {
+	width: 80px;
+}
+.doc-only input[type='text'].data3 {
+	width: 600px;
+	text-align: left;
+}
+.doc-only .data4 {
+	width: 100px;
+}
+.doc-only textarea {
+/* 	text-indent: 20px; */
+	width: 100%;
+	height: 200px;
+	border: none;
+}
+.doc-health-table {
+	border: 1px solid black;
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+}
+.doc-health-table  th, .doc-health-table td {
+	border: 1px solid black;
+	padding: 6px;
+}
+.doc-health .date {
+	width: 85px;
+}
+.doc-health .way, .doc-health .target {
+	width: 80px;
+}
+.doc-health .declarer, .doc-health .evaluater {
+	width: 95px;
+	text-align: center;
+}
+.doc-health .evaluate {
+	width: 40px;
+}
+.doc-pain-title input[type='radio'],
+.doc-pain-title input[type='checkbox'] {
+	display: none;
+}
+.doc-pain-title label {
+	cursor: pointer;
+	position: relative;
+	padding-left: 20px;
+	margin-right: 10px;
+}
+.doc-pain-title label:before {
+	content: "";
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	position: absolute;
+	left: 0;
+	top: 0px;
+	border: 1px solid #000;
+/* 	border-radius: 1px; */
+}
+.doc-pain-title input[type=radio]:checked + label:before,
+.doc-pain-title input[type=checkbox]:checked + label:before {
+	content: "\2713";
+	text-align: center;
+	line-height: 12px;
+}
+.doc-pain-way, .doc-pain-way * {
+	font-size: 10.5pt;
+}
+.doc-pain-way > * {
+	display: table-cell;
+	vertical-align: middle;
+}
+.doc-pain-way .nrs {
+	width: 230px;
+}
+.doc-pain-way img {
+	width: 228px;
+	height: 100px;
+	margin-left: -13px;
+}
+.doc-pain-way .behavior {
+	width: 438px;
+}
+.doc-pain-way table {
+	border: 1px solid black;
+	width: 100%;
+	border-collapse: collapse;
+}
+.doc-pain-way th {
+	text-align: center;
+}
+.doc-pain-way th, .doc-pain-way td {
+	border: 1px solid black;
+	line-height: 1.2;
+	font-size: 9pt;
+}
+/***************** override default easyui css ****************/
+.datagrid-cell, .datagrid-cell-group {
+	white-space: normal;
+	word-wrap: normal;
+	height: auto;
+}
+.datagrid-header td,
+.datagrid-body td,
+.datagrid-footer td {
+	border-color: #969696;
+}
+/* .datagrid-editable-input { */
+/* 	text-align: center; */
+/* } */
+/***************** print css ****************/
+@media print {
+	.toolbar-container {
+		display: none;
+	}
+	.doc-container, .paper-container {
+		padding: 0px;
+	}
+	.paper {
+		padding: 0px;
+	}
+/* 	.combo { */
+/* 		border: none; */
+/* 	} */
+/* 	.textbox-addon { */
+/* 		display: none; */
+/* 	} */
+/* 	.textbox { */
+/* 		border-radius: 0px; */
+/* 		border-bottom: 1px solid black; */
+/* 	} */
+/* 	.textbox .textbox-text { */
+/* 		border-radius: 0px; */
+/* 	} */
+	@page {
+		margin-bottom: 5mm;
+	}
+}

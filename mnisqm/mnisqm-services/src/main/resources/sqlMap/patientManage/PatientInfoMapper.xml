@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.patientManage.dao.PatientInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.patientManage.domain.PatientInfo" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="PAT_ID" property="patId" jdbcType="VARCHAR" />
+    <result column="IN_HOSP_NO" property="inHospNo" jdbcType="VARCHAR" />
+    <result column="BED_CODE" property="bedCode" jdbcType="VARCHAR" />
+    <result column="WARD_CODE" property="wardCode" jdbcType="VARCHAR" />
+    <result column="WARD_NAME" property="wardName" jdbcType="VARCHAR" />
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="BARCODE" property="barcode" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="GENDER" property="gender" jdbcType="VARCHAR" />
+    <result column="PERSON_ID" property="personId" jdbcType="VARCHAR" />
+    <result column="BIRTH_DATE" property="birthDate" jdbcType="TIMESTAMP" />
+    <result column="CONTACT_PERSON" property="contactPerson" jdbcType="VARCHAR" />
+    <result column="CONTACT_PHONE" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="CONTACT_ADDRESS" property="contactAddress" jdbcType="VARCHAR" />
+    <result column="IS_BABY" property="isBaby" jdbcType="VARCHAR" />
+    <result column="DANGER_LEVEL" property="dangerLevel" jdbcType="VARCHAR" />
+    <result column="NURSE_LEVEL" property="nurseLevel" jdbcType="VARCHAR" />
+    <result column="CHARGE_TYPE" property="chargeType" jdbcType="VARCHAR" />
+    <result column="CHARGE_TYPE_NAME" property="chargeTypeName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_CODE" property="doctorCode" jdbcType="VARCHAR" />
+    <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+    <result column="DUTY_NURSE_CODE" property="dutyNurseCode" jdbcType="VARCHAR" />
+    <result column="DUTY_NURSE_NAME" property="dutyNurseName" jdbcType="VARCHAR" />
+    <result column="IN_DATE" property="inDate" jdbcType="TIMESTAMP" />
+    <result column="IN_DIAG" property="inDiag" jdbcType="VARCHAR" />
+    <result column="OUT_DATE" property="outDate" jdbcType="TIMESTAMP" />
+    <result column="OUT_DIAG" property="outDiag" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="DIET_NAME" property="dietName" jdbcType="VARCHAR" />
+    <result column="PREPAY_COST" property="prepayCost" jdbcType="DECIMAL" />
+    <result column="OWN_COST" property="ownCost" jdbcType="DECIMAL" />
+    <result column="BALANCE" property="balance" jdbcType="DECIMAL" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="ALLERGEN" property="allergen" jdbcType="VARCHAR" />
+    <result column="ADVERSE_REACTION_DRUGS" property="adverseReactionDrugs" jdbcType="VARCHAR" />
+    <result column="SYNC_CREATE" property="syncCreate" jdbcType="TIMESTAMP" />
+    <result column="SYNC_UPDATE" property="syncUpdate" jdbcType="TIMESTAMP" />
+    <result column="ISSEPARATE" property="isseparate" jdbcType="INTEGER" />
+    <result column="MARITAL_STATUS" property="maritalStatus" jdbcType="VARCHAR" />
+    <result column="OCCUPATION" property="occupation" jdbcType="VARCHAR" />
+    <result column="EDUCATION" property="education" jdbcType="VARCHAR" />
+    <result column="HOMETOWN" property="hometown" jdbcType="VARCHAR" />
+    <result column="RELIGION" property="religion" jdbcType="VARCHAR" />
+    <result column="SOURCE" property="source" jdbcType="VARCHAR" />
+    <result column="DAILYCAREGIVERS" property="dailycaregivers" jdbcType="VARCHAR" />
+    <result column="ADMISSIONMODE" property="admissionmode" jdbcType="VARCHAR" />
+    <result column="INP_NO" property="inpNo" jdbcType="VARCHAR" />
+    <result column="APPEAL" property="appeal" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PAT_CURE_INFO
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.patientManage.domain.PatientInfo" >
+    insert into PAT_CURE_INFO (PAT_ID,IN_HOSP_NO, 
+      BED_CODE, WARD_CODE,WARD_NAME,DEPT_CODE,DEPT_NAME, BARCODE, 
+      NAME, GENDER, PERSON_ID, 
+      BIRTH_DATE, CONTACT_PERSON, CONTACT_PHONE, 
+      CONTACT_ADDRESS, IS_BABY, DANGER_LEVEL, 
+      NURSE_LEVEL, CHARGE_TYPE, CHARGE_TYPE_NAME, 
+      DOCTOR_CODE, DOCTOR_NAME, DUTY_NURSE_CODE, 
+      DUTY_NURSE_NAME, IN_DATE, IN_DIAG, 
+      OUT_DATE, OUT_DIAG, STATUS, 
+      DIET_NAME, PREPAY_COST, OWN_COST, 
+      BALANCE, REMARK, ALLERGEN, 
+      ADVERSE_REACTION_DRUGS, SYNC_CREATE, SYNC_UPDATE, 
+      ISSEPARATE, MARITAL_STATUS, OCCUPATION, 
+      EDUCATION, HOMETOWN, RELIGION, 
+      SOURCE, DAILYCAREGIVERS, ADMISSIONMODE, 
+      INP_NO, APPEAL)
+    values (#{patId,jdbcType=VARCHAR}, #{inHospNo,jdbcType=VARCHAR}, 
+      #{bedCode,jdbcType=VARCHAR}, #{wardCode,jdbcType=VARCHAR},#{wardName,jdbcType=VARCHAR},#{deptCode,jdbcType=VARCHAR},#{deptName,jdbcType=VARCHAR}, #{barcode,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{personId,jdbcType=VARCHAR}, 
+      #{birthDate,jdbcType=TIMESTAMP}, #{contactPerson,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, 
+      #{contactAddress,jdbcType=VARCHAR}, #{isBaby,jdbcType=VARCHAR}, #{dangerLevel,jdbcType=VARCHAR}, 
+      #{nurseLevel,jdbcType=VARCHAR}, #{chargeType,jdbcType=VARCHAR}, #{chargeTypeName,jdbcType=VARCHAR}, 
+      #{doctorCode,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, #{dutyNurseCode,jdbcType=VARCHAR}, 
+      #{dutyNurseName,jdbcType=VARCHAR}, #{inDate,jdbcType=TIMESTAMP}, #{inDiag,jdbcType=VARCHAR}, 
+      #{outDate,jdbcType=TIMESTAMP}, #{outDiag,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{dietName,jdbcType=VARCHAR}, #{prepayCost,jdbcType=DECIMAL}, #{ownCost,jdbcType=DECIMAL}, 
+      #{balance,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, #{allergen,jdbcType=VARCHAR}, 
+      #{adverseReactionDrugs,jdbcType=VARCHAR}, #{syncCreate,jdbcType=TIMESTAMP}, #{syncUpdate,jdbcType=TIMESTAMP}, 
+      #{isseparate,jdbcType=INTEGER}, #{maritalStatus,jdbcType=VARCHAR}, #{occupation,jdbcType=VARCHAR}, 
+      #{education,jdbcType=VARCHAR}, #{hometown,jdbcType=VARCHAR}, #{religion,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{dailycaregivers,jdbcType=VARCHAR}, #{admissionmode,jdbcType=VARCHAR}, 
+      #{inpNo,jdbcType=VARCHAR}, #{appeal,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPatId" parameterType="com.lachesis.mnisqm.module.patientManage.domain.PatientInfo" >
+    update PAT_CURE_INFO
+    set PAT_ID = #{patId,jdbcType=VARCHAR},
+      IN_HOSP_NO = #{inHospNo,jdbcType=VARCHAR},
+      BED_CODE = #{bedCode,jdbcType=VARCHAR},
+      WARD_CODE = #{wardCode,jdbcType=VARCHAR},
+      WARD_NAME = #{wardName,jdbcType=VARCHAR},
+      DEPT_CODE = #{deptCode,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      BARCODE = #{barcode,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=VARCHAR},
+      PERSON_ID = #{personId,jdbcType=VARCHAR},
+      BIRTH_DATE = #{birthDate,jdbcType=TIMESTAMP},
+      CONTACT_PERSON = #{contactPerson,jdbcType=VARCHAR},
+      CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
+      CONTACT_ADDRESS = #{contactAddress,jdbcType=VARCHAR},
+      IS_BABY = #{isBaby,jdbcType=VARCHAR},
+      DANGER_LEVEL = #{dangerLevel,jdbcType=VARCHAR},
+      NURSE_LEVEL = #{nurseLevel,jdbcType=VARCHAR},
+      CHARGE_TYPE = #{chargeType,jdbcType=VARCHAR},
+      CHARGE_TYPE_NAME = #{chargeTypeName,jdbcType=VARCHAR},
+      DOCTOR_CODE = #{doctorCode,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      DUTY_NURSE_CODE = #{dutyNurseCode,jdbcType=VARCHAR},
+      DUTY_NURSE_NAME = #{dutyNurseName,jdbcType=VARCHAR},
+      IN_DATE = #{inDate,jdbcType=TIMESTAMP},
+      IN_DIAG = #{inDiag,jdbcType=VARCHAR},
+      OUT_DATE = #{outDate,jdbcType=TIMESTAMP},
+      OUT_DIAG = #{outDiag,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      DIET_NAME = #{dietName,jdbcType=VARCHAR},
+      PREPAY_COST = #{prepayCost,jdbcType=DECIMAL},
+      OWN_COST = #{ownCost,jdbcType=DECIMAL},
+      BALANCE = #{balance,jdbcType=DECIMAL},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      ALLERGEN = #{allergen,jdbcType=VARCHAR},
+      ADVERSE_REACTION_DRUGS = #{adverseReactionDrugs,jdbcType=VARCHAR},
+      SYNC_CREATE = #{syncCreate,jdbcType=TIMESTAMP},
+      SYNC_UPDATE = #{syncUpdate,jdbcType=TIMESTAMP},
+      ISSEPARATE = #{isseparate,jdbcType=INTEGER},
+      MARITAL_STATUS = #{maritalStatus,jdbcType=VARCHAR},
+      OCCUPATION = #{occupation,jdbcType=VARCHAR},
+      EDUCATION = #{education,jdbcType=VARCHAR},
+      HOMETOWN = #{hometown,jdbcType=VARCHAR},
+      RELIGION = #{religion,jdbcType=VARCHAR},
+      SOURCE = #{source,jdbcType=VARCHAR},
+      DAILYCAREGIVERS = #{dailycaregivers,jdbcType=VARCHAR},
+      ADMISSIONMODE = #{admissionmode,jdbcType=VARCHAR},
+      INP_NO = #{inpNo,jdbcType=VARCHAR},
+      APPEAL = #{appeal,jdbcType=VARCHAR}
+    where PAT_ID = #{patId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select ID, PAT_ID, IN_HOSP_NO, BED_CODE, WARD_CODE, WARD_NAME, DEPT_CODE, DEPT_NAME, BARCODE, NAME, GENDER, PERSON_ID, 
+    BIRTH_DATE, CONTACT_PERSON, CONTACT_PHONE, CONTACT_ADDRESS, IS_BABY, DANGER_LEVEL, 
+    NURSE_LEVEL, CHARGE_TYPE, CHARGE_TYPE_NAME, DOCTOR_CODE, DOCTOR_NAME, DUTY_NURSE_CODE, 
+    DUTY_NURSE_NAME, IN_DATE, IN_DIAG, OUT_DATE, OUT_DIAG, STATUS, DIET_NAME, PREPAY_COST, 
+    OWN_COST, BALANCE, REMARK, ALLERGEN, ADVERSE_REACTION_DRUGS, SYNC_CREATE, SYNC_UPDATE, 
+    ISSEPARATE, MARITAL_STATUS, OCCUPATION, EDUCATION, HOMETOWN, RELIGION, SOURCE, DAILYCAREGIVERS, 
+    ADMISSIONMODE, INP_NO, APPEAL
+    from PAT_CURE_INFO
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, PAT_ID, IN_HOSP_NO, BED_CODE, WARD_CODE, WARD_NAME, DEPT_CODE, DEPT_NAME, BARCODE, NAME, GENDER, PERSON_ID, 
+    BIRTH_DATE, CONTACT_PERSON, CONTACT_PHONE, CONTACT_ADDRESS, IS_BABY, DANGER_LEVEL, 
+    NURSE_LEVEL, CHARGE_TYPE, CHARGE_TYPE_NAME, DOCTOR_CODE, DOCTOR_NAME, DUTY_NURSE_CODE, 
+    DUTY_NURSE_NAME, IN_DATE, IN_DIAG, OUT_DATE, OUT_DIAG, STATUS, DIET_NAME, PREPAY_COST, 
+    OWN_COST, BALANCE, REMARK, ALLERGEN, ADVERSE_REACTION_DRUGS, SYNC_CREATE, SYNC_UPDATE, 
+    ISSEPARATE, MARITAL_STATUS, OCCUPATION, EDUCATION, HOMETOWN, RELIGION, SOURCE, DAILYCAREGIVERS, 
+    ADMISSIONMODE, INP_NO, APPEAL
+    from PAT_CURE_INFO
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from PAT_CURE_INFO where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.patientManage.domain.PatientInfo" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into PAT_CURE_INFO (PAT_ID,IN_HOSP_NO, 
+      BED_CODE, WARD_CODE, WARD_NAME, DEPT_CODE, DEPT_NAME, BARCODE, 
+      NAME, GENDER, PERSON_ID, 
+      BIRTH_DATE, CONTACT_PERSON, CONTACT_PHONE, 
+      CONTACT_ADDRESS, IS_BABY, DANGER_LEVEL, 
+      NURSE_LEVEL, CHARGE_TYPE, CHARGE_TYPE_NAME, 
+      DOCTOR_CODE, DOCTOR_NAME, DUTY_NURSE_CODE, 
+      DUTY_NURSE_NAME, IN_DATE, IN_DIAG, 
+      OUT_DATE, OUT_DIAG, STATUS, 
+      DIET_NAME, PREPAY_COST, OWN_COST, 
+      BALANCE, REMARK, ALLERGEN, 
+      ADVERSE_REACTION_DRUGS, SYNC_CREATE, SYNC_UPDATE, 
+      ISSEPARATE, MARITAL_STATUS, OCCUPATION, 
+      EDUCATION, HOMETOWN, RELIGION, 
+      SOURCE, DAILYCAREGIVERS, ADMISSIONMODE, 
+      INP_NO, APPEAL)
+    values (#{patId,jdbcType=VARCHAR}, #{inHospNo,jdbcType=VARCHAR}, 
+      #{bedCode,jdbcType=VARCHAR}, #{wardCode,jdbcType=VARCHAR},#{wardName,jdbcType=VARCHAR},#{deptCode,jdbcType=VARCHAR},#{deptName,jdbcType=VARCHAR}, #{barcode,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{personId,jdbcType=VARCHAR}, 
+      #{birthDate,jdbcType=TIMESTAMP}, #{contactPerson,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, 
+      #{contactAddress,jdbcType=VARCHAR}, #{isBaby,jdbcType=VARCHAR}, #{dangerLevel,jdbcType=VARCHAR}, 
+      #{nurseLevel,jdbcType=VARCHAR}, #{chargeType,jdbcType=VARCHAR}, #{chargeTypeName,jdbcType=VARCHAR}, 
+      #{doctorCode,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, #{dutyNurseCode,jdbcType=VARCHAR}, 
+      #{dutyNurseName,jdbcType=VARCHAR}, #{inDate,jdbcType=TIMESTAMP}, #{inDiag,jdbcType=VARCHAR}, 
+      #{outDate,jdbcType=TIMESTAMP}, #{outDiag,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{dietName,jdbcType=VARCHAR}, #{prepayCost,jdbcType=DECIMAL}, #{ownCost,jdbcType=DECIMAL}, 
+      #{balance,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, #{allergen,jdbcType=VARCHAR}, 
+      #{adverseReactionDrugs,jdbcType=VARCHAR}, #{syncCreate,jdbcType=TIMESTAMP}, #{syncUpdate,jdbcType=TIMESTAMP}, 
+      #{isseparate,jdbcType=INTEGER}, #{maritalStatus,jdbcType=VARCHAR}, #{occupation,jdbcType=VARCHAR}, 
+      #{education,jdbcType=VARCHAR}, #{hometown,jdbcType=VARCHAR}, #{religion,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{dailycaregivers,jdbcType=VARCHAR}, #{admissionmode,jdbcType=VARCHAR}, 
+      #{inpNo,jdbcType=VARCHAR}, #{appeal,jdbcType=VARCHAR})
+  </insert>
+  <select id="getByInHospNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select ID, PAT_ID, IN_HOSP_NO, BED_CODE, WARD_CODE, WARD_NAME, DEPT_CODE, DEPT_NAME, BARCODE, NAME, GENDER, PERSON_ID, 
+    BIRTH_DATE, CONTACT_PERSON, CONTACT_PHONE, CONTACT_ADDRESS, IS_BABY, DANGER_LEVEL, 
+    NURSE_LEVEL, CHARGE_TYPE, CHARGE_TYPE_NAME, DOCTOR_CODE, DOCTOR_NAME, DUTY_NURSE_CODE, 
+    DUTY_NURSE_NAME, IN_DATE, IN_DIAG, OUT_DATE, OUT_DIAG, STATUS, DIET_NAME, PREPAY_COST, 
+    OWN_COST, BALANCE, REMARK, ALLERGEN, ADVERSE_REACTION_DRUGS, SYNC_CREATE, SYNC_UPDATE, 
+    ISSEPARATE, MARITAL_STATUS, OCCUPATION, EDUCATION, HOMETOWN, RELIGION, SOURCE, DAILYCAREGIVERS, 
+    ADMISSIONMODE, INP_NO, APPEAL
+    from PAT_CURE_INFO
+    where IN_HOSP_NO = #{inHospNo}
+  </select>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.training.dao.OutContinuingEducationMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.remote.training.domain.ContinuingEducation" >
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="NURSE_NAME" property="nurseName" jdbcType="VARCHAR" />
+    <result column="POSITION" property="position" jdbcType="VARCHAR" />
+    <result column="PERIOD_OF_TIME" property="periodOfTime" jdbcType="VARCHAR" />
+    <result column="TRAINING_NAME" property="trainingName" jdbcType="VARCHAR" />
+    <result column="PLACE" property="place" jdbcType="VARCHAR" />
+    <result column="SCORE" property="score" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.remote.training.domain.ContinuingEducation" >
+    insert into CONTINUING_EDUCATION (DEPT_CODE, DEPT_NAME, NURSE_NAME, 
+      POSITION, PERIOD_OF_TIME, TRAINING_NAME, 
+      PLACE, SCORE, CONTENT
+      )
+    values (#{deptCode,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, #{nurseName,jdbcType=VARCHAR}, 
+      #{position,jdbcType=VARCHAR}, #{periodOfTime,jdbcType=VARCHAR}, #{trainingName,jdbcType=VARCHAR}, 
+      #{place,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}
+      )
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select DEPT_CODE, DEPT_NAME, NURSE_NAME, POSITION, PERIOD_OF_TIME, TRAINING_NAME, 
+    PLACE, SCORE, CONTENT
+    from CONTINUING_EDUCATION
+  </select>
+  <insert parameterType="com.lachesis.mnisqm.module.remote.training.domain.ContinuingEducation" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into CONTINUING_EDUCATION (DEPT_CODE, DEPT_NAME, NURSE_NAME, 
+      POSITION, PERIOD_OF_TIME, TRAINING_NAME, 
+      PLACE, SCORE, CONTENT
+      )
+    values (#{deptCode,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, #{nurseName,jdbcType=VARCHAR}, 
+      #{position,jdbcType=VARCHAR}, #{periodOfTime,jdbcType=VARCHAR}, #{trainingName,jdbcType=VARCHAR}, 
+      #{place,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}
+      )
+  </insert>
+</mapper>

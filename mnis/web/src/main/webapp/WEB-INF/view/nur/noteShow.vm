@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小白板录入</title>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/patientGlance.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/note_s.css')">
+    <script type="text/javascript" src="#url('/resources/js/handlebars-v3.0.3.js?1472534366476')"></script>
+</head>
+<body>
+<header>
+    <h1 class="w-title">
+        $!deptName工作情况一览表
+        <div style="right: .7em;position: absolute;top: .1em;">
+            <span id="today">$!today</span>
+        </div>
+    </h1>
+</header>
+<section class="note">
+    <div id="white-board" data-title="工作一览">
+    </div>
+    <div id="bed-wrapper" style="display: none" class="main_r" data-title="床位列表">
+        <div class="middle auto-scroll">
+            <ul class="patient-list clearfix">
+                #if ( $bedList && $bedList.size() > 0 )
+                    #foreach($bedPatient in $bedList)
+                        <li class="fl patientBox level-$bedPatient.tendLevel"
+                            data-patientName="$!bedPatient.patientName" data-bedCode="$!bedPatient.bedCode"
+                            data-inhospitalno="$!bedPatient.inHospitalNo" data-patientId="$bedPatient.patientId"
+                            data-searchBedCode="$!bedPatient.showBedCode">
+                            <a href="javascript:getInPatInfoById('$bedPatient.patientId');" class="color">
+                                <div class="clearfix bg">
+
+                                    <span class="tdl$bedPatient.tendLevel">$!bedPatient.showBedCode</span>.<span
+                                        style="display: inline-block;width: 70px;overflow: hidden;vertical-align: bottom;white-space: nowrap;text-overflow: ellipsis;">$!bedPatient.patientName</span>
+                                    #if($!bedPatient.chargeType && $!bedPatient.chargeType != "")
+                                        <em class="fr">$bedPatient.chargeType.substring(0,1)</em>
+                                    #else
+                                        <em class="fr">其他</em>
+                                    #end
+                                    #if($!bedPatient.ageDuration == "Y" && $!bedPatient.age != "")
+                                        <span class="fr bgcolor child"></span>
+                                    #end
+
+                                </div>
+                                <div class="clearfix age_number">
+                                    <div>
+                                        #if($!bedPatient.gender == "M")
+                                            <span class="fl span">男</span>
+                                        #elseif($!bedPatient.gender == "F")
+                                            <span class="fl span">女</span>
+                                        #else
+                                            <span class="fl span"></span>
+                                        #end
+                                        <span class="fl tar">$!bedPatient.age</span>
+                                        <span class="fr">$!bedPatient.admitDate</span>
+                                    </div>
+                                </div>
+                                <div class="clearfix disease">
+                                    <p class="fl p1">
+                                        #if($!bedPatient.diet)
+                                            <span class="diet" title="$bedPatient.diet">$bedPatient.diet</span>
+                                        #else
+                                            <span class="diet" title="">&nbsp;</span>
+                                        #end
+                                        #if($!bedPatient.admitDiagnosis )
+                                            <span class="diagnosis"
+                                                  title="$bedPatient.admitDiagnosis">$bedPatient.admitDiagnosis</span>
+                                        #end
+                                    </p>
+
+                                    <p class="fl p3">
+
+                                        <span style="color: red;font-size: 12px" title="$bedPatient.allergyDrugs">
+                                            $bedPatient.allergyDrugs
+                                        </span>
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                    #end
+                #end
+            </ul>
+        </div>
+    </div>
+</section>
+<footer>
+
+</footer>
+<div class="edit-dialog">
+    <form class="form-wrapper">
+        <ul class="form-list clearfix">
+        </ul>
+    </form>
+</div>
+<script type="text/javascript" src="#url('/resources/js/nur/noteShow.js?1472534366476')"></script>
+</body>
+</html>

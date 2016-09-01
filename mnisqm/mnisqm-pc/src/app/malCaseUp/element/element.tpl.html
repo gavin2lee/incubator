@@ -1,0 +1,25 @@
+<div ng-controller="MalCaseUpElementController as vm">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-indent"></i>
+            <span>不良元素元素管理</span>
+            <div class="pull-right">
+                <button class="btn btn-xs btn-primary">新增元素</button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table ng-table="vm.tableParams" class="table table-condensed table-bordered table-striped">
+                <tr ng-repeat="row in vm.lst">
+                    <td data-title="'元素编号'">{{row.elementCode}}</td>
+                    <td data-title="'元素名称'">{{row.elementName}}</td>
+                    <td data-title="'显示名称'">{{row.viewName}}</td>
+                    <td data-title="'压疮大小'">{{row.groupName}}</td>
+                    <td data-title="'元素类型'">{{row.elementType}}</td>
+                    <td data-title="'组件宽度'">{{row.width}}</td>
+                    <td data-title="'备注'">{{row.remark}}</td>
+                    <td data-title="'是否必填'">{{row.required}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

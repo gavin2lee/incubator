@@ -1,0 +1,85 @@
+<div class="col-md-12 handle-wrapper">
+  <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+    <div class="panel-heading">
+      <i class="fa fa-list-alt"></i>
+      <span>不良事件列表</span>
+      <!-- <div class="pull-right">
+        <button ng-click="vm.open()" class="btn btn-primary btn-xs">
+          <i class="fa fa-upload"></i>
+          事件上报
+        </button>
+      </div> -->
+    </div>
+    <div class="panel-body">
+
+      <table print-table="vm.list" st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered">
+        <thead>
+          <tr class="header-export">
+            <th st-sort="hisCode">不良事件级别</th>
+            <th>类型</th>
+            <th>发生时间</th>
+            <th>科室</th>
+            <th>住院号</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>年龄</th>
+            <th>主要诊断</th>
+            <th>简要（5WH1）</th>
+            <th>报告人</th>
+
+            <th print-remove>操作</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="row in vm.list">
+          <tr class="row-{{$index}}">
+            <td ng-click="vm.loadDetail(row.code)">
+              {{ row.damageLevelName }}
+            </td>
+            <td ng-click="vm.loadDetail(row.code)">
+              {{row.eventTypeName}}
+            </td>
+            <td ng-click="vm.loadDetail(row.code)">
+              {{row.eventTime}}
+            </td>
+            <td ng-click="vm.loadDetail(row.code)">
+              {{row.deptName}}
+            </td>
+            <td ng-click="vm.loadDetail(row.code)">
+              {{ row.patientHospNo }}
+            </td>
+            <td ng-click="vm.loadDetail(row.code)">
+              {{row.patientName}}
+            </td>
+            <td ng-click="vm.loadDetail(row.code)">
+              {{ row.patientGenderName}}
+            </td>
+            <td ng-click="vm.loadDetail(row.code)">
+              {{row.patientAge}}
+            </td>
+            <td ng-click="vm.loadDetail(row.code)">
+              {{row.patientDiagnose}}
+            </td>
+            <td ng-click="vm.loadDetail(row.code)">
+              {{row.eventDescribe}}
+            </td>
+            <td ng-click="vm.loadDetail(row.code)">
+              {{row.userName}}
+            </td>
+            <td>
+              <a href="javascript:;" ui-sref="home.dispose({reportCode: row.reportCode})">处理</a>
+              ｜
+              <a href="javascript:;" ng-click="vm.open(row)">整改</a>
+              ｜
+              <a href="javascript:;" ui-sref="home.dispose({reportCode: row.reportCode})">效果评估</a>
+              <!-- <button class="btn btn-default btn-xs" ui-sref="home.dispose({reportCode: row.reportCode})" ng-if="!row.isEditing"><i class="fa fa-flash"></i>  处理</button> -->
+              <!-- <button class="btn btn-default btn-xs" ng-click="vm.open(row)" ng-if="!row.isEditing"><i class="fa fa-eraser"></i>  整改</button>
+              <button class="btn btn-default btn-xs" ng-click="vm.open(row)" ng-if="!row.isEditing"><i class="fa fa-pencil"></i>  效果评估</button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <none-data-info list="vm.list"></none-data-info>
+    </div>
+  </div>
+</div>

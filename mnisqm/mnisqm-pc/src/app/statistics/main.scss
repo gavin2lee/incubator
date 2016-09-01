@@ -1,0 +1,108 @@
+.statistics-wrapper {
+  $border-color: #ddd;
+  position: relative;
+  overflow: hidden;
+  .link-wrapper {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    line-height: 0;
+    font-size: 0;
+    border-bottom: 1px solid $border-color;
+    a {
+      padding: 5px 15px;
+      font-size: 14px;
+      line-height: 1.7;
+      &:hover {
+        background-color: #eee;
+      }
+      &.active {
+        background-color: white;
+        border-top: 1px solid $border-color;
+        border-right: 1px solid $border-color;
+        border-left: 1px solid $border-color;
+      }
+    }
+  }
+  .stat-link {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    font-size: 40px;
+    line-height: 40px;
+  }
+  .table {
+    background-color: white;
+  }
+  .stat-header {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .chart-wrapper {
+    .filter {
+      padding: 10px 0;
+      .center {
+        margin: auto;
+        float: none;
+        select {
+          height: 26px;
+          padding-top: 0;
+          padding-bottom: 0;
+          font-size: 12px;
+        }
+      }
+    }
+    .echarts-wrap {
+      text-align: center;
+      > div:first-child {
+        margin: auto!important;
+      }
+    }
+    .data-panel {
+      padding: 10px 0;
+      text-align: center;
+    }
+  }
+  .row {
+    .statistics-card {
+      a:hover {
+        text-decoration: none;
+      }
+      $radius: 10px;
+      width: 250px;
+      margin: 15px auto;
+      .statistics-title {
+        $height: 40px;
+        height: $height;
+        font-size: 20px;
+        color: white;
+        line-height: $height;
+        background-color: $base-color2;
+        border-radius: $radius $radius 0 0;
+      }
+      .statistics-content {
+        height: 230px;
+        padding: 10px 0;
+        border: 1px solid $base-color2;
+        border-top: none;
+        border-radius: 0 0 $radius $radius;
+        background-color: white;
+        p {
+          margin: 0;
+          padding: 0 15px;
+          color: #333333;
+          font-size: 14px;
+          text-align: left;
+          line-height: 24px;
+          span:first-child:not(:last-child) {
+            padding-right: 0;
+          }
+          span:last-child:not(:first-child) {
+            padding-left: 0;
+          }
+        }
+      }
+    }
+  }
+}

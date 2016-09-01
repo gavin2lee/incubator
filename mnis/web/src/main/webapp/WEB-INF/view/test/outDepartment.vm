@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head runat="server">
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/outDepartment.css')" />
+<script type="text/javascript" src="#url('/resources/js/nur/outDepartment.js?1472534366479')"></script>
+</head>
+<body>
+<div class="wrapper f_yahei">
+    <div class="insp-top top-tools" style="height:40px">
+    <div class="top-tools-box">
+      <select style="width:100px;margin-left:20px;">
+            <option>患者姓名</option>
+            <option>住院号</option>
+      </select>
+    <input type="text" style="width:100px;margin-left:15px;">
+    <div class="btn-nm" onclick="searchPatCrisValue()" style="width: 70px;height: 23px;line-height: 21px;margin-top: 4px;margin-left:15px;">
+        <span class="btm">查询</span>
+    </div>
+    <div class="btn-box fr mgr10">
+      <div class="time-box fl mgr10">
+            <input id="startDate" name="startDate" class="Wdate" value="2014-06-15" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})" readonly="readonly" style="width: 80px;">
+            至
+           <input id="endDate" name="endDate" class="Wdate" value="2014-08-15" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})" readonly="readonly" style="width: 80px;">
+    </div>
+    <input type="button" value="查询" onclick="searchPatCrisValue()">
+    </div>
+    </div>
+</div>
+<div class="content">
+<table id="info-tab">
+    <thead>
+        <tr>
+            <th sortable="true" data-options="field:'c1',width:110,align:'center'">住院号</th>
+            <th sortable="true" data-options="field:'c2',width:110,align:'center'">姓名</th>
+            <th sortable="true" data-options="field:'s1',width:110,align:'center'">性别</th>
+            <th sortable="true" data-options="field:'s2',width:110,align:'center'">年龄</th>
+            <th sortable="true" data-options="field:'s3',width:110,align:'center'">入院日期</th>
+            <th sortable="true" data-options="field:'s4',width:110,align:'center'">入院科室</th>
+            <th sortable="true" data-options="field:'sendTime2',width:150,align:'center'">入院诊断</th>
+            <th sortable="true" data-options="field:'s5',width:110,align:'center'">联系地址</th>
+            <th sortable="true" data-options="field:'s6',width:110,align:'center'">联系人</th>
+            <th sortable="true" data-options="field:'s7',width:110,align:'center'">联系电话</th>
+            <th sortable="true" data-options="field:'s8',width:110,align:'center'">出院日期</th>
+            <th sortable="true" data-options="field:'s9',width:110,align:'center'">出院科室</th>
+            <th sortable="true" data-options="field:'s10',width:110,align:'center'">出院诊断</th>
+        </tr>
+    </thead>
+<tbody>
+<tr>
+<td>000002</td><td>刘海文</td><td>男</td><td>58</td>
+<td>2014-04-23</td><td>内科</td><td>脑膜炎</td>
+<td>深圳南山区蛇口</td><td>张国强</td><td>13045659482</td>
+<td>2014-06-23</td><td>内科</td><td>脑膜炎</td>      		                
+</tr>
+<tr>
+<td>000005</td><td>曾琪</td><td>男</td><td>32</td>
+<td>2014-04-25</td><td>内科</td><td>恶性高血压</td>
+<td>深圳南山区桃园路</td><td>曾建国</td><td>13054019543</td>
+<td>2014-06-23</td><td>内科</td><td>恶性高血压</td>      		                		                
+</tr>
+<tr>
+<td>000006</td><td>王桂珍</td><td>女</td><td>51</td>
+<td>2014-04-25</td><td>内科</td><td>冠心病</td>
+<td>厦门思明区望海路</td><td>陈思成</td><td>18613549045</td>
+<td>2014-06-25</td><td>内科</td><td>冠心病</td>      		                
+</tr>
+<tr>
+<td>000006</td><td>晏富来</td><td>男</td><td>45</td>
+<td>2014-05-15</td><td>内科</td><td>肾小管病变</td>
+<td>南昌昌北区蛟桥镇</td><td>李小明</td><td>18654026841</td>
+<td>2014-07-01</td><td>内科</td><td>肾小管病变</td>      		                
+</tr>
+<tr>
+<td>000002</td><td>陈天翔</td><td>男</td><td>58</td>
+<td>2014-05-20</td><td>内科</td><td>泌尿系感染</td>
+<td>九江秋水镇</td><td>吴天华</td><td>13045659485</td>
+<td>2014-07-02</td><td>内科</td><td>泌尿系感染</td>      		                
+</tr>
+<tr>
+<td>000002</td><td>程亚运</td><td>男</td><td>58</td>
+<td>2014-05-20</td><td>内科</td><td>肺炎</td>
+<td>高安八达岭</td><td>李达标</td><td>13045569682</td>
+<td>2014-07-09</td><td>内科</td><td>肺炎</td>      		                
+</tr>
+<tr>
+<td>000006</td><td>晏琪</td><td>男</td><td>43</td>
+<td>2014-05-15</td><td>内科</td><td>高血压性心脏病和肾脏病伴有心力衰竭</td>
+<td>深圳罗湖华侨路</td><td>陈爱华</td><td>13854097264</td>
+<td>2014-07-10</td><td>内科</td><td>高血压性心脏病和肾脏病伴有心力衰竭</td>      		                
+</tr>
+<tr>
+<td>000006</td><td>曾海文</td><td>男</td><td>50</td>
+<td>2014-05-18</td><td>内科</td><td>冠状动脉粥样硬化性心脏病</td>
+<td>上海浦东</td><td>郭小强</td><td>13590462971</td>
+<td>2014-07-25</td><td>内科</td><td>冠状动脉粥样硬化性心脏病</td>      		                
+</tr>
+<tr>
+<td>000006</td><td>刘富来</td><td>男</td><td>50</td>
+<td>2014-05-20</td><td>内科</td><td>冠心病</td>
+<td>深圳宝安区仓前锦福苑</td><td>邹云平</td><td>18613549245</td>
+<td>2014-08-01</td><td>内科</td><td>冠心病</td>      		                
+</tr>						
+</tbody>
+</table>
+</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+
+});
+function loadRecordSuccess( data ) {
+
+}
+</script>
+</body>
+</html>

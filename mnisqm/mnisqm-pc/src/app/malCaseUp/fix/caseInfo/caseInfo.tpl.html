@@ -1,0 +1,63 @@
+<div>
+  <div class="modal-body case-info-wrapper">
+    <!-- TODO 添加字段 替换成表达式 -->
+    <div class="container-fluid">
+      <div class="label-group col-md-6">
+        <label class="col-md-4 control-label">事件类型</label>
+        <div class="col-md-8 case-info">：{{vm.metaData.malCaseInfo.eventTypeName}}</div>
+      </div>
+      <div class="label-group col-md-6">
+        <label class="col-md-4 control-label">不良事件级别</label>
+        <div class="col-md-8 case-info">：{{vm.metaData.malCaseInfo.damageLevelName}}</div>
+      </div>
+      <div class="label-group col-md-6">
+        <label for="name" class="col-md-4 control-label">上报科室</label>
+        <div class="col-md-8 case-info">：{{vm.metaData.malCaseInfo.deptName}}</div>
+      </div>
+
+      <div class="label-group col-md-6">
+        <label class="control-label col-md-4">发生时间</label>
+        <div class="col-md-8 case-info">：{{vm.metaData.malCaseInfo.eventTime}}</div>
+      </div>
+
+      <div class="label-group col-md-6">
+        <label for="email" class="col-md-4 control-label">上报人</label>
+        <div class="col-md-8 case-info">：{{vm.metaData.malCaseInfo.userName}}（{{vm.metaData.malCaseInfo.userRole}}）</div>
+      </div>
+
+      <div class="label-group col-md-6">
+        <label for="name" class="col-md-4 control-label">患者住院号</label>
+        <div class="col-md-8 case-info">：{{vm.metaData.malCaseInfo.patientHospNo}}</div>
+      </div>
+
+      <div class="label-group col-md-6">
+        <label for="email" class="col-md-4 control-label">患者床号</label>
+        <div class="col-md-8 case-info">：{{vm.metaData.malCaseInfo.patientBedNo}}</div>
+      </div>
+
+      <div class="label-group col-md-6">
+        <label for="email" class="col-md-4 control-label">患者姓名</label>
+        <div class="col-md-8 case-info">：{{vm.metaData.malCaseInfo.patientName}}</div>
+      </div>
+
+      <div class="label-group col-md-6">
+        <label for="email" class="col-md-4 control-label">患者性别</label>
+        <div class="col-md-8 case-info">：{{vm.metaData.malCaseInfo.patientGenderName}}</div>
+      </div>
+
+      <div class="label-group col-md-6">
+        <label class="col-md-4 control-label">患者年龄</label>
+        <div class="col-md-8 case-info">：{{vm.metaData.malCaseInfo.patientAge}}</div>
+      </div>
+      <div class="label-group col-md-12">
+        <label class="col-md-2 control-label">患者诊断</label>
+        <div class="col-md-10 case-info">：{{vm.metaData.malCaseInfo.patientDiagnose}}</div>
+      </div>
+
+      <div class="label-group col-md-12">
+        <label class="col-md-2 control-label">事件经过描述</label>
+        <div class="col-md-10 case-info">：{{vm.metaData.malCaseInfo.eventDescribe}}</div>
+      </div>
+    </div>
+  </div>
+</div>

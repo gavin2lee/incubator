@@ -1,0 +1,43 @@
+<div class="wrapper bd-du-wrapper padding-content">
+  <!-- <uib-tabset active="active"> -->
+    <!-- <uib-tab index="0" heading="护理业务分析"> -->
+    <ul class="page-nav">
+      <li class="active"><a>科室使用情况一览</a></li>
+    </ul>
+      <div class="panel panel-layout panel-default">
+        <div class="tool-wrapper container-fluid form-inline">
+          <div class="filter-item">
+            <label >月份： </label>
+            <span class="input-group">
+              <input ng-model="vm.queryParams.month" type="text" id="month" name="month" required uib-datepicker-popup datepicker-options="vm.options.month" on-open-focus="true" is-open="vm.monthOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" common-picker="month" readonly>
+
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-sm btn-default" ng-click="vm.monthOpen = true">
+                  <i class="fa fa-calendar"></i>
+                </button>
+              </span>
+            </span>
+          </div>
+          <div class="filter-item">
+            <button class="btn btn-primary btn-sm" ng-click="vm.load.func()">查询</button>
+          </div>
+        </div>
+        <div class="echarts-wrap" echarts="vm.deptUse.identity" echarts-dimension="vm.deptUse.dimension" config="vm.deptUse.config"></div>
+        <table class="table table-condensed table-bordered">
+          <thead>
+            <tr class="header-export">
+              <th></th>
+              <th ng-repeat="item in vm.names">{{item}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.catesData">
+              <td>{{item.text}}</td>
+              <td ng-repeat="sub in item.data track by $index">{{sub}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    <!-- </uib-tab> -->
+  <!-- </uib-tabset> -->
+</div>

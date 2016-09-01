@@ -1,0 +1,10 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/cdic_service.css')" />	
+</head>
+<body style="background-image:url(../common/images/common/main.jpg);">
+	<div style="height:100%;margin:0px 12%;text-align:center; font-size:12px; font-family:'Microsoft YaHei';" id="contentDiv" scrolling="auto">
+		此功能尚未实现!
+	</div>
+</body>
+</html>

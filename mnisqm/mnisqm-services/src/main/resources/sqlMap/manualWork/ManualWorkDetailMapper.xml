@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.manualWork.dao.ManualWorkDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.manualWork.domain.ManualWorkDetail" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="WORK_CODE" property="workCode" jdbcType="VARCHAR" />
+    <result column="WORK_ITEM" property="workItem" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from MANUAL_WORK_DETAIL
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.manualWork.domain.ManualWorkDetail" >
+    insert into MANUAL_WORK_DETAIL (WORK_CODE, WORK_ITEM, 
+      STATUS, CREATE_TIME, UPDATE_TIME, 
+      CREATE_PERSON, UPDATE_PERSON)
+    values (#{workCode,jdbcType=VARCHAR}, #{workItem,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.manualWork.domain.ManualWorkDetail" >
+    update MANUAL_WORK_DETAIL
+    set WORK_CODE = #{workCode,jdbcType=VARCHAR},
+      WORK_ITEM = #{workItem,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <update id="updatemanualWorkDetailForDelete" parameterType="com.lachesis.mnisqm.module.manualWork.domain.ManualWorkDetail" >
+	update MANUAL_WORK_DETAIL
+	set
+	STATUS = #{status,jdbcType=CHAR}
+	where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, WORK_CODE, WORK_ITEM, STATUS, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, 
+    UPDATE_PERSON
+    from MANUAL_WORK_DETAIL
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, WORK_CODE, WORK_ITEM, STATUS, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, 
+    UPDATE_PERSON
+    from MANUAL_WORK_DETAIL
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from MANUAL_WORK_DETAIL where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.manualWork.domain.ManualWorkDetail" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into MANUAL_WORK_DETAIL (WORK_CODE, WORK_ITEM, 
+      STATUS, CREATE_TIME, UPDATE_TIME, 
+      CREATE_PERSON, UPDATE_PERSON)
+    values (#{workCode,jdbcType=VARCHAR}, #{workItem,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.event.dao.RiskTrendMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.event.domain.RiskTrend" >
+    <result column="DATE" property="date" jdbcType="VARCHAR" />
+    <result column="RATE" property="rate" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.event.domain.RiskTrend" >
+    insert into RISK_TREND (DATE, RATE)
+    values (#{date,jdbcType=VARCHAR}, #{rate,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select DATE, RATE
+    from RISK_TREND
+  </select>
+  <insert parameterType="com.lachesis.mnisqm.module.event.domain.RiskTrend" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into RISK_TREND (DATE, RATE)
+    values (#{date,jdbcType=VARCHAR}, #{rate,jdbcType=VARCHAR})
+  </insert>
+</mapper>

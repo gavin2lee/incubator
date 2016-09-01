@@ -1,0 +1,30 @@
+.code-item-wrapper {
+    display: inline-block;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    margin: 0 auto;
+}
+
+@media print {
+
+}
+
+.code-content {
+    margin: auto 0 auto auto;
+}
+
+img {
+    width: 57px;
+    height: 57px;
+}
+
+.nurse-info {
+    font-size: 12px;
+    line-height: 1.6;
+    margin: auto;
+    margin-left: 4px;
+}
+
+.page-break {
+    page-break-after: always;
+}

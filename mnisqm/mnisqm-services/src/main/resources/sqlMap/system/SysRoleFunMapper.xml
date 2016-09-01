@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.system.dao.SysRoleFunMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.system.domain.SysRoleFun" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="ROLE_CODE" property="roleCode" jdbcType="VARCHAR" />
+    <result column="FUN_CODE" property="funCode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROLE_FUN
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.system.domain.SysRoleFun" >
+    insert into SYS_ROLE_FUN (ROLE_CODE, FUN_CODE, 
+      STATUS, UPDATE_TIME, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_PERSON)
+    values (#{roleCode,jdbcType=VARCHAR}, #{funCode,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, GETDATE(), GETDATE(), 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.system.domain.SysRoleFun" >
+    update SYS_ROLE_FUN
+    set ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+      FUN_CODE = #{funCode,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, ROLE_CODE, FUN_CODE, STATUS, UPDATE_TIME, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_PERSON
+    from SYS_ROLE_FUN
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, ROLE_CODE, FUN_CODE, STATUS, UPDATE_TIME, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_PERSON
+    from SYS_ROLE_FUN
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from SYS_ROLE_FUN where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.system.domain.SysRoleFun" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into SYS_ROLE_FUN (SEQ_ID, ROLE_CODE, FUN_CODE, 
+      STATUS, UPDATE_TIME, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_PERSON)
+    values (#{seqId,jdbcType=BIGINT}, #{roleCode,jdbcType=VARCHAR}, #{funCode,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="deleteSysRoleFun" parameterType="com.lachesis.mnisqm.module.system.domain.SysRoleFun" >
+  		update dbo.SYS_ROLE_FUN set STATUS='09' where ROLE_CODE=#{role_code},FUN_CODE=#{fun_code}
+  </update>
+  
+  <delete id="deleteByRoleFun" parameterType="com.lachesis.mnisqm.module.system.domain.SysRoleFun" >
+  		delete from dbo.SYS_ROLE_FUN where ROLE_CODE=#{roleCode}
+  </delete>
+</mapper>

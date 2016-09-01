@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head runat="server">
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/sur.css')" />
+<script type="text/javascript" src="#url('/resources/js/sur.js?1472534366479')"></script>
+<script type="text/javascript">
+var _surDataList;
+</script>
+</head>
+<body>
+<div class="wrapper f_yahei">
+<div class="insp-top top-tools" style="height:40px">
+<div class="top-tools-box">
+<div class="title">
+  手术管理(<span>今日</span>)
+  <i></i>
+  <div>
+<p><span class="circle circle2"></span>今日</p>
+<p><span class="circle"></span>明日</p>
+  </div>
+</div>
+<div class="btn-box fr mgr10">
+  <div class="time-box fl mgr10">
+<input id="startDate" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 120px;">
+至
+<input id="endDate" name="endDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 120px;">
+  </div>
+  <input class="fl" type="button" value="查询">
+  <div style="float:right;margin-left:10px;margin-top: 3px;">
+<span class="span-icon span-block marginTop checked" id="block-view" title="图标"></span>
+<span class="span-icon span-list marginTop" id="list-view" title="列表"></span>
+  </div>
+  </div>
+</div>
+</div>
+<div class="content">
+<div class="sur-show-box">
+  <div class="sur-show-block">
+
+<div class="block-list">
+  <ul>
+<!-- <li class="suring checked">
+  <span>手术中</span>
+  <div>
+    <p>
+      <span>100床</span>
+      <span>王晓晓</span>
+      <span>25岁</span>
+    </p>
+    <p>
+      <span>男</span>
+      <span>12345678</span>
+    </p>
+  </div>
+</li>
+<li class="sured">
+  <span>手术中</span>
+  <div>
+    <p>
+      <span>100床</span>
+      <span>王晓晓</span>
+      <span>25岁</span>
+    </p>
+    <p>
+      <span>男</span>
+      <span>12345678</span>
+    </p>
+  </div>
+</li>
+<li class="waitsur">
+  <span>手术中</span>
+  <div>
+    <p>
+      <span>100床</span>
+      <span>王晓晓</span>
+      <span>25岁</span>
+    </p>
+    <p>
+      <span>男</span>
+      <span>12345678</span>
+    </p>
+  </div>
+</li> -->
+  </ul>
+</div>
+
+<div class="block-info">
+  <div class="si sur-info">
+<h3>手术信息</h3>
+<div class="info-content">
+  
+  <p><span>手术计划时间：2014-02-14 12:00</span></p>
+  <p>
+<span>手术名称：肱骨骨折复位术</span>
+<span>手术部位手：左</span>
+  </p>
+  <p>
+<span>主刀医生：李鲜点</span>
+<span>第一助手：李而非</span>
+<span>第二助手：李艾尔</span>
+  </p>
+  
+</div>
+  </div>
+  <div class="si recv-msg">
+<h3>接收信息</h3>
+<div class="info-content">
+  <p><span>送病人：王红丹  2014-02-14 12:00</span></p>
+  <p><span>接病人：王红丹  2014-02-14 12:00</span></p>
+</div>
+  </div>
+  <div class="si pres-info">
+<h3>医嘱信息</h3>
+<div class="info-content">
+  <p>
+<span>医嘱开立时间：已执行2014-02-14 12:00</span>
+<span>医嘱开立医生：李雪</span>
+  </p>
+  <p>
+<span>医嘱内容：术前禁食</span>
+<span>执行时间：2014-02-14 12:00</span>
+  </p>
+  <p>
+<span>执行护士：杨深红</span>
+  </p>
+</div>
+  </div>
+  <div class="si vital-signs">
+<h3>生命体征</h3>
+<div class="info-content">
+  <p>
+术前：<br>
+<span>体温：37℃</span>
+<span>脉搏：85次/分</span>
+<span>呼吸：20次/分</span>
+<span>血压：120/80mmHg</span>
+<!-- <span>指尖血糖：7.4mmol/L</span> -->
+  </p>
+  <p>
+术后：<br>
+<span>体温：37℃</span>
+<span>脉搏：85次/分</span>
+<span>呼吸：19次/分</span>
+<span>血压：120/80mmHg</span>
+  </p>
+</div>
+  </div>
+</div>
+  </div>
+
+  <div class="sur-show-list hide">
+<table id="sur-table-info"></table>
+  </div>
+</div>
+</div>
+</div>
+<div id="prescriptionBox">
+  <table id="prescription"></table>
+</div>
+<script type="text/javascript">
+	$(function(){
+
+	});
+	function loadRecordSuccess( data ) {
+
+	}
+</script>
+</body>
+</html>

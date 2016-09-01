@@ -1,0 +1,52 @@
+<div>
+  <div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+      <!-- <i class="fa fa-edit"></i> -->
+      导入文件
+    </h5>
+  </div>
+  <div class="modal-body">
+    <input type="file" nv-file-select="" uploader="vm.formData.uploader" multiple="">
+    <br />
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>文件名</th>
+          <th ng-show="vm.formData.uploader.isHTML5">大小</th>
+          <th ng-show="vm.formData.uploader.isHTML5">进度</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in vm.formData.uploader.queue">
+          <td><strong>{{ item.file.name }}</strong></td>
+          <td ng-show="vm.formData.uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+          <td ng-show="vm.formData.uploader.isHTML5">
+            <div class="progress" style="margin-bottom: 0;">
+              <div class="progress-bar progress-bar-striped" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+            </div>
+          </td>
+          <td class="text-center">
+            <i ng-show="item.isSuccess" class="success-text fa fa-check"></i>
+            <i ng-show="item.isCancel" class="fa warning-text fa-ban-circle"></i>
+            <i ng-show="item.isError" class="fa danger-text fa-remove"></i>
+          </td>
+          <td nowrap>
+            <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+              <span class="fa fa-upload"></span> 上传
+            </button>
+            <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+              <span class="fa fa-ban-circle"></span> 取消
+            </button>
+            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+              <span class="fa fa-trash"></span> 移除
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

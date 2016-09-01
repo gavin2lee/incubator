@@ -1,0 +1,105 @@
+<!-- begin 检查任务管理 -->
+<div class="wrapper quality-task-wrapper padding-content">
+  <ul class="page-nav clearfix">
+    <li class="active"><a ui-sref="home.qualityForm">质控计划</a></li>
+  </ul>
+      <!-- <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load"> -->
+      <div class="panel panel-layout panel-default">
+        <!-- <div class="panel-heading">
+          <i class="fa fa-tasks"></i>
+          <span>任务管理</span>
+          <div class="pull-right">
+            <button class="btn btn-xs btn-default" ng-click="vm.addTask()">新增任务</button>
+          </div>
+        </div> -->
+        <div class="tool-wrapper container-fluid form-inline">
+          <div class="filter-item">
+            <label for="team">质控组：</label>
+            <select class="input-sm" id="team" ng-model="vm.filter.teamCode">
+              <option value="">全部</option>
+              <option value="{{item.teamCode}}" ng-repeat="item in vm.groups">{{item.teamName}}</option>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label for="model">模板：</label>
+            <select class="input-sm" id="model" ng-model="vm.filter.modelId">
+              <option value="">全部</option>
+              <option value="{{item.seqId}}" ng-repeat="item in vm.models">{{item.modelName}}</option>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label for="status">状态：</label>
+            <select class="input-sm" id="status" ng-model="vm.filter.status">
+              <option value="">全部</option>
+              <option value="01">启用</option>
+              <option value="02">关闭</option>
+            </select>
+          </div>
+          <div class="pull-right">
+            <button class="btn btn-sm btn-primary" ng-click="vm.open()">新增计划</button>
+          </div>
+        </div>
+        <div class="panel-body" loading-wrapper loading-type="content" loading-options="vm.load">
+          <!-- <form class="form-inline pull-right">
+            <div class="form-group quality-filter">
+              <label for="month" class="control-label">月份&nbsp;</label>
+              <select class="form-control input-sm" id="month">
+                <option>1</option>
+              </select>
+            </div>
+            <div class="form-group quality-filter">
+              <label for="type" class="control-label">类型&nbsp;</label>
+              <select class="form-control input-sm" id="type"></select>
+            </div>
+            <div class="form-group quality-filter">
+                <label for="area" class="control-label">病区&nbsp;</label>
+                <select class="form-control input-sm" id="area"></select>
+            </div>
+            <div class="form-group quality-filter">
+              <button class="btn btn-xs btn-default">查询</button>
+            </div>
+          </form> -->
+          <table class="table table-hover table-condensed table-bordered no-border">
+            <thead>
+              <tr class="header-export">
+                <th>护理质量组</th>
+                <th>计划时间</th>
+                <th>调查模板</th>
+                <th>任务</th>
+
+                <th print-remove>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-{{$index}}" ng-repeat="row in vm.list | filter: {modelId: vm.filter.modelId, teamCode: vm.filter.teamCode}">
+                <td class="text-center">
+                  {{ vm.getTeamName(row.teamCode) }}
+                </td>
+                <td class="text-center">
+                  {{ row.startDate }} ~ {{ row.endDate }}
+                </td>
+                <td class="text-center">
+                  {{ vm.getModelName(row.modelId) }}
+                </td>
+                <td class="text-center">
+                  {{ row.qualityTaskList.length }}
+                </td>
+                <td data-title="'操作'" class="text-center">
+                  <a class="btn btn-primary btn-xs"
+                          ui-sref="home.qualityTaskAdd({id: row.seqId})">
+                    <span class="fa fa-edit"></span>编辑
+                  </a>
+                  <button class="btn btn-danger btn-xs"
+                          ng-click="vm.del(row.seqId)">
+                    <span class="fa fa-trash"></span>删除
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <none-data-info list="vm.list"></none-data-info>
+        </div>
+      </div>
+</div>
+<!-- end 检查任务管理 -->

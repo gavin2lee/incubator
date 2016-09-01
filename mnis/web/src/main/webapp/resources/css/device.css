@@ -1,0 +1,65 @@
+/* device.html样式 */
+.device { width: 100%; height: 900px; background: #eff0f4 url(../img/device/bg.jpg) center top no-repeat; }
+.device .logo { display: block; margin: 36px 0 90px; }
+.device .bg_content { background: url(../img/device/bg2.png) no-repeat; width: 934px; height: 464px; }
+.device .bg_content .bgcolor1 { width: 593px; height: 56px; line-height: 56px; margin: 30px 0 23px; padding-left: 68px; background-color: #0075b2; color: white; font-size: 25px; }
+.device .bg_content .form_l { margin: 0 8px 0 153px; }
+.device .form_l span { width: 6px; }
+.device .form_l .bgcolor2 { background-color: #49a5da; }
+.device .form_l .bgcolor3 { background-color: #b2d9e7; }
+.device .form_l .bgcolor4 { background-color: #e2aa5c; }
+.device .form_l .height1 { height: 53px; }
+.device .form_l .height2 { height: 102px; }
+.device .form_l .same { border: none; font-size: 20px; font-family: "Microsoft YaHei"; padding: 0 0 0 15px; } 
+.device .form_l .select { width: 280px; }
+.device .form_l .select option { background-color: white; }
+.device .form_l .select1 { height: 53px; padding: 13px 0 13px 12px; background-color: #dee8ea; } 
+.device .form_l .select2 { height: 102px; padding: 36px 0 36px 12px; background-color: #eaeade; } 
+.device .form_l input { width: 265px; line-height: 53px; background-color: #f1f6f6; }
+.device .bg_content .form_r { cursor: pointer; width: 84px; height: 104px; border: none; background: url(../img/device/device.png) no-repeat; }
+.device .bg_content .input1 { background-position: -267px -236px; }
+.device .bg_content .input2 { background-position: -82px -473px; }
+.device .footer { margin: 625px 0 0 0; }
+.device .footer li { margin-right: 23px; }
+.device .footer a { position: relative; }
+.device .footer .span { width: 135px; height: 135px; background: url(../img/device/device.png) no-repeat; }
+.device .footer .span1 { width: 133px; height: 133px; background-position: -273px -343px; } 
+.device .footer .span2 { background-position: -1px -1px; }
+.device .footer .span3 { background-position: -379px -200px; }
+.device .footer .span4 { background-position: -132px -204px; }
+.device .footer .span5 { background-position: -1px -336px; }
+.device .footer .span6 { background-position: -169px -473px; }
+.device .footer .span7 { width: 132px; height: 131px; background: url(../img/device/device3.png) -177px -418px no-repeat; }
+.device .footer .font { margin: 15px 0 0 32px; font-family: "Microsoft YaHei"; font-weight: normal; }
+.device .footer .bg { position: absolute; left: -40px; top: 110px; display: inline-block; width: 24px; height: 23px; line-height: 23px; color: white; background: url(../img/device/device.png) -1px -575px no-repeat; text-align: center; } 
+
+/* 点击左右箭头几张图片来回滚动 */
+.device .jcarousel-clip { width: 1084px; margin-left: 56px; overflow: hidden; }
+.device .jcarousel-clip, .device .jcarousel-list { position: relative; }
+.device .jcarousel-prev-horizontal, .device .jcarousel-prev-disabled-horizontal { position: absolute; width: 28px; height: 32px; margin-top: 54px; cursor: pointer; background: url(../img/device/device.png) -48px -573px no-repeat; }
+.device .jcarousel-prev-horizontal:hover, .device .jcarousel-prev-disabled-horizontal:hover { width: 26px; margin-top: 55px; background-position: -207px -167px; }
+.device .jcarousel-next-horizontal, .device .jcarousel-next-disabled-horizontal { position: absolute; left: 50%; margin-left: 574px; width: 25px; height: 32px; margin-top: 54px; cursor: pointer; background: url(../img/device/device.png) -518px -103px no-repeat; }
+.device .jcarousel-next-horizontal:hover, .device .jcarousel-next-disabled-horizontal:hover { margin-top: 56px; margin-left: 573px; background-position: -24px -574px; } 
+
+/* login.html样式 */
+.login { width: 100%; background: #eff0f4 url(../img/device/bg_login.jpg) center top no-repeat; }
+.login .center { margin-top: 173px; }
+.login .left .logo { display: block; margin: 0 0 180px; }
+.login .right .bg_userLogin { width: 566px; height: 555px; background: url(../img/device/bg_userLogin.png) no-repeat; }
+.login .right .bg_arrow { position: relative; z-index: -1; display: inline-block; top: 70px; left: -18px; width: 18px; height: 23px; background: url(../img/device/bg2.png) 0 -72px no-repeat; }
+.login .right .bgcolor1 { width: 435px; height: 56px; line-height: 56px; margin: 5px 0 38px -18px; padding-left: 53px; background-color: #0075b2; color: white; font-size: 25px; }
+.login .right form { position: relative; margin: 0 93px 0 36px; }
+.login .right form label { font-size: 20px; } 
+.login .right form .text { width: 419px; height: 53px; padding-left: 12px; background-color: #deeaea; border: 1px solid #a9d8d8; font-size: 17px; margin: 12px 0 23px; }
+.login .right form input { cursor: pointer; }
+.login .right form span { display: inline-block; width: 16px; height: 8px; background: url(../img/device/device.png) -578px -120px no-repeat; margin: 0 0 3px -30px; cursor: pointer; }
+.login .right form p { left: 0; top: 103px; width: 431px; height: 96px; }
+.login .right form p em { height: 32px; line-height: 32px; }
+.login .right form .marginBottom { margin-bottom: 16px; cursor: auto; }
+.login .right form .reset { font-size: 18px; color: #0075b2; background: none; border: none; }
+.login .right form .bg_login { width: 433px; height: 55px; background: url(../img/device/device3.png) 0 -210px no-repeat; border: none; color: white; font-size: 25px; margin-top: 50px; } 
+.login .right form .bg_login:hover { background-position: 0 -266px; }
+.login .right .copyright { width: 245px; margin: 10px auto 0; color: #b9b9b9; font-size: 14px; }
+
+
+

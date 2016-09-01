@@ -1,0 +1,26 @@
+<td colspan="{{tdLen}}">
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>工号</th>
+        <th>科室</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in vm.detail">
+        <td>{{item.userName}}</td>
+        <td>{{item.userCode}}</td>
+        <td>
+          <select class="form-control input-sm" name="deptCode" ng-model="item.deptCode">
+            <option ng-repeat="item in vm.deptData" value="{{item.deptCode}}">{{item.deptName}}</option>
+          </select>
+        </td>
+        <td>
+          <button class="btn btn-success btn-xs" ng-click="vm.save(item)" uib-tooltip="保存"><span class="fa fa-save"></span></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</td>

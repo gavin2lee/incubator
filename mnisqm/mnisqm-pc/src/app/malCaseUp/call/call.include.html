@@ -1,0 +1,113 @@
+<form class="w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="addLevelForm">
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="form-group col-sm-3">
+          <label for="name" class="control-label col-sm-5">事件等级</label>
+          <div class="col-sm-7">
+            <input type="hidden" ng-model="vm.formData.damageLevel">
+            <select ng-change="vm.formData.damageLevel = (vm.metaData.levelList | filter:vm.formData.level.damageLevelName)[0].damageLevel" data class="form-controll input-sm" ng-options="level.damageLevelName for level in vm.metaData.levelList track by level.damageLevel" ng-model="vm.formData.level">
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-sm-3">
+          <label for="name" class="control-label col-sm-5">上报科室</label>
+          <div class="col-sm-7">
+            <input type="hidden" ng-model="vm.formData.deptCode">
+            <select ng-change="vm.formData.deptCode = (vm.metaData.deptList | filter:vm.formData.dept.deptName)[0].deptCode" data class="form-controll input-sm" ng-options="dept.deptName for dept in vm.metaData.deptList track by dept.deptCode" ng-model="vm.formData.dept">
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-sm-3">
+          <label for="email" class="control-label col-sm-5">上报人</label>
+          <div class="col-sm-7">
+            <input type="hidden" ng-model="vm.formData.userCode">
+            <input readOnly type="text" ng-model="vm.formData.userName" class="form-control input-sm">
+          </div>
+        </div>
+        <div class="form-group col-sm-3">
+            <label>
+              <input ng-model="vm.formData.userRole" value="当事人" name="userRole" type="radio"> 当事人
+            </label>
+            <label>
+              <input ng-model="vm.formData.userRole" value="目击者" name="userRole" type="radio"> 目击者
+            </label>
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="email" class="control-label col-sm-2 fixed-label">发生时间</label>
+          <div class="col-sm-4">
+            <span class="input-group">
+              <input ng-model="vm.formData.eventDate" type="text" id="eventDate" name="eventDate" required uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.eventTimeOpen" ng-model="vm.count.comUser.birthday" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm">
+
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-sm btn-default" ng-click="vm.eventTimeCalender()">
+                  <i class="fa fa-calendar"></i>
+                </button>
+              </span>
+            </span>
+          </div>
+          <div class="col-sm-5">
+            <uib-timepicker template-url="app/common/tpls/timepicker/timepicer.html" ng-model="vm.formData.eventTime" class="time-picker" ng-change="vm.timeChanged()" hour-step="1" minute-step="1" show-meridian="ismeridian"></uib-timepicker>
+          </div>
+        </div>
+        <div class="form-group col-sm-3">
+          <label for="name" class="control-label col-sm-5">住院号</label>
+          <div class="col-sm-7">
+            <input class="form-control input-sm" required ng-model="vm.formData.patientHospNo" type="text">
+          </div>
+        </div>
+        <div class="form-group col-sm-3">
+          <label for="email" class="control-label col-sm-5">床号</label>
+          <div class="col-sm-7">
+            <input type="text" ng-model="vm.formData.patientBedNo" class="form-control input-sm">
+          </div>
+        </div>        
+        <div class="form-group col-sm-3">
+          <label for="email" class="control-label col-sm-5">姓名</label>
+          <div class="col-sm-7">
+            <input type="text" ng-model="vm.formData.patientName" class="form-control input-sm">
+          </div>
+        </div>
+        <div class="form-group col-sm-3">
+          <label for="email" class="control-label col-sm-5">性别</label>
+          <div class="col-sm-7">
+            <select name="gender" ng-model="vm.formData.patientGender" class="form-control input-sm">
+              <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.gender">{{item.dicName}}</option>
+            </select>
+          </div>
+          <!-- <input type="text" ng-model="vm.formData.patientGender" class="form-control input-sm" style="width:4em;"> -->
+        </div>
+        <div class="form-group col-sm-3">
+          <label for="email" class=" control-label col-sm-5">年龄</label>
+          <div class="col-sm-7">
+            <input type="text" ng-model="vm.formData.patientAge" class="form-control input-sm" style="width:4em;">
+          </div>
+        </div>
+        <div class="form-group col-sm-12">
+          <label class="col-sm-1 control-label fixed-label">诊断</label>
+          <div class="col-sm-10">
+            <input type="text" ng-model="vm.formData.patientDiagnose" class="form-control input-sm">
+          </div>
+        </div>
+        <div class="form-group col-sm-12">
+          <label class="col-sm-1 control-label fixed-label">事件类型</label>
+          <div class="col-sm-10">
+              <label class="event-type" ng-repeat="eventType in vm.metaData.eventTypeList">
+                <input ng-model="vm.formData.eventType" ng-checked="vm.formData.eventType.eventTypeCode == eventType.eventTypeCode" type="radio" value="{{eventType}}" name="eventTypeCode"> {{eventType.eventTypeName}}
+              </label>
+          </div>
+        </div>
+        <div class="form-group col-sm-12">
+          <label class="col-sm-2 control-label">事件经过描述(5WH1)</label>
+          <div class="col-sm-10">
+            <textarea type="text" ng-model="vm.formData.eventDescribe" class="form-control input-sm"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok()">上报</button>
+    <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+  </div>
+</form>

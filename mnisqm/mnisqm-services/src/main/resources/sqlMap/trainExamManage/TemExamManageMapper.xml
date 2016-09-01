@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.trainExamManage.dao.TemExamManageMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.trainExamManage.domain.TemExamManage" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="EXAM_CODE" property="examCode" jdbcType="VARCHAR" />
+    <result column="EXAM_NAME" property="examName" jdbcType="VARCHAR" />
+    <result column="EXAM_TIME" property="examTime" jdbcType="TIMESTAMP" />
+    <result column="TIME_SPAN" property="timeSpan" jdbcType="VARCHAR" />
+    <result column="PLACE" property="place" jdbcType="VARCHAR" />
+    <result column="GROSS_SCORE" property="grossScore" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <collection property="temPerformanceManageList" javaType="java.util.List"
+		ofType="com.lachesis.mnisqm.module.trainExamManage.domain.TemPerformanceManage"
+		column="EXAM_CODE" >
+		<id column="SEQID" property="seqId" jdbcType="BIGINT" />
+    	<result column="EXAM_CODE" property="examCode" jdbcType="VARCHAR" />
+    	<result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    	<result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    	<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    	<result column="SCORE" property="score" jdbcType="DECIMAL" />
+    	<result column="ASSESS_SITUATION" property="assessSituation" jdbcType="INTEGER" />
+    	<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    	<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    	<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    	<result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+	</collection>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from TEM_EXAM_MANAGE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.trainExamManage.domain.TemExamManage" >
+    insert into TEM_EXAM_MANAGE (EXAM_CODE, EXAM_NAME, 
+      EXAM_TIME, TIME_SPAN, PLACE, 
+      GROSS_SCORE, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_TIME, UPDATE_PERSON)
+    values (#{examCode,jdbcType=VARCHAR}, #{examName,jdbcType=VARCHAR}, 
+      #{examTime,jdbcType=TIMESTAMP}, #{timeSpan,jdbcType=VARCHAR}, #{place,jdbcType=VARCHAR}, 
+      #{grossScore,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.trainExamManage.domain.TemExamManage" >
+    update TEM_EXAM_MANAGE
+    set EXAM_CODE = #{examCode,jdbcType=VARCHAR},
+      EXAM_NAME = #{examName,jdbcType=VARCHAR},
+      EXAM_TIME = #{examTime,jdbcType=TIMESTAMP},
+      TIME_SPAN = #{timeSpan,jdbcType=VARCHAR},
+      PLACE = #{place,jdbcType=VARCHAR},
+      GROSS_SCORE = #{grossScore,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, EXAM_CODE, EXAM_NAME, EXAM_TIME, TIME_SPAN, PLACE, GROSS_SCORE, CREATE_TIME, 
+    CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+    from TEM_EXAM_MANAGE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, EXAM_CODE, EXAM_NAME, EXAM_TIME, TIME_SPAN, PLACE, GROSS_SCORE, CREATE_TIME, 
+    CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+    from TEM_EXAM_MANAGE
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from TEM_EXAM_MANAGE where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.trainExamManage.domain.TemExamManage" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into TEM_EXAM_MANAGE (EXAM_CODE, EXAM_NAME, 
+      EXAM_TIME, TIME_SPAN, PLACE, 
+      GROSS_SCORE, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_TIME, UPDATE_PERSON)
+    values (#{examCode,jdbcType=VARCHAR}, #{examName,jdbcType=VARCHAR}, 
+      #{examTime,jdbcType=TIMESTAMP}, #{timeSpan,jdbcType=VARCHAR}, #{place,jdbcType=VARCHAR}, 
+      #{grossScore,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <select id="queryByTOrDCOrENOrUCOrUN" resultMap="BaseResultMap" parameterType="Map">
+    select te.SEQ_ID, te.EXAM_CODE, te.EXAM_NAME, te.EXAM_TIME, te.TIME_SPAN, te.PLACE, te.GROSS_SCORE, te.CREATE_TIME, 
+    te.CREATE_PERSON, te.UPDATE_TIME, te.UPDATE_PERSON, tp.SEQ_ID SEQID, tp.EXAM_CODE, tp.DEPT_CODE, tp.USER_CODE, tp.USER_NAME, tp.SCORE, tp.ASSESS_SITUATION, 
+    tp.REMARK, tp.CREATE_TIME, tp.CREATE_PERSON, tp.UPDATE_TIME, tp.UPDATE_PERSON
+    from TEM_EXAM_MANAGE te,TEM_PERFORMANCE_MANAGE tp
+    where te.EXAM_CODE = tp.EXAM_CODE
+    and te.EXAM_TIME >= #{beginTime}
+    and #{endTime} > te.EXAM_TIME
+    <if test="deptCode != null">
+        and tp.DEPT_CODE = #{deptCode}
+    </if>
+    <if test="examName != null">
+        and te.EXAM_NAME = #{examName}
+    </if>
+    <if test="userCode != null">
+        and tp.USER_CODE = #{userCode}
+    </if>
+    <if test="userName != null">
+        and tp.USER_NAME = #{userName}
+    </if>
+  </select>
+</mapper>

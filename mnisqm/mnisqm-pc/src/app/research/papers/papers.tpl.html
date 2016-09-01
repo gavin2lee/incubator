@@ -1,0 +1,66 @@
+<div class="col-md-12">
+    <div class="panel panel-layout panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-balance-scale"></i>
+            <span>科研论文管理</span>
+            <div class="pull-right">
+                <button class="btn btn-primary btn-xs" ng-click="vm.add()">
+                    新增
+                </button>
+            </div>
+        </div>
+        <div class="panel-body">
+
+          <table print-table="vm.list" st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered">
+            <thead>
+              <tr class="header-export">
+                <th>论文名称</th>
+                <th>作者</th>
+                <th>刊物名称</th>
+                <th>刊号</th>
+                <th>字数</th>
+                <th>核心刊物</th>
+                <th>发表日期</th>
+
+                <th print-remove>操作</th>
+              </tr>
+            </thead>
+            <tbody ng-repeat="row in vm.list">
+              <tr class="row-{{$index}}">
+                <td class="text-center" >
+                    {{ row.paperName }}
+                </td>
+                <td class="text-center">
+                    {{ row.author }}
+                </td>
+                <td class="text-center">
+                    {{ row.publictionName }}
+                </td>
+                <td class="text-center" >
+                    {{ row.publictionNo }}
+                </td>
+                <td class="text-center" >
+                    {{ row.wordsNumber }}
+                </td>
+                <td class="text-center" >
+                    {{ row.corePubliction }}
+                </td>
+                <td class="text-center" >
+                    {{ row.publishDate }}
+                </td>
+                <td class="text-center">
+                    <button class="btn btn-danger btn-xs" ng-click="vm.edit(row)" uib-tooltip="编辑" >
+                        <span class="fa fa-pencil"></span>
+                    </button>
+                    <button class="btn btn-danger btn-xs" ng-click="vm.deletePapers(row.seqId)" uib-tooltip="删除">
+                        <span class="fa fa-trash"></span>
+                    </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <none-data-info list="vm.list"></none-data-info>
+        </div>
+    </div>
+</div>

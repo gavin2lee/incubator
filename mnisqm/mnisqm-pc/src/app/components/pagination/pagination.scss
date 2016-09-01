@@ -1,0 +1,22 @@
+.pagination-wrapper {
+  display: block;
+  text-align: right;
+  padding: 0 10px;
+
+  li a{
+    color: $base-color2;
+  }
+  .active {
+    a {
+      background-color: $base-color2!important;
+      border-color: $base-color2!important;
+    }
+  }
+}
+.pagination-text {
+  display: inline-block;
+  margin: 0 10px;
+}
+.pagination {
+  vertical-align: middle;
+}

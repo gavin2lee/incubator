@@ -1,0 +1,14 @@
+<div class="main-wrapper container-fluid full-screen">
+  <acme-header></acme-header>
+  <acme-navbar></acme-navbar>
+  <acme-breadcrumb displayname-property="data.displayName" abstract-proxy-property="data.proxy"></acme-breadcrumb>
+  <!-- <acme-bread></acme-bread> -->
+  <div class="main-body container-fluid" ui-view ng-class="{'main-body_min-nav': main.minMode, 'sub-nav-hidden': !main.isSubNavShow}">
+  <!--<div class="main-body container-fluid" ui-view ng-class="{'main-body_min-nav': main.minMode, 'sub-nav-hidden': !main.isSubNavShow}">-->
+  </div>
+  <!-- <loading></loading> -->
+  <div class="footer">
+    Copyright © 2016 深圳联新移动医疗有限公司 All Rights Reserved.
+  </div>
+</div>
+</div>

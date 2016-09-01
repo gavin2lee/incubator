@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.satTemplate.dao.SatOptionMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.satTemplate.domain.SatOption" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="DETAIL_CODE" property="detailCode" jdbcType="VARCHAR" />
+    <result column="OPTION_CODE" property="optionCode" jdbcType="VARCHAR" />
+    <result column="OPTION_CONTENT" property="optionContent" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SAT_OPTION
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatOption" >
+    insert into SAT_OPTION (DETAIL_CODE, OPTION_CODE, 
+      OPTION_CONTENT, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_TIME, UPDATE_PERSON)
+    values (#{detailCode,jdbcType=VARCHAR}, #{optionCode,jdbcType=VARCHAR}, 
+      #{optionContent,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatOption" >
+    update SAT_OPTION
+    set DETAIL_CODE = #{detailCode,jdbcType=VARCHAR},
+      OPTION_CODE = #{optionCode,jdbcType=VARCHAR},
+      OPTION_CONTENT = #{optionContent,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, DETAIL_CODE, OPTION_CODE, OPTION_CONTENT, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from SAT_OPTION
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, DETAIL_CODE, OPTION_CODE, OPTION_CONTENT, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from SAT_OPTION
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from SAT_OPTION where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatOption" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into SAT_OPTION (DETAIL_CODE, OPTION_CODE, 
+      OPTION_CONTENT, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_TIME, UPDATE_PERSON)
+    values (#{detailCode,jdbcType=VARCHAR}, #{optionCode,jdbcType=VARCHAR}, 
+      #{optionContent,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+</mapper>

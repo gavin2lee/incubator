@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.user.dao.ComUserMapperExt" >
+	<!-- 通过部门编号获取用户列表 -->
+	<select id="selectUserByDepot" parameterType="java.util.Map" resultType="ComUser">
+		SELECT 	u.SEQ_ID		seqId,
+				u.USER_CODE		userCode,
+				u.HIS_CODE		hisCode,
+				u.USER_NAME		userName,
+				u.GENDER		gender,
+				u.PHONE			phone,
+				u.EMAIL 		email,
+				u.BIRTHDAY		birthday,
+				u.GRADUATION_DATE	graduationDate,
+				u.GRADUATION_SCHOOL graduationSchool,
+				u.EDUCATION		education,
+				d.dept_code		deptCode
+		FROM COM_USER u
+		INNER JOIN COM_DEPT_USER d on u.USER_CODE = d.USER_CODE
+		WHERE u.STATUS != '09'
+		and u.USER_TYPE !='04'
+		<if test="deptCode != null">
+			and d.DEPT_CODE=#{deptCode}
+		</if>
+	</select>
+
+	<!-- 查询员工信息，通过员工编号 -->
+	<select id="selectUserByCode" parameterType= "java.lang.String" resultType="ComUser">
+		SELECT 
+			SEQ_ID					seqId, 
+			USER_CODE				userCode, 
+			HIS_CODE				hisCode, 
+			USER_NAME				userName, 
+			STATUS					status, 
+			USER_TYPE				userType, 
+			GENDER					gender,
+			PHONE					phone, 
+		    EMAIL					email,
+		    BIRTHDAY				birthday,
+		    INDUCTION_DATE			inductionDate, 
+		    NATURE					nature, 
+		    PAPERS_TYPE				papersType,
+			PAPERS_NO				papersNo, 
+			NATION					nation, 
+			COUNTRY					country, 
+		    NATIVE_PLACE			nativePlace, 
+		    GRADUATION_SCHOOL		graduationSchool, 
+		    PROFESSION				profession, 
+		    DEGREE					degree, 
+		    DEGREE_NO				degreeNo, 
+		    EDUCATION				education, 
+		    EDUCATION_NO			educationNo, 
+		    GRADUATION_DATE			graduationDate, 
+		    LANGUAGE				language, 
+		    HEALTH					health, 
+		    PRACTICE_APPROVE_DATE	practiceApproveDate, 
+		    PRACTICE_TYPE			practiceType, 
+		    PRACTICE_NO				practiceNo, 
+		    PRACTICE_VALID_DATE		practiceValidDate, 
+		    POLITACAL_STATUS		politacalStatus, 
+		    TECHNICAL_POST			technicalPost, 
+		    DUTY					duty, 
+		    CREATE_PERSON			createPerson, 
+		    UPDATE_PERSON			updatePerson,
+		    MARRIAGE				marriage,
+		    BIRTH					birth,
+		    H_EDUCATION				hEducation,
+		    H_GRADUATION_DATE		hGraduationDate,
+		    H_GRADUATION_SCHOOL		hGraduationSchool,
+		    CLINICAL				clinical,
+		    TECHNICAL_POST_TIME		technicalPostTime,
+      		DUTY_TIME				dutyTime,
+      		ENERGY_LEVEL			energyLevel,
+      		HAT_NO					hatNo,
+      		DRESS_NO				dressNo,
+      		SHOE_NO					shoeNo,
+      		PARTICIPATE_JOB_TIME	participateJobTime,
+      		COMPUTER_LEVEL			computerLevel,
+      		HEIGHT					height,
+      		NURSE_REGISTER_NO		nurseRegisterNo,
+      		TEACH_LEVEL				teachLevel,
+      		INSTITUTION				institution
+		FROM COM_USER 
+		WHERE USER_CODE = #{userCode}
+		and STATUS != '09'
+	</select>
+	<!-- 查询员工新，通过HIS员工编号 -->
+	<select id="selectUserByHisCode" parameterType= "java.lang.String" resultType="ComUser">
+		SELECT 
+			SEQ_ID					seqId, 
+			USER_CODE				userCode, 
+			HIS_CODE				hisCode, 
+			USER_NAME				userName, 
+			STATUS					status, 
+			USER_TYPE				userType, 
+			GENDER					gender,
+			PHONE					phone, 
+		    EMAIL					email,
+		    BIRTHDAY				birthday,
+		    INDUCTION_DATE			inductionDate, 
+		    NATURE					nature, 
+		    PAPERS_TYPE				papersType,
+			PAPERS_NO				papersNo, 
+			NATION					nation, 
+			COUNTRY					country, 
+		    NATIVE_PLACE			nativePlace, 
+		    GRADUATION_SCHOOL		graduationSchool, 
+		    PROFESSION				profession, 
+		    DEGREE					degree, 
+		    DEGREE_NO				degreeNo, 
+		    EDUCATION				education, 
+		    EDUCATION_NO			educationNo, 
+		    GRADUATION_DATE			graduationDate, 
+		    LANGUAGE				language, 
+		    HEALTH					health, 
+		    PRACTICE_APPROVE_DATE	practiceApproveDate, 
+		    PRACTICE_TYPE			practiceType, 
+		    PRACTICE_NO				practiceNo, 
+		    PRACTICE_VALID_DATE		practiceValidDate, 
+		    POLITACAL_STATUS		politacalStatus, 
+		    TECHNICAL_POST			technicalPost, 
+		    DUTY					duty, 
+		    CREATE_PERSON			createPerson, 
+		    UPDATE_PERSON			updatePerson,
+		    MARRIAGE				marriage,
+		    BIRTH					birth,
+		    H_EDUCATION				hEducation,
+		    H_GRADUATION_DATE		hGraduationDate,
+		    H_GRADUATION_SCHOOL		hGraduationSchool,
+		    CLINICAL				clinical,
+		    TECHNICAL_POST_TIME		technicalPostTime,
+      		DUTY_TIME				dutyTime,
+      		ENERGY_LEVEL			energyLevel,
+      		HAT_NO					hatNo,
+      		DRESS_NO				dressNo,
+      		SHOE_NO					shoeNo,
+      		PARTICIPATE_JOB_TIME	participateJobTime,
+      		COMPUTER_LEVEL			computerLevel,
+      		HEIGHT					height,
+      		NURSE_REGISTER_NO		nurseRegisterNo,
+      		TEACH_LEVEL				teachLevel,
+      		INSTITUTION				institution
+		FROM COM_USER 
+		WHERE HIS_CODE = #{hisCode}
+		and STATUS != '09'
+	</select>
+	
+	<!-- 查询员工信息 -->
+	<select id="selectUserByCodeNameDept" parameterType="java.lang.String" resultType="ComUser">
+		SELECT 
+			u.SEQ_ID					seqId, 
+			u.USER_CODE					userCode, 
+			u.HIS_CODE					hisCode, 
+			u.USER_NAME					userName, 
+			u.STATUS					status, 
+			u.USER_TYPE					userType, 
+			u.GENDER					gender,
+			u.PHONE						phone, 
+		    u.EMAIL						email,
+		    u.BIRTHDAY					birthday,
+		    u.INDUCTION_DATE			inductionDate, 
+		    u.NATURE					nature, 
+		    u.PAPERS_TYPE				papersType,
+			u.PAPERS_NO					papersNo, 
+			u.NATION					nation, 
+			u.COUNTRY					country, 
+		    u.NATIVE_PLACE				nativePlace, 
+		    u.GRADUATION_SCHOOL			graduationSchool, 
+		    u.PROFESSION				profession, 
+		    u.DEGREE					degree, 
+		    u.DEGREE_NO					degreeNo, 
+		    u.EDUCATION					education, 
+		    u.EDUCATION_NO				educationNo, 
+		    u.GRADUATION_DATE			graduationDate, 
+		    u.LANGUAGE					language, 
+		    u.HEALTH					health, 
+		    u.PRACTICE_APPROVE_DATE		practiceApproveDate, 
+		    u.PRACTICE_TYPE				practiceType, 
+		    u.PRACTICE_NO				practiceNo, 
+		    u.PRACTICE_VALID_DATE		practiceValidDate, 
+		    u.POLITACAL_STATUS			politacalStatus, 
+		    u.TECHNICAL_POST			technicalPost, 
+		    u.DUTY						duty, 
+		    u.CREATE_PERSON				createPerson, 
+		    u.UPDATE_PERSON				updatePerson,
+		    u.MARRIAGE					marriage,
+		    u.BIRTH						birth,
+		    u.H_EDUCATION				hEducation,
+		    u.H_GRADUATION_DATE			hGraduationDate,
+		    u.H_GRADUATION_SCHOOL		hGraduationSchool,
+		    u.CLINICAL					clinical,
+		    u.TECHNICAL_POST_TIME		technicalPostTime,
+      		u.DUTY_TIME					dutyTime,
+      		u.ENERGY_LEVEL				energyLevel,
+      		u.HAT_NO					hatNo,
+      		u.DRESS_NO					dressNo,
+      		u.SHOE_NO					shoeNo,
+      		u.PARTICIPATE_JOB_TIME		participateJobTime,
+      		u.COMPUTER_LEVEL			computerLevel,
+      		u.HEIGHT					height,
+      		u.NURSE_REGISTER_NO			nurseRegisterNo,
+      		u.TEACH_LEVEL				teachLevel,
+      		u.INSTITUTION				institution,
+			d.dept_code					deptCode,
+			case when p.DEPT_NURSE_HEADER = u.USER_CODE
+			then 1
+			when p.DEPT_NURSE_HEADER != u.USER_CODE Or p.DEPT_NURSE_HEADER IS null
+			then 0
+			end							isDeptNurseHeader,
+			dbo.fun_get_Age(BIRTHDAY,GETDATE())	age
+		FROM COM_USER u
+		INNER JOIN COM_DEPT_USER d on u.USER_CODE = d.USER_CODE
+		INNER JOIN COM_DEPT p on p.DEPT_CODE=d.DEPT_CODE
+		WHERE u.STATUS != '09'
+		<if test="deptCode != null">
+			and d.DEPT_CODE=#{deptCode}
+		</if>
+		<if test="userCode != null">
+			and u.USER_CODE=#{userCode}
+		</if>
+		<if test="userName != null">
+			and u.USER_NAME like CONCAT(CONCAT('%', #{userName}), '%')
+		</if>
+		<if test="userType != null">
+			and u.USER_TYPE=#{userType}
+		</if>
+		<if test="gender != null">
+			and u.GENDER=#{gender}
+		</if>
+	</select>
+</mapper>

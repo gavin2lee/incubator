@@ -1,0 +1,111 @@
+<!-- <div class="col-md-12"> -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-pie-chart"></i> 科室概况
+  </div>
+  <div class="panel-body">
+    <div class="chart-wrapper">
+      <div class="row">
+        <div class="col-md-3 chart_text">
+          <div class="form-group">
+            <span class="col-md-5 control-label">
+              科室总计：
+            </span>
+            <span class="value-label">{{vm.deptTotal}} 人</span>
+          </div>
+          <div class="form-group">
+            <span class="col-md-5 control-label">
+              在编：
+            </span>
+            <span class="value-label">{{vm.activeCount}}人</span>
+          </div>
+          <div class="form-group">
+            <span class="col-md-5 control-label">
+              聘用：
+            </span>
+            <span class="value-label">{{vm.activeCount}}人</span>
+          </div>
+          <div class="form-group">
+            <span class="col-md-5 control-label">
+              床护比：
+            </span>
+            <span class="value-label">23 / 56人</span>
+          </div>
+        </div>
+        <div class="col-md-9 chart-content">
+          <div class="col-md-6 echarts-wrap" echarts="vm.stastics.technicalPost.identity" echarts-dimension="vm.stastics.technicalPost.dimension" config="vm.stastics.technicalPost.config"></div>
+          <div class="col-md-6 echarts-wrap" echarts="vm.stastics.clinical.identity" echarts-dimension="vm.stastics.clinical.dimension" config="vm.stastics.clinical.config"></div>
+        </div>
+
+      </div>
+      <!-- <div class="row">
+        <div class="col-md-6 echarts-wrap" echarts="vm.stastics.teachLevel.identity" echarts-dimension="vm.stastics.teachLevel.dimension" config="vm.stastics.teachLevel.config"></div>
+      </div> -->
+    </div>
+  </div>
+</div>
+<div class="panel panel-layout panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-user"></i>
+    <span>科室数据</span>
+
+    <!-- <div class="pull-right">
+        <button class="btn btn-default btn-xs" ng-click="vm.openUpload()">
+          <i class="fa fa-upload"></i>
+          导入数据
+        </button>
+        <button print-btn class="btn btn-default btn-xs">
+          <i class="fa fa-print"></i>
+          打印
+        </button>
+        <button ng-click="vm.open()" ng-disabled="!vm.selectedDept" class="btn btn-default btn-xs">
+          <i class="fa fa-user-plus"></i>
+          添加员工
+        </button>
+      </div> -->
+  </div>
+  <div class="panel-body no-padding">
+    <table st-table="vm.displayList" st-safe-src="vm.userDataList" class="table table-hover table-condensed table-bordered">
+      <thead>
+        <tr class="header-export">
+          <th st-sort="hisCode">员工编号</th>
+          <th>姓名</th>
+          <th>性别</th>
+          <th>年龄</th>
+          <th>职务</th>
+          <th>职称</th>
+          <th>临床层级</th>
+          <th>学历</th>
+          <th>电话</th>
+          <!-- <th print-remove>操作</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="row in vm.displayList" class="row-{{$index}} user-detail-item" ng-dblclick="vm.goDetail(row)">
+          <td>{{row.hisCode}}</td>
+          <td>{{row.userName}}</td>
+          <td>{{row.gender && (row.gender == 1 ? '男' : '女')}}</td>
+          <td>{{row.age}}</td>
+          <td>{{row.duty && (dicInfo.position | filter:row.duty)[0].dicName}}</td>
+          <td>{{row.technicalPost && (dicInfo.technicalPost | filter:row.technicalPost)[0].dicName }}</td>
+          <td>{{ row.clinical && (dicInfo.clinical | filter:row.clinical)[0].dicName}}</td>
+          <td>{{row.education}}</td>
+          <td>{{row.phone}}</td>
+          <!-- <td class="print-remove" data-title="'操作'">
+              <a ui-sref="home.baseInfo.detail({id:row.userCode})">详情</a>
+            </td> -->
+        </tr>
+        <tr grid-expand tpl-src="app/nursingWorkers/files/files.detail.html" ng-show="vm.expanedIndex == $index && vm.expanded"></tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="9">
+            <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    <none-data-info list="vm.userDataList"></none-data-info>
+  </div>
+</div>
+<!-- </div> -->

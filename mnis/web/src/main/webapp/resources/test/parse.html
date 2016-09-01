@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+<form id="parseForm" action="#">
+	<input type="button" value="btn1">
+	<br>
+	<input type="checkbox">
+	<br>
+	<input type="color">
+	<br>
+	<input type="date">
+	<br>
+	<input type="datetime-local">
+	<br>
+	<input type="datetime">
+	<br>
+	<input type="email">
+	<br>
+	<input type="file">
+	<br>
+	<input type="hidden">
+	<br>
+	<input type="image">
+	<br>
+	<input type="month">
+	<br>
+	<input type="number">
+	<br>
+	<input type="password">
+	<br>
+	<input type="radio">
+	<br>
+	<input type="range">
+	<br>
+	<input type="reset">
+	<br>
+	<input type="search">
+	<br>
+	<input type="submit">
+	<br>
+	<input type="tel">
+	<br>
+	<input type="text">
+	<br>
+	<input type="time">
+</form>
+<input type="button" value="parse" onclick="parse()">
+<input type="reset">
+<script type="text/javascript">
+$(function() {
+	$('#parseForm input').each(function() {
+	    $(this).keyup(function() {
+	        $(this).attr('value', $(this).val());
+	    });
+	});
+});
+
+function parse() {
+// 	var form = document.getElementById("parseForm");
+// 	console.log(form.innerHTML);
+// 	var $clone = $("#parseForm").clone().val($("#parseForm").val()).appendTo("body")
+// 	console.log($clone.html());
+// 	console.log($("body").html());
+	console.log($("#parseForm"));
+	console.log($("#parseForm").html());
+// 	console.log($("#parseForm").clone(true).html());
+}
+</script>
+</body>
+</html>

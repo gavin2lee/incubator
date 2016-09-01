@@ -1,0 +1,379 @@
+body {
+  background-color: #eff0f2;
+}
+
+.bg_header {
+  height: 49px;
+  background: url(../img/bg_header.jpg) 0 -1px repeat-x;
+}
+
+.bg_header .center,
+.bg_header2 .center {
+  position: relative;
+  line-height: 28px;
+}
+
+.bg_header ul {
+  position: absolute;
+  top: 50px;
+  right: 0px;
+}
+
+.bg_header ul.nav1 {
+  top: 29px;
+}
+
+.bg_header ul.nav2 {
+  top: 69px;
+  width: 928px;
+  z-index: 2;
+  background-color: #587085;
+  opacity: 0.9;
+}
+
+.bg_header ul.nav2 li {
+  float: left;
+  height: 32px;
+  line-height: 32px;
+  width: 25%;
+  margin-left: -1px;
+  background-color: #587085;
+}
+
+.bg_header ul.nav2 li:hover {
+  background: url(../img/hover_bg.png) center bottom no-repeat;
+}
+
+.bg_header ul.nav2 li a {
+  display: block;
+  height: 24px;
+  line-height: 24px;
+  margin-top: 4px;
+  border-left: 1px solid #9daab1;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.bg_header ul.nav2 li a.first {
+  border-left: none;
+}
+
+.bg_header ul.nav1 li a {
+  display: inline-block;
+  width: 116px;
+  height: 40px;
+  text-decoration: none;
+  color: #c5d4e9;
+  font-size: 14px;
+}
+
+.bg_header ul.nav1 li a:hover,
+.bg_header li .click {
+  background: url(../img/hover_bg.png) 65px bottom no-repeat;
+}
+
+.bg_header ul.nav1 li a .icon {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background: url(../img/MNIS.png) -69px -136px no-repeat;
+  margin: 8px 9px 0 11px;
+}
+
+.bg_header ul.nav1 li a .font {
+  position: relative;
+  top: -6px;
+}
+
+.bg_header2 {
+  width: 100%;
+  height: 29px;
+  margin-top: -49px;
+  background-color: #fff;
+}
+
+.bg_header2 .bg {
+  width: 337px;
+  height: 29px;
+  background: url(../img/MNIS.png) 0 -571px no-repeat;
+}
+
+.bg_header2 h3 {
+  position: absolute;
+  top: 8px;
+  left: 75px;
+  color: white;
+  font-size: 25px;
+  font-weight: normal;
+}
+
+.bg_header2 .font {
+  vertical-align: middle;
+  font-size: 13px;
+  font-family: "Microsoft YaHei";
+  color: #3e3a39;
+}
+
+.bg_header2 .date {
+  margin-left: 7px;
+  margin-right: 12px;
+}
+
+.bg_header2 .account {
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+  height: 24px;
+  line-height: 24px;
+  padding-left: 6px;
+  -webkit-user-select: none;
+}
+
+.bg_header2 .account2 {
+  background-color: #ebedf0;
+  border: 1px solid #b2b5b8;
+}
+
+.bg_header2 .account div:hover {
+  cursor: pointer;
+}
+
+.bg_header2 .account span {
+  display: inline-block;
+  width: 10px;
+  height: 5px;
+  background: url(../img/MNIS.png) 0 -1px no-repeat;
+  margin: 0 0 2px 8px;
+}
+
+.bg_header2 .account2 .hide {
+  display: block;
+}
+
+.bg_header2 .account .user-tools {
+  position: absolute;
+  right: -45px;
+  top: 26px;
+  position: absolute;
+  background-color: white;
+  width: 125px;
+  height: 125px;
+  margin: 3px 0 0 -7px;
+  border: 1px solid #a4afb4;
+  background-color: #587c91;
+  user-select: none;
+}
+
+.bg_header2 .account .user-tools a {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  height: 31px;
+  line-height: 31px;
+  padding-left: 35px;
+  font-size: 13px;
+  color: #fff;
+}
+
+.bg_header2 .account .user-tools a:hover {
+  background-color: #698da2;
+}
+
+.bg_header2 .account .user-tools a i {
+  position: absolute;
+  left: 10px;
+  top: 6px;
+  width: 19px;
+  height: 19px;
+  background: url(../img/MNIS.png) 0 -166px no-repeat;
+}
+
+.bg_header2 .account .user-tools a i.click {
+  background-position: -20px -166px;
+}
+
+.bg_header2 img {
+  margin-top: 5px;
+}
+
+.bg_header3 {
+  width: 330px;
+  margin-top: -29px;
+}
+
+.shadow {
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+
+.toolsBtnAndInfo {
+  width: 100%;
+  height: 52px;
+  margin: 0 auto;
+  background-color: #ececec;
+  border-bottom: 1px solid #abbbc1
+}
+
+.toolsBtnAndInfo .toolsBtn {
+  position: relative;
+  float: left;
+  width: 290px;
+  height: 100%;
+  padding-left: 20px;
+  margin-right: -310px;
+}
+
+
+/* 对按钮的宽度定义 */
+
+.toolsBtnAndInfo .toolsBtn ._btn {
+  height: 33px;
+  line-height: 33px;
+}
+
+// .toolsBtnAndInfo .toolsBtn .btn-nm {
+//   width: 100px;
+//   margin-top: 8px;
+//   line-height: 29px;
+// }
+.toolsBtnAndInfo .toolsBtn .btn-select {
+  width: 150px;
+}
+
+.toolsBtnAndInfo .info {
+  float: right;
+  width: 100%;
+  height: 100%;
+}
+
+.toolsBtnAndInfo .info .info-content {
+  position: relative;
+  margin-left: 310px;
+  overflow: hidden;
+}
+
+.toolsBtnAndInfo .info .info-content div.info-cover {
+  display: none;
+  position: absolute;
+  right: 0px;
+  width: 20px;
+  height: 52px;
+  line-height: 52px;
+  background-color: #ccc;
+  box-shadow: 1px 0px 8px #000;
+  z-index: 2;
+  text-align: center;
+  cursor: pointer;
+}
+
+.toolsBtnAndInfo .info ul {
+  position: absolute;
+  right: 0px;
+  /*width:1000px;*/
+  padding-top: 4px;
+}
+
+.toolsBtnAndInfo .info ul.lf0 {
+  left: 0px;
+}
+
+.toolsBtnAndInfo .info li {
+  float: left;
+  min-width: 75px;
+  line-height: 40px;
+  margin: 0 2px;
+  text-align: center;
+  font-size: 18px;
+  font-family: "Microsoft YaHei";
+  overflow: hidden;
+}
+
+.toolsBtnAndInfo .info li span {
+  display: block;
+  line-height: 22px;
+  color: #1e3443;
+  font-size: 13px;
+}
+
+.toolsBtnAndInfo .info li span:first-child {
+  color: #656b6f;
+}
+
+.toolsBtnAndInfo .info li span.red {
+  color: #f00;
+}
+
+
+/* 左侧panel 覆盖 */
+
+div.layout-panel-west div.panel-header {
+  position: relative;
+  background: -webkit-linear-gradient(top, rgb(239, 242, 242), rgb(239, 242, 242));
+  border-bottom-width: 0px;
+}
+
+div.layout-expand-west div.panel-header {
+  overflow: visible;
+}
+
+div.layout-expand-west div.panel-header .panel-tool {
+  top: 40px;
+  right: -3px;
+  height: 34px;
+}
+
+div.layout-expand-west div.panel-header .panel-tool a {
+  width: 25px;
+  height: 34px;
+}
+
+div.layout-expand-west div.panel-header .panel-tool a.layout-button-right {
+  background: url('../img/tool-icons.png') no-repeat 0 0;
+}
+
+div.layout-panel-west div.panel-header .panel-title {
+  display: none;
+}
+
+div.layout-panel-west div.panel-header .panel-tool {
+  position: absolute;
+  top: 40px;
+  right: -3px;
+  height: 34px;
+}
+
+div.layout-panel-west div.panel-header .panel-tool a {
+  width: 25px;
+  height: 34px;
+}
+
+div.layout-panel-west div.panel-header .panel-tool a.layout-button-left {
+  position: relative;
+  z-index: 999999;
+  background: url('../img/tool-icons.png') no-repeat 0 -34px;
+}
+
+#panel-west {
+  margin-top: -10px;
+}
+
+
+/*
+* 左侧panel滚动条隐藏
+*/
+
+#mainMenu {
+  overflow: hidden;
+}
+
+#mainMenu:hover {
+  overflow: auto;
+}

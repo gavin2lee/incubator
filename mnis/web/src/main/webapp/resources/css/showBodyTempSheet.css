@@ -1,0 +1,23 @@
+.event-msg-box{
+	position: relative;
+	overflow:hidden;
+}
+.event-msg-box:hover{
+	overflow: visible;
+}
+.event-msg-box div{
+	position: absolute;
+
+}
+
+.conditionInputBox input{
+    height:21px;
+    line-height:21px;
+    font-size:12px;
+    width:50px;
+    margin-right:2px;
+    vertical-align:top;
+}
+.conditionInputBox select{
+    height:23px;
+}

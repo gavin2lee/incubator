@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head runat="server">
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/prescriptionExe.css')" />
+<script type="text/javascript" src="#url('/resources/js/nur/prescriptionUnExe.js?1472534366478')"></script>
+<script type="text/javascript">
+  var _patientId = '$!patientId';
+</script>
+</head>
+<body>
+	<div class="wrapper f_yahei">
+		<div class="insp-top top-tools" style="height:40px">
+	      <div class="top-tools-box">
+            <div class="top-title">
+                <span>未执行医嘱</span>
+            </div>
+            <div class="fl" style="position:relative;margin-left:20px;font-size:13px;overflow:hidden;white-space: nowrap;">
+              <p id="nurPatientInfo" class="nurPatientInfo"></p>
+              <div id="info-cover" class="info-cover">&lt;</div>
+            </div> 
+            <!-- <div class="btn-box fl mgl15">
+                医嘱类型：
+                <input type="button" value="查询" onclick="searchPatCrisValue()">
+            </div> -->
+  		    <div class="btn-box fr mgr10">
+                <div class="time-box fl mgr10">
+                  <!--   <input value="$!currentDate" id="startDate" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 85px;">
+                  至
+                    <input value="$!currentDate" id="endDate" name="endDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 85px;"> -->
+                </div>
+	              <select class="selector" id="select1">
+                  <option value="">全部医嘱</option>
+                  <option value="CZ">长嘱</option>
+                  <option value="LZ">临嘱</option>
+                </select>
+                <select class="selector" id="select2">
+                    <option value="">全部分类</option>
+                    <option value="INFUSION">输液</option>
+                    <option value="UZ">治疗</option>
+                    <option value="LAB">检验</option>
+                    <option value="UC">检查</option>
+                    <option value="ORAL">口服药</option>
+
+                    <!-- <option calue="SKINTEST">皮试</option>   
+                    <option value="MF">膳食</option>
+                    <option value="M">描述医嘱</option>
+                    <option value="U">非药品</option>
+                    <option value="UT">其他</option> -->
+                </select>
+                <input type="button" value="查询"  onclick="getPatOrderDetail()" style="min-width:50px;">
+            </div>
+	      </div>
+		</div>
+		<div class="content" style="height:100%;">
+      		<table id="info-tab"></table>
+		</div>
+	</div>
+	
+  <div id="editorPlanDate" class="easyui-dialog" closed="true" title='修改计划时间' data-options="buttons:[{text:'保存',handler:savePlanDate},{text:'取消',handler:closeEditorPlanDateBox}]">
+      <div class="editPanel" style="padding:15px;"></div>
+  </div>
+	<script type="text/javascript">
+            document.body.removeChild(document.body.childNodes[0]);
+	</script>
+</body>
+</html>

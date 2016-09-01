@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lachesis.mnisqm.module.event.dao.EventTypeMapper">
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.event.domain.EventType">
+    <id column="SEQ_ID" jdbcType="BIGINT" property="seqId" />
+    <result column="EVENT_TYPE_CODE" jdbcType="VARCHAR" property="eventTypeCode" />
+    <result column="EVENT_TYPE_NAME" jdbcType="VARCHAR" property="eventTypeName" />
+    <result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+    <result column="STATUS" jdbcType="CHAR" property="status" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_PERSON" jdbcType="VARCHAR" property="createPerson" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_PERSON" jdbcType="VARCHAR" property="updatePerson" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from EVENT_TYPE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.event.domain.EventType">
+    insert into EVENT_TYPE (EVENT_TYPE_CODE, EVENT_TYPE_NAME, 
+      DEPT_CODE, STATUS, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{eventTypeCode,jdbcType=VARCHAR}, #{eventTypeName,jdbcType=VARCHAR}, 
+      #{deptCode,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, GETDATE(), 
+      #{createPerson,jdbcType=VARCHAR}, GETDATE(), #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.event.domain.EventType">
+    update EVENT_TYPE
+    set EVENT_TYPE_CODE = #{eventTypeCode,jdbcType=VARCHAR},
+      EVENT_TYPE_NAME = #{eventTypeName,jdbcType=VARCHAR},
+      DEPT_CODE = #{deptCode,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select SEQ_ID, EVENT_TYPE_CODE, EVENT_TYPE_NAME, DEPT_CODE, STATUS,
+    CREATE_PERSON, UPDATE_PERSON
+    from EVENT_TYPE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select SEQ_ID, EVENT_TYPE_CODE, EVENT_TYPE_NAME, DEPT_CODE, STATUS, CREATE_TIME, 
+    CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+    from EVENT_TYPE
+    where STATUS='01'
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List">
+    delete from EVENT_TYPE where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert id="insertAndReturnKey" keyProperty="id" parameterType="com.lachesis.mnisqm.module.event.domain.EventType" useGeneratedKeys="true">
+    insert into EVENT_TYPE (SEQ_ID, EVENT_TYPE_CODE, EVENT_TYPE_NAME, 
+      DEPT_CODE, STATUS, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{seqId,jdbcType=BIGINT}, #{eventTypeCode,jdbcType=VARCHAR}, #{eventTypeName,jdbcType=VARCHAR}, 
+      #{deptCode,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+</mapper>

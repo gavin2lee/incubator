@@ -1,0 +1,41 @@
+<div class="col-md-12">
+  <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+    <div class="panel-heading">
+      <i class="fa fa-eye-slash"></i>
+      <span>排班规则管理</span>
+      <button class="btn btn-sm btn-primary" ng-click="vm.add()">新增规则</button>
+    </div>
+    <div class="panel-body">
+      <table print-table="vm.list" st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered">
+        <thead>
+          <tr class="header-export">
+            <th st-sort="hisCode">规则名称</th>
+            <th>日期类型</th>
+            <th>班次</th>
+            <th>班次次数</th>
+            <th>护理人员级别</th>
+            <th>备注</th>
+            <th print-remove>操作</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="row in vm.list">
+          <tr class="row-{{$index}}">
+            <td>{{ row.ruleName }}</td>
+            <td>{{ row.dateTypeName }}</td>
+            <td>{{ row.className }}</td>
+            <td>{{ row.userCount }}</td>
+            <!-- <td>{{ row.userLevel }}</td> -->
+            <td>{{ getDicName('level', row.userLevel) }}</td>
+            <td>{{ row.remark }}</td>
+            <td class="print-remove" data-title="'操作'">
+              <button class="btn btn-xs btn-primary" ng-click="vm.edit(row)"><span class="fa fa-edit"></span></button>
+              <button class="btn btn-xs btn-danger" ng-click="vm.del(row.seqId)"><span class="fa fa-trash"></span></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <none-data-info list="vm.list"></none-data-info>
+    </div>
+  </div>
+</div>

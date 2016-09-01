@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.qualityForm.dao.QualityIssueManageMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.qualityForm.domain.QualityIssueManage" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="RESULT_CODE" property="resultCode" jdbcType="VARCHAR" />
+    <result column="FORM_NAME" property="formName" jdbcType="VARCHAR" />
+    <result column="ISSUE_CONTENT" property="issueContent" jdbcType="VARCHAR" />
+    <result column="ISSUE_USER_CODE" property="issueUserCode" jdbcType="VARCHAR" />
+    <result column="ISSUE_TIME" property="issueTime" jdbcType="TIMESTAMP" />
+    <result column="REASON_ANALYSIS" property="reasonAnalysis" jdbcType="VARCHAR" />
+    <result column="REASON_USER_CODE" property="reasonUserCode" jdbcType="VARCHAR" />
+    <result column="REASON_TIME" property="reasonTime" jdbcType="TIMESTAMP" />
+    <result column="RES_DESCRIBE" property="resDescribe" jdbcType="VARCHAR" />
+    <result column="RES_D_USER_CODE" property="resDUserCode" jdbcType="VARCHAR" />
+    <result column="RES_D_TIME" property="resDTime" jdbcType="TIMESTAMP" />
+    <result column="RES_PLAN" property="resPlan" jdbcType="VARCHAR" />
+    <result column="RES_P_USER_CODE" property="resPUserCode" jdbcType="VARCHAR" />
+    <result column="RES_P_TIME" property="resPTime" jdbcType="TIMESTAMP" />
+    <result column="EVALUATION" property="evaluation" jdbcType="VARCHAR" />
+    <result column="EVALUATION_USER_CODE" property="evaluationUserCode" jdbcType="VARCHAR" />
+    <result column="EVALUATION_TIME" property="evaluationTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <result column="TASK_DATE" property="taskTime" jdbcType="VARCHAR" />
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="FORM_TYPE" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from QUALITY_ISSUE_MANAGE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityIssueManage" >
+    insert into QUALITY_ISSUE_MANAGE (RESULT_CODE, FORM_NAME, 
+      ISSUE_CONTENT, ISSUE_USER_CODE, ISSUE_TIME, 
+      REASON_ANALYSIS, REASON_USER_CODE, REASON_TIME, 
+      RES_DESCRIBE, RES_D_USER_CODE, RES_D_TIME, 
+      RES_PLAN, RES_P_USER_CODE, RES_P_TIME, 
+      EVALUATION, EVALUATION_USER_CODE, EVALUATION_TIME, 
+      STATUS, CREATE_TIME, UPDATE_TIME, 
+      CREATE_PERSON, UPDATE_PERSON)
+    values (#{resultCode,jdbcType=VARCHAR}, #{formName,jdbcType=VARCHAR}, 
+      #{issueContent,jdbcType=VARCHAR}, #{issueUserCode,jdbcType=VARCHAR}, #{issueTime,jdbcType=TIMESTAMP}, 
+      #{reasonAnalysis,jdbcType=VARCHAR}, #{reasonUserCode,jdbcType=VARCHAR}, #{reasonTime,jdbcType=TIMESTAMP}, 
+      #{resDescribe,jdbcType=VARCHAR}, #{resDUserCode,jdbcType=VARCHAR}, #{resDTime,jdbcType=TIMESTAMP}, 
+      #{resPlan,jdbcType=VARCHAR}, #{resPUserCode,jdbcType=VARCHAR}, #{resPTime,jdbcType=TIMESTAMP}, 
+      #{evaluation,jdbcType=VARCHAR}, #{evaluationUserCode,jdbcType=VARCHAR}, #{evaluationTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityIssueManage" >
+    update QUALITY_ISSUE_MANAGE
+    set RESULT_CODE = #{resultCode,jdbcType=VARCHAR},
+      FORM_NAME = #{formName,jdbcType=VARCHAR},
+      ISSUE_CONTENT = #{issueContent,jdbcType=VARCHAR},
+      ISSUE_USER_CODE = #{issueUserCode,jdbcType=VARCHAR},
+      ISSUE_TIME = #{issueTime,jdbcType=TIMESTAMP},
+      REASON_ANALYSIS = #{reasonAnalysis,jdbcType=VARCHAR},
+      REASON_USER_CODE = #{reasonUserCode,jdbcType=VARCHAR},
+      REASON_TIME = #{reasonTime,jdbcType=TIMESTAMP},
+      RES_DESCRIBE = #{resDescribe,jdbcType=VARCHAR},
+      RES_D_USER_CODE = #{resDUserCode,jdbcType=VARCHAR},
+      RES_D_TIME = #{resDTime,jdbcType=TIMESTAMP},
+      RES_PLAN = #{resPlan,jdbcType=VARCHAR},
+      RES_P_USER_CODE = #{resPUserCode,jdbcType=VARCHAR},
+      RES_P_TIME = #{resPTime,jdbcType=TIMESTAMP},
+      EVALUATION = #{evaluation,jdbcType=VARCHAR},
+      EVALUATION_USER_CODE = #{evaluationUserCode,jdbcType=VARCHAR},
+      EVALUATION_TIME = #{evaluationTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, RESULT_CODE, FORM_NAME, ISSUE_CONTENT, ISSUE_USER_CODE, ISSUE_TIME, 
+    REASON_ANALYSIS, REASON_USER_CODE, REASON_TIME, RES_DESCRIBE, RES_D_USER_CODE, RES_D_TIME, 
+    RES_PLAN, RES_P_USER_CODE, RES_P_TIME, EVALUATION, EVALUATION_USER_CODE, EVALUATION_TIME, 
+    STATUS, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON
+    from QUALITY_ISSUE_MANAGE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, RESULT_CODE, FORM_NAME, ISSUE_CONTENT, ISSUE_USER_CODE, ISSUE_TIME, 
+    REASON_ANALYSIS, REASON_USER_CODE, REASON_TIME, RES_DESCRIBE, RES_D_USER_CODE, RES_D_TIME, 
+    RES_PLAN, RES_P_USER_CODE, RES_P_TIME, EVALUATION, EVALUATION_USER_CODE, EVALUATION_TIME, 
+    STATUS, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON
+    from QUALITY_ISSUE_MANAGE
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from QUALITY_ISSUE_MANAGE where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityIssueManage" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into QUALITY_ISSUE_MANAGE ( RESULT_CODE, FORM_NAME, 
+      ISSUE_CONTENT, ISSUE_USER_CODE, ISSUE_TIME, 
+      REASON_ANALYSIS, REASON_USER_CODE, REASON_TIME, 
+      RES_DESCRIBE, RES_D_USER_CODE, RES_D_TIME, 
+      RES_PLAN, RES_P_USER_CODE, RES_P_TIME, 
+      EVALUATION, EVALUATION_USER_CODE, EVALUATION_TIME, 
+      STATUS, CREATE_TIME, UPDATE_TIME, 
+      CREATE_PERSON, UPDATE_PERSON)
+    values ( #{resultCode,jdbcType=VARCHAR}, #{formName,jdbcType=VARCHAR}, 
+      #{issueContent,jdbcType=VARCHAR}, #{issueUserCode,jdbcType=VARCHAR}, #{issueTime,jdbcType=TIMESTAMP}, 
+      #{reasonAnalysis,jdbcType=VARCHAR}, #{reasonUserCode,jdbcType=VARCHAR}, #{reasonTime,jdbcType=TIMESTAMP}, 
+      #{resDescribe,jdbcType=VARCHAR}, #{resDUserCode,jdbcType=VARCHAR}, #{resDTime,jdbcType=TIMESTAMP}, 
+      #{resPlan,jdbcType=VARCHAR}, #{resPUserCode,jdbcType=VARCHAR}, #{resPTime,jdbcType=TIMESTAMP}, 
+      #{evaluation,jdbcType=VARCHAR}, #{evaluationUserCode,jdbcType=VARCHAR}, #{evaluationTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <select id="getByresultCode" resultMap="BaseResultMap" parameterType="String" >
+    select SEQ_ID, RESULT_CODE, FORM_NAME, ISSUE_CONTENT, ISSUE_USER_CODE, ISSUE_TIME, REASON_ANALYSIS, 
+    REASON_USER_CODE, REASON_TIME, RES_DESCRIBE, RES_D_USER_CODE, RES_D_TIME, RES_PLAN, 
+    RES_P_USER_CODE, RES_P_TIME, EVALUATION, EVALUATION_USER_CODE, EVALUATION_TIME, STATUS, 
+    CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON
+    from QUALITY_ISSUE_MANAGE
+    where RESULT_CODE = #{resultCode,jdbcType=VARCHAR}
+  </select>
+  <select id="queryByTimeAndTypeAndDeptCode" resultMap="BaseResultMap" parameterType="Map" >
+    select qi.SEQ_ID, qi.RESULT_CODE, qi.FORM_NAME, qi.ISSUE_CONTENT, qi.ISSUE_USER_CODE, qi.ISSUE_TIME, qi.REASON_ANALYSIS, 
+    qi.REASON_USER_CODE, qi.REASON_TIME, qi.RES_DESCRIBE, qi.RES_D_USER_CODE, qi.RES_D_TIME, qi.RES_PLAN, 
+    qi.RES_P_USER_CODE, qi.RES_P_TIME, qi.EVALUATION, qi.EVALUATION_USER_CODE, qi.EVALUATION_TIME, qi.STATUS, 
+    qi.CREATE_TIME, qi.UPDATE_TIME, qi.CREATE_PERSON, qi.UPDATE_PERSON, qt.TASK_DATE, qt.FORM_CODE, cd.DEPT_NAME, cd.DEPT_CODE, qr.FORM_TYPE
+    from QUALITY_ISSUE_MANAGE qi, QUALITY_RESULT qr, COM_DEPT cd, QUALITY_TASK qt
+    where qi.RESULT_CODE = qr.RESULT_CODE
+    and cd.DEPT_CODE = qr.DEPT_CODE
+    and qt.TASK_CODE = qr.TASK_CODE
+    and qt.TASK_DATE like #{date}
+    <if test="deptCode!=null">
+        and qr.DEPT_CODE = #{deptCode}
+    </if>
+     <if test="type!=null">
+        and qr.FORM_TYPE = #{type}
+    </if>
+    and qt.STATUS = '01'
+  </select>
+</mapper>

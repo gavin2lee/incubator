@@ -1,0 +1,219 @@
+<div>
+  <div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+      编辑{{vm.metaData.title}}信息
+    </h5>
+  </div>
+  <form class="form-horizontal w5c-form" role="form" novalidate w5c-form-validate="vm.metaData.validationOption" name="yearForm">
+
+    <div class="modal-body">
+      <div ng-if="vm.metaData.name === 'duty'">
+        <div class="well well-sm">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">职务：</label>
+            <div class="col-sm-4">
+              <select id="duty" required name="duty" ng-model="vm.formData.duty" class="form-control input-sm">
+                <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.position">{{item.dicName}}</option>
+              </select>
+              <!-- <input class="form-control input-sm" required name="duty" ng-model="vm.formData.duty" placeholder="当前职务" type="text"> -->
+            </div>
+          </div>
+
+          <div class="form-group">
+
+            <label class="col-sm-2 control-label">开始时间：</label>
+            <div class="col-sm-4">
+              <span class="input-group">
+                    <input type="text" id="dutyStartDate" name="dutyStartDate" uib-datepicker-popup required
+                           datepicker-options="vm.dateOptions" is-open="vm.dutyStartDateIsOpen"
+                           ng-model="vm.formData.dutyStartDate" close-text="关闭" current-text="今天"
+                           clear-text="清除"
+                           class="form-control input-sm" timestamp-to-string>
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-default"
+                            ng-click="vm.openCalender('dutyStartDateIsOpen')">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                    </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-4 col-sm-offset-2">
+              <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok('comUserNursing')">保存</button>
+              <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+            </div>
+          </div>
+
+        </div>
+        <div class="panel panel-default">
+          <table class="table table-hover table-condensed table-bordered">
+            <thead>
+              <tr>
+                <th>职务</th>
+                <th>开始时间</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="row in vm.metaData.list">
+                <td>{{row.duty && (dicInfo.position | filter:row.duty)[0].dicName || '无'}}</td>
+                <td>{{row.startDate || '无'}}</td>
+              </tr>
+              <tr ng-show="vm.metaData.list.length === 0">
+                <td colspan="3">
+                  <i class="fa fa-info-circle text-success"></i> 暂无记录
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div ng-if="vm.metaData.name === 'technicalPost'">
+        <div class="well well-sm">
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">职称：</label>
+            <div class="col-sm-4">
+              <select id="technicalPost" name="technicalPost" ng-model="vm.formData.technicalPost" class="form-control input-sm">
+                <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.technicalPost">{{item.dicName}}</option>
+              </select>
+              <!-- <input class="form-control input-sm" required name="technicalPost" ng-model="vm.formData.technicalPost" placeholder="在职职称" type="text"> -->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">审批单位：</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control input-sm" required name="reviewUnit" ng-model="vm.formData.reviewUnit">
+            </div>
+
+            <label class="col-sm-2 control-label">开始日期：</label>
+            <div class="col-sm-4">
+              <span class="input-group">
+                    <input type="text" id="positionStartDate" name="positionStartDate" uib-datepicker-popup required
+                           datepicker-options="vm.dateOptions" is-open="vm.positionStartDateIsOpen"
+                           ng-model="vm.formData.positionStartDate" close-text="关闭" current-text="今天"
+                           clear-text="清除"
+                           class="form-control input-sm" timestamp-to-string>
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-default"
+                            ng-click="vm.openCalender('positionStartDateIsOpen')">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                    </span>
+              </span>
+            </div>
+          </div>
+
+          <!-- <div class="form-group">
+            <label class="col-sm-2 control-label">审批单位：</label>
+            <div class="col-sm-4">
+              <input type="text" name="reviewUnit" required class="form-control input-sm" ng-model="vm.formData.reviewUnit">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">开始时间：</label>
+            <div class="col-sm-4">
+              <span class="input-group">
+                <input type="text" id="comUserPosition_startDate_{{$index}}" required name="comUserPositionStartDate" uib-datepicker-popup datepicker-options="vm.dateOptions" on-open-focus="true" is-open="vm.formData.startDateIsOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm"
+                  ng-model="vm.formData.startDate" timestamp-to-string>
+                <span class="input-group-btn">
+                       <button type="button" class="btn btn-sm btn-default" ng-click="vm.openCalender('startDateIsOpen', vm.formData)">
+                         <i class="fa fa-calendar"></i>
+                       </button>
+                       </span>
+              </span>
+            </div>
+          </div> -->
+
+          <div class="form-group">
+            <div class="col-sm-4 col-sm-offset-2">
+              <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok('comUserPosition')">保存</button>
+              <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+            </div>
+          </div>
+
+        </div>
+        <div class="panel panel-default">
+          <table class="table table-hover table-condensed table-bordered">
+            <thead>
+              <tr>
+                <th>职称</th>
+                <th>审批单位</th>
+                <th>开始日期</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="row in vm.metaData.list">
+                <td>{{ row.technicalPost && (dicInfo.technicalPost | filter:row.technicalPost)[0].dicName  || '无'}}</td>
+                <td>{{row.reviewUnit || '无'}}</td>
+                <td>{{row.startDate || '无'}}</td>
+              </tr>
+              <tr ng-show="vm.metaData.list.length === 0">
+                <td colspan="3">
+                  <i class="fa fa-info-circle text-success"></i> 暂无记录
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div ng-if="vm.metaData.name === 'teachLevel' || vm.metaData.name === 'clinical'">
+        <div class="well well-sm">
+
+          <div class="form-group">
+            <label ng-if="vm.metaData.name === 'teachLevel'" class="col-sm-2 control-label">带教：</label>
+            <label ng-if="vm.metaData.name === 'clinical'" class="col-sm-2 control-label">临床层级：</label>
+            <div class="col-sm-4">
+              <select ng-if="vm.metaData.name === 'teachLevel'" id="teaching" name="teaching" ng-model="vm.formData.teachLevel" class="form-control input-sm">
+                <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.teaching">{{item.dicName}}</option>
+              </select>
+              <!-- <input class="form-control input-sm" ng-if="vm.metaData.name === 'teachLevel'" required name="teachLevel" ng-model="vm.formData.teachLevel" type="text"> -->
+              <select ng-if="vm.metaData.name === 'clinical'" id="clinical" name="clinical" ng-model="vm.formData.clinical" class="form-control input-sm">
+                <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.clinical">{{item.dicName}}</option>
+              </select>
+              <!-- <input class="form-control input-sm" ng-if="vm.metaData.name === 'clinical'" required name="clinical" ng-model="vm.formData.clinical" type="text"> -->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-4 col-sm-offset-2">
+              <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.saveChanges(vm.metaData.name === 'clinical' ? 1 : 2)">保存</button>
+              <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+            </div>
+          </div>
+
+        </div>
+        <div class="panel panel-default">
+          <table class="table table-hover table-condensed table-bordered">
+            <thead>
+              <tr>
+                <th>变更前</th>
+                <th>变更后</th>
+                <th>变更时间</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="row in vm.metaData.list">
+                <td>{{row.foreName}}</td>
+                <td>{{row.rearName}}</td>
+                <td>{{row.changeTime}}</td>
+
+              </tr>
+              <tr ng-show="vm.metaData.list.length === 0">
+                <td colspan="3">
+                  <i class="fa fa-info-circle text-success"></i> 暂无记录
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

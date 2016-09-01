@@ -1,0 +1,64 @@
+<div class="quality-add-plan-wrapper">
+  <div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+      新增质控组
+    </h5>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="form">
+        <div class="form-wrapper">
+          <div class="text-input clearfix">
+            <div class="form-group">
+              <label for="teamCode" class="control-label col-xs-4">护理质量组：</label>
+              <div class="col-xs-8">
+                <select class="input-sm form-control" id="teamCode" ng-model="vm.formData.teamCode" ng-change="vm.teamChange()">
+                  <option value="{{item.teamCode}}" ng-repeat="item in vm.groups">{{item.teamName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="area" class="control-label col-xs-4">调查模板：</label>
+              <div class="col-xs-8">
+                <select class="input-sm form-control" id="modelName" ng-model="vm.formData.modelId">
+                  <option value="{{item.seqId}}" ng-repeat="item in vm.models">{{item.modelName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="area" class="control-label col-xs-4">开始时间：</label>
+              <div class="col-xs-8">
+                <span class="input-group">
+                  <input ng-model="vm.formData.startDate" type="text" id="startDate" name="startDate" required uib-datepicker-popup on-open-focus="true" is-open="vm.startOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" timestamp-to-string readonly>
+
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-default" ng-click="vm.startOpen = true">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="area" class="control-label col-xs-4">结束时间：</label>
+              <div class="col-xs-8">
+                <span class="input-group">
+                  <input ng-model="vm.formData.endDate" type="text" id="endDate" name="endDate" required uib-datepicker-popup on-open-focus="true" is-open="vm.endOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" timestamp-to-string readonly>
+
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-default" ng-click="vm.endOpen = true">
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+              <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok()">保存</button>
+              <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+          </div>
+        </div>
+      </form>
+  </div>
+</div>

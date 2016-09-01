@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>配置小白板</title>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/patientGlance.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/spectrum.css')">
+    <script type="text/javascript" src="#url('/resources/js/map.js?1472534366476')" ></script>
+    <script type="text/javascript" src="#url('/resources/js/main/main.js?1472534366476')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/handlebars-v3.0.3.js?1472534366476')"></script>
+</head>
+<style>
+    input {
+        vertical-align: middle;
+    }
+
+    .iframe-dialog::-webkit-scrollbar {
+        display: none;
+        width: 3px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #F5F5F5;
+    }
+
+    .form-wrapper {
+        padding: 10px;
+    }
+    .form-list, .check-wrapper {
+        line-height: 250%;
+    }
+
+    .check-wrapper {
+        padding: 0 10px;
+    }
+
+    .input-sm {
+        width: 4em;
+    }
+
+    .form-list > li {
+        float: left;
+        width: 50%;
+        margin-top: 3px;
+    }
+
+    .data-select li {
+        line-height: 200%;
+        float: left;
+        margin-right: 8px;
+    }
+
+    .label-span {
+        display: inline-block;
+        min-width: 7em;
+        text-align: right;
+        margin-right: 3px;
+        vertical-align: top;
+    }
+
+    .input-block {
+        display: inline-block;
+        min-width: 20em;
+    }
+
+    .add-box {
+        display: inline-block;
+        margin-left: 7em;
+    }
+
+    .iframe-dialog {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        z-index: 999;
+        left: 0;
+        background: #fff;
+        overflow-y: scroll;
+    }
+
+    .close-iframe {
+        position: absolute;
+        font-size: 20pt;
+        color: #fff;
+        text-shadow: 0px 1px 1px #0A0F15;
+        /*background: rgba(222, 222, 222, 0.6);*/
+        width: 36px;
+        height:36px;
+        line-height:32px;
+        z-index: 1000;
+        border-radius: 50%;
+        left: 10px;
+        top: 10px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .select-wrapper_title {
+        margin-bottom: 6px;
+    }
+
+    .selecte-wrapper_right, .selecte-wrapper_left {
+        padding: 10px;
+        float: left;
+        line-height: 160%;
+        border: 1px #ddd solid;
+        height: 270px;
+        overflow-y: scroll;
+    }
+
+    .selecte-wrapper_left {
+        width: 20%;
+    }
+    .selecte-wrapper_right {
+        width: 30%;
+    }
+
+    .selecte-wrapper_right .s-label {
+        padding: 0 4px;
+        position: relative;
+    }
+
+    .delete-arrow {
+        border-radius: 50%;
+        background: #f60;
+        color: #fff;
+    }
+
+    .selecte-wrapper_right .s-label:hover {
+        cursor: pointer;
+    }
+
+    .selecte-wrapper_right .s-label:hover .delete-arrow {
+        display: block;
+    }
+
+    .form-wrapper_selected {
+        margin-left: 10px;
+    }
+
+    .form-wrapper_selected > li{
+        position: relative;
+    }
+
+    .form-wrapper_selected .delete-arrow {
+        display: none;
+        position: absolute;
+        top: 2px;
+        left: -13px;
+        width: 14px;
+        height: 14px;
+        line-height: 14px;
+        color: #fff;
+        text-align: center;
+        background-color: #f60;
+    }
+    input[type="text"] {
+            border-radius: 3px;
+            height: 26px;
+            line-height: 18px;
+            padding: 0 5px;
+    }
+    select {
+        border-radius: 3px;
+            height: 26px;
+    }
+    .check-wrapper li + li {
+        margin-top: 10px;
+    }
+</style>
+<body>
+<!-- 页眉 -->
+    #parse("nur/header.vm")
+
+<section class="center">
+    <div class="config-wrapper">
+        <table class="config-table">
+
+        </table>
+    </div>
+</section>
+<footer>
+
+</footer>
+<div class="edit-dialog">
+    <form class="form-wrapper">
+        <ul class="form-list clearfix">
+            <li>
+           		 <input type="hidden" id="templateId" name="templateId">
+                <span class="label-span">名称：</span>
+                <div class="input-block">
+                    <input class="easyui-validatebox" data-options="require: true" name="name" readonly type="text">
+                </div>
+            </li>
+            <li>
+                <span class="label-span">编号：</span>
+                <div class="input-block">
+                    <input class="easyui-validatebox" data-options="require: true" readonly name="code" type="text">
+                </div>
+            </li>
+            <li>
+                <span class="label-span">位置：</span>
+                <div class="input-block">
+                    <label for="rowNo">行号：</label>
+                    <input class="input-sm easyui-validatebox" id="rowNo" name="rowNo" data-options="require: true" type="text" class="input-sm" placeholder="行号">
+
+                    <label for="columnNo">列号：</label>
+                    <input name="columnNo" id="columnNo" type="text" class="input-sm" placeholder="列号">
+                </div>
+            </li>
+            <li>
+                <span class="label-span">宽度：</span>
+                <div class="input-block">
+                    <input class="input-sm easyui-validatebox" data-options="require: true" name="width" type="text" class="input-sm" placeholder="宽度百分比">%
+                	<span class="label-span">标题宽度：</span>
+                	<input class="input-sm easyui-validatebox" data-options="require: true" name="titleWidth" type="text" class="input-sm" placeholder="标题宽度像素">px
+                </div>
+            </li>
+            <li>
+                <span class="label-span">其它选项：</span>
+                <div class="input-block">
+                    <input type="checkbox" name="isEdit" checked id="isEdit">
+                    <label for="isEdit">是否可编辑</label>
+
+                    <input type="checkbox" name="isBedCode" id="isBedCode">
+                    <label for="isBedCode">只显示床号</label>
+
+                    <input type="checkbox" name="isColspan" id="isColspan">
+                    <label for="isColspan">单列显示</label>
+					<!--
+                    <input type="checkbox" id="isAddNew">
+                    <label for="isAddNew">是否增加行</label>
+                    -->
+                </div>
+            </li>
+
+            <li>
+                <span class="label-span">列类型：</span>
+                <input type="text" class="input-sm" value="0" name="columnType">
+            </li>
+
+            <li>
+                <span class="label-span">分割线设置：</span>
+                <div class="input-block">
+                    <input type="checkbox" name="isShowLineR" id="isShowLineR">
+                    <label for="isShowLineR">显示右分割线</label>
+
+                    <input type="checkbox" name="isShowLineB" id="isShowLineB">
+                    <label for="isShowLineB">显示下分割线</label>
+
+                    <input type="checkbox" name="isShowLineT" id="isShowLineT">
+                    <label for="isShowLineT">显示标题与内容分割线</label>
+
+                </div>
+            </li>
+             <li>
+                <span class="label-span">标题字号：</span>
+                <input type="text" class="input-sm" value="0" name="titleFontSize">
+            </li>
+           
+            <li>
+                <span class="label-span">文本显示设置：</span>
+                <div class="input-block">
+                    <input type="checkbox" name="isShowTitle" id="isShowTitle">
+                    <label for="isShowTitle">显示标题</label>
+
+                    <input type="checkbox" name="isShowData" id="isShowContent">
+                    <label for="isShowContent">显示内容</label>
+
+					<input type="checkbox" name="isDosage" id="isDosage">
+                    <label for="isDosage">显示剂量</label>
+                </div>
+            </li>
+
+            <li>
+                <span class="label-span">内容字号：</span>
+                <input type="text" class="input-sm" value="0" name="contentFontSize">
+            </li>
+
+            <li>
+                <span class="label-span">包含行数：</span>
+                <input type="text" class="input-sm" value="0" name="includeRow">
+            </li>
+
+            <li>
+                <span class="label-span">背景色：</span>
+                <div class="input-block">
+                    <input type="text" name="backgroundColor" placeholder="">
+                    <a href="javascript:;" id="default-color" class="_btn _btn-md">默认颜色</a>
+                </div>
+            </li>
+
+            <li>
+                <span class="label-span">显示类型：</span>
+                <div class="input-block">
+                    <select class="selector" name="showType">
+                    </select>
+                </div>
+            </li>
+
+            <li style="display: none;">
+                <span class="label-span">选择数据项：</span>
+                <div class="input-block">
+                    <ul class="data-select">
+                    </ul>
+                </div>
+            </li>
+
+            <li style="display: none;">
+                <span class="label-span">子项目：</span>
+                <div class="input-block" id="subItem">
+                </div>
+            </li>
+        </ul>
+    </form>
+</div>
+<div class="iframe-dialog">
+    <div class="close-iframe">
+        ×
+    </div>
+    <iframe id="preview-iframe" allowfullscreen scrolling="none" frameborder="0">
+    </iframe>
+</div>
+<div class="add-item-dialog">
+    <form class="form-wrapper">
+        <div class="select-wrapper clearfix">
+            <div class="selecte-wrapper_left">
+                <h4 class="select-wrapper_title">全部项目
+                    <div class="fr">
+
+                        <input type="checkbox" id="checkAll">
+                        <label for="checkAll">全选</label>
+                    </div>
+                    </h4>
+
+                <ul class="form-wrapper_item">
+
+                </ul>
+            </div>
+            <div class="fl" style="padding: 10px;margin-top: 116px; font-size: 18px;">
+                ⇌
+            </div>
+
+            <div class="selecte-wrapper_right">
+                <h4 class="select-wrapper_title">已选择项目</h4>
+                <ul class="form-wrapper_selected"></ul>
+            </div>
+
+            <div class="check-wrapper fl">
+                <h4 class="select-wrapper_title" style="line-height: 30px; font-size: 16px;">总体设置</h4>
+                <ul class="clearfix">
+                    <li>
+                        <span class="label-span">大标题：</span>
+                        <div class="input-block">
+                            <input class="easyui-validatebox" data-options="require: true" name="title" type="text">
+                        </div>
+                    </li>
+                    <li>
+                        <span class="label-span">大标题字号：</span>
+                        <div class="input-block">
+                            <input class="easyui-validatebox input-sm" placeholder="默认:18" name="titleFts" type="text">
+                        </div>
+                    </li>
+                    <li>
+                        <span class="label-span">总行数：</span>
+                        <div class="input-block">
+                            <input class="input-sm easyui-validatebox" data-options="require: true" name="rowCount" type="text"> 行
+                        </div>
+                    </li>
+
+                    <li>
+                        <span class="label-span">模板：</span>
+                        <div class="input-block">
+                            <select class="selector" name="template">
+                            </select>
+                        </div>
+                    </li>
+
+                    <li>
+                        <span class="label-span">大标题背景：</span>
+                        <div class="input-block">
+                            <input type="text" name="background" placeholder="">
+                            <a href="javascript:;" id="default-color-title" class="btn">默认颜色</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="#url('/resources/js/spectrum.js?1472534366476')"></script>
+<script type="text/javascript" src="#url('/resources/js/nur/noteConfig.js?1472534366476')"></script>
+<script type="text/javascript" src="#url('/resources/js/nur/msgBox.js?1472534366476')" charset="utf-8"></script>
+</body>
+</html>

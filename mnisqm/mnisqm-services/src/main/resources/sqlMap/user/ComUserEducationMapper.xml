@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lachesis.mnisqm.module.user.dao.ComUserEducationMapper">
+  <resultMap id="BaseResultMap" type="ComUserEducation">
+    <id column="SEQ_ID" jdbcType="BIGINT" property="seqId" />
+    <result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+    <result column="STATUS" jdbcType="CHAR" property="status" />
+    <result column="START_DATE" jdbcType="VARCHAR" property="startDate" />
+    <result column="END_DATE" jdbcType="VARCHAR" property="endDate" />
+    <result column="EDUCATION_TYPE" jdbcType="CHAR" property="educationType" />
+    <result column="LEANING_TIME" jdbcType="BIGINT" property="leaningTime" />
+    <result column="COURSE_TOPICS" jdbcType="VARCHAR" property="courseTopics" />
+    <result column="COURSE_CONTENT" jdbcType="VARCHAR" property="courseContent" />
+    <result column="CREATE_PERSON" jdbcType="VARCHAR" property="createPerson" />
+    <result column="UPDATE_PERSON" jdbcType="VARCHAR" property="updatePerson" />
+  </resultMap>
+  
+  <!-- 逻辑删除 -->
+  <update id="deleteByPrimaryKey" parameterType="ComUserEducation">
+    update  COM_USER_EDUCATION
+    set STATUS=#{status},
+    	UPDATE_PERSON =#{updatePerson}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <insert id="insert" parameterType="ComUserEducation">
+    insert into COM_USER_EDUCATION (USER_CODE, STATUS, 
+      START_DATE, END_DATE, EDUCATION_TYPE, 
+      LEANING_TIME, COURSE_TOPICS, COURSE_CONTENT, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+      UPDATE_PERSON)
+    values (#{userCode,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{startDate,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR}, #{educationType,jdbcType=CHAR}, 
+      #{leaningTime,jdbcType=BIGINT}, #{courseTopics,jdbcType=VARCHAR}, #{courseContent,jdbcType=VARCHAR}, 
+      GETDATE(), #{createPerson,jdbcType=VARCHAR}, GETDATE(), 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="ComUserEducation">
+    update COM_USER_EDUCATION
+    set USER_CODE = #{userCode,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      START_DATE = #{startDate,jdbcType=VARCHAR},
+      END_DATE = #{endDate,jdbcType=VARCHAR},
+      EDUCATION_TYPE = #{educationType,jdbcType=CHAR},
+      LEANING_TIME = #{leaningTime,jdbcType=BIGINT},
+      COURSE_TOPICS = #{courseTopics,jdbcType=VARCHAR},
+      COURSE_CONTENT = #{courseContent,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+</mapper>

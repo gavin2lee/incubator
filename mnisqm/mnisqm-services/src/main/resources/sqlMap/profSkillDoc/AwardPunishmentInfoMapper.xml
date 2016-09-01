@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.lachesis.mnisqm.module.profSkillDoc.dao.AwardPunishmentInfoMapper">
+	
+	<!-- 逻辑添加 -->
+	<insert id="insert"
+		parameterType="AwardPunishmentInfo">
+		insert into PTF_AWARD_PUNISHMENT_INFO
+		(USER_CODE,USER_NAME, WARD_CODE, APTYPE,
+		APTIME, REASON, MEASURE, STATUS, AUDITOR, 
+		REMARK, CREATE_TIME, CREATE_PERSON, 
+		UPDATE_TIME, UPDATE_PERSON)
+		values
+		(#{userCode},#{userName},
+		#{wardCode},#{apType},#{apTime},
+		#{reason},#{measure},'01',
+		#{auditor},#{remark},GETDATE(),
+		#{createPerson},GETDATE(),#{updatePerson})
+	</insert>
+	<!-- 逻辑删除 -->
+	<update id="deleteByPrimaryKey"
+		parameterType="AwardPunishmentInfo">
+		update
+		PTF_AWARD_PUNISHMENT_INFO
+		set
+		STATUS=#{status},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑修改 -->
+	<update id="update"
+		parameterType="AwardPunishmentInfo">
+		update
+		PTF_AWARD_PUNISHMENT_INFO
+		set
+		USER_CODE=#{userCode},
+		USER_NAME=#{userName},
+		WARD_CODE=#{wardCode},
+		APTYPE=#{apType},
+		APTIME=#{apTime},
+		REASON=#{reason},
+		MEASURE=#{measure},
+		AUDITOR=#{auditor},
+		REMARK=#{remark},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑查找 -->
+	<select id="select"
+		parameterType="AwardPunishmentInfo"
+		resultType="AwardPunishmentInfo">
+		select
+		SEQ_ID				as seqId, 
+		USER_CODE			as userCode, 
+		USER_NAME			as userName,
+		WARD_CODE			as wardCode, 
+		APTYPE				as apType, 
+		APTIME				as apTime,
+		REASON				as reason, 
+		MEASURE				as measure, 
+		STATUS				as status, 
+		AUDITOR				as auditor, 
+		REMARK				as remark
+		from
+		PTF_AWARD_PUNISHMENT_INFO
+		where STATUS='01'
+		<if test="userCode != null">
+			and USER_CODE=#{userCode}
+		</if>
+		<if test="userName != null">
+			and USER_NAME like #{userName}
+		</if>
+		<if test="wardCode != null">
+			and WARD_CODE like #{wardCode}
+		</if>
+		<if test="apType != null">
+			and APTYPE = #{apType}
+		</if>
+		<if test="apTime != null">
+			and APTIME = #{apTime}
+		</if>
+		<if test="reason != null">
+			and REASON like #{reason}
+		</if>
+		<if test="measure != null">
+			and MEASURE = #{measure}
+		</if>
+		<if test="auditor != null">
+			and AUDITOR like #{auditor}
+		</if>
+	</select>
+</mapper>
+  

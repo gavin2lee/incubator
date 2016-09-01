@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.system.dao.SysConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.system.domain.SysConfig" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="CONFIG_ID" property="configId" jdbcType="VARCHAR" />
+    <result column="CONFIG_VALUE" property="configValue" jdbcType="VARCHAR" />
+    <result column="CONFIG_TYPE" property="configType" jdbcType="VARCHAR" />
+    <result column="CONFIG_OWNER" property="configOwner" jdbcType="VARCHAR" />
+    <result column="VALID_FLAG" property="validFlag" jdbcType="VARCHAR" />
+    <result column="CONFIG_DESC" property="configDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from SYS_CONFIG
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.system.domain.SysConfig" >
+    insert into SYS_CONFIG (CONFIG_ID, CONFIG_VALUE, 
+      CONFIG_TYPE, CONFIG_OWNER, VALID_FLAG, 
+      CONFIG_DESC)
+    values (#{configId,jdbcType=VARCHAR}, #{configValue,jdbcType=VARCHAR}, 
+      #{configType,jdbcType=VARCHAR}, #{configOwner,jdbcType=VARCHAR}, #{validFlag,jdbcType=VARCHAR}, 
+      #{configDesc,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.system.domain.SysConfig" >
+    update SYS_CONFIG
+    set CONFIG_ID = #{configId,jdbcType=VARCHAR},
+      CONFIG_VALUE = #{configValue,jdbcType=VARCHAR},
+      CONFIG_TYPE = #{configType,jdbcType=VARCHAR},
+      CONFIG_OWNER = #{configOwner,jdbcType=VARCHAR},
+      VALID_FLAG = #{validFlag,jdbcType=VARCHAR},
+      CONFIG_DESC = #{configDesc,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select ID, CONFIG_ID, CONFIG_VALUE, CONFIG_TYPE, CONFIG_OWNER, VALID_FLAG, CONFIG_DESC
+    from SYS_CONFIG
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, CONFIG_ID, CONFIG_VALUE, CONFIG_TYPE, CONFIG_OWNER, VALID_FLAG, CONFIG_DESC
+    from SYS_CONFIG
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from SYS_CONFIG where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.system.domain.SysConfig" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into SYS_CONFIG (CONFIG_ID, CONFIG_VALUE, 
+      CONFIG_TYPE, CONFIG_OWNER, VALID_FLAG, 
+      CONFIG_DESC)
+    values (#{configId,jdbcType=VARCHAR}, #{configValue,jdbcType=VARCHAR}, 
+      #{configType,jdbcType=VARCHAR}, #{configOwner,jdbcType=VARCHAR}, #{validFlag,jdbcType=VARCHAR}, 
+      #{configDesc,jdbcType=VARCHAR})
+  </insert>
+  <select id="getByConfigId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select ID, CONFIG_ID, CONFIG_VALUE, CONFIG_TYPE, CONFIG_OWNER, VALID_FLAG, CONFIG_DESC
+    from SYS_CONFIG
+    where CONFIG_ID = #{configId}
+  </select>
+</mapper>

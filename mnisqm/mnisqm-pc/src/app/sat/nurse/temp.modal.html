@@ -1,0 +1,69 @@
+<div class="sat-wrapper">
+  <div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+      <!-- <i class="fa fa-edit"></i> -->
+      护士满意度模板
+    </h5>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="form">
+      <div class="container-fluid">
+        <div class="">
+          <div class="form-group">
+            <label for="formCode" class="col-sm-1 control-label">编号：</label>
+            <div class="col-sm-3">
+              <input class="form-control input-sm" name="" id="formCode" type="text" value="{{vm.formData.deptName}}" ng-model="vm.formData.formCode" disabled />
+            </div>
+            <label for="formName" class="col-sm-1 control-label">名称：</label>
+            <div class="col-sm-3">
+              <input class="form-control input-sm" ng-model="vm.formData.formName" id="formName" name="" autocomplete="off" type="text" />
+            </div>
+            <label for="formType" class="col-sm-1 control-label">类型：</label>
+            <div class="col-sm-3">
+              <select class="form-control" name="formType" id="formType" ng-model="vm.formData.formType">
+                <option ng-repeat="item in nurseSatTypes" value="{{item}}">{{item}}</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-sm btn-success" ng-click="vm.add()">添加调查项</button>
+            <table class="sat-table">
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>调查问题</th>
+                  <th>调查选项1</th>
+                  <th>调查选项2</th>
+                  <th>调查选项3</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in vm.formData.satTempDetailList">
+                  <td>{{$index + 1}}</td>
+                  <td>
+                    <input class="form-control" type="text" ng-model="item.content">
+                  </td>
+                  <td ng-repeat="item in item.satOptionList">
+                    <input class="col-md-2" type="radio" disabled="disabled">
+                    <div class="col-md-10">
+                      <input class="form-control" type="text" ng-model="item.optionContent">
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-danger" ng-click="vm.del($index)">删除</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="form-group text-center">
+            <button class="btn btn-sm btn-success" type="button" ng-click="vm.ok()">保存</button>
+            <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

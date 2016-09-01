@@ -1,0 +1,31 @@
+.bd-ba-wrapper {
+  .ws-table {
+    border-left: 1px solid #ddd;
+  }
+  .data-table {
+    table-layout: fixed;
+  }
+  .data-title {
+    line-height: 36px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    border-top: none;
+    > div:last-child {
+      border-left: 1px solid #ddd;
+    }
+  }
+  .data-content {
+    width: 25%;
+    line-height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: $base-color2;
+    text-align: center;
+    border-bottom: 1px solid #ddd!important;
+    > div + div {
+      border-left: 1px solid #ddd;
+    }
+  }
+}

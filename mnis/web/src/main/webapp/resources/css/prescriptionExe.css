@@ -1,0 +1,28 @@
+.editPanel input{
+	width:150px;
+	margin:10px 0 0 10px;
+	padding-left:3px;
+}
+.adviceState{
+	display:inline-block;
+	padding:0px 2px;
+	margin-right:5px;
+	color:#fff;
+}
+.bgcred{
+	background-color: #f00;
+}
+.bgcgreen{
+	background-color: #02d538;
+}
+.bgcblue{
+	background-color: #4d93c4;
+}
+.bgcgray{
+	background-color: #c0c0c0;
+}
+.bgcorg{
+	background-color: #ff8d20;
+	opacity:0.8;
+}
+

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.schedule.dao.ScheduleDeptClassMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.schedule.domain.ScheduleDeptClass" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CLASS_CODE" property="classCode" jdbcType="VARCHAR" />
+    <result column="CLASS_NAME" property="className" jdbcType="VARCHAR" />
+    <result column="START_TIME" property="startTime" jdbcType="VARCHAR" />
+    <result column="END_TIME" property="endTime" jdbcType="VARCHAR" />
+    <result column="COLOR" property="color" jdbcType="VARCHAR" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 逻辑删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="ScheduleDeptClass" >
+    update SCHEDULE_DEPT_CLASS
+    set 
+      STATUS = #{status,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  
+  <!-- 数据插入 -->
+  <insert id="insert" parameterType="ScheduleDeptClass" >
+    insert into SCHEDULE_DEPT_CLASS ( DEPT_CODE, STATUS, 
+      CLASS_CODE, CLASS_NAME, START_TIME, 
+      END_TIME, CREATE_TIME, UPDATE_TIME, 
+      CREATE_PERSON, UPDATE_PERSON,COLOR)
+    values (#{deptCode,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{classCode,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, 
+      #{endTime,jdbcType=VARCHAR}, GETDATE(), GETDATE(), 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson},#{color})
+  </insert>
+  <!-- 更新班次 -->
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.schedule.domain.ScheduleDeptClass" >
+    update SCHEDULE_DEPT_CLASS
+    set 
+      STATUS = #{status,jdbcType=VARCHAR},
+      CLASS_CODE = #{classCode,jdbcType=VARCHAR},
+      CLASS_NAME = #{className,jdbcType=VARCHAR},
+      START_TIME = #{startTime,jdbcType=VARCHAR},
+      END_TIME = #{endTime,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      COLOR = #{color}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <!-- 查询科室下的所有数据 -->
+  <select id="selectAllByCode" resultMap="BaseResultMap" parameterType="ScheduleDeptClass">
+    select SEQ_ID, DEPT_CODE, STATUS, CLASS_CODE, CLASS_NAME, START_TIME, END_TIME, 
+     CREATE_PERSON, UPDATE_PERSON,COLOR
+    from SCHEDULE_DEPT_CLASS
+    where status != '09'
+    and DEPT_CODE = #{deptCode}
+  </select>
+</mapper>

@@ -1,0 +1,72 @@
+<div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+        填写科研论文
+    </h5>
+</div>
+<form class="form-inline w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="addLevelForm">
+    <div class="modal-body ">
+        <div class="static-form-item container-fluid">
+            <div class="form-group col-md-6">
+                <div class="col-sm-4">
+                    <label class="control-label">论文名称：</label>
+                </div>
+                <div class="col-sm-8">
+                    <input ng-model="vm.formData.paperName">
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="col-sm-4">
+                    <label class="control-label">作者：</label>
+                </div>
+                <div class="col-sm-8">
+                    <input ng-model="vm.formData.author">
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="col-sm-4">
+                    <label class="control-label">刊物名称：</label>
+                </div>
+                <div class="col-sm-8">
+                    <input ng-model="vm.formData.publictionName">
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="col-sm-4">
+                    <label class="control-label">刊号：</label>
+                </div>
+                <div class="col-sm-8">
+                    <input ng-model="vm.formData.publictionNo">
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="col-sm-4">
+                    <label class="control-label">字数：</label>
+                </div>
+                <div class="col-sm-8">
+                    <input ng-model="vm.formData.wordsNumber">
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="col-sm-4">
+                    <label class="control-label">核心刊物：</label>
+                </div>
+                <div class="col-sm-8">
+                    <input ng-model="vm.formData.corePubliction">
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <div class="col-sm-2">
+                    <label class="control-label">发表日期：</label>
+                </div>
+                <div class="col-sm-10">
+                    <input ng-model="vm.formData.publishDate">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok()">保存</button>
+        <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+    </div>
+</form>

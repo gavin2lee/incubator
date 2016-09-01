@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.schedule.dao.ScheduleLeaveMapper">
+	<!-- 数据插入 -->
+	<insert id="insert" parameterType="ScheduleLeave">
+		insert into SCHEDULE_LEAVE (USER_CODE, DEPT_CODE,
+		DEPT_NAME, STATUS, GROUP_CODE,
+		START_TIME, END_TIME, LEAVE_WHY, LEAVE_TYPE,DAYS,
+		APPROVE_STATUS, APPROVE_REMARK, REMARK,
+		CREATE_TIME, CREATE_PERSON, UPDATE_TIME,
+		UPDATE_PERSON, APPROVE_PERSON_CODE)
+		values (#{userCode,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR},
+		#{deptName,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+		#{groupCode,jdbcType=VARCHAR},
+		#{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{leaveWhy,jdbcType=VARCHAR},
+		#{leaveType,jdbcType=VARCHAR},#{days},
+		#{approveStatus,jdbcType=VARCHAR}, #{approveRemark,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		GETDATE(), #{createPerson,jdbcType=VARCHAR}, GETDATE(),
+		#{updatePerson,jdbcType=VARCHAR}, #{approvePersonCode})
+	</insert>
+	<!-- 更新 -->
+	<update id="updateByKey" parameterType="ScheduleLeave">
+		UPDATE SCHEDULE_LEAVE SET
+		STATUS = #{status},
+		START_TIME = #{startTime},
+		END_TIME = #{endTime},
+		LEAVE_WHY = #{leaveWhy},
+		LEAVE_TYPE = #{leaveType},
+		APPROVE_STATUS = #{approveStatus},
+		APPROVE_REMARK = #{approveRemark},
+		REMARK = #{remark},
+		UPDATE_PERSON = #{updatePerson},
+		UPDATE_TIME = GETDATE(),
+		DAYS = #{days},
+		APPROVE_PERSON_CODE=#{approvePersonCode}
+		WHERE SEQ_ID = #{seqId}
+	</update>
+
+	<!-- 查询请假信息 -->
+	<select id="selectLeave" resultType="ScheduleLeave"
+		parameterType="ScheduleLeave">
+		select l.SEQ_ID seqId,
+		l.USER_CODE userCode,
+		u.USER_NAME userName,
+		l.DEPT_CODE deptCode,
+		l.DEPT_NAME deptName,
+		l.START_TIME startTime,
+		l.END_TIME endTime,
+		l.LEAVE_WHY leaveWhy,
+		l.LEAVE_TYPE leaveType,
+		l.APPROVE_STATUS approveStatus,
+		l.APPROVE_REMARK approveRemark,
+		l.REMARK remark,
+		l.DAYS days,
+		l.APPROVE_PERSON_CODE approvePersonCode
+		from SCHEDULE_LEAVE l
+		INNER JOIN COM_USER u on l.USER_CODE = u.USER_CODE
+		WHERE l.STATUS !='09'
+		<if test="deptCode != null">
+			and l.DEPT_CODE = #{deptCode}
+		</if>
+	</select>
+
+	<!-- 逻辑删除 -->
+	<update id="deleteLeaveByKey" parameterType="java.lang.Long">
+		update SCHEDULE_LEAVE set
+		STATUS ='09',
+		UPDATE_TIME = GETDATE()
+		WHERE SEQ_ID =#{seqId}
+	</update>
+
+	<!-- 修改审核状态 -->
+	<update id="updateApproveStatus" parameterType="ScheduleLeave">
+		update SCHEDULE_LEAVE
+		set
+		APPROVE_STATUS=#{approveStatus},
+		UPDATE_PERSON = #{updatePerson},
+		UPDATE_TIME = GETDATE()
+		<if test="approvePersonCode != null">
+			, APPROVE_PERSON_CODE=#{approvePersonCode}
+		</if>
+		where
+		SEQ_ID =#{seqId}
+	</update>
+	
+	<!-- 查询科室护士长 -->
+	<select id="selectDeptHeader" parameterType="ScheduleLeave" resultType="ComDept">
+		<!-- SELECT top 1 d.DEPT_NURSE_HEADER 
+		FROM COM_USER u 
+			inner join COM_DEPT_USER c on u.USER_CODE=c.USER_CODE and c.STATUS!='09'
+			inner join COM_DEPT d on c.DEPT_CODE = d.DEPT_CODE and d.STATUS!='09'
+			and u.USER_CODE=#{userCode} and u.STATUS!='09' -->
+			SELECT top 1 d.DEPT_NURSE_HEADER deptNurseHeader
+		FROM COM_DEPT d 
+		where  d.STATUS!='09'
+			and d.DEPT_CODE=#{deptCode} 
+			
+			
+	</select>
+</mapper>

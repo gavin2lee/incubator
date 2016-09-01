@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>打印腕带</title>
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/wristBarcode.css')" />
+<script type="text/javascript" src="#url('/resources/js/nur/wristBarcode.js?1472534366479')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/handlebars-v3.0.3.js?1472534366479')"></script>
+<script type="text/javascript" src="#url('/resources/js/jquery.qrcode-0.12.0.min.js?1472534366479')"></script>
+<script type="text/javascript">
+    var _patientId = '$!id';
+</script>
+</head>
+<body id="patCrisValueLayout" class="easyui-layout">
+    <iframe id="printFrame" src="" style="display:none;width:170px;height:270px;"></iframe>
+    <div data-options="region:'north'" style="height: 39px; overflow: hidden;border-bottom:none;" >
+        <div class="top-tools">
+            <div class="top-tools-box">
+                <div class="top-title">
+                    <span>打印腕带</span>
+                </div>
+                <input type="hidden" id="pid" value = "$!id" />
+                <div class="btn-box fr mgr10">
+                    <input id="printWristBarcode" type="button" value="打印腕带">
+                    <input id="printBedCard" type="button" value="打印床头卡">
+                </div>
+            </div>
+        </div>
+    </div>
+	
+    <div id="wristBarcodeContent" data-options="region:'center'" style="overflow: hidden;">
+   		<!--display:none;-->
+        <div id="printPreviewList" style="display:none;position:absolute;bottom:0;left:200px;width:500px;height:300px;z-index:999;"></div>
+        <img id="qrImg" src="" style="display:none;">
+        <table id="wristBarcodeTable" class="easyui-datagrid" data-options="fit:true,fitColumns:true"></table>
+    </div>
+
+    <!-- 腕带模板 -->
+    <script id="handCard" type="text/x-handlebars-template">
+    </script>
+    
+    <!-- 床头卡模板 -->
+    <!--
+    <script id="bedCard" type="text/x-handlebars-template">
+        {{#data}}
+        <div class="bed-card">
+            <div class="header">
+                <div class="title">{{title}}</div>
+                <div class="admitDate">入院时间：{{admitDate}}</div>
+            </div>
+             <hr>
+            <div class="body">
+            	<div class="pat-info">
+            		<span class="bedCode">{{bedCode}}</span>
+            		<span class="name">{{name}}</span>
+            	</div>
+                <div class="sex">{{sex}}</div>
+                <div class="age">{{age}}</div>
+ 				<div class="dutyNurseName">责任护士：{{dutyNurseName}}</div>
+				<div class="admitDiagnosis">诊&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;断：{{admitDiagnosis}}</div>
+  				  <div class="inHospitalNo">住&nbsp;&nbsp;院&nbsp;号：{{inHospitalNo}}</div>
+ 				  <div class="allergyDrugs">过&nbsp;&nbsp;敏&nbsp;史：{{allergyDrugs}}</div>
+          		          <div class="diet">饮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;食：{{diet}}</div>
+     			     <div class="tendLevel">护理等级：{{tendLevel}}</div>
+    			<div class="qr"><img src="{{qr}}"></div>
+            </div>
+        </div>
+        {{/data}} 
+    </script>
+    -->
+    <!--胸科床头卡-->
+    <script id="bedCard" type="text/x-handlebars-template">
+    </script>
+    
+    
+	<!-- 南方医院床头卡模板 -->
+	<!--
+    <script id="bedCard" type="text/x-handlebars-template">
+        {{#data}}
+        <div class="nf_bed-card">
+           	<div  class="qr"><img src="{{qr}}"/></div>
+            <div class="pat_info">
+            	<div>
+            		<span >{{bedCode}}</span>
+            		<span >{{name}}</span>
+            	</div>
+            	<div >
+            		<span >{{inHospitalNo}}</span>
+            	</div>
+            </div>
+        </div>
+        {{/data}} 
+    </script>
+    -->
+</body>
+</html>

@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.LabTestServiceMapper">
+	<resultMap id="labTestItemMap" type="LabTestItem">
+		<id property="detailRecordId" column="lab_test_detail_id" />
+		<result property="itemName" column="item_name" />
+		<result property="itemCode" column="item_code" />
+		<result property="result" column="result_value" />
+		<result property="resultUnit" column="result_unit" />
+		<result property="normalFlag" column="normal_flag" 
+			typeHandler="com.lachesis.mnis.core.mybatis.handler.LabTestNormalFlagHandler"/>
+		<result property="ranges" column="ref_ranges" />
+		<result property="masterId" column="lab_test_mas_id" />
+	</resultMap>
+	<resultMap id="labTestRecordMap" type="LabTestRecord">
+		<id property="masterId" column="lab_test_mas_id" />
+		<result property="subject" column="test_subject" />
+		<result property="specimen" column="test_specimen" />
+		<result property="orderDoctorName" column="doc_name" />
+		<result property="requestDate" column="request_datetime" />
+		<result property="reporterName" column="reporter_name" />
+		<result property="reportTime" column="report_datetime"  />
+		<result property="testName" column="test_people" />
+		<result property="testDate" column="test_datetime" />
+		<result property="checkName" column="check_people" />
+		<result property="checkDate" column="check_datetime" />
+		<result property="status" column="lab_test_status" />
+		<result property="patientName" column="pat_name" />
+		<result property="bedCode" column="bed_code" />
+		<result property="hospNo" column="his_pat_no" />
+		<result property="recordFlag" column="record_flag" 
+			typeHandler="com.lachesis.mnis.core.mybatis.handler.LabTestAcuteHandler"/>
+		<result property="priFlag" column="pri_flag" />
+		<collection property="itemList" resultMap="labTestItemMap" />
+	</resultMap>
+	<resultMap id="labTestSendRecordMap" type="com.lachesis.mnis.core.labtest.entity.LabTestSendRecord">
+		<id property="patId" column="pat_id" />
+		<result property="bedCode" column="bed_code"/>
+		<result property="patName" column="pat_name"/>
+		<result property="inHospNo" column="in_hosp_no"/>
+		<result property="age" column="age"/>
+		<result property="sex" column="sex"/>
+		<collection property="labTestSendRecordDetails" resultMap="labTestSendRecordDetailMap"></collection>
+		
+	</resultMap>
+	
+	<resultMap id="labTestSendRecordDetailMap" type="com.lachesis.mnis.core.labtest.entity.LabTestSendRecordDetail">
+		<id property="barcode" column="barcode" />
+		<result property="patId" column="pat_id"/>
+		<result property="tubeColor" column="tube_color"/>
+		<result property="testName" column="test_name"/>
+		<result property="status" column="status"/>
+		<result property="sendNurseCode" column="send_nurse_code"/>
+		<result property="sendNurseName" column="send_nurse_name"/>
+		<result property="sendDate" column="send_date"/>
+		<result property="execNurseCode" column="exec_nurse_code"/>
+		<result property="execNurseName" column="exec_nurse_name"/>
+		<result property="execDate" column="exec_date"/>
+	</resultMap>
+	
+	<resultMap id="labTestSendStatisticMap" type="com.lachesis.mnis.core.labtest.entity.LabTestSendStatistic">
+		<id property="type" column="type"/>
+		<result property="name" column="name"/>
+		<result property="count" column="count"/>
+	</resultMap>
+	
+	<sql id="sqlLabTestResult">
+		<!-- tr.barcode(条形码号)||tr.his_itemcode(检验项目) as lab_test_mas_id,tr.getsampledate(检验科接收样品时间) exec_datetime,tr.his_itemname(检验名称) test_subject, 
+	       tr.sampletype(样品类型) test_specimen,tr.doctorname(开立医师姓名) doc_name,tr.SAMPLETIME(抽取样品时间) request_datetime,tr.GETSAMPLETESTERNAME(接收样品检验医师名称) confirmer_name,
+	       tr.ADJUSTSAMPLETESTERNAME(核准样品检验医师名称) reporter_name,tr.RESULTDATE(核准时间) report_datetime,tr.STATE(第7位是1可以给医生看，A 添加单 G 生成检验单L 取血 O 接收样本 P 数据获得 R 审核结果 S 完成下一步计划) lab_test_status,
+	       tr.patientname(患者姓名) pat_name,tr.patientno(患者卡号) his_pat_no, tr.bedno(病床) bed_code,li.barcode(条码)||li.hisitemcode(收费项目编码)||li.itemcode(项目编码) lab_test_detail_id,
+	       it.item_name(小项目名称) item_name,li.itemcode(项目编码) item_code,li.result(结果) result_value,tr.ACUTE(是否加急) as record_flag,
+	       li.flag(标记) AS normal_flag,li.range(参考范围) ref_ranges -->
+	       pm.id as lab_test_mas_id,
+	       pm.test_subject, 
+	       pm.test_specimen,
+	       pm.send_people as doc_name,
+	       pm.send_date as request_datetime,
+	       pm.test_people,
+	       pm.test_date as test_datetime,
+	       pm.report_people as reporter_name,
+	       pm.report_date as report_datetime,
+	       pm.check_people as check_name,
+	       pm.check_date as check_datetime,
+	       pm.status as lab_test_status,
+	       pm.pat_name,
+	       pm.in_hosp_no, 
+	       pm.bed_code,
+	       pd.id as lab_test_detail_id,
+	       pd.item_name,
+	       pd.item_code,
+	       pd.result_value,
+	       pd.normal_flag as record_flag,
+	       pd.normal_flag as normal_flag,
+	       pd.ref_ranges,
+	       pd.result_unit
+	</sql>
+	
+	<sql id="sqlLabTestTable">
+		PAT_LAB_TEST_MAS pm ,PAT_LAB_TEST_DETAIL pd<!-- ,PAT_CURE_INFO pci -->
+	</sql>
+	
+		
+	<select id="getLabTestRecordById" parameterType="string" resultMap="labTestRecordMap">
+	    select 
+       	   <include refid="sqlLabTestResult" />
+	        from <!--PAT_SPECIMENS_COLLECTION sb, -->
+	       <include refid="sqlLabTestTable" />
+	       where
+	       <!-- pci.in_hosp_no = pm.in_hosp_no
+	       and -->
+	       pm.TEST_NO = pd.TEST_NO
+	       and pm.BARCODE=#{barcode}
+	       <!-- and sb.pat_id = pm.pat_id
+	       and sb.specimen_barcode = #{barcode} -->
+	</select>
+	
+	<select id="getPublishLabTests" parameterType="Map" resultMap="labTestRecordMap">
+	    select 
+	       pm.id as lab_test_mas_id,
+	       pm.test_subject, 
+	       pm.test_specimen,
+	       pm.send_people as doc_name,
+	       pm.send_date as request_datetime,
+	       pm.test_people,
+	       pm.test_date as test_datetime,
+	       pm.report_people as reporter_name,
+	       pm.report_date as report_datetime,
+	       pm.check_people as check_name,
+	       pm.check_date as check_datetime,
+	       pm.status as lab_test_status,
+	       pm.pat_name,
+	       pm.in_hosp_no, 
+	       pm.bed_code,
+	       pd.id as lab_test_detail_id,
+	       pd.item_name,
+	       pd.item_code,
+	       pd.result_value,
+	       pd.normal_flag as record_flag,
+	       pd.normal_flag as normal_flag,
+	       pd.ref_ranges,
+	       pd.result_unit
+	    from 
+	       PAT_CURE_INFO p
+	       inner join PAT_LAB_TEST_MAS pm on p.in_hosp_no = pm.in_hosp_no
+	       inner join PAT_LAB_TEST_DETAIL pd on pm.TEST_NO = pd.TEST_NO
+	       left join sys_msg_publish mp on mp.oper_type=2 and mp.oper_id = pm.test_no
+	    where
+	       p.ward_code=#{deptCode}
+	       and p.status = 1
+	       and mp.seq_id is null
+	       and  pd.result_value IS NOT NULL
+	       and pm.report_date is not null
+	       <!-- and patienttype= '住院' -->
+	       and pm.report_date <![CDATA[ >= ]]> #{startTime} <!-- #{startTime}  -->  
+	       <if test="endTime != null">
+	       	and pm.report_date <![CDATA[ <= ]]> #{endTime} 
+	       </if>
+	       and pm.status <![CDATA[ <> ]]>  '0000000000'
+	       order by pm.report_date,pd.item_no
+	</select>
+	
+	<select id="getLabTestRecord" parameterType="Map" resultMap="labTestRecordMap">
+	    select 
+	    	<include refid="sqlLabTestResult" />
+	       from 
+	       <include refid="sqlLabTestTable" />
+	       where
+	       <!-- pci.in_hosp_no = pm.in_hosp_no
+	       and 
+	       pm.pat_id = #{patientId}-->
+	       pm.TEST_NO = pd.TEST_NO
+	       and  pm.in_hosp_no=#{in_hosp_no}
+	       and  pd.result_value IS NOT NULL
+	       and pm.report_date is not null
+	       <!-- and patienttype= '住院' -->
+	       and pm.report_date <![CDATA[ >= ]]> #{startTime} <!-- #{startTime}  -->  
+	       and pm.report_date <![CDATA[ <= ]]> #{endTime} 
+	       and pm.status <![CDATA[ <> ]]>  '0000000000'
+	       order by pm.report_date,pd.item_no
+	</select>
+		
+	<update id="updateLabTestRecordPriFlag" parameterType="Map"  >
+	    update REC_LAB_TEST_MAS set PRI_FLAG = #{priFlag} 
+	    where lab_test_mas_id=#{id}
+	</update>
+	
+	<select id="getLabTestSendStatistic" parameterType="String" resultMap="labTestSendStatisticMap">
+		SELECT count (DISTINCT
+	        tt.PAT_ID ) count,'带送检' name,'SEND' type
+		FROM    ( SELECT    p.PAT_ID 
+		          FROM      dbo.PAT_CURE_INFO p
+		                    INNER JOIN dbo.PAT_ORDER_EXEC e ON p.PAT_ID = e.PAT_ID and p.status = 1
+		                    INNER JOIN dbo.SYS_BARCODE_SYNC bs ON e.BARCODE = bs.BARCODE
+		                    LEFT JOIN dbo.PAT_INSPECT_RECORD ts ON e.BARCODE = ts.BARCODE  and ts.status = 2
+		          WHERE     p.WARD_CODE = #{param1}
+		          	AND     e.EXEC_DATE >= #{param2}
+		          	AND 	e.EXEC_DATE &lt; #{param3}
+		          <if test="param4 != null">
+		          	AND 	ts.ID IS NULL
+		          </if>
+		                    
+		          UNION ALL
+		          SELECT    p.PAT_ID 
+		          FROM      dbo.PAT_INSPECT_RECORD ts
+		                    INNER JOIN dbo.SYS_BARCODE_SYNC bs ON ts.BARCODE = bs.BARCODE  and ts.status = 1
+		                    INNER JOIN dbo.PAT_CURE_INFO p ON p.PAT_ID = ts.PAT_ID AND p.status=1
+		          WHERE     p.WARD_CODE = #{param1}
+		          	AND     ts.send_date >= #{param2}
+		          	AND 	ts.send_date &lt; #{param3}
+		          <if test="param4 != null">
+		          	AND 	ts.ID IS NULL
+		          </if>
+		        ) tt
+
+	</select>
+	
+	<select id="getLabTestSendPatIdByBarcode" parameterType="String" resultType="String">
+		select top 1 
+			case when e.id is null then p.pat_id +'-' + '1'
+			else p.pat_id + '-' + '2'
+			end pat_id_sourece
+		from SYS_BARCODE_SYNC bs
+		inner join pat_cure_info p on p.in_hosp_no = bs.pat_id and p.status = 1
+		left join pat_order_exec e on e.barcode = bs.barcode
+		where bs.barcode=#{param1} 
+	</select>	
+	
+	<select id="getLabTestSendCountByBarcode" parameterType="String" resultType="Integer">
+		SELECT  count(1) count
+		FROM  PAT_INSPECT_RECORD ts 
+		WHERE ts.barcode = #{param1}
+	</select>
+	<select id="getLabTestSendRecords" parameterType="String" resultMap="labTestSendRecordMap">
+		SELECT DISTINCT
+	        tt.PAT_ID ,
+	        tt.IN_HOSP_NO ,
+	        tt.pat_name ,
+	        tt.BED_CODE ,
+	        tt.sex ,
+	        tt.tube_color,
+	        tt.BARCODE ,
+	        tt.test_name ,
+	        tt.STATUS,
+	        tt.SEND_DATE ,
+	        tt.SEND_NURSE_CODE ,
+	        tt.SEND_NURSE_NAME ,
+	        tt.EXEC_NURSE_CODE,
+	        tt.EXEC_NURSE_NAME,
+	        tt.EXEC_DATE,
+	        LEN(tt.bed_code)
+		FROM    ( SELECT    p.PAT_ID ,
+		                    p.IN_HOSP_NO ,
+		                    p.NAME pat_name ,
+		                    p.BED_CODE ,
+		                    p.GENDER sex ,
+		                    bs.BARCODE ,
+		                    bs.PNAME test_name,
+		                    cd.CODE tube_color,
+		                    ts.STATUS,
+		                    ts.SEND_DATE ,
+		                    ts.SEND_NURSE_CODE ,
+		                    ts.SEND_NURSE_NAME,
+		                    e.EXEC_USER_CODE exec_nurse_code,
+		                    e.EXEC_USER_NAME exec_nurse_name,
+		                    e.EXEC_DATE
+		          FROM      dbo.PAT_CURE_INFO p
+		                    INNER JOIN dbo.PAT_ORDER_EXEC e ON p.PAT_ID = e.PAT_ID and p.status = 1
+		                    INNER JOIN dbo.SYS_BARCODE_SYNC bs ON e.BARCODE = bs.BARCODE
+		                    LEFT JOIN dbo.PAT_INSPECT_RECORD ts ON e.BARCODE = ts.BARCODE and ts.status = 2
+		                    LEFT JOIN dbo.COM_DIC cd ON cd.DIC_TYPE='TUBECOLOR' AND cd.his_code = bs.TUBECOLOR
+		          WHERE     p.WARD_CODE = #{param1}
+		          <if test="param2 != null">
+		          	AND		p.pat_id = #{param2}
+		          </if>
+		          	AND     e.EXEC_DATE >= #{param3}
+		          	AND 	e.EXEC_DATE &lt; #{param4}
+		          <if test="param5 != null">
+		          	AND 	ts.ID IS NULL
+		          </if>
+		                    
+		          UNION ALL
+		          SELECT    p.PAT_ID ,
+		                    p.IN_HOSP_NO ,
+		                    p.NAME pat_name ,
+		                    p.BED_CODE ,
+		                    p.GENDER sex ,
+		                    bs.BARCODE ,
+		                    bs.PNAME test_name,
+		                    cd.CODE tube_color,
+		                    ts.STATUS,
+		                    ts.SEND_DATE ,
+		                    ts.SEND_NURSE_CODE ,
+		                    ts.SEND_NURSE_NAME,
+		                    null exec_nurse_code,
+		                   	null exec_nurse_name,
+		                    null EXEC_DATE
+		          FROM      dbo.PAT_INSPECT_RECORD ts
+		                    INNER JOIN dbo.SYS_BARCODE_SYNC bs ON ts.BARCODE = bs.BARCODE and ts.status = 1
+		                    INNER JOIN dbo.PAT_CURE_INFO p ON p.PAT_ID = ts.PAT_ID AND p.status=1
+		                    LEFT JOIN dbo.COM_DIC cd ON cd.DIC_TYPE='TUBECOLOR' AND cd.his_code = bs.TUBECOLOR
+		          WHERE     p.WARD_CODE = #{param1}
+		          <if test="param2 != null">
+		          	AND		p.pat_id = #{param2}
+		          </if>
+		          	AND     ts.send_date >= #{param3}
+		          	AND 	ts.send_date &lt; #{param4}
+		          <if test="param5 != null">
+		          	AND 	ts.ID IS NULL
+		          </if>
+		        ) tt
+
+		order by len(tt.bed_code),tt.bed_code,tt.barcode
+	</select>
+	
+	<insert id="insertLabTestSend" parameterType="com.lachesis.mnis.core.labtest.entity.LabTestSendRecordDetail">
+		 INSERT dbo.PAT_INSPECT_RECORD
+             ( PAT_ID ,
+               BARCODE ,
+               STATUS ,
+               SEND_NURSE_CODE ,
+               SEND_NURSE_NAME ,
+               SEND_DATE
+             )
+    	 VALUES(#{patId},#{barcode},#{status},#{sendNurseCode},#{sendNurseName},#{sendDate})
+	</insert>
+</mapper>

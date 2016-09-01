@@ -1,0 +1,91 @@
+<ul class="clearfix f_yahei nav1" id="nav1" style="top:0px;">
+    #*<li class="fl menu-1" id="menu-1">
+        <a href="#url('/nur/patientGlance/patientGlanceMain.do')"><span class="icon"></span><span
+                class="font">病人一览</span></a>
+        <ul class="clearfix f_yahei nav2">
+            <li><a href="#url('/nur/patientGlance/patientGlanceMain.do')" class="first">床位列表</a></li>
+            <!-- <li><a href="javascript:void(0);">床位管理</a></li> -->
+            <li><a id="shift-to" href="#url('/index/patientMain2.do')" class="first">出院转科</a></li>
+        </ul>
+    </li>
+    <li class="fl menu-2" id="menu-2">
+        <a href="javascript:void(0);"><span class="icon"></span><span class="font">医嘱管理</span></a>
+        <ul class="clearfix f_yahei nav2">
+            <li><a href="javascript:void(0);" id="prescriptionAllManager"
+                   onclick="openNurseSubTab('prescriptionAll',contextPath+'/resources/js/nur/prescriptionAllMenu.js?1472534366476',undefined,{'menuId':'prescriptionAllManager'});">医嘱查看</a>
+            </li>
+            <li><a href="javascript:void(0);" id="prescriptionUnExeManager"
+                   onclick="openNurseSubTab('prescriptionUnExe',contextPath+'/resources/js/nur/prescriptionUnExeMenu.js?1472534366476',undefined,{'menuId':'prescriptionUnExeManager'});">未执行医嘱</a>
+            </li>
+            <li><a href="javascript:void(0);" id="prescriptionUnExeManager"
+                   onclick="openNurseSubTab('prescriptionUnExe',contextPath+'/resources/js/nur/executionOrderMenu.js?1472534366476',undefined,{'menuId':'executionOrder'});">执行单</a>
+            </li>
+            <!--  <li><a href="javascript:void(0);" id="prescriptionCheckManager" onclick="openNurseSubTab('prescriptionCheck',contextPath+'/resources/js/nur/prescriptionCheckMenu.js?1472534366476',undefined,{'menuId':'prescriptionCheckManager'});">医嘱审核</a></li>
+             <li><a href="javascript:void(0);" id="prescriptionExeManager" onclick="openNurseSubTab('prescriptionExe',contextPath+'/resources/js/nur/prescriptionExeMenu.js?1472534366476',undefined,{'menuId':'prescriptionExeManager'});">医嘱执行</a></li> -->
+        </ul>
+    </li>
+    <li class="fl menu-3" id="menu-3">
+        <a href="javascript:void(0);"><span class="icon"></span><span class="font">生命体征</span></a>
+        <ul class="clearfix f_yahei nav2">
+            <li><a href="javascript:void(0);" id="bodyTempSheetManager"
+                   onclick="openNurseSubTab('bodyTempSheet',contextPath+'/resources/js/nur/bodyTempSheetMenu.js?1472534366476',undefined,{'menuId':'bodyTempSheetManager'});">体温单批量录入</a>
+            </li>
+            <li><a id="goTempSheet" href="javascript:;">体温单文书</a></li>
+            <!--
+            <li><a href="javascript:void(0);" id="showBodyTempSheetManager"
+                   onclick="openNurseSubTab('showBodyTempSheet',contextPath+'/resources/js/nur/showBodyTempSheetMenu.js?1472534366476',undefined,{'menuId':'showBodyTempSheetManager'});">体温单记录</a>
+            </li>
+            -->
+        </ul>
+    </li>
+    <li class="fl menu-5" id="menu-5">
+        <a href="javascript:void(0);"><span class="icon"></span><span class="font">临床报告</span></a>
+        <ul class="clearfix f_yahei nav2">
+            <li><a href="javascript:void(0);" id="labTestRecordManager"
+                   onclick="openNurseSubTab('labTestRecord',contextPath+'/resources/js/nur/labTestRecordMenu.js?1472534366476',undefined,{'menuId':'labTestRecordManager'});">检验报告</a>
+            </li>
+            <li><a href="javascript:void(0);" id="inspectionRptMainManager"
+                   onclick="openNurseSubTab('inspectionRptMain',contextPath+'/resources/js/nur/inspectionRptMainMenu.js?1472534366476',undefined,{'menuId':'inspectionRptMainManager'});">检查报告</a>
+            </li>
+            <li><a href="javascript:void(0);" id="patCrisValueManager"
+                   onclick="openNurseSubTab('patCrisValue',contextPath+'/resources/js/nur/patCrisValueMenu.js?1472534366476',undefined,{'menuId':'patCrisValueManager'});">危急值</a>
+            </li>
+        </ul>
+    </li>
+    <li class="fl menu-6" id="menu-6">
+        <a href="#url('/nur/shiftBook/shiftBookMain.do')"><span class="icon"></span><span class="font">交班本</span></a>
+    </li>
+    <!-- <li class="fl menu-7" id="menu-7">
+                            <a href="#url('/index/nurseMain.do')"><span class="icon"></span><span class="font">护理管理</span></a>
+                            <ul class="clearfix f_yahei nav2">
+                                <li><a href="javascript:void(0);" class="first">工作量统计</a></li>
+                                <li><a href="javascript:void(0);">排班</a></li>
+                                <li><a href="javascript:void(0);">考勤</a></li>
+                                <li><a href="javascript:void(0);">耗材管理</a></li>
+                                <li><a href="javascript:void(0);">物品借换管理</a></li>
+                            </ul>
+                        </li>-->
+    <li class="fl menu-7" id="menu-7">
+        <a href="javascript:void(0);"><span class="icon"></span><span class="font">条码打印</span></a>
+        <ul class="clearfix f_yahei nav2">
+            <li><a href="javascript:void(0);" id="wristBarcodeManager"
+                   onclick="openNurseSubTab('wristBarcode',contextPath+'/resources/js/nur/wristBarcodeMenu.js?1472534366476',undefined,{'menuId':'wristBarcodeManager'});">打印腕带</a>
+            </li>
+            <li><a href="javascript:void(0);" id="labelBarcodeManager"
+                   onclick="openNurseSubTab('labelBarcode',contextPath+'/resources/js/nur/labelBarcodeMenu.js?1472534366476',undefined,{'menuId':'labelBarcodeManager'});">打印瓶签</a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="fl menu-9" id="menu-9">
+        <a href="#url('/nur/infusionmanager/getInfusionTimer.do')"><span class="icon"></span><span
+                class="font">输液监护</span></a>
+    </li>
+    <li class="fl menu-8" id="menu-8">
+        <a href="javascript:void(0);"><span class="icon"></span><span class="font">更多</span></a>
+        <ul class="clearfix f_yahei nav2">
+            <li><a href="javascript:void(0);" class="first">系统设置</a></li>
+            <!--<li><a href="javascript:void(0);" class="first">系统设置</a></li>-->
+        </ul>
+    </li>*#
+</ul>

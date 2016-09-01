@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hljld-v" language="groovy" pageWidth="1010" pageHeight="700" orientation="Landscape" columnWidth="970" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2f42722-42e5-4f4e-a6a3-2031f2d22235">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="DE08_10_054_00" class="java.lang.String"/>
+	<parameter name="PTNT_BED" class="java.lang.String"/>
+	<parameter name="PTNT_NAM" class="java.lang.String"/>
+	<parameter name="PTNT_HOSPITAL_NO" class="java.lang.String"/>
+	<parameter name="PTNT_SEX" class="java.lang.String"/>
+	<parameter name="PTNT_AGE" class="java.lang.String"/>
+	<parameter name="BE_HOSPITALIZED_TIME" class="java.lang.String"/>
+	<parameter name="PTNT_DIAGNOSE" class="java.lang.String"/>
+	<field name="DATE_LIST" class="java.lang.String"/>
+	<field name="LIGHT_GOOD" class="java.lang.String"/>
+	<field name="WARD_ENVIRONMENT" class="java.lang.String"/>
+	<field name="FALL_CAUTION" class="java.lang.String"/>
+	<field name="EASY_GET" class="java.lang.String"/>
+	<field name="DONT_STRIDE_ACROSS_BED" class="java.lang.String"/>
+	<field name="CALL_MACHINE" class="java.lang.String"/>
+	<field name="GUIDE_FAMILY" class="java.lang.String"/>
+	<field name="NIGHT_LINE" class="java.lang.String"/>
+	<field name="ACCOMPANY_TOILET" class="java.lang.String"/>
+	<field name="HELP_MOVE" class="java.lang.String"/>
+	<field name="SAFE_TAPE" class="java.lang.String"/>
+	<field name="CLOSE_NURSE" class="java.lang.String"/>
+	<field name="NOTICE_DOCTOR" class="java.lang.String"/>
+	<field name="DONT_LEAVE_BED" class="java.lang.String"/>
+	<field name="SAFE_CLOTHES" class="java.lang.String"/>
+	<field name="DRUG_REACTION" class="java.lang.String"/>
+	<field name="LX_SZSANYUAN_229" class="java.lang.String"/>
+	<field name="CREATE_PERSON" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="120" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="970" height="35" uuid="2319e4df-022a-46d1-b068-e4e17d7d4d0f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[深圳市第三人民医院]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="45" width="970" height="35" uuid="ae4aff8c-43bd-4dc6-9f57-93d3699e25ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[防跌倒护理单]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="45" height="20" uuid="71dd4632-7576-4d7a-9ec8-01eb5e58cc42"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[病区：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="45" y="80" width="120" height="20" uuid="f05e287b-bba3-4669-8690-77c3255b2c78"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DE08_10_054_00}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="165" y="80" width="45" height="20" uuid="8e6d5a98-e13d-4604-bfbf-50058702c4cd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[床号：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="210" y="80" width="100" height="20" uuid="3952e3fb-41c6-4d26-b8d4-0a94c5eafb64"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_BED}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="80" width="45" height="20" uuid="825a940f-973c-48a5-83fe-7006fcb70849"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[姓名：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="355" y="80" width="100" height="20" uuid="7eaaf748-fc1f-487c-acfd-25759005cf4f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_NAM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="455" y="80" width="56" height="20" uuid="3790b48b-276d-46b0-811b-5f8b2b337a8a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[住院号：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="511" y="80" width="120" height="20" uuid="6342019d-4c85-4e74-bc5d-a96f063cb3f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_HOSPITAL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="631" y="80" width="45" height="20" uuid="6308c312-6c7a-4f34-8353-3dcaa7df56df"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[性别：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="746" y="80" width="45" height="20" uuid="f55358d0-3fb0-46b8-bae6-058131a7ea7b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[年龄：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="676" y="80" width="70" height="20" uuid="7d737b68-5472-4e80-b882-34f0a7f34aad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_SEX}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="791" y="80" width="75" height="20" uuid="b55f3508-62ab-4676-9053-ddbac07504b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_AGE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="70" height="20" uuid="9eb85c96-f62a-4ff7-872c-fc5794d97cac"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[入院时间：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="100" width="130" height="20" uuid="db91da07-f5af-4e1f-ae0e-7f18b775bcce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BE_HOSPITALIZED_TIME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="100" width="45" height="20" uuid="8fc593c4-1bc3-40da-913b-7d8cbe9b82f4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[诊断：]]></text>
+			</staticText>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="245" y="100" width="725" height="20" uuid="5a020d30-839a-444c-8a86-216b39b77b80"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12" isStrikeThrough="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PTNT_DIAGNOSE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="220" splitType="Stretch">
+			<staticText>
+				<reportElement style="table_TH" x="0" y="0" width="90" height="220" forecolor="#000000" backcolor="#FFFFFF" uuid="eedc3e9a-4fb2-4879-9de4-90054d1ac856"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[日期]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="889" y="0" width="81" height="220" forecolor="#000000" backcolor="#FFFFFF" uuid="87144061-fe4f-481f-883e-17064d30e97b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[签名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="0" width="403" height="20" uuid="854e39a9-e194-454e-aaff-35f8af5d8b9f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[常规措施]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="0" width="317" height="20" uuid="3143df3b-c3ce-4b6e-b836-3af7ce5f017e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[加强措施]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="20" width="45" height="200" uuid="e4a71968-d61d-46c1-b470-a6e3a7d486b7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[病房内光线充足，地面干净不潮湿，保持道路通畅]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="20" width="45" height="200" uuid="869c0bc0-abd0-441a-8e63-b637fcb97b6b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[引导患者熟悉病房环境，危险环境有警示标识]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="20" width="30" height="200" uuid="b503815e-77b5-45ca-b618-4181927f44c4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[悬挂跌倒风险警示牌]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="20" width="45" height="200" uuid="759f335b-0d7a-45b2-af50-6f61b85edfd5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[把患者需要的物品（水杯，眼镜，纸巾，尿壶等）放置在易取用的地方]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="20" width="45" height="200" uuid="304ff8c5-9a89-4c5e-9cd0-0fd2550ff93c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[放低床身，固定床刹，加床栏，指导患者勿跨越床栏]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="20" width="40" height="200" uuid="bd9f58b0-c791-4a76-a350-18e70f6aacea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[提供呼叫器并教会使用，放于易取得的位置]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="20" width="133" height="200" uuid="09245590-4358-4ed0-9e7b-21f713e59985"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[指导家属，陪人，病人预防跌倒的方法及注意事项：a、当患者头晕时，确保其在床上休息，注意做到“起床三部曲”：醒后卧床一分钟，坐起后一分钟再站起，站起后一分钟再行走；b、穿大小适合的鞋和大小适合的衣裤，鞋底应防滑            c、切勿靠在不稳定的家具上，善用扶手]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="473" y="20" width="20" height="200" uuid="94949304-3e87-4f5b-affc-ffd91852baa2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[加强巡视，晚上使用夜灯]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="20" width="45" height="200" uuid="9511b45b-54f0-4214-b5a7-670013e7e985"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[留陪护，陪同患者如厕，及时换尿片，给便盘、尿壶]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="538" y="20" width="45" height="200" uuid="6ed5a922-7a94-4e5b-bc2f-b06558940692"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[患者在行走或功能训练过程中给予帮助、监督]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="583" y="20" width="20" height="200" uuid="8ae46d27-db3b-4f51-8930-a46ea5d30d9d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[轮椅座椅，使用安全腰带]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="603" y="20" width="45" height="200" uuid="4156745f-2c8d-471f-b7f2-b8ead435e010"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[对于烦躁、谵妄的患者，调床位至靠近护士站的病房，便于观察]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="648" y="20" width="40" height="200" uuid="586cf87e-6982-40a5-a257-e430635a5cd5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[对于仿造，谵妄的患者，通知医生进一步处理]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="688" y="20" width="62" height="200" uuid="9099573e-617c-482e-80a4-2c0f008bb0ef"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[离床活动、外出检查必须有人陪同。无人陪伴的情况下，不要擅自下床，不要随意离开病房]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="750" y="20" width="30" height="200" uuid="1507d3a0-bb53-4bf5-b4d2-952c47f10dc9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[给予<br>安全<br>背心<br>或<br>约束]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="780" y="20" width="30" height="200" uuid="a136217c-10a0-4e26-b5eb-3ab5cf515c37"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[观察<br>药物<br>反应<br>及副<br>作用:<br>催眠<br>降压<br>降糖<br>利尿<br>等药]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="810" y="0" width="79" height="220" uuid="c4cb755a-89a2-49c1-8b5d-b38302a0e7de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[补充措施]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Prevent">
+			<textField>
+				<reportElement style="table_TH" stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="20" backcolor="#FFFFFF" uuid="73578e1e-ed02-4fa5-a258-4c88785f09ad"/>
+				<textFieldExpression><![CDATA[$F{DATE_LIST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="0" width="45" height="20" uuid="64a80499-7c28-430c-9e6d-a62cd212ef5c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{LIGHT_GOOD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="0" width="45" height="20" uuid="15db5fe2-1378-4c1b-bde0-74980f57542e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{WARD_ENVIRONMENT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="0" width="30" height="20" uuid="def302c6-2391-4c2b-8530-4bc69089a1a3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FALL_CAUTION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="0" width="45" height="20" uuid="8a86d3bd-be89-40a9-9d84-b2a47f153515"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{EASY_GET}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="0" width="45" height="20" uuid="fb02bf8f-6de3-4d28-999a-90957648c612"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DONT_STRIDE_ACROSS_BED}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="40" height="20" uuid="635f0ba8-6286-4b5b-9953-9578109dab04"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CALL_MACHINE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="0" width="133" height="20" uuid="28bab49c-c825-4a0d-b56c-0c999f310bf3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{GUIDE_FAMILY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="473" y="0" width="20" height="20" uuid="554e9787-9e3d-4a33-b314-10da05a2d633"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NIGHT_LINE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="493" y="0" width="45" height="20" uuid="c5adac43-296f-4dfa-806b-64e10a0c94f8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ACCOMPANY_TOILET}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="538" y="0" width="45" height="20" uuid="650b991b-56b9-4948-9474-9909937359e8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{HELP_MOVE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="583" y="0" width="20" height="20" uuid="627308d5-8ed3-4555-9fc7-915d2345938f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SAFE_TAPE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="603" y="0" width="45" height="20" uuid="c05bee82-a3d3-4841-b82d-f5b6c9505967"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CLOSE_NURSE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="648" y="0" width="40" height="20" uuid="c155d898-f67c-49f6-becc-42e25a154a2f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOTICE_DOCTOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="688" y="0" width="62" height="20" uuid="2c3b4806-a17f-42d7-9f5b-2566ca8d1d53"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DONT_LEAVE_BED}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="750" y="0" width="30" height="20" uuid="b5d1988e-b4c4-41e5-8487-fc61eb709829"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SAFE_CLOTHES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="780" y="0" width="30" height="20" uuid="57572b67-3024-461c-aeca-1dc8f1083362"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DRUG_REACTION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="810" y="0" width="79" height="20" uuid="c8c29cea-7b99-4604-b64b-37c0b34baa13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{LX_SZSANYUAN_229}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="889" y="0" width="81" height="20" uuid="b925c8e1-941d-4578-8f28-31eab65a881f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CREATE_PERSON}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="726" height="15" uuid="70719137-a2e5-40c6-8f65-0eb37cba47b2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[跌倒风险：1分，使用常规措施；>=2分，高危风险，使用常规措施和加强措施，结合实际补充措施]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

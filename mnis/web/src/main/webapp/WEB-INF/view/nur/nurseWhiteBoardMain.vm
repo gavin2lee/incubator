@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小白板录入</title>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/patientGlance.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/note_s.css')">
+    <script type="text/javascript" src="#url('/resources/js/handlebars-v3.0.3.js?1472534366478')"></script>
+</head>
+<style>
+    .combobox-item {
+        float: left;
+        padding: 3px!important;
+        cursor: pointer;
+        margin: 2px;
+    }
+    section .panel-header {
+        padding: 0;
+    }
+    section .panel-title {
+        background-color: #ececec;
+        height: 42px;
+        color: #333333;
+    }
+
+
+    #whiteBoardTemplate {
+      color: #333;
+    }
+</style>
+<body>
+<header style="position: fixed;width: 100%;height: 52px;z-index: 1000;">
+    <div class="slide-ctr" style="position: absolute;right: .7em;left: inherit;">
+        <a class="_btn" href="javascript:;" class="active" id="save">保存</a>
+    </div>
+    <h1 class="w-title">
+        小白版编辑
+    </h1>
+    <div class="slide-ctr" style="left: .7em; right: 400px;color:#fff;">
+        <a class="_btn" href="/mnis/nur/patientGlance/patientGlanceMain" data-index="1">返回床位列表</a>
+        科室模板：
+        <select class="selector" id="whiteBoardTemplate">
+          <option value="2">
+            科室2号
+          </option>
+        </select>
+    </div>
+
+</header>
+<section style="    padding-top: 60px;">
+    <div class="center">
+        <div class="easyui-panel" title="请填写">
+            <form class="form-wrapper">
+                <ul class="form-list clearfix">
+                </ul>
+            </form>
+            #*<form id="whiteBoardForm">
+                <table>
+                    <tr>
+                        <td class="label-td" data-recordcode="bw" data-recordname="病危">病危床号:</td>
+                        <td class="input-td">
+                            <input name="patient" data-itemname="病床列表" data-type="outer" class="combobox-patient"/>
+                        </td>
+                        <td class="label-td" data-recordcode="bz" data-recordname="病重">
+                            病重床号:
+                        </td>
+                        <td class="input-td">
+                            <input name="patient" data-itemname="病床列表" data-type="outer" class="combobox-patient"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-td" data-recordcode="ry" data-recordname="新入病人">新入病人:</td>
+                        <td class="input-td">
+                            <input name="patient" data-itemname="病床列表" data-type="outer" class="combobox-patient"/>
+                        </td>
+                        <td class="label-td" data-recordcode="cy" data-recordname="出院病人">
+                            出院病人:
+                        </td>
+                        <td class="input-td">
+                            <input name="patient" data-itemname="病床列表" data-type="outer" class="combobox-patient"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-td" data-recordcode="urine" data-recordname="24h尿量">24h尿量:</td>
+                        <td class="input-td">
+                            <input name="patient" data-itemname="病床列表" data-type="outer" class="combobox-patient"/>
+                        </td>
+                        <td class="label-td" data-recordcode="in-output" data-recordname="24h出入量">
+                            24h出入量:
+                        </td>
+                        <td class="input-td">
+                            <input name="patient" data-itemname="病床列表" data-type="outer" class="combobox-patient"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-td" data-recordcode="weight" data-recordname="体重">体重:</td>
+                        <td class="input-td">
+                            <input name="patient" data-itemname="病床列表" data-type="outer" class="combobox-patient"/>
+                        </td>
+                        <td class="label-td" data-recordcode="abdominalCir" data-recordname="腹围">腹围:</td>
+                        <td class="input-td">
+                            <input name="patient" data-itemname="病床列表" data-type="outer" class="combobox-patient"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-recordcode="bodysign" data-recordname="生命体征" class="label-td">生命体征:</td>
+                        <td class="input-td">
+                            <ul class="list-formIitem">
+                            </ul>
+                            <a href="javascript:;" class="easyui-linkbutton add-bodySign-item" data-options="iconCls:'icon-add'">添加</a>
+                        </td>
+                        <td data-recordcode="bloodGlu" data-recordname="血糖监测" class="label-td">
+                            血糖监测:
+                        </td>
+                        <td class="input-td">
+                            <ul class="list-formIitem">
+                            </ul>
+                            <a href="javascript:;" class="easyui-linkbutton add-bloodSugar-item" data-options="iconCls:'icon-add'">添加</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-recordcode="importantHint" data-recordname="重要提示" class="label-td">重要提示:</td>
+                        <td class="input-td">
+                            <ul class="list-formIitem">
+                            </ul>
+                            <a href="javascript:;" class="easyui-linkbutton add-note-item" data-options="iconCls:'icon-add'">添加</a>
+                        </td>
+                        <td data-recordcode="importantNotice" data-recordname="重要通知" class="label-td">重要通知:</td>
+                        <td class="input-td">
+                            <ul class="list-formIitem">
+                            </ul>
+                            <a href="javascript:;" class="easyui-linkbutton add-notice-item" data-options="iconCls:'icon-add'">添加</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-recordcode="shiftDoctor" data-recordname="付班医生" class="label-td">付班医生:</td>
+                        <td class="input-td">
+                            <input comboname="content" placeholder="付班医生" data-itemname="付班医生" id="shiftDoctor" name="shiftDoctor" type="text"/>
+                        </td>
+                        <td data-recordcode="dutyDoctor" data-recordname="值班医生" class="label-td">值班医生:</td>
+                        <td class="input-td">
+                            <input comboname="content" placeholder="值班医生" data-itemname="值班医生" id="dutyDoctor" name="dutyDoctor" type="text"/>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td data-recordcode="a_one_nurse" data-recordname="A1班" class="label-td">
+                            白班护士（A1）:
+                        </td>
+                        <td class="input-td">
+                            <input comboname="content" placeholder="A1班" data-itemname="A1班" id="a_one_nurse" name="a_one_nurse" type="text"/>
+                        </td>
+                        <td data-recordcode="a_two_nurse" data-recordname="A2班" class="label-td">
+                            白班护士（A2）:
+                        </td>
+                        <td class="input-td">
+                            <input comboname="content" placeholder="A2班" data-itemname="A2班" id="a_two_nurse" name="a_two_nurse" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-recordcode="a_three_nurse" data-recordname="A3班" class="label-td">
+                            白班护士（A3）:
+                        </td>
+                        <td class="input-td">
+                            <input comboname="content" placeholder="A3班" data-itemname="A3班" id="a_three_nurse" name="a_three_nurse" type="text"/>
+                        </td>
+                        <td data-recordcode="a_four_nurse" data-recordname="A4班" class="label-td">
+                            白班护士（A4）:
+                        </td>
+                        <td class="input-td">
+                            <input comboname="content" placeholder="A4班" data-itemname="A4班" id="a_four_nurse" name="a_four_nurse" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-recordcode="b_nurse" data-recordname="B班" class="label-td">
+                            白班护士（B）:
+                        </td>
+                        <td class="input-td">
+                            <input comboname="content" placeholder="B班" data-itemname="B班" id="b_nurse" name="b_nurse" type="text"/>
+                        </td>
+                        <td data-recordcode="p_nurse" data-recordname="P班" class="label-td">
+                            值班护士（P）:
+                        </td>
+                        <td class="input-td">
+                            <input comboname="content" placeholder="P班" data-itemname="P班" id="p_nurse" name="p_nurse" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-recordcode="n_nurse" data-recordname="N班" class="label-td">
+                            值班护士（N）:
+                        </td>
+                        <td class="input-td">
+                            <input comboname="content" placeholder="N班" data-itemname="N班" id="n_nurse" name="n_nurse" type="text"/>
+                        </td>
+                        <td data-recordcode="fu_nurse" data-recordname="辅班" class="label-td">
+                            值班护士（辅）:
+                        </td>
+                        <td class="input-td">
+                            <input comboname="content" placeholder="辅班" data-itemname="辅班" id="fu_nurse" name="fu_nurse" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-recordcode="secondDoctor" data-recordname="值班护士" class="label-td">二线医生:</td>
+                        <td class="input-td">
+                            <input comboname="content" placeholder="二线医生" data-itemname="二线医生" id="secondDoctor" name="secondDoctor" type="text"/>
+                        </td>
+                        <td class="label-td" data-recordcode="secondHeadNurse" data-recordname="二线护士长">
+                            二线护士长:
+                        </td>
+                        <td class="input-td">
+                            <input comboname="content" placeholder="二线护士长" data-itemname="二线护士长" name="secondHeadNurse" id="secondHeadNurse" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+##                            <a href="javascript:;" style="padding: 0 12px" class="btn-nm">保存</a>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>*#
+        </div>
+    </div>
+</section>
+<footer></footer>
+<script type="text/javascript" src="#url('/resources/js/nur/noteForm_v1.js?1472534366478')"></script>
+</body>
+</html>

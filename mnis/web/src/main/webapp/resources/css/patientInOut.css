@@ -1,0 +1,89 @@
+
+.out-grid {
+	width: 50%;
+	float: left;
+}
+.out-detail {
+	float: right;
+	width: 49%;
+	background: #fff;
+	border: 1px #ccc solid;
+}
+
+.out-detail .list-header {
+	background: #eee;
+	padding: 4px 8px;
+}
+
+.out-dl dt{
+	background: #eee;
+	padding: 4px 8px;
+	font-size: 12px;
+	border-bottom: 1px #ccc solid;
+	border-top: 1px #ccc solid;
+}
+
+.out-dl dd{
+	position: relative;
+	border-bottom: 1px #ccc dotted;
+	padding: 4px 8px;
+	font-size: 12px;
+}
+.out-dl dd span {
+	margin-right: 40px;
+}
+
+.out-dl .basic-info {
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.out-dl.operation-records dd {
+
+	margin-left: 24px;
+}
+
+.out-dl dd:last-child {
+	border-bottom: 0;
+}
+
+.out-dl.operation-records dd::before {
+	position: absolute;
+	top: calc(50% - 6px);
+	left: -12px;
+	content: ' ';
+	display: inline-block;
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	background: #bbb;
+	z-index: 10;
+}
+
+.out-dl.operation-records dd::after {
+	position: absolute;
+	top: -1px;
+	left: -8px;
+	content: ' ';
+	display: block;
+	width: 1px;
+	height: 104%;
+	background: #bbb;
+	z-index: 9;
+}
+
+.out-dl.operation-records dt+::after {
+	height: 50%;
+	top:auto;
+	bottom: 0;
+}
+.out-dl.operation-records dt+dd {
+	color: #3473c0;
+}
+.out-dl.operation-records dt+::before {
+	background: #3473c0;
+}
+
+.out-dl.operation-records dd:last-child::after {
+	height: 50%;
+}

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.CriticalServiceMapper">
+	<resultMap id="criticalValueMap" type="CriticalValue">
+		<id property="criticalValueId" column="barcode" />
+		<result property="deptNo" column="ward_code" />
+		<result property="patientName" column="name" />
+		<result property="bedCode" column="bed_code" />
+		<result property="inHospNo" column="in_hosp_no" />
+		<result property="sendPeople" column="send_people" />
+		<result property="sendTime" column="send_time" />
+		<result property="criticalValue" column="critical_value" />
+		<result property="dispose" column="dispose_doctor_name" />
+		<result property="type" column="type" />
+		<result property="status" column="dispose_status" />
+		<result property="disposeTime" column="dispose_date" />
+		<result property="receiveName" column="RECEIVE_NAME" />
+		<result property="doctorName" column="DOCTOR_NAME" />
+		<result property="isRepeat" column="IS_REPEAT" />
+	</resultMap>
+	
+	<resultMap id="criticalValueRecordMap" type="com.lachesis.mnis.core.critical.entity.CriticalValueRecord">
+		<id property="criticalValueId" column="barcode" />
+		<result property="deptNo" column="ward_code" />
+		<result property="patientName" column="name" />
+		<result property="bedCode" column="bed_code" />
+		<result property="inHospNo" column="in_hosp_no" />
+		<result property="sendPeople" column="send_people" />
+		<result property="sendTime" column="send_time" />
+		<result property="criticalValue" column="critical_value" />
+		<result property="dispose" column="dispose_doctor_name" />
+		<result property="type" column="type" />
+		<result property="status" column="dispose_status" />
+		<result property="disposeTime" column="dispose_date" />
+		<result property="itemSubject" column="item_subject" />
+		<association property="criticalOperRecord" resultMap="criticalOperRecordMap" />
+		<collection property="labTestItems" resultMap="labTestItemMap"></collection>
+	</resultMap>
+	<resultMap id="criticalOperRecordMap" type="com.lachesis.mnis.core.critical.entity.CriticalOperRecord">
+		<id property="id" column="id"/>
+		<result property="operNurseCode" column="oper_nurse_code"/>
+		<result property="operNurseName" column="oper_nurse_name"/>
+		<result property="operTime" column="oper_time"/>
+		<result property="operValue" column="oper_value"/>
+		<result property="barcode" column="barcode"/>
+		<result property="doctorName" column="DOCTOR_NAME"/>
+		<result property="receiveName" column="RECEIVE_NAME"/>
+		<result property="isRepeat" column="IS_REPEAT"/>
+	</resultMap>
+	<resultMap id="labTestItemMap" type="LabTestItem">
+		<id property="detailRecordId" column="id" />
+		<result property="itemName" column="item_name" />
+		<result property="result" column="result_value" />
+		<result property="resultUnit" column="result_unit" />
+		<result property="normalFlag" column="normal_flag" />
+		<result property="ranges" column="ref_ranges" />
+		<result property="masterId" column="barcode" />
+	</resultMap>
+	<resultMap type="java.util.Map" id="CriticalItem"></resultMap>
+	<select id="getCriticalValue" parameterType="Map" resultMap="criticalValueMap">
+		select
+		cv.ward_code,cv.bed_code,cv.critical_value,cv.send_people,cv.send_time,
+		cv.dispose_doctor_name,cv.dispose_nurse_code,cv.dispose_nurse_name
+		,cv.dispose_date,
+		cv.dispose_status,cv.in_hosp_no ,p.name,cv.TEST_NO as
+		barcode, pcr.DOCTOR_NAME, pcr.RECEIVE_NAME, pcr.IS_REPEAT
+		from dbo.PAT_CRITICAL_RECORD pcr, pat_critical_value cv
+		left join pat_cure_info p on p.pat_id = cv.pat_id
+		
+		<where>
+			<if test="patIds != null and patIds.size() > 0">
+				cv.pat_id in (
+					<foreach collection="patIds" item="patId" index="index"
+							 separator=",">
+						#{patId}
+					</foreach>
+					)
+			</if>
+			<if test="deptno != null">
+				and cv.ward_code = #{deptno}
+			</if>
+			<if test="startTime != null">
+			 <![CDATA[AND cv.send_time > #{startTime} ]]>
+			</if>
+			<if test="endTime != null">
+			 <![CDATA[AND cv.send_time <=#{endTime} ]]>
+			</if>
+			<if test="status != null">
+			 <![CDATA[AND cv.dispose_status =#{status} AND cv.dispose_nurse_code is null]]>
+			</if>
+			AND pcr.BARCODE = cv.TEST_NO
+		</where>
+		order by cv.send_time
+	</select>
+
+	<select id="getCriticalValueById" parameterType="String"
+		resultMap="criticalValueMap">
+		select
+		cv.ward_code,cv.bed_code,cv.critical_value,cv.send_people,cv.send_time,
+		cv.dispose_doctor_name,cv.dispose_nurse_code,cv.dispose_nurse_name
+		,cv.dispose_date,
+		cv.dispose_status,cv.in_hosp_no ,p.name,p.barcode as barcode
+		from pat_critical_value cv
+		left join pat_cure_info p on p.pat_id = cv.pat_id
+		where
+		p.barcode = #{param1}
+	</select>
+
+	<insert id="updateCritical">
+		update pat_critical_value set dispose_nurse_code = #{param2},
+		dispose_nurse_name=#{param3},
+		dispose_date = #{param3}
+		where critical_id=#{param1}
+		<!-- insert into pat_critical_value (critical_id ,nurse_id
+		,nurse_name ,process_time ) values
+		(#{param1}, #{param2}, #{param3},
+		#{param4}) -->
+	</insert>
+	
+	<select id="getCriticalValueRecord" parameterType="Map" resultMap="criticalValueRecordMap">
+		SELECT  cv.ward_code ,
+		        cv.bed_code ,
+		        cv.in_hosp_no ,
+		        p.name ,
+		        cv.TEST_NO barcode ,
+		        cv.critical_value ,
+		        cv.send_people ,
+		        cv.send_time ,
+		        cv.dispose_doctor_name ,
+		        cv.dispose_date ,
+		        cv.dispose_status ,
+		        pcr.ID ,
+		        pcr.OPER_NURSE_CODE ,
+		        pcr.OPER_NURSE_NAME ,
+		        pcr.OPER_TIME ,
+		        pcr.OPER_VALUE,
+		        pcr.DOCTOR_NAME,
+		        pcr.RECEIVE_NAME,
+		        pcr.IS_REPEAT,
+		 		m.TEST_SUBJECT item_subject,
+		        d.ID,
+		        d.ITEM_NAME,
+		        d.NORMAL_FLAG,
+		        d.REF_RANGES,
+		        d.RESULT_UNIT,
+		        d.RESULT_VALUE
+		FROM    dbo.PAT_CRITICAL_VALUE cv
+		        INNER JOIN dbo.PAT_CURE_INFO p ON p.PAT_ID = cv.PAT_ID
+		                                          AND p.STATUS = 1
+		        INNER JOIN dbo.PAT_LAB_TEST_MAS m ON cv.TEST_NO = m.TEST_NO
+		        INNER JOIN dbo.PAT_LAB_TEST_DETAIL d ON cv.TEST_NO = d.TEST_NO
+		        LEFT JOIN dbo.PAT_CRITICAL_RECORD pcr ON pcr.BARCODE = cv.TEST_NO
+		        
+		WHERE d.NORMAL_FLAG IN ('CL','CH')
+		<if test="deptCode != null">
+			AND cv.WARD_CODE = #{deptCode}
+		</if>
+		<if test="patId != null">
+			AND p.PAT_ID = #{patId}
+		</if>
+		<if test="isAll == null">
+			AND pcr.id is null
+		</if>
+		<if test="startTime != null">
+			AND cv.send_time >= #{startTime}
+		</if>
+		<if test="endTime != null">
+			AND cv.send_time &lt; #{endTime}
+		</if>
+		ORDER BY cv.send_time,d.item_no
+	</select>
+	
+	<select id="getCritiveRecordCount" parameterType="String" resultType="Integer">
+		SELECT 
+			count(1)
+		FROM PAT_CRITICAL_RECORD
+		WHERE barcode=#{param1}
+	</select>
+	
+	<insert id="insertCriticalOperRecord" parameterType="com.lachesis.mnis.core.critical.entity.CriticalOperRecord">
+		INSERT dbo.PAT_CRITICAL_RECORD
+		        ( OPER_NURSE_CODE ,OPER_NURSE_NAME ,OPER_TIME ,OPER_VALUE ,BARCODE, DOCTOR_NAME, RECEIVE_NAME, IS_REPEAT
+		        )
+		VALUES  (#{operNurseCode},#{operNurseName},#{operTime},#{operValue},#{barcode},#{doctorName},#{receiveName},#{isRepeat}
+		        )
+	</insert>
+</mapper>

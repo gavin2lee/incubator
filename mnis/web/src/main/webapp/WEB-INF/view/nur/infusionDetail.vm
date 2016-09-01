@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>输液详情 - 联新</title>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/patientGlance.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/transfusionMonitor.css')"/>
+    <script type="text/javascript">
+        var currCheckedPatientId = null;
+    </script>
+    <style type="text/css">
+        .three li {
+            list-style: none;
+            overflow: hidden;
+        }
+
+        .smsg {
+            width: 345px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body>
+<!-- 页眉 -->
+<div id="header" class="header" style="height:70px;">
+    <div class="top">
+        <div class="clearfix center">
+            <span class="fl bg"></span>
+            <span class="color font date">$!today</span><span class="font">$!deptName，</span>
+
+            <div class="font account">
+                <div id="user"><em>$!user.user.name</em><span></span></div>
+                <input type="hidden" id="deptId" value="$!deptCode"/>
+                <input type="hidden" id="nurseId" value="$!user.userId"/>
+
+                <div class="user-tools hide" style="height:62px;">
+                    <a href="javascript:void(0)" id="quit"><i></i>退出登录</a>
+                    <!--                   <a href="javascript:void(0)" id="changeKs"><i></i>切换科室</a>-->
+                    <a href="javascript:void(0)" id="changeAccount"><i></i>切换账户</a>
+                    <!--                    <a href="javascript:void(0)" id="modifyPsd"><i></i>修改密码</a> -->
+                </div>
+            </div>
+            <img id="logo" src="#url('/resources/img/logo.png')" class="fr" alt="LACHESIS联新设备管理"/>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="center">
+            <div class="coverBlock"></div>
+            <div class="hosTitle f_yahei">
+                $!hospitalName
+            </div>
+            #parse("nur/menu.vm")
+        </div>
+    </div>
+</div>
+<!--主体 start-->
+<div class="panel layout-panel-center">
+    <div id="patCrisValueLayout" title="" class="panel-body panel-body-noheader layout-body">
+        <div data-options="region:'north'">
+            <div class="top-tools">
+                <div class="top-tools-box">
+                    <div class="center">
+                        <div class="fl panel-sub-title">
+                            输液详情医嘱
+                        </div>
+                        <div class="btn-box fr mgr10">
+                            <div class="tool-widget">
+                                <div class="search-widget-1">
+                                    <input data-bind-aaa="name" placeholder="请输入床号" id="searchKey">
+                                    <button id="searchBtn"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-body center">
+            <div class="panel-sub panel-sub-title clearfix">
+                <div class="fl subTitle">
+                    <span class="icon icon-yznr"></span>
+                    医嘱内容
+
+                    患者：$!patient.name
+                </div>
+                <div class="btn-box fr">
+                    <a href="javascript:;" id="addPatrolBtn" type="button" class="btn">巡视录入</a>
+                </div>
+            </div>
+            <!--输液情况列表 start-->
+            <div class="panel-sub infusion-advice-wrapper clearfix">
+                <div class="slide-wrapper">
+                    <div class="btn-wrapper clearfix">
+                        <a class="fl i-d-prev" href="javascript:;">
+                            <span></span>
+                        </a>
+                        <a class="fr i-d-next" href="javascript:;">
+                            <span></span>
+                        </a>
+                    </div>
+                    <div class="slide-container">
+                        <input type="hidden" id="deptCode" value="$!patient.deptCode">
+                        <input type="hidden" id="devMacAddr" value="$!deviceInfo.macAddress">
+                        <ul class="item-box i-d-list clearfix">
+                        ## 遍历输液药物列表 start
+                            #foreach($info in $allOrderList)
+                                #if($!info.bagInfo.infusion_status == "I")
+                                <li class="fl transfusing on" data-bagid="$!info.bagInfo.infusion_bag_id">
+                                    <input id="orderId" type="hidden" value="$!info.bagInfo.order_no">
+                                #else
+                                    #if($!info.bagInfo.infusion_status == "C")
+                                    <li class="fl unreached" data-bagid="$!info.bagInfo.infusion_bag_id">
+                                    #else
+                                        #if($!info.bagInfo.infusion_status == "F")
+                                        <li class="fl suspend" data-bagid="$!info.bagInfo.infusion_bag_id">
+                                        #else
+                                            #if($!info.bagInfo.infusion_status == "S")
+                                            <li class="fl transfused" data-bagid="$!info.bagInfo.infusion_bag_id">
+                                            #else
+                                                #if($!info.bagInfo.infusion_status == "P")
+                                                <li class="fl transfused" data-bagid="$!info.bagInfo.infusion_bag_id">
+                                                #else
+                                                <li class="fl transfusing" data-bagid="$!info.bagInfo.infusion_bag_id">
+                                                #end
+                                            #end
+                                        #end
+                                    #end
+                                #end
+                                <div>$!info.orderExecStatusCode</div>
+                                <div class="i-d-header clearfix">
+                                    <div class="infusion-vol fl">$!info.bagInfo.order_exec_count
+                                        /$!info.bagInfo.order_count</div>
+                                    <div class="infusion-timer fr">
+                                    <span>
+                                        #if($!info.bagInfo.infusion_status == "F")
+                                            已完成
+                                        #else
+                                            <span class="icon icon-timer"></span>
+                                            $!info.infusionInfo.rest_time
+                                        #end
+                                        <br>
+                                        <span>$!info.orderInfo.usageName &nbsp; $!info.orderInfo.deliverFreq</span>
+                                    </span>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                <div class="infusion-describe">
+                                    <ul>
+                                        #foreach($item in $!info.orderInfo.orderItems)
+                                            <li class="clearfix">
+                                                <span class="fl">$!item.orderName</span>
+                                                <span class="fr">$!item.dosage$!item.dosageUnit</span>
+                                            </li>
+                                        #end
+                                    </ul>
+                                    #if ($!info.orderInfo.orderItems.size() > 2)
+                                        <div class="more">
+                                            ...
+                                        </div>
+                                    #end
+                                </div>
+
+                                <div class="infusion-rate">
+                                <div class="rate-bar-wrapper">
+                                    #if($!info.bagInfo.infusion_status == "F")
+                                        <div class="rate-bar-num" style="width: 100%;"></div>
+                                    </div>
+                                    <div class="rate-text">
+                                    <div id="" class="rate-percent">
+                                        100%
+                                    #else
+                                        <div class="rate-bar-num"
+                                             style="width: $!info.infusionInfo.inm_percent%;"></div>
+                                    </div>
+                                    <div class="rate-text">
+                                    <div id="" class="rate-percent">
+                                        $!info.infusionInfo.inm_percent%
+                                    #end
+                                </div>
+                                    <div id="" class="rate-range clearfix">
+                                        #if($!info.bagInfo.infusion_status != "F")
+                                            <span class="fl">
+                                                $!info.bagInfo.begin_time
+                                            </span>
+                                                <span class="fr">
+                                                    $!info.bagInfo.end_time
+                                                </span>
+                                        #end
+                                    </div>
+                                </div>
+                                </div>
+                            </li>
+                            #end
+                        ## 遍历输液药物列表 end
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--输液情况列表 end-->
+
+            <!--输液详情图表 start-->
+            <div class="panel-sub panel-sub-title clearfix">
+                <div class="fl">
+                    <span class="icon icon-syjcq"></span>
+                    输液检测器（设备号：
+                    <span id="infusion-device-id">
+                        #if(!$deviceInfo.deviceSn)
+                            --
+                        #else
+                            $deviceInfo.deviceSn
+                        #end
+                    </span>
+                    ，绑定床号：<span id="infusion-bed-id">$patient.bedCode</span>号床）
+
+                </div>
+                <div class="btn-box fr">
+                    #if($!deviceInfo.bindType == "DP" || $!deviceInfo.bindType == "DB")
+                        <a href="javascript:;" id="dev-off" type="button" class="btn">解除绑定</a>
+                    #end
+                    <a href="javascript:;" id="dev-set" type="button" class="btn">设置</a>
+                </div>
+
+            </div>
+            <div class="panel-sub infusion-detail-data clearfix">
+                <div id="i-d-wrapper">
+
+                </div>
+            </div>
+            <!--输液详情图表 end-->
+
+            <!-- 巡视录入 start-->
+            <div class="easyui-dialog" id="addPatrol">
+                <div style="padding:15px;">
+                    <form id="addPatrolForm">
+                        <div id="addDev-wrapper" class="dlg-panel">
+                            <ul class="form-ele clearfix">
+                                <li class="fl">
+                                    输液滴速：
+                                    <input type="tel" value="" data-options="required:true" name="deliverSpeed"
+                                           class="easyui-validatebox">
+                                    滴／分
+                                ##                                    speedUnit
+
+                                </li>
+                                <li class="fl">
+                                    剩余液量：
+                                    <input type="tel" value="" data-options="required:true" name="residue"
+                                           class="easyui-validatebox">
+                                    ml
+                                </li>
+                                <li class="fl">
+                                    <a href="javascript:;" class="btn" id="refresh">刷新</a>
+                                </li>
+                            #*<li class="fl">
+                                剩余时间：
+                                <input type="tel" value="" data-options="required:true" name="restTimeAlarm"
+                                       class="easyui-validatebox">
+                                分钟
+                            </li>*#
+                                <li class="fl alone">
+                                    输液情况：
+                                    <input name="abnormal" value="" data-options="required:true" type="radio"
+                                           checked id="infusion-normal">
+                                    <label for="infusion-normal">正常</label>
+                                    <input name="abnormal" value="" data-options="required:true" type="radio"
+                                           id="infusion-unusual">
+                                    <label for="infusion-unusual">异常</label>
+                                </li>
+                                <li class="fl visible-toggle">
+                                    异常处理：
+##                                    <input type="hidden" name="anomalyDisposal">
+                                    <input class="handler-toggle" type="checkbox" name="anomalyDisposal" value="输液终止" id="infusion-stop">
+                                    <label for="infusion-stop">输液终止</label>
+                                    <input class="handler-toggle" type="checkbox" name="anomalyDisposal" value="输液暂停" id="infusion-suspend">
+                                    <label for="infusion-suspend">输液暂停</label>
+                                </li>
+                                <li class="fl visible-toggle alone">
+                                    异常原因：
+                                    <select name="anomalyMsg" id="">
+                                        <option selected="selected" value="">--无--</option>
+                                        <option value="静脉炎">静脉炎</option>
+                                        <option value="发热反应">发热反应</option>
+                                        <option value="空气栓塞">空气栓塞</option>
+                                        <option value="液体外渗">液体外渗</option>
+                                        <option value="液体不滴">液体不滴</option>
+                                        <option value="针头滑脱">针头滑脱</option>
+                                        <option value="针头阻塞">针头阻塞</option>
+                                        <option value="压力过低">压力过低</option>
+                                        <option value="静脉痉挛">静脉痉挛</option>
+                                        <option value="循环负荷过重反应">循环负荷过重反应</option>
+                                        <option value="患者出现输液反应">患者出现输液反应</option>
+                                        <option value="患者要求停止输液">患者要求停止输液</option>
+                                        <option value="茂菲滴管内液面过高">茂菲滴管内液面过高</option>
+                                        <option value="茂菲滴管内液面过低">茂菲滴管内液面过低</option>
+                                        <option value="茂菲滴管内液面自行下降">茂菲滴管内液面自行下降</option>
+                                    </select>
+                                </li>
+                               #* <li class="fl visible-toggle alone">
+                                    异常处理：
+                                    <textarea rows="2" placeholder="填写异常处理措施" cols="50"
+                                              name="anomalyDisposal"></textarea>
+                                </li>*#
+                            </ul>
+                            <h3 class="dialog-sub-title"></h3>
+                            <ul id="patrolWrapper" class="form-ele clearfix">
+                                <li class="fl">
+                                    备药护士：
+                                    <span></span>
+                                    <span></span>
+                                </li>
+                                <li class="fl">
+                                    配液护士：
+                                    <span></span>
+                                    <span></span>
+                                </li>
+                                <li class="fl">
+                                    执行护士：
+                                    <span></span>
+                                    <span></span>
+                                </li>
+                                <li class="fl">
+                                    审核护士：
+                                    <span></span>
+                                    <span></span>
+                                </li>
+                                <li class="fl alone">
+                                    巡视护士：
+                                    <div class="fr" style="width: 89%;">
+                                        <div>罗向阳  2015-09-08 13:52:54  </div>
+                                        <div>罗向阳  2015-09-08 13:52:54  </div>
+                                        <div>罗向阳  2015-09-08 13:52:54  </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 巡视录入 end -->
+
+            <!-- 巡视录入 start-->
+            <div class="easyui-dialog" id="deviceSetting">
+                <div style="padding:15px;">
+                    <form id="setDeviceForm">
+                        <input type="hidden" name="deviceModel" value="Ladrip"/>
+                        <input type="hidden" name="bindType" value="DB"/>
+
+                        <div class="dlg-panel" id="setting-wrapper"><h3 class="dialog-sub-title">设备信息</h3>
+                            <ul class="form-ele clearfix">
+                                <li class="fl"> 型号：$deviceInfo.deviceModel</li>
+                                <li class="fl"> 设备号：$deviceInfo.deviceSn</li>
+                                <li class="fl"><input type="hidden" name="macAddress" value="22:22:22:22:22:22">
+                                    蓝牙mac地址：$!deviceInfo.macAddress
+                                </li>
+                            </ul>
+                            <h3 class="dialog-sub-title">报警设置</h3>
+                            <ul class="form-ele clearfix">
+                                <li class="fl alone"><input type="checkbox" name="alarmSwitch"
+                                                            id="isAlarm"> <label for="isAlarm">报警开启</label></li>
+                                <li class="fl"> 剩余液量 <input type="tel" value="20" data-options="required:true"
+                                                            name="restMlAlerm" class="easyui-validatebox"> ml
+                                </li>
+                                <li class="fl"> 剩余时间 <select data-options="required:true" class="easyui-validatebox"
+                                                             name="restTimeAlarm">
+                                    <option value="5">5分钟</option>
+                                    <option value="10">10分钟</option>
+                                </select></li>
+                                <li class="fl"> 滴速范围 <input type="tel" value="30" data-options="required:true"
+                                                            class="easyui-validatebox" name="dropSpeedFloor"> -
+                                    <input type="tel" value="50" data-options="required:true"
+                                           class="easyui-validatebox" name="dropSpeedUpper"> 滴／分
+                                </li>
+                                <li class="fl"> 点滴系数 <select data-options="required:true" class="easyui-validatebox"
+                                                             name="idc">
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                </select></li>
+                                <li class="fl alone"><input type="checkbox" id="defaultSetting" name="isDefault">
+                                    <label for="defaultSetting">设为所有设备默认设置</label></li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 巡视录入 end -->
+
+            <!-- 解绑提醒 start-->
+            <div class="easyui-dialog" id="unbindConfirm">
+                <div style="padding:15px;">
+                    <p>
+                        确定要对设备 <span id="confirm-dev-name">$deviceInfo.deviceSn</span> 解除绑定吗？
+                    </p>
+                </div>
+            </div>
+            <!-- 解绑提醒 end -->
+        </div>
+    </div>
+</div>
+<!--主体 end-->
+<script type="text/javascript" src="#url('/resources/js/map.js?1472534366476')"></script>
+<script type="text/javascript" src="#url('/resources/js/Highcharts/js/highcharts.js?1472534366476')"></script>
+<script type="text/javascript" src="#url('/resources/js/dictionary.js?1472534366476')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/main/main.js?1472534366476')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/nur/patientGlance.js?1472534366476')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/nur/infusionDetail.js?1472534366476')" charset="utf-8"></script>
+</body>
+</html>

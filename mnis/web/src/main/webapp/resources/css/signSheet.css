@@ -1,0 +1,138 @@
+/*  医嘱审核样式 */
+
+html{height:100%;}
+body{height:100%;}
+.wrapper{height:100%;}
+.ua-box .ua-b-content span.text{text-align: right;padding-right:20px;}
+/*.set-prescription-time{width:500px;height:250px;padding:10px 20px;}
+.set-prescription-time li{margin-top:10px;}*/
+.ua-box .ua-b-content select{width:100px;}
+/*.ua-box .ua-b-content span.text{width: 40px !important;}*/
+/*.ua-b-content{padding:0px !important;}
+.bottom-tools{position:absolute;right:50px;bottom:20px;}
+.bottom-tools .btn-nm{width:70px;height:23px;line-height:21px;margin-top: 4px;margin-right: 10px;}
+*/
+.tab-btn{
+	position: relative;
+	float: left;
+	width: 110px;
+	height: 30px;
+	line-height: 30px;
+	margin-top:4px;
+	text-align: center;
+	border-right:1px dotted #fff;
+	cursor:pointer;
+	font-size:15px;
+}
+.tab-btn i{
+	display: none;
+	position: absolute;
+	bottom:-5px;
+	left:50%;
+	width: 16px;
+	height: 7px;
+	margin-left:-8px;
+	background: url(../img/hover_bg.png) no-repeat;
+}
+.tab-btn:hover i{
+	display: block;
+}
+.checked i{
+	display: block;
+}
+
+#addSigns .ua-b-content{
+	height:220px;
+}
+#addSigns .ua-b-content ul li{
+	margin-top: 10px;
+}
+#addSigns .ua-b-content ul li input[type='text']{
+	width:174px;
+}
+#addSigns .ua-b-content ul li select{
+	width: 180px;
+}
+/*.ua-b-c-toolbar select{width:100px;height:25px;margin-right:5px;}
+.ua-b-c-toolbar input{height:25px;padding:0 5px;margin-right:5px;}*/
+.styleList{height:320px;padding:15px;}
+.styleList .list{
+	position: relative;
+	width:240px;
+	height:320px;
+	border:1px solid #ccc;
+	
+}
+.listBox{
+	position: relative;
+	height:320px;
+	overflow-y:auto;  
+	-webkit-user-select:none;
+}
+.styleList .list ul li{
+	height: 22px;
+	line-height: 22px;
+	padding:0 5px;
+	font-size: 13px;
+	border-top:1px solid #f8f8f8;
+	-webkit-user-select:none;
+}
+.styleList .list ul li.move{
+	background-color: #eee !important;
+	color: #ccc;
+}
+.styleList .list ul li:hover{
+	background-color: #e0e4e8;
+}
+.leftList{
+	margin-left:20px;
+}
+.leftList .fastFind{
+	position: absolute;
+	left:0;
+	top:0;
+	width:235px;
+	height:24px;
+	line-height: 24px;
+	padding-left: 5px;
+	border-bottom:1px solid #ccc;
+	font-size: 13px;
+}
+.leftList .fastFind input{
+
+}
+.leftList .listBox{
+	height:295px;
+	margin-top:25px;
+}
+
+.rightList{
+	margin-right:20px;
+}
+.cacheNode{
+	position: absolute;
+	display:none;
+	top:62px;
+	width: 228px;
+	height: 20px;
+	padding:0 5px;
+	background-color: #ccc;
+	border:1px dotted #999;
+	font-size:13px;
+	opacity:0.8;
+}
+.insertLine{
+	border-top-color:#333 !important;
+}
+.bottom-tools{position:absolute;right:50px;bottom:20px;}
+.bottom-tools .btn-nm{width:70px;height:23px;line-height:21px;margin-top: 4px;margin-right: 10px;}
+
+.operationBtn{position: absolute;left: 50%;top:50%;width: 25px;height: 150px;margin-top:-75px;margin-left:-12.5px;overflow: hidden;}
+.operationBtn div{width: 25px;height: 50px;overflow:hidden;}
+.operationBtn div.rightBtn{position: absolute;margin-top:50px;}
+.operationBtn div i{display: block;width: 0;height: 0;border:25px solid #f8f8f8;cursor:pointer;}
+.operationBtn div.leftBtn i{border-left-color:#ccc;}
+.operationBtn div.leftBtn i:hover{border-left-color:#777;}
+.operationBtn div.rightBtn i{margin-left:-100%;border-right-color:#ccc;}
+.operationBtn div.rightBtn i:hover{border-right-color:#777;}
+

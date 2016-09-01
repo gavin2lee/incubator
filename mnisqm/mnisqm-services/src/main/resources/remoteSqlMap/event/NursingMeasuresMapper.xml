@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.event.dao.NursingMeasuresMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.event.domain.NursingMeasures" >
+    <result column="RISK_NAME" property="riskName" jdbcType="VARCHAR" />
+    <result column="MEASURES_NAME" property="measuresName" jdbcType="VARCHAR" />
+    <result column="NUMBER" property="number" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.event.domain.NursingMeasures" >
+    insert into NURSING_MEASURES (RISK_NAME, MEASURES_NAME, NUMBER
+      )
+    values (#{riskName,jdbcType=VARCHAR}, #{measuresName,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}
+      )
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select RISK_NAME, MEASURES_NAME, NUMBER
+    from NURSING_MEASURES
+  </select>
+  <insert parameterType="com.lachesis.mnisqm.module.event.domain.NursingMeasures" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into NURSING_MEASURES (RISK_NAME, MEASURES_NAME, NUMBER
+      )
+    values (#{riskName,jdbcType=VARCHAR}, #{measuresName,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}
+      )
+  </insert>
+</mapper>

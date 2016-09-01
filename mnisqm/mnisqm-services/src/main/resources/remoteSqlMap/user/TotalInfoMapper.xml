@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.user.dao.TotalInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.user.domain.TotalInfo" >
+    <result column="NURSE_SUM" property="nurseSum" jdbcType="INTEGER" />
+    <result column="POST_PEARSON_SUM" property="postPearsonSum" jdbcType="INTEGER" />
+    <result column="PATIENT_SUM" property="patientSum" jdbcType="INTEGER" />
+    <result column="CRITICAL_PATIENT_SUM" property="criticalPatientSum" jdbcType="INTEGER" />
+    <result column="SURGERY_PATIENT_SUM" property="surgeryPatientSum" jdbcType="INTEGER" />
+    <result column="LEAVE_NURSE_SUM" property="leaveNurseSum" jdbcType="INTEGER" />
+    <result column="ALLOCATE_APPLY_SUM" property="allocateApplySum" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.user.domain.TotalInfo" >
+    insert into TOTAL_INFO (NURSE_SUM, POST_PEARSON_SUM, PATIENT_SUM, 
+      CRITICAL_PATIENT_SUM, SURGERY_PATIENT_SUM)
+    values (#{nurseSum,jdbcType=INTEGER}, #{postPearsonSum,jdbcType=INTEGER}, #{patientSum,jdbcType=INTEGER}, 
+      #{criticalPatientSum,jdbcType=INTEGER}, #{surgeryPatientSum,jdbcType=INTEGER})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select NURSE_SUM, POST_PEARSON_SUM, PATIENT_SUM, CRITICAL_PATIENT_SUM, SURGERY_PATIENT_SUM
+    from TOTAL_INFO
+  </select>
+  <insert parameterType="com.lachesis.mnisqm.module.user.domain.TotalInfo" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into TOTAL_INFO (NURSE_SUM, POST_PEARSON_SUM, PATIENT_SUM, 
+      CRITICAL_PATIENT_SUM, SURGERY_PATIENT_SUM)
+    values (#{nurseSum,jdbcType=INTEGER}, #{postPearsonSum,jdbcType=INTEGER}, #{patientSum,jdbcType=INTEGER}, 
+      #{criticalPatientSum,jdbcType=INTEGER}, #{surgeryPatientSum,jdbcType=INTEGER})
+  </insert>
+  <select id="selectMainInfo" resultMap="BaseResultMap" >
+    select(
+    	select count(*) from YIHUI.numas.dbo.v_COM_USER where NATURE != '岗位培训生' ) NURSE_SUM,
+    (	select count(*) from YIHUI.numas.dbo.v_COM_USER where NATURE = '岗位培训生' ) POST_PEARSON_SUM,
+    (   select count(*) from PAT_CURE_INFO where OUT_DATE is not null) PATIENT_SUM,
+    (   select count(*) from PAT_CURE_INFO where DANGER_LEVEL in ('病重','重危')) CRITICAL_PATIENT_SUM,
+    (   select count(*) from YIHUI.numas.dbo.SCHEDULE_LEAVE where APPROVE_USER is null) LEAVE_NURSE_SUM,
+    (   select count(*) from YIHUI.numas.dbo.COM_TRANSFERS_MANAGE where STATUS = '1') ALLOCATE_APPLY_SUM
+    
+    
+  </select>
+</mapper>

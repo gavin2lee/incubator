@@ -1,0 +1,13 @@
+/*  医嘱审核样式 */
+
+html{height:100%;}
+body{height:100%;}
+.wrapper{height:100%;}
+.ua-box .ua-b-content span.text{text-align: right;padding-right:20px;}
+.set-prescription-time{width:500px;height:250px;padding:10px 20px;}
+.set-prescription-time li{margin-top:10px;}
+.ua-box .ua-b-content select{width:100px !important;height:30px;}
+.ua-box .ua-b-content span.text{width: 40px !important;}
+.ua-b-content{padding:0px !important;}
+.bottom-tools{position:absolute;right:50px;bottom:20px;}
+.bottom-tools .btn-nm{width:70px;height:23px;line-height:21px;margin-top: 4px;margin-right: 10px;}

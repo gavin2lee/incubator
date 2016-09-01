@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.user.dao.ComUserPositionMapper" >
+  <!-- 逻辑删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="ComUserPosition" >
+    update COM_USER_POSITION
+    set STATUS = #{status,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="ComUserPosition" >
+    insert into COM_USER_POSITION (STATUS, USER_CODE, 
+      POSITION_NAME, START_DATE, END_DATE, 
+      REVIEW_UNIT, CREATE_TIME, UPDATE_TIME, 
+      CREATE_PERSON, UPDATE_PERSON)
+    values ( #{status,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, 
+      #{technicalPost}, #{startDate,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR}, 
+      #{reviewUnit,jdbcType=VARCHAR}, GETDATE(), GETDATE(), 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="ComUserPosition" >
+    update COM_USER_POSITION
+    set STATUS = #{status,jdbcType=VARCHAR},
+      USER_CODE = #{userCode,jdbcType=VARCHAR},
+      POSITION_NAME = #{technicalPost},
+      START_DATE = #{startDate,jdbcType=VARCHAR},
+      END_DATE = #{endDate,jdbcType=VARCHAR},
+      REVIEW_UNIT = #{reviewUnit,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+</mapper>

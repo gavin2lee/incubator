@@ -1,0 +1,3794 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.OrderMapper">
+	<resultMap type="OrderBaseInfo" id="orderBaseMap">
+		<id property="orderId" column="order_item_id" />
+		<result property="orderGroupNo" column="order_group_id" />
+		<result property="orderSubNo" column="order_sub_no" />
+		<result property="performNo" column="perform_no"/>
+		<result property="orderName" column="item_name" />
+		<result property="orderItemCode" column="item_code" />
+		<result property="dosage" column="dosage" />
+		<result property="dosageUnit" column="dosage_unit" />
+		<result property="drugSpec" column="drug_specs" />
+		<result property="skinTestRequired" column="skin_test_required" />
+		<result property="remark" column="remark" />
+		<result property="specimenName" column="specimen_name" />
+		<result property="usageCode" column="usage_code" />
+		<result property="usageName" column="usage_name" />
+	</resultMap>
+	
+	<resultMap type="OrderBaseGroup" id="orderBaseGroupMap">
+		<id property="orderGroupNo" column="order_group_id" />
+		<result property="patientId" column="pat_id" />
+		<result property="inHospNo" column="in_hosp_no" />
+		<result property="workUnitCode" column="dept_code" />
+		<result property="patientBedCode" column="bed_code" />
+		<result property="patientName" column="pat_name" />
+		<result property="orderTypeCode" column="order_type_code" />
+		<result property="orderTypeName" column="order_type_name" />
+		<result property="orderExecTypeCode" column="order_exec_type_code" />
+		<result property="orderExecTypeName" column="order_exec_type_name" />
+		<result property="deliverFreq" column="freq_name" />
+		<result property="deliverFreqCode" column="freq_code" />
+		<result property="usageName" column="usage_name" />
+		<result property="emergent" column="emergent" />
+		<result property="skinTestOrder" column="is_skin_test" />
+		<result property="orderStatusCode" column="order_status_code"
+			typeHandler="com.lachesis.mnis.core.mybatis.handler.OrderStatusCodeHandler" />
+		<result property="orderStatusName" column="order_status_name"
+			typeHandler="com.lachesis.mnis.core.mybatis.handler.OrderStatusNameHandler" />
+		<result property="createDate" column="create_datetime" />
+		<result property="createDoctorId" column="create_doc_code" />
+		<result property="createDoctorName" column="create_doc_name" />
+		<result property="stopDate" column="stop_datetime" />
+		<result property="stopDoctorId" column="stop_doc_code" />
+		<result property="stopDoctorName" column="stop_doc_name" />
+		<result property="planExecTime" column="plan_exec_time" />
+		<result property="beginDate" column="begin_date" />
+		<result property="endDate" column="end_date" />
+		<result property="orderLiquorStatus" column="order_liquor_status" />
+		<result property="mark" column="mark" />
+		<result property="orderSortNo" column="order_sort_no" />
+		<result property="orderNo" column="order_no" />
+		<result property="isPrintLabel" column="is_print_label" />
+		<result property="performSchedule" column="perform_schedule" />
+		<result property="tubecolor" column="tubecolor" />
+		<association property="orderLiquorItem" resultMap="orderLiquorItemMap"/>
+		<collection property="orderItems" resultMap="orderBaseMap" />
+	</resultMap>
+	
+	<!-- 医嘱配药信息 -->
+	<resultMap type="OrderLiquorItem" id ="orderLiquorItemMap">
+		<id property="execOrderId" column="order_exec_id"/>
+		<result property="orderId" column="order_group_id"/>
+		<result property="prepareNurseName" column="lx_prepare_nurse_name"/>
+		<result property="prepareTime" column="lx_prepare_time"/>
+		<result property="verifyNurseName" column="lx_verify_nurse_name"/>
+		<result property="verifyTime" column="lx_verify_time"/>
+		<result property="execNurseName" column="lx_exec_nurse_name"/>
+		<result property="execTime" column="lx_exec_time"/>
+		<result property="liquor" column="liquor"/>
+	</resultMap>
+
+	<resultMap type="OrderExecInfo" id="orderExecMap">
+		<id property="orderExecId" column="order_exec_id" />
+		<result property="orderExecGroupNo" column="order_group_id" />
+		<result property="planDate" column="plan_datetime" />
+		<result property="execDate" column="exec_datetime" />
+		<result property="execNurseId" column="exec_nurse_code" />
+		<result property="execNurseName" column="exec_nurse_name" />
+		<result property="finishDate" column="finish_datetime" />
+		<result property="finishNurseName" column="finish_nurse_name" />
+		<result property="orderExecBarcode" column="barcode" />
+		<result property="approveNurseId" column="approve_nurse_code" />
+		<result property="approveNurseName" column="approve_nurse_name" />
+	</resultMap>
+
+	<resultMap type="OrderExecGroup" id="orderExecGroupMap">
+		<id property="orderExecBarcode" column="order_exec_id" />  <!-- typeHandler="OrderBarcodeHandler" -->
+		<result property="orderExecStatusCode" column="order_exec_status_code"
+			typeHandler="com.lachesis.mnis.core.mybatis.handler.OrderExecStatusCodeHandler" />
+		<result property="orderExecStatusName" column="order_exec_status_name"
+			typeHandler="com.lachesis.mnis.core.mybatis.handler.OrderExecStatusNameHandler" />
+		<result property="planExecTime" column="plan_datetime" />
+		<result property="performSchedule" column="perform_schedule"/>
+		<association property="orderGroup" resultMap="orderBaseGroupMap" />
+		<association property="orderExecLog" resultMap="orderExecMap" />
+	</resultMap>
+
+	<resultMap type="OrderBedInfo" id="OrderBedInfoMap">
+		<result property="bedCode" column="bed_code" />
+		<result property="patId" column="pat_id" />
+		<result property="newOrderCount" column="new_order_count" />
+		<result property="execedOrderCount" column="execed_order_count" />
+		<result property="unexecedOrderCount" column="unexeced_order_count" />
+		<result property="stopOrderCount" column="stop_order_count" />
+		<result property="unstopOrderCount" column="unstop_order_count" />
+		<result property="orderType" column="order_type" />
+		<result property="isEmergent" column="is_emergent" />
+		<result property="nurseLevel" column="nurse_level"/>
+	</resultMap>
+
+	<resultMap type="HisOrderGroup" id="hisOrderGroupMap">
+		<id property="orderGroupNo" column="order_group_id" />
+		<association property="orderGroup" resultMap="orderBaseGroupMap"></association>
+		<collection property="orderExecList" resultMap="hisOrderExecInfo"></collection>
+	</resultMap>
+
+	<resultMap type="OrderExecInfo" id="hisOrderExecInfo">
+		<id property="orderExecId" column="order_exec_id" />
+		<result property="orderExecBarcode" column="order_group_id" />
+		<result property="planDate" column="plan_datetime" />
+		<result property="execDate" column="exec_datetime" />
+		<result property="execNurseId" column="exec_nurse_code" />
+		<result property="execNurseName" column="exec_nurse_name" />
+		<result property="approveNurseId" column="approve_nurse_code" />
+		<result property="approveNurseName" column="approve_nurse_name" />
+	</resultMap>
+	
+	<resultMap type="com.lachesis.mnis.core.order.entity.OrderCount" id="OrderCount">
+		<id property="pat_id" column="pat_id" />
+		<result property="pendingOrderCount" column="pendingOrderCount" />
+		<result property="finishedOrderCount" column="finishedOrderCount" />
+	</resultMap>
+	
+	<resultMap type="OrderUnprintStatistic" id="orderUnprintStatisticMap">
+		<id property="patId" column="pat_id" />
+		<result property="bedCode" column="bed_code" />
+		<result property="unprintOrderCount" column="unprint_order_count" />
+	</resultMap>
+	
+	<resultMap type="OrderPrintInfo" id="orderPrintInfoMap">
+		<id property="patId" column="pat_id" />
+		<result property="patName" column="pat_name" />
+		<result property="bedCode" column="bed_code" />
+		<result property="deptCode" column="dept_code" />
+		<result property="gender" column="gender" />
+		<result property="deptName" column="dept_name" />
+		<result property="age" column="birth_date" typeHandler="com.lachesis.mnis.core.mybatis.handler.PatientAgeHandler"/> 
+		<collection property="orderGroups" resultMap="orderBaseGroupMap"></collection>
+	</resultMap>
+	
+	<!-- 获取医嘱执行类型的编号和名称对应 -->
+	<resultMap type="java.util.Map" id="orderExecTypeCodeName">
+		<result property="code" column="code"/>
+		<result property="name" column="name"/>
+	</resultMap>
+	<!-- 医嘱执行单信息 -->
+	<resultMap type="com.lachesis.mnis.core.order.entity.OrderExecDocumentInfo" id="orderExecDocumentInfoMap">
+		<id property="patId" column="pat_id" />
+		<result property="patName" column="pat_name"/>
+		<result property="bedCode" column="bed_code"/>
+		<result property="deptCode" column="dept_code"/>
+		<result property="deptName" column="dept_name"/>
+		<result property="inHospNo" column="in_hosp_no"/>
+		<collection property="orderExecDocOrderInfos" resultMap="orderExecDocOrderInfoMap"></collection>
+	</resultMap>
+	<resultMap type="com.lachesis.mnis.core.order.entity.OrderExecDocOrderInfo" id="orderExecDocOrderInfoMap">
+		<id property="id" column="order_id" />
+		<result property="patId" column="pat_id" />
+		<result property="orderExecTypeCode" column="order_exec_type_code"/>
+		<result property="orderExecTypeName" column="order_exec_type_name"/>
+		<result property="orderUsageCode" column="usage_code"/>
+		<result property="orderUsageName" column="usage_name"/>
+		<result property="orderExecDate" column="exec_date"/>
+		<result property="orderType" column="order_type"/>
+		<result property="isPrinted" column="is_printed"/>
+		<association property="orderExecDocumentPrintInfo" resultMap="orderExecDocumentPrintInfoMap"></association>
+		<collection property="orderExecDocumentDetailInfos" resultMap="orderExecDocumentDetailInfoMap"></collection>
+	</resultMap>
+	<resultMap type="com.lachesis.mnis.core.order.entity.OrderExecDocumentPrintInfo" id="orderExecDocumentPrintInfoMap">
+		<id property="printId" column="print_id" />
+		<result property="patId" column="print_pat_id" />
+		<result property="deptCode" column="print_dept_code"/>
+		<result property="ordDocType" column="ord_doc_type"/>
+		<result property="ordUsgType" column="ord_usage_type"/>
+		<result property="ordType" column="ord_type"/>
+		<result property="operDate" column="oper_date"/>
+		<result property="printDate" column="print_date"/>
+		<result property="printNurseCode" column="print_nurse_code"/>
+		<result property="printNurseName" column="print_nurse_name"/>
+		<result property="checkDate" column="print_check_date"/>
+		<result property="checkNurseCode" column="print_check_nurse_code"/>
+		<result property="checkNurseName" column="print_check_nurse_name"/>
+	</resultMap>
+	<resultMap type="com.lachesis.mnis.core.order.entity.OrderExecDocumentDetailInfo" id="orderExecDocumentDetailInfoMap">
+		<id property="orderNo" column="order_no" />
+		<result property="orderStatus" column="order_status"/>
+		<result property="isApproved" column="is_approved" />
+		<collection property="orderItems" resultMap="orderItemsMap"></collection>
+		<collection property="orderExecDocumentGroupInfos" resultMap="orderExecDocumentGroupInfoMap"></collection>
+	</resultMap>
+	<resultMap type="OrderBaseInfo" id="orderItemsMap">
+		<id property="orderItemCode" column="item_code" />
+		<result property="orderGroupNo" column="order_no_id" />
+		<result property="orderSubNo" column="order_sub_no" />
+		<result property="dosage" column="dosage" />
+		<result property="dosageUnit" column="dosage_unit" />
+		<result property="usageCode" column="usage_code" />
+		<result property="usageName" column="usage_name" />
+		<result property="orderName" column="item_name" />
+	</resultMap>
+	<resultMap type="com.lachesis.mnis.core.order.entity.OrderExecDocumentGroupInfo" id="orderExecDocumentGroupInfoMap">
+		<id property="orderGroupNo" column="order_group_no" />
+		<result property="planDate" column="plan_date"/>
+		<result property="performSchedule" column="perform_schedule" />
+		<result property="isExeced" column="is_execed" />
+		<result property="freq" column="freq" />
+		<result property="remark" column="remark" />
+		<association property="orderExecLog" resultMap="orderExecMap"></association>
+		<collection property="infusionMonitorRecords" resultMap="infusionMonitorRecordInfoMap"></collection>
+		<collection property="orderLiquorItems" resultMap="orderLiquorItemInfoMap"></collection>
+	</resultMap> 
+	
+	<resultMap type="com.lachesis.mnis.core.infusionmonitor.entity.InfusionMonitorRecord" id="infusionMonitorRecordInfoMap">
+		<id property="id" column="infu_monitor_id" />
+		<result property="orderExecId" column="rec_order_exec_id" />
+		<result property="recordNurseId" column="rec_nurse_code" />
+		<result property="recordNurseName" column="rec_nurse_name" />
+		<result property="residue" column="residue" />
+		<result property="recordDate" column="rec_datetime" />
+		<result property="deliverSpeed" column="deliver_speed" />
+		<result property="speedUnit" column="speed_unit" />
+	</resultMap>
+ 	<resultMap type="com.lachesis.mnis.core.liquor.entity.OrderLiquorItem" id="orderLiquorItemInfoMap">
+		<id property="execOrderId" column="lx_exec_order_id" />
+		<result property="orderId" column="lx_order_id" />
+		<result property="prepareNurseId" column="lx_prepare_nurse_id" />
+		<result property="prepareNurseName" column="lx_prepare_nurse_name" />
+		<result property="prepareTime" column="lx_prepare_time" />
+		<result property="execNurseId" column="lx_exec_nurse_id" />
+		<result property="execNurseName" column="lx_exec_nurse_name" />
+		<result property="execTime" column="lx_exec_time" />
+		<result property="verifyNurseId" column="lx_verify_nurse_id" />
+		<result property="verifyNurseName" column="lx_verify_nurse_name" />
+		<result property="verifyTime" column="lx_verify_time" />
+	</resultMap> 
+	
+	<!-- 计算医嘱状态 反映医嘱的执行状态，数据库：1,2,3,4：新开,执行,停止,作废 转化为：如新开:1,未执行:2,停止:3,已执行:4,未停止:5 
+		使用代码 -->
+	<sql id="calculateOrderStatus">
+		CASE
+		WHEN g.Is_LongTerm =1 and g.ORDER_STATUS_CODE = 3 
+		then 3
+		when g.Is_LongTerm =1 and
+		g.ORDER_STATUS_CODE != 3
+		and g.CREATE_DATETIME &lt; convert(varchar,GETDATE() - 1,120)
+		then 5
+		when
+		g.Is_LongTerm =1 and
+		g.ORDER_STATUS_CODE != 3
+		and g.CREATE_DATETIME >= convert(varchar,GETDATE() - 1,120)
+		then 1
+		WHEN
+		g.Is_LongTerm =0 and
+		g.ORDER_STATUS_CODE != 3 and e.id is not null
+		then 4
+		WHEN
+		g.Is_LongTerm
+		=0 and g.ORDER_STATUS_CODE != 3 and e.id is null
+		then 2
+		END
+		as
+		order_status_code,
+		CASE
+		WHEN g.Is_LongTerm =1 and g.ORDER_STATUS_CODE = 3 
+		then 3
+		when g.Is_LongTerm =1 and
+		g.ORDER_STATUS_CODE != 3
+		and g.CREATE_DATETIME &lt; convert(varchar,GETDATE() - 1,120)
+		then 5
+		when
+		g.Is_LongTerm =1 and 
+		g.ORDER_STATUS_CODE != 3
+		and g.CREATE_DATETIME >= convert(varchar,GETDATE() - 1,120)
+		then 1
+		WHEN
+		g.Is_LongTerm =0 and
+		g.ORDER_STATUS_CODE != 3 and e.id is not null
+		then 4
+		WHEN
+		g.Is_LongTerm
+		=0 and g.ORDER_STATUS_CODE != 3 and e.id is null
+		then 2
+		END
+		as
+		order_status_name
+	</sql>
+
+	<!-- 计算医嘱类型 -->
+	<sql id="calculateOrderType">
+		CASE
+		g.Is_LongTerm when 1 then 'CZ' else 'LZ' END
+		as
+		order_type_code,
+		CASE
+		g.Is_LongTerm when 1 then '长期医嘱' else '临时医嘱' END
+		as order_type_name
+	</sql>
+
+	<!-- 计算医嘱执行类型 -->
+	<sql id="calculateOrderExecType">
+		case when g.ORDER_EXEC_TYPE_CODE IS null or cd.Code is null then 'UZ'
+		else cd.CODE
+		end
+		as order_exec_type_code,
+		case when g.ORDER_EXEC_TYPE_CODE IS null or cd.Code is null then '治疗'
+		else cd.name
+		end
+		as order_exec_type_name
+	</sql>
+
+	<!--配液状态 P：备药 V:审核 F：配液 -->
+	<sql id="orderLiquorStatusSql">
+		CASE WHEN
+		l.state is null THEN 'P'
+		ELSE
+		l.state
+		END
+		as order_liquor_status
+	</sql>
+
+	<!-- 计划时间 -->
+	<sql id="planTimeCondition">
+		<if test="startDate!= null">
+			AND g.PLAN_TIME >= #{startDate}
+		</if>
+		<if test="endDate != null">
+			AND g.PLAN_TIME &lt; #{endDate}
+		</if>
+	</sql>
+	
+	<!-- 医嘱执行类型条件 -->
+	<sql id="orderExecTypeCodeCond">
+		AND (cd.code = #{orderExecTypeCode}
+		<choose>
+			<when test="orderExecTypeCode == 'UZ'">
+				or g.ORDER_EXEC_TYPE_CODE is null
+			</when>
+		</choose>
+		)
+	</sql>
+	
+	<sql id="orderBaseInfoSql">
+		<!-- 测试使用，具体同步生成 -->
+		g.order_bar as order_group_id
+		,g.PAT_ID as pat_id
+		,g.FREQ_NAME as freq_name
+		,g.FREQ_CODE
+		,g.IS_EMERGENT as emergent
+		,g.IS_SKIN_TEST as is_skin_test
+		,g.IS_SKIN_TEST as skin_test_required
+		,g.CREATE_DATETIME as create_datetime
+		,g.CREATE_DOC_ID as create_doc_code
+		,g.CREATE_DOC_NAME as create_doc_name
+		,g.REMARK as mark
+		,null as tubecolor
+		,g.PLAN_TIME as plan_exec_time
+		,g.STOP_DOC_ID as stop_doc_code
+		,g.STOP_DOC_NAME as stop_doc_name
+		,g.STOP_DATE as stop_datetime
+		,g.order_sort_no as order_sort_no
+		,g.order_no as order_no
+		,
+		<include refid="calculateOrderType"></include>
+		,
+		<include refid="calculateOrderExecType"></include>
+		,
+		<include refid="calculateOrderStatus"></include>
+
+		,i.ORDER_GROUP_ID+'*' +CAST(i.ORDER_SUB_NO as varchar) as order_item_id
+		,i.order_sub_no
+		,i.ITEM_CODE as item_code
+		,i.ITEM_NAME as item_name
+		,i.usage_code as usage_code
+		,i.usage_name as usage_name
+		,i.SPECIFICATION as drug_specs
+		,i.DOSAGE as dosage
+		,i.DOSAGE_UNIT as dosage_unit
+		,i.REMARK as remark
+		
+		,p.NAME as pat_name
+		,p.BED_CODE as bed_code
+		,p.IN_HOSP_NO as in_hosp_no
+	
+	</sql>
+	
+	<sql id="orderExecInfoSql">
+
+		g.ORDER_BAR as order_exec_id
+		,g.PLAN_TIME as plan_datetime
+		,g.ORDER_BAR as barcode
+		,e.EXEC_DATE as exec_datetime
+		,e.EXEC_USER_CODE as exec_nurse_code
+		,e.EXEC_USER_NAME as exec_nurse_name
+		,e.ID AS order_exec_status_code
+		,e.ID as order_exec_status_name
+	</sql>
+	<sql id="orderRelatedInfoSql">
+		pi.is_print_label as is_print_label		,
+		<include refid="orderLiquorStatusSql" />
+	</sql>
+
+	<sql id="orderTableSql">
+		PAT_ORDER_GROUP g
+		inner join PAT_ORDER_ITEM i on g.PAT_ID=i.PAT_ID and g.ORDER_NO=i.ORDER_NO and g.PERFORM_NO=i.PERFORM_NO 
+		inner join PAT_CURE_INFO p on p.pat_id = g.pat_id AND p.STATUS=1
+		left join PAT_ORDER_EXEC e on g.order_bar = e.barcode
+		left join COM_DIC cd on cd.his_code = g.order_exec_type_code and cd.dic_type='USAGE'
+	</sql>
+	
+	<sql id="orderRelatedTableSql">
+		left join NURSE_LIQUOR l on g.order_bar = l.order_group_id
+		left join PAT_PRINT_INFO pi on pi.print_data_id = g.order_bar and pi.print_type = 'order'
+	</sql>
+	
+	<!--**************** 插入操作******************* -->
+	<insert id="insertOrderExecution" parameterType="java.util.List">
+		INSERT INTO PAT_ORDER_EXEC(PLAN_DATE, order_group_id )
+		(
+		<foreach collection="list" item="item" index="index"
+			separator="union all">
+			select
+			#{item.planDate},#{item.orderExecGroupNo}
+		</foreach>
+		)
+	</insert>
+
+	<insert id="insertSingleOrderExecution" parameterType="OrderExecInfo">
+		INSERT INTO
+		PAT_ORDER_EXEC(ORDER_GROUP_ID,BARCODE,PAT_ID,WARD_CODE,EXEC_TYPE,
+		PLAN_DATE,EXEC_USER_CODE,EXEC_USER_NAME,EXEC_DATE,SEC_BARCODE )
+		VALUES
+		(
+		#{orderExecGroupNo},#{orderExecBarcode},#{patientId},#{detpId},#{orderExecType},
+		#{planDate},#{execNurseId},#{execNurseName},#{execDate},#{secBarcode}
+		)
+		<!-- <selectKey resultType="String" keyProperty="orderExecId" order="AFTER" 
+			databaseId="order_exec_id"> SELECT @@IDENTITY AS ID </selectKey> -->
+	</insert>
+	
+	<!-- ***************更新操作************** -->
+	<update id="updateOrderExecution" parameterType="java.util.Map">
+		UPDATE PAT_ORDER_EXEC
+		SET
+		EXEC_USER_CODE = #{param2},
+		EXEC_DATE = #{param3}
+		WHERE
+		id IN (
+		<foreach collection="param1" item="item" index="index"
+			separator=",">
+			#{item.id}
+		</foreach>
+		)
+	</update>
+
+	<!-- 医嘱排序 -->
+	<update id="updateOrderNoByOrderGroupId" parameterType="String">
+		UPDATE
+		PAT_ORDER_GROUP
+		SET
+		ORDER_SORT_NO = #{param2}
+		WHERE
+		ORDER_BAR = #{param1}
+	</update>
+
+	<!-- 查询多个病人的全部医嘱 -->
+	<select id="selectOrderBaseGroupByPatId" parameterType="java.util.Map"
+		resultMap="orderExecGroupMap">
+	select
+		<include refid="orderExecInfoSql" />
+		,
+		<include refid="orderBaseInfoSql" />
+		,
+		<include refid="orderRelatedInfoSql" />
+		from
+		<include refid="orderTableSql" />
+		<include refid="orderRelatedTableSql" />
+		WHERE
+		g.ORDER_STATUS_CODE &lt; 3
+		and g.pat_id = #{patientId}
+		and cd.code not in ('LAB')
+		<if test="deptCode != null">
+			and p.ward_code = #{deptCode}
+		</if>
+
+		<!-- 医嘱分类 -->
+		<if test="orderTypeCode != null">
+			AND g.Is_LongTerm = #{orderTypeCode}
+		</if>
+		<!-- 根据医嘱执行类型，获取对应的医嘱 -->
+		<if test="orderExecTypeCode != null">
+			<include refid="orderExecTypeCodeCond"></include>
+			<if test="orderExecTypeCode == 'INFUSION'">
+				AND g.ORDER_STATUS_CODE != 3
+			</if>
+		</if>
+		<include refid="planTimeCondition"></include>
+		
+		<if test="orderExecTypeCode == 'ORAL'">
+			and i.order_sub_no not in (
+				SELECT n_order_no FROM PAT_DRUGBAGRECLIST d WHERE d.pat_id = #{patientId}
+				<if test="startDate != null">
+					AND d.DT_TAKEDATE >= #{startDate}
+				</if>
+				<if test="endDate != null">
+					AND d.DT_TAKEDATE &lt; #{endDate}
+				</if>
+			)
+		</if> 
+		<if test="hospitalCode !=null and hospitalCode == 'SZSY'">
+			AND ((cd.code in('OXYGEN','ATOMIZING')) 
+				or (i.is_subtbl = '0' or i.is_subtbl is null))
+		</if>
+	order by g.plan_time desc,g.order_sort_no  
+	</select>
+	
+	<select id="selectDrugBagByPatId" parameterType="java.util.Map"
+		resultMap="orderExecGroupMap">
+		SELECT d.BARCODE as order_exec_id,
+	       d.DT_TAKEDATE  plan_datetime,
+	       d.BARCODE as barcode,
+	       d.BARCODE as order_group_id,
+	       '' as freq_name,
+	       '' as emergent,
+	       '' as is_skin_test,
+	       '' as skin_test_required,
+	       d.DT_TAKEDATE as create_datetime,
+	       '' as create_doc_code,
+	       '' as create_doc_name,
+	       '' mark,
+	       d.DT_TAKEDATE as plan_exec_time,
+	       d.TAKETIMENM as perform_schedule,
+	       '' as stop_doc_code,
+	       '' as stop_doc_name,
+	       null as stop_datetime,
+	       '' as order_sort_no,
+	       d.n_order_no as order_no,
+	       'CZ' as order_type_code,
+	       '长嘱' as order_type_name,
+	       'ORAL' as order_exec_type_code,
+	       '口服药' as order_exec_type_name,
+	       CASE
+	         WHEN e.ID IS NULL THEN
+	          2
+	         ELSE
+	          4
+	       END AS order_status_code,
+	       2 as order_status_name,
+	       d.n_order_no as order_item_id,
+	       d.n_order_sub_no as order_sub_no,
+	       d.drugcd as item_code,
+	       d.drugnm as item_name,
+	       'ORAL' as usage_code,
+	       '口服药' as usage_name,
+	       d.STANDARDDOSE as drug_specs,
+	       d.D_DISPENSEDOSE as dosage,
+	       d.UNITNM_D_D as dosage_unit,
+	       null as remark,
+	       null as is_print_label,
+	       'F' as order_liquor_status,
+	       null as tubecolor,
+	        
+	       p.BED_CODE as bed_code,
+	       p.IN_HOSP_NO as in_hosp_no,
+	       p.PAT_ID as pat_id,
+	       p.NAME as pat_name,
+	       
+	       e.EXEC_DATE as exec_datetime,
+	       e.EXEC_USER_CODE as exec_nurse_code,
+	       e.EXEC_USER_NAME as exec_nurse_name,
+	       e.ID AS order_exec_status_code,
+	       e.ID as order_exec_status_name  
+		
+		FROM PAT_DRUGBAGRECLIST d
+		INNER JOIN PAT_CURE_INFO p ON d.pat_id = p.pat_id
+		LEFT JOIN PAT_ORDER_EXEC e ON e.barcode = d.barcode
+		WHERE d.pat_id = #{patientId}
+				<if test="startDate != null">
+					AND d.DT_TAKEDATE >= #{startDate}
+				</if>
+				<if test="endDate != null">
+					AND d.DT_TAKEDATE &lt; #{endDate}
+				</if>
+		order by d.barcode desc
+	</select>
+	
+	<select id="selectLabByPatId" parameterType="java.util.Map"
+		resultMap="orderExecGroupMap">
+		SELECT LM.BARCODE as order_exec_id,
+	       SEND_DATE plan_datetime,
+	       lm.BARCODE as barcode,
+	       e.EXEC_DATE as exec_datetime,
+	       e.EXEC_USER_CODE as exec_nurse_code,
+	       e.EXEC_USER_NAME as exec_nurse_name,
+	       e.ID AS order_exec_status_code,
+	       e.ID as order_exec_status_name,
+	       lm.BARCODE as order_group_id,
+	       info.PAT_ID as pat_id,
+	       '' as freq_name,
+	       '' as emergent,
+	       '' as is_skin_test,
+	       '' as skin_test_required,
+	       SEND_DATE as create_datetime,
+	       '' as create_doc_code,
+	       '' as create_doc_name,
+	       '' mark,
+	       dic.code as TUBECOLOR,
+	       SEND_DATE as plan_exec_time,
+	       '' as stop_doc_code,
+	       '' as stop_doc_name,
+	       null as stop_datetime,
+	       '' as order_sort_no,
+	       lm.HISCODE as order_no,
+	       'LZ' as order_type_code,
+	       '临时医嘱' as order_type_name,
+	       'LAB' as order_exec_type_code,
+	       '检验' as order_exec_type_name,
+	       CASE
+	         WHEN e.ID IS NULL THEN
+	          2
+	         ELSE
+	          4
+	       END AS order_status_code,
+	       2 as order_status_name,
+	       lm.HISCODE as order_item_id,
+	       '' as order_sub_no,
+	       '' as item_code,
+	       lm.PNAME as item_name,
+	       'UL' as usage_code,
+	       '检验' as usage_name,
+	       NULL as drug_specs,
+	       '1' as dosage,
+	       '次' as dosage_unit,
+	       null as remark,
+	       null as pat_name,
+	       info.BED_CODE as bed_code,
+	       info.IN_HOSP_NO as in_hosp_no,
+	       null as is_print_label,
+	       'F' as order_liquor_status
+	  	FROM SYS_BARCODE_SYNC LM
+	 	inner join PAT_CURE_INFO info on info.IN_HOSP_NO = lm.PAT_ID
+	                              and info.STATUS = '1'
+	  	left join com_dic dic on dic.his_code = lm.tubecolor
+	  	left join PAT_ORDER_EXEC e on LM.barcode = e.barcode
+   
+		WHERE info.PAT_ID =  #{patientId}
+			<if test="startDate!= null">
+				AND LM.SEND_DATE >= #{startDate}
+			</if>
+			<if test="endDate != null">
+				AND LM.SEND_DATE &lt; #{endDate}
+			</if>
+	</select>
+
+	<!-- 查询某个病人的已执行医嘱 -->
+	<select id="selectExecutedOrderGroups" parameterType="java.util.HashMap"
+		resultMap="orderExecGroupMap">
+		select
+		<include refid="orderExecInfoSql" />
+		,
+		<include refid="orderBaseInfoSql" />
+		,
+		<include refid="orderRelatedInfoSql" />
+		from
+		<include refid="orderTableSql" />
+		<include refid="orderRelatedTableSql" />
+		WHERE
+		g.ORDER_STATUS_CODE != 4
+		AND
+		g.pat_id = #{patientId}
+		and e.id is not
+		null
+		<if test="orderTypeCode != null">
+			AND g.Is_LongTerm = #{orderTypeCode}
+		</if>
+		<if test="orderExecTypeCode != null">
+			<include refid="orderExecTypeCodeCond"></include>
+		</if>
+		<include refid="planTimeCondition"></include>
+		<if test="hospitalCode !=null and hospitalCode == 'SZSY'">
+			AND ((cd.code in('OXYGEN','ATOMIZING')) 
+				or (i.is_subtbl = '0' or i.is_subtbl is null))
+		</if>
+		order by g.PLAN_TIME desc,g.order_sort_no
+	</select>
+
+	<!-- 查询某个病人的未执行医嘱 -->
+	<select id="selectUnExecutedOrderGroups" parameterType="java.util.HashMap"
+		resultMap="orderExecGroupMap">
+		select
+		<include refid="orderExecInfoSql" />
+		,
+		<include refid="orderBaseInfoSql" />
+		,
+		<include refid="orderRelatedInfoSql" />
+		from
+		<include refid="orderTableSql" />
+		<include refid="orderRelatedTableSql" />
+		WHERE
+		g.ORDER_STATUS_CODE != 4
+		<!-- and g.order_status_code ! = 3 -->
+		AND
+		g.pat_id = #{patientId}
+		<!-- and e.id is null -->
+		<if test="orderTypeCode != null">
+			AND g.Is_LongTerm = #{orderTypeCode}
+		</if>
+		<!-- 瓶签打印获取INFUSION,INJECT,ORAL医嘱 -->
+		<choose>
+			<when test="orderExecTypeCode != null">
+				AND cd.code = #{orderExecTypeCode}
+			</when>
+			<otherwise>
+				AND cd.code is not null AND cd.code in ('INFUSION','INJECT','ORAL')
+			</otherwise>
+		</choose>
+		<include refid="planTimeCondition"></include>
+		order by g.PLAN_TIME,g.order_sort_no
+	</select>
+	<!-- 统计未打印未执行的医嘱 -->
+	<select id="getUnprintOrderStatisticList" parameterType="java.util.HashMap"
+	resultMap="orderUnprintStatisticMap">
+	with UNEXEC_ORDER_TAB as(select distinct * from (select
+		g.order_bar,g.PAT_ID ,p.BED_CODE
+		from PAT_ORDER_GROUP g
+		inner join PAT_ORDER_ITEM i on g.PAT_ID = i.PAT_ID
+		and g.ORDER_NO = i.ORDER_NO
+		and g.PERFORM_NO = i.PERFORM_NO
+		inner join PAT_CURE_INFO p on p.pat_id = g.pat_id
+		AND p.STATUS=1
+		left join PAT_ORDER_EXEC e on g.order_bar = e.barcode
+		left join COM_DIC cd on cd.his_code = g.order_exec_type_code
+		and cd.dic_type = 'USAGE'
+		left join PAT_PRINT_INFO pi on pi.print_data_id = g.order_bar
+		and pi.print_type = 'order'
+		WHERE g.ORDER_STATUS_CODE != 4
+		AND (pi.IS_PRINT_LABEL is null or pi.IS_PRINT_LABEL = '0')
+		AND CD.CODE IS NOT NULL AND CD.CODE IN ('INFUSION','ORAL','INJECT')
+		AND p.WARD_CODE= #{deptCode}
+		<if test="orderTypeCode != null">
+			AND g.Is_LongTerm = #{orderTypeCode}
+		</if>
+		<include refid="planTimeCondition"></include>)
+		ALL_UNEXEC_ORDER_TAB)
+
+		select COUNT(tab.pat_id) UNPRINT_ORDER_COUNT,tab.PAT_ID,tab.BED_CODE from
+		UNEXEC_ORDER_TAB tab
+		group by tab.PAT_ID,tab.BED_CODE
+		order by tab.BED_CODE
+	</select>
+
+	<!-- 根据 扫描医嘱order_group_id获取医嘱 -->
+	<select id="getOrderListScanGroupId" parameterType="String"
+		resultMap="orderExecGroupMap">
+		select 
+		<include refid="orderExecInfoSql" />
+		,
+		<include refid="orderBaseInfoSql" />,
+		<include refid="orderLiquorStatusSql" />
+		from
+		<include refid="orderTableSql" />
+		left join NURSE_LIQUOR l on g.order_bar = l.order_group_id
+		WHERE
+		g.order_bar = #{param1} and cd.CODE!='LAB'
+		<if test="param3 != null">
+			AND ( g.ORDER_STATUS_CODE in (1,2)
+             OR ( ORDER_STATUS_CODE = 3
+                  AND g.STOP_DATE IS NOT NULL
+                  AND g.STOP_DATE > GETDATE()
+                )
+           )
+		</if>
+		<if test="param2 != null">
+			AND g.pat_id=#{param2}
+		</if>
+		<if test="param4 != null and param4 == 'SZSY'">
+			AND ((cd.code in('OXYGEN','ATOMIZING')) 
+				or (i.is_subtbl = '0' or i.is_subtbl is null))
+		</if>
+	</select>
+	
+	<select id="isStopOrderOriginal" parameterType="String" resultType="String">
+		 select top 1 order_status from pat_order_original 
+		 where is_longterm = 1 and group_no=#{param1} and pat_id=#{param2}
+	</select>
+	
+	<!-- ********************获取医嘱床位信息*********************** -->
+	<!-- 获取pat_order_group床位信息 -->
+	<select id="getOrderLongBedInfoList" parameterType="java.util.HashMap"
+		resultMap="OrderBedInfoMap">
+		WITH tab_1 AS
+		(select distinct * from (select
+		g.ORDER_BAR,
+		g.pat_id,
+		g.PLAN_TIME,
+		g.ORDER_STATUS_CODE,
+		g.STOP_DOC_NAME,
+		g.STOP_DATE,
+		g.CREATE_DATETIME,
+		p.BED_CODE,
+		e.ID,
+		p.NURSE_LEVEL
+		from dbo.PAT_CURE_INFO p
+		inner join pat_order_group g on p.PAT_ID=g.PAT_ID AND p.STATUS=1
+		inner join pat_order_item i on g.PAT_ID=i.PAT_ID and g.ORDER_NO=i.ORDER_NO and g.PERFORM_NO=i.PERFORM_NO
+		left join pat_order_exec e on g.order_bar = e.barcode
+		left join COM_DIC cd on cd.his_code = g.order_exec_type_code and
+		cd.dic_type = 'USAGE'
+		where 
+		g.Is_LongTerm = 1
+		AND cd.code not in ('LAB')
+	 	AND ( g.ORDER_STATUS_CODE in (1,2)
+             OR ( ORDER_STATUS_CODE = 3
+                  AND g.STOP_DATE IS NOT NULL
+                  AND g.STOP_DATE > GETDATE()
+                )
+           )
+		<if test="startDate!= null">
+			AND g.PLAN_TIME >= #{startDate}
+		</if>
+		<if test="endDate != null">
+			AND g.PLAN_TIME &lt; #{endDate}
+		</if>
+		<if test="orderExecTypeCode != null">
+			<include refid="orderExecTypeCodeCond"></include>
+		</if>
+
+		<if test="patientIds != null and patientIds.size>0">
+			AND p.pat_id IN
+			(
+			<foreach collection="patientIds" item="item" index="index"
+				separator=",">
+				#{item}
+			</foreach>
+			)
+		</if>
+		<if test="deptCode != null">
+			And p.ward_code = #{deptCode}
+		</if>
+		)
+		as tab_2)
+
+		SELECT *
+		FROM (SELECT p.bed_code,
+		p.pat_id,
+		SUM(CASE WHEN p.CREATE_DATETIME
+		>=convert(varchar, GETDATE() - 1, 120) THEN 1 ELSE 0 END) as
+		new_order_count,
+		sum(CASE WHEN p.ORDER_STATUS_CODE = 3 THEN 1 ELSE 0 END) as stop_order_count,
+		SUM(CASE WHEN p.ORDER_STATUS_CODE in (1,2) THEN 1 ELSE 0 END) as
+		unstop_order_count,
+		p.NURSE_LEVEL as nurse_level
+		FROM tab_1 p
+		GROUP BY bed_code,pat_id,NURSE_LEVEL) pp
+		where
+			(pp.unstop_order_count + pp.stop_order_count) > 0
+		order by LEN(pp.BED_CODE),pp.bed_code
+	</select>
+	
+	<select id="getOrderTempBedInfoList" parameterType="java.util.HashMap"
+		resultMap="OrderBedInfoMap">
+		WITH TAB_1 AS
+		(SELECT DISTINCT * FROM (SELECT
+		G.ORDER_BAR,
+		G.IS_EMERGENT,
+		G.PAT_ID,
+		G.PLAN_TIME,
+		G.ORDER_STATUS_CODE,
+		G.CREATE_DATETIME,
+		P.BED_CODE,
+		E.ID,
+		P.NURSE_LEVEL
+		FROM DBO.PAT_CURE_INFO P
+		INNER JOIN PAT_ORDER_GROUP G ON P.PAT_ID=G.PAT_ID AND P.STATUS = 1
+		INNER JOIN PAT_ORDER_ITEM I ON G.PAT_ID=I.PAT_ID AND G.ORDER_NO=I.ORDER_NO AND G.PERFORM_NO=I.PERFORM_NO
+		LEFT JOIN PAT_ORDER_EXEC E ON G.ORDER_BAR = E.BARCODE
+		LEFT JOIN COM_DIC CD ON CD.HIS_CODE = G.ORDER_EXEC_TYPE_CODE AND
+		CD.DIC_TYPE = 'USAGE'
+		WHERE  
+		G.IS_LONGTERM = 0
+		AND CD.CODE NOT IN ('LAB')
+		AND g.ORDER_STATUS_CODE in (1,2)
+		<if test="startDate!= null">
+			AND g.PLAN_TIME >= #{startDate}
+		</if>
+		<if test="endDate != null">
+			AND g.PLAN_TIME &lt; #{endDate}
+		</if>
+		<!-- 医嘱分类 -->
+		<if test="orderExecTypeCode != null">
+			<include refid="orderExecTypeCodeCond"></include>
+		</if>
+
+		<if test="patientIds != null and patientIds.size>0">
+			AND P.PAT_ID IN
+			(
+			<foreach collection="patientIds" item="item" index="index"
+				separator=",">
+				#{item}
+			</foreach>
+			)
+		</if>
+		<if test="deptCode != null">
+			AND P.WARD_CODE = #{deptCode}
+		</if>
+		AND p.STATUS=1
+		<if test="orderExecTypeCode == 'LAB' or orderExecTypeCode == null">
+			UNION ALL
+				SELECT         
+				LM.BARCODE AS ORDER_BAR,
+				NULL AS IS_EMERGENT,
+				INFO.PAT_ID,
+				LM.SEND_DATE PLAN_TIME,
+				CASE WHEN E.ID IS NULL THEN 2
+		             ELSE 4
+		        END AS ORDER_STATUS_CODE, 
+				LM.SEND_DATE AS CREATE_DATETIME,
+				INFO.BED_CODE,
+				E.ID,
+				INFO.NURSE_LEVEL  
+				FROM SYS_BARCODE_SYNC LM
+				INNER JOIN PAT_CURE_INFO INFO ON INFO.IN_HOSP_NO = LM.PAT_ID AND INFO.STATUS  = '1'
+				LEFT JOIN PAT_ORDER_EXEC E ON LM.BARCODE = E.BARCODE    
+				WHERE INFO.WARD_CODE = #{deptCode}
+				<if test="patientIds != null and patientIds.size>0">
+					AND INFO.PAT_ID IN
+					(
+					<foreach collection="patientIds" item="item" index="index"
+						separator=",">
+						#{item}
+					</foreach>
+					)
+				</if>
+				<if test="startDate!= null">
+					AND LM.SEND_DATE >= #{startDate}
+				</if>
+				<if test="endDate != null">
+					AND LM.SEND_DATE &lt; #{endDate}
+				</if>
+		
+		</if>
+		<if test="orderExecTypeCode == 'BLOOD'">
+			UNION ALL
+				SELECT  TI.DON_CODE + TI.PROD_CODE ORDER_BAR ,
+				        NULL IS_EMERGENT ,
+				        P.PAT_ID ,
+				        TI.SEND_DATE PLAN_TIME,
+				        CASE WHEN E.ID IS NULL THEN 2
+				             ELSE 4
+				        END ORDER_STATUS_CODE ,
+				        TI.SEND_DATE CREATE_DATETIME ,
+				        P.BED_CODE ,
+				        E.ID ,
+				        P.NURSE_LEVEL
+				FROM    PAT_TRANSFUSION_INFO TI
+				        INNER JOIN PAT_ORDER_ORIGINAL PO ON PO.ORDER_ID = TI.ORDER_ID
+				        INNER JOIN PAT_CURE_INFO P ON P.PAT_ID = PO.PAT_ID
+				                                      AND P.STATUS = 1
+				        LEFT JOIN PAT_ORDER_EXEC E ON E.BARCODE = TI.DON_CODE
+				                                      AND E.SEC_BARCODE = TI.PROD_CODE
+				WHERE   P.WARD_CODE = #{deptCode}
+				<if test="patientIds != null and patientIds.size>0">
+					AND P.PAT_ID IN
+					(
+					<foreach collection="patientIds" item="item" index="index"
+						separator=",">
+						#{item}
+					</foreach>
+					)
+				</if>
+				<if test="startDate!= null">
+					AND TI.SEND_DATE >= #{startDate}
+				</if>
+				<if test="endDate != null">
+					AND TI.SEND_DATE &lt; #{endDate}
+				</if>
+		
+		</if>
+		
+		)
+		AS TAB_2)
+
+		SELECT *
+		FROM (SELECT P.BED_CODE,
+		P.PAT_ID,
+		SUM(CONVERT(INT, IS_EMERGENT)) AS IS_EMERGENT,
+		SUM(CASE WHEN P.ID IS NOT NULL THEN 1 ELSE 0 END) EXECED_ORDER_COUNT,
+		SUM(CASE WHEN P.ID IS NULL THEN 1 ELSE 0 END) UNEXECED_ORDER_COUNT,
+		P.NURSE_LEVEL AS NURSE_LEVEL
+		FROM TAB_1 P
+		GROUP BY BED_CODE,PAT_ID,NURSE_LEVEL) PP
+		WHERE
+			(PP.EXECED_ORDER_COUNT + PP.UNEXECED_ORDER_COUNT) > 0
+		ORDER BY LEN(PP.BED_CODE),PP.BED_CODE
+	</select>
+
+
+	<!-- 获取pat_order_original长嘱床位信息 -->
+	<select id="getOrderOriginalLongBedInfoList" parameterType="java.util.HashMap"
+		resultMap="OrderBedInfoMap">
+		WITH    tab_1
+          AS ( SELECT DISTINCT
+                        *
+               FROM     ( 
+			              SELECT    mm.PAT_ID + '_' + mm.GROUP_NO AS order_group_id ,
+                                    mm.PAT_ID ,
+                                    mm.ORDER_STATUS ,
+                                    mm.BED_CODE ,
+                                    e.ID ,
+                                    mm.begin_date ,
+                                    mm.nurse_level
+                          FROM      (
+						             SELECT g.ORDER_STATUS,g.PAT_ID,g.begin_date,g.GROUP_NO,g.order_exec_type_code,p.BED_CODE,p.nurse_level 
+									    FROM PAT_ORDER_ORIGINAL g,PAT_CURE_INFO p
+										WHERE p.STATUS=1
+											  AND g.Is_LongTerm = 1
+											<!-- 医嘱分类 -->
+											<if test="patientIds != null and patientIds.size>0">
+												AND p.pat_id IN
+												(
+												<foreach collection="patientIds" item="item" index="index"
+													separator=",">
+													#{item}
+												</foreach>
+												)
+											</if>
+										  And p.ward_code = #{deptCode}
+										  AND g.PAT_ID = p.PAT_ID
+						            ) mm
+                                    LEFT JOIN PAT_ORDER_GROUP pg ON pg.pat_id = mm.pat_id
+                                                              AND pg.order_no = mm.group_no AND pg.is_longterm = 1
+                                                              AND (pg.plan_time is null
+																or
+																(
+																	pg.plan_time >= #{startDate}
+																	AND pg.plan_time &lt; #{endDate}
+																))
+                                    LEFT JOIN pat_order_exec e ON pg.order_bar = e.barcode
+                                    LEFT JOIN COM_DIC cd ON cd.his_code = mm.order_exec_type_code
+                                                            AND cd.dic_type = 'USAGE'
+                        ) AS tab_2
+             )
+    SELECT  *
+    FROM    ( SELECT    p.bed_code ,
+                        p.pat_id ,
+                        SUM(CASE WHEN p.ORDER_STATUS = 3 THEN 1
+                                 ELSE 0
+                            END) AS stop_order_count ,
+                        SUM(CASE WHEN p.ORDER_STATUS in (1,2)
+                                 THEN 1
+                                 ELSE 0
+                            END) AS unstop_order_count,
+                        SUM(CASE WHEN p.ORDER_STATUS in (1,2) and p.begin_date
+							>=convert(varchar, GETDATE() - 1, 120) THEN 1 ELSE 0 
+							END) as new_order_count,
+                        p.nurse_level
+              FROM      tab_1 p
+              GROUP BY  bed_code ,
+                        pat_id ,
+                        nurse_level
+            ) pp
+			 where
+					(pp.unstop_order_count + pp.stop_order_count) > 0
+		    ORDER BY LEN(pp.BED_CODE) , pp.bed_code 
+	</select>
+
+<!-- 获取pat_order_original床位信息 -->
+	<select id="getOrderOriginalTempBedInfoList" parameterType="java.util.HashMap"
+		resultMap="OrderBedInfoMap">
+		WITH    tab_1
+          AS ( SELECT DISTINCT
+                        *
+               FROM     ( 
+			              SELECT    mm.PAT_ID + '_' + mm.GROUP_NO AS order_group_id ,
+                                    mm.IS_EMERGENT ,
+                                    mm.PAT_ID ,
+                                    mm.ORDER_STATUS ,
+                                    mm.BED_CODE ,
+                                    e.ID ,
+                                    mm.begin_date ,
+                                    mm.nurse_level
+                          FROM      (
+						             SELECT g.ORDER_STATUS,g.PAT_ID,g.begin_date,g.GROUP_NO,g.IS_EMERGENT,g.order_exec_type_code,p.BED_CODE,p.nurse_level 
+									    FROM PAT_ORDER_ORIGINAL g,PAT_CURE_INFO p
+										WHERE p.STATUS=1
+											  AND g.Is_LongTerm = 0
+											<!-- 医嘱分类 -->
+												AND g.begin_date >= #{startDate}
+												AND g.begin_date &lt; #{endDate}
+											and (g.order_type_code not in('C','D'))								
+											<if test="patientIds != null and patientIds.size>0">
+												AND p.pat_id IN
+												(
+												<foreach collection="patientIds" item="item" index="index"
+													separator=",">
+													#{item}
+												</foreach>
+												)
+											</if>
+										  AND p.ward_code = #{deptCode}
+										  AND g.PAT_ID = p.PAT_ID
+						            ) mm
+                                    LEFT JOIN PAT_ORDER_GROUP pg ON pg.pat_id = mm.pat_id
+                                                              AND pg.order_no = mm.group_no
+                                                              AND (pg.plan_time is null
+																or
+																(
+																	pg.plan_time >= #{startDate}
+																	AND pg.plan_time &lt; #{endDate}
+																))
+                                    LEFT JOIN pat_order_exec e ON pg.order_bar = e.barcode
+                                    LEFT JOIN COM_DIC cd ON cd.his_code = mm.order_exec_type_code
+                                                            AND cd.dic_type = 'USAGE'
+                        ) AS tab_2
+             )
+    SELECT  *
+    FROM    ( SELECT    p.bed_code ,
+                        p.pat_id ,
+                        SUM(CONVERT(INT, IS_EMERGENT)) AS IS_EMERGENT ,
+                        SUM(CASE WHEN  
+                                     p.id IS NOT NULL
+                                 THEN 1
+                                 ELSE 0
+                            END) execed_order_count ,
+                        SUM(CASE WHEN 
+                                     p.id IS NULL
+                                 THEN 1
+                                 ELSE 0
+                            END) unexeced_order_count ,
+                        p.nurse_level
+              FROM      tab_1 p
+              GROUP BY  bed_code ,
+                        pat_id ,
+                        nurse_level
+            ) pp
+			 where
+					(pp.execed_order_count + pp.unexeced_order_count) > 0
+		    ORDER BY LEN(pp.BED_CODE) , pp.bed_code 
+	</select>
+
+	<!-- 获取原始医嘱和其分解后的执行信息-不包括口服医嘱和检验医嘱 -->
+	<select id="getOriginalOrderList" parameterType="java.util.HashMap"
+		resultMap="hisOrderGroupMap">
+		SELECT
+		g.pat_id+'_'+g.group_no + '_' + g.ORDER_STATUS as order_group_id
+		,g.order_id as order_id
+		,g.PAT_ID as pat_id
+		,g.IN_HOSP_NO as in_hosp_no
+		,g.FREQ_NAME as freq_name
+		,g.IS_EMERGENT as emergent
+		,g.NEED_SKINTEST as is_skin_test
+		,g.CREATE_DATETIME as create_datetime
+		,g.CREATE_DOC_ID as create_doc_code
+		,g.CREATE_DOC_NAME as create_doc_name
+		,g.STOP_DOC_ID as stop_doc_code
+		,g.STOP_DOC_NAME as stop_doc_name
+		,g.STOP_DATE as stop_datetime
+		,g.begin_date as begin_date
+		,g.end_date as end_date
+
+		,g.order_id as order_item_id
+		,g.ITEM_CODE as item_code
+		,g.ITEM_NAME as item_name
+		,g.usage_code as usage_code
+		,g.usage_name as usage_name
+		,g.SPECIFICATION as drug_specs
+		,g.DOSAGE as dosage
+		,g.DOSAGE_UNIT as dosage_unit
+		,g.REMARK as remark
+		,g.perform_schedule as perform_schedule
+		,g.perform_schedule as show_perform_schedule
+
+		,
+		<include refid="calculateOrderType"></include>
+		,
+		<include refid="calculateOrderExecType"></include>
+		,CASE
+		WHEN g.Is_LongTerm =1 and g.ORDER_STATUS = 3 then 3
+		when g.Is_LongTerm =1 and g.ORDER_STATUS !=3 and g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME &lt; convert(varchar,GETDATE() - 1,120)
+		then 5
+		when
+		g.Is_LongTerm =1 and g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME >= convert(varchar,GETDATE() - 1,120)
+		then 1
+		WHEN
+		g.Is_LongTerm =0 and
+		g.ORDER_STATUS != 3 and e.id is not null
+		then 4
+		WHEN
+		g.Is_LongTerm =0 and g.ORDER_STATUS !=3 and e.id is null
+		then 2
+		END
+		as
+		order_status_code,
+		CASE
+		WHEN g.Is_LongTerm =1 and g.ORDER_STATUS =3	then 4
+		when g.Is_LongTerm =1 and g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME &lt; convert(varchar,GETDATE() - 1,120)
+		then 5
+		when
+		g.Is_LongTerm =1 and g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME >= convert(varchar,GETDATE() - 1,120)
+		then 1
+		WHEN
+		g.Is_LongTerm =0 and g.ORDER_STATUS != 3 and e.id is not null
+		then 4
+		WHEN
+		g.Is_LongTerm =0 and g.ORDER_STATUS != 3 and e.id is null
+		then 2
+		END
+		as
+		order_status_name
+
+		,CASE  
+		 WHEN g.ORDER_EXEC_TYPE_CODE is null THEN pg.order_bar
+		 WHEN g.ORDER_EXEC_TYPE_CODE !='UC' THEN pg.order_bar
+		 WHEN g.ORDER_EXEC_TYPE_CODE ='UC' THEN null
+		 END
+		 as order_exec_id
+		,pg.PLAN_TIME as plan_datetime
+		,e.EXEC_DATE as exec_datetime
+		,e.EXEC_USER_CODE as exec_nurse_code
+		,e.EXEC_USER_NAME as exec_nurse_name
+		,e.APPROVE_USER_CODE as approve_nurse_code
+		,e.APPROVE_USER_NAME as approve_nurse_name
+		,p.NURSE_LEVEL as nurse_level
+       	,l.PREPARE_NURSE_NAME as prepare_nurse_name
+       	,l.PREPARE_TIME as prepare_time
+       	,l.VERIFY_NURSE_NAME as verify_nurse_name
+       	,l.VERIFY_TIME as verify_time
+       	,l.EXEC_NURSE_NAME as liq_exec_nurse_name
+       	,l.EXEC_TIME as liq_exec_time
+       	,cd.LIQUOR as liquor
+
+		FROM PAT_ORDER_ORIGINAL g
+		inner join PAT_CURE_INFO p on p.pat_id = g.pat_id
+		left join PAT_ORDER_GROUP pg on pg.pat_id = g.pat_id and pg.order_no =
+		g.group_no AND pg.order_status_code != 3 and  (pg.plan_time is null
+		or
+		(<if test="startDate != null">
+			pg.plan_time >= #{startDate}
+		</if>
+		<if test="endDate != null">
+			AND pg.plan_time &lt; #{endDate}
+		</if>))
+		left join pat_order_exec e on e.pat_id = pg.pat_id and pg.order_bar = e.ORDER_GROUP_ID
+		left
+		join COM_DIC cd on cd.his_code = g.order_exec_type_code and
+		cd.dic_type='USAGE'
+		left join NURSE_LIQUOR l on pg.ORDER_BAR = l.ORDER_GROUP_ID
+		WHERE
+		g.pat_id IN
+		(
+		<foreach collection="patientIds" item="item" index="index"
+			separator=",">
+			#{item}
+		</foreach>
+		)
+		<if test="hospitalCode !=null and hospitalCode == 'SZSY'">
+			AND ((cd.code in('OXYGEN','ATOMIZING')) 
+				or (g.is_subtbl = '0' or g.is_subtbl is null))
+		</if>
+		
+		AND p.STATUS=1
+		
+		<if test="isAdd!=1">
+			AND (cd.code is null or cd.code not in ('ORAL','LAB'))	
+		</if>
+		<!-- 医嘱分类 -->
+			<if test="orderTypeCode != null">
+			AND g.Is_LongTerm = #{orderTypeCode}
+			<choose >
+				<when test="orderTypeCode == 1">
+					<if test="endDate != null">
+						AND g.begin_date &lt; #{endDate}
+					</if>
+				</when>
+				<otherwise>
+					<if test="startDate!= null">
+						AND g.begin_date >= #{startDate}
+					</if>
+					<if test="endDate != null">
+						AND g.begin_date &lt; #{endDate}
+					</if>
+					and (g.order_type_code != 'C' and g.order_type_code != 'D')
+				</otherwise>
+			</choose>
+		</if>
+		<!-- 根据医嘱执行类型，获取对应的医嘱 -->
+		<if test="orderExecTypeCode != null">
+			<include refid="orderExecTypeCodeCond"></include>
+		</if>
+		order by cd.sort_no desc,g.create_datetime,pg.plan_time
+	</select>
+	
+	<!-- 获取原始医嘱和其分解后的执行信息-只包括口服医嘱和检验医嘱 -->
+	<select id="getOriginalOrderListToORAL" parameterType="java.util.HashMap"
+		resultMap="hisOrderGroupMap">
+		SELECT
+		g.pat_id + '_' + g.group_no + '_' + g.ORDER_STATUS as order_group_id
+		,g.order_id as order_id
+		,g.PAT_ID as pat_id
+		,g.IN_HOSP_NO as in_hosp_no
+		,g.FREQ_NAME as freq_name
+		,g.IS_EMERGENT as emergent
+		,g.NEED_SKINTEST as is_skin_test
+		,g.CREATE_DATETIME as create_datetime
+		,g.CREATE_DOC_ID as create_doc_code
+		,g.CREATE_DOC_NAME as create_doc_name
+		,g.STOP_DOC_ID as stop_doc_code
+		,g.STOP_DOC_NAME as stop_doc_name
+		,g.STOP_DATE as stop_datetime
+		,g.begin_date as begin_date
+		,g.end_date as end_date
+
+		,g.order_id as order_item_id
+		,g.ITEM_CODE as item_code
+		,g.ITEM_NAME as item_name
+		,g.usage_code as usage_code
+		,g.usage_name as usage_name
+		,g.SPECIFICATION as drug_specs
+		,g.DOSAGE as dosage
+		,g.DOSAGE_UNIT as dosage_unit
+		,g.REMARK as remark
+		,g.perform_schedule as perform_schedule
+		,g.perform_schedule as show_perform_schedule
+
+		,
+		<include refid="calculateOrderType"></include>
+		,
+		<include refid="calculateOrderExecType"></include>
+		,CASE
+		WHEN g.Is_LongTerm =1 and g.ORDER_STATUS = 3 
+		then 3
+		when g.Is_LongTerm =1 and g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME &lt; convert(varchar,GETDATE() - 1,120)
+		then 5
+		when
+		g.Is_LongTerm =1 and  g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME >= convert(varchar,GETDATE() - 1,120)
+		then 1
+		WHEN
+		g.Is_LongTerm =0 and
+		g.ORDER_STATUS != 3 and e.id is not null
+		then 4
+		WHEN
+		g.Is_LongTerm =0 and g.ORDER_STATUS != 3 and e.id is null
+		then 2
+		END
+		as
+		order_status_code,
+		CASE
+		WHEN g.Is_LongTerm =1 and g.ORDER_STATUS = 3
+		then 3
+		when g.Is_LongTerm =1 and g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME &lt; convert(varchar,GETDATE() - 1,120)
+		then 5
+		when
+		g.Is_LongTerm =1 and g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME
+		>= convert(varchar,GETDATE() - 1,120)
+		then 1
+		WHEN
+		g.Is_LongTerm =0 and
+		g.ORDER_STATUS != 3 and e.id is not null
+		then 4
+		WHEN
+		g.Is_LongTerm =0 and g.ORDER_STATUS != 3 and e.id is null
+		then 2
+		END
+		as
+		order_status_name
+
+		,pg.order_bar as order_exec_id
+		,pg.PLAN_TIME as plan_datetime
+		,e.EXEC_DATE as exec_datetime
+		,e.EXEC_USER_CODE as exec_nurse_code
+		,e.EXEC_USER_NAME as exec_nurse_name
+		,e.APPROVE_USER_CODE as approve_nurse_code
+		,e.APPROVE_USER_NAME as approve_nurse_name
+		,p.NURSE_LEVEL as nurse_level
+		,cd.LIQUOR as liquor
+
+		FROM PAT_ORDER_ORIGINAL g
+		inner join PAT_CURE_INFO p on p.pat_id = g.pat_id
+		left join PAT_ORDER_GROUP pg on pg.pat_id = g.pat_id and pg.order_no =
+		g.group_no AND (pg.plan_time is null
+		or
+		(<if test="startDate != null">
+			pg.plan_time >= #{startDate}
+		</if>
+		<if test="endDate != null">
+			AND pg.plan_time &lt; #{endDate}
+		</if>))
+		left join PAT_ORDER_ITEM pi on pg.PAT_ID=pi.PAT_ID and pg.ORDER_NO=pi.ORDER_NO and pg.PERFORM_NO=pi.PERFORM_NO
+		left join PAT_DRUGBAGRECLIST d on pi. ORDER_GROUP_ID = d.N_ORDER_SUB_NO
+		left join pat_order_exec e on d.BARCODE = e.ORDER_GROUP_ID
+		left
+		join COM_DIC cd on cd.his_code = g.order_exec_type_code and
+		cd.dic_type='USAGE'
+
+		WHERE
+		g.pat_id IN
+		(
+		<foreach collection="patientIds" item="item" index="index"
+			separator=",">
+			#{item}
+		</foreach>
+		)
+		AND p.STATUS=1
+		AND cd.code in ('ORAL')
+		<!-- 医嘱分类 -->
+			<if test="orderTypeCode != null">
+			AND g.Is_LongTerm = #{orderTypeCode}
+			<choose >
+				<when test="orderTypeCode == 1">
+					<if test="endDate != null">
+						AND g.begin_date &lt; #{endDate}
+					</if>
+				</when>
+				<otherwise>
+					<if test="startDate!= null">
+						AND g.begin_date >= #{startDate}
+					</if>
+					<if test="endDate != null">
+						AND g.begin_date &lt; #{endDate}
+					</if>
+					and (g.order_type_code != 'C' and g.order_type_code != 'D')
+				</otherwise>
+			</choose>
+		</if>
+		<!-- 根据医嘱执行类型，获取对应的医嘱 -->
+		<if test="orderExecTypeCode != null">
+			<include refid="orderExecTypeCodeCond"></include>
+		</if>
+		order by cd.sort_no desc,g.create_datetime
+	</select>
+
+	<!-- 获取原始医嘱和其分解后的执行信息-只包括检验医嘱 -->
+	<select id="getOriginalOrderListToLAB" parameterType="java.util.HashMap"
+		resultMap="hisOrderGroupMap">
+		SELECT
+		g.pat_id+'_'+g.group_no+ '_' + g.ORDER_STATUS as order_group_id
+		,g.order_id as order_id
+		,g.PAT_ID as pat_id
+		,g.IN_HOSP_NO as in_hosp_no
+		,g.FREQ_NAME as freq_name
+		,g.IS_EMERGENT as emergent
+		,g.NEED_SKINTEST as is_skin_test
+		,g.CREATE_DATETIME as create_datetime
+		,g.CREATE_DOC_ID as create_doc_code
+		,g.CREATE_DOC_NAME as create_doc_name
+		,g.STOP_DOC_ID as stop_doc_code
+		,g.STOP_DOC_NAME as stop_doc_name
+		,g.STOP_DATE as stop_datetime
+		,g.begin_date as begin_date
+		,g.end_date as end_date
+
+		,g.order_id as order_item_id
+		,g.ITEM_CODE as item_code
+		,g.ITEM_NAME as item_name
+		,g.usage_code as usage_code
+		,g.usage_name as usage_name
+		,g.SPECIFICATION as drug_specs
+		,g.DOSAGE as dosage
+		,g.DOSAGE_UNIT as dosage_unit
+		,g.REMARK as remark
+		,g.perform_schedule as perform_schedule
+		,g.perform_schedule as show_perform_schedule
+
+		,
+		<include refid="calculateOrderType"></include>
+		,
+		<include refid="calculateOrderExecType"></include>
+		,CASE
+		WHEN g.Is_LongTerm =1 and g.ORDER_STATUS = 3 
+		then 3
+		when g.Is_LongTerm =1 and g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME &lt; convert(varchar,GETDATE() - 1,120)
+		then 5
+		when
+		g.Is_LongTerm =1 and g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME >= convert(varchar,GETDATE() - 1,120)
+		then 1
+		WHEN
+		g.Is_LongTerm =0 and g.ORDER_STATUS != 3 and e.id is not null
+		then 4
+		WHEN
+		g.Is_LongTerm =0 and g.ORDER_STATUS != 3 and e.id is null
+		then 2
+		END
+		as
+		order_status_code,
+		CASE
+		WHEN g.Is_LongTerm =1 and g.ORDER_STATUS =
+		3
+		then 3
+		when g.Is_LongTerm =1 and g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME &lt; convert(varchar,GETDATE() - 1,120)
+		then 5
+		when
+		g.Is_LongTerm =1 and g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME >= convert(varchar,GETDATE() - 1,120)
+		then 1
+		WHEN
+		g.Is_LongTerm =0 and
+		g.ORDER_STATUS != 3 and e.id is not null
+		then 4
+		WHEN
+		g.Is_LongTerm =0 and g.ORDER_STATUS != 3 and e.id is null
+		then 2
+		END
+		as
+		order_status_name
+
+		,pg.order_bar as order_exec_id
+		,pg.PLAN_TIME as plan_datetime
+		,e.EXEC_DATE as exec_datetime
+		,e.EXEC_USER_CODE as exec_nurse_code
+		,e.EXEC_USER_NAME as exec_nurse_name
+		,e.APPROVE_USER_CODE as approve_nurse_code
+		,e.APPROVE_USER_NAME as approve_nurse_name
+		,p.NURSE_LEVEL as nurse_level
+		,cd.LIQUOR as liquor
+		FROM PAT_ORDER_ORIGINAL g
+		inner join PAT_CURE_INFO p on p.pat_id = g.pat_id
+		left join PAT_ORDER_GROUP pg on pg.pat_id = g.pat_id and pg.order_no =
+		g.group_no AND (pg.plan_time is null
+		or
+		(<if test="startDate != null">
+			pg.plan_time >= #{startDate}
+		</if>
+		<if test="endDate != null">
+			AND pg.plan_time &lt; #{endDate}
+		</if>))
+		left join PAT_ORDER_ITEM pi on pg.PAT_ID=pi.PAT_ID and pg.ORDER_NO=pi.ORDER_NO and pg.PERFORM_NO=pi.PERFORM_NO
+		left join pat_order_exec e on pi.PERFORM_NO = e.ORDER_GROUP_ID
+		left
+		join COM_DIC cd on cd.his_code = g.order_exec_type_code and
+		cd.dic_type='USAGE'
+
+		WHERE
+		g.pat_id IN
+		(
+		<foreach collection="patientIds" item="item" index="index"
+			separator=",">
+			#{item}
+		</foreach>
+		)
+		AND p.STATUS=1
+		AND cd.code in ('LAB')
+		<!-- 医嘱分类 -->
+			<if test="orderTypeCode != null">
+			AND g.Is_LongTerm = #{orderTypeCode}
+			<choose >
+				<when test="orderTypeCode == 1">
+					<if test="endDate != null">
+						AND g.begin_date &lt; #{endDate}
+					</if>
+				</when>
+				<otherwise>
+					<if test="startDate!= null">
+						AND g.begin_date >= #{startDate}
+					</if>
+					<if test="endDate != null">
+						AND g.begin_date &lt; #{endDate}
+					</if>
+					and (g.order_type_code != 'C' and g.order_type_code != 'D')
+				</otherwise>
+			</choose>
+		</if>
+		<!-- 根据医嘱执行类型，获取对应的医嘱 -->
+		<if test="orderExecTypeCode != null">
+			AND cd.code = #{orderExecTypeCode}
+		</if>
+		order by cd.sort_no desc,g.create_datetime
+	</select>
+	
+	<select id="getPatientIdByOrderGroupId" parameterType="String"
+		resultType="String">
+		select top 1 pat_id from (
+			SELECT  g.pat_id
+			FROM    pat_order_group g
+			        INNER JOIN PAT_CURE_INFO p ON p.pat_id = g.pat_id AND p.STATUS=1
+			        LEFT JOIN COM_DIC cd ON cd.his_code = g.order_exec_type_code
+			                                AND cd.dic_type = 'USAGE'
+			WHERE   
+			        cd.liquor = '1'
+			        AND g.order_bar = #{param1}
+			<if test="param2 == 'ORAL'">
+				UNION ALL   
+				SELECT  dg.pat_id
+				FROM    PAT_DRUGBAGRECLIST dg
+				        INNER JOIN PAT_CURE_INFO p ON p.pat_id = dg.pat_id AND p.STATUS=1
+				WHERE   dg.barcode = #{param1}
+			</if>
+		) tt
+	</select>
+	
+	<!-- ********************获取包药机信息********************* -->
+	<select id="getOralOrderIdByBarcode" parameterType="String" resultType="String">
+		SELECT  distinct g.order_bar
+		FROM    PAT_ORDER_GROUP g
+		        INNER JOIN PAT_CURE_INFO p ON p.pat_id = g.pat_id
+		        INNER JOIN PAT_ORDER_ITEM i ON g.PAT_ID = i.PAT_ID
+		                                       AND g.ORDER_NO = i.ORDER_NO
+		                                       AND g.PERFORM_NO = i.PERFORM_NO
+		WHERE 	g.ORDER_BAR = #{param1}
+		UNION ALL
+		SELECT  distinct pd.BARCODE
+		FROM    PAT_DRUGBAGRECLIST pd
+		        INNER JOIN PAT_CURE_INFO p ON p.pat_id = pd.pat_id
+		        INNER JOIN PAT_ORDER_ITEM i ON pd.N_ORDER_SUB_NO = i.order_group_id
+		WHERE 	pd.BARCODE = #{param1}
+		
+	</select>
+	
+	<!-- 根据条码获取口服药信息 -->
+	<select id="getORALOrderGroupDetail" parameterType="String" resultMap="orderExecGroupMap">
+		SELECT  CASE WHEN e.ID IS NULL THEN 2
+		             ELSE 4
+		        END AS order_status_code ,
+		        'CZ' order_type_code,
+		        dg.BARCODE AS order_exec_id ,
+		        dg.DT_TAKEDATE AS plan_exec_time ,
+		        dg.TAKETIMENM as perform_schedule,
+		        dg.BARCODE AS barcode ,
+		        e.EXEC_DATE AS exec_datetime ,
+		        e.EXEC_USER_CODE AS exec_nurse_code ,
+		        e.EXEC_USER_NAME AS exec_nurse_name ,
+		        e.ID AS order_exec_status_code ,
+		        e.ID AS order_exec_status_name ,
+		        dg.BARCODE AS order_group_id ,
+		        p.PAT_ID AS pat_id ,
+		        p.IN_HOSP_NO AS in_hosp_no ,
+		        cd.CODE AS order_exec_type_code,
+		        cd.name AS order_exec_type_name,
+		        i.ORDER_GROUP_ID order_item_id,
+		        i.order_sub_no ,
+		        i.perform_no ,
+		        i.ITEM_CODE AS item_code ,
+		        i.ITEM_NAME AS item_name ,
+		        i.usage_code AS usage_code ,
+		        i.usage_name AS usage_name ,
+		        i.SPECIFICATION AS drug_specs ,
+		        i.DOSAGE AS dosage ,
+		        i.DOSAGE_UNIT AS dosage_unit ,
+		        i.REMARK AS remark ,
+		        p.NAME AS pat_name ,
+		        p.BED_CODE AS bed_code ,
+		        pi.is_print_label AS is_print_label ,
+		        CASE WHEN l.state IS NULL THEN 'P'
+		             ELSE l.state
+		        END AS order_liquor_status
+		FROM    dbo.PAT_DRUGBAGRECLIST dg
+		        INNER JOIN PAT_ORDER_ITEM i ON dg.N_ORDER_SUB_NO = i.order_group_id
+		        INNER JOIN PAT_CURE_INFO p ON p.pat_id = dg.PAT_ID
+		        LEFT JOIN PAT_ORDER_EXEC e ON dg.BARCODE = e.barcode
+		        LEFT JOIN NURSE_LIQUOR l ON dg.BARCODE = l.order_group_id
+		        LEFT JOIN COM_DIC cd ON cd.his_code = i.USAGE_CODE
+		                                AND cd.dic_type = 'USAGE'
+		        LEFT JOIN PAT_PRINT_INFO pi ON pi.print_data_id = dg.BARCODE
+		                                       AND pi.print_type = 'order' 
+		WHERE 	i.ORDER_GROUP_ID = #{param1}
+				<if test="param2 != null">
+					AND p.pat_id=#{param2}
+				</if>
+		UNION 
+		SELECT  CASE WHEN e.ID IS NULL THEN 2
+		             ELSE 4
+		        END AS order_status_code ,
+		        'CZ' order_type_code,
+		        dg.BARCODE AS order_exec_id ,
+		        dg.DT_TAKEDATE AS plan_exec_time ,
+		        dg.TAKETIMENM as perform_schedule,
+		        dg.BARCODE AS barcode ,
+		        e.EXEC_DATE AS exec_datetime ,
+		        e.EXEC_USER_CODE AS exec_nurse_code ,
+		        e.EXEC_USER_NAME AS exec_nurse_name ,
+		        e.ID AS order_exec_status_code ,
+		        e.ID AS order_exec_status_name ,
+		        dg.BARCODE AS order_group_id ,
+		        p.PAT_ID AS pat_id ,
+		        p.IN_HOSP_NO AS in_hosp_no ,
+		        cd.CODE AS order_exec_type_code,
+		        cd.name AS order_exec_type_name,
+		        i.ORDER_GROUP_ID order_item_id,
+		        i.order_sub_no ,
+		        i.perform_no ,
+		        i.ITEM_CODE AS item_code ,
+		        i.ITEM_NAME AS item_name ,
+		        i.usage_code AS usage_code ,
+		        i.usage_name AS usage_name ,
+		        i.SPECIFICATION AS drug_specs ,
+		        i.DOSAGE AS dosage ,
+		        i.DOSAGE_UNIT AS dosage_unit ,
+		        i.REMARK AS remark ,
+		        p.NAME AS pat_name ,
+		        p.BED_CODE AS bed_code ,
+		        pi.is_print_label AS is_print_label ,
+		        CASE WHEN l.state IS NULL THEN 'P'
+		             ELSE l.state
+		        END AS order_liquor_status
+		FROM    dbo.PAT_DRUGBAGRECLIST dg
+		        INNER JOIN PAT_ORDER_ITEM i ON dg.N_ORDER_SUB_NO = i.order_group_id
+		        INNER JOIN PAT_CURE_INFO p ON p.pat_id = dg.PAT_ID
+		        LEFT JOIN PAT_ORDER_EXEC e ON dg.BARCODE = e.barcode
+		        LEFT JOIN NURSE_LIQUOR l ON dg.BARCODE = l.order_group_id
+		        LEFT JOIN COM_DIC cd ON cd.his_code = i.USAGE_CODE
+		                                AND cd.dic_type = 'USAGE'
+		        LEFT JOIN PAT_PRINT_INFO pi ON pi.print_data_id = dg.BARCODE
+		                                       AND pi.print_type = 'order' 
+		WHERE 	dg.BARCODE=#{param1}
+				<if test="param2 != null">
+					AND p.pat_id=#{param2}
+				</if>
+	</select>
+	
+	
+	<!-- 检验条码查找 -->
+	<select id="getLABOrderGroupDetailByBarcode" parameterType="String" resultMap="orderExecGroupMap">
+		SELECT  CASE WHEN e.ID IS NULL THEN 2
+		             ELSE 4
+		        END AS order_status_code ,
+		        lm.BARCODE AS order_exec_id ,
+		        lm.BARCODE AS barcode ,
+		        lm.SEND_DATE AS plan_exec_time ,
+		        e.EXEC_DATE AS exec_datetime ,
+		        e.EXEC_USER_CODE AS exec_nurse_code ,
+		        e.EXEC_USER_NAME AS exec_nurse_name ,
+		        e.ID AS order_exec_status_code ,
+		        e.ID AS order_exec_status_name ,
+		        lm.BARCODE AS order_group_id ,
+		        p.PAT_ID AS pat_id ,
+		        p.IN_HOSP_NO AS in_hosp_no ,
+		        'LAB' AS order_exec_type_code ,
+		        '检验' AS order_exec_type_name ,
+		        lm.HISCODE AS order_item_id ,
+		        '' order_sub_no ,
+		        '' AS item_code ,
+		        lm.PName AS item_name ,
+		        'LAB' AS usage_code ,
+		        '检验' AS usage_name ,
+		        '' AS drug_specs ,
+		        1 AS dosage ,
+		        '次' AS dosage_unit ,
+		        '' AS remark ,
+		        p.NAME AS pat_name ,
+		        p.BED_CODE AS bed_code ,
+		        pi.is_print_label AS is_print_label ,
+		        CASE WHEN l.state IS NULL THEN 'P'
+		             ELSE l.state
+		        END AS order_liquor_status ,
+		        cd1.CODE TUBECOLOR
+		FROM    dbo.SYS_BARCODE_SYNC lm
+		        INNER JOIN dbo.PAT_CURE_INFO p ON lm.pat_id = p.IN_HOSP_NO
+		                                          AND p.STATUS = 1
+		        LEFT JOIN PAT_ORDER_EXEC e ON lm.BARCODE = e.barcode
+		        LEFT JOIN NURSE_LIQUOR l ON lm.BARCODE = l.order_group_id
+		        LEFT JOIN PAT_PRINT_INFO pi ON pi.print_data_id = lm.BARCODE
+		                                       AND pi.print_type = 'order'
+		        LEFT JOIN COM_DIC cd1 ON cd1.HIS_CODE = lm.TUBECOLOR
+		                                 AND cd1.DIC_TYPE = 'TUBECOLOR'
+        WHERE 	(lm.BARCODE=#{param1})
+				<if test="param2 != null">
+					AND p.pat_id=#{param2}
+				</if>
+	</select>
+	<!-- 输血条码信息 -->
+	<select id="getBloodOrderGroupDetail" parameterType="String" resultMap="orderExecGroupMap">
+		SELECT  P.PAT_ID PAT_ID ,
+		        P.IN_HOSP_NO IN_HOSP_NO ,
+		        P.NAME PAT_NAME ,
+		        P.BED_CODE BED_CODE ,
+		        TI.DON_CODE + '-:' + TI.PROD_CODE BARCODE ,
+		        TI.SEND_DATE PLAN_EXEC_TIME ,
+		        TI.DON_CODE + '-:' + TI.PROD_CODE ORDER_GROUP_ID ,
+		        'BLOOD' ORDER_EXEC_TYPE_CODE ,
+		        '输血' ORDER_EXEC_TYPE_NAME ,
+		        'BLOOD' USAGE_CODE ,
+		        '输血' USAGE_NAME ,
+		        TI.PROD_CLASS_HIS_CODE ITEM_CODE ,
+		        TI.PROD_CLASS_NAME ITEM_NAME ,
+		        '' AS DRUG_SPECS ,
+		        TI.BLOOD_VOLUME AS DOSAGE ,
+		        TI.BLOOD_UNIT AS DOSAGE_UNIT ,
+		        '' AS REMARK ,
+		        TI.ID ORDER_ITEM_ID ,
+		        TI.DON_CODE + '-:' + TI.PROD_CODE ORDER_EXEC_ID ,
+		        CASE WHEN E.ID IS NULL THEN 2
+		             ELSE 4
+		        END AS ORDER_STATUS_CODE ,
+		        E.EXEC_DATE AS EXEC_DATETIME ,
+		        E.EXEC_USER_CODE AS EXEC_NURSE_CODE ,
+		        E.EXEC_USER_NAME AS EXEC_NURSE_NAME ,
+		        E.APPROVE_USER_CODE APPROVE_USER_CODE ,
+		        E.APPROVE_USER_NAME APPROVE_USER_NAME ,
+		        E.ID AS ORDER_EXEC_STATUS_CODE ,
+		        E.ID AS ORDER_EXEC_STATUS_NAME
+		FROM    DBO.PAT_TRANSFUSION_INFO TI
+		        INNER JOIN PAT_ORDER_ORIGINAL PO ON PO.ORDER_ID = TI.DOCTOR_ADVICE_NUM
+		        INNER JOIN DBO.PAT_CURE_INFO P ON PO.PAT_ID = P.PAT_ID
+		                                          AND P.STATUS = 1
+		        LEFT JOIN PAT_ORDER_EXEC E ON E.BARCODE = TI.DON_CODE
+		                                      AND E.SEC_BARCODE = TI.PROD_CODE
+				      
+        <where>
+        		<if test="param1 != null">
+        			ti.DON_CODE = #{param1} and ti.PROD_CODE=#{param2}
+        		</if>
+				<if test="param3 != null">
+					AND p.pat_id=#{param3}
+				</if>
+				<if test="param4!= null">
+					AND ti.send_date >= #{param4}
+				</if>
+				<if test="param5 != null">
+					AND ti.send_date &lt; #{param5}
+				</if>
+		</where> 	
+	</select>
+	
+	<!-- 统计口服药、检验当天要执行总数，已执行总数 -->
+	<select id="getOrderCount" parameterType="java.util.Map" resultMap="OrderCount">
+		<if test="orderExecType=='ORAL'">
+			WITH    oral_tab
+		          AS ( SELECT DISTINCT
+		                        g.order_bar ,
+		                        e.id
+		               FROM 	PAT_ORDER_GROUP g    
+		               			INNER JOIN PAT_ORDER_ITEM i ON g.PAT_ID=i.PAT_ID and g.ORDER_NO=i.ORDER_NO and g.PERFORM_NO=i.PERFORM_NO
+		                        INNER JOIN PAT_CURE_INFO p ON p.PAT_ID = g.PAT_ID
+		                        LEFT JOIN PAT_ORDER_EXEC e ON e.ORDER_GROUP_ID = g.ORDER_BAR
+		                        LEFT JOIN COM_DIC cd ON cd.HIS_CODE = g.ORDER_EXEC_TYPE_CODE
+		                                                AND cd.DIC_TYPE = 'USAGE'
+		               WHERE    g.ORDER_STATUS_CODE &lt; 3
+		                        AND cd.CODE = 'ORAL'
+		                        AND p.PAT_ID = #{patId}
+								<if test="startDate != null">
+									AND g.plan_time >= #{startDate}
+								</if>
+								<if test="endDate != null">
+									AND g.plan_time &lt; #{endDate}
+								</if>
+								and i.order_sub_no not in (
+								SELECT n_order_no FROM PAT_DRUGBAGRECLIST d WHERE d.pat_id = #{patId}
+								<if test="startDate != null">
+									AND d.DT_TAKEDATE >= #{startDate}
+								</if>
+								<if test="endDate != null">
+									AND d.DT_TAKEDATE &lt; #{endDate}
+								</if>
+								)
+								
+						UNION ALL
+								
+						SELECT    distinct d.barcode,t2.id
+		                FROM      PAT_DRUGBAGRECLIST d
+					    LEFT JOIN dbo.PAT_ORDER_EXEC t2 ON d.BARCODE = t2.BARCODE
+		                WHERE     d.PAT_ID=#{patId} 
+                      			<if test="startDate != null">
+									AND d.DT_TAKEDATE >= #{startDate}
+								</if>
+								<if test="endDate != null">
+									AND d.DT_TAKEDATE &lt; #{endDate}
+								</if>
+		             )
+		    SELECT  SUM(CASE WHEN oral_tab.id IS NOT NULL THEN 1
+		                     ELSE 0
+		                END) finishedOrderCount ,
+		            COUNT(oral_tab.order_bar) pendingOrderCount
+		    FROM    oral_tab
+		
+		</if>
+		<if test="orderExecType=='LAB'">
+		 WITH    lab_tab
+                  AS ( SELECT  DISTINCT
+                                t1.BARCODE ,
+                                p.PAT_ID ,
+                                e.ID
+                       FROM     dbo.SYS_BARCODE_SYNC t1
+                                INNER JOIN dbo.PAT_CURE_INFO p ON t1.PAT_ID = p.IN_HOSP_NO
+                                                              AND p.STATUS = 1
+                                LEFT JOIN dbo.PAT_ORDER_EXEC e ON p.PAT_ID = e.PAT_ID
+                                                              AND t1.BARCODE = e.BARCODE
+                       WHERE    p.PAT_ID = #{patId} 
+                       			<if test="startDate != null">
+									AND t1.send_date >= #{startDate}
+								</if>
+								<if test="endDate != null">
+									AND t1.send_date &lt; #{endDate}
+								</if>
+                       GROUP BY p.PAT_ID ,
+                                t1.BARCODE ,
+                                e.ID
+                     )
+            SELECT  SUM(CASE WHEN lab.id IS NOT NULL THEN 1
+                             ELSE 0
+                        END) finishedOrderCount ,
+                    COUNT(lab.BARCODE) pendingOrderCount
+            FROM    lab_tab lab ;  
+		
+		</if>
+		<if test="orderExecType=='INFUSION'">
+		WITH    tab_1
+		          AS ( SELECT DISTINCT
+		                        g.order_bar ,
+		                        e.id
+		               FROM     PAT_ORDER_GROUP g
+		                        INNER JOIN PAT_ORDER_ITEM i ON g.PAT_ID=i.PAT_ID and g.ORDER_NO=i.ORDER_NO and g.PERFORM_NO=i.PERFORM_NO
+		                        INNER JOIN PAT_CURE_INFO p ON p.PAT_ID = g.PAT_ID
+		                        LEFT JOIN PAT_ORDER_EXEC e ON e.ORDER_GROUP_ID = g.ORDER_BAR
+		                        LEFT JOIN COM_DIC cd ON cd.HIS_CODE = g.ORDER_EXEC_TYPE_CODE
+		                                                AND cd.DIC_TYPE = 'USAGE'
+		               WHERE    g.ORDER_STATUS_CODE &lt; 3
+		                        AND cd.CODE = 'INFUSION'
+		                        AND p.PAT_ID = #{patId}
+								<if test="startDate != null">
+									AND g.plan_time >= #{startDate}
+								</if>
+								<if test="endDate != null">
+									AND g.plan_time &lt; #{endDate}
+								</if>
+								<if test="orderType != null">
+									AND g.IS_LONGTERM = #{orderType}
+								</if>
+		             )
+		    SELECT  SUM(CASE WHEN tab_1.id IS NOT NULL THEN 1
+		                     ELSE 0
+		                END) finishedOrderCount ,
+		            COUNT(tab_1.order_bar) pendingOrderCount
+		    FROM    tab_1		
+		</if>
+		<if test="orderExecType != 'INFUSION' and orderExecType != 'ORAL' and orderExecType != 'LAB'">
+		WITH    tab_1
+		          AS ( SELECT DISTINCT
+		                        g.order_bar ,
+		                        e.id
+		               FROM     PAT_ORDER_GROUP g
+		                        INNER JOIN PAT_ORDER_ITEM i ON g.PAT_ID=i.PAT_ID and g.ORDER_NO=i.ORDER_NO and g.PERFORM_NO=i.PERFORM_NO
+		                        INNER JOIN PAT_CURE_INFO p ON p.PAT_ID = g.PAT_ID
+		                        LEFT JOIN PAT_ORDER_EXEC e ON e.ORDER_GROUP_ID = g.ORDER_BAR
+		                        LEFT JOIN COM_DIC cd ON cd.HIS_NAME = g.ORDER_EXEC_TYPE_NAME
+		                                                AND cd.DIC_TYPE = 'USAGE'
+		               WHERE    g.ORDER_STATUS_CODE &lt; 3
+		              			AND cd.CODE= #{orderExecType}
+								AND p.PAT_ID = #{patId}
+								<if test="startDate != null">
+									AND g.plan_time >= #{startDate}
+								</if>
+								<if test="endDate != null">
+									AND g.plan_time &lt; #{endDate}
+								</if>
+								<if test="orderType != null">
+									AND g.IS_LONGTERM = #{orderType}
+								</if>
+		             )
+		    SELECT  SUM(CASE WHEN tab_1.id IS NOT NULL THEN 1
+		                     ELSE 0
+		                END) finishedOrderCount ,
+		            COUNT(tab_1.order_bar) pendingOrderCount
+		    FROM    tab_1			
+		</if>
+	</select>
+	<!-- 统计输血数量 -->
+	<select id="getBloodOrderCount" parameterType="java.util.Map" resultMap="OrderCount">
+		 WITH    TRANSFUSION_tab
+                  AS ( SELECT  DISTINCT
+                                t1.DON_CODE,
+                                t1.PROD_CODE ,
+                                p.PAT_ID ,
+                                e.ID
+                       FROM     dbo.PAT_TRANSFUSION_INFO t1
+								INNER JOIN dbo.PAT_ORDER_ORIGINAL po ON t1.DOCTOR_ADVICE_NUM = po.ORDER_ID
+                                INNER JOIN dbo.PAT_CURE_INFO p ON po.PAT_ID = p.PAT_ID
+                                                              AND p.STATUS = 1
+                                LEFT JOIN dbo.PAT_ORDER_EXEC e ON p.PAT_ID = e.PAT_ID
+                                                              AND t1.DON_CODE = e.BARCODE
+                                                              AND t1.PROD_CODE = e.SEC_BARCODE
+                        WHERE    p.PAT_ID = #{patId} 
+                       			<if test="startDate != null">
+									AND t1.send_date >= #{startDate}
+								</if>
+								<if test="endDate != null">
+									AND t1.send_date &lt; #{endDate}
+								</if>
+                       GROUP BY p.PAT_ID ,
+                                t1.DON_CODE,
+                                t1.PROD_CODE ,
+                                e.ID
+                     )
+            SELECT  SUM(CASE WHEN tf.id IS NOT NULL THEN 1
+                             ELSE 0
+                        END) finishedOrderCount ,
+                    COUNT(tf.DON_CODE) pendingOrderCount
+            FROM    TRANSFUSION_tab tf 
+	</select>
+	
+	<select id="getOrderPrintInfos" parameterType="java.util.HashMap"
+		resultMap="orderPrintInfoMap">
+		SELECT 
+		p.pat_id as pat_id,
+		p.name as pat_name,
+		p.bed_code as bed_code,
+		p.ward_code as dept_code,
+		p.IN_HOSP_NO as in_hosp_no,
+		p.gender,
+		p.birth_date,
+		p.in_date,
+		dept.name dept_name,
+       g.order_id as order_id,
+       g.FREQ_NAME as freq_name,
+       g.freq_code,
+       g.IS_EMERGENT as emergent,
+       g.NEED_SKINTEST as is_skin_test,
+       g.CREATE_DATETIME as create_datetime,
+       g.CREATE_DOC_ID as create_doc_code,
+       g.CREATE_DOC_NAME as create_doc_name,
+       g.STOP_DOC_ID as stop_doc_code,
+       g.STOP_DOC_NAME as stop_doc_name,
+       g.STOP_DATE as stop_datetime,
+       g.begin_date as begin_date,
+       g.end_date as end_date,
+       g.order_id as order_item_id,
+       g.ITEM_CODE as item_code,
+       g.ITEM_NAME as item_name,
+       g.usage_code as usage_code,
+       g.usage_name as usage_name,
+       g.SPECIFICATION as drug_specs,
+       g.DOSAGE as dosage,
+       g.DOSAGE_UNIT as dosage_unit,
+       g.REMARK as remark,
+       g.perform_schedule as perform_schedule,
+       g.perform_schedule as show_perform_schedule,
+       g.group_no as order_no,
+       pg.plan_time as plan_exec_time,
+       case when pg.order_bar is null then p.in_hosp_no + 'XH' + g.group_no + '*'+CONVERT(varchar(100), GETDATE(), 112)
+       else pg.order_bar
+       end
+       as order_group_id
+       ,
+		<include refid="calculateOrderType"></include>
+		,
+		<include refid="calculateOrderExecType"></include>
+		,CASE
+		WHEN g.Is_LongTerm =1 and g.ORDER_STATUS = 3 
+		then 3
+		when g.Is_LongTerm =1 and
+		g.ORDER_STATUS !=4 and g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME &lt; convert(varchar,GETDATE() - 1,120)
+		then 5
+		when
+		g.Is_LongTerm =1 and g.ORDER_STATUS !=4 and
+		g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME
+		>= convert(varchar,GETDATE() - 1,120)
+		then 1
+		WHEN
+		g.Is_LongTerm =0 and
+		g.ORDER_STATUS != 4 and e.id is not null
+		then 4
+		WHEN
+		g.Is_LongTerm
+		=0 and g.ORDER_STATUS != 4 and e.id is null
+		then 2
+		END
+		as
+		order_status_code,
+		CASE
+		WHEN g.Is_LongTerm =1 and g.ORDER_STATUS =
+		3
+		then 3
+		when g.Is_LongTerm =1 and
+		g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME &lt; convert(varchar,GETDATE() - 1,120)
+		then 5
+		when
+		g.Is_LongTerm =1 and
+		g.ORDER_STATUS != 3
+		and g.CREATE_DATETIME
+		>= convert(varchar,GETDATE() - 1,120)
+		then 1
+		WHEN
+		g.Is_LongTerm =0 and
+		g.ORDER_STATUS != 3 and e.id is not null
+		then 4
+		WHEN
+		g.Is_LongTerm
+		=0 and g.ORDER_STATUS != 3 and e.id is null
+		then 2
+		END
+		as
+		order_status_name,
+		pi.is_print_label as is_print_label
+	  FROM PAT_ORDER_ORIGINAL g
+	  inner join PAT_CURE_INFO p on p.pat_id = g.pat_id
+	  inner join COM_WARD dept on p.WARD_CODE = dept.code
+	  left join PAT_ORDER_GROUP pg on pg.pat_id = g.pat_id
+	                              and pg.order_no = g.group_no and pg.ORDER_STATUS_CODE!=3
+	  left join PAT_ORDER_EXEC e on pg.order_bar = e.barcode
+	  left join COM_DIC cd on cd.his_code = g.order_exec_type_code
+	                      and cd.dic_type = 'USAGE'
+	                      
+
+	   left join PAT_PRINT_INFO pi on pi.print_data_id = pg.order_bar   and pi.print_type = 'order'
+           
+	 
+	 WHERE
+	 	p.ward_code = #{deptCode}
+		<!-- 医嘱分类 -->
+		<if test="patIds != null">
+			AND p.pat_id in
+			(
+			<foreach collection="patIds" item="item" index="index"
+				separator=",">
+				#{item}
+			</foreach>
+			)
+		</if>
+		AND p.STATUS=1
+		<if test="orderTypeCode != null">
+			AND g.Is_LongTerm = #{orderTypeCode}
+		</if>
+		
+
+		<if test="startDate != null">
+			and pg.plan_time >= #{startDate}
+		</if>
+		<if test="endDate != null">
+			AND pg.plan_time &lt; #{endDate}
+		</if>
+
+		<if test="orderPrinted == 0">
+			AND  pi.is_print_label is null
+		</if>
+		<!-- <choose>
+			<when test="orderPrinted == 1">
+				AND pi.is_print_label = #{orderPrinted}
+			</when>
+			<otherwise>
+				AND (pi.is_print_label = #{orderPrinted} or pi.is_print_label is null)
+			</otherwise>
+		</choose> -->
+
+		<!-- 瓶签打印获取INFUSION,INJECT,ORAL医嘱 -->
+		<choose>
+			<when test="orderExecTypeCode != null">
+				AND cd.code = #{orderExecTypeCode}
+			</when>
+			<otherwise>
+				AND cd.code is not null AND cd.code in ('INFUSION','INJECT','ORAL')
+			</otherwise>
+		</choose>
+		order by len(p.bed_code),p.bed_code,pg.plan_time,g.order_id,cd.sort_no desc
+	</select>
+	<!-- 根据条码获取执行信息 -->
+	<select id="selectOrderExecInfoByOrderBar" resultMap="orderExecMap">
+		select top 1 
+		ORDER_GROUP_ID as order_exec_id,
+		PLAN_DATE as plan_datetime,
+		BARCODE as barcode,
+		EXEC_DATE as exec_datetime,
+		EXEC_USER_CODE as exec_nurse_code,
+		EXEC_USER_NAME as exec_nurse_name,
+		FINISH_DATE as finish_datetime,
+		FINISH_USER_CODE as finish_nurse_code,
+		FINISH_USER_NAME as finish_nurse_name,
+		ID AS order_exec_status_code,
+		ID as order_exec_status_name
+		from
+		PAT_ORDER_EXEC
+		where
+		BARCODE = #{orderBar}
+	</select>
+	
+	<select id="getOrderItemsByBarcode" parameterType="String" resultMap="orderBaseMap">
+		select i.order_item_id,i.item_code,i.item_name,i.DOSAGE,i.DOSAGE_UNIT,i.usage_name 
+		from pat_order_item i
+		where i.order_bar = #{param1}
+		order by i.order_item_id
+	</select>
+	<select id="getOralOrderItemsByBarcode" parameterType="String" resultMap="orderBaseMap">
+		select dg.barcode+dg.n_order_sub_no order_item_id,dg.drugcd item_code,dg.drugnm item_name,
+		dg.D_DISPENSEDOSE DOSAGE,dg.UNITNM_D_D DOSAGE_UNIT,'口服' usage_name 
+		from PAT_DRUGBAGRECLIST dg
+		where dg.barcode = #{param1}
+		order by dg.N_BAG_NO
+	</select>
+	<select id="getLabOrderItemsByBarcode" parameterType="String" resultMap="orderBaseMap">
+		select bs.barcode+bs.hiscode order_item_id, bs.pname item_name,'检验' usage_name 
+		from sys_barcode_sync bs
+		where bs.barcode = #{param1}
+		order by bs.hiscode
+	</select>
+	<!-- 根据条码获取医嘱状态 -->
+	<select id="getOrderStatusByOrderGroupId" parameterType="String" resultType="String">
+	select top 1 * from(
+		Select CASE WHEN g.ORDER_STATUS_CODE = 3
+                  AND g.STOP_DATE IS NOT NULL
+                  AND g.STOP_DATE > GETDATE() THEN 2
+             ELSE g.ORDER_STATUS_CODE
+        END ORDER_STATUS_CODE
+		FROM
+		PAT_ORDER_GROUP g
+		left join COM_DIC cd on cd.his_code = g.order_exec_type_code and cd.dic_type='USAGE'
+		WHERE
+		g.order_bar = #{param1}
+		<if test="param3 != null">
+			AND g.pat_id = #{param3}
+		</if>
+		<if test="param2 != null">
+			AND cd.liquor=#{param2}
+		</if>
+		union all
+		select 4 ORDER_STATUS_CODE from PAT_DRUGBAGRECLIST dg
+		where dg.barcode = #{param1}
+		<if test="param3 != null">
+			AND dg.pat_id = #{param3}
+		</if>
+		union all
+		select 4 ORDER_STATUS_CODE from SYS_BARCODE_SYNC bs
+		where bs.barcode = #{param1}
+		) order_status
+	</select>
+	<!-- 根据条码获取原始医嘱状态 -->
+	<select id="getOriginalOrderStatusByOrderGroupId" parameterType="String" resultType="String">
+		SELECT TOP 1 po.ORDER_STATUS FROM dbo.PAT_ORDER_ORIGINAL po
+		INNER JOIN dbo.PAT_ORDER_GROUP pg ON po.PAT_ID=pg.PAT_ID AND pg.ORDER_STATUS_CODE = 3
+		
+		WHERE pg.ORDER_BAR = #{param1} 
+			<if test="param2 != null">
+				AND pg.pat_id = #{param2}
+			</if>
+		ORDER BY po.ORDER_STATUS DESC;
+	</select>
+	<!-- 根据条码判断医嘱是否执行 -->
+	<select id="getOrderExecCountById" parameterType="String" resultType="Integer">
+		SELECT count(1)
+		FROM PAT_ORDER_EXEC e
+		<where> 
+			<if test="param1 != null">
+				e.barcode = #{param1}
+			</if>
+			<if test="param2 != null">
+				AND e.sec_barcode = #{param2}
+			</if>
+			<if test="param3 != null">
+				AND e.pat_id = #{param3}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getBracodeRelation" parameterType="String" resultMap="orderExecMap">
+		select
+		ra.lx_barcode as order_exec_id,
+		ra.PLAN_TIME as plan_datetime,
+		e.order_group_id as barcode
+		from pat_barcode_relation ra left join
+		PAT_ORDER_EXEC e ON e.BARCODE=ra.lx_barcode  where his_barcode = #{param1}
+		order by ra.plan_time
+	</select>
+	<!-- 24小时出入量 -->
+	<select id="getInAndOutOrder" resultType="int">
+		SELECT COUNT(1)
+		  FROM PAT_ORDER_ORIGINAL g 
+		  inner join PAT_CURE_INFO p on p.pat_id = g.pat_id and p.status = 1
+		   where g.pat_id = #{param1} 
+		   and g.BEGIN_DATE &lt;= #{param3}
+		   and g.ORDER_STATUS &lt;3
+		   and (g.ITEM_NAME like '%24小时出%' or g.ITEM_NAME like '%24h出入%' or g.ITEM_NAME like '%24H出入%' 
+		   or g.ITEM_NAME like '%24小时入%' or g.ITEM_NAME like '%２４小时出入%' or g.ITEM_NAME like '%２４小时入%')
+	</select>
+	<!-- 尿量 -->
+	<select id="getUrineOrder" resultType="int">
+		SELECT COUNT(1)
+		  FROM PAT_ORDER_ORIGINAL g 
+		  inner join PAT_CURE_INFO p on p.pat_id = g.pat_id and p.status = 1
+		   where g.pat_id = #{param1} 
+		   and g.BEGIN_DATE &lt;= #{param3}
+		   and g.ORDER_STATUS &lt;3
+		   and g.item_name like '%24%尿量%'
+	</select>
+	<select id="getCreateDateTimeOfPatInoutOrder" resultType="java.lang.String">
+		select top 1 CREATE_DATETIME
+		  from PAT_ORDER_ORIGINAL g
+		  inner join PAT_CURE_INFO p on p.pat_id = g.pat_id and p.status = 1
+		   where g.pat_id = #{param1}
+		   and g.BEGIN_DATE &lt;= #{param3}
+		   and g.ORDER_STATUS &lt;3
+		   and (g.ITEM_NAME like '%24小时出%' or g.ITEM_NAME like '%24h出入%' or g.ITEM_NAME like '%24H出入%'
+		   or g.ITEM_NAME like '%24小时入%' or g.ITEM_NAME like '%２４小时出入%' or g.ITEM_NAME like '%２４小时入%'
+		   or g.item_name like '%24%尿量%')
+		   order by g.CREATE_DATETIME
+	</select>
+	<!-- 条码类型 -->
+	<select id="getOrderBarcodeType" resultType="String">
+		select top 1 * from (
+		select 'NORMAL-'+pg.pat_id barType from pat_order_group pg 
+		where pg.order_bar = #{param1}
+		<if test="param2">
+			and pg.pat_id = #{param2}
+		</if>
+		union all
+		select 'ORAL-'+ dg.pat_id barType from PAT_DRUGBAGRECLIST dg
+		where dg.barcode = #{param1}
+		<if test="param2">
+			and pg.pat_id = #{param2}
+		</if>
+		union all
+		select 'LAB-' + bs.pat_id barType from SYS_BARCODE_SYNC bs
+		where bs.barcode = #{param1}
+		) order_type
+	</select>
+	
+	<!-- 获取医嘱执行类型 -->
+	<select id="getOrderExecTypes" resultMap="orderExecTypeCodeName">
+		SELECT code, name FROM com_dic c
+		 WHERE c.dic_type = 'USAGE'
+  		 and c.ID in (select max(ID) from COM_DIC group by CODE)
+ 		 order by c.sort_no
+	</select>
+	
+	<select id="getOrderUsageTypes" resultMap="orderExecTypeCodeName">
+		SELECT distinct his_code code,his_name name FROM com_dic c
+		WHERE c.dic_type='USAGE' 
+	</select>
+	
+	<!-- 获取医嘱执行类型 -->
+	<select id="getCopyOrderExecTypes" parameterType="java.util.Map" resultMap="orderExecTypeCodeName">
+		SELECT distinct code, name FROM com_dic c
+		 WHERE c.dic_type = 'USAGE'
+		 <choose>
+		 	<when test="type == 'copy'">
+		 		and c.is_copy = '1'
+		 	</when>
+		 	<otherwise>
+		 		and c.liquor = '1' 
+		 	</otherwise>
+		 </choose>
+  		
+	</select>
+	<!-- NDA端获取医嘱执行单-执行单 -->
+	<select id="getOrdExecDocInfosToNda" parameterType="java.util.HashMap" resultMap="orderExecGroupMap">
+		WITH    tab_1
+          AS ( SELECT TOP 100000000
+                        mm.order_bar order_group_id ,
+                        mm.order_bar order_exec_id,
+                        mm.pat_id ,
+                        mm.in_hosp_no ,
+                        mm.name pat_name ,
+                        mm.dept_code ,
+                        mm.bed_code ,
+                        CASE WHEN mm.usage_code IS NULL
+                                  OR cd.code IS NULL THEN 'UZ'
+                             ELSE cd.CODE
+                        END AS order_exec_type_code ,
+                        CASE WHEN mm.usage_code IS NULL
+                                  OR cd.code IS NULL THEN '治疗'
+                             ELSE cd.name
+                        END AS order_exec_type_name ,
+                        CASE WHEN mm.usage_code IS NULL
+                                  OR cd.code IS NULL THEN 'UZ'
+                             ELSE mm.usage_code
+                        END AS usage_code ,
+                        CASE WHEN mm.usage_code IS NULL
+                                  OR cd.code IS NULL THEN '治疗'
+                             ELSE mm.usage_name
+                        END AS usage_name ,
+                        mm.order_item_id ,
+                        mm.order_no ,
+                        mm.order_status_code ,
+                        mm.order_sub_no ,
+                        CASE mm.Is_LongTerm
+                          WHEN 1 THEN 'CZ'
+                          ELSE 'LZ'
+                        END AS order_type_code ,
+                        CASE mm.Is_LongTerm
+                          WHEN 1 THEN '长期医嘱'
+                          ELSE '临时医嘱'
+                        END AS order_type_name ,
+                        mm.item_code item_code ,
+                        mm.item_name item_name ,
+                        mm.DOSAGE AS dosage ,
+                        mm.DOSAGE_UNIT AS dosage_unit ,
+                        mm.FREQ_CODE AS freq_code ,
+                        mm.plan_time plan_exec_time ,
+                        CONVERT(VARCHAR(5), mm.plan_time, 24) perform_schedule ,
+                        pe.exec_date exec_datetime ,
+                        pe.exec_user_code exec_nurse_code ,
+                        pe.exec_user_name exec_nurse_name ,
+                        CASE WHEN pr.value IS NOT NULL THEN pr.value
+                             ELSE mm.remark
+                        END mark ,
+                        pe.ID order_exec_status_code,
+						pe.ID order_exec_status_name,
+                        
+                        nl.ORDER_GROUP_ID lx_order_id ,
+                        nl.id lx_exec_order_id ,
+                        nl.EXEC_NURSE_ID lx_exec_nurse_id ,
+                        nl.EXEC_NURSE_NAME lx_exec_nurse_name ,
+                        nl.EXEC_TIME lx_exec_time ,
+                        nl.PREPARE_NURSE_ID lx_prepare_nurse_id ,
+                        nl.PREPARE_NURSE_NAME lx_prepare_nurse_name ,
+                        nl.PREPARE_TIME lx_prepare_time ,
+                        nl.VERIFY_NURSE_ID lx_verify_nurse_id ,
+                        nl.VERIFY_NURSE_NAME lx_verify_nurse_name ,
+                        nl.VERIFY_TIME lx_verify_time
+               FROM     ( SELECT    p.pat_id ,p.in_hosp_no ,p.name ,p.ward_code dept_code , p.bed_code ,
+                                    po.order_no ,po.order_sub_no ,po.item_code ,po.item_name ,
+                                    po.DOSAGE ,po.DOSAGE_UNIT ,po.usage_code ,po.usage_name ,po.is_subtbl ,po.ORDER_ITEM_ID ,
+                                    pg.order_bar ,pg.plan_time ,pg.IS_LONGTERM , pg.FREQ_CODE ,pg.order_exec_type_code ,pg.REMARK,
+                                    pg.ORDER_STATUS_CODE
+                          FROM      pat_cure_info p ,pat_order_group pg,dbo.PAT_ORDER_ITEM po
+				 WHERE p.status = 1
+				  <if test="deptCode != null">
+						and p.ward_code = #{deptCode}
+					</if>
+					<if test="endDate != null">
+						and pg.plan_time &lt; #{endDate}
+					</if>
+					<if test="startDate != null">
+						and pg.plan_time >= #{startDate}
+					</if>
+				   AND p.PAT_ID = po.PAT_ID
+				   AND p.PAT_ID = pg.PAT_ID
+				  AND PO.PAT_ID = PG.PAT_ID AND PO.ORDER_NO = PG.ORDER_NO AND PO.PERFORM_NO = PG.PERFORM_NO
+				 ) mm LEFT JOIN com_dic cd ON cd.his_code = mm.order_exec_type_code
+		                                AND cd.dic_type = 'usage'
+		        LEFT JOIN pat_order_exec pe ON pe.barcode = mm.order_bar
+		        LEFT JOIN PAT_ORDER_ADDITIONAL pr ON pr.barcode = mm.order_bar
+		                                             AND pr.type = 1
+		        LEFT JOIN nurse_liquor nl ON nl.order_group_id = mm.order_bar
+		WHERE    ( ( cd.code IN ( 'OXYGEN', 'ATOMIZING' ) )
+		              OR ( mm.is_subtbl = '0'
+		                   OR mm.is_subtbl IS NULL
+		                 )
+		            )
+			    <choose>
+					<when test="execType == 1">
+						and pe.id is not null
+					</when>
+					<when test="execType == 2">
+						and pe.id is null
+					</when>
+					<otherwise>
+					</otherwise>
+			   </choose>
+		ORDER BY LEN(mm.bed_code) ,
+		        mm.bed_code ,
+		        mm.ORDER_EXEC_TYPE_CODE ,
+		        mm.is_longterm DESC ,
+		        mm.PLAN_TIME ,
+		        mm.order_item_id 
+	)
+	select * from tab_1 
+		<where>
+			<if test="patIds != null and patIds.size() > 0">
+				 tab_1.pat_id in (
+				<foreach collection="patIds" item="patId" index="index"
+						 separator=",">
+					#{patId}
+				</foreach>
+				)
+			</if>
+			<if test="orderSubNos != null and orderSubNos.size() > 0">
+				and tab_1.order_sub_no not  in (
+				<foreach collection="orderSubNos" item="orderSubNo" index="index"
+						 separator=",">
+					#{orderSubNo}
+				</foreach>
+				)
+			</if>
+		</where> 
+	</select>
+	<!-- 获取医嘱执行单-nda执行单 ,瓶签-->
+	<select id="getOrdExecDocInfosToNdaOral" parameterType="java.util.HashMap" resultMap="orderExecGroupMap">
+		
+			select 
+				mm.barcode order_group_id,
+				mm.barcode order_exec_id,
+				mm.pat_id,
+				mm.in_hosp_no,
+				mm.name pat_name,
+				mm.ward_code dept_code,
+				mm.bed_code,
+
+				'ORAL' AS order_exec_type_code,
+				'口服' AS order_exec_type_name,
+				'ORAL' AS usage_code ,
+				'口服' AS usage_name ,
+				mm.barcode+mm.n_order_no order_item_id,
+				mm.n_bag_no order_no,
+				'2' order_status_code,
+				mm.n_order_no order_sub_no,			
+				'CZ' order_type_code,
+				mm.drugcd AS item_code ,
+				mm.drugnm AS item_name ,
+				mm.D_DISPENSEDOSE AS dosage ,
+				mm.UNITNM_D_D AS dosage_unit ,
+				mm.DT_TAKEDATE plan_exec_time,
+				mm.taketimenm perform_schedule,
+				
+				case when pe.id is not null then 1
+				else 0
+				end is_execed,
+				pe.exec_date exec_datetime,
+				pe.exec_user_code exec_nurse_code,
+				pe.exec_user_name exec_nurse_name,
+				pe.ID order_exec_status_code,
+				pe.ID order_exec_status_name,
+				
+				pr.value remark				
+			from (
+			
+				select 
+					p.PAT_ID,p.IN_HOSP_NO,p.NAME,p.WARD_CODE,p.BED_CODE,
+					dg.BARCODE,dg.N_BAG_NO,dg.DT_TAKEDATE,dg.TAKETIMENM,dg.N_PRESCNO,
+					dg.n_order_no ,dg.drugcd  ,dg.drugnm ,dg.D_DISPENSEDOSE,dg.UNITNM_D_D
+								
+				from dbo.PAT_CURE_INFO p,PAT_DRUGBAGRECLIST dg
+				WHERE p.STATUS = 1
+					<if test="deptCode != null">
+						and p.ward_code = #{deptCode}
+					</if>
+					<if test="patIds != null and patIds.size() > 0">
+						and p.pat_id in (
+						<foreach collection="patIds" item="patId" index="index"
+								 separator=",">
+							#{patId}
+						</foreach>
+						)
+					</if>
+					<if test="endDate != null">
+						and dg.DT_TAKEDATE&lt; #{endDate}
+					</if>
+					<if test="startDate != null">
+						and dg.DT_TAKEDATE >= #{startDate}
+					</if>
+					AND p.PAT_ID = dg.PAT_ID
+		        
+				) mm 
+		         LEFT JOIN PAT_ORDER_EXEC pe ON mm.BARCODE = pe.barcode
+		         LEFT JOIN PAT_ORDER_ADDITIONAL pr ON pr.barcode = mm.BARCODE and pr.type=1
+		 	<where>  
+				<choose>
+					<when test="execType == 1">
+						and pe.id is not null
+					</when>
+					<when test="execType == 2">
+						and pe.id is null
+					</when>
+					<otherwise>
+					</otherwise>
+				</choose>
+		 	</where> 	
+	 	ORDER BY len(mm.bed_code),mm.bed_code,mm.DT_TAKEDATE,mm.n_bag_no
+	
+	</select>
+	<!-- 获取医嘱执行单-NDA执行单,瓶签 -->
+	<select id="getOrdExecDocInfosToNdaLab" parameterType="java.util.HashMap" resultMap="orderExecGroupMap">
+		select 
+			mm.barcode order_group_id,
+			mm.barcode order_exec_id,
+			mm.pat_id,
+			mm.in_hosp_no,
+			mm.name pat_name,
+			mm.ward_code dept_code,
+			mm.bed_code,
+			
+			'LAB' AS order_exec_type_code ,
+			'检验' AS order_exec_type_name ,
+			'LAB' AS usage_code ,
+			'检验' AS usage_name ,
+			mm.barcode order_item_id,
+			mm.barcode order_no,
+			'LZ' AS order_type,
+			'2' order_status_code,
+			mm.PName AS item_name ,
+			1 AS dosage ,
+			'次' AS dosage_unit,
+			mm.send_date plan_exec_time,
+			convert(varchar(5),mm.send_date,24) perform_schedule,
+	        
+	        mm.TUBECOLOR,
+	        
+			pe.exec_date exec_datetime,
+			pe.exec_user_code exec_nurse_code,
+			pe.exec_user_name exec_nurse_name,
+			pe.ID order_exec_status_code,
+			pe.ID order_exec_status_name,
+			
+			pr.value remark
+		FROM   
+			(
+				select p.PAT_ID,p.IN_HOSP_NO,p.NAME,p.WARD_CODE,p.BED_CODE,
+					lm.barcode,lm.send_date,lm.PName,lm.synctime,lm.TUBECOLOR
+				from pat_cure_info p,sys_barcode_sync lm
+				where 
+					p.status = 1
+					<if test="deptCode != null">
+						and p.ward_code = #{deptCode}
+					</if>
+					<if test="patIds != null and patIds.size() > 0">
+						and p.pat_id in (
+						<foreach collection="patIds" item="patId" index="index"
+								 separator=",">
+							#{patId}
+						</foreach>
+						)
+					</if>
+					<if test="endDate != null">
+						and lm.send_date&lt; #{endDate}
+					</if>
+					<if test="startDate != null">
+						and lm.send_date >= #{startDate}
+					</if>
+					and lm.pat_id = p.in_hosp_no
+			) mm
+		
+	        LEFT JOIN PAT_ORDER_EXEC pe ON mm.BARCODE = pe.barcode
+	        LEFT JOIN PAT_ORDER_ADDITIONAL pr ON pr.barcode = mm.BARCODE and pr.type=1
+	        LEFT JOIN COM_DIC cd ON cd.HIS_CODE = mm.TUBECOLOR
+	                                 AND cd.DIC_TYPE = 'TUBECOLOR'
+	 	<where>
+			<choose>
+				<when test="execType == 1">
+					and pe.id is not null
+				</when>
+				<when test="execType == 2">
+					and pe.id is null
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</where> 
+		ORDER BY len(mm.bed_code),mm.bed_code,mm.send_date,mm.synctime
+	</select>
+	
+	<select id="getOrdExecDocInfosToNdaBlood" parameterType="java.util.HashMap" resultMap="orderExecGroupMap">
+		select 
+			mm.DON_CODE + '-:' + mm.PROD_CODE order_group_id,
+			mm.DON_CODE + '-:' + mm.PROD_CODE order_exec_id,
+			mm.pat_id,
+			mm.in_hosp_no,
+			mm.name pat_name,
+			mm.ward_code dept_code,
+			mm.bed_code,
+			
+			'BLOOD' AS order_exec_type_code ,
+			'输血' AS order_exec_type_name ,
+			'BLOOD' AS usage_code ,
+			'输血' AS usage_name ,
+			mm.DOCTOR_ADVICE_NUM order_item_id,
+			mm.group_no order_no,
+			'LZ' AS order_type,
+			mm.FREQ_CODE AS freq_code ,
+			mm.ORDER_STATUS order_status_code,
+			mm.PROD_NAME AS item_name ,
+			mm.BLOOD_VOLUME AS dosage ,
+			mm.BLOOD_UNIT AS dosage_unit,
+			mm.send_date plan_exec_time,
+			convert(varchar(5),mm.send_date,24) perform_schedule,
+	        
+	        
+			pe.exec_date exec_datetime,
+			pe.exec_user_code exec_nurse_code,
+			pe.exec_user_name exec_nurse_name,
+			pe.ID order_exec_status_code,
+			pe.ID order_exec_status_name,
+			
+			pr.value remark
+		FROM   
+			(
+				select p.PAT_ID,p.IN_HOSP_NO,p.NAME,p.WARD_CODE,p.BED_CODE,
+					ti.DON_CODE ,ti.PROD_CODE ,ti.SEND_DATE ,ti.DOCTOR_ADVICE_NUM ,ti.PROD_HIS_CODE ,
+                    ti.PROD_NAME ,ti.BLOOD_VOLUME ,ti.BLOOD_UNIT ,
+                    po.IS_LONGTERM ,po.GROUP_NO ,po.ORDER_SUB_NO ,po.ORDER_STATUS,po.FREQ_CODE
+				from  dbo.PAT_CURE_INFO p ,
+                    dbo.PAT_TRANSFUSION_INFO ti ,
+                    dbo.PAT_ORDER_ORIGINAL po
+				where 
+					p.status = 1
+					<if test="deptCode != null">
+						and p.ward_code = #{deptCode}
+					</if>
+					<if test="patIds != null and patIds.size() > 0">
+						and p.pat_id in (
+						<foreach collection="patIds" item="patId" index="index"
+								 separator=",">
+							#{patId}
+						</foreach>
+						)
+					</if>
+					<if test="endDate != null">
+						and ti.send_date&lt; #{endDate}
+					</if>
+					<if test="startDate != null">
+						and ti.send_date >= #{startDate}
+					</if>
+					AND p.PAT_ID = po.PAT_ID
+                    AND ti.DOCTOR_ADVICE_NUM = po.ORDER_ID
+                    AND ti.CASE_NUM = po.IN_HOSP_NO
+			) mm
+		
+	        LEFT JOIN PAT_ORDER_EXEC pe ON mm.DON_CODE = pe.barcode and mm.PROD_CODE = pe.sec_barcode
+	        LEFT JOIN PAT_ORDER_ADDITIONAL pr ON pr.barcode = mm.DOCTOR_ADVICE_NUM and pr.type=1
+	 	<where>
+			<choose>
+				<when test="execType == 1">
+					and pe.id is not null
+				</when>
+				<when test="execType == 2">
+					and pe.id is null
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</where> 
+		ORDER BY len(mm.bed_code),mm.bed_code,mm.send_date
+	</select>
+	
+	<!-- 获取医嘱执行单-执行单 -->
+	<select id="getOrdExecDocInfos" parameterType="java.util.HashMap" resultMap="orderExecDocumentInfoMap">
+		WITH tab_1 AS 
+		(SELECT  TOP 100000000
+			CASE WHEN mm.USAGE_CODE IS NULL
+             THEN mm.PAT_ID + 'UZ' + mm.is_longterm
+                  + CONVERT(VARCHAR(10), mm.plan_time, 112)
+             ELSE mm.PAT_ID + mm.USAGE_CODE + mm.is_longterm
+                  + CONVERT(VARCHAR(10), mm.plan_time, 112)
+		        END order_id ,
+		        mm.order_id order_original_id,
+		        mm.pat_id ,
+		        mm.in_hosp_no ,
+		        mm.name pat_name ,
+		        mm.dept_code ,
+		        mm.dept_name ,
+		        mm.bed_code ,
+		        CASE WHEN mm.usage_code IS NULL
+		                  OR cd.code IS NULL THEN 'UZ'
+		             ELSE cd.CODE
+		        END AS order_exec_type_code ,
+		        CASE WHEN mm.usage_code IS NULL
+		                  OR cd.code IS NULL THEN '治疗'
+		             ELSE cd.name
+		        END AS order_exec_type_name ,
+		        CASE WHEN mm.usage_code IS NULL
+		                  OR cd.code IS NULL THEN 'UZ'
+		             ELSE mm.usage_code
+		        END AS usage_code ,
+		        CASE WHEN mm.usage_code IS NULL
+		                  OR cd.code IS NULL THEN '治疗'
+		             ELSE mm.usage_name
+		        END AS usage_name ,
+		        mm.group_no + mm.pat_id order_no_id ,
+		        mm.group_no order_no ,
+		        mm.order_status ,
+		        mm.order_sub_no ,
+		        mm.is_longterm order_type ,
+		        mm.item_code item_code ,
+		        mm.item_name item_name ,
+		        mm.DOSAGE AS dosage ,
+		        mm.DOSAGE_UNIT AS dosage_unit ,
+		        mm.FREQ_CODE AS freq ,
+		        mm.order_bar order_group_no ,
+		        mm.plan_time plan_date ,
+		        CONVERT(VARCHAR(10), mm.plan_time, 120) exec_date ,
+		        CONVERT(VARCHAR(5), mm.plan_time, 24) perform_schedule ,
+		        CASE WHEN pe.id IS NOT NULL THEN 1
+		             ELSE 0
+		        END is_execed ,
+		        pe.barcode order_exec_id ,
+		        pe.exec_date exec_datetime ,
+		        pe.exec_user_code exec_nurse_code ,
+		        pe.exec_user_name exec_nurse_name ,
+		        
+		        CASE WHEN pa.id IS NOT NULL THEN 1
+		             ELSE 0
+		        END is_approved ,
+		        
+		        CASE WHEN pr.value IS NOT NULL THEN pr.value
+		             ELSE mm.remark
+		        END remark ,
+		        nl.ORDER_GROUP_ID lx_order_id ,
+		        nl.id lx_exec_order_id ,
+		        nl.EXEC_NURSE_ID lx_exec_nurse_id ,
+		        nl.EXEC_NURSE_NAME lx_exec_nurse_name ,
+		        nl.EXEC_TIME lx_exec_time ,
+		        nl.PREPARE_NURSE_ID lx_prepare_nurse_id ,
+		        nl.PREPARE_NURSE_NAME lx_prepare_nurse_name ,
+		        nl.PREPARE_TIME lx_prepare_time ,
+		        nl.VERIFY_NURSE_ID lx_verify_nurse_id ,
+		        nl.VERIFY_NURSE_NAME lx_verify_nurse_name ,
+		        nl.VERIFY_TIME lx_verify_time ,
+		        CASE WHEN dp.id IS NOT NULL THEN 1
+		             ELSE 0
+		        END is_printed ,
+		        dp.pat_id print_pat_id ,
+		        dp.dept_code print_dept_code ,
+		        dp.id print_id ,
+		        dp.ord_doc_type ,
+		        dp.oper_date ,
+		        dp.ord_usage_type ,
+		        dp.ord_type ,
+		        dp.print_date ,
+		        dp.print_nurse_code ,
+		        dp.print_nurse_name ,
+		        dp.check_nurse_code print_check_nurse_code ,
+		        dp.check_nurse_name print_check_nurse_name ,
+		        dp.check_date print_check_date
+		FROM    (
+		         SELECT p.pat_id ,p.in_hosp_no ,p.name ,p.ward_code dept_code ,p.bed_code , 
+					   cw.name dept_name,
+					   po.group_no,po.group_no order_no ,po.order_status ,po.order_sub_no ,
+					   po.is_longterm,po.item_code,po.item_name,po.DOSAGE,po.DOSAGE_UNIT,po.FREQ_CODE,
+					   po.usage_code,po.usage_name,pg.order_exec_type_code,po.is_subtbl,po.order_id,
+					   pg.order_bar,pg.plan_time,pg.REMARK
+				  FROM pat_cure_info p,com_ward cw,pat_order_original po,pat_order_group pg
+				 WHERE p.status = 1
+				  <if test="deptCode != null">
+						and p.ward_code = #{deptCode}
+					</if>
+					<!-- <if test="orderSubNos != null and orderSubNos.size() > 0">
+						and po.order_sub_no not  in (
+						<foreach collection="orderSubNos" item="orderSubNo" index="index"
+								 separator=",">
+							#{orderSubNo}
+						</foreach>
+						)
+					</if> -->
+					<if test="endDate != null">
+						and pg.plan_time &lt; #{endDate}
+					</if>
+					<if test="startDate != null">
+						and pg.plan_time >= #{startDate}
+					</if>
+					AND p.ward_code = cw.code
+				   AND p.PAT_ID = po.PAT_ID
+				   AND p.PAT_ID = pg.PAT_ID
+				   AND po.pat_id = pg.pat_id
+				   AND po.group_no = pg.order_no
+				 ) mm LEFT JOIN com_dic cd ON cd.his_code = mm.order_exec_type_code
+		                                AND cd.dic_type = 'usage'
+		        LEFT JOIN pat_order_doc_print dp ON dp.pat_id = mm.pat_id
+		                                            AND dp.ord_doc_type = 'EXECUTION'
+		                                            AND CONVERT(VARCHAR(10), dp.oper_date, 120) = CONVERT(VARCHAR(10), mm.plan_time, 120)
+		                                            AND dp.ord_usage_type = mm.order_exec_type_code
+		                                            AND dp.ord_type = mm.is_longterm
+		        LEFT JOIN pat_order_exec pe ON pe.barcode = mm.order_bar
+		        LEFT JOIN PAT_ORDER_ADDITIONAL pr ON pr.barcode = mm.order_bar
+		                                             AND pr.type = 1
+		        LEFT JOIN nurse_liquor nl ON nl.order_group_id = mm.order_bar
+		        LEFT JOIN PAT_ORDER_APPROVE pa ON mm.group_no = pa.order_no and mm.pat_id = pa.pat_id 
+		        and convert(varchar(10),pa.APPROVE_DATE,120) = convert(varchar(10),mm.plan_time,120)
+		WHERE    ( ( cd.code IN ( 'OXYGEN', 'ATOMIZING' ) )
+		              OR ( mm.is_subtbl = '0'
+		                   OR mm.is_subtbl IS NULL
+		                 )
+		            )
+			    <choose>
+					<when test="execType == 1">
+						and pe.id is not null
+					</when>
+					<when test="execType == 2">
+						and pe.id is null
+					</when>
+					<otherwise>
+					</otherwise>
+			   </choose>
+		ORDER BY LEN(mm.bed_code) ,
+		        mm.bed_code ,
+		        mm.ORDER_EXEC_TYPE_CODE ,
+		        mm.is_longterm DESC ,
+		        mm.PLAN_TIME ,
+		        mm.order_id 
+	)
+	select * from tab_1 
+		<where>
+			<if test="patIds != null and patIds.size() > 0">
+				 tab_1.pat_id in (
+				<foreach collection="patIds" item="patId" index="index"
+						 separator=",">
+					#{patId}
+				</foreach>
+				)
+			</if>
+			<if test="orderSubNos != null and orderSubNos.size() > 0">
+				and tab_1.order_sub_no not  in (
+				<foreach collection="orderSubNos" item="orderSubNo" index="index"
+						 separator=",">
+					#{orderSubNo}
+				</foreach>
+				)
+			</if>
+			<if test="orderIds != null and orderIds.size() > 0">
+				and tab_1.order_original_id not  in (
+				<foreach collection="orderIds" item="orderId" index="index"
+						 separator=",">
+					#{orderId}
+				</foreach>
+				)
+			</if>
+		</where> 
+	</select>
+	
+	<!-- 获取医嘱执行单-执行单 ,瓶签-->
+	<select id="getOrdExecDocInfosToOral" parameterType="java.util.HashMap" resultMap="orderExecDocumentInfoMap">
+		
+			select 
+				mm.PAT_ID+'1'+ 'ORAL' +convert(varchar(10),mm.DT_TAKEDATE,112)
+				order_id,
+				mm.pat_id,
+				mm.in_hosp_no,
+				mm.name pat_name,
+				mm.ward_code dept_code,
+				mm.dept_name,
+				mm.bed_code,
+				
+				'1' order_type,
+				mm.barcode order_group_no,
+				mm.barcode order_no,
+				'1' order_status,
+				mm.DT_TAKEDATE plan_date,
+				mm.taketimenm perform_schedule,
+				convert(varchar(10),mm.DT_TAKEDATE,120) exec_date,
+				
+				'ORAL' AS order_exec_type_code,
+			    '口服' AS order_exec_type_name,
+			    
+			    mm.N_PRESCNO,
+			    mm.n_order_no order_sub_no,
+			    mm.drugcd AS item_code ,
+		        mm.drugnm AS item_name ,
+		        'ORAL' AS usage_code ,
+		        '口服' AS usage_name ,
+		        mm.D_DISPENSEDOSE AS dosage ,
+		        mm.UNITNM_D_D AS dosage_unit ,
+				
+				case when pe.id is not null then 1
+				else 0
+				end is_execed,
+				pe.barcode order_exec_id,
+				pe.exec_date exec_datetime,
+				pe.exec_user_code exec_nurse_code,
+				pe.exec_user_name exec_nurse_name,
+				
+				 CASE WHEN pa.id IS NOT NULL THEN 1
+		             ELSE 0
+		        END is_approved ,
+				
+				pr.value remark,
+				
+				case when dp.id is not null then 1
+				else 0
+				end is_printed,
+				dp.pat_id print_pat_id,
+				dp.dept_code print_dept_code,
+				dp.id print_id,
+				dp.ord_doc_type,
+				dp.ord_usage_type,
+				dp.ord_type,
+				dp.oper_date,
+				dp.print_date ,
+				dp.print_nurse_code ,
+				dp.print_nurse_name ,
+				dp.check_nurse_code print_check_nurse_code,
+				dp.check_nurse_name print_check_nurse_name,
+				dp.check_date print_check_date 
+				
+			from (
+			
+				select 
+					p.PAT_ID,p.IN_HOSP_NO,p.NAME,p.WARD_CODE,p.BED_CODE,cw.NAME dept_name,
+					dg.BARCODE,dg.N_BAG_NO,dg.DT_TAKEDATE,dg.TAKETIMENM,dg.N_PRESCNO,
+					dg.n_order_no ,dg.drugcd  ,dg.drugnm ,dg.D_DISPENSEDOSE,dg.UNITNM_D_D
+								
+				from dbo.PAT_CURE_INFO p,dbo.COM_WARD cw,PAT_DRUGBAGRECLIST dg
+				WHERE p.STATUS = 1
+					<if test="deptCode != null">
+						and p.ward_code = #{deptCode}
+					</if>
+					<if test="patIds != null and patIds.size() > 0">
+						and p.pat_id in (
+						<foreach collection="patIds" item="patId" index="index"
+								 separator=",">
+							#{patId}
+						</foreach>
+						)
+					</if>
+					<if test="endDate != null">
+						and dg.DT_TAKEDATE&lt; #{endDate}
+					</if>
+					<if test="startDate != null">
+						and dg.DT_TAKEDATE >= #{startDate}
+					</if>
+					AND p.WARD_CODE = cw.CODE
+					AND p.PAT_ID = dg.PAT_ID
+		        
+				) mm 
+		         LEFT JOIN PAT_ORDER_EXEC pe ON mm.BARCODE = pe.barcode
+		         LEFT JOIN PAT_ORDER_ADDITIONAL pr ON pr.barcode = mm.BARCODE and pr.type=1
+		         left join pat_order_doc_print dp on dp.pat_id = mm.pat_id 
+		         <choose>
+					<when test="docType == 1">
+						and dp.ord_doc_type='EXECUTION'
+						and dp.ord_usage_type = 'ORAL'
+			         	and dp.ord_type = '1'
+					</when>
+					<otherwise>
+						and dp.ord_doc_type='NORMAL'
+					</otherwise>
+				</choose>
+		         and convert(varchar(10),dp.oper_date,120) = convert(varchar(10),mm.DT_TAKEDATE,120)
+		         LEFT JOIN PAT_ORDER_APPROVE pa ON mm.barcode = pa.order_no and mm.pat_id = pa.pat_id
+		 	<where>  
+				<choose>
+					<when test="execType == 1">
+						and pe.id is not null
+					</when>
+					<when test="execType == 2">
+						and pe.id is null
+					</when>
+					<otherwise>
+					</otherwise>
+				</choose>
+		 	</where> 	
+	 	ORDER BY len(mm.bed_code),mm.bed_code,mm.DT_TAKEDATE,mm.n_bag_no
+	
+	</select>
+	<!-- 获取医嘱执行单-执行单,瓶签 -->
+	<select id="getOrdExecDocInfosToLab" parameterType="java.util.HashMap" resultMap="orderExecDocumentInfoMap">
+		select 
+			mm.PAT_ID+'0'+'LAB'+convert(varchar(10),mm.send_date,112)
+			order_id,
+			mm.pat_id,
+			mm.in_hosp_no,
+			mm.name pat_name,
+			mm.ward_code dept_code,
+			mm.dept_name,
+			mm.bed_code,
+			
+			'0' AS order_type,
+			'LAB' AS order_exec_type_code ,
+		    '检验' AS order_exec_type_name ,
+		    
+		    mm.barcode order_group_no,
+		    mm.send_date plan_date,
+		    convert(varchar(10),mm.send_date,120) exec_date,
+		    convert(varchar(5),mm.send_date,24) perform_schedule,
+		    
+	        mm.barcode order_id,
+	        mm.barcode order_no,
+	        '1' order_status,
+	        '' AS item_code ,
+	        mm.PName AS item_name ,
+	        'LAB' AS usage_code ,
+	        '检验' AS usage_name ,
+	        1 AS dosage ,
+	        '次' AS dosage_unit,
+	        
+			case when pe.id is not null then 1
+			else 0
+			end is_execed,
+			pe.barcode order_exec_id,
+			pe.exec_date exec_datetime,
+			pe.exec_user_code exec_nurse_code,
+			pe.exec_user_name exec_nurse_name,
+			
+			 CASE WHEN pa.id IS NOT NULL THEN 1
+		             ELSE 0
+		        END is_approved ,
+			
+			pr.value remark,
+			
+			case when dp.id is not null then 1
+			else 0
+			end is_printed,
+			dp.pat_id print_pat_id,
+			dp.dept_code print_dept_code,
+			dp.id print_id,
+			dp.ord_doc_type,
+			dp.ord_usage_type,
+			dp.ord_type,
+			dp.oper_date,
+			dp.print_date ,
+			dp.print_nurse_code ,
+			dp.print_nurse_name ,
+			dp.check_nurse_code print_check_nurse_code,
+			dp.check_nurse_name print_check_nurse_name,
+			dp.check_date print_check_date
+			
+		FROM   
+			(
+				select p.PAT_ID,p.IN_HOSP_NO,p.NAME,p.WARD_CODE,p.BED_CODE,cw.NAME dept_name,
+					lm.barcode,lm.send_date,lm.PName,lm.synctime,lm.TUBECOLOR
+				from pat_cure_info p,com_ward cw,sys_barcode_sync lm
+				where 
+					p.status = 1
+					<if test="deptCode != null">
+						and p.ward_code = #{deptCode}
+					</if>
+					<if test="patIds != null and patIds.size() > 0">
+						and p.pat_id in (
+						<foreach collection="patIds" item="patId" index="index"
+								 separator=",">
+							#{patId}
+						</foreach>
+						)
+					</if>
+					<if test="endDate != null">
+						and lm.send_date&lt; #{endDate}
+					</if>
+					<if test="startDate != null">
+						and lm.send_date >= #{startDate}
+					</if>
+					and p.ward_code = cw.code
+					and lm.pat_id = p.in_hosp_no
+			) mm
+		
+	        LEFT JOIN PAT_ORDER_EXEC pe ON mm.BARCODE = pe.barcode
+	        LEFT JOIN PAT_ORDER_ADDITIONAL pr ON pr.barcode = mm.BARCODE and pr.type=1
+	        left join pat_order_doc_print dp on dp.pat_id =mm.pat_id 
+	        <choose>
+				<when test="docType == 1">
+					and dp.ord_doc_type='EXECUTION'
+					and dp.ord_usage_type = 'LAB'
+		         	and dp.ord_type = '1'
+				</when>
+				<otherwise>
+					and dp.ord_doc_type='NORMAL'
+				</otherwise>
+			</choose>
+	        and convert(varchar(10),dp.oper_date,120) = convert(varchar(10),mm.send_date,120)
+	        LEFT JOIN PAT_ORDER_APPROVE pa ON mm.barcode = pa.order_no and mm.pat_id = pa.pat_id
+	        LEFT JOIN COM_DIC cd ON cd.HIS_CODE = mm.TUBECOLOR
+	                                 AND cd.DIC_TYPE = 'TUBECOLOR'
+	 	<where>
+			<choose>
+				<when test="execType == 1">
+					and pe.id is not null
+				</when>
+				<when test="execType == 2">
+					and pe.id is null
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</where> 
+		ORDER BY len(mm.bed_code),mm.bed_code,mm.send_date,mm.synctime
+	</select>
+	
+	<!-- 获取医嘱执行单-执行单 ,瓶签-->
+	<select id="getOrdExecDocInfosToBlood" parameterType="java.util.HashMap" resultMap="orderExecDocumentInfoMap">
+		
+			select 
+				mm.PAT_ID+'1'+ 'BLOOD' +convert(varchar(10),mm.SEND_DATE,112)
+				order_id,
+				mm.pat_id,
+				mm.in_hosp_no,
+				mm.name pat_name,
+				mm.ward_code dept_code,
+				mm.dept_name,
+				mm.bed_code,
+				
+				mm.IS_LONGTERM order_type,
+				mm.DOCTOR_ADVICE_NUM order_group_no,
+				mm.group_no order_no,
+				mm.order_status,
+				mm.send_date plan_date,
+				convert(varchar(10),mm.send_date,120) exec_date,
+		    	convert(varchar(5),mm.send_date,24) perform_schedule,
+				
+				'BLOOD' AS order_exec_type_code,
+			    '输血' AS order_exec_type_name,
+			    
+			    mm.order_sub_no,
+			    mm.PROD_NAME AS item_code ,
+		        mm.PROD_NAME AS item_name ,
+		        'BLOOD' AS usage_code ,
+		        '输血' AS usage_name ,
+		        mm.BLOOD_VOLUME AS dosage ,
+		        mm.BLOOD_UNIT AS dosage_unit ,
+		        mm.FREQ_CODE AS freq ,
+				
+				case when pe.id is not null then 1
+				else 0
+				end is_execed,
+				pe.barcode+pe.sec_barcode order_exec_id,
+				pe.exec_date exec_datetime,
+				pe.exec_user_code exec_nurse_code,
+				pe.exec_user_name exec_nurse_name,
+				pe.APPROVE_USER_CODE approve_nurse_code,
+				pe.APPROVE_USER_NAME approve_nurse_name,
+				 CASE WHEN pa.id IS NOT NULL THEN 1
+		             ELSE 0
+		        END is_approved ,
+				
+				pr.value remark,
+				
+				case when dp.id is not null then 1
+				else 0
+				end is_printed,
+				dp.pat_id print_pat_id,
+				dp.dept_code print_dept_code,
+				dp.id print_id,
+				dp.ord_doc_type,
+				dp.ord_usage_type,
+				dp.ord_type,
+				dp.oper_date,
+				dp.print_date ,
+				dp.print_nurse_code ,
+				dp.print_nurse_name ,
+				dp.check_nurse_code print_check_nurse_code,
+				dp.check_nurse_name print_check_nurse_name,
+				dp.check_date print_check_date 
+				
+			from (
+			
+				select 
+					p.PAT_ID,p.IN_HOSP_NO,p.NAME,p.WARD_CODE,p.BED_CODE,cw.NAME dept_name,
+					ti.DON_CODE,ti.PROD_CODE,ti.SEND_DATE,ti.DOCTOR_ADVICE_NUM,ti.PROD_HIS_CODE,ti.PROD_NAME,
+					ti.BLOOD_VOLUME,ti.BLOOD_UNIT,
+					po.IS_LONGTERM,po.GROUP_NO,po.ORDER_SUB_NO,po.ORDER_STATUS,po.FREQ_CODE
+								
+				from dbo.PAT_CURE_INFO p,dbo.COM_WARD cw,dbo.PAT_TRANSFUSION_INFO ti,dbo.PAT_ORDER_ORIGINAL po
+				WHERE p.STATUS = 1
+					<if test="deptCode != null">
+						and p.ward_code = #{deptCode}
+					</if>
+					<if test="patIds != null and patIds.size() > 0">
+						and p.pat_id in (
+						<foreach collection="patIds" item="patId" index="index"
+								 separator=",">
+							#{patId}
+						</foreach>
+						)
+					</if>
+					<if test="endDate != null">
+						and ti.send_date&lt; #{endDate}
+					</if>
+					<if test="startDate != null">
+						and ti.send_date >= #{startDate}
+					</if>
+					AND p.WARD_CODE = cw.CODE
+					AND p.PAT_ID = po.PAT_ID
+					AND ti.DOCTOR_ADVICE_NUM = po.ORDER_ID
+					AND ti.CASE_NUM = po.IN_HOSP_NO
+		        
+				) mm 
+		         LEFT JOIN PAT_ORDER_EXEC pe ON mm.don_code = pe.barcode and mm.prod_code = pe.sec_barcode
+		         LEFT JOIN PAT_ORDER_ADDITIONAL pr ON pr.barcode = mm.DOCTOR_ADVICE_NUM and pr.type=1
+		         left join pat_order_doc_print dp on dp.pat_id = mm.pat_id 
+		         and convert(varchar(10),dp.oper_date,120) = convert(varchar(10),mm.SEND_DATE,120)
+		         <choose>
+					<when test="docType == 1">
+						and dp.ord_doc_type='EXECUTION'
+						and dp.ord_usage_type = 'BLOOD'
+			         	and dp.ord_type = '1'
+					</when>
+					<otherwise>
+						and dp.ord_doc_type='NORMAL'
+					</otherwise>
+				</choose>
+				 LEFT JOIN PAT_ORDER_APPROVE pa ON mm.group_no = pa.order_no and mm.pat_id = pa.pat_id
+				 and convert(varchar(10),pa.APPROVE_DATE,120) = convert(varchar(10),mm.send_date,120)
+		         
+		 	<where>  
+				<choose>
+					<when test="execType == 1">
+						and pe.id is not null
+					</when>
+					<when test="execType == 2">
+						and pe.id is null
+					</when>
+					<otherwise>
+					</otherwise>
+				</choose>
+		 	</where> 	
+	 	ORDER BY len(mm.bed_code),mm.bed_code,mm.send_date,mm.doctor_advice_num,pa.id
+	
+	</select>
+	
+	<!-- 医嘱执行单-输液卡 -->
+	<select id="getOrdExecDocInfosOnInfuCard" parameterType="java.util.HashMap" resultMap="orderExecDocumentInfoMap">
+	WITH    tab_1
+          AS ( SELECT TOP 10000000
+                        mm.PAT_ID + mm.is_longterm
+                        + +CONVERT(VARCHAR(10), mm.plan_time, 112) order_id ,
+                        mm.pat_id ,
+                        mm.in_hosp_no ,
+                        mm.name pat_name ,
+                        mm.ward_code dept_code ,
+                        mm.dept_name ,
+                        mm.bed_code ,
+                        CASE WHEN mm.usage_code IS NULL
+                                  OR mm.cd_code IS NULL THEN 'UZ'
+                             ELSE mm.cd_code
+                        END AS order_exec_type_code ,
+                        CASE WHEN mm.usage_code IS NULL
+                                  OR mm.cd_code IS NULL THEN '治疗'
+                             ELSE mm.cd_name
+                        END AS order_exec_type_name ,
+                        mm.group_no + mm.pat_id order_no_id ,
+                        mm.group_no order_no ,
+                        mm.order_status ,
+                        mm.order_sub_no ,
+                        mm.is_longterm order_type ,
+                        CASE WHEN mm.usage_code IS NULL
+                                  OR mm.cd_code IS NULL THEN 'UZ'
+                             ELSE mm.usage_code
+                        END AS usage_code ,
+                        CASE WHEN mm.usage_code IS NULL
+                                  OR mm.cd_code IS NULL THEN '治疗'
+                             ELSE mm.usage_name
+                        END AS usage_name ,
+                        mm.item_code item_code ,
+                        mm.item_name item_name ,
+                        mm.DOSAGE AS dosage ,
+                        mm.DOSAGE_UNIT AS dosage_unit ,
+                        mm.FREQ_CODE AS freq ,
+                        mm.plan_time plan_date ,
+                        mm.order_bar order_group_no ,
+                        CONVERT(VARCHAR(10), mm.plan_time, 120) exec_date ,
+                        CASE WHEN pe.id IS NOT NULL THEN 1
+                             ELSE 0
+                        END is_execed ,
+                        pe.barcode order_exec_id ,
+                        pe.exec_date exec_datetime ,
+                        pe.exec_user_code exec_nurse_code ,
+                        pe.exec_user_name exec_nurse_name ,
+                        CASE WHEN dp.id IS NOT NULL THEN 1
+                             ELSE 0
+                        END is_printed ,
+                        
+                         CASE WHEN pa.id IS NOT NULL THEN 1
+				             ELSE 0
+				        END is_approved ,
+                        
+                        dp.pat_id print_pat_id ,
+                        dp.dept_code print_dept_code ,
+                        dp.id print_id ,
+                        dp.ord_doc_type ,
+                        dp.ord_usage_type ,
+                        dp.ord_type ,
+                        dp.oper_date ,
+                        dp.print_date ,
+                        dp.print_nurse_code ,
+                        dp.print_nurse_name ,
+                        dp.check_nurse_code print_check_nurse_code ,
+                        dp.check_nurse_name print_check_nurse_name ,
+                        dp.check_date print_check_date ,
+                        mi.INFU_MONITOR_ID ,
+                        mi.ORDER_EXEC_ID AS rec_order_exec_id ,
+                        mi.DELIVER_SPEED ,
+                        mi.RESIDUE ,
+                        mi.REC_NURSE_CODE ,
+                        mi.REC_NURSE_NAME ,
+                        mi.REC_DATETIME
+               FROM     ( SELECT    
+               					cd.CODE cd_code , cd.name cd_name ,
+                                p.PAT_ID ,p.BED_CODE ,p.NAME ,p.IN_HOSP_NO ,p.WARD_CODE ,cw.NAME dept_name ,
+                                po.IS_LONGTERM ,po.USAGE_CODE ,po.GROUP_NO ,po.ORDER_STATUS ,
+                                po.ORDER_SUB_NO ,po.USAGE_NAME ,po.ITEM_CODE ,po.ITEM_NAME ,
+                                po.DOSAGE ,po.DOSAGE_UNIT ,po.FREQ_CODE ,po.ORDER_EXEC_TYPE_CODE ,
+                                po.order_id ,pg.PLAN_TIME , pg.ORDER_BAR
+                          FROM      dbo.COM_DIC cd ,
+                                    dbo.PAT_CURE_INFO p ,
+                                    dbo.COM_WARD cw ,
+                                    dbo.PAT_ORDER_ORIGINAL po ,
+                                    dbo.PAT_ORDER_GROUP pg
+                          WHERE     p.STATUS = 1
+                                    AND cd.dic_type = 'USAGE'
+                                    AND cd.is_infusion_card = '1'
+                                    <if test="deptCode != null">
+										and p.ward_code = #{deptCode}
+									</if>
+                                   <if test="hospitalCode !=null and hospitalCode == 'SZSY'">
+											and (po.is_subtbl = '0' or po.is_subtbl is null)
+									</if>
+									<if test="endDate != null">
+										and convert(varchar(10),pg.PLAN_TIME,120 )&lt; #{endDate}
+									</if>
+									<if test="startDate != null">
+										and convert(varchar(10),pg.PLAN_TIME,120 )>= #{startDate}
+									</if>
+                                    AND cd.his_code = po.order_exec_type_code
+                                    AND p.WARD_CODE = cw.CODE
+                                    AND p.PAT_ID = po.PAT_ID
+                                    AND p.PAT_ID = pg.PAT_ID
+                                    AND po.PAT_ID = pg.PAT_ID
+                                    AND po.GROUP_NO = pg.ORDER_NO
+                        ) mm
+                        LEFT JOIN pat_order_exec pe ON pe.barcode = mm.order_bar
+                        LEFT JOIN PAT_ORDER_APPROVE pa ON mm.group_no = pa.order_no and mm.pat_id = pa.pat_id
+                        LEFT JOIN pat_order_doc_print dp ON dp.pat_id = mm.pat_id
+                                                            AND dp.ord_doc_type = 'INF_CARD'
+                                                            AND CONVERT(VARCHAR(10), dp.oper_date, 120) = CONVERT(VARCHAR(10), mm.PLAN_TIME, 120)
+                                                            AND dp.ord_type = mm.is_longterm
+                        LEFT JOIN PAT_INFUSION_MONITOR_ITEM mi ON mi.ORDER_EXEC_ID = mm.ORDER_BAR
+               <where>
+	               	<choose>
+						<when test="execType == 1">
+							and pe.id is not null
+						</when>
+						<when test="execType == 2">
+							and pe.id is null
+						</when>
+						<otherwise>
+						</otherwise>
+					</choose>
+               </where>
+               ORDER BY LEN(mm.bed_code) ,
+                        mm.bed_code ,
+                        mm.is_longterm DESC ,
+                        mm.PLAN_TIME ,
+                        mm.order_id
+             )
+    SELECT  * FROM    tab_1     
+    <where>
+   		 <if test="patIds != null and patIds.size() > 0">
+			tab_1.pat_id in (
+			<foreach collection="patIds" item="patId" index="index"
+					 separator=",">
+				#{patId}
+			</foreach>
+			)
+		</if>  
+	</where>
+        
+	</select>
+	<!-- 医嘱执行单-瓶签 -->
+	<select id="getOrdExecDocInfosOnLabel" parameterType="java.util.HashMap" resultMap="orderExecDocumentInfoMap">
+		select 
+			case when po.USAGE_CODE is null then po.PAT_ID+po.is_longterm+convert(varchar(10),pg.plan_time,112)
+			else 
+			po.PAT_ID+po.is_longterm+po.USAGE_CODE+convert(varchar(10),pg.plan_time,112)
+			end order_id,
+			p.pat_id,
+			p.in_hosp_no,
+			p.name pat_name,
+			p.ward_code dept_code,
+			cw.name dept_name,
+			p.bed_code,
+			
+			po.Is_LongTerm order_type,
+			case when po.usage_code IS null or cd.code is null then 'UZ'
+			else cd.CODE
+			end
+			as order_exec_type_code,
+			case when po.usage_code IS null or cd.code is null then '治疗'
+			else cd.name
+			end
+			as order_exec_type_name,
+			case when po.usage_code is null or cd.code is null then 'UZ'
+			else po.usage_code
+			end
+			as usage_code,
+			case when po.usage_code is null or cd.code is null then '治疗'
+			else po.usage_name
+			end
+			as usage_name,
+			
+			po.group_no + po.pat_id order_no_id,
+			po.group_no order_no,
+			po.order_status,
+			po.is_longterm order_type,
+			po.usage_code usage_code,
+			po.usage_name usage_name,
+			
+			po.item_code item_code,
+			po.item_name item_name,
+			po.DOSAGE as dosage,
+			po.DOSAGE_UNIT as dosage_unit,
+			po.FREQ_CODE as freq,
+	
+			pg.plan_time plan_date,
+			pg.order_bar order_group_no,
+			convert(varchar(10),pg.plan_time,120) exec_date,
+			
+			case when pe.id is not null then 1
+			else 0
+			end is_execed,
+			pe.barcode order_exec_id,
+			pe.exec_date exec_datetime,
+			pe.exec_user_code exec_nurse_code,
+			pe.exec_user_name exec_nurse_name,
+			
+			 CASE WHEN pa.id IS NOT NULL THEN 1
+		             ELSE 0
+		        END is_approved ,
+			
+			case when dp.id is not null then 1
+			else 0
+			end is_printed,
+			dp.pat_id print_pat_id,
+			dp.dept_code print_dept_code,
+			dp.id print_id,
+			dp.ord_doc_type,
+			dp.ord_usage_type,
+			dp.ord_type,
+			dp.oper_date,
+			dp.print_date ,
+			dp.print_nurse_code ,
+			dp.print_nurse_name ,
+			dp.check_nurse_code print_check_nurse_code,
+			dp.check_nurse_name print_check_nurse_name,
+			dp.check_date print_check_date,
+			
+			nl.ORDER_GROUP_ID lx_order_id,
+			nl.id lx_exec_order_id,
+			nl.EXEC_NURSE_ID lx_exec_nurse_id,
+			nl.EXEC_NURSE_NAME lx_exec_nurse_name,
+			nl.EXEC_TIME lx_exec_time,
+			nl.PREPARE_NURSE_ID lx_prepare_nurse_id,
+			nl.PREPARE_NURSE_NAME lx_prepare_nurse_name,
+			nl.PREPARE_TIME lx_prepare_time,
+			nl.VERIFY_NURSE_ID lx_verify_nurse_id,
+			nl.VERIFY_NURSE_NAME lx_verify_nurse_name,
+			nl.VERIFY_TIME lx_verify_time
+			
+		from  pat_order_group pg
+			inner join pat_order_original po on po.pat_id = pg.pat_id and po.group_no = pg.order_no
+			inner join pat_cure_info p on p.pat_id = pg.pat_id
+			inner join com_ward cw on cw.code = p.ward_code
+			left join COM_DIC cd on cd.his_code = po.order_exec_type_code and cd.dic_type='USAGE' 
+			left join pat_order_exec pe on pe.barcode = pg.order_bar
+			left join pat_order_doc_print dp on dp.pat_id = pg.pat_id and dp.ord_doc_type='LABEL'
+			and convert(varchar(10),dp.oper_date,120) = convert(varchar(10),pg.PLAN_TIME,120)
+			and dp.ord_usage_type = pg.order_exec_type_code
+			and dp.ord_type = pg.is_longterm
+			left join NURSE_LIQUOR nl on nl.ORDER_GROUP_ID = pg.ORDER_BAR
+			LEFT JOIN PAT_ORDER_APPROVE pa ON po.group_no = pa.order_no and po.pat_id = pa.pat_id
+		where 
+			p.status='1'
+			and cd.is_ord_label='1'
+			<if test="deptCode != null">
+				and p.ward_code = #{deptCode}
+			</if>
+			<if test="patIds != null and patIds.size() > 0">
+				and pg.pat_id in (
+				<foreach collection="patIds" item="patId" index="index"
+						 separator=",">
+					#{patId}
+				</foreach>
+				)
+			</if>
+			<if test="endDate != null">
+				and convert(varchar(10),pg.PLAN_TIME,120 )&lt; #{endDate}
+			</if>
+			<if test="startDate != null">
+				and convert(varchar(10),pg.PLAN_TIME,120 )>= #{startDate}
+			</if>
+		ORDER BY len(p.bed_code),p.bed_code,pg.is_longterm desc,pg.PLAN_TIME
+	</select>
+	<insert id="saveOrdExecDocPrtInf" parameterType="com.lachesis.mnis.core.order.entity.OrderExecDocumentPrintInfo"
+		useGeneratedKeys="true" keyProperty="printId">
+		insert into pat_order_doc_print(pat_id,dept_code,ord_doc_type,ord_usage_type,print_date,print_nurse_code,
+		print_nurse_name,check_nurse_code,check_nurse_name,check_date,oper_date,ord_type)
+		values(#{patId},#{deptCode},#{ordDocType},#{ordUsgType},#{printDate},#{printNurseCode},
+		#{printNurseName},#{checkNurseCode},#{checkNurseName},#{checkDate},#{operDate},#{ordType})
+	</insert>
+	
+	<update id="updateOrdExecDocPrtInf" parameterType="com.lachesis.mnis.core.order.entity.OrderExecDocumentPrintInfo">
+		update pat_order_doc_print
+		<set>
+			<if test="patId!=null">
+				pat_id = #{patId},
+			</if>
+			<if test="deptCode!=null">
+				dept_code = #{deptCode},
+			</if>
+			<if test="ordDocType!=null">
+				ord_doc_type = #{ordDocType},
+			</if>
+			<if test="ordUsgType!=null">
+				ord_usage_type = #{ordUsgType},
+			</if>
+			<if test="ordType!=null">
+				ord_type = #{ordType},
+			</if>
+			<if test="printDate!=null">
+				print_date = #{printDate},
+			</if>
+			<if test="printNurseCode!=null">
+				print_nurse_code = #{printNurseCode},
+			</if>
+			<if test="printNurseName!=null">
+				print_nurse_name = #{printNurseName},
+			</if>
+			<if test="checkNurseCode!=null">
+				check_nurse_code = #{checkNurseCode},
+			</if>
+			<if test="checkNurseName!=null">
+				check_nurse_name = #{checkNurseName},
+			</if>
+			<if test="checkDate!=null">
+				check_date = #{checkDate},
+			</if>
+			<if test="operDate!=null">
+				oper_date = #{operDate}
+			</if>
+		</set>
+		where id = #{printId}
+	</update>
+	
+	<select id="getOrdExecDocPrtInfCount" parameterType="String" resultType="int">
+		select count(id) from pat_order_doc_print
+		where id = #{param1}
+	</select>
+	
+	<select id="getOrderSubNoFromDrugBag" parameterType="java.util.HashMap" resultType="String">
+		SELECT distinct n_order_no FROM pat_cure_info p, PAT_DRUGBAGRECLIST d
+		WHERE
+			p.status = 1
+		 	and d.DT_TAKEDATE &lt; #{endDate}
+			and d.DT_TAKEDATE >= #{startDate}
+			<if test="deptCode != null">
+				and p.ward_code = #{deptCode}
+			</if>
+			<if test="patIds != null and patIds.size() > 0">
+				and p.pat_id in (
+				<foreach collection="patIds" item="patId" index="index"
+						 separator=",">
+					#{patId}
+				</foreach>
+				)
+			</if>
+			and d.pat_id = p.pat_id 
+	</select>
+	
+	<select id="getOrderIdFromBlood" parameterType="java.util.HashMap" resultType="String">
+		SELECT distinct DOCTOR_ADVICE_NUM FROM pat_cure_info p, PAT_TRANSFUSION_INFO d
+		WHERE
+			p.status = 1
+		 	and d.SEND_DATE &lt; #{endDate}
+			and d.SEND_DATE >= #{startDate}
+			<if test="deptCode != null">
+				and p.ward_code = #{deptCode}
+			</if>
+			<if test="patIds != null and patIds.size() > 0">
+				and p.pat_id in (
+				<foreach collection="patIds" item="patId" index="index"
+						 separator=",">
+					#{patId}
+				</foreach>
+				)
+			</if>
+			and d.case_num = p.in_hosp_no 
+	</select>
+	
+	<insert id="insertPatOrderRemark" parameterType="java.util.Map">
+		insert PAT_ORDER_ADDITIONAL(value,barcode,create_date,is_valid,type)
+		values(#{value},#{barcode},GETDATE(),1,#{type})
+	</insert>
+	
+	<update id="updatePatOrderRemarkByBarcode" parameterType="java.util.Map">
+		update PAT_ORDER_ADDITIONAL set value=#{value},update_date=GETDATE()
+		where barcode=#{barcode} and type=#{type} and is_valid=1
+	</update>
+	
+	<select id="getCountByRemarkBarcode" parameterType="java.util.Map" resultType="Integer">
+		select count(1) from PAT_ORDER_ADDITIONAL 
+		where barcode=#{barcode} and type=#{type} and is_valid=1
+	</select>
+	<!-- 获取医嘱停止或新开的数据 -->
+	<select id="getPublishOriginalOrders" parameterType="java.util.HashMap"
+		resultMap="hisOrderGroupMap">
+		SELECT g.pat_id + '_' + g.group_no + '_' + g.ORDER_STATUS as order_group_id,
+			   p.bed_code,
+			   p.name pat_name,
+		       g.order_id as order_id,
+		       g.PAT_ID as pat_id,
+		       g.IN_HOSP_NO as in_hosp_no,
+		       g.FREQ_NAME as freq_name,
+		       g.IS_EMERGENT as emergent,
+		       g.NEED_SKINTEST as is_skin_test,
+		       g.CREATE_DATETIME as create_datetime,
+		       g.CREATE_DOC_ID as create_doc_code,
+		       g.CREATE_DOC_NAME as create_doc_name,
+		       g.STOP_DOC_ID as stop_doc_code,
+		       g.STOP_DOC_NAME as stop_doc_name,
+		       g.STOP_DATE as stop_datetime,
+		       g.begin_date as begin_date,
+		       g.end_date as end_date,
+		       g.order_id as order_item_id,
+		       g.ITEM_CODE as item_code,
+		       g.ITEM_NAME as item_name,
+		       g.usage_code as usage_code,
+		       g.usage_name as usage_name,
+		       g.SPECIFICATION as drug_specs,
+		       g.DOSAGE as dosage,
+		       g.DOSAGE_UNIT as dosage_unit,
+		       g.REMARK as remark,
+		       g.perform_schedule as perform_schedule,
+		       g.perform_schedule as show_perform_schedule,
+		       CASE g.Is_LongTerm
+		         when 1 then
+		          'CZ'
+		         else
+		          'LZ'
+		       END as order_type_code,
+		       CASE g.Is_LongTerm
+		         when 1 then
+		          '长期医嘱'
+		         else
+		          '临时医嘱'
+		       END as order_type_name,
+		       case
+		         when g.ORDER_EXEC_TYPE_CODE IS null or cd.Code is null then
+		          'UZ'
+		         else
+		          cd.CODE
+		       end as order_exec_type_code,
+		       case
+		         when g.ORDER_EXEC_TYPE_CODE IS null or cd.Code is null then
+		          '治疗'
+		         else
+		          cd.name
+		       end as order_exec_type_name,
+		       CASE
+		         WHEN g.ORDER_STATUS = 3 then
+		          3
+		         when g.ORDER_STATUS != 3 and
+		              g.CREATE_DATETIME >= convert(varchar, GETDATE() - 1, 120) then
+		          1
+		       END as order_status_code,
+		       CASE
+		         WHEN g.ORDER_STATUS = 3 then
+		          3
+		         when g.ORDER_STATUS != 3 and
+		              g.CREATE_DATETIME >= convert(varchar, GETDATE() - 1, 120) then
+		          1
+		       END as order_status_name,
+		       p.NURSE_LEVEL as nurse_level,
+		       cd.LIQUOR as liquor
+		  FROM PAT_ORDER_ORIGINAL g
+		 inner join PAT_CURE_INFO p on p.pat_id = g.pat_id
+		                           and p.status = 1
+		  left join COM_DIC cd on cd.his_code = g.order_exec_type_code
+		                      and cd.dic_type = 'USAGE'
+		  left join SYS_MSG_PUBLISH mp on g.group_no = mp.oper_id
+		WHERE
+		p.ward_code = #{deptCode}
+		and mp.seq_id is null
+		<if test="hospitalCode !=null and hospitalCode == 'SZSY'">
+			AND ((cd.code in('OXYGEN','ATOMIZING')) 
+				or (g.is_subtbl = '0' or g.is_subtbl is null))
+		</if>
+		and ((g.create_datetime >= #{startTime} 
+			<if test="endTime != null">
+				and g.create_datetime &lt; #{endTime})
+			</if>
+			or (g.STOP_DATE >= #{startTime} 
+			<if test="endTime != null">
+				and g.STOP_DATE &lt; #{endTime})
+			</if>
+		)
+		order by cd.sort_no desc,g.create_datetime
+	</select>
+	
+	<insert id="insertOrderApprove" parameterType="com.lachesis.mnis.core.order.entity.OrderApprove">
+		INSERT INTO dbo.PAT_ORDER_APPROVE
+        ( pat_id,dept_code,order_no ,approve_date ,approve_nurse_code ,approve_nurse_name ,
+        	approve_type ,IS_VALID )
+        values(#{patId},#{deptCode},#{orderNo},#{approveDate},#{approveNurseCode},
+        	#{approveNurseName},#{approveType},'1')
+	</insert>
+	
+	<update id="updateOrderApprove" parameterType="com.lachesis.mnis.core.order.entity.OrderApprove">
+		update dbo.PAT_ORDER_APPROVE set approve_date=#{approveDate},
+		approve_nurse_code=#{approveNurseCode},approve_nurse_name=#{approveNurseName}
+       	where pat_id=#{patId} and order_no=#{barcode} and is_valid=1
+	</update>
+	
+	<select id="getOrderApproveCount" parameterType="String" resultType="Integer">
+		select count(1) from PAT_ORDER_APPROVE where pat_id = #{patId} 
+		and order_no = #{orderNo} and is_valid = 1
+	</select>
+	
+</mapper>

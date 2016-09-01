@@ -1,0 +1,281 @@
+/*横向瓶签样式 w:50cm,h:70cm*/
+.transfusion-horizontal {
+	float: left;
+	width: 185px;
+	height: 254px;
+	font-size: 10px;
+}
+
+.transfusion-horizontal .header {
+	height: 70px;
+	margin-left:10px;
+	margin-top:10px;
+}
+
+.transfusion-horizontal .header div {
+	float:left;
+}
+
+
+.transfusion-horizontal .header .p-info {
+	width: 110px;
+	margin: 0 auto;
+}
+
+.transfusion-horizontal .header .p-info .base-info .bednum {
+	font-size: 15px;
+}
+
+.transfusion-horizontal .header .p-info .padding {
+	padding-top:5px;
+}
+.transfusion-horizontal .header .barcode-info{
+	width:50px;
+	padding-left:5px;
+}
+.transfusion-horizontal .header .barcode-info .qr img {
+	width: 40px;
+}
+
+.transfusion-horizontal .header .barcode-info .order-info{
+	padding-top:2px;
+}
+
+.transfusion-horizontal hr {
+	width: 175px;
+	height: 0px;
+	margin: 0 auto;
+	border: none;
+	border-bottom: 1px solid #000;
+}
+
+.transfusion-horizontal .body {
+	height: 150px;
+	padding-top:5px;
+}
+
+.transfusion-horizontal .body .drug-list {
+	height: 110px;
+	overflow: hidden;
+}
+
+.transfusion-horizontal .body .drug-list ul {
+	width: 174px;
+	margin: 0 auto;
+	padding: 2px 0;
+	font-size: 10px;
+}
+
+.transfusion-horizontal .body .drug-list ul li {
+	position: relative;
+	line-height: 18px;
+}
+
+.transfusion-horizontal .body .drug-list ul li span {
+	display: inline-block;
+}
+
+.transfusion-horizontal .body .drug-list ul li span.drugname {
+	width: 130px;
+}
+
+.transfusion-horizontal .body .drug-list ul li span.standard {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 45px;
+	text-align: right;
+}
+
+.transfusion-horizontal .body .statistics {
+	padding-right: 25px;
+	line-height: 20px;
+	font-size: 10px;
+}
+
+.transfusion-horizontal .body .statistics div {
+	float: right;
+}
+
+.transfusion-horizontal .body .statistics div.bednum {
+	float: left;
+	margin-left: 8px;
+}
+
+.transfusion-horizontal .body .statistics div:last-child {
+	margin-right: 15px;
+}
+
+/*纵向瓶签样式 w:70cm,h:50cm*/
+.transfusion-verital {
+	float: left;
+	width: 254px;
+	height: 182px;
+	font-size: 10px;
+}
+
+.transfusion-verital .header {
+	height: 60px;
+	margin-left:5px;
+	margin-top:5px;
+}
+
+.transfusion-verital .header div {
+	float:left;
+}
+
+
+.transfusion-verital .header .p-info {
+	width: 195px;
+	margin: 0 auto;
+	padding-left:5px;
+}
+
+.transfusion-verital .header .p-info .base-info{
+	width:195px;
+}
+
+.transfusion-verital .header .p-info .base-info .bednum {
+	font-size: 15px;
+}
+
+.transfusion-verital .header .p-info .inHospNo{
+	width:70px;
+}
+
+.transfusion-verital .header .p-info .date{
+	width:50px;
+}
+
+.transfusion-verital .header .p-info .padding {
+	padding-top:2px;
+}
+.transfusion-verital .header .barcode-info{
+	width:40px;
+}
+.transfusion-verital .header .barcode-info .qr img {
+	width: 40px;
+}
+
+.transfusion-verital .header .barcode-info .order-info{
+	padding-top:2px;
+}
+
+.transfusion-verital hr {
+	width: 244px;
+	height: 0px;
+	margin: 0 auto;
+	border: none;
+	border-bottom: 1px solid #000;
+}
+
+.transfusion-verital .body {
+	height: 100px;
+	padding-top:2px;
+}
+
+.transfusion-verital .body .drug-list {
+	height: 100px;
+	overflow: hidden;
+}
+
+.transfusion-verital .body .drug-list ul {
+	width: 244px;
+	margin: 0 auto;
+	padding: 2px;
+	font-size: 10px;
+}
+
+.transfusion-verital .body .drug-list ul li {
+	position: relative;
+	line-height: 14px;
+}
+
+.transfusion-verital .body .drug-list ul li span {
+	display: inline-block;
+}
+
+.transfusion-verital .body .drug-list ul li span.drugname {
+	width: 200px;
+	padding-left:7px;
+}
+
+.transfusion-verital .body .drug-list ul li span.standard {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 45px;
+	text-align: right;
+	padding-right:10px;
+}
+
+.transfusion-verital .body .statistics {
+	padding-right: 25px;
+	line-height: 20px;
+	font-size: 7px;
+}
+
+.transfusion-verital .body .statistics div {
+	float: right;
+}
+
+.transfusion-verital .body .statistics div.bednum {
+	float: left;
+	margin-left: 8px;
+}
+
+.transfusion-verital .body .statistics div:last-child {
+	margin-right: 15px;
+}
+
+/*瓶签50*80*/
+/*
+.transfusion{
+	float: left;
+	width: 185px;
+	height: 276px;
+	font-size: 12px;
+}
+.transfusion hr{
+	width: 175px;
+	height: 0px;
+	margin: 0 auto;
+	border:none;
+	border-bottom: 1px solid #000;
+}
+.transfusion .header{
+	height: 40px;
+	text-align: center;
+	font-size: 13px;
+}
+.transfusion .header .title{ padding-top: 3px; }
+.transfusion .header .sub-title{ padding: 3px 0; }
+
+.transfusion .body{	height: 130px;}
+.transfusion .body .drug-list{ height: 110px;overflow: hidden; }
+.transfusion .body .drug-list ul{width: 174px;margin: 0 auto;padding:2px 0;font-size: 10px;}
+.transfusion .body .drug-list ul li{position:relative;line-height: 18px;}
+.transfusion .body .drug-list ul li span{display: inline-block;}
+.transfusion .body .drug-list ul li span.drugname{ width:130px; }
+.transfusion .body .drug-list ul li span.standard{ position: absolute;right: 0;bottom: 0; width:45px;text-align: right;}
+.transfusion .body .statistics{ padding-right: 25px; line-height: 20px;font-size: 10px;}
+.transfusion .body .statistics div{float: right;}
+.transfusion .body .statistics div.bednum{float: left;margin-left: 8px;}
+.transfusion .body .statistics div:last-child{margin-right: 15px;}
+
+.transfusion .footer{ height: 105px; }
+.transfusion .footer .p-info{width: 175px;margin: 0 auto;}
+.transfusion .footer .p-info > div{float: left;}
+.transfusion .footer .p-info .number{width:170px;padding: 0 2px;}
+.transfusion .footer .p-info .number > div{  display: inline-block; line-height: 25px;}
+.transfusion .footer .p-info .number .barcode{width: 170px;}
+.transfusion .footer .p-info .number .sitnum{float: right;}
+.transfusion .footer .p-info .qr{ display:inline-block; height: 75px;  width: 70px; padding-top:5px; text-align: center;}
+.transfusion .footer .p-info .qr img{width: 50px;}
+.transfusion .footer .p-info .qr .method{line-height: 25px;}
+.transfusion .footer .p-info .info{display:inline-block;width: 100px;height: 80px;text-align: right;}
+.transfusion .footer .p-info .info .base-info > span{padding-left:5px;line-height:35px;}
+.transfusion .footer .p-info .info .time {margin-top: 10px;}
+*/
+
+

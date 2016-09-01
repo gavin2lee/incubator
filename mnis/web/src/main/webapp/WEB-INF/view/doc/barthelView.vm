@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-table th, .doc-table td {
+	padding: 0px;
+}
+.doc-table td {
+	width: 15px;
+	height: 35px;
+}
+.doc-table * {
+	font-size: 10.5pt;
+}
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+	}
+}
+</style>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper">
+	<div class="paper-content">
+		#barthel()
+		<div class="doc-content">
+			<table class="doc-table">
+				<thead>
+					<tr>
+			            <th rowspan="3" style="width: 70px;">日期时间</th>
+						<th colspan="4">进食</th>
+						<th colspan="4">洗澡</th>
+						<th colspan="4">修饰(洗<br>脸、刷<br>牙、梳<br>头等)</th>
+						<th colspan="4">穿衣</th>
+						<th colspan="4">控制大便</th>
+						<th colspan="4">控制小便</th>
+						<th colspan="4">如厕</th>
+						<th colspan="4">床椅转移</th>
+						<th colspan="4">平地行走<br>45米</th>
+						<th colspan="4">上下楼梯</th>
+			            <th rowspan="3" style="width: 22px;">总评分</th>
+			            <th rowspan="3" style="width: 70px;">自理能力等级(重度依赖、中度依赖、轻度依赖、无需依赖)</th>
+			            <th rowspan="3" style="width: 50px;">签名</th>
+					</tr>
+					<tr>
+						<th>完<br>全<br>独<br>立</th>
+						<th>需<br>部<br>分<br>帮<br>助</th>
+						<th>需<br>极<br>大<br>帮<br>助</th>
+						<th>完<br>全<br>依<br>赖</th>
+						<th>完<br>全<br>独<br>立</th>
+						<th>需<br>部<br>分<br>帮<br>助</th>
+						<th>需<br>极<br>大<br>帮<br>助</th>
+						<th>完<br>全<br>依<br>赖</th>
+						<th>完<br>全<br>独<br>立</th>
+						<th>需<br>部<br>分<br>帮<br>助</th>
+						<th>需<br>极<br>大<br>帮<br>助</th>
+						<th>完<br>全<br>依<br>赖</th>
+						<th>完<br>全<br>独<br>立</th>
+						<th>需<br>部<br>分<br>帮<br>助</th>
+						<th>需<br>极<br>大<br>帮<br>助</th>
+						<th>完<br>全<br>依<br>赖</th>
+						<th>完<br>全<br>独<br>立</th>
+						<th>需<br>部<br>分<br>帮<br>助</th>
+						<th>需<br>极<br>大<br>帮<br>助</th>
+						<th>完<br>全<br>依<br>赖</th>
+						<th>完<br>全<br>独<br>立</th>
+						<th>需<br>部<br>分<br>帮<br>助</th>
+						<th>需<br>极<br>大<br>帮<br>助</th>
+						<th>完<br>全<br>依<br>赖</th>
+						<th>完<br>全<br>独<br>立</th>
+						<th>需<br>部<br>分<br>帮<br>助</th>
+						<th>需<br>极<br>大<br>帮<br>助</th>
+						<th>完<br>全<br>依<br>赖</th>
+						<th>完<br>全<br>独<br>立</th>
+						<th>需<br>部<br>分<br>帮<br>助</th>
+						<th>需<br>极<br>大<br>帮<br>助</th>
+						<th>完<br>全<br>依<br>赖</th>
+						<th>完<br>全<br>独<br>立</th>
+						<th>需<br>部<br>分<br>帮<br>助</th>
+						<th>需<br>极<br>大<br>帮<br>助</th>
+						<th>完<br>全<br>依<br>赖</th>
+						<th>完<br>全<br>独<br>立</th>
+						<th>需<br>部<br>分<br>帮<br>助</th>
+						<th>需<br>极<br>大<br>帮<br>助</th>
+						<th>完<br>全<br>依<br>赖</th>
+					</tr>
+					<tr>
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            <th>0</th>
+			            
+			            <th>5</th>
+			            <th>0</th>
+			            <th>0</th>
+			            <th>0</th>
+			            
+			            <th>5</th>
+			            <th>0</th>
+			            <th>0</th>
+			            <th>0</th>
+			            
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            <th>0</th>
+			            
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            <th>0</th>
+			            
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            <th>0</th>
+			            
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            <th>0</th>
+			            
+			            <th>15</th>
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            
+			            <th>15</th>
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            <th>0</th>
+			        </tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		#barthelComment()
+	</div>
+	#pageFoot()
+</div>
+</div>
+<script type="text/javascript">
+function getRowDatas(row, isFirstRow, lastDate) {
+	return [
+		formatDate(row['date'], isFirstRow, lastDate),
+		row['eatIndependently'],
+		row['eatLittleHelp'],
+		row['eatExtremelyHelp'],
+		row['eatDependently'],
+		
+		row['bathIndependently'],
+		row['bathLittleHelp'],
+		row['bathExtremelyHelp'],
+		row['bathDependently'],
+		
+		row['attireIndependently'],
+		row['attireLittleHelp'],
+		row['attireExtremelyHelp'],
+		row['attireDependently'],
+		
+		row['dressIndependently'],
+		row['dressLittleHelp'],
+		row['dressExtremelyHelp'],
+		row['dressDependently'],
+		
+		row['defecateIndependently'],
+		row['defecateLittleHelp'],
+		row['defecateExtremelyHelp'],
+		row['defecateDependently'],
+		
+		row['peeIndependently'],
+		row['peeLittleHelp'],
+		row['peeExtremelyHelp'],
+		row['peeDependently'],
+		
+		row['wcIndependently'],
+		row['wcLittleHelp'],
+		row['wcExtremelyHelp'],
+		row['wcDependently'],
+		
+		row['shiftIndependently'],
+		row['shiftLittleHelp'],
+		row['shiftExtremelyHelp'],
+		row['shiftDependently'],
+		
+		row['walkIndependently'],
+		row['walkLittleHelp'],
+		row['walkExtremelyHelp'],
+		row['walkDependently'],
+		
+		row['stairIndependently'],
+		row['stairLittleHelp'],
+		row['stairExtremelyHelp'],
+		row['stairDependently'],
+		
+		row['score'],
+		row['level'],
+		row['sign']
+	];
+}
+$(function() {
+	fillTable('#url("/doc/barthel/view/datas")', '$!{patient.cureNo}', 44, getRowDatas);
+});
+</script>
+</body>
+</html>

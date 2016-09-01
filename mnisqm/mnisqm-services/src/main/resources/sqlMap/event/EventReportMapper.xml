@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.event.dao.EventReportMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.event.domain.EventReport" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="REPORT_CODE" property="reportCode" jdbcType="VARCHAR" />
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="DAMAGE_LEVEL" property="damageLevel" jdbcType="VARCHAR" />
+    <result column="DAMAGE_REMARK" property="damageRemark" jdbcType="VARCHAR" />
+    <result column="EVENT_TIME" property="eventTime" jdbcType="TIMESTAMP" />
+    <result column="EVENT_TYPE_CODE" property="eventTypeCode" jdbcType="VARCHAR" />
+    <result column="EVENT_TYPE_NAME" property="eventTypeName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_ROLE" property="userRole" jdbcType="VARCHAR" />
+    <result column="PATIENT_BED_NO" property="patientBedNo" jdbcType="VARCHAR" />
+    <result column="PATIENT_NAME" property="patientName" jdbcType="VARCHAR" />
+    <result column="PATIENT_GENDER" property="patientGender" jdbcType="CHAR" />
+    <result column="PATIENT_AGE" property="patientAge" jdbcType="VARCHAR" />
+    <result column="PATIENT_HOSP_NO" property="patientHospNo" jdbcType="VARCHAR" />
+    <result column="PATIENT_IN_DATE" property="patientInDate" jdbcType="TIMESTAMP" />
+    <result column="PATIENT_DIAGNOSE" property="patientDiagnose" jdbcType="VARCHAR" />
+    <result column="PATIENT_OTHER" property="patientOther" jdbcType="VARCHAR" />
+    <result column="EVENT_DESCRIBE" property="eventDescribe" jdbcType="VARCHAR" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <result column="TASK_CODE" property="taskCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 逻辑删除 -->
+  <update id="deleteByPrimaryKey" parameterType="EventReport" >
+    update EVENT_REPORT
+    set 
+      STATUS = #{status,jdbcType=CHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <!-- 数据插入-->
+  <insert id="insert" parameterType="EventReport" >
+    insert into EVENT_REPORT (REPORT_CODE, DEPT_CODE, 
+      DEPT_NAME, DAMAGE_LEVEL, DAMAGE_REMARK, 
+      EVENT_TIME, EVENT_TYPE_CODE, EVENT_TYPE_NAME, 
+      STATUS, USER_CODE, USER_NAME, 
+      USER_ROLE, PATIENT_BED_NO, PATIENT_NAME, 
+      PATIENT_GENDER, PATIENT_AGE, PATIENT_HOSP_NO, 
+      PATIENT_IN_DATE, PATIENT_DIAGNOSE, PATIENT_OTHER, 
+      EVENT_DESCRIBE, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_TIME, UPDATE_PERSON,TASK_CODE)
+    values (#{reportCode,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR}, 
+      #{deptName,jdbcType=VARCHAR}, #{damageLevel,jdbcType=VARCHAR}, #{damageRemark,jdbcType=VARCHAR}, 
+      #{eventTime,jdbcType=VARCHAR}, #{eventTypeCode,jdbcType=VARCHAR}, #{eventTypeName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{userRole,jdbcType=VARCHAR}, #{patientBedNo,jdbcType=VARCHAR}, #{patientName,jdbcType=VARCHAR}, 
+      #{patientGender,jdbcType=CHAR}, #{patientAge,jdbcType=VARCHAR}, #{patientHospNo,jdbcType=VARCHAR}, 
+      #{patientInDate,jdbcType=VARCHAR}, #{patientDiagnose,jdbcType=VARCHAR}, #{patientOther,jdbcType=VARCHAR}, 
+      #{eventDescribe,jdbcType=VARCHAR}, GETDATE(), #{createPerson,jdbcType=VARCHAR}, 
+      GETDATE(), #{updatePerson,jdbcType=VARCHAR},#{taskCode,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="EventReport" >
+    update EVENT_REPORT
+    set REPORT_CODE = #{reportCode,jdbcType=VARCHAR},
+      DEPT_CODE = #{deptCode,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      DAMAGE_LEVEL = #{damageLevel,jdbcType=VARCHAR},
+      DAMAGE_REMARK = #{damageRemark,jdbcType=VARCHAR},
+      EVENT_TIME = #{eventTime,jdbcType=TIMESTAMP},
+      EVENT_TYPE_CODE = #{eventTypeCode,jdbcType=VARCHAR},
+      EVENT_TYPE_NAME = #{eventTypeName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      USER_CODE = #{userCode,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_ROLE = #{userRole,jdbcType=VARCHAR},
+      PATIENT_BED_NO = #{patientBedNo,jdbcType=VARCHAR},
+      PATIENT_NAME = #{patientName,jdbcType=VARCHAR},
+      PATIENT_GENDER = #{patientGender,jdbcType=CHAR},
+      PATIENT_AGE = #{patientAge,jdbcType=VARCHAR},
+      PATIENT_HOSP_NO = #{patientHospNo,jdbcType=VARCHAR},
+      PATIENT_IN_DATE = #{patientInDate,jdbcType=TIMESTAMP},
+      PATIENT_DIAGNOSE = #{patientDiagnose,jdbcType=VARCHAR},
+      PATIENT_OTHER = #{patientOther,jdbcType=VARCHAR},
+      EVENT_DESCRIBE = #{eventDescribe,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      TASK_CODE = #{taskCode,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, REPORT_CODE, DEPT_CODE, DEPT_NAME, DAMAGE_LEVEL, DAMAGE_REMARK, EVENT_TIME, 
+    EVENT_TYPE_CODE, EVENT_TYPE_NAME, STATUS, USER_CODE, USER_NAME, USER_ROLE, PATIENT_BED_NO, 
+    PATIENT_NAME, PATIENT_GENDER, PATIENT_AGE, PATIENT_HOSP_NO, PATIENT_IN_DATE, PATIENT_DIAGNOSE, 
+    PATIENT_OTHER, EVENT_DESCRIBE, CREATE_TIME, CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON,TASK_CODE
+    from EVENT_REPORT
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <!-- 查询所有的上报信息 -->
+  <select id="selectEventList" resultType="EventReport" parameterType="EventReport">
+    select 
+		r.SEQ_ID seqId,
+		r.REPORT_CODE reportCode,
+		r.DEPT_CODE deptCode,
+	    r.DEPT_NAME deptName,
+	    r.DAMAGE_LEVEL damageLevel,
+	    l.DAMAGE_LEVEL_NAME damageLevelName,
+	    r.DAMAGE_REMARK damageRemark,
+	    r.EVENT_TIME eventTime,
+	    r.EVENT_TYPE_CODE eventTypeCode,
+	    r.EVENT_TYPE_NAME eventTypeName,
+	    r.USER_CODE userCode,
+	    r.USER_NAME userName,
+	    r.STATUS	status,
+	    r.USER_ROLE userRole,
+	    r.PATIENT_BED_NO patientBedNo, 
+	    r.PATIENT_NAME patientName,
+	    r.PATIENT_GENDER patientGender,
+	    r.PATIENT_AGE patientAge,
+	    r.PATIENT_HOSP_NO patientHospNo,
+	    r.PATIENT_IN_DATE patientInDate,
+	    r.PATIENT_DIAGNOSE patientDiagnose,
+	    r.PATIENT_OTHER patientOther,
+	    r.EVENT_DESCRIBE eventDescribe,
+	    r.CREATE_PERSON createPerson,
+	    r.UPDATE_PERSON updatePerson,
+	    r.TASK_CODE taskCode,
+	    t.TASK_STATUS taskStatus
+    from EVENT_REPORT r 
+    	inner join EVENT_LEVEL l on r.DAMAGE_LEVEL = l.DAMAGE_LEVEL
+    	left join SYS_TASK t on r.TASK_CODE = t.TASK_CODE
+    WHERE r.STATUS !='09' 
+    <if test="deptCode !=null and deptCode !=''">
+    	and r.DEPT_CODE = #{deptCode}
+    	or t.HANDLE_DEPT = #{deptCode}
+    </if>
+    <if test="userCode !=null and userCode !=''">
+    	and r.USER_CODE = #{userCode}
+    </if>
+    <if test="reportCode != null and reportCode !=''">
+    	and r.REPORT_CODE = #{reportCode}
+    </if>
+    	order by r.CREATE_TIME DESC
+  </select>
+  	<!-- 查询科室护士长 -->
+	<select id="selectDeptHeader" parameterType="EventReport" resultType="ComDept">
+	SELECT top 1 d.DEPT_NURSE_HEADER deptNurseHeader
+		FROM COM_DEPT d
+		where d.STATUS!='09'
+		and d.DEPT_CODE=#{deptCode} 
+	</select>
+</mapper>

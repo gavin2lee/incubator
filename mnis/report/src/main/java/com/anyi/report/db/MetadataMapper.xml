@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	               
+	               
+<mapper namespace="com.anyi.report.db.MetadataMapper">
+	<resultMap id="metadataMap" type="com.anyi.report.entity.Metadata">		
+		<id property="metadata_code" column="metadata_code" />
+		<result property="metadata_name" column="metadata_name" />
+		<result property="metadata_simple_name" column="metadata_simple_name" />
+		<result property="metadata_name_pinyin" column="metadata_name_pinyin" />
+		<result property="input_type" column="input_type" />
+		<result property="data_type" column="data_type" />
+		<result property="min_value" column="min_value" />
+		<result property="max_value" column="max_value" />
+		<result property="verify_policy_code" column="verify_policy_code"/>
+		<result property="unit" column="unit"/>
+		<result property="precision" column="precision"/>
+		<result property="active" column="active"/>
+		<result property="required" column="required"/>
+		<result property="default_value" column="default_value"/>
+		<result property="is_list_date" column="is_list_date"/>
+	</resultMap>
+	<select id="queryMetadata" resultMap="metadataMap">
+	SELECT METADATA_NAME
+      ,METADATA_SIMPLE_NAME
+      ,METADATA_NAME_PINYIN
+      ,METADATA_CODE
+      ,INPUT_TYPE
+      ,DATA_TYPE
+      ,READONLY_FLAG
+      ,MIN_VALUE
+      ,MAX_VALUE
+      ,VERIFY_POLICY_CODE
+      ,UNIT
+      ,PRECISION
+      ,REMARK
+      ,ACTIVE
+      ,required
+      ,default_value
+      ,is_list_date
+  	FROM METADATA	
+  	where 1=1
+  	<if test="metadata_name!= null"> METADATA_NAME like '%'+#{metadata_name}+'%'</if>
+  	<if test="metadata_simple_name!= null"> metadata_simple_name like '%'+#{metadata_simple_name}+'%'</if>
+  	<if test="metadata_name_pinyin!= null"> metadata_name_pinyin like '%'+#{metadata_name_pinyin}+'%'</if>
+  	<if test="metadata_code!= null"> metadata_code =#{metadata_code}#</if>
+	</select>
+	<select id="isExitSameCode" parameterType="java.lang.String" resultType="java.lang.String">
+		select count(*) total from METADATA where METADATA_CODE=#{metadata_code}
+	</select>
+	<insert id="addMetadada" parameterType="com.anyi.report.db.MetadataMapper">
+		insert into METADATA
+		(
+		   METADATA_NAME
+	      ,METADATA_SIMPLE_NAME
+	      ,METADATA_NAME_PINYIN
+	      ,METADATA_CODE
+	      ,INPUT_TYPE
+	      ,DATA_TYPE
+	      ,READONLY_FLAG
+	      ,MIN_VALUE
+	      ,MAX_VALUE
+	      ,VERIFY_POLICY_CODE
+	      ,UNIT
+	      ,PRECISION
+	      ,REMARK
+	      ,required
+	      ,default_value
+	      ,is_list_date		
+		)
+		values
+		(
+		   #{metadata_name}
+	      ,#{metadata_simple_name}
+	      ,#{metadata_name_pinyin}
+	      ,#{metadata_code}
+	      ,#{input_type}
+	      ,#{data_type}
+	      ,#{readonly_flag}
+	      ,#{min_value}
+	      ,#{max_value}
+	      ,#{verify_policy_code}
+	      ,#{unit}
+	      ,#{precision}
+	      ,#{remark}
+	      ,#{required}
+	      ,#{default_value}	
+	      ,#{is_list_date}		
+		)
+	</insert>
+	
+	<update id="updateMetadata" parameterType="com.anyi.report.db.MetadataMapper">
+		update METADATA set 
+		   METADATA_NAME=#{metadata_name}
+	      ,METADATA_SIMPLE_NAME=#{metadata_simple_name}
+	      ,METADATA_NAME_PINYIN=#{metadata_name_pinyin}
+	      ,INPUT_TYPE=#{input_type}
+	      ,DATA_TYPE=#{data_type}
+	      ,READONLY_FLAG=#{readonly_flag}
+	      ,MIN_VALUE=#{min_value}
+	      ,MAX_VALUE=#{max_value}
+	      ,VERIFY_POLICY_CODE=#{verify_policy_code}
+	      ,UNIT=#{unit}
+	      ,PRECISION=#{precision}
+	      ,REMARK=#{remark}
+	      ,required=#{required}
+	      ,default_value=#{default_value}	
+	      ,is_list_date=#{is_list_date}
+	      where METADATA_CODE=#{metadata_code}		
+	</update>
+	<delete id="deletaMetadata" parameterType="com.anyi.report.db.MetadataMapper">
+		delete from METADATA where METADATA_CODE=#{metadata_code}	
+	</delete>
+	<resultMap id="metadataOptionMap" type="com.anyi.report.entity.MetadataOption">
+		<id property="oprion_id" column="oprion_id" />
+		<result property="metadata_code" column="metadata_code" />
+		<result property="option_name" column="option_name" />
+		<result property="option_code" column="option_code" />
+		<result property="ord" column="ord" />
+		<result property="remark" column="remark" />
+		<result property="active" column="active" />
+		<result property="width" column="width"/>
+		<result property="height" column="height"/>
+		<result property="parent_id" column="parent_id"/>
+	</resultMap>
+	<select id="queryMetadataOption" resultMap="metadataOptionMap">
+	   SELECT 
+	   OPRION_ID
+      ,METADATA_CODE
+      ,OPTION_NAME
+      ,OPTION_CODE
+      ,ORD
+      ,REMARK
+      ,ACTIVE
+      ,OPTION_INPUT_UNIT
+      ,OPTION_INPUT_NAME
+      ,parent_id
+  	  FROM METADATA_OPTION
+  	  where 1=1	
+  	  <if test="parent_id!= null"> parent_id =#{parent_id}#</if>
+  	  <if test="metadata_code!= null"> metadata_code =#{metadata_code}#</if>
+	</select>		
+	<insert id="addMetadataOption" parameterType="com.anyi.report.entity.MetadataOption">
+	 insert into METADATA_OPTION
+	 (
+      METADATA_CODE
+      ,OPTION_NAME
+      ,OPTION_CODE
+      ,ORD
+      ,REMARK
+      ,OPTION_INPUT_UNIT
+      ,OPTION_INPUT_NAME
+      ,parent_id
+      )
+      values
+      (
+       #{metadata_code}
+      ,#{option_name}
+      ,#{option_code}
+      ,#{ord}
+      ,#{remark}
+      ,#{option_input_unit}
+      ,#{option_input_name}
+      ,#{parent_id}     
+      )		
+	</insert>
+	<update id="updateMetadataOption"  parameterType="com.anyi.report.entity.MetadataOption">
+	  update METADATA_OPTION set
+	   OPTION_NAME=#{option_name}
+      ,OPTION_CODE=#{option_code}
+      ,ORD=#{ord}
+      ,REMARK=#{remark}
+      ,OPTION_INPUT_UNIT=#{option_input_unit}
+      ,OPTION_INPUT_NAME=#{option_input_name}
+      where OPRION_ID==#{oprion_id}		
+	</update>
+	<delete id="deleteMetadataOption"  parameterType="com.anyi.report.entity.MetadataOption">
+		delete from METADATA_OPTION where OPRION_ID=#{oprion_id}
+	</delete>
+</mapper>

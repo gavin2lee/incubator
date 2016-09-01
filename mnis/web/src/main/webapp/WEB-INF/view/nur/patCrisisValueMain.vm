@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>危机值</title>
+<script type="text/javascript" src="#url('/resources/js/nur/patCrisValue.js?1472534366478')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/easyui/plugins/jquery.datagrid-detailview.js?1472534366478')" charset="utf-8"></script>
+<script type="text/javascript">
+    var _patientId = '$!id';
+</script>
+</head>
+<body id="patCrisValueLayout" class="easyui-layout">
+    <div data-options="region:'north'" style="height: 39px; overflow: hidden;border-bottom:none;" >
+        <div class="top-tools">
+            <div class="top-tools-box">
+                <div class="top-title">
+                    <span>危急值</span>
+                </div>
+                <input type="hidden" id="pid" value = "$!id" />
+                <div class="btn-box fr mgr10">
+                    <select class="selector" id="select1" style="display:none;">
+                        <option value="">全部</option>
+                        <option value="bed">床号</option>
+                        <option value="name">姓名</option>
+                        <option value="hosNo">住院号</option>
+                    </select>
+                    <input type="text" id="searchVal" style="position: relative; top: 1px;height:25px;width:80px;display:none;">
+                    <div class="time-box fl mgr10">
+                        <input id="startDate" value="" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 80px;top:-2px">
+                        至
+                        <input id="endDate" value="" name="endDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 80px;top:-2px">
+                    </div>
+                    <div class="widget-wrap">
+                      <div class="btn-widget">
+                        <input style="margin-top: 6px;height: 23px!important;line-height: 23px!important;" class="_btn _btn-md middle" type="button" value="查询" onclick="searchPatCrisValue();">  
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="patCrisValContent" data-options="region:'center'" style="overflow: hidden;">
+        <table id="patCrisValueTable" class="easyui-datagrid" data-options="fit:true,fitColumns:true">
+                   
+        </table>
+        <div id="patCrisValBox" class="easyui-dialog" data-options="title:'详细危急值列表',width:750,height:400,closed:true,buttons:[
+            {text:'关闭',handler:patCrisValBoxBtn}
+        ]">
+            <table id="patCrisDetail">
+            </table>
+        </div>
+    </div>
+    
+</body>
+</html>

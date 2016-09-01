@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.satTemplate.dao.SatResultMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.satTemplate.domain.SatResult" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="RESULT_CODE" property="resultCode" jdbcType="VARCHAR" />
+    <result column="RESULT_NAME" property="resultName" jdbcType="VARCHAR" />
+    <result column="USER_TYPE" property="userType" jdbcType="INTEGER" />
+    <result column="BED_CODE" property="bedCode" jdbcType="VARCHAR" />
+    <result column="FORM_TYPE" property="formType" jdbcType="VARCHAR" />
+    <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="IN_HOSP_NO" property="inHospNo" jdbcType="VARCHAR" />
+    <result column="SURVER_DATE" property="surverDate" jdbcType="VARCHAR" />
+    <result column="ADVICE" property="advice" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <collection property="satResultDetailList" javaType="java.util.List"
+		ofType="com.lachesis.mnisqm.module.satTemplate.domain.SatResultDetail"
+		column="RESULT_CODE" >
+		<id column="SEQID" property="seqId" jdbcType="BIGINT" />
+    	<result column="DETAIL_CODE" property="detailCode" jdbcType="VARCHAR" />
+    	<result column="RESULT_CODE" property="resultCode" jdbcType="VARCHAR" />
+    	<result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    	<result column="OPTION_CODE" property="optionCode" jdbcType="VARCHAR" />
+    	<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    	<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    	<result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    	<collection property="satOptionList" javaType="java.util.List"
+		ofType="com.lachesis.mnisqm.module.satTemplate.domain.SatOption"
+		column="DETAIL_CODE" >
+			<id column="SEQID1" property="seqId" jdbcType="BIGINT" />
+    		<result column="DETAIL_CODE" property="detailCode" jdbcType="VARCHAR" />
+    		<result column="OPTIONCODE" property="optionCode" jdbcType="VARCHAR" />
+    		<result column="OPTION_CONTENT" property="optionContent" jdbcType="VARCHAR" />
+    		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    		<result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    		<result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+		</collection>
+	</collection>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SAT_RESULT
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatResult" >
+    insert into SAT_RESULT (DEPT_CODE, RESULT_CODE, RESULT_NAME,
+      USER_TYPE, BED_CODE, FORM_TYPE, 
+      USER_CODE, NAME, IN_HOSP_NO, 
+      SURVER_DATE, ADVICE, STATUS, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+      UPDATE_PERSON)
+    values (#{deptCode,jdbcType=VARCHAR}, #{resultCode,jdbcType=VARCHAR}, #{resultName,jdbcType=VARCHAR}, 
+      #{userType,jdbcType=INTEGER}, #{bedCode,jdbcType=VARCHAR}, #{formType,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{inHospNo,jdbcType=VARCHAR}, 
+      #{surverDate,jdbcType=VARCHAR}, #{advice,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatResult" >
+    update SAT_RESULT
+    set DEPT_CODE = #{deptCode,jdbcType=VARCHAR},
+      RESULT_CODE = #{resultCode,jdbcType=VARCHAR},
+      RESULT_NAME = #{resultName,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=INTEGER},
+      BED_CODE = #{bedCode,jdbcType=VARCHAR},
+      FORM_TYPE = #{formType,jdbcType=VARCHAR},
+      USER_CODE = #{userCode,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      IN_HOSP_NO = #{inHospNo,jdbcType=VARCHAR},
+      SURVER_DATE = #{surverDate,jdbcType=VARCHAR},
+      ADVICE = #{advice,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <update id="updateForDelete" parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatResult" >
+	update SAT_RESULT
+	set
+	UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}, 
+    UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+	STATUS = #{status,jdbcType=CHAR}
+	where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, DEPT_CODE, RESULT_CODE, RESULT_NAME, USER_TYPE, BED_CODE, FORM_TYPE, USER_CODE, 
+    NAME, IN_HOSP_NO, SURVER_DATE, ADVICE, STATUS, CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+    UPDATE_PERSON
+    from SAT_RESULT
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, DEPT_CODE, RESULT_CODE, RESULT_NAME, USER_TYPE, BED_CODE, FORM_TYPE, USER_CODE, 
+    NAME, IN_HOSP_NO, SURVER_DATE, ADVICE, STATUS, CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+    UPDATE_PERSON
+    from SAT_RESULT
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from SAT_RESULT where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatResult" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into SAT_RESULT (DEPT_CODE, RESULT_CODE, RESULT_NAME,
+      USER_TYPE, BED_CODE, FORM_TYPE, 
+      USER_CODE, NAME, IN_HOSP_NO, 
+      SURVER_DATE, ADVICE, STATUS, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+      UPDATE_PERSON)
+    values (#{deptCode,jdbcType=VARCHAR}, #{resultCode,jdbcType=VARCHAR}, #{resultName,jdbcType=VARCHAR}, 
+      #{userType,jdbcType=INTEGER}, #{bedCode,jdbcType=VARCHAR}, #{formType,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{inHospNo,jdbcType=VARCHAR}, 
+      #{surverDate,jdbcType=VARCHAR}, #{advice,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <select id="queryByDateOrFormTypeOrPatientOrDeptCode" resultMap="BaseResultMap" parameterType="Map">
+    select sr.SEQ_ID, sr.DEPT_CODE, sr.RESULT_CODE, sr.RESULT_NAME, sr.USER_TYPE, sr.BED_CODE, sr.FORM_TYPE, sr.USER_CODE, 
+    sr.NAME, sr.IN_HOSP_NO, sr.SURVER_DATE, sr.ADVICE, sr.STATUS, sr.CREATE_TIME, sr.CREATE_PERSON, sr.UPDATE_TIME, 
+    sr.UPDATE_PERSON, srd.SEQ_ID SEQID, srd.DETAIL_CODE, srd.RESULT_CODE, srd.CONTENT, srd.OPTION_CODE, srd.CREATE_TIME, srd.CREATE_PERSON, 
+    srd.UPDATE_TIME, srd.UPDATE_PERSON, so.SEQ_ID SEQID1, so.DETAIL_CODE, so.OPTION_CODE OPTIONCODE, so.OPTION_CONTENT, so.CREATE_TIME, so.CREATE_PERSON, 
+    so.UPDATE_TIME, so.UPDATE_PERSON
+    from SAT_RESULT sr, SAT_RESULT_DETAIL srd, SAT_OPTION so
+    where sr.RESULT_CODE = srd.RESULT_CODE
+    and srd.DETAIL_CODE = so.DETAIL_CODE
+    and sr.STATUS = '01'
+    <if test="formType != null">
+        and sr.FORM_TYPE = #{formType}
+    </if>
+    <if test="patientName != null">
+        and sr.NAME = #{patientName}
+    </if>
+    <if test="yearAndMonth != null">
+    	and sr.SURVER_DATE like #{yearAndMonth}
+    </if>
+    <if test="deptCode != null">
+    	and sr.DEPT_CODE = #{deptCode}
+    </if>
+    <if test="beginTime != null">
+    	and sr.SURVER_DATE >= #{beginTime}
+    </if>
+    <if test="endTime != null">
+    	and  #{endTime} >= sr.SURVER_DATE
+    </if>
+    <if test="userType != null">
+    	and  #{userType} = sr.USER_TYPE
+    </if>
+  </select>
+</mapper>

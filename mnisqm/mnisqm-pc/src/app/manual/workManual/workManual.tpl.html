@@ -1,0 +1,122 @@
+<!-- begin 分组管理内容 -->
+<div class="col-md-7">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-tasks"></i>
+        <span>床位分组管理</span>
+      </div>
+      <div class="panel-body">
+        <table ng-table="vm.tableParams" class="table table-condensed table-bordered table-striped">
+          <tr ng-repeat="row in vm.lst">
+              <td data-title="'组号'"
+                  class="text-center"
+                  ng-click="vm.edit(row)">
+                {{ row.groupCode }}
+              </td>
+              <td data-title="'组名'"
+                  class="text-center"
+                  ng-click="vm.edit(row)">
+                {{ row.groupName }}
+              </td>
+              <td data-title="'床位'"
+                  class="text-center"
+                  ng-click="vm.edit(row)">
+                {{ row.beds }}
+              </td>
+              <td data-title="'操作'" class="text-center">
+                <button class="btn btn-danger btn-xs"
+                        ng-click="vm.deleteGroup(row.seqId)"
+                        uib-tooltip="删除"
+                        ng-if="!row.isEditing">
+                  <span class="fa fa-trash"></span>
+                </button>
+              </td>
+          </tr>
+        </table>
+      </div>
+  </div>
+</div>
+<div class="col-md-5">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-tasks"></i>
+        <span>新增分组</span>
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal w5c-form"
+              role="form"
+              novalidate
+              w5c-form-validate="vm.role.validationOption"
+              name="addbedForm"
+              form="addbedForm">
+            <div class="container-fluid">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="groupCode" class="col-sm-3 control-label">组号：</label>
+                  <div class="col-sm-9">
+                    <input class="form-control input-sm"
+                           autocomplete="off"
+                           ng-model="vm.formData.groupCode"
+                           name="groupCode"
+                           type="text"
+                           id="groupCode" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="groupName" class="col-sm-3 control-label">组名：</label>
+                  <div class="col-sm-9">
+                    <input class="form-control input-sm"
+                           name="groupName"
+                           required
+                           autocomplete="off"
+                           ng-model="vm.formData.groupName"
+                           type="text"
+                           id="groupName" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="bedCode" class="col-sm-3 control-label">床位：</label>
+                  <div class="col-sm-9">
+                    <ul class="flow-list">
+                      <li ng-repeat="flowItem in vm.formData.bedList track by $index">
+                        <span>{{ flowItem }}</span>
+                        <a ng-click="vm.removeFlow($index)" href="javascript:;" class="text-danger">
+                          <i class="fa fa-times-circle"></i>
+                        </a>
+                      </li>
+                    </ul>
+                    <div class="input-group">
+                      <input type="text"
+                             class="form-control input-sm"
+                             ng-model="vm.flowText"
+                             placeholder="新增床位"
+                             autocomplete="off"
+                             name="bedCode"
+                             id="bedCode" />
+                      <span class="input-group-btn">
+                        <button ng-click="vm.addFlow()"
+                                class="btn btn-primary btn-sm"
+                                ng-disabled="addbedForm.bedCode.$invalid || addbedForm.bedCode.$pristine">新增</button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label"></label>
+                  <div class="col-sm-9">
+                    <button class="btn btn-sm btn-success"
+                            type="button"
+                            w5c-form-submit="vm.saveGroup()"
+                            ng-disabled="addbedForm.groupName.$invalid || addbedForm.groupCode.$invalid">保存</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>
+{{ vm.lst }}
+
+<!-- end 分组管理内容 -->

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.user.dao.SeniorSearchMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.user.domain.SeniorSearch" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NURSE_NAME" property="nurseName" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="NURSE_NUM" property="nurseNum" jdbcType="INTEGER" />
+    <result column="PAT_NUM" property="patNum" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, NURSE_NAME, DEPT_NAME, NURSE_NUM, PAT_NUM
+    from SENIOR_SEARCH
+  </select>
+  <select id="queryAllSeniorSearch" resultMap="BaseResultMap" parameterType="Map">
+    select isnull(RESULT.ON_JOB_NURSE_SUM,0)-isnull(RESULT.ON_LEAVE_NURSE_SUM,0) NURSE_NUM,
+    	vcu.user_code ID,
+    	vcu.user_name NURSE_NAME,
+    	vcu.DEPT_NAME
+    from (select  sdc.DEPT_CODE, 
+			sum(1) ON_JOB_NURSE_SUM,
+			sum(case when sl.APPROVE_USER is not null and #{dateTime} >= sl.START_TIME and sl.END_TIME > #{dateTime} then 1 else 0 end) ON_LEAVE_NURSE_SUM
+		  from YIHUI.numas.dbo.SCHEDULE_RECORD_DETAIL srd left join YIHUI.numas.dbo.SCHEDULE_DEPT_CLASS sdc on sdc.CLASS_CODE = srd.CLASS_CODE
+			left join YIHUI.numas.dbo.SCHEDULE_LEAVE sl on srd.USER_CODE = sl.USER_CODE
+		  where  #{dateTime} >= sdc.START_TIME 
+			and sdc.END_TIME > #{dateTime}
+			<if test="deptCode != null">
+				and sdc.DEPT_CODE = #{deptCode}
+			</if>
+			order by sdc.DEPT_CODE
+		) as RESULT, YIHUI.numas.dbo.v_COM_USER vcu, 
+		YIHUI.numas.dbo.COM_USER_POSITION cup, 
+		YIHUI.numas.dbo.COM_USER_EXPERIENCE cue,
+		YIHUI.numas.dbo.COM_TRANSFERS_MANAGE ctm
+	where RESULT.DEPT_CODE = vcu.DEPT_CODE
+		<if test="hierarchy != null">
+			and cup.POSITION_NAME = #{hierarchy}
+			and cup.USER_CODE = vcu.user_code
+		</if>
+		<if test="specialQualifications != null">
+			and (ctm.OUT_DEPT = #{specialQualifications}
+				or ctm.IN_DEPT = #{specialQualifications}
+			)and ctm.STATUS = '2'
+			and ctm.USER_CODE = vcu.user_code
+		</if>
+		<if test="collegeExperience != null">
+			and cue.DEPT_NAME like #{collegeExperience}
+			and cue.USER_CODE = vcu.user_code
+		</if>
+		<if test="nightShiftFlag != null">
+			and vcu.ACCESS_NIGHT_SHIFT = 'Y'
+		</if>
+  </select>
+</mapper>

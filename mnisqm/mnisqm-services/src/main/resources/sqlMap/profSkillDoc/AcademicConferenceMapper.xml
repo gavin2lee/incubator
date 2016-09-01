@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.lachesis.mnisqm.module.profSkillDoc.dao.AcademicConferenceMapper">
+	
+	<!-- 逻辑添加 -->
+	<insert id="insert"
+		parameterType="AcademicConference">
+		insert into PTF_ACADEMIC_CONFERENCE
+		(USER_CODE,USER_NAME,
+		WARD_CODE, MEETING_NAME, MEETING_DATE,
+		MEETING_SITE,
+		HOST_UNIT, CREDIT, STATUS, AUDITOR, REMARK, CREATE_TIME,
+		CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON)
+		values
+		(#{userCode},#{userName},#{wardCode},
+		#{meetingName},#{meetingDate},#{meetingSite},
+		#{hostUnit},#{credit},'01',
+		#{auditor},#{remark},GETDATE(),
+		#{createPerson},GETDATE(),#{updatePerson})
+	</insert>
+	<!-- 逻辑删除 -->
+	<update id="deleteByPrimaryKey"
+		parameterType="AcademicConference">
+		update
+		PTF_ACADEMIC_CONFERENCE
+		set
+		STATUS=#{status},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑修改 -->
+	<update id="update"
+		parameterType="AcademicConference">
+		update
+		PTF_ACADEMIC_CONFERENCE
+		set
+		USER_CODE=#{userCode},
+		USER_NAME=#{userName},
+		WARD_CODE=#{wardCode},
+		MEETING_NAME=#{meetingName},
+		MEETING_DATE=#{meetingDate},
+		MEETING_SITE=#{meetingSite},
+		HOST_UNIT=#{hostUnit},
+		CREDIT=#{credit},
+		AUDITOR=#{auditor},
+		REMARK=#{remark},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑查找 -->
+	<select id="select" parameterType="AcademicConference"
+		resultType="AcademicConference">
+		select
+		SEQ_ID			as seqId,
+		USER_CODE		as userCode,
+		USER_NAME		as userName,
+		WARD_CODE		as wardCode, 
+		MEETING_NAME	as meetingName, 
+		MEETING_DATE	as meetingDate, 
+		MEETING_SITE	as meetingSite,
+		HOST_UNIT		as hostUnit, 
+		CREDIT			as credit,
+		STATUS			as status, 
+		AUDITOR			as auditor, 
+		REMARK			as remark
+		from
+		PTF_ACADEMIC_CONFERENCE
+		where STATUS='01'
+		<if test="userCode != null">
+			and USER_CODE=#{userCode}
+		</if>
+		<if test="userName != null">
+			and USER_NAME like #{userName}
+		</if>
+		<if test="wardCode != null">
+			and WARD_CODE=#{wardCode}
+		</if>
+		<if test="meetingName != null">
+			and MEETING_NAME like #{meetingName}
+		</if>
+		<if test="meetingDate != null">
+			and MEETING_Date=#{meetingDate}
+		</if>
+		<if test="meetingSite != null">
+			and MEETING_Site like #{meetingSite}
+		</if>
+		<if test="hostUnit != null">
+			and HOST_UNIT like #{hostUnit}
+		</if>
+		<if test="credit != null">
+			and CREDIT = #{credit}
+		</if>
+		<if test="auditor != null">
+			and AUDITOR like #{auditor}
+		</if>
+	</select>
+</mapper>
+  

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<title>使用约束带观察记录表</title>
+</head>
+<body class="doc restraint">
+#docToolbar()
+<div class="doc-container">
+<div class="doc-head">
+#pageTitle('使用约束带观察记录表')
+	<div class="doc-patient">
+#pagePatient()
+		<span><label id="diagnosisLabel" class="diagnosisLabel">诊断:&nbsp;</label><span id="pDiagnosis" class="value diagnosis">$!{patient.diagnose}</span></span>
+		<span><label>约束首次应用日期:</label><input id="hold1" class="easyui-datebox" data-options="editable: false" value="$!{doc.hold1}"></span>
+	</div>
+</div>
+<div class="doc-content">
+    <div id="tb">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+<!--         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">保存</a> -->
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">还原</a>
+<!-- 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">GetChanges</a> -->
+    </div>
+    <table id="dg" style="height: 400px;width: 100%;" class="easyui-datagrid" data-options="
+    	nowrap: false,
+		singleSelect: true,
+		autoRowHeight: true,
+		fitColumns: true,
+		toolbar: '#tb',
+		showFooter: true,
+		onClickRow: onClickRow,
+		onBeginEdit: onBeginEdit,
+		onLoadSuccess: function(data) {
+		},
+		url: '#url("/doc/restraint/datas")',
+		queryParams: {
+			cureNo: '$!{patient.cureNo}'
+		},
+		method: 'get',
+		idField: 'id'">
+	    <thead>
+	        <tr>
+	            <th rowspan="2" data-options="field:'date',
+					align:'center',
+					resizable: false,
+					width:90,
+					formatter: function(value,row,index){
+						if (!value) {
+							return '';
+						}
+						if (index == 0) {
+	    					return value;
+						}
+						return formatDate(value, false, $('#dg').datagrid('getRows')[index-1]['date']);
+	    			},
+					editor: {
+						type: 'datetimebox',
+						options: {
+							showSeconds: false,
+							editable: false,
+							validType:{
+								length:[0,16]
+							}
+						}
+					}">日期时间</th>
+				<th colspan="3">约束原因</th>
+				<th colspan="5">约束部位</th>
+				<th colspan="6">观察要点</th>
+				<th>措施</th>
+	            <th rowspan="2" data-options="width:70,field:'sign',align:'center',resizable: false">签名</th>
+			</tr>
+			<tr>
+	            <th data-options="width:40,field:'reasonDraw',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">防意外拔管</th>
+	            <th data-options="width:30,field:'reasonFret',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">躁动</th>
+	            <th data-options="width:30,field:'reasonFall',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">防坠床</th>
+	            <th data-options="width:30,field:'partLeftHand',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">左手腕</th>
+	            <th data-options="width:30,field:'partRightHand',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">右手腕</th>
+	            <th data-options="width:30,field:'partLeftFoot',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">左踝部</th>
+	            <th data-options="width:30,field:'partRightFoot',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">右踝部</th>
+	            <th data-options="width:30,field:'partChest',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">胸部</th>
+	            <th data-options="width:30,field:'pointGood',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">血运良好</th>
+	            <th data-options="width:30,field:'pointBad',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">血运不良</th>
+	            <th data-options="width:30,field:'pointIntact',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">皮肤完整</th>
+	            <th data-options="width:30,field:'pointBruise',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">皮肤擦伤</th>
+	            <th data-options="width:30,field:'pointNotSwell',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">肢体不肿</th>
+	            <th data-options="width:30,field:'pointSwell',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">肢体肿胀</th>
+	            <th data-options="width:30,field:'observe',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">定时观察</th>
+	        </tr>
+	    </thead>
+	</table>
+</div>
+#restraintComment()
+</div>
+<!-- Diagnosis Window -->
+<div id="win"></div>
+<script type="text/javascript">
+var editIndex = undefined;
+function endEditing(index) {
+	if (editIndex == undefined) {
+		return true;
+	}
+	if ($("#dg").datagrid('validateRow', editIndex)) {
+		$("#dg").datagrid('endEdit', editIndex);
+		editIndex = undefined;
+		return true;
+	} else {
+		return false;
+	}
+}
+function onClickRow(index){
+    if (editIndex != index){
+        if (endEditing()) {
+        	// 本人,护理组长和护士长能修改
+        	var rows = $('#dg').datagrid('getRows');
+        	if ('$!{currentUser.code}' == rows[index]['userCode']
+        			|| 1 == $!{currentUser.purview}
+        			|| 2 == $!{currentUser.purview}) {
+	            $('#dg').datagrid('selectRow', index)
+	                    .datagrid('beginEdit', index);
+	            editIndex = index;
+        	}
+        } else {
+            $('#dg').datagrid('selectRow', editIndex);
+        }
+    }
+}
+function append(){
+    if (endEditing()){
+        $('#dg').datagrid('appendRow',{
+        	date: datetimeToString(new Date()),
+        	sign: '$!{currentUser.name}$!{currentUser.code}',
+        	userCode: '$!{currentUser.code}',
+        	deptCode: '$!{currentUser.deptCode}',
+        	deptName: '$!{currentUser.deptName}'
+        });
+        editIndex = $('#dg').datagrid('getRows').length-1;
+        $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+    }
+}
+function removeit() {
+    var row = $('#dg').datagrid('getSelected');
+    if (!row){return}
+    var index = $('#dg').datagrid('getRowIndex', row);
+    if (index == undefined){return}
+    if ('$!{currentUser.code}' == row['userCode']) {
+	    $('#dg').datagrid('cancelEdit', index)
+	            .datagrid('deleteRow', index);
+	    editIndex = undefined;
+    } else {
+    	$.messager.alert('数据删除', '只有本人才允许删除', 'info');
+    }
+}
+function accept(){
+    if (endEditing()){
+    	var editable = '$!{doc.editable}' || true;
+    	if (editable) {
+	        $.ajax({
+	        	url: '#url("/doc/restraint")',
+	        	type: 'POST',
+	        	data: {
+	        		cureNo: '$!{patient.cureNo}',
+	        		hospitalNo: '$!{patient.hospitalNo}',
+	        		hold1: $('#hold1').datebox('getValue'),
+	        		inserted: JSON.stringify($('#dg').datagrid('getChanges', 'inserted')),
+	        		updated: JSON.stringify($('#dg').datagrid('getChanges', 'updated')),
+	        		deleted: JSON.stringify($('#dg').datagrid('getChanges', 'deleted'))
+	        	},
+	        	success: function(data, status) {
+	        		if (data && data.code) {
+	        			if ('1' == data.code) {
+				        	$('#dg').datagrid('acceptChanges').datagrid('reload').datagrid('unselectAll');
+		        		} else {
+			        		$.messager.alert('数据保存', data.message || '保存失败', 'error');
+	        			}
+	        		}
+	        	},
+	        	error: function(xhr, status, err) {
+	        		$.messager.alert('数据保存', '保存失败', 'error');
+	        	}
+	        });
+    	} else {
+    		$.messager.alert('数据保存', '不允许修改', 'error');
+    	}
+    }
+}
+function reject(){
+    $('#dg').datagrid('rejectChanges').datagrid('unselectAll');
+    editIndex = undefined;
+}
+var groups = {
+	pointGood: 1,
+	pointBad: 1,
+	pointIntact: 2,
+	pointBruise: 2,
+	pointNotSwell: 3,
+	pointSwell: 3
+};
+function groupSiblings(field) {
+	var siblings = [];
+	for (var key in groups) {
+		if (key != field && groups[key] == groups[field]) {
+			siblings.push(key);
+		}
+	}
+	return siblings;
+}
+function onBeginEdit(index,row) {
+	#[[
+    var editors = $('#dg').datagrid('getEditors', index);
+    for (var i = 9; i < 15; i++) {
+    	$(editors[i].target).change(function() {
+    		var $td = $(this).parents('td[field]');
+    		var field = $td.attr('field');
+    		if ($(this).is(':checked')) {
+	    		$.each(groupSiblings(field), function(idx, value) {
+	    			var editor = $('#dg').datagrid('getEditor', {index:index, field: value});
+	    			var $editor = $(editor.target);
+	    			if ($editor.is(':checked')) {
+	    				$editor.attr('checked', false);
+	    			}
+	    		});
+    		}
+    	});
+    }
+	]]#
+}
+// initialize page when loaded
+$(function() {
+	$('#save').click(accept);
+	$('#approve').click(function() {});
+	$('#print').val('预  览').click(function() {
+		var params = [
+   			'location=no',
+   			'height='+screen.availHeight,
+   			'width='+screen.availWidth,
+   			'scrollbars=yes',
+   			'resizable=yes',
+   			'fullscreen=yes' // only works in IE, but here for completeness
+   		].join(',');
+   		var new_window = window.open('#url("/doc/restraint/view?cureNo=$!{patient.cureNo}")', '', params);
+   		new_window.resizeTo(screen.availWidth, screen.availHeight);
+	});
+	$('#diagnosisLabel').click(function() {
+		$('#win').window({
+			title: '诊断修正列表',
+		    width: 700,
+		    height: 500,
+		    minimizable: false,
+			href: '#url("/doc/diagnosis")?cureNo=$!{patient.cureNo}',
+			onClose: function() {
+				var rows = $('#dDg').datagrid('getRows');
+				if (rows && rows.length > 0) {
+					$('#pDiagnosis').text(rows[rows.length - 1]['diagnosis']);
+				} else {
+					$('#pDiagnosis').text('$!{patient.diagnose}');
+				}
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

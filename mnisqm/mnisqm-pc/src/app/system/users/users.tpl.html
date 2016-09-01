@@ -1,0 +1,108 @@
+<div class="col-md-2">
+  <div class="panel pull-left dept-wrapper panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-bars"></i>
+      <span>科室列表</span>
+    </div>
+    <div class="panel-body list" full-height>
+      <div class="list-filter">
+        <input type="text" class="form-control input-sm" ng-model="vm.filterText.deptName" placeholder="输入关键字搜索">
+      </div>
+      <uib-accordion class="list-accordion">
+      <div class="list__tile">
+        <a href="javascript:;" ng-class="{'active': vm.deptData.deptCode === vm.selectedDept}" ng-click="vm.load(vm.deptData.deptCode, vm.deptData.deptName)">
+          <span class="list__text ng-binding ng-scope" role="button" tabindex="0">{{vm.deptData.deptName}}</span>
+          <i class="pull-right fa fa-angle-down"></i>
+        </a>
+      </div>
+      <ul class="sublist">
+        <li ng-repeat="subItem in vm.deptData.belongedDepts | filter:vm.filterText" class="accordion-item" ng-class="{'active': subItem.deptCode === vm.selectedDept}">
+          <a ng-click="vm.load(subItem.deptCode, subItem.deptName)" class="sublist__item">{{subItem.deptName}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-10">
+  <div class="panel panel-layout panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-user"></i>
+      <span>用户信息</span>
+      <div class="pull-right">
+        <button ng-click="vm.open()" class="btn btn-default btn-xs" ng-disabled="!vm.selectedDept">添加用户</button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <table print-table="vm.list" st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered">
+        <thead>
+          <tr class="header-export">
+            <th></th>
+            <th>员工编号</th>
+            <th>用户姓名</th>
+            <th>登录名</th>
+
+            <th print-remove>操作</th>
+          </tr>
+        </thead>
+
+        <tbody ng-repeat="row in vm.list">
+          <tr class="row-{{$index}}" ng-class="{'info': row.userCode === vm.selectedUser.userCode}">
+            <td grid-expand-trigger grid-p="seqId" grid-expand-method="showRole" class="trigger">
+              <i class="fa fa-caret-right"></i>
+            </td>
+            <td>
+              {{row.userCode}}
+            </td>
+            <td>
+              {{row.userName}}
+            </td>
+            <td>
+              {{row.loginName}}
+            </td>
+            <td>
+              <a href="javascript:;" ng-click="vm.open(row)" ng-if="!row.isEditing">编辑</a>
+              ｜
+              <span ng-if="vm.expanedIndex == $index">
+                <a href="javascript:;" ng-click="vm.openRole(row)">添加角色</a>
+                ｜
+              </span>
+              <a href="javascript:;" class="danger-text" ng-click="vm.del(row.seqId)" ng-if="!row.isEditing">删除</a>
+            </td>
+          </tr>
+          <tr grid-expand tpl-src="app/system/users/users.detail.html" ng-show="vm.expanedIndex == $index && vm.expanded"></tr>
+        </tbody>
+      </table>
+
+      <none-data-info list="vm.list"></none-data-info>
+    </div>
+  </div>
+
+  <!-- <div class="panel panel-default" ng-if="vm.selectedUser">
+    <div class="panel-heading">
+      <i class="fa fa-user"></i>
+      <span>用户角色</span>
+      <div class="pull-right">
+        <button ng-click="vm.openRole()" class="btn btn-primary btn-xs" ng-disabled="!vm.selectedDept">添加现有角色</button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <table ng-table="vm.roleTableParams" class="table table-hover table-condensed table-bordered table-striped" demo-tracked-table="demo.tableTracker">
+        <tr ng-repeat="row in $data">
+          <td data-title="'角色编号'">
+            {{row.roleCode}}
+          </td>
+          <td data-title="'所属部门'">
+            {{row.deptName}}
+          </td>
+          <td data-title="'角色名称'">
+            {{row.roleName}}
+          </td>
+          <td data-title="'操作'">
+            <button class="btn btn-danger btn-xs" uib-tooltip="删除角色" ng-click="vm.delUserRole(row.seqId)" ng-if="!row.isEditing"><span class="fa fa-trash"></span></button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div> -->
+</div>

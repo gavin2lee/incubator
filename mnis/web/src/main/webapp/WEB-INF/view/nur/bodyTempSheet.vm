@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head runat="server">
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/bodyTempSheetCommon.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')" />
+<script type="text/javascript" src="#url('/resources/js/nur/bodyTempSheetCommon.js?1472534366474')"></script>
+<style type="text/css">
+    .conditionInputBox input{
+        height:21px;
+        line-height:21px;
+        font-size:12px;
+        width:50px;
+        margin-right:2px;
+        vertical-align:top;
+    }
+    .conditionInputBox select{
+        height:23px;
+    }
+</style>
+</head>
+<body>
+	<div class="wrapper f_yahei">
+		<div class="insp-top top-tools" style="height:40px">
+	        <div class="top-tools-box">
+                <div class="top-title">
+                    <span>体温单录入</span>
+                </div>
+  		    	<div class="btn-box fr mgr10">
+                    <div class="time-box fl mgr10">
+                    <!--
+                        <input id="date" name="startDate" class="Wdate"  onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;">
+                        -->
+                        <input id="startDate" type="text" class="easyui-datebox"   style="width: 100px;height:24px;"></input>
+
+                        <!-- <select id="time" style="vertical-align: top;"></select> -->
+                        <select id="selectTime" name="endDate" class="easyui-combobox" style="height:25px;width:60px;top:0px;"></select>
+                        <input id="time" name="endDate" style="height:25px;width:60px;display:none;top:0px;">
+                        <!--<input id="time" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm'})" readonly="readonly" style="min-width:50px;width:50px;">-->
+                        <!-- <input id="time" name="endDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm:ss'})" readonly="readonly" style="width: 70px;"> -->
+                    </div>
+                    <input class="_btn _btn-md" type="button" id="copyAll" value="全部转抄">
+                    <input class="_btn _btn-md" type="button" value="保存" onclick="save(true);">
+                    <input class="_btn _btn-md" type="button" value="删除" onclick="deleteInfo()">
+                    <input class="_btn _btn-md" type="button" value="重置" onclick="reset();">
+                    <input class="_btn _btn-md" type="button" value="查看体温单" onclick="showPatientTempSheet()">
+                </div>
+	      </div>
+		</div>
+		<div class="content" style="height:80%;">
+      		<table id="info-tab"></table>
+##            <table id="jsgrid-info"></table>
+            <div class="batch-tips">
+                使用键盘快速录入: 【→】向右移动; 【←】向左移动; 【↑】选择上一行; 【↓】选择下一行; 【enter】选择下一行第一个输入框.
+            </div>
+		</div>
+	</div>
+    <!-- #parse("test/allergyDrugPanel.vm") -->
+	<script type="text/javascript">
+            //initTest();
+            $(function(){
+               //initAllergyDrug('');
+            });
+            /*
+            function initTablePattern(tableId){
+                var params = {};
+                params.callbackObj = tableId;
+                params.title= "样式编辑";
+                params.loadPatterns = loadPatterns;
+                params.loadLeftList = loadAlternateItems;
+                params.loadRightList = loadPatternItems;
+                params.savePattern=savePatternAndItems;
+                initPatternDialog(params);
+            }*/
+	</script>
+
+</body>
+</html>

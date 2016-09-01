@@ -1,0 +1,157 @@
+<div class="statistics-wrapper">
+  <div class="row">
+    <div class="col-md-3 text-center">
+      <div class="statistics-card">
+        <a ui-sref="home.nurseManagerStat.form">
+          <div class="statistics-title">护理人员管理</div>
+          <div class="statistics-content">
+            <p class="row"><span class="col-md-6">总人数：</span><span class="col-md-6 text-right">{{vm.nurseCount.total}}人</span></p>
+            <p class="row"><span class="col-md-6">新增：</span><span class="col-md-6 text-right">{{vm.nurseCount.increase}}人</span></p>
+            <p class="row"><span class="col-md-6">离开：</span><span class="col-md-6 text-right">{{vm.nurseCount.leave}}人</span></p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-3 text-center">
+      <div class="statistics-card">
+        <a ui-sref="home.researchStat">
+          <div class="statistics-title">科研管理</div>
+          <div class="statistics-content">
+            <p class="row">
+              <span class="col-md-8">全院科研项目：</span>
+              <span class="col-md-4 text-right">{{vm.research.proj}}个</span>
+            </p>
+            <p class="row">
+              <span class="col-md-8">全院科研论文：</span>
+              <span class="col-md-4 text-right">{{vm.research.paper}}篇</span>
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-3 text-center">
+      <div class="statistics-card">
+        <a ui-sref="home.bedNursing.liqDis">
+          <div class="statistics-title">床旁护理</div>
+          <div class="statistics-content">
+            <p class="row">
+              <span class="col-md-8">配液次数：</span>
+              <span class="col-md-4 text-right">{{vm.bedNursing.liqDis}}</span>
+            </p>
+            <p class="row">
+              <span class="col-md-8">医嘱执行次数：</span>
+              <span class="col-md-4 text-right">{{vm.bedNursing.doctor}}</span>
+            </p>
+            <p class="row">
+              <span class="col-md-8">文书体征使用次数：</span>
+              <span class="col-md-4 text-right">{{vm.bedNursing.doc}}</span>
+            </p>
+            <p class="row">
+              <span class="col-md-8">巡视次数：</span>
+              <span class="col-md-4 text-right">{{vm.bedNursing.patrol}}</span>
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-3 text-center">
+      <div class="statistics-card">
+        <a ui-sref="home.dutyStat">
+          <div class="statistics-title">科室排班</div>
+          <div class="statistics-content">
+            <p class="row" ng-repeat="item in vm.dutyRoster">
+              <span class="col-md-6">{{vm.getDeptName(item.deptCode)}}：</span>
+              <span class="col-md-6 text-right">{{item.hours}}小时</span>
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 text-center">
+      <div class="statistics-card">
+        <a ui-sref="home.malCaseStat">
+          <div class="statistics-title">不良事件</div>
+          <div class="statistics-content">
+            <p class="row">
+              <span class="col-md-8">上报最多的类型：</span>
+              <span class="col-md-4 text-right text-danger">{{vm.malCase.type}}</span>
+            </p>
+            <p class="row">
+              <span class="col-md-8">上报最多的科室：</span>
+              <span class="col-md-4 text-right text-danger">{{vm.getDeptName(vm.malCase.deptCode)}}</span>
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-3 text-center">
+      <div class="statistics-card">
+        <a ui-sref="home.qualityStat">
+          <div class="statistics-title">护理质控</div>
+          <div class="statistics-content">
+            <p class="row">
+              <span class="col-md-12">评分最差的5项：</span>
+            </p>
+            <p class="row" ng-repeat="item in vm.quality.worst">
+              <span class="col-md-12 text-right" ng-class="{'text-danger': $index === 0, 'text-warning': $index === 1}">{{item}}</span>
+            </p>
+            <p class="row">
+              <span class="col-md-8">评分最高的科室：</span>
+              <span class="col-md-4 text-right text-success">{{vm.getDeptName(vm.quality.bestDeptCode)}}</span>
+            </p>
+            <p class="row">
+              <span class="col-md-8">评分最低的科室：</span>
+              <span class="col-md-4 text-right text-danger">{{vm.getDeptName(vm.quality.worstDeptCode)}}</span>
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-3 text-center">
+      <div class="statistics-card">
+        <a ui-sref="home.examStat">
+          <div class="statistics-title">考试培训</div>
+          <div class="statistics-content">
+            <p class="row">
+              <span class="col-md-12">考试最薄弱的5项：</span>
+            </p>
+            <p class="row" ng-repeat="item in vm.exam.worst">
+              <span class="col-md-12 text-right" ng-class="{'text-danger': $index === 0, 'text-warning': $index === 1}">{{item}}</span>
+            </p>
+            <p class="row">
+              <span class="col-md-8">分数最高的科室：</span>
+              <span class="col-md-4 text-right text-success">{{vm.getDeptName(vm.exam.bestDeptCode)}}</span>
+            </p>
+            <p class="row">
+              <span class="col-md-8">分数最低的科室：</span>
+              <span class="col-md-4 text-right text-danger">{{vm.getDeptName(vm.exam.worstDeptCode)}}</span>
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-3 text-center">
+      <div class="statistics-card">
+        <a ui-sref="home.satStat.patient">
+          <div class="statistics-title">满意度</div>
+          <div class="statistics-content">
+            <p class="row">
+              <span class="col-md-12">患者最不满意的3项：</span>
+            </p>
+            <p class="row" ng-repeat="item in vm.sat.patient">
+              <span class="col-md-12 text-right" ng-class="{'text-danger': $index === 0, 'text-warning': $index === 1}">{{item}}</span>
+            </p>
+            <p class="row">
+              <span class="col-md-12">护士最不满意的3项：</span>
+            </p>
+            <p class="row" ng-repeat="item in vm.sat.nurse">
+              <span class="col-md-12 text-right" ng-class="{'text-danger': $index === 0, 'text-warning': $index === 1}">{{item}}</span>
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

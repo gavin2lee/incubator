@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.DocTreeMapper" >
+	<!-- 原有文书写死模块，新增表结构查询 -->
+	<resultMap id="ComNavTree" type="com.lachesis.mnis.core.doctree.entity.ComNavTree">
+		<id property="id" column="id"/>
+		<result property="showname" column="showname"/>
+		<result property="fieldtype" column="fieldtype"/>
+		<result property="ord" column="ord"/>
+		<result property="parent_id" column="parent_id"/>
+		<result property="type" column="type"/>
+	</resultMap>
+	
+	<select id="getComNavTrees" resultMap="ComNavTree">
+		select id, showname, fieldtype, ord, parent_id, type,url from dbo.COM_NAV_TREE where status=0 order by PARENT_ID,ord
+	</select>
+</mapper>

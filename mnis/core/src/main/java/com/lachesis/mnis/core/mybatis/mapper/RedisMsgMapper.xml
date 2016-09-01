@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.RedisMsgMapper">
+	<insert id="saveRedisMsgRecord"
+		parameterType="com.lachesis.mnis.core.redismsg.entity.RedisMsgRecord">
+		insert into
+		sys_msg_publish(oper_type,oper_id,oper_nurse_code,oper_nurse_name,oper_time,oper_value)
+		values(#{operType},#{operId},#{operNurseCode},#{operNurseName},#{operDate},#{operValue})
+	</insert>
+	
+	<select id="getSysMsgPublishByOperId" parameterType="String" resultType="Integer">
+		select count(1) from sys_msg_publish
+		where oper_id = #{param1} and oper_type=#{param2}
+	</select>
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lachesis.mnisqm.module.user.dao.ComUserNursingMapper">
+  <!-- 逻辑删除 -->
+  <update id="deleteByPrimaryKey" parameterType="ComUserNursing">
+    update COM_USER_NURSING
+    set STATUS = #{status,jdbcType=CHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <insert id="insert" parameterType="ComUserNursing">
+    insert into COM_USER_NURSING (STATUS, USER_CODE, 
+      START_DATE, END_DATE, REVIEW_UNIT, 
+      UNIT_LEVEL, DEPT_NAME, POSITION, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+      UPDATE_PERSON)
+    values (#{status,jdbcType=CHAR}, #{userCode,jdbcType=VARCHAR}, 
+      #{startDate,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR}, #{reviewUnit,jdbcType=VARCHAR}, 
+      #{unitLevel,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, #{duty}, 
+      GETDATE(), #{createPerson,jdbcType=VARCHAR}, GETDATE(), 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="ComUserNursing">
+    update COM_USER_NURSING
+    set STATUS = #{status,jdbcType=CHAR},
+      USER_CODE = #{userCode,jdbcType=VARCHAR},
+      START_DATE = #{startDate,jdbcType=VARCHAR},
+      END_DATE = #{endDate,jdbcType=VARCHAR},
+      REVIEW_UNIT = #{reviewUnit,jdbcType=VARCHAR},
+      UNIT_LEVEL = #{unitLevel,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      POSITION = #{duty},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+</mapper>

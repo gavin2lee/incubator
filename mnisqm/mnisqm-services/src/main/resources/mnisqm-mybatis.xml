@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+		<setting name="cacheEnabled" value="true" />
+		<!-- 查询时，关闭关联对象即时加载以提高性能 -->
+		<setting name="lazyLoadingEnabled" value="true" />
+		<!-- 设置关联对象加载的形态，此处为按需加载字段(加载字段由SQL指定)，不会加载关联表的所有字段，以提高性能 -->
+		<setting name="aggressiveLazyLoading" value="false" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="false" />
+		<setting name="autoMappingBehavior" value="PARTIAL" />
+		<setting name="defaultExecutorType" value="SIMPLE" /> <!-- BATCH, REUSE -->
+		<setting name="defaultStatementTimeout" value="25000" />
+		<setting name="safeRowBoundsEnabled" value="false" />
+		<setting name="mapUnderscoreToCamelCase" value="false" />
+		<setting name="localCacheScope" value="SESSION" />
+		<setting name="jdbcTypeForNull" value="OTHER" />
+		<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString" />
+	</settings>
+    
+    <!-- 类型 -->
+    <typeAliases>
+    	<!-- 系统模块 -->
+      	<typeAlias alias="SysUserRole" type="com.lachesis.mnisqm.module.system.domain.SysUserRole"/>
+      	<typeAlias alias="SysRole" type="com.lachesis.mnisqm.module.system.domain.SysRole"/>
+      	<typeAlias alias="SysUser" type="com.lachesis.mnisqm.module.system.domain.SysUser"/>
+    	<!-- 用户模块 -->
+       	<typeAlias alias="ComUser" type="com.lachesis.mnisqm.module.user.domain.ComUser"/>
+       	<typeAlias alias="ComUserPosition" type="com.lachesis.mnisqm.module.user.domain.ComUserPosition"/>
+		<typeAlias alias="ComUserNursing" type="com.lachesis.mnisqm.module.user.domain.ComUserNursing"/>
+		<typeAlias alias="ComUserEducation" type="com.lachesis.mnisqm.module.user.domain.ComUserEducation"/>
+		<typeAlias alias="ComUserLearning" type="com.lachesis.mnisqm.module.user.domain.ComUserLearning"/>
+		<typeAlias alias="ComUserTraining" type="com.lachesis.mnisqm.module.user.domain.ComUserTraining"/>
+		<typeAlias alias="ComUserFamily" type="com.lachesis.mnisqm.module.user.domain.ComUserFamily"/>
+      	<typeAlias alias="ComDept" type="com.lachesis.mnisqm.module.user.domain.ComDept"/>
+      	<typeAlias alias="ComDeptNurse" type="com.lachesis.mnisqm.module.user.domain.ComDeptNurse"/>
+      	
+      	<!-- 不良事件模块 -->
+      	<typeAlias alias="EventType" type="com.lachesis.mnisqm.module.event.domain.EventType"/>
+      	<typeAlias alias="EventLevel" type="com.lachesis.mnisqm.module.event.domain.EventLevel"/>
+      	<typeAlias alias="EventReport" type="com.lachesis.mnisqm.module.event.domain.EventReport"/>
+      	<typeAlias alias="EventReportDetail" type="com.lachesis.mnisqm.module.event.domain.EventReportDetail"/>
+      	<typeAlias alias="EventMeasures" type="com.lachesis.mnisqm.module.event.domain.EventMeasures"/>
+      	<typeAlias alias="EventRequirement" type="com.lachesis.mnisqm.module.event.domain.EventRequirement"/>
+      	<typeAlias alias="EventAssessment" type="com.lachesis.mnisqm.module.event.domain.EventAssessment"/>
+      	
+      	<!-- 科室排班模块 -->
+      	<typeAlias alias="ScheduleRecord" type="com.lachesis.mnisqm.module.schedule.domain.ScheduleRecord"/>
+      	<typeAlias alias="ScheduleRecordDetail" type="com.lachesis.mnisqm.module.schedule.domain.ScheduleRecordDetail"/>
+      	<typeAlias alias="ComBedGroup" type="com.lachesis.mnisqm.module.user.domain.ComBedGroup"/>
+      	<typeAlias alias="ScheduleDeptClass" type="com.lachesis.mnisqm.module.schedule.domain.ScheduleDeptClass"/>
+      	<typeAlias alias="ResearchItem" type="com.lachesis.mnisqm.module.research.domain.ResearchItem"/>
+      	<typeAlias alias="ScheduleRule" type="com.lachesis.mnisqm.module.schedule.domain.ScheduleRule"/>
+      	<typeAlias alias="ScheduleLeave" type="com.lachesis.mnisqm.module.schedule.domain.ScheduleLeave"/>
+      	<typeAlias alias="ScheduleCount" type="com.lachesis.mnisqm.module.schedule.domain.ScheduleCount"/>
+      	
+      	<!-- 专业技术档案 -->
+      	<typeAlias alias="AcademicConference" type="com.lachesis.mnisqm.module.profSkillDoc.domain.AcademicConference"/>
+      	<typeAlias alias="Assessment" type="com.lachesis.mnisqm.module.profSkillDoc.domain.Assessment"/>
+      	<typeAlias alias="AwardPunishmentInfo" type="com.lachesis.mnisqm.module.profSkillDoc.domain.AwardPunishmentInfo"/>
+      	<typeAlias alias="ContinuingEducation" type="com.lachesis.mnisqm.module.profSkillDoc.domain.ContinuingEducation"/>
+      	<typeAlias alias="CprAcls" type="com.lachesis.mnisqm.module.profSkillDoc.domain.CprAcls"/>
+      	<typeAlias alias="EducationRecordInspection" type="com.lachesis.mnisqm.module.profSkillDoc.domain.EducationRecordInspection"/>
+      	<typeAlias alias="NurseHirarchicalRegistration" type="com.lachesis.mnisqm.module.profSkillDoc.domain.NurseHirarchicalRegistration"/>
+      	<typeAlias alias="PersonalAssessment" type="com.lachesis.mnisqm.module.profSkillDoc.domain.PersonalAssessment"/>
+      	<typeAlias alias="PositionStatement" type="com.lachesis.mnisqm.module.profSkillDoc.domain.PositionStatement"/>
+      	<typeAlias alias="PreJobTraining" type="com.lachesis.mnisqm.module.profSkillDoc.domain.PreJobTraining"/>
+      	<typeAlias alias="SpecialistNursesExperience" type="com.lachesis.mnisqm.module.profSkillDoc.domain.SpecialistNursesExperience"/>
+    
+      	<!-- 质量检查模块 -->
+      	<typeAlias alias="QualityModel" type="com.lachesis.mnisqm.module.qualityForm.domain.QualityModel"/>
+      	<typeAlias alias="QualityModelDetail" type="com.lachesis.mnisqm.module.qualityForm.domain.QualityModelDetail"/>
+      	<typeAlias alias="QualityFormDetail" type="com.lachesis.mnisqm.module.qualityForm.domain.QualityFormDetail"/>
+      	<typeAlias alias="QualityForm" type="com.lachesis.mnisqm.module.qualityForm.domain.QualityForm"/>
+      	
+    </typeAliases>
+</configuration>	

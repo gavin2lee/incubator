@@ -1,0 +1,17 @@
+.editCheck {
+  .table td {vertical-align: middle;}
+
+  .partial-td {
+    padding: 0;
+
+    input,
+    textarea {
+      border: none;
+    }
+
+    input {min-height: 42px;}
+
+    textarea {max-width: 188px;}
+  }
+
+}

@@ -1,0 +1,2169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	               
+	               
+<mapper namespace="com.anyi.report.db.ReportMapper">
+	<resultMap id="templateMap" type="com.anyi.report.entity.DocTemplate">
+		<id property="templateId" column="template_id" />
+<!-- 		<result property="orderExecTypeCode" column="order_exec_type_code"
+			typeHandler="com.uih.anyi.mnis.order.persist.handler.OrderExecTypeCodeHandler" />
+		<result property="orderExecTypeName" column="order_exec_type_name" 
+			typeHandler="com.uih.anyi.mnis.order.persist.handler.OrderExecTypeNameHandler" />
+ -->
+		<result property="templateName" column="template_name" />
+		<result property="docType" column="doc_type" />
+		<result property="report_type" column="REPORT_TYPE" />
+		<result property="deptCode" column="dept_code" />
+		<result property="showIndex" column="show_index" />
+		<result property="valid" column="valid" />
+		<result property="memo" column="memo" />
+		<result property="templateShowName" column="template_show_name" />
+		<result property="template_file_name" column="template_file_name"/>
+		<result property="orientation" column="orientation"/>
+		<result property="createTime" column="create_time"/>
+		<result property="width" column="width"/>
+		<result property="height" column="height"/>
+		<collection property="bands" resultMap="templateBandMap" />
+	</resultMap>
+
+	<resultMap id="menuTreeMap" type="com.anyi.report.entity.DocTemplate">
+		<result property="templateId" column="template_id" />
+		<result property="templateName" column="template_name" />
+		<result property="deptCode" column="dept_code" />
+		<result property="showIndex" column="show_index" />
+		<result property="valid" column="valid" />
+		<result property="memo" column="memo" />
+		<result property="templateShowName" column="template_show_name" />
+		<result property="template_file_name" column="template_file_name"/>
+		<result property="width" column="width"/>
+		<result property="height" column="height"/>
+	</resultMap>
+			
+	<resultMap id="templateBandMap" type="com.anyi.report.entity.DocBand">
+		<id property="bandId" column="band_id" />
+		<result property="bandName" column="band_name" />
+		<result property="posY" column="band_pos_y" />
+		<result property="height" column="band_height" />
+		<collection property="items" resultMap="templateItemMap" />
+	</resultMap>
+	
+	<resultMap id="templateItemMap" type="com.anyi.report.entity.DocTemplateItem">
+		<id property="itemId" column="item_id" />
+		<result property="parentBandId" column="band_id" />
+		<result property="item_name" column="item_name" />
+		<result property="posX" column="item_pos_x" />
+		<result property="posY" column="item_pos_y" />
+		<result property="width" column="item_width" />
+		<result property="height" column="item_height" />
+		<result property="align" column="align" />
+		<result property="margin" column="margin" />
+		<result property="isbold" column="isbold" />
+		<result property="size" column="size" />
+		<result property="direction" column="direction" />
+		<result property="type" column="item_type" />
+		<result property="image_url" column="image_url" />
+		<result property="if_underline" column="if_underline" />
+		<result property="required" column="required" />
+		<result property="inputType" column="INPUT_TYPE" />
+		<result property="data_type" column="DATA_TYPE" />
+		<result property="max_value" column="MAX_VALUE" />
+		<result property="min_value" column="MIN_VALUE" />
+		<result property="if_show" column="IF_SHOW" />
+		<result property="event_type" column="EVENT_TYPE" />
+		<result property="precision" column="PRECISION" />
+		<result property="readonly_flag" column="READONLY_FLAG" />				
+		<result property="metadata_name" column="metadata_name" />
+		<result property="metadata_simple_name" column="metadata_simple_name" />
+		<result property="default_value" column="default_value"/>
+		<result property="score" column="score"/>
+		<result property="unit" column="unit" />
+		<result property="if_rel" column="if_rel" />
+		<result property="target" column="target" />
+		<result property="saveRequired" column="save_required"/>
+		<result property="index" column="ITEM_INDEX"/>
+		<collection property="options" resultMap="templateItemOptionMap" />
+		<collection property="checkbox" resultMap="templateItemCheckBoxMap" />		
+	</resultMap>
+
+	<resultMap id="templateItemOptionMap" type="com.anyi.report.entity.DocTemplateItemOption">
+		<result property="code" column="option_code" />
+		<result property="value" column="option_name" />
+		<result property="metadata_name_pinyin" column="metadata_name_pinyin" />
+		<result property="children" column="children" />
+		<result property="option_ord" column="option_ord" />
+		<result property="option_input_name" column="option_input_name" />
+		<result property="option_input_unit" column="option_input_unit" />
+	</resultMap>
+	
+	<resultMap id="templateItemCheckBoxMap" type="com.anyi.report.entity.DocTemplateItemCheckBox">
+		<result property="checkbox_code" column="checkbox_code" />
+		<result property="show_type" column="show_type" />
+		<result property="checkbox_name" column="checkbox_name" />
+		<result property="checkbox_ord" column="checkbox_ord" />
+		<result property="data_type" column="checkbox_data_type"/>
+		<collection property="checkbox_son" resultMap="templateItemCheckBoxSonMap" />
+		<collection property="checkbox_text" resultMap="templateItemCheckBoxTextMap" />
+	</resultMap>	
+	
+	<resultMap id="templateItemCheckBoxSonMap" type="com.anyi.report.entity.DocTemplateItemCheckBoxSon">
+		<result property="checkbox_code_son" column="checkbox_code_son" />
+		<result property="checkbox_name_son" column="checkbox_name_son" />
+		<result property="checkbox_son_ord" column="checkbox_son_ord" />
+	</resultMap>	
+	
+	<resultMap id="templateItemCheckBoxTextMap" type="com.anyi.report.entity.DocTemplateItemCheckBoxText">
+		<result property="text_name" column="text_name" />
+		<result property="text_unit" column="text_unit" />
+		<result property="text_data_type" column="text_data_type" />
+		<result property="checkbox_text_code" column="checkbox_text_code" />
+		<result property="width" column="width_text" />
+	</resultMap>
+	
+	<!-- 出入量累计的MAP -->
+	<resultMap type="java.util.Map" id="backDayInOut7Map">
+		<result property="templateItemId" column="TEMPLATE_ITEM_ID" />
+		<result property="recordValue" column="RECORD_VALUE" />
+	</resultMap>
+	
+	<!-- 获取模板节点信息 -->
+	<select id="getTemplateList" resultMap="templateMap">
+		select 
+		t.template_id, 
+		t.template_name,
+		t.doc_type,
+		t.REPORT_TYPE,
+		t.dept_code,
+		t.show_index,
+		t.valid,
+		t.memo,
+		t.template_show_name,
+		t.template_file_name,
+		t.orientation,
+		t.create_time,
+		t.width,
+		t.height,
+		b.band_id,
+		b.band_name,
+		b.band_pos_y,
+		b.band_height,
+		i.item_id,
+		i.band_id,
+		i.item_name,
+		i.item_pos_x,
+		i.item_pos_y,
+		i.item_width,
+		i.item_height,
+		i.align,
+		i.margin,
+		i.isbold,
+		i.size,
+		i.direction,
+		i.item_type,
+		i.image_url,
+		i.item_index,
+		i.if_underline,
+		m.required,
+		m.input_type,
+		m.data_type,
+		m.max_value,
+		m.min_value,
+		m.if_show,
+		m.event_type,
+		m.precision,
+		m.readonly_flag,
+		m.metadata_name,
+		m.metadata_simple_name,
+		m.default_value,
+		m.unit,
+		m.if_rel,
+		m.target,
+		m.save_required,
+		op.metadata_code option_code,
+		op.metadata_simple_name option_name,
+		op.metadata_name_pinyin,
+		checkbox.show_type,
+		checkbox.metadata_code checkbox_code,
+		checkbox.metadata_simple_name checkbox_name,
+		checkbox.data_type checkbox_data_type,
+		checkbox.ord as checkbox_ord,
+		
+		checkbox_son.metadata_code checkbox_code_son,
+		checkbox_son.metadata_simple_name checkbox_name_son,
+		
+		checkbox_text.metadata_simple_name text_name,
+		checkbox_text.unit text_unit,
+		checkbox_text.width as width_text,
+		checkbox_text.metadata_code checkbox_text_code,
+		
+		op.ord as option_ord,
+		op.metadata_simple_name,
+		op.unit,
+		op.children,
+		checkbox_son.ord as checkbox_son_ord,
+		checkbox_text.ord as checkbox_text_ord
+		from doc_report_template t 
+		left join doc_report_band b on t.template_id = b.template_id 
+		left join doc_report_template_item i on b.band_id=i.band_id
+		left join doc_metadata m on i.item_name = m.metadata_code 
+		left join doc_metadata op on m.metadata_code = op.parent_code and (m.data_type='OPT' or m.data_type='MONOIDAL_SCORE' or m.data_type='MOPT') and  op.is_secode is null 
+		left join doc_metadata checkbox on 
+		(
+		 (m.metadata_code = checkbox.parent_code and( m.data_type='SEL'  or  m.data_type='MSEL') and  checkbox.is_secode is null)
+		 or
+		 (checkbox.is_dyna='Y' and i.item_name in('TITLE_ONE','TITLE_TWO','TITLE_THREE','TITLE_FOUR','TITLE_FIVE') ) 
+		)
+		left join doc_metadata checkbox_son on checkbox.metadata_code = checkbox_son.parent_code and  checkbox_son.is_secode='S'
+		left join doc_metadata checkbox_text on checkbox.metadata_code = checkbox_text.parent_code  and  checkbox_text.is_secode='T'
+		WHERE i.item_index IS NOT NULL
+		
+		<if test="templateId!= null"> AND T.TEMPLATE_ID=#{templateId} </if>
+		 order by i.item_index ASC,
+		op.ord ASC,
+		checkbox.ord ASC,
+		checkbox_son.ord ASC,
+		checkbox_text.ord ASC
+	</select>	
+		
+	<!-- 获取动态列的数据源  start-->	
+	<resultMap type="com.anyi.report.entity.DynaMetadata" id="DynaItemDataMap">
+		<result property="checkbox_code" column="METADATA_CODE"/>
+		<result property="checkbox_name" column="METADATA_NAME"/>
+		<result property="checkbox_ord" column="ord"/>
+	</resultMap>	
+	<select id="getDynaItemData" resultMap="DynaItemDataMap">
+		SELECT A.METADATA_CODE,A.METADATA_NAME,A.ORD FROM doc_metadata A where parent_code=#{checkbox_code}
+	</select>
+	<!-- 获取动态列的数据源  end-->			
+			
+	<resultMap id="recordDataList" type="com.anyi.report.entity.RecordDataList">
+		<result property="record_id" column="record_id_detail"/>
+		<collection property="list_detail" resultMap="listDetailMap" />
+	</resultMap>
+	<resultMap id="listDetailMap" type="com.anyi.report.entity.RecordDataListDetail">
+		<result property="record_id" column="record_id" />
+		<result property="data_key" column="data_key" />
+		<result property="data_value" column="data_value" />
+		<collection property="list_select" ofType="com.anyi.report.entity.DynaMetadata"
+		select="list_select" column="{data_key=data_key,record_id=record_id}">
+		</collection>		
+	</resultMap>	
+	<select id="list_select" parameterType="java.util.HashMap" resultMap="DynaItemDataMap">
+		<if test="data_key=='DATA_ONE' or data_key=='DATA_TWO' or data_key=='DATA_THREE' or data_key=='DATA_FOUR' or data_key=='DATA_FIVE' ">
+			select c.metadata_code,c.metadata_name,c.ord from doc_metadata a,doc_report_data_item b,doc_metadata c
+			where a.metadata_code=b.record_value and record_id=#{record_id} and b.template_item_id=#{data_key} 
+			and c.parent_code=a.metadata_code
+		</if>	
+		<if test="data_key!='DATA_ONE' and data_key!='DATA_TWO' and data_key!='DATA_THREE' and data_key!='DATA_FOUR' and data_key!='DATA_FIVE' ">
+			select '' metadata_code,'' metadata_name,'' ord from doc_metadata a where 1=2
+		</if>							
+	</select>
+
+	<resultMap id="ItemList" type="com.anyi.report.entity.RecordDataItemList">
+		<result property="template_id" column="template_id"/>
+		<result property="inpatient_no" column="inpatient_no"/>
+		<result property="record_id" column="record_id"/>
+		<result property="approve_status" column="approve_status"/>
+		<collection property="list_item" resultMap="recordDataItem"></collection>
+	</resultMap>
+	<resultMap id="recordDataItem" type="com.anyi.report.entity.RecordDataItem">
+		<result property="record_item_id" column="record_item_id"/>
+		<result property="template_item_id" column="template_item_id"/>
+		<result property="record_id" column="record_id"/>
+		<result property="record_value" column="record_value"/>
+		<result property="template_item_id" column="template_item_id"/>
+		<result property="parent_id" column="parent_id"/>
+		 <!-- <association property="parent_id" column="parent_id"
+            javaType="com.anyi.report.entity.RecordDataItem" select="selectListItems"/> -->
+		<collection property="list_item"  ofType="com.anyi.report.entity.RecordDataItem"  
+         select="selectListItems" column="{record_item_id=record_item_id,record_id=record_id}"   >  
+        </collection>
+	</resultMap>
+
+	<!-- 
+	<resultMap id="recordDataItemList" type="com.anyi.report.entity.RecordDataItemList">
+		<result property="template_item_id" column="template_item_id_list"/>
+		<result property="record_value" column="record_value_list"/>
+		<collection property="list_son" resultMap="recordDataItemSon" />
+	</resultMap>
+	<resultMap id="recordDataItemSon" type="com.anyi.report.entity.RecordDataItemSon">
+		<result property="template_item_id" column="template_item_id_son"/>
+		<result property="record_value" column="record_value_son"/>
+	</resultMap>
+	 -->
+	<resultMap id="templateRecord" type="com.anyi.report.entity.DocRecord">
+		<id property="recordId" column="recordId" />
+		<result property="template_id" column="template_id" />
+		<result property="inpatient_no" column="inpatient_no" />
+		<result property="print_show" column="show_type" />
+		<result property="date_list" column="date_list" />
+		<collection property="data_list"  ofType="com.anyi.report.entity.RecordDataList"  
+         select="selectList" column="{template_id=template_id,inpatient_no=inpatient_no,date_list=date_list,recordId=recordId}"   >  
+        </collection>  
+        <collection property="data_item_list"  ofType="com.anyi.report.entity.RecordDataItemList"  
+         select="selectItems" column="{template_id=template_id,inpatient_no=inpatient_no,date_list=date_list,recordId=recordId}"   >  
+        </collection>
+        <collection property="dyna_list"  ofType="com.anyi.report.entity.RecordDataListDetail"  
+         select="selectDynas" column="{template_id=template_id,inpatient_no=inpatient_no,date_list=date_list,recordId=recordId}"   >  
+        </collection>
+	</resultMap>
+	
+	<!-- <resultMap id="specialMap" type="com.anyi.report.vo.SpecialVo">
+		<id property="record_key" column="record_key" />
+		<result property="record_value" column="record_value" />
+	</resultMap> -->
+	
+	<!-- 查询模板中生命体征、专科评估元素 -->
+	<select id="getSpecials" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		select count(1)  from dbo.doc_report_template rt
+		left join dbo.doc_report_band rb on rt.template_id = rb.template_id
+		left join dbo.doc_report_template_item rti on rb.band_id=rti.band_id
+		where rt.template_id=#{template_id} 
+		and rti.item_name in (select ITEM_CODE from dic_body_sign)  
+		
+	</select>
+	
+	
+	<!-- 查询模板历史保存记录 -->
+	<select id="getTempDatas" resultMap="templateRecord" >
+		select #{recordId} recordId,#{template_id} template_id,#{inpatient_no} inpatient_no,#{date_list} date_list, show_type from DOC_PRINT_SHOW
+	</select>
+	<!-- 查询数据列表 --> 
+	<select id="selectList"  parameterType="java.util.HashMap" resultType="com.anyi.report.entity.RecordDataList" resultMap="recordDataList" >
+		select m.record_id record_id_detail,
+		m.record_id,
+		l.template_item_id data_key,
+		l.record_value data_value
+		from doc_report_data m 
+		left join doc_report_data_item l on m.record_id=l.record_id and l.parent_id='0'
+		<if test="date_list!=null">
+			left join doc_report_data_item l1 on l.record_id=l1.record_id 
+			and l1.template_item_id='DATE_LIST' and l1.record_value=#{date_list}
+		</if>
+		where  
+		<if test="recordId!=null">
+			m.record_id=#{recordId}
+		</if>
+		<if test="template_id!=null">
+			<if test="recordId!=null">
+				and
+			</if>
+			m.template_id=#{template_id}
+		</if>
+		 and m.inpatient_no=#{inpatient_no} and m.valid='0'
+		<if test="date_list!=null">
+			and l1.record_id is not null
+		</if>
+		<!-- <if test="recordId!=null">
+			and m.record_id=#{recordId}
+		</if> -->
+		and l.template_item_id is not null
+		and l.template_item_id not in('TITLE_ONE','TITLE_TWO','TITLE_THREE','TITLE_FOUR','TITLE_FIVE') 
+		order by 
+		<if test="date_list!=null">
+			(case l.TEMPLATE_ITEM_ID when 'TIME_LIST' then l.record_value else '24:00'	end 
+			) asc
+		</if> 
+		<if test="date_list==null">
+			(
+				case l.TEMPLATE_ITEM_ID when 'DATE_LIST' then l.record_value
+				else '9999-01-01' end
+			) asc
+		</if>
+
+		
+						
+		
+	</select>
+	<!-- 查询基本数据 -->
+	<select id="selectItems" parameterType="java.util.HashMap" resultMap="ItemList" >
+		select 
+		a.inpatient_no,
+		a.template_id,
+		b.record_value,
+		b.template_item_id,
+		b.record_id,
+		b.record_item_id,
+		b.parent_id,
+		a.approve_status
+		from 
+		doc_report_data a ,doc_report_data_item b
+		where a.record_id=b.record_id
+		<if test="recordId!=null">
+		 and a.record_id=#{recordId}
+		</if>		
+		<if test="date_list!=null">
+			and a.record_id in
+			( select record_id from doc_report_data_item where template_item_id='DATE_LIST' and record_value=#{date_list} )
+		</if>
+		and a.template_id=#{template_id} and a.inpatient_no=#{inpatient_no} and a.valid='0'
+		and b.parent_id is null
+		order by b.record_id
+	</select>	
+		<!-- 
+		<select id="selectItems" parameterType="java.util.HashMap" resultMap="recordDataItem" >	
+		select i.record_value,
+		i.template_item_id,i.record_id,i.record_item_id,i.parent_id from doc_report_data_item i
+		where i.record_id 
+		<if test="recordId!=null">
+		=#{recordId}
+		</if>
+		<if test="recordId==null   ">
+		in(
+		select MAX(m.record_id) from doc_report_data m 
+			<if test="date_list!=null">
+				left join doc_report_data_item i1 on m.record_id=i1.record_id 
+				and i1.template_item_id='DATE_LIST' and i1.record_value=#{date_list}		
+			</if>
+		where  m.template_id=#{template_id} and m.inpatient_no=#{inpatient_no} and m.valid='0') 
+		</if>
+		and i.parent_id is null
+		</select> 
+		 -->
+	    
+	<!-- 查询动态列 -->
+	<select id="selectDynas" parameterType="java.util.HashMap"  resultMap="listDetailMap" >
+		select i.record_value data_value,
+		i.template_item_id data_key,i.record_id from doc_report_data_item i
+		where i.record_id =
+		(select MAX(m.record_id) from doc_report_data m 
+		where  m.template_id=#{template_id} and m.inpatient_no=#{inpatient_no} and m.valid='0') 
+		and i.template_item_id in('TITLE_ONE','TITLE_TWO','TITLE_THREE','TITLE_FOUR','TITLE_FIVE')		
+		<!-- 
+		select i.record_value data_value,
+		i.template_item_id data_key from doc_report_data_item i
+		where i.record_id =
+		<if test="recordId!=null">
+		#{recordId}
+		</if>
+		<if test="recordId==null">
+		(select MAX(m.record_id) from doc_report_data m 
+			<if test="date_list!=null">
+				left join doc_report_data_item i1 on m.record_id=i1.record_id 
+					and i1.template_item_id='DATE_LIST' and i1.record_value=#{date_list}				
+			</if>
+		where  m.template_id=#{template_id} and m.inpatient_no=#{inpatient_no} and m.valid='0') 
+		</if>
+		and i.template_item_id in('TITLE_ONE','TITLE_TWO','TITLE_THREE','TITLE_FOUR','TITLE_FIVE')		
+		 -->
+
+	</select>
+	
+	<!-- 递归查询子节点数据 -->
+	<select id="selectListItems" parameterType="java.util.HashMap" resultType="com.anyi.report.entity.RecordDataItem"  resultMap="recordDataItem" >
+		select i.record_value,
+		i.template_item_id,i.record_id,i.record_item_id,i.parent_id from doc_report_data_item i
+		where i.record_id =#{record_id} and i.parent_id=#{record_item_id}
+	</select>
+
+	<insert id="addTemplate" parameterType="com.anyi.report.entity.DocTemplate">
+		insert into doc_report_template (template_id,template_name,doc_type,dept_code,show_index,valid,memo,template_show_name,template_file_name,create_time,orientation,width,height,report_type) 
+		values 
+		(#{templateId},#{templateName},#{docType},#{deptCode},#{showIndex},#{valid},#{memo},#{templateShowName},#{template_file_name},#{createTime},#{orientation},#{width},#{height},#{report_type})
+	</insert>
+	
+	<insert id="addTemplateBand" parameterType="com.anyi.report.entity.DocBand">
+		insert into doc_report_band (band_id,template_id,band_name,band_pos_y,band_height) 
+		values 
+		(#{bandId},#{parentTemplateId},#{bandName},#{posY},#{height})
+	</insert>
+	
+	<insert id="addTemplateItem" parameterType="com.anyi.report.entity.DocTemplateItem">
+		insert into doc_report_template_item(item_id,band_id,item_pos_x,item_pos_y,item_width,item_height,item_name,item_type,item_index,align,margin,isbold,size,direction,image_url,if_underline)
+		values 
+		(#{itemId},#{parentBandId},#{posX},#{posY},#{width},#{height},#{item_name},#{type},#{index},#{align},#{margin},#{isbold},#{size},#{direction},#{image_url},#{if_underline})
+	</insert>
+	
+	<insert id="saveRecord" parameterType="com.anyi.report.entity.DocRecord">
+		insert into doc_report_data (record_id,template_id,inpatient_no,create_time,date_list,time_list,create_person,ORDER_CODE,is_header) values (#{recordId},#{template_id},#{inpatient_no}, #{createTime},cast(#{date_list} as date),cast(#{time_list} as time),#{create_person},#{order_code},#{isHeader})
+	</insert>
+	<update id="updateRecord" parameterType="com.anyi.report.entity.DocRecord">
+		update doc_report_data set modify_time=#{modify_time},date_list=#{date_list},time_list=#{time_list} where record_id=#{recordId}
+	</update>
+	<insert id="saveRecordItem" parameterType="com.anyi.report.entity.RecordDataItem" useGeneratedKeys="true" keyProperty="record_item_id" >
+		insert into doc_report_data_item (record_id,template_item_id,record_value,parent_id) values (#{record_id}, #{template_item_id},#{record_value},#{parent_id})
+	</insert>
+	<update id="updateRecordItem"  parameterType="com.anyi.report.entity.RecordDataItem">
+		update doc_report_data_item set record_value=#{record_value} where record_item_id=#{record_item_id}
+	</update>
+	<!-- 
+	<insert id="saveRecordList" parameterType="com.anyi.report.entity.RecordDataListForSave">
+		insert into doc_report_data_list (record_id,data_key,data_value,data_index) values (#{record_id},#{data_key}, #{data_value},#{data_index})
+	</insert>
+	<update id="updateRecordList"  parameterType="com.anyi.report.entity.RecordDataListForSave">
+		update doc_report_data_list set data_value=#{data_value} where record_item_id=#{record_item_id}
+	</update>
+	<delete id="delete_data_list"  parameterType="com.anyi.report.entity.DocRecord">
+		delete from doc_report_data_list where record_id=#{recordId}
+	</delete>
+	 -->
+	<delete id="delete_data_item" parameterType="String">
+		delete from doc_report_data_item where record_id=#{param1}
+	</delete>
+	
+	<delete id="delete_data"  parameterType="String">
+		delete from doc_report_data where record_id=#{param1}
+	</delete>
+	
+
+	<!-- begin by qingzhi.liu 2016.01.19  -->
+	<resultMap type="com.anyi.report.vo.LeftTreeVo" id="LeftTreeMap">
+		<result property="type_id" column="type_id"/>
+		<result property="type_name" column="type_name"/>
+		<result property="pat_id" column="pat_id"/>
+		<result property="type" column="type"/>
+		<collection property="data"  ofType="com.anyi.report.vo.TemplateVo"  
+         select="selectTemplate" column="{doc_type=type_id,inpatient_no=pat_id,type=type,dept_code=dept_code}"   >  
+        </collection>  
+	</resultMap>	
+	<resultMap type="com.anyi.report.vo.TemplateVo" id="TemplateMapTree">
+		<result property="template_id" column="template_id"/>
+		<result property="template_name" column="template_show_name"/>
+		<result property="record_id" column="record_id"/>
+		<result property="pat_id" column="pat_id"/>
+		<result property="type" column="type"/>
+		<collection property="data"  ofType="com.anyi.report.vo.TimeTreeVo"  
+         select="selectDate" column="{template_id=template_id,inpatient_no=pat_id,type=type}"   >  
+        </collection>
+	</resultMap>	
+	<resultMap type="com.anyi.report.vo.TimeTreeVo" id="TimeTreeMap">
+		<result property="template_id" column="template_id"/>
+		<result property="record_id" column="record_id"/>
+		<result property="data_value" column="data_value"/>
+		<result property="pat_id" column="pat_id"/>
+		<result property="type" column="type"/>
+		<collection property="data"  ofType="com.anyi.report.vo.TimeTreeVo"  
+         select="selectTime" column="{template_id=template_id,inpatient_no=pat_id,data_value=data_value,type=type}"   >  
+        </collection>
+	</resultMap>
+	
+	<!-- 获取表结构 -->
+	<select id="getTrees" parameterType="java.util.HashMap" resultMap="LeftTreeMap">
+		select doc_type_id type_id, doc_type_name type_name,#{pat_id} pat_id,#{type} type,#{dept_code} dept_code from doc_type 
+	</select>
+	
+	<select id="selectTemplate" parameterType="java.util.HashMap" resultType="com.anyi.report.vo.TemplateVo" resultMap="TemplateMapTree"  >  
+		
+ 		<if test="doc_type==1">   <!-- 临床护理 -->
+ 			select   t.template_id, t.template_show_name,r.record_id,'' pat_id,#{type} type from doc_report_template t
+			left join dbo.doc_report_data r on t.template_id=r.template_id 
+			<if test="inpatient_no!= null"> AND r.INPATIENT_NO=#{inpatient_no} </if>
+	 		where doc_type=#{doc_type} and t.valid=0
+	 		<!-- <if test="inpatient_no!= null"> AND r.INPATIENT_NO=#{inpatient_no} </if> -->
+	 		<if test="inpatient_no==null"> AND r.template_id is null </if>
+ 		</if>
+ 		
+ 		<if test="doc_type==2">  <!-- 护理记录 -->
+ 			select   t.template_id, t.template_show_name,#{inpatient_no} pat_id,#{type} type from doc_report_template t
+	 		where doc_type=#{doc_type} 
+ 		</if>
+ 		<if test="dept_code!=null">
+ 		     and (t.dept_code=#{dept_code} or t.dept_code='0')
+ 		</if>
+    </select>
+    <!-- 查询日期 -->
+    <select id="selectDate" parameterType="java.util.HashMap" resultType="com.anyi.report.vo.TimeTreeVo" resultMap="TimeTreeMap" >
+    	<if test="inpatient_no!= null">
+    		<if test="type=='NDA'"> 
+    			select  t.template_id,rl.record_value+' '+rt.record_value data_value,#{inpatient_no} pat_id,#{type} type,rl.record_id from doc_report_template t
+				left join dbo.doc_report_data r on t.template_id=r.template_id AND r.INPATIENT_NO=#{inpatient_no}
+				left join dbo.doc_report_data_item rl on r.record_id=rl.record_id
+				left join dbo.doc_report_data_item rt on r.record_id = rt.record_id and rt.template_item_id='TIME_LIST'
+			 	where t.template_id=#{template_id} and rl.template_item_id='DATE_LIST' and t.valid=0 
+    		</if>
+    		<if test="type=='PC'">
+    			select  t.template_id,rl.record_value data_value,#{inpatient_no} pat_id,#{type} type from doc_report_template t
+				left join dbo.doc_report_data r on t.template_id=r.template_id AND r.INPATIENT_NO=#{inpatient_no}
+				left join dbo.doc_report_data_item rl on r.record_id=rl.record_id
+			 	where t.template_id=#{template_id} and rl.template_item_id='DATE_LIST' and t.valid=0 
+			 	group by t.template_id,rl.record_value
+    		</if>
+    	</if>
+    	
+    </select>
+    <!-- 查询时间 -->  
+    <select id="selectTime" parameterType="java.util.HashMap" resultType="com.anyi.report.vo.TimeTreeVo" resultMap="TimeTreeMap" >
+    	<if test="data_value!=null and type=='PC'">
+	    	select record_id,record_value data_value,#{template_id} template_id,#{inpatient_no} pat_id,#{type} type 
+	    	from dbo.doc_report_data_item l where record_id 
+			in(select  r.record_id from doc_report_template t
+			left join dbo.doc_report_data r on t.template_id=r.template_id 
+			<if test="inpatient_no!= null"> AND r.INPATIENT_NO=#{inpatient_no} </if>
+			left join dbo.doc_report_data_item rl on r.record_id=rl.record_id
+		 	where r.template_id=#{template_id} and rl.template_item_id='DATE_LIST' and record_value=#{data_value} and t.valid=0  
+		 	group by t.template_id,r.record_id,rl.record_value)
+		 	and template_item_id='TIME_LIST'
+			order by l.record_value asc		 	
+    	</if>
+    	<!-- 查询一个空的东东，不然报错 -->
+    	<if test="data_value!=null and type=='NDA'">
+	    	select record_id,record_value data_value,#{template_id} template_id,#{inpatient_no} pat_id,#{type} type 
+	    	from dbo.doc_report_data_item where 1=2
+    	</if>  
+    	<if test="data_value==null or type==null ">
+	    	select record_id,record_value data_value,#{template_id} template_id,#{inpatient_no} pat_id,#{type} type 
+	    	from dbo.doc_report_data_item where 1=2
+    	</if>  
+    	  	
+    </select>  
+    <!-- end by qingzhi.liu  2016.01.19-->
+    
+	<!--  获取所有记录，组织护理文书的树结构 start -->
+	<resultMap type="com.anyi.report.entity.DocTreeType" id="queryDataForTree">
+		<result property="type_id" column="type_id"/>
+		<result property="type_name" column="type_name"/>
+		<result property="show_type" column="SHOW_TYPE"/>
+		<collection property="template_list" resultMap="templateListMap"></collection>
+	</resultMap>
+	<resultMap type="com.anyi.report.entity.DcoTreeTemplate" id="templateListMap">
+		<result property="template_id" column="template_id"/>
+		<result property="template_name" column="template_show_name"/>
+		<result property="report_type" column="report_type"/>
+		<collection property="record_list" resultMap="recordListMap"></collection>
+	</resultMap>
+	<resultMap type="com.anyi.report.entity.DocTreeRecord" id="recordListMap">
+		<result property="record_id" column="record_id"/>
+		<result property="date_list" column="date_list"/>
+		<result property="time_list" column="time_list"/>
+	</resultMap>
+	<select id="getDataForTree" parameterType="java.util.HashMap" resultMap="queryDataForTree">
+		SELECT 
+		A.DOC_TYPE_ID TYPE_ID,
+		A.DOC_TYPE_NAME TYPE_NAME,
+		A.SHOW_TYPE,
+		B.TEMPLATE_ID,
+		B.TEMPLATE_SHOW_NAME,
+		B.REPORT_TYPE,
+		C.RECORD_ID,
+		C.DATE_LIST,
+		C.TIME_LIST
+		FROM DOC_TYPE A
+		INNER JOIN DOC_REPORT_TEMPLATE B ON A.DOC_TYPE_ID=B.DOC_TYPE
+		LEFT JOIN DOC_REPORT_DATA C ON B.TEMPLATE_ID=C.TEMPLATE_ID AND  C.INPATIENT_NO=#{pat_id}
+				AND (C.IS_HEADER != '1' OR C.IS_HEADER IS NULL)
+		WHERE (B.DEPT_CODE=#{dept_code} OR B.DEPT_CODE='0')
+		ORDER BY A.DOC_TYPE_ID,B.SHOW_INDEX,C.DATE_LIST DESC,C.TIME_LIST DESC
+	</select>
+	
+	<select id="getDataForHistoryTree" parameterType="java.util.HashMap" resultMap="queryDataForTree">
+		SELECT * FROM(
+		SELECT 
+		A.DOC_TYPE_ID TYPE_ID,
+		A.DOC_TYPE_NAME TYPE_NAME,
+		A.SHOW_TYPE,
+		B.TEMPLATE_ID,
+		B.TEMPLATE_SHOW_NAME,
+		B.REPORT_TYPE,
+		C.RECORD_ID,
+		C.DATE_LIST,
+		C.TIME_LIST,
+		B.SHOW_INDEX
+		FROM DOC_TYPE A
+		INNER JOIN DOC_REPORT_TEMPLATE B ON A.DOC_TYPE_ID=B.DOC_TYPE
+		INNER JOIN DOC_REPORT_DATA_HIS C ON B.TEMPLATE_ID=C.TEMPLATE_ID AND  C.INPATIENT_NO=#{pat_id}
+				  AND (C.IS_HEADER != '1' OR C.IS_HEADER IS NULL)
+		UNION
+		SELECT 
+		A.DOC_TYPE_ID TYPE_ID,
+		A.DOC_TYPE_NAME TYPE_NAME,
+		A.SHOW_TYPE,
+		B.TEMPLATE_ID,
+		B.TEMPLATE_SHOW_NAME,
+		B.REPORT_TYPE,
+		C.RECORD_ID,
+		C.DATE_LIST,
+		C.TIME_LIST,
+		B.SHOW_INDEX
+		FROM DOC_TYPE A
+		INNER JOIN DOC_REPORT_TEMPLATE B ON A.DOC_TYPE_ID=B.DOC_TYPE
+		INNER JOIN DOC_REPORT_DATA C ON B.TEMPLATE_ID=C.TEMPLATE_ID AND  C.INPATIENT_NO=#{pat_id}
+				  AND (C.IS_HEADER != '1' OR C.IS_HEADER IS NULL)
+		) r
+		ORDER BY r.TYPE_ID,r.SHOW_INDEX,r.DATE_LIST DESC,r.TIME_LIST DESC
+		
+	</select>
+	<select id="getDataOfTransferPatient" parameterType="java.util.HashMap" resultMap="queryDataForTree">
+		SELECT
+		A.DOC_TYPE_ID TYPE_ID,
+		A.DOC_TYPE_NAME TYPE_NAME,
+		A.SHOW_TYPE,
+		B.TEMPLATE_ID,
+		B.TEMPLATE_SHOW_NAME,
+		B.REPORT_TYPE,
+		C.RECORD_ID,
+		C.DATE_LIST,
+		C.TIME_LIST
+		FROM DOC_TYPE A
+		INNER JOIN DOC_REPORT_TEMPLATE B ON A.DOC_TYPE_ID=B.DOC_TYPE
+		LEFT JOIN DOC_REPORT_DATA C ON B.TEMPLATE_ID=C.TEMPLATE_ID AND  C.INPATIENT_NO=#{pat_id}
+		AND (C.IS_HEADER != '1' OR C.IS_HEADER IS NULL)
+		WHERE (B.DEPT_CODE=#{dept_code} OR B.DEPT_CODE='0')
+		ORDER BY A.DOC_TYPE_ID,B.SHOW_INDEX,C.DATE_LIST DESC,C.TIME_LIST DESC
+	</select>
+	<!--  获取所有记录，组织护理文书的树结构 end -->
+
+	<select id="getPrintTemplateByID" parameterType="java.util.List" resultMap="templateMap">
+		SELECT t.template_id,
+		t.template_name,
+		t.doc_type,
+		t.dept_code,
+		t.show_index,
+		t.valid,
+		t.memo,
+		t.template_show_name,
+		t.template_file_name,
+		t.orientation,
+		t.create_time,
+		t.width,
+		t.height
+		FROM DOC_REPORT_TEMPLATE t
+		WHERE t.template_id LIKE 'print%'
+		AND SUBSTRING(t.template_id, CHARINDEX('_', t.template_id)+1, LEN(t.template_id)) in
+		<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</select>
+	
+	<!-- PrintDataMap-start -->
+	<resultMap type="com.anyi.report.entity.PrintModelMain" id="PrintDataMap">
+		<id property="template_id" column="template_id" />
+		<result property="template_file_name" column="template_file_name"/>
+		<collection property="data_list" resultMap="DataListPrint" />
+		<collection property="data_item" resultMap="DataItemPrint" />	
+	</resultMap>
+	<resultMap id="DataListPrint" type="com.anyi.report.entity.PrintModelList">
+		<id property="record_id" column="record_id"/>
+		<collection property="list_detail" resultMap="list_detail_map"></collection>
+	</resultMap>
+	<resultMap type="com.anyi.report.entity.PrintModelListDetail" id="list_detail_map">
+		<result property="data_key" column="data_key"/>
+		<result property="data_value" column="data_value"/>
+		<result property="data_type" column="data_type_l"/>
+		<result property="metadata_name" column="METADATA_NAME"/>
+		<result property="item_type" column="ITEM_TYPE"/>
+		<result property="ord" column="ORD"/>
+		<collection property="list_ord" resultMap="list_ord_map" />
+	</resultMap>
+	<resultMap type="com.anyi.report.entity.PrintModelListDetailOrd" id="list_ord_map">
+		<result property="ord" column="ord"/>
+		<result property="metadata_code" column="metadata_code_ord"/>
+		<result property="metadata_name" column="metadata_name_ord"/>
+	</resultMap>	
+	<resultMap id="DataItemPrint" type="com.anyi.report.entity.PrintModelItem">
+		<result property="record_id" column="record_id_item"/>
+		<result property="value" column="record_value_item"/>
+		<result property="data_type" column="data_type_i"/>
+		<result property="item_id" column="item_id_i"/>
+		<result property="option_name" column="OPTION_NAME_i"/>
+		<collection property="checkbox_item" resultMap="checkbox_item_map" />
+	</resultMap>
+	<resultMap id="checkbox_item_map" type="com.anyi.report.entity.PrintModelCheckBox">
+		<result property="checkbox_name" column="checkbox_name_i"/>
+		<result property="checkbox_code" column="checkbox_code_i"/>
+		<result property="checkbox_value" column="checkbox_value"/>
+	</resultMap>
+		
+	<!-- PrintDataMap-end -->
+	
+	<!-- 根据模板的id查询护理记录单列表中所有的数据节点 -->
+	<select id="get_item_list"  parameterType="java.util.HashMap" resultType="java.lang.String">
+		SELECT ITEM_NAME FROM DOC_REPORT_TEMPLATE_ITEM
+		WHERE BAND_ID IN(
+		SELECT BAND_ID FROM DOC_REPORT_BAND WHERE TEMPLATE_ID=#{template_id}
+		AND BAND_ID LIKE '%detail'
+		)	
+		ORDER BY ITEM_INDEX	
+	</select>
+	<resultMap id="dataMapPrintMap" type="com.anyi.report.entity.DocReportPrintData">
+		<result property="record_id" column="RECORD_ID"/>
+		<result property="patID" column="INPATIENT_NO"/>
+		<result property="templateID" column="TEMPLATE_ID"/>
+		<result property="dateList" column="DATE_LIST"/>
+		<result property="timeList" column="TIME_LIST"/>
+		<result property="rowHight" column="ROW_HIGHT"/>
+		<result property="pageNo" column="PAGE_NO"/>
+		<collection property="data_list" resultMap="dataMapPrintMapDetail"></collection>
+	</resultMap>	
+	<resultMap id="dataMapPrintMapDetail" type="com.anyi.report.entity.DocReportPrintDataDetail">
+		<result property="template_item_id" column="TEMPLATE_ITEM_ID"/>
+		<result property="record_value" column="RECORD_VALUE"/>
+		<result property="data_type" column="DATA_TYPE"/>
+		<result property="raw_value" column="RAW_VALUE"/>
+		<result property="metadata_code" column="METADATA_CODE"/>
+	</resultMap>	
+	<select id="queryDataForPrint"   parameterType="java.util.HashMap" resultMap="dataMapPrintMap">
+		<!--SELECT A.RECORD_ID,B.TEMPLATE_ITEM_ID,
+		CASE C.DATA_TYPE WHEN 'OPT' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'SEL' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'MSEL' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'SWT' THEN C.METADATA_SIMPLE_NAME
+		ELSE B.RECORD_VALUE END AS  RECORD_VALUE,
+		C.DATA_TYPE,
+		B.RECORD_VALUE AS RAW_VALUE,
+		C.MEATADATA_CODE
+		FROM DOC_REPORT_DATA A ,
+		DOC_REPORT_DATA_ITEM B,
+		DOC_METADATA C
+		WHERE A.RECORD_ID=B.RECORD_ID
+		AND C.METADATA_CODE=
+		(
+		CASE WHEN C.DATA_TYPE IN ('OPT','MSEL','SEL','SWT') THEN B.RECORD_VALUE
+		ELSE B.TEMPLATE_ITEM_ID END
+		)
+		AND B.TEMPLATE_ITEM_ID IN (${item_name})
+		AND A.INPATIENT_NO=#{inpatient_no} 
+		AND A.TEMPLATE_ID=#{template_id}	
+		ORDER BY A.DATE_LIST,A.TIME_LIST-->
+		<!--bug, OPT选项改为允许用户输入后，以上的查询语句无法获取自定义选项，现重新写一个-->
+		SELECT A.RECORD_ID,B.TEMPLATE_ITEM_ID,
+		CASE C.DATA_TYPE WHEN 'OPT' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'SEL' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'MSEL' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'SWT' THEN C.METADATA_SIMPLE_NAME
+		ELSE B.RECORD_VALUE END AS  RECORD_VALUE,
+		C.DATA_TYPE,
+		B.RECORD_VALUE AS RAW_VALUE,
+		C.METADATA_CODE
+		FROM DOC_REPORT_DATA A
+		inner join DOC_REPORT_DATA_ITEM B on b.RECORD_ID = a.RECORD_ID
+		left join DOC_METADATA C on c.METADATA_CODE = b.RECORD_VALUE
+		WHERE B.TEMPLATE_ITEM_ID IN (${item_name})
+		AND A.INPATIENT_NO=#{inpatient_no}
+		AND A.TEMPLATE_ID=#{template_id}
+		AND (A.IS_HEADER IS NULL  OR A.IS_HEADER != '1')
+		ORDER BY A.DATE_LIST,A.TIME_LIST
+	</select>
+	
+	<select id="queryHistoryDataForPrint"   parameterType="java.util.HashMap" resultMap="dataMapPrintMap">
+		<!--bug, OPT选项改为允许用户输入后，以上的查询语句无法获取自定义选项，现重新写一个-->
+		SELECT A.RECORD_ID,B.TEMPLATE_ITEM_ID,
+		CASE C.DATA_TYPE WHEN 'OPT' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'SEL' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'MSEL' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'SWT' THEN C.METADATA_SIMPLE_NAME
+		ELSE B.RECORD_VALUE END AS  RECORD_VALUE,
+		C.DATA_TYPE,
+		B.RECORD_VALUE AS RAW_VALUE,
+		C.METADATA_CODE
+		FROM DOC_REPORT_DATA_HIS A
+		inner join DOC_REPORT_DATA_ITEM_HIS B on b.RECORD_ID = a.RECORD_ID
+		left join DOC_METADATA C on c.METADATA_CODE = b.RECORD_VALUE
+		WHERE B.TEMPLATE_ITEM_ID IN (${item_name})
+		AND A.INPATIENT_NO=#{inpatient_no}
+		AND A.TEMPLATE_ID=#{template_id}
+		AND (A.IS_HEADER IS NULL  OR A.IS_HEADER != '1')
+		ORDER BY A.DATE_LIST,A.TIME_LIST
+	</select>
+	<!-- 后台打印时用到的查询语句，需要查询到元数据 -->
+	<select id="getDataForPrint" resultMap="PrintDataMap">
+		select 
+		m.template_id,
+		t.template_file_name,
+		
+		l.record_id ,
+		l.template_item_id data_key,
+		case dl.DATA_TYPE  when 'OPT' then mol.METADATA_NAME  else l.record_value end as data_value,
+		mol.METADATA_NAME,
+		dl.DATA_TYPE DATA_TYPE_L,
+		MOL.DATA_TYPE ITEM_TYPE,
+		MOL.ORD,
+		
+		checkbox_l.ord,
+		checkbox_l.METADATA_CODE METADATA_CODE_ORD,
+		checkbox_l.METADATA_NAME METADATA_NAME_ORD,
+		
+		i.record_id record_id_item,
+		i.template_item_id item_id_i,
+		i.record_value record_value_item,
+		moi.METADATA_NAME OPTION_NAME_i,
+		
+		checkbox_item.METADATA_NAME CHECKBOX_NAME_i,
+		checkbox_item.METADATA_CODE CHECKBOX_CODE_i,
+		i.record_value,
+		
+		di.DATA_TYPE DATA_TYPE_I
+		from doc_report_data m 
+		inner join doc_report_data m2 on m.template_id=m2.template_id
+		inner join doc_report_template t on t.template_id=m.template_id
+		
+		left join doc_report_data_item i on m.record_id = i.record_id  
+		and (
+		i.parent_id is null 
+		or( i.template_item_id in('TITLE_ONE','TITLE_TWO','TITLE_THREE','TITLE_FOUR','TITLE_FIVE') )
+		)
+		left join doc_report_data_item l on m2.record_id=l.record_id and l.parent_id='0'
+		
+		left join doc_metadata di on di.metadata_code=i.template_item_id
+		left join doc_metadata dl on dl.metadata_code=l.template_item_id
+		
+		left join doc_metadata checkbox_item on checkbox_item.METADATA_CODE=di.METADATA_CODE and (di.DATA_TYPE='SEL' or di.DATA_TYPE='MSEL') and checkbox_item.is_secode is null
+		left join doc_metadata checkbox_l on checkbox_l.parent_code=l.template_item_id
+		
+		left join doc_metadata moi on  moi.METADATA_CODE=i.record_value  and  (moi.DATA_TYPE='OPT' or moi.is_dyna='Y')
+		left join doc_metadata mol on  mol.METADATA_CODE=l.record_value 
+		where m.valid='0' and m2.valid='0'
+		and M.record_id in(select max(record_id) from doc_report_data group by template_id) 	
+		and  M.template_id=#{template_id} 
+		and m.inpatient_no=#{inpatient_no}
+		order by m2.record_id desc,l.template_item_id
+	</select>
+	
+	<!-- 前台编辑时展示数据 -->
+	<resultMap id="RecordDataMap" type="com.anyi.report.entity.DocDataRecord">
+		<result property="approve_person" column="APPROVE_PERSON"/>
+		<result property="approve_status" column="APPROVE_STATUS"/>
+		<result property="approve_time" column="APPROVE_TIME"/>
+		<result property="inpatient_no" column="INPATIENT_NO"/>
+		<result property="create_time" column="CREATE_TIME"/>
+		<result property="create_person" column="CREATE_PERSON"/>
+		<result property="printflag" column="PRINTFLAG"/>
+		<result property="record_id" column="RECORD_ID"/>
+		<result property="template_id" column="TEMPLATE_ID"/>
+		<result property="dateList" column="DATE_LIST"/>
+		<result property="isHeader" column="IS_HEADER" />
+		<collection property="list" resultMap="RecordDataItemMap" />
+	</resultMap>
+	<resultMap id="RecordDataItemMap" type="com.anyi.report.entity.DocDataRecordItem">
+		<result property="record_item_id" column="RECORD_ITEM_ID"/>
+		<result property="record_id" column="RECORD_ID"/>
+		<result property="template_item_id" column="TEMPLATE_ITEM_ID"/>
+		<result property="record_value" column="RECORD_VALUE"/>
+		<result property="parent_id" column="PARENT_ID"/>
+	</resultMap>
+	
+	<resultMap id="DocDataReportSyncMap" type="com.anyi.report.entity.DocDataReportSync">
+		<result property="patId" column="pat_id"/>
+		<result property="deptCode" column="dept_code"/>
+		<result property="value" column="value"/>
+		<result property="valueType" column="value_type"/>
+	</resultMap>
+	<!-- 查询出所有数据，在java中再做处理，避免数据库性能问题 -->	
+	<select id="loadAllData" resultMap="RecordDataMap">
+		SELECT  
+				A.APPROVE_PERSON,
+				A.APPROVE_STATUS,
+				A.APPROVE_TIME,
+				A.INPATIENT_NO,
+				A.CREATE_TIME,
+				A.CREATE_PERSON,
+				A.PRINTFLAG,
+				A.RECORD_ID,
+				A.TEMPLATE_ID,
+				A.IS_HEADER,
+				B.RECORD_ITEM_ID,
+				B.RECORD_ID,
+				B.TEMPLATE_ITEM_ID,
+				ISNULL(B.RECORD_VALUE,'')  RECORD_VALUE,
+				B.PARENT_ID,
+				A.DATE_LIST
+		FROM DOC_REPORT_DATA A 
+				inner join DOC_REPORT_DATA_ITEM B
+				on A.RECORD_ID=B.RECORD_ID
+		WHERE A.INPATIENT_NO=#{inpatient_no}
+			AND A.TEMPLATE_ID=#{template_id} 
+		<if test="record_id!= null">		
+			AND A.RECORD_ID=#{record_id} 
+		</if>
+		<if test="modify_time != null">
+			AND A.DATE_LIST = #{modify_time}
+		</if>
+		<if test="startDate != null and endDate != null">
+			AND A.DATE_LIST >= #{startDate}
+			AND A.DATE_LIST &lt;= #{endDate}
+		</if>
+		AND A.VALID='0'
+		AND (A.IS_HEADER != '1' OR A.IS_HEADER IS NULL)
+		ORDER BY A.DATE_LIST,A.TIME_LIST, A.RECORD_ID
+
+	</select>
+	
+	<!-- 查询出所有历史数据，在java中再做处理，避免数据库性能问题 -->	
+	<select id="loadAllHistoryData" resultMap="RecordDataMap">
+		SELECT  
+				A.APPROVE_PERSON,
+				A.APPROVE_STATUS,
+				A.APPROVE_TIME,
+				A.INPATIENT_NO,
+				A.CREATE_TIME,
+				A.CREATE_PERSON,
+				A.PRINTFLAG,
+				A.RECORD_ID,
+				A.TEMPLATE_ID,
+				A.IS_HEADER,
+				B.RECORD_ITEM_ID,
+				B.RECORD_ID,
+				B.TEMPLATE_ITEM_ID,
+				ISNULL(B.RECORD_VALUE,'')  RECORD_VALUE,
+				B.PARENT_ID
+				FROM DOC_REPORT_DATA_HIS A 
+				inner join DOC_REPORT_DATA_ITEM_HIS B
+				on A.RECORD_ID=B.RECORD_ID
+		WHERE A.INPATIENT_NO=#{inpatient_no}
+			AND A.TEMPLATE_ID=#{template_id} 
+		<if test="record_id!= null">		
+			AND A.RECORD_ID=#{record_id} 
+		</if>
+		<if test="modify_time != null">
+			AND A.DATE_LIST = #{modify_time}
+		</if>
+		<if test="startDate != null and endDate != null">
+			AND A.DATE_LIST => #{startDate}
+			AND A.DATE_LIST &lt;= #{endDate}
+			<!-- AND CAST((CONVERT(varchar(20),A.DATE_LIST,23)+' '+CONVERT(varchar(20),A.TIME_LIST,24)) AS DATETIME)>#{startDate}
+			AND CAST((CONVERT(varchar(20),A.DATE_LIST,23)+' '+CONVERT(varchar(20),A.TIME_LIST,24)) AS DATETIME)&lt;=#{endDate} -->
+		</if>
+		AND A.VALID='0'
+		AND (A.IS_HEADER != '1' OR A.IS_HEADER IS NULL)
+		ORDER BY A.DATE_LIST,A.TIME_LIST, A.RECORD_ID
+	</select>
+
+	<select id="getDocHeaderRecord" parameterType="java.util.Map" resultMap="RecordDataMap">
+	SELECT
+	A.APPROVE_PERSON,
+	A.APPROVE_STATUS,
+	A.APPROVE_TIME,
+	A.INPATIENT_NO,
+	A.CREATE_TIME,
+	A.CREATE_PERSON,
+	A.PRINTFLAG,
+	A.RECORD_ID,
+	A.TEMPLATE_ID,
+	A.IS_HEADER,
+	B.RECORD_ITEM_ID,
+	B.RECORD_ID,
+	B.TEMPLATE_ITEM_ID,
+	ISNULL(B.RECORD_VALUE,'')  RECORD_VALUE,
+	B.PARENT_ID
+	FROM DOC_REPORT_DATA A,DOC_REPORT_DATA_ITEM B
+	WHERE A.RECORD_ID = B.RECORD_ID
+	AND A.INPATIENT_NO = #{patID}
+	AND A.TEMPLATE_ID = #{templateID}
+	AND A.IS_HEADER = '1'
+	ORDER BY A.MODIFY_TIME DESC
+	</select>
+ 
+	<!-- for show tree start-->
+	<resultMap id="docType" type="com.anyi.report.entity.DocType">
+		<result property="doc_type_id" column="doc_type_id" />
+		<result property="doc_type_name" column="doc_type_name" />
+		<result property="order" column="ord"/>
+		<result property="showType" column="show_type"/>
+	</resultMap>
+	<select id="getDocType" resultMap="docType">
+		SELECT   DOC_TYPE_ID, DOC_TYPE_NAME FROM   DOC_TYPE WHERE  1=1
+	   <if test="doc_type_valid!= null"> AND DOC_TYPE_VALID=#{doc_type_valid} </if>
+	</select>
+	<select id="getDocTypeByID" resultMap="docType">
+		SELECT DOC_TYPE_ID, DOC_TYPE_NAME, ORD, SHOW_TYPE FROM DOC_TYPE
+		WHERE DOC_TYPE_VALID = 'Y'
+		AND DOC_TYPE_ID = #{docTypeID}
+	</select>
+	<resultMap id="docTemplate" type="com.anyi.report.entity.DocTemplate">
+		<result property="templateId" column="template_id" />
+		<result property="templateShowName" column="template_show_name" />
+	</resultMap>
+	<select id="getDocTemplate" resultMap="docTemplate">
+		SELECT   TEMPLATE_ID, TEMPLATE_SHOW_NAME FROM      doc_REPORT_TEMPLATE WHERE  1=1
+	   <if test="docType!= null"> AND DOC_TYPE=#{docType} </if>
+	</select>
+	<resultMap id="reportData" type="com.anyi.report.entity.DocRecord">
+		<result property="recordId" column="RECORD_ID" />
+		<result property="createTime" column="create_time" />
+		<result property="template_id" column="template_id" />
+		<result property="inpatient_no" column="inpatient_no" />
+		<result property="create_person" column="CREATE_PERSON"/>
+		<result property="approve_status" column="APPROVE_STATUS"/>
+		<result property="date_list" column="DATE_LIST" />
+		<result property="time_list" column="TIME_LIST" />
+		<result property="isHeader" column="IS_HEADER" />
+		<result property="rowHight" column="ROW_HIGHT" />
+		<result property="pageNo" column="PAGE_NO" />
+	</resultMap>
+	<select id="getDocData" resultMap="reportData">
+		SELECT   TEMPLATE_ID, RECORD_ID,CREATE_TIME,INPATIENT_NO FROM      doc_REPORT_DATA WHERE  1=1
+	   <if test="inpatient_no!= null"> AND INPATIENT_NO=#{inpatient_no} </if>
+	   <if test="template_id!= null"> AND TEMPLATE_ID=#{template_id} </if>
+	</select>
+	<resultMap id="dataListMap" type="com.anyi.report.entity.ModelForTreeDataList">
+		<result property="recordId" column="record_id" />
+		<result property="createTime" column="data_value" />
+		<result property="data_index" column="data_index" />
+	</resultMap>	
+	<select id="getDataList" resultMap="dataListMap">
+		SELECT   
+		distinct
+		a.record_id,
+		b.data_value,
+		b.data_index
+		FROM     
+		doc_REPORT_DATA a,doc_report_data_list b,doc_metadata c
+		WHERE  a.record_id=b.record_id
+		and c.METADATA_CODE=b.data_key
+	   <if test="inpatient_no!= null"> AND a.INPATIENT_NO=#{inpatient_no} </if>
+	   <if test="template_id!= null"> AND a.TEMPLATE_ID=#{template_id} </if>
+	   order by data_value desc
+	</select>	
+	<!-- for show tree end-->
+
+	<!-- 删除模板信息 start -->
+	<delete id="delete_template" parameterType="com.anyi.report.entity.DocTemplate">
+		delete from doc_report_template where template_id =#{templateId}
+	</delete>
+	<delete id="delete_template_band" parameterType="com.anyi.report.entity.DocTemplate">
+		delete from doc_report_band where template_id =#{templateId}
+	</delete>	
+	<delete id="delete_template_item" parameterType="com.anyi.report.entity.DocTemplate">
+		delete from doc_report_template_item where band_id in 
+		(select band_id from doc_report_band where template_id =#{templateId}  )
+	</delete>
+	<!-- 删除模板信息 end -->
+	
+	<!-- 将模板置为无效 -->
+	<update id="update_template_valid" parameterType="com.anyi.report.entity.DocTemplate">
+		update doc_report_template set valid='1'
+	</update>	
+	
+	<!-- 获取科室，用于上传模板 -->
+	<resultMap type="com.anyi.report.entity.ComWard" id="queryComWardMap">
+		<result property="code" column="code"/>
+		<result property="name" column="name"/>
+	</resultMap>
+	<select id="queryComWard" resultMap="queryComWardMap">
+		select CODE,name from COM_WARD
+		union select '0' code,'全院' name
+	</select>
+	
+	<!-- 判断审核人跟责任护士是不是一样的 -->
+	<select id="isSamePerson" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM DOC_REPORT_DATA_ITEM WHERE RECORD_ID IN (${record_id})
+		and TEMPLATE_ITEM_ID='CREATE_PERSON'
+		AND RECORD_VALUE=#{approve_person}
+	</select>
+	
+	<!-- 审核签名(更改主表的审核时间，取当前实际时间) -->
+	<update id="approve" parameterType="com.anyi.report.entity.DocApprove">
+		update DOC_REPORT_DATA set approve_status='Y',approve_person=#{approve_person},approve_time=cast(#{now_time} as datetime)
+		 where record_id in
+		 (
+		 	<foreach collection="list"  item="obj">
+		 		#{obj.record_id},
+		 	</foreach>
+		 '0')
+	</update>
+	<!-- 更新字表的审核人 -->
+	<update id="approve_person" parameterType="com.anyi.report.entity.DocApprove">
+		update DOC_REPORT_DATA_ITEM set RECORD_VALUE=#{approve_person}
+		 where record_id in
+		 (
+		 	<foreach collection="list"  item="obj">
+		 		#{obj.record_id},
+		 	</foreach>
+		 '0')
+		 and TEMPLATE_ITEM_ID='APPROVE_PERSON'
+	</update>
+	<!-- 字表审核时间（客户自己选择的时间） -->
+	<update id="approve_time" parameterType="com.anyi.report.entity.DocApprove">
+		update DOC_REPORT_DATA_ITEM set RECORD_VALUE=#{approve_time}
+		 where record_id in
+		 (
+		 	<foreach collection="list"  item="obj">
+		 		#{obj.record_id},
+		 	</foreach>
+		 '0')
+		 and TEMPLATE_ITEM_ID='APPROVE_TIME'
+	</update>
+	
+	<select id="getShowType" resultType="java.lang.String">
+		SELECT  SHOW_TYPE FROM DOC_PRINT_SHOW
+	</select>
+	
+	<!-- 处理需要反填的数据 -->
+	<resultMap id="refMap" type="com.anyi.report.vo.SpecialVo">
+		<result property="record_key" column="RECORD_KEY" />
+		<result property="record_value" column="RECORD_VALUE" />
+	</resultMap>	
+	<select id="ref_list" parameterType="com.anyi.report.entity.RefModel" resultMap="refMap">
+		WITH t1 AS 
+		( 
+		select c.RECORD_ID, 
+		c.TEMPLATE_ITEM_ID RECORD_KEY, 
+		c.RECORD_VALUE RECORD_VALUE, 
+		b.TEMPLATE_ID, 
+		b.INPATIENT_NO 
+		from DOC_METADATA a, DOC_REPORT_DATA b, DOC_REPORT_DATA_ITEM c 
+		where a.METADATA_CODE = c.TEMPLATE_ITEM_ID 
+		and b.RECORD_ID = c.RECORD_ID 
+		and a.if_rel = 'Y' 
+		AND b.INPATIENT_NO =#{inpatient_no} 
+        and c.TEMPLATE_ITEM_ID  in
+		 (
+		 	<foreach collection="code_list"  item="obj">
+		 		#{obj},
+		 	</foreach>
+		 '0')		
+		), 
+		t2 AS 
+		( 
+		SELECT a.TEMPLATE_ID,a.INPATIENT_NO,MAX(a.RECORD_ID) RECORD_ID FROM t1 a 
+		GROUP BY a.TEMPLATE_ID,a.INPATIENT_NO 
+		) 
+		SELECT a.* FROM t1 a,t2 b 
+		WHERE a.TEMPLATE_ID = b.TEMPLATE_ID 
+		AND a.INPATIENT_NO = b.INPATIENT_NO 
+		AND a.RECORD_ID = b.RECORD_ID
+	</select>		
+	
+	<!-- 护理记录单，获取前一天的数据（统计入量和出量） start-->
+		<resultMap type="com.anyi.report.entity.RecordDataItem" id="inTakeTotalMap">
+		<result property="record_item_id" column="RECORD_ITEM_ID"/>
+		<result property="record_value" column="RECORD_VALUE"/>
+	</resultMap>
+	<!-- gary 这是一个空的值 -->
+	<select id="get_before_data"  parameterType="java.util.HashMap" resultMap="inTakeTotalMap">
+		SELECT b.TEMPLATE_ITEM_ID, b.RECORD_VALUE,a.DATE_LIST from DOC_REPORT_DATA a ,
+		DOC_REPORT_DATA_ITEM b 
+		where a.RECORD_ID=b.RECORD_ID
+		and a.TEMPLATE_ID=#{template_id}
+		and a.INPATIENT_NO=#{inpatient_no}
+		and b.TEMPLATE_ITEM_ID in (${in_out})
+		and b.RECORD_VALUE!='gary'
+		and a.DATE_LIST=convert(date, convert(char(10),dateadd(day,-1, convert(date, #{date_list})),120))
+		 and a.time_list &lt;=convert(time,'23:59') 
+		and  a.time_list  &gt;convert(time,#{count_time})
+		and b.RECORD_VALUE is not null
+        and b.RECORD_VALUE!=''
+		ORDER BY A.RECORD_ID,B.TEMPLATE_ITEM_ID	
+	</select>
+	
+	<!-- gary 这是一个空的值 -->
+	<select id="get_before_history_data"  parameterType="java.util.HashMap" resultMap="inTakeTotalMap">
+		SELECT b.TEMPLATE_ITEM_ID, b.RECORD_VALUE,a.DATE_LIST from DOC_REPORT_DATA_HIS a ,
+		DOC_REPORT_DATA_ITEM_HIS b 
+		where a.RECORD_ID=b.RECORD_ID
+		and a.TEMPLATE_ID=#{template_id}
+		and a.INPATIENT_NO=#{inpatient_no}
+		and b.TEMPLATE_ITEM_ID in (${in_out})
+		and b.RECORD_VALUE!='gary'
+		and a.DATE_LIST=convert(date, convert(char(10),dateadd(day,-1, convert(date, #{date_list})),120))
+		 and a.time_list &lt;=convert(time,'23:59') 
+		and  a.time_list  &gt;convert(time,#{count_time})
+		and b.RECORD_VALUE is not null
+        and b.RECORD_VALUE!=''
+		ORDER BY A.RECORD_ID,B.TEMPLATE_ITEM_ID	
+	</select>
+	<!-- 护理记录单，获取前一天的数据（统计入量和出量） end-->
+	
+	<!-- 根据时间段统计出入量 start-->
+	<select id="get_inout_data_bytime"  parameterType="java.util.HashMap" resultMap="inTakeTotalMap">
+		SELECT b.TEMPLATE_ITEM_ID, b.RECORD_VALUE,a.DATE_LIST from DOC_REPORT_DATA a ,
+		DOC_REPORT_DATA_ITEM b 
+		where a.RECORD_ID=b.RECORD_ID
+		and a.TEMPLATE_ID=#{template_id}
+		and a.INPATIENT_NO=#{inpatient_no}
+		and b.TEMPLATE_ITEM_ID in (${in_out})
+		and convert(varchar(10),a.DATE_LIST, 120)+' '+ISNULL(CONVERT(varchar(12) , a.TIME_LIST, 108 ),'')
+		&gt;=#{start_time}
+		and convert(varchar(10),a.DATE_LIST, 120)+' '+ISNULL(CONVERT(varchar(12) , a.TIME_LIST, 108 ),'') 
+		&lt;=#{end_time}
+		and b.RECORD_VALUE is not null
+        and b.RECORD_VALUE!=''
+		ORDER BY a.DATE_LIST desc		
+	</select>
+	<!-- 根据时间段统计出入量 end-->	
+	
+	
+	<!-- 根据代码获取属于的名称 -->
+	<select id="getNameBycode"  parameterType="java.util.HashMap" resultType="java.lang.String">
+		SELECT C.METADATA_SIMPLE_NAME FROM DOC_METADATA C WHERE C.METADATA_CODE=#{metadata_code}
+	</select>
+
+
+	<!-- 获取护理记录单的id,用于生命体征，执行医嘱时的转抄 -->
+	<select id="getTemplateIdByDeptcode" parameterType="java.lang.String" resultType="java.lang.String">
+         select top 1 template_id from DOC_REPORT_TEMPLATE
+         where report_type='1' and VALID='0'
+         and dept_code = #{deptID}
+         order by show_index
+	</select>
+
+	<!-- 获取护理文书配置，用于在床位栏展示防跌防压疮标识或频次提醒  start-->
+	<resultMap type="com.anyi.report.entity.DocConfig" id="docConfigMap">
+		<result property="doc_type" column="DOC_TYPE"/>
+		<result property="tri_grade_min" column="TRI_GRADE_MIN"/>
+		<result property="tri_grade_max" column="TRI_GRADE_MAX"/>
+		<result property="frequency" column="FREQUENCY"/>
+		<result property="ref_column" column="REF_COLUMN"/>	
+		<result property="tri_content" column="TRI_CONTENT"/>		
+	</resultMap>
+	<select id="get_docConfig"  parameterType="java.util.HashMap" resultMap="docConfigMap">
+		SELECT DOC_TYPE,TRI_GRADE_MIN,TRI_GRADE_MAX,FREQUENCY,CONFIG_TYPE,REF_COLUMN,TRI_CONTENT FROM DOC_CONFIG
+		WHERE DOC_TYPE=(SELECT REPORT_TYPE FROM DOC_REPORT_TEMPLATE  WHERE TEMPLATE_ID=#{template_id})
+		ORDER BY CONFIG_TYPE,FREQUENCY DESC	
+	</select>
+	<!-- 获取护理文书配置，用于在床位栏展示防跌防压疮标识或频次提醒  end-->	
+	
+	<!-- 更新防跌，防压疮标志 -->
+	<update id="updatePatInfoStat" parameterType="java.util.HashMap"  statementType="STATEMENT">
+		UPDATE PAT_INFO_STAT SET ${column}=${val} WHERE PAT_ID=${pat_id}
+	</update>
+	<!-- 插入一条新的记录，防跌，防压疮等 -->
+	<insert id="insertPatInfoStat" parameterType="java.util.HashMap" statementType="STATEMENT">
+		INSERT INTO PAT_INFO_STAT(PAT_ID,${column}) VALUES (${pat_id},${val})
+	</insert>
+	<!-- 根据日期和时间查询出是否有大于该条记录的数据，如果有的话就无需处理是否需要做频次，防跌，防压疮等信息 -->
+	<select id="queryReportByTime" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM   DOC_REPORT_DATA WHERE 
+         ISNULL(CONVERT(varchar(100),DATE_LIST,23),'')+CASE WHEN CONVERT(varchar(100),TIME_LIST,14) IS NULL THEN '' ELSE ' '+CONVERT(varchar(100),TIME_LIST,14) END 
+         &gt;#{time_list}
+         AND INPATIENT_NO=#{inpatient_no} AND TEMPLATE_ID=#{template_id}
+	</select>
+	
+	<!-- 数据备份，转历史，以防记录太多影响查询速度   start-->
+	<insert id="report_data_bak">
+		INSERT INTO DOC_REPORT_DATA_HIS
+		(
+			TEMPLATE_ID,
+			INPATIENT_NO,
+			RECORD_ID,
+			CREATE_TIME,
+			MODIFY_TIME,
+			PRINTFLAG,
+			VALID,
+			APPROVE_STATUS,
+			APPROVE_PERSON,
+			APPROVE_TIME,
+			DATE_LIST,
+			TIME_LIST,
+			CREATE_PERSON,
+			ORDER_CODE,
+			IS_HEADER,
+			ROW_HIGHT,
+			PAGE_NO
+		)
+		SELECT 
+			TEMPLATE_ID,
+			INPATIENT_NO,
+			RECORD_ID,
+			CREATE_TIME,
+			MODIFY_TIME,
+			PRINTFLAG,
+			VALID,
+			APPROVE_STATUS,
+			APPROVE_PERSON,
+			APPROVE_TIME,
+			DATE_LIST,
+			TIME_LIST,
+			CREATE_PERSON,
+			ORDER_CODE,
+			IS_HEADER,
+			ROW_HIGHT,
+			PAGE_NO
+		FROM DOC_REPORT_DATA
+		WHERE INPATIENT_NO IN
+		(
+			SELECT DISTINCT A.INPATIENT_NO FROM DOC_REPORT_DATA A,PAT_CURE_INFO B
+			WHERE A.INPATIENT_NO=B.PAT_ID
+			AND DATEDIFF (DAY ,B.OUT_DATE,GETDATE())>=10			
+		)
+	</insert>
+	<insert id="report_data_item_bak">
+	INSERT INTO DOC_REPORT_DATA_ITEM_HIS
+	(
+	RECORD_ITEM_ID,
+	RECORD_ID,
+	TEMPLATE_ITEM_ID,
+	RECORD_VALUE,
+	PARENT_ID
+	)
+	SELECT
+		RECORD_ITEM_ID,
+		RECORD_ID,
+		TEMPLATE_ITEM_ID,
+		RECORD_VALUE,
+		PARENT_ID	
+	FROM DOC_REPORT_DATA_ITEM
+	WHERE  RECORD_ID IN
+	(
+		SELECT RECORD_ID FROM DOC_REPORT_DATA WHERE INPATIENT_NO IN
+		(
+			SELECT DISTINCT A.INPATIENT_NO FROM DOC_REPORT_DATA A,PAT_CURE_INFO B
+			WHERE A.INPATIENT_NO=B.PAT_ID
+			AND DATEDIFF (DAY ,B.OUT_DATE,GETDATE())>=10			
+		)	
+	)
+	</insert>
+	<delete id="delete_report_data_item" >
+		DELETE FROM DOC_REPORT_DATA_ITEM WHERE RECORD_ID IN
+		(
+			SELECT RECORD_ID FROM DOC_REPORT_DATA WHERE INPATIENT_NO IN
+			(
+				SELECT DISTINCT A.INPATIENT_NO FROM DOC_REPORT_DATA A,PAT_CURE_INFO B
+				WHERE A.INPATIENT_NO=B.PAT_ID
+				AND DATEDIFF (DAY ,B.OUT_DATE,GETDATE())>=10			
+			)	
+		)
+	</delete>
+	<delete id="delete_report_data">
+		DELETE FROM DOC_REPORT_DATA WHERE INPATIENT_NO IN
+		(
+			SELECT DISTINCT A.INPATIENT_NO FROM DOC_REPORT_DATA A,PAT_CURE_INFO B
+			WHERE A.INPATIENT_NO=B.PAT_ID
+			AND DATEDIFF (DAY ,B.OUT_DATE,GETDATE())>=10			
+		)
+	</delete>
+	<!-- 数据备份，转历史，以防记录太多影响查询速度   end-->
+	
+	<!-- 判断时间点是否有记录，用于合并相同的数据 -->
+	<select id="getRecordIDsByTime"  parameterType="java.util.HashMap" resultType="java.lang.String">
+		SELECT A.RECORD_ID
+		FROM DOC_REPORT_DATA A
+		WHERE A.DATE_LIST=#{date_list}
+		AND CONVERT(VARCHAR(20), A.TIME_LIST, 8) = #{time_list}
+		AND A.TEMPLATE_ID=#{template_id}
+		AND A.INPATIENT_NO=#{inpatient_no}
+		AND (A.IS_HEADER IS NULL OR A.IS_HEADER != '1')
+	</select>
+	<select id="getSameItemCountInRecord"  parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(*)
+		FROM DOC_REPORT_DATA_ITEM
+		WHERE RECORD_ID=#{recordID}
+		AND TEMPLATE_ITEM_ID IN
+		<foreach collection="itemIDs" item="item" index='index'  open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+		AND RECORD_VALUE IS NOT NULL
+		AND RECORD_VALUE!=''
+	</select>
+	
+	<select id="getDocDataReportInSync" parameterType="java.util.Map" resultMap="DocDataReportSyncMap">
+		select tt.pat_id,SUM(convert(decimal,tt.RECORD_VALUE)) value,tt.value_type,tt.dept_code 
+		from 
+		(select d.TEMPLATE_ID,p.WARD_CODE dept_code, di.TEMPLATE_ITEM_ID value_type,
+		d.INPATIENT_NO pat_id,di.RECORD_VALUE from DOC_REPORT_DATA d
+		inner join DOC_REPORT_DATA_ITEM di on di.RECORD_ID = d.RECORD_ID
+		inner join PAT_CURE_INFO p on p.PAT_ID = d.INPATIENT_NO
+		where di.TEMPLATE_ITEM_ID='inTake'
+		and CONVERT(varchar,d.DATE_LIST) + ' ' + convert(varchar(8),d.TIME_LIST) > #{startDate}
+		and CONVERT(varchar,d.DATE_LIST) + ' ' + convert(varchar(8),d.TIME_LIST) &lt;= #{endDate}
+		<if test="patId != null">
+			and p.pat_id = #{patId}
+		</if>
+		and di.RECORD_VALUE is not null and di.RECORD_VALUE != '') tt
+		group by tt.pat_id,tt.value_type,tt.dept_code
+	</select>
+	
+	<select id="getDocDataReportOutSync" parameterType="java.util.Map" resultMap="DocDataReportSyncMap">
+		select tt.pat_id,SUM(convert(decimal,tt.RECORD_VALUE)) value,tt.value_type,tt.dept_code 
+		from 
+		(select distinct d.record_id,d.TEMPLATE_ID,p.WARD_CODE dept_code, di.TEMPLATE_ITEM_ID value_type,d.INPATIENT_NO pat_id,di.RECORD_VALUE from DOC_REPORT_DATA d
+		inner join DOC_REPORT_DATA_ITEM di on di.RECORD_ID = d.RECORD_ID
+		inner join PAT_CURE_INFO p on p.PAT_ID = d.INPATIENT_NO
+		inner join (select distinct tmp.record_id from DOC_REPORT_DATA tmp 
+			inner join DOC_REPORT_DATA_ITEM tmp_item on tmp_item.record_id = tmp.record_id
+			where tmp_item.RECORD_VALUE in 
+				(
+					<foreach collection="outNames" item="item" index="index"
+					separator=",">
+						#{item}
+					</foreach>
+				)  
+				<if test="patId != null">
+					and tmp.INPATIENT_NO = #{patId}
+				</if>
+			) tab on tab.RECORD_ID = di.RECORD_ID 
+		where di.TEMPLATE_ITEM_ID='outTake'
+		and CONVERT(varchar,d.DATE_LIST) + ' ' + convert(varchar(8),d.TIME_LIST) > #{startDate}
+		and CONVERT(varchar,d.DATE_LIST) + ' ' + convert(varchar(8),d.TIME_LIST) &lt;= #{endDate}
+		<if test="patId != null">
+			and p.pat_id = #{patId}
+		</if>
+		and di.RECORD_VALUE is not null and di.RECORD_VALUE != '') tt
+		group by tt.pat_id,tt.value_type,tt.dept_code
+	</select>
+
+	<resultMap id="DefaultTemplate" type="com.anyi.report.entity.PatientDefaultTemplate">
+		<result column="PAT_ID"  property="patID"/>
+		<result column="DEPT_CODE"   property="deptCode"/>
+		<result column="TEMPLATE_ID" property="templateID"/>
+		<result column="IS_VALID"    property="bValid"/>
+	</resultMap>
+	<select id="getPatientDefaultTemplate" parameterType="java.util.Map" resultMap="DefaultTemplate">
+		select PAT_ID, DEPT_CODE, TEMPLATE_ID, IS_VALID
+		from DOC_REPORT_DEFAULT_TEMPLATE
+		where PAT_ID=#{patID}
+		<if test="deptCode != null">
+			and DEPT_CODE=#{deptCode}
+		</if>
+	</select>
+	<update id="updatePatientDefaultTemplate" parameterType="java.util.Map">
+		update DOC_REPORT_DEFAULT_TEMPLATE
+		set TEMPLATE_ID = #{templateID}
+		where PAT_ID = #{patID}
+		<if test="deptCode != null">
+			and DEPT_CODE=#{deptCode}
+		</if>
+	</update>
+	<insert id="insertPatientDefaultTemplate" parameterType="java.util.Map">
+		insert into DOC_REPORT_DEFAULT_TEMPLATE
+		(PAT_ID, DEPT_CODE, TEMPLATE_ID)
+		values (#{patID}, #{deptCode}, #{templateID})
+	</insert>
+
+	<!--根据医嘱编号查询是否存在文书记录-->
+	<select id="getRecordIDByPatId" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT TOP 1 record_id
+		FROM doc_report_data
+		WHERE INPATIENT_NO = #{param1}
+	</select>
+
+	<select id="getReportPrintNum" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT PAGE_NUM
+		FROM DOC_REPORT_PRINT_PAGENUM
+		WHERE PAT_ID = #{patID}
+		AND   TEMPLATE_ID = #{templateID};
+	</select>
+	<update id="updateReportPrintNum" parameterType="java.util.Map">
+		UPDATE DOC_REPORT_PRINT_PAGENUM
+		SET PAGE_NUM = #{printNum},
+		CREATE_TIME = #{createTime},
+		CREATE_PERSON = #{createPerson}
+		WHERE PAT_ID = #{patID}
+		and TEMPLATE_ID = #{templateID}
+	</update>
+	<insert id="insertReportPrintNum" parameterType="java.util.Map">
+		INSERT INTO DOC_REPORT_PRINT_PAGENUM
+		(PAT_ID,
+		TEMPLATE_ID,
+		PAGE_NUM,
+		CREATE_PERSON)
+		VALUES(
+		#{patID},
+		#{templateID},
+		#{printNum},
+		#{createPerson}
+		)
+	</insert>
+	<resultMap id="docReportStatisticMap" type="com.anyi.report.entity.DocRecordStatistic">
+		<id property="id" column="id" />
+		<result property="patId" column="pat_id" />
+		<result property="deptCode" column="dept_code" />
+		<result property="staticType" column="static_type" />
+		<result property="staticItemType" column="static_item_type" />
+		<result property="staticTypeName" column="static_type_name" />
+		<result property="staticItemTypeName" column="static_item_type_name" />
+		<result property="unit" column="unit" />
+		<result property="staticValue" column="static_value" />
+		<result property="staticDate" column="static_date" />
+		<result property="staticTime" column="static_time" />
+		<result property="createDate" column="create_time" />
+		<result property="templateID" column="TEMPLATE_ID"/>
+		<result property="pageNo" column="PAGE_NO"/>
+	</resultMap>
+	
+	<resultMap id="docReportDataStatisticMap" type="com.anyi.report.entity.DocRecordDataStatistic">
+		<id property="staticDate" column="static_date" />
+		<collection property="docRecordStatistics" resultMap="docReportStatisticMap" />
+	</resultMap>
+	
+	<insert id="insertDocReprotStatistic" parameterType="com.anyi.report.entity.DocRecordStatistic">
+		insert into DOC_REPORT_DATA_STATISTIC(pat_id,dept_code,static_type,static_item_type,static_unit,
+		static_value,static_date,static_time,create_time,is_valid,template_id,page_no)
+		values(#{patId},#{deptCode},#{staticType},#{staticItemType},#{unit},
+		#{staticValue},#{staticDate},#{staticTime},#{createDate},'1',#{templateID},#{pageNo})
+	</insert>
+	<update id="updateDocReprotStatistic" parameterType="com.anyi.report.entity.DocRecordStatistic">
+		update DOC_REPORT_DATA_STATISTIC set static_value = #{staticValue} ,create_time= #{createDate}
+		WHERE id=#{id} and is_valid=1
+	</update>
+	<select id="getDocReprotDataStatistic" parameterType="String" resultMap="docReportStatisticMap">
+		SELECT  ds.id ,
+		        ds.PAT_ID ,
+		        ds.DEPT_CODE ,
+		        convert(varchar(10),ds.STATIC_DATE,120) STATIC_DATE ,
+		        ds.STATIC_ITEM_TYPE ,
+		        convert(varchar(5),ds.STATIC_TIME)  STATIC_TIME,
+		        ds.STATIC_TYPE ,
+		        ds.STATIC_VALUE,
+		        ds.CREATE_TIME,
+		        ds.TEMPLATE_ID,
+		        ds.PAGE_NO,
+		        dm.METADATA_SIMPLE_NAME STATIC_ITEM_TYPE_NAME
+		        
+		FROM    DOC_REPORT_DATA_STATISTIC ds
+		        LEFT JOIN dbo.DOC_METADATA dm ON dm.METADATA_CODE = ds.STATIC_ITEM_TYPE
+		WHERE   ds.is_valid = 1
+		and ds.pat_id=#{param1} and ds.dept_code = #{param2}
+		and ds.static_date = #{param3} and ds.static_time=#{param4}
+		and ds.TEMPLATE_ID = #{param5}
+		ORDER BY ds.STATIC_VALUE DESC
+	</select>
+	
+	<select id="getDocReprotDataAllStatistic" parameterType="String" resultMap="docReportDataStatisticMap">
+		SELECT  ds.id ,
+		        ds.PAT_ID ,
+		        ds.DEPT_CODE ,
+		        convert(varchar(10),ds.STATIC_DATE,120) STATIC_DATE ,
+		        ds.STATIC_ITEM_TYPE ,
+		        convert(varchar(5),ds.STATIC_TIME)  STATIC_TIME,
+		        ds.STATIC_TYPE ,
+		        ds.STATIC_VALUE,
+		        ds.CREATE_TIME,
+		        ds.TEMPLATE_ID,
+		        ds.PAGE_NO,
+		        case when  dm.METADATA_SIMPLE_NAME is NULL
+		        	then  ds.STATIC_ITEM_TYPE
+		        else dm.METADATA_SIMPLE_NAME 
+		        end AS STATIC_ITEM_TYPE_NAME
+		FROM    DOC_REPORT_DATA_STATISTIC ds
+		        LEFT JOIN dbo.DOC_METADATA dm ON dm.METADATA_CODE = ds.STATIC_ITEM_TYPE
+		WHERE   ds.is_valid = 1
+		and ds.pat_id=#{param1} and ds.dept_code = #{param2}
+		and ds.static_date >= #{param3} and ds.static_date &lt;= #{param4}
+		and ds.TEMPLATE_ID = #{param5}
+	</select>
+
+	<select id="getStatisticDataByPageNo" resultMap="docReportDataStatisticMap">
+		SELECT  ds.id ,
+		ds.PAT_ID ,
+		ds.DEPT_CODE ,
+		ds.TEMPLATE_ID,
+		ds.PAGE_NO,
+		convert(varchar(10),ds.STATIC_DATE,120) STATIC_DATE ,
+		ds.STATIC_ITEM_TYPE ,
+		convert(varchar(5),ds.STATIC_TIME)  STATIC_TIME,
+		ds.STATIC_TYPE ,
+		ds.STATIC_VALUE,
+		ds.CREATE_TIME,
+		case when  dm.METADATA_SIMPLE_NAME is NULL
+		then  ds.STATIC_ITEM_TYPE
+		else dm.METADATA_SIMPLE_NAME
+		end AS STATIC_ITEM_TYPE_NAME
+		FROM    DOC_REPORT_DATA_STATISTIC ds
+		LEFT JOIN dbo.DOC_METADATA dm ON dm.METADATA_CODE = ds.STATIC_ITEM_TYPE
+		WHERE   ds.is_valid = 1
+		and ds.pat_id=#{patID} and ds.TEMPLATE_ID = #{templateID}
+		<if test="startPage > 0">
+			AND ds.PAGE_NO >= #{startPage}
+		</if>
+		<if test="endPage > 0">
+			AND #{endPage} >= ds.PAGE_NO
+		</if>
+		<if test="numType == 1">
+			AND (ds.PAGE_NO%2) > 0
+		</if>
+		<if test="numType == 2">
+			AND (ds.PAGE_NO%2) = 0
+		</if>
+		order by STATIC_DATE, STATIC_TIME
+	</select>
+
+	<update id="updatePrintInfo4StatisticRecord" parameterType="com.anyi.report.entity.DocReportPrintData">
+		UPDATE DOC_REPORT_DATA_STATISTIC
+		SET ROW_HIGHT = #{rowHight},
+			PAGE_NO = #{pageNo}
+		WHERE PAT_ID=#{patID}
+		AND TEMPLATE_ID = #{templateID}
+		AND convert(varchar(10),STATIC_DATE,23) = #{dateList}
+		AND convert(varchar(5),STATIC_TIME) = #{timeList}
+	</update>
+
+	<select id="getStatisticCountWithInvalidPageNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT (ID)
+		FROM DOC_REPORT_DATA_STATISTIC
+		WHERE PAT_ID=#{patID}
+		AND TEMPLATE_ID = #{templateID}
+		AND (PAGE_NO IS NULL OR PAGE_NO = '0')
+	</select>
+	
+	<select id="getDocReprotStatistic" parameterType="String" resultMap="docReportStatisticMap">
+		SELECT  ds.id ,
+		        ds.PAT_ID ,
+		        ds.DEPT_CODE ,
+		        convert(varchar(10),ds.STATIC_DATE,120) STATIC_DATE ,
+		        ds.STATIC_ITEM_TYPE ,
+		        convert(varchar(5),ds.STATIC_TIME)  STATIC_TIME,
+		        ds.STATIC_TYPE ,
+		        ds.STATIC_VALUE,
+		        ds.CREATE_TIME,
+				ds.TEMPLATE_ID,
+				ds.PAGE_NO
+		FROM    DOC_REPORT_DATA_STATISTIC ds
+		WHERE   ds.is_valid = 1
+		and ds.pat_id=#{param1} and ds.dept_code = #{param2}
+		and ds.static_date = #{param3} and ds.static_time=#{param4}
+		<if test="param5 != null">
+			and ds.STATIC_TYPE = #{param5}
+		</if>
+		<if test="param6 != null">
+			and ds.STATIC_ITEM_TYPE = #{param6}
+		</if>
+		and ds.TEMPLATE_ID = #{param7}
+	</select>
+	
+	
+	<select id="getDocDataRecordItems" parameterType="String" resultMap="RecordDataItemMap">
+		select * from DOC_REPORT_DATA_ITEM where record_id=#{param1}
+		and record_value is not null and record_value != '';
+	</select>
+	
+	<insert id="saveFailRecordInfo" parameterType="com.anyi.report.entity.DocRecordFailInfo">
+		INSERT INTO DOC_REPORT_RECORD_FAIL
+		(PAT_ID, BARCODE, DEPT_CODE, DATE_LIST, TIME_LIST, REASON, CREATE_PERSON)
+		VALUES (#{patID}, #{barcode}, #{deptCode}, #{dateList}, #{timeList}, #{reason}, #{createPerson})
+	</insert>
+
+	<!--根据医嘱编号查询是否存在文书记录-->
+	<select id="getRecordCountByOrdercode" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT(record_id)
+		FROM doc_report_data
+		WHERE order_code = #{orderCode}
+	</select>
+
+	<!-- 查询当前记录的上一条记录 -->
+	<select id="getOneRecordBeforTheRecord" parameterType="java.util.Map" resultMap="reportData">
+	  SELECT TOP 1
+	  TEMPLATE_ID,
+	  INPATIENT_NO,
+	  RECORD_ID,
+	  DATE_LIST,
+	  TIME_LIST,
+	  CREATE_PERSON,
+	  IS_HEADER,
+	  ROW_HIGHT,
+	  PAGE_NO
+      FROM DOC_REPORT_DATA
+      WHERE INPATIENT_NO = #{inpatient_no}
+		AND TEMPLATE_ID = #{template_id}
+		AND (#{date_list} > DATE_LIST OR (DATE_LIST = #{date_list} AND #{time_list} > TIME_LIST))
+		AND (IS_HEADER IS NULL  OR IS_HEADER != '1')
+      ORDER BY DATE_LIST DESC, TIME_LIST DESC
+	</select>
+
+	<select id="getRecordsOnAndAfterPageNo" resultMap="reportData">
+		SELECT TEMPLATE_ID,
+		INPATIENT_NO,
+		RECORD_ID,
+		DATE_LIST,
+		TIME_LIST,
+		CREATE_PERSON,
+		IS_HEADER,
+		ROW_HIGHT,
+		PAGE_NO
+		FROM DOC_REPORT_DATA
+		WHERE INPATIENT_NO = #{patID}
+		AND TEMPLATE_ID = #{templateID}
+		AND (PAGE_NO IS NOT NULL AND PAGE_NO >= #{pageNo})
+		AND (IS_HEADER IS NULL  OR IS_HEADER != '1')
+		ORDER BY DATE_LIST, TIME_LIST
+	</select>
+
+	<select id="getRecordCountWithInvalidPageNo" resultType="java.lang.Integer">
+		SELECT COUNT(RECORD_ID)
+		FROM DOC_REPORT_DATA
+		WHERE INPATIENT_NO = #{patID}
+		AND TEMPLATE_ID = #{templateID}
+		AND (PAGE_NO IS NULL OR PAGE_NO = '0')
+		AND (IS_HEADER IS NULL  OR IS_HEADER != '1')
+	</select>
+
+	<select id="getRecordCountWithInvalidPageNoInHistory" resultType="java.lang.Integer">
+		SELECT COUNT(RECORD_ID)
+		FROM DOC_REPORT_DATA_HIS
+		WHERE INPATIENT_NO = #{patID}
+		AND TEMPLATE_ID = #{templateID}
+		AND (PAGE_NO IS NULL OR PAGE_NO = '0')
+		AND (IS_HEADER IS NULL  OR IS_HEADER != '1')
+	</select>
+
+	<select id="getAllRecordsForPatient" resultMap="reportData">
+		SELECT TEMPLATE_ID,
+		INPATIENT_NO,
+		RECORD_ID,
+		DATE_LIST,
+		TIME_LIST,
+		CREATE_PERSON,
+		IS_HEADER,
+		ROW_HIGHT,
+		PAGE_NO
+		FROM DOC_REPORT_DATA
+		WHERE INPATIENT_NO = #{patID}
+		AND TEMPLATE_ID = #{templateID}
+		AND (IS_HEADER IS NULL  OR IS_HEADER != '1')
+		ORDER BY DATE_LIST, TIME_LIST
+	</select>
+
+	<select id="getDocRecordByID" resultMap="reportData">
+		SELECT TEMPLATE_ID,
+		INPATIENT_NO,
+		RECORD_ID,
+		DATE_LIST,
+		TIME_LIST,
+		CREATE_PERSON,
+		APPROVE_STATUS,
+		IS_HEADER,
+		ROW_HIGHT,
+		PAGE_NO
+		FROM DOC_REPORT_DATA
+		WHERE RECORD_ID = #{recordID}
+		AND (IS_HEADER IS NULL  OR IS_HEADER != '1')
+	</select>
+
+	<update id="updatePrintInfo4Record" >
+		UPDATE DOC_REPORT_DATA
+		SET
+			PAGE_NO = #{pageNo},
+			ROW_HIGHT = #{rowHight}
+		WHERE RECORD_ID = #{recordID}
+	</update>
+
+	<select id="getPrintDataForRecord" resultMap="dataMapPrintMap">
+		SELECT A.RECORD_ID,
+		A.INPATIENT_NO,
+		A.TEMPLATE_ID,
+		A.DATE_LIST,
+		A.TIME_LIST,
+		A.ROW_HIGHT,
+		A.PAGE_NO,
+		B.TEMPLATE_ITEM_ID,
+		B.RECORD_VALUE AS RAW_VALUE,
+		CASE C.DATA_TYPE
+			WHEN 'OPT' THEN C.METADATA_SIMPLE_NAME
+			WHEN 'SEL' THEN C.METADATA_SIMPLE_NAME
+			WHEN 'MSEL' THEN C.METADATA_SIMPLE_NAME
+			WHEN 'SWT' THEN C.METADATA_SIMPLE_NAME
+			ELSE B.RECORD_VALUE END AS  RECORD_VALUE,
+		C.DATA_TYPE,
+		C.METADATA_CODE
+		FROM DOC_REPORT_DATA A
+		inner join DOC_REPORT_DATA_ITEM B on b.RECORD_ID = a.RECORD_ID
+		left join DOC_METADATA C on c.METADATA_CODE = b.RECORD_VALUE
+		WHERE A.RECORD_ID = #{recordID}
+		AND (A.IS_HEADER IS NULL  OR A.IS_HEADER != '1')
+		AND B.TEMPLATE_ITEM_ID IN
+		<foreach collection="itemList" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+		AND B.RECORD_VALUE IS NOT NULL
+		AND B.RECORD_VALUE != ''
+		ORDER BY A.DATE_LIST, A.TIME_LIST
+	</select>
+
+	<select id="getAllRecordsPrintDataForPatient" resultMap="dataMapPrintMap">
+		SELECT A.RECORD_ID,
+		A.INPATIENT_NO,
+		A.TEMPLATE_ID,
+		A.DATE_LIST,
+		A.TIME_LIST,
+		A.ROW_HIGHT,
+		A.PAGE_NO,
+		B.TEMPLATE_ITEM_ID,
+		B.RECORD_VALUE AS RAW_VALUE,
+		CASE C.DATA_TYPE
+		WHEN 'OPT' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'SEL' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'MSEL' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'SWT' THEN C.METADATA_SIMPLE_NAME
+		ELSE B.RECORD_VALUE END AS  RECORD_VALUE,
+		C.DATA_TYPE,
+		C.METADATA_CODE
+		FROM DOC_REPORT_DATA A
+		inner join DOC_REPORT_DATA_ITEM B on b.RECORD_ID = a.RECORD_ID
+		left join DOC_METADATA C on c.METADATA_CODE = b.RECORD_VALUE
+		WHERE A.INPATIENT_NO = #{patID}
+		AND A.TEMPLATE_ID = #{templateID}
+		AND (A.IS_HEADER IS NULL  OR A.IS_HEADER != '1')
+		AND B.TEMPLATE_ITEM_ID IN
+		<foreach collection="itemList" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+		AND B.RECORD_VALUE IS NOT NULL
+		AND B.RECORD_VALUE != ''
+		ORDER BY A.DATE_LIST, A.TIME_LIST, A.RECORD_ID
+	</select>
+
+	<select id="getRecordsPrintDataForPatient" parameterType="java.util.Map" resultMap="dataMapPrintMap">
+		SELECT A.RECORD_ID,
+		A.INPATIENT_NO,
+		A.TEMPLATE_ID,
+		A.DATE_LIST,
+		A.TIME_LIST,
+		A.ROW_HIGHT,
+		A.PAGE_NO,
+		B.TEMPLATE_ITEM_ID,
+		B.RECORD_VALUE AS RAW_VALUE,
+		CASE C.DATA_TYPE
+		WHEN 'OPT' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'SEL' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'MSEL' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'SWT' THEN C.METADATA_SIMPLE_NAME
+		ELSE B.RECORD_VALUE END AS  RECORD_VALUE,
+		C.DATA_TYPE,
+		C.METADATA_CODE
+		FROM DOC_REPORT_DATA A
+		inner join DOC_REPORT_DATA_ITEM B on b.RECORD_ID = a.RECORD_ID
+		left join DOC_METADATA C on c.METADATA_CODE = b.RECORD_VALUE
+		WHERE A.INPATIENT_NO = #{patID}
+		AND A.TEMPLATE_ID = #{templateID}
+		<if test="startPage >0">
+			AND A.PAGE_NO >= #{startPage}
+		</if>
+		<if test="endPage > 0">
+			AND #{endPage} >= A.PAGE_NO
+		</if>
+		<if test="numType == 1">
+			AND (A.PAGE_NO%2) > 0
+		</if>
+		<if test="numType == 2">
+			AND (A.PAGE_NO%2) = 0
+		</if>
+		AND (A.IS_HEADER IS NULL  OR A.IS_HEADER != '1')
+		AND B.TEMPLATE_ITEM_ID IN
+		<foreach collection="itemList" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+		AND B.RECORD_VALUE IS NOT NULL
+		AND B.RECORD_VALUE != ''
+		ORDER BY A.DATE_LIST, A.TIME_LIST, A.RECORD_ID
+	</select>
+
+	<select id="getRecordsPrintDataForPatientInHistory" parameterType="java.util.Map" resultMap="dataMapPrintMap">
+		SELECT A.RECORD_ID,
+		A.INPATIENT_NO,
+		A.TEMPLATE_ID,
+		A.DATE_LIST,
+		A.TIME_LIST,
+		A.ROW_HIGHT,
+		A.PAGE_NO,
+		B.TEMPLATE_ITEM_ID,
+		B.RECORD_VALUE AS RAW_VALUE,
+		CASE C.DATA_TYPE
+		WHEN 'OPT' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'SEL' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'MSEL' THEN C.METADATA_SIMPLE_NAME
+		WHEN 'SWT' THEN C.METADATA_SIMPLE_NAME
+		ELSE B.RECORD_VALUE END AS  RECORD_VALUE,
+		C.DATA_TYPE,
+		C.METADATA_CODE
+		FROM DOC_REPORT_DATA_HIS A
+		inner join DOC_REPORT_DATA_ITEM_HIS B on b.RECORD_ID = a.RECORD_ID
+		left join DOC_METADATA C on c.METADATA_CODE = b.RECORD_VALUE
+		WHERE A.INPATIENT_NO = #{patID}
+		AND A.TEMPLATE_ID = #{templateID}
+		AND A.PAGE_NO >= #{startPage}
+		<if test="endPage > 0">
+			AND #{endPage} >= A.PAGE_NO
+		</if>
+		<if test="numType == 1">
+			AND (A.PAGE_NO%2) > 0
+		</if>
+		<if test="numType == 2">
+			AND (A.PAGE_NO%2) = 0
+		</if>
+		AND (A.IS_HEADER IS NULL  OR A.IS_HEADER != '1')
+		AND B.TEMPLATE_ITEM_ID IN
+		<foreach collection="itemList" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+		AND B.RECORD_VALUE IS NOT NULL
+		AND B.RECORD_VALUE != ''
+		ORDER BY A.DATE_LIST, A.TIME_LIST, A.RECORD_ID
+	</select>
+
+	<select id="getRecordWithMaxTempratureInTimeInterval" parameterType="java.util.Map" resultMap="reportData">
+		SELECT TOP 1
+		A.RECORD_ID,
+		A.TEMPLATE_ID,
+		A.INPATIENT_NO,
+		A.DATE_LIST,
+		A.TIME_LIST,
+		A.CREATE_PERSON,
+		A.IS_HEADER
+		FROM DOC_REPORT_DATA A
+		inner join DOC_REPORT_DATA_ITEM B on (B.RECORD_ID = A.RECORD_ID AND B.TEMPLATE_ITEM_ID = 'temperature'
+												AND LEN(B.RECORD_VALUE) > 0)
+		WHERE A.INPATIENT_NO = #{patID}
+		AND A.TEMPLATE_ID = #{templateID}
+		AND (A.IS_HEADER IS NULL  OR A.IS_HEADER != '1')
+		AND ((A.DATE_LIST = #{startDate} AND A.TIME_LIST >= #{startTime})
+		<if test="startDate == endDate">
+			AND #{endTime} > A.TIME_LIST
+		</if>
+		<if test="endDate > startDate">
+			OR (A.DATE_LIST = #{endDate} AND #{endTime} > A.TIME_LIST)
+		</if>)
+		ORDER BY B.RECORD_VALUE DESC
+	</select>
+
+	<select id="getMaxPageNoOfPatDocRecords" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT MAX(PAGE_NO)
+		FROM DOC_REPORT_DATA
+		WHERE INPATIENT_NO = #{patID}
+		AND TEMPLATE_ID = #{templateID}
+		AND (IS_HEADER IS NULL  OR IS_HEADER != '1')
+	</select>
+
+	<select id="getPrintPageNoForSpecifiedDate" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT DISTINCT(PAGE_NO)
+		FROM DOC_REPORT_DATA
+		WHERE INPATIENT_NO = #{patID}
+		AND TEMPLATE_ID = #{templateID}
+		<if test="startDate != null">
+			AND DATE_LIST >= #{startDate}
+		</if>
+		<if test="endDate != null">
+			AND #{endDate} >= DATE_LIST
+		</if>
+		AND (IS_HEADER IS NULL  OR IS_HEADER != '1')
+		ORDER BY PAGE_NO
+	</select>
+
+	<insert id="savePatPrintInfo" parameterType="com.anyi.report.entity.PrintInfoRecord">
+		INSERT INTO PAT_PRINT_RECORD
+		(PAT_ID, DEPT_CODE, TEMPLATE_ID, PRINT_TYPE, PRINT_INFO, CREATE_PERSON)
+		VALUES (#{patID},#{deptCode},#{templateID},#{printType},#{printStart},#{createPerson})
+	</insert>
+
+	<insert id="saveDocReportUserPermission" parameterType="com.anyi.report.entity.DocUserPermission">
+		INSERT INTO DOC_REPORT_PERMISSION
+		(USER_CODE, PAT_ID, DEPT_CODE, TEMPLATE_ID, BEGIN_TIME, END_TIME, CREATE_PERSON)
+		VALUES (#{userCode},#{patID},#{deptCode},#{templateID},#{startTime},#{endTime},#{createPerson})
+	</insert>
+
+	<resultMap id="docUserPermission" type="com.anyi.report.entity.DocUserPermission">
+		<result property="userCode" column="USER_CODE"/>
+		<result property="deptCode" column="DEPT_CODE"/>
+		<result property="patID" column="PAT_ID"/>
+		<result property="templateID" column="TEMPLATE_ID"/>
+		<result property="startTime" column="BEGIN_TIME"/>
+		<result property="endTime" column="END_TIME"/>
+		<result property="valid" column="IS_VALID"/>
+		<result property="createPerson" column="CREATE_PERSON"/>
+		<result property="createTime" column="CREATE_TIME"/>
+	</resultMap>
+
+	<select id="getDocReportUserPermission" resultMap="docUserPermission">
+		SELECT USER_CODE,
+		 PAT_ID,
+	     DEPT_CODE,
+	     TEMPLATE_ID,
+		 BEGIN_TIME,
+		 END_TIME,
+		 IS_VALID,
+		 CREATE_PERSON,
+		 CREATE_TIME
+		FROM  DOC_REPORT_PERMISSION
+		WHERE USER_CODE = #{userCode}
+		AND PAT_ID = #{patID}
+		AND DEPT_CODE = #{deptCode}
+		AND TEMPLATE_ID = #{templateID}
+		AND getdate() >= BEGIN_TIME
+		AND END_TIME >= getdate()
+		AND IS_VALID = '1'
+	</select>
+	
+	<!-- 查询前一天7点到24点的出入量统计 -->
+	<select id="getBackDayInOut7" parameterType="java.util.Map" resultMap="backDayInOut7Map">
+		with report as ( SELECT d.INPATIENT_NO,d.RECORD_ID,i.TEMPLATE_ITEM_ID,i.RECORD_VALUE FROM DOC_REPORT_DATA_ITEM i 
+			inner join DOC_REPORT_DATA d on i.RECORD_ID=d.RECORD_ID
+			and d.INPATIENT_NO=#{patId} and d.TEMPLATE_ID=#{templateId}
+			and (
+			(d.DATE_LIST=#{dateList} and d.TIME_LIST >'07:00')
+			<if test="timeList!=null and endDate==null">
+				AND #{timeList} > d.TIME_LIST
+			</if>
+			<if test="endDate != null">
+				OR (d.DATE_LIST=#{endDate} and #{timeList} > d.TIME_LIST)
+			</if>
+			)
+			and i.TEMPLATE_ITEM_ID in ('out_name','outTake')
+			AND (d.IS_HEADER IS NULL OR d.IS_HEADER != '1')
+			and i.RECORD_VALUE is not null and  ltrim(i.RECORD_VALUE) !=''
+			UNION ALL
+			<!--把与指定时间点时间相同的记录数据（recordID在指定的之前）合并进去-->
+			SELECT d.INPATIENT_NO,d.RECORD_ID,i.TEMPLATE_ITEM_ID,i.RECORD_VALUE FROM DOC_REPORT_DATA_ITEM i
+			inner join DOC_REPORT_DATA d on i.RECORD_ID=d.RECORD_ID
+			WHERE d.INPATIENT_NO=#{patId} and d.TEMPLATE_ID=#{templateId}
+			<if test="timeList!=null and endDate==null">
+				AND (d.DATE_LIST=#{dateList} and #{timeList} = d.TIME_LIST)
+			</if>
+			<if test="timeList!=null and endDate != null">
+				AND (d.DATE_LIST=#{endDate} and #{timeList} = d.TIME_LIST)
+			</if>
+			<if test="recordID != null">
+				AND d.RECORD_ID &lt; #{recordID}
+			</if>
+			<if test="timeList==null or recordID==null">
+				AND d.INPATIENT_NO = '0'
+			</if>
+			and i.TEMPLATE_ITEM_ID in ('out_name','outTake')
+			AND (d.IS_HEADER IS NULL OR d.IS_HEADER != '1')
+			and i.RECORD_VALUE is not null and  ltrim(i.RECORD_VALUE) !='')
+		select TEMPLATE_ITEM_ID,SUM(cast(RECORD_VALUE as numeric(18,2))) RECORD_VALUE from(
+		select distinct
+			r1.RECORD_ID,
+			case when r1.TEMPLATE_ITEM_ID ='outTake'
+			then 'outTake-'+r2.RECORD_VALUE
+			else 'outTake-'+r1.RECORD_VALUE 
+			end TEMPLATE_ITEM_ID,
+			case when r1.TEMPLATE_ITEM_ID ='outTake'
+			then r1.RECORD_VALUE
+			else r2.RECORD_VALUE 
+			end RECORD_VALUE
+			from report r1 
+			inner join report r2 on r1.RECORD_ID = r2.RECORD_ID and r1.TEMPLATE_ITEM_ID != r2.TEMPLATE_ITEM_ID)t
+			group by TEMPLATE_ITEM_ID
+		union all
+		SELECT TEMPLATE_ITEM_ID,sum(CAST(RECORD_VALUE as numeric(18,2))) RECORD_VALUE FROM
+			(SELECT i.TEMPLATE_ITEM_ID, i.RECORD_VALUE
+			FROM DOC_REPORT_DATA_ITEM i
+			inner join DOC_REPORT_DATA d on i.RECORD_ID=d.RECORD_ID
+			and d.INPATIENT_NO=#{patId} and d.TEMPLATE_ID=#{templateId}
+			and (
+			(d.DATE_LIST=#{dateList} and d.TIME_LIST >'07:00')
+			<if test="timeList!=null and endDate==null">
+				AND #{timeList} > d.TIME_LIST
+			</if>
+			<if test="endDate != null">
+				OR (d.DATE_LIST=#{endDate} and #{timeList} >= d.TIME_LIST)
+			</if>
+			)
+			and i.TEMPLATE_ITEM_ID in ('inTake')
+			AND (d.IS_HEADER IS NULL OR d.IS_HEADER != '1')
+			and i.RECORD_VALUE is not null and ltrim(i.RECORD_VALUE) !=''
+			<!--group by i.TEMPLATE_ITEM_ID-->
+			UNION ALL
+		<!--把与指定时间点时间相同的记录数据（recordID在指定的之前）合并进去-->
+			SELECT i.TEMPLATE_ITEM_ID, i.RECORD_VALUE
+			FROM DOC_REPORT_DATA_ITEM i
+			inner join DOC_REPORT_DATA d on i.RECORD_ID=d.RECORD_ID
+			WHERE d.INPATIENT_NO=#{patId} and d.TEMPLATE_ID=#{templateId}
+			<if test="timeList!=null and endDate==null">
+				AND (d.DATE_LIST=#{dateList} and #{timeList} = d.TIME_LIST)
+			</if>
+			<if test="timeList!=null and endDate != null">
+				AND (d.DATE_LIST=#{endDate} and #{timeList} = d.TIME_LIST)
+			</if>
+			<if test="recordID != null">
+				AND d.RECORD_ID &lt; #{recordID}
+			</if>
+			<if test="timeList==null or recordID==null">
+				AND d.INPATIENT_NO = '0'
+			</if>
+			and i.TEMPLATE_ITEM_ID in ('inTake')
+			AND (d.IS_HEADER IS NULL OR d.IS_HEADER != '1')
+			and i.RECORD_VALUE is not null and ltrim(i.RECORD_VALUE) !='')l
+			group by TEMPLATE_ITEM_ID
+	</select>
+
+	<select id="getRecordStoolCountForSpecifiedDate" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT(RECORD_VALUE) FROM DOC_REPORT_DATA d
+		INNER JOIN DOC_REPORT_DATA_ITEM i on d.RECORD_ID = i.RECORD_ID
+		WHERE d.INPATIENT_NO = #{patID}
+		AND d.TEMPLATE_ID = #{templateID}
+		AND i.TEMPLATE_ITEM_ID = 'out_name'
+		AND i.RECORD_VALUE in ('out_name_02', 'out_name_11', 'out_name_12', 'out_name_15')
+		AND d.DATE_LIST = #{date}
+		AND (d.IS_HEADER IS NULL OR d.IS_HEADER != '1')
+	</select>
+
+</mapper>

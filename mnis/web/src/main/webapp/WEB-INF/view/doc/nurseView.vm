@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-table th, .doc-table td {
+	padding: 2px;
+}
+.doc-table td {
+/* 	width: 10px; */
+	height: 25px;
+}
+.doc-table tbody td:nth-child(1) {
+	word-break: break-word;
+}
+.doc-table tbody td:nth-child(24) {
+	text-align: left;
+	word-break: break-all;
+}
+@media print {
+	@page {
+		size: landscape;
+		margin-left: 20mm;
+/* 		margin-bottom: 30px; */
+	}
+}
+</style>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper paper-landscape">
+	<div class="paper-content">
+		#nurse()
+		<div class="doc-content">
+			<table class="doc-table">
+				<thead>
+					<tr>
+			            <th rowspan="2" style="width: 45px;">日期</th>
+			            <th rowspan="2" style="width: 45px;">时间</th>
+			            <th rowspan="2" style="width: 33px;">T<br>℃<br>X</th>
+			            <th rowspan="2" style="width: 25px;">P<br>次/分</th>
+			            <th rowspan="2" style="width: 25px;">R<br>次/分</th>
+			            <th rowspan="2" style="width: 57px;">BP<br>(S/D)<br>mmHg</th>
+			            <th rowspan="2" style="width: 40px;">SpO<sub>2</sub><br>%</th>
+			            <th rowspan="2" style="width: 25px;">意识</th>
+			        	<th colspan="4">瞳孔</th>
+			            <th rowspan="2" style="width: 25px;">给氧方式</th>
+			            <th rowspan="2" style="width: 35px;">氧<br>流<br>量<br><span style="font-size: 12px;">L/min</span></th>
+			        	<th colspan="2">气道</th>
+			            <th rowspan="2" style="width: 25px;">皮肤情况</th>
+			        	<th colspan="6">导管护理</th>
+			            <th rowspan="2">病情、治疗及护理记录</th>
+			            <th rowspan="2" style="width: 50px;">签名</th>
+			        </tr>
+			        <tr>
+			            <th style="width: 35px;">左侧大小<br>mm</th>
+			            <th style="width: 25px;">左侧对光</th>
+			            <th style="width: 35px;">右侧大小<br>mm</th>
+			            <th style="width: 25px;">右侧对光</th>
+			            <th style="width: 25px;">吸痰</th>
+			            <th style="width: 25px;">性状</th>
+			            <th style="width: 25px;">$!{doc.hold1}</th>
+			            <th style="width: 25px;">$!{doc.hold2}</th>
+			            <th style="width: 25px;">$!{doc.hold3}</th>
+			            <th style="width: 25px;">$!{doc.hold4}</th>
+			            <th style="width: 25px;">$!{doc.hold5}</th>
+			            <th style="width: 25px;">尿量<br>ml</th>
+			        </tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		#nurseComment()
+	</div>
+	#pageFoot()
+</div>
+</div>
+<script type="text/javascript">
+function getRowDatas(row, isFirstRow, lastDate) {
+	return [
+		getDate2(row['date'], isFirstRow, lastDate),
+		getTime(row['date']),
+		row['temperature'],
+		row['pulse'],
+		row['breath'],
+		row['bloodPressure'],
+		row['bloodOxygen'],
+		row['awareness'],
+		row['pupilSizeLeft'],
+		row['pupilLightLeft'],
+		row['pupilSizeRight'],
+		row['pupilLightRight'],
+		row['oxygenWay'],
+		row['oxygenFlow'],
+		formatCheck(row['sputum']),
+		row['quale'],
+		row['skin'],
+		row['pipe1'],
+		row['pipe2'],
+		row['pipe3'],
+		row['pipe4'],
+		row['pipe5'],
+		row['urine'],
+		row['record'],
+		row['sign']
+	];
+}
+$(function() {
+	fillTable('#url("/doc/nurse/view/datas")', '$!{patient.cureNo}', 25, getRowDatas, true);
+});
+</script>
+</body>
+</html>

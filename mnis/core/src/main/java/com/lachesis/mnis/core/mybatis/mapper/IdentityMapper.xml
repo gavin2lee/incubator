@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.IdentityMapper">
+    
+    <resultMap  id="config" type="com.lachesis.mnis.core.identity.entity.ConfigBean">
+        <id property="id" column="id"/>
+    	<result property="code" column="config_id"/>
+		<result property="name" column="config_value"/>
+		<result property="type" column="config_type"/>
+		<result property="owner" column="config_owner"/>
+    </resultMap>
+    
+	<resultMap id="user" type="com.lachesis.mnis.core.identity.entity.SysUser">
+		<id property="id" column="user_id" />
+		<result property="code" column="user_code" />
+		<result property="loginName" column="login_name" />
+		<result property="password" column="password" />
+		<result property="name" column="user_name" />
+		<result property="flag" column="flag" />
+		<result property="gender" column="gender" />
+		<result property="phone" column="phone" />
+		<result property="email" column="email" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	
+	<resultMap id="deptment" type="com.lachesis.mnis.core.identity.entity.SysDept">
+		<id property="id" column="dept_id" />
+		<result property="code" column="dept_code" />
+		<result property="name" column="dept_name" />
+		<result column="searchCode" property="search_code" />
+		<result property="isDept" column="is_dept" />
+		<result property="flag" column="flag" />
+	</resultMap>
+	
+	<resultMap id="role" type="com.lachesis.mnis.core.identity.entity.SysRole">
+		<id property="id" column="role_id" />
+		<result property="code" column="role_code" />
+		<result property="name" column="role_name" />
+		<result property="level" column="role_level" />
+		<result property="flag" column="flag" />
+		<result property="remark" column="remark" />
+	</resultMap>
+	
+	<resultMap id="userInformation" type="com.lachesis.mnis.core.identity.entity.UserInformation">
+		<id property="userId" column="user_code" />
+		<result property="deptCode" column="dept_code"/>
+		<result property="deptName" column="dept_name" />
+		<association property="user" resultMap="user" />
+		<collection property="deptList" resultMap="deptment" />
+		<collection property="roleList" resultMap="role" />
+	</resultMap>
+
+	<resultMap  id="dict" type="com.lachesis.mnis.core.identity.entity.Dict">
+	    <id property="id" column="id"/>
+		<result property="code" column="code"/>
+		<result property="name" column="name"/>
+    </resultMap>
+    
+	<resultMap id="userFinger" type="com.lachesis.mnis.core.identity.entity.UserFinger">
+		<id property="id" column="id" />
+		<result property="userCode" column="user_code" />
+		<result property="deptCode" column="dept_code" />
+		<result property="feature" column="finger_feature" />
+		<result property="secretKey" column="sec_key"/>
+		<result property="createDate" column="create_date" />
+	</resultMap>
+	
+	<resultMap id="sysMenuMap" type="com.lachesis.mnis.core.identity.entity.SysMenu">
+		<id property="id" column="id" />
+		<result property="code" column="code" />
+		<result property="name" column="name" />
+		<result property="parentCode" column="parent_code" />
+		<result property="url" column="url"/>
+		<result property="orderNo" column="order_no" />
+		<result property="resourceUrl" column="resource_url" />
+		<result property="urlType" column="url_type" />
+	</resultMap>
+	
+	<resultMap id="loginCardManagerMap" type="com.lachesis.mnis.core.identity.entity.LoginCardManager">
+		<id property="nurseCode" column="nurse_code" />
+		<result property="loginCardCode" column="login_card_code" />
+		<result property="nurseName" column="nurse_name" />
+		<result property="deptCode" column="dept_code" />
+		<result property="deptName" column="dept_name"/>
+		<result property="isPrint" column="is_print" />
+		<result property="operaDate" column="opera_date" />
+	</resultMap>
+	
+	<resultMap id="loginCardInfoMap" type="com.lachesis.mnis.core.identity.entity.LoginCardInfo">
+		<id property="id" column="id" />
+		<result property="loginCardCode" column="login_card_code" />
+		<result property="nurseCode" column="nurse_code" />
+		<result property="nurseName" column="nurse_name" />
+		<result property="deptCode" column="dept_code" />
+		<result property="deptName" column="dept_name"/>
+		<result property="operaNurseCode" column="opera_nurse_code" />
+		<result property="operaNurseName" column="opera_nurse_name" />
+		<result property="status" column="status" />
+		<result property="operaDate" column="opera_date"/>
+		<result property="startDate" column="start_date" />
+		<result property="endDate" column="end_date" />
+	</resultMap>
+	
+	<select id="getUserByCode" parameterType="java.lang.String" resultMap="userInformation">
+		SELECT U.ID AS USER_ID,U.CODE AS USER_CODE,U.LOGIN_NAME AS LOGIN_NAME,
+			   U.NAME AS USER_NAME,U.PASSWORD,U.PHONE,U.GENDER,
+			   D.ID AS DEPT_ID,D.CODE AS DEPT_CODE,D.NAME AS DEPT_NAME,
+			   R.ID AS ROLE_ID,R.CODE AS ROLE_CODE,R.NAME AS ROLE_NAME,R.LEVEL AS ROLE_LEVEL
+		FROM COM_USER U
+			 LEFT JOIN COM_WARD_USER DU ON U.CODE = DU.USER_CODE
+			 LEFT JOIN COM_WARD D ON D.CODE = DU.WARD_CODE AND D.FLAG = 1 
+			 LEFT JOIN COM_WARD_DUSER WDU ON U.CODE = WDU.USER_CODE AND WDU.WARD_CODE = D.CODE
+			 LEFT JOIN COM_USER_ROLE UR ON U.CODE = UR.USER_CODE
+			 LEFT JOIN COM_ROLE R ON U.CODE = UR.ROLE_CODE AND R.FLAG =1
+		WHERE U.FLAG = 1  AND U.CODE = #{param1}
+		ORDER BY WDU.ID desc,DU.ID desc
+	</select>
+	
+	<select id="getUserByLoginName" parameterType="java.lang.String" resultMap="userInformation">
+		SELECT U.ID AS USER_ID,U.CODE AS USER_CODE,U.LOGIN_NAME AS LOGIN_NAME,
+			   U.NAME AS USER_NAME,U.PASSWORD,U.PHONE,U.GENDER,
+			   D.ID AS DEPT_ID,D.CODE AS DEPT_CODE,D.NAME AS DEPT_NAME,
+			   R.ID AS ROLE_ID,R.CODE AS ROLE_CODE,R.NAME AS ROLE_NAME,R.LEVEL AS ROLE_LEVEL
+		FROM COM_USER U
+			 LEFT JOIN COM_WARD_USER DU ON U.CODE = DU.USER_CODE
+			 LEFT JOIN COM_WARD D ON D.CODE = DU.WARD_CODE AND D.FLAG = 1 
+			 LEFT JOIN COM_WARD_DUSER WDU ON U.CODE = WDU.USER_CODE AND WDU.WARD_CODE = D.CODE
+			 LEFT JOIN COM_USER_ROLE UR ON U.CODE = UR.USER_CODE
+			 LEFT JOIN COM_ROLE R ON U.CODE = UR.ROLE_CODE AND R.FLAG =1
+		WHERE U.FLAG = 1  AND (U.LOGIN_NAME = #{param1} or U.CODE = #{param1})
+		<if test="param2 != null">
+			and DU.WARD_CODE = #{param2}
+		</if>
+		ORDER BY  WDU.ID desc,DU.ID desc
+	</select>
+	
+	<select id="getDeptments" resultMap="deptment">
+      	SELECT D.ID AS DEPT_ID,D.CODE AS DEPT_CODE,D.NAME AS DEPT_NAME,D.SEARCH_CODE,D.IS_DEPT
+    	FROM COM_WARD D
+    	WHERE D.FLAG = 1 
+  	</select>
+  	
+  	<select id="getDeptmentsByCode" resultMap="deptment" parameterType="String">
+      	SELECT D.ID AS DEPT_ID,D.CODE AS DEPT_CODE,D.NAME AS DEPT_NAME,D.SEARCH_CODE,D.IS_DEPT
+    	FROM COM_WARD D
+    	inner join COM_WARD_USER wu on wu.ward_code = d.code
+    	WHERE D.FLAG = 1 
+    	<if test="param1 != null">
+    		and wu.user_code=#{param1}
+    	</if>
+    	<if test="param2 != null">
+    		and D.CODE = #{param2}
+    	</if>
+    	
+  	</select>
+  	
+	<select id="getSystemConfig" resultMap="config">
+		SELECT ID,CONFIG_ID,CONFIG_VALUE,ISNULL(CONFIG_TYPE,'S')AS CONFIG_TYPE,CONFIG_OWNER
+		FROM SYS_CONFIG
+		WHERE VALID_FLAG = 1
+	</select>
+	
+	<!-- 需分页显示，暂时全部取出 -->
+	<select id="getDiagList" resultMap="dict">
+		SELECT ID,CODE,NAME
+		FROM DIC_DIAG
+		WHERE FLAG = 1
+	</select>
+	
+	<!-- 需分页显示，暂时取50条 -->
+	<select id="getDrugList" resultMap="dict">
+		SELECT drug_code as code,
+				drug_name as name
+		FROM dict_drug
+		WHERE drug_type = 'P' AND is_valid = 1
+	</select>
+	
+	<select id="getFingerSecKeyByUserCode" parameterType="String" resultType="String">
+		SELECT DISTINCT SEC_KEY
+		FROM COM_USER_FINGER
+		WHERE USER_CODE = #{userCode}
+	</select>
+
+	<select id="getFingerByDeptCodeAndDate" parameterType="String" resultMap="userFinger">
+	    SELECT ID,USER_CODE,DEPT_CODE,FINGER_FEATURE,SEC_KEY,CREATE_DATE
+		FROM  COM_USER_FINGER
+		WHERE DEPT_CODE  = #{param1}
+				<if test="param2 != null" >
+        			AND CREATE_DATE <![CDATA[ > ]]> #{param2}
+      			</if>
+	</select>
+
+	<insert id="saveUserFinger" parameterType="com.lachesis.mnis.core.identity.entity.UserFinger" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO COM_USER_FINGER (USER_CODE,DEPT_CODE,FINGER_FEATURE,SEC_KEY,CREATE_DATE)
+		VALUES(#{userCode},
+					 #{deptCode},
+					 #{feature},
+					 #{secretKey},
+					 GETDATE())		
+	</insert>
+	
+	<!-- 查询生命体征配置信息 -->
+	<select id="getBodysignConfig" resultType="com.lachesis.mnis.core.bodysign.entity.BodySignConfig">
+		select CFG_NO cfgNo,CFG_TYPE cfgType,value value,
+		reserved_1 reserved1,reserved_2 reserved2,reserved_3 reserved3,
+		reserved_4 reserved4,reserved_5 reserved5,reserved_6 reserved6
+		from SYS_BODYSIGN_CONFIG
+		where CFG_TYPE ='BODYSIGN_TIME'
+		and status ='1'
+	</select>
+	
+	<select id="getSysMenusByCode"  parameterType="java.util.HashMap"  resultMap="sysMenuMap">
+		select id,code,name,parent_code,url,order_no,resource_url,url_type from com_menu_config
+		where is_valid=1
+		<choose>
+			<when test="code != null">
+				and parent_code=#{code}
+			</when>
+			<otherwise>
+				and (parent_code is null or parent_code='')
+			</otherwise>
+		</choose>
+		order by order_no
+	</select>
+	
+	<!-- 数据重置方法 -->
+	<update id="resetData">
+		DELETE NURSE_LIQUOR
+		DELETE PAT_ORDER_EXEC
+		DELETE PAT_INFUSION_MONITOR
+		DELETE PAT_INFUSION_MONITOR_ITEM
+		DELETE PAT_SKIN_TEST
+		UPDATE PAT_CURE_INFO SET IN_DATE =GETDATE()-1
+		UPDATE PAT_ORDER_ORIGINAL SET CREATE_DATETIME=GETDATE(),BEGIN_DATE=GETDATE(),END_DATE=NULL
+		UPDATE PAT_ORDER_GROUP SET CREATE_DATETIME=GETDATE(),PLAN_TIME=CONVERT(varchar(100),GETDATE(),23) +' '+ CONVERT(varchar(100),PLAN_TIME,24)
+		UPDATE SYS_BARCODE_SYNC set SEND_DATE=GETDATE()
+		UPDATE PAT_CRITICAL_VALUE SET SEND_TIME = GETDATE()
+		UPDATE PAT_LAB_TEST_MAS SET REPORT_DATE = GETDATE()
+		UPDATE PAT_DRUGBAGRECLIST SET DT_TAKEDATE =CONVERT(VARCHAR(100),GETDATE(),120)
+	</update>
+	
+	
+	<!-- 登陆牌处理 -->
+	<select id="getLoginCardManagers" parameterType="String" resultMap="loginCardManagerMap">
+		SELECT  CU.CODE NURSE_CODE,
+				CU.NAME NURSE_NAME,
+				CW.CODE DEPT_CODE,
+				CW.NAME DEPT_NAME,
+				LC.OPERA_DATE,
+				LC.LOGIN_CARD_CODE,
+				CASE WHEN LC.ID IS NULL THEN 0
+				ELSE 1
+				END IS_PRINT
+		FROM    COM_USER CU
+		        INNER JOIN COM_WARD_USER CWU ON CU.CODE = CWU.USER_CODE
+		        INNER JOIN COM_WARD CW ON CW.CODE = CWU.WARD_CODE
+		                                  AND CW.FLAG = 1
+		        LEFT JOIN LOGIN_CARD_INFO LC ON LC.NURSE_CODE = CWU.USER_CODE
+		                                        AND LC.DEPT_CODE = CWU.WARD_CODE
+		                                        AND LC.IS_VALID = 1
+		WHERE   CU.FLAG = 1
+		        AND CWU.WARD_CODE = #{param1}
+		        <if test="param2 != null">
+		        	 AND CWU.USER_CODE = #{param2}
+		        </if>
+		        <if test="param3 != null">
+		        	 AND CU.NAME = #{param3}
+		        </if>
+		order by cu.code   
+	</select>
+	
+	<select id="getLoginCardInfos" parameterType="String" resultMap="loginCardInfoMap">
+		SELECT  lc.id ,
+		        lc.nurse_code ,
+		        lc.login_card_code,
+		        cu.name nurse_name ,
+		        lc.dept_code ,
+		        cw.NAME dept_name ,
+		        lc.opera_nurse_code ,
+		        lc.opera_nurse_name ,
+		        lc.opera_date ,
+		        lc.start_date ,
+		        lc.end_date ,
+		        CASE WHEN lc.start_date &lt;= GETDATE()
+		                  AND lc.end_date >= GETDATE() THEN 2
+		             ELSE lc.status
+		        END status
+		FROM    login_card_info lc
+		        INNER JOIN dbo.COM_USER cu ON lc.nurse_code = cu.code
+		                                      AND cu.FLAG = 1
+		        INNER JOIN dbo.COM_WARD cw ON lc.dept_code = cw.CODE
+		                                      AND cw.FLAG = 1
+		WHERE   lc.dept_code = #{param1}
+				<if test="param2 != null">
+		        	 AND lc.NURSE_CODE = #{param2}
+		        </if>
+		        <if test="param3 != null">
+		        	 AND CU.NAME = #{param3}
+		        </if>
+		order by lc.nurse_code,lc.opera_date desc
+	</select>
+	
+	<select id="getLoginCardStatus" parameterType="String" resultType="String">
+		select CASE WHEN lc.start_date > GETDATE()
+		                  AND lc.end_date &lt; GETDATE() THEN lc.dept_code + '-' + lc.nurse_code+'-2'
+		             ELSE lc.dept_code + '-' + lc.nurse_code + '-' + convert(varchar,lc.status)
+		        END status
+		from login_card_info lc 
+		where lc.login_card_code = #{param1}
+	</select>
+	
+	<insert id="insertLoginCardInfo" parameterType="com.lachesis.mnis.core.identity.entity.LoginCardInfo">
+		insert into login_card_info(login_card_code,nurse_code,dept_code,opera_date,opera_nurse_code,opera_nurse_name,
+		status,start_date,end_date,is_valid)
+		values(#{loginCardCode},#{nurseCode},#{deptCode},#{operaDate},#{operaNurseCode},#{operaNurseName},
+		#{status},#{startDate},#{endDate},'1')
+	</insert>
+	
+	<update id="invalidLoginCardInfo" parameterType="com.lachesis.mnis.core.identity.entity.LoginCardInfo">
+		update login_card_info set 
+			status=1,
+			is_valid=0,
+			opera_date=#{operaDate},
+			opera_nurse_code=#{operaNurseCode},
+			opera_nurse_name=#{operaNurseName}
+		where is_valid=1 
+			<if test="loginCardCode != null">
+				and login_card_code=#{loginCardCode}
+			</if>
+			<if test="nurseCode != null">
+				and nurse_code=#{nurseCode}
+			</if>
+	</update>
+	<!-- 设置默认科室 -->
+	
+	<select id="getDefaultDeptCount" parameterType="String" resultType="Integer">
+		select count(1) from COM_WARD_DUSER 
+		where user_code = #{param1}
+	</select>
+	
+	<insert id="insertDefaultDept" parameterType="String">
+		insert into COM_WARD_DUSER(user_code,ward_code) 
+		values(#{param1},#{param2})
+	</insert>
+	
+	<update id="updateDefaultDept" parameterType="String">
+		update COM_WARD_DUSER set ward_code=#{param2} 
+		where user_code=#{param1}
+	</update>
+	
+	<insert id="insertSysUser" parameterType="com.lachesis.mnis.core.identity.entity.SysUser">
+		insert into COM_USER (CODE, LOGIN_NAME, NAME, PASSWORD, PHONE, GENDER, FLAG, EMAIL, REMARK)
+		values(#{code},#{loginName},#{name},#{password},#{phone},#{gender},#{flag},#{email},#{remark})
+	</insert>
+	
+</mapper>

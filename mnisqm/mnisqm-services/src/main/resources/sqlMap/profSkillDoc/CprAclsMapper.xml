@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.profSkillDoc.dao.CprAclsMapper">
+	
+	<!-- 逻辑添加 -->
+	<insert id="insert"
+		parameterType="CprAcls">
+		insert into PTF_CPR_ACLS
+		(USER_CODE, USER_NAME,
+		TRAIN_TIME,
+		TRAIN_NAME, ASSESSMENT_CONTENT,
+		CERTIFICATE_QUALIFICATION, STATUS,
+		AUDITOR, REMARK,
+		CREATE_TIME, CREATE_PERSON,
+		UPDATE_TIME, UPDATE_PERSON)
+		values
+		(#{userCode},#{userName},
+		#{trainTime},#{trainName},
+		#{assessmentContent},#{certificateQualification},
+		'01',#{auditor},
+		#{remark},GETDATE(),
+		#{createPerson},GETDATE(),
+		#{updatePerson})
+	</insert>
+	<!-- 逻辑删除 -->
+	<update id="deleteByPrimaryKey"
+		parameterType="CprAcls">
+		update
+		PTF_CPR_ACLS
+		set
+		STATUS=#{status},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑修改 -->
+	<update id="update"
+		parameterType="CprAcls">
+		update
+		PTF_CPR_ACLS
+		set
+		USER_CODE=#{userCode},
+		USER_NAME=#{userName},
+		TRAIN_TIME=#{trainTime},
+		TRAIN_NAME=#{trainName},
+		ASSESSMENT_CONTENT=#{assessmentContent},
+		CERTIFICATE_QUALIFICATION=#{certificateQualification},
+		AUDITOR=#{auditor},
+		REMARK=#{remark},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑查找 -->
+	<select id="select"
+		parameterType="CprAcls"
+		resultType="CprAcls">
+		select
+		SEQ_ID						as seqId, 
+		USER_CODE					as userCode, 
+		USER_NAME					as userName,
+		TRAIN_TIME					as trainTime, 
+		TRAIN_NAME					as trainName,
+		ASSESSMENT_CONTENT			as assessmentContent, 
+		CERTIFICATE_QUALIFICATION	as certificateQualification,
+		STATUS						as status, 
+		AUDITOR						as auditor, 
+		REMARK						as remark
+		from
+		PTF_CPR_ACLS
+		where STATUS='01'
+		<if test="userCode != null">
+			and USER_CODE=#{userCode}
+		</if>
+		<if test="userName != null">
+			and USER_NAME like #{userName}
+		</if>
+		<if test="trainTime != null">
+			and TRAIN_TIME = #{trainTime}
+		</if>
+		<if test="trainName != null">
+			and TRAIN_NAME like #{trainName}
+		</if>
+		<if test="assessmentContent != null">
+			and ASSESSMENT_CONTENT like #{assessmentContent}
+		</if>
+		<if test="certificateQualification != null">
+			and CERTIFICATE_QUALIFICATION like
+			#{certificateQualification}
+		</if>
+		<if test="auditor != null">
+			and AUDITOR like #{auditor}
+		</if>
+	</select>
+</mapper>
+  

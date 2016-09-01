@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.system.dao.SysTaskMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.system.domain.SysTask" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="TASK_CODE" property="taskCode" jdbcType="VARCHAR" />
+    <result column="HANDLE_PERSON" property="handlePerson" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="TASK_STATUS" property="taskStatus" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="HANDLE_DEPT" property="handleDept" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_TASK
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.system.domain.SysTask" >
+    insert into SYS_TASK (TASK_CODE, HANDLE_PERSON, 
+      STATUS, TASK_STATUS, REMARK, 
+      CREATE_PERSON, UPDATE_PERSON, CREATE_TIME, 
+      UPDATE_TIME, HANDLE_DEPT)
+    values (#{taskCode,jdbcType=VARCHAR}, #{handlePerson,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{taskStatus,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR}, GETDATE(), 
+      GETDATE(), #{handleDept,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.system.domain.SysTask" >
+    update SYS_TASK
+    set TASK_CODE = #{taskCode,jdbcType=VARCHAR},
+      HANDLE_PERSON = #{handlePerson,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      TASK_STATUS = #{taskStatus,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE(),
+      HANDLE_DEPT = #{handleDept,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, TASK_CODE, HANDLE_PERSON, STATUS, TASK_STATUS, REMARK, CREATE_PERSON, 
+    UPDATE_PERSON, CREATE_TIME, UPDATE_TIME,HANDLE_DEPT
+    from SYS_TASK
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <!--根据taskCode查找任务  -->
+  <select id="selectByTaskCode" parameterType="java.util.Map" resultType="com.lachesis.mnisqm.module.system.domain.SysTask" >
+    select 
+    SEQ_ID seqId,
+    TASK_CODE taskCode,
+    HANDLE_PERSON handlePerson,
+    STATUS status,
+    TASK_STATUS taskStatus,
+    REMARK remark,
+    CREATE_PERSON createPerson, 
+    UPDATE_PERSON updatePerson,
+    CREATE_TIME createTime,
+    UPDATE_TIME updateTime,
+    HANDLE_DEPT handleDept
+    from SYS_TASK
+    where TASK_CODE = #{taskCode,jdbcType=VARCHAR}
+  </select>
+  	
+   <select id="selectByTaskStatus" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select SEQ_ID, TASK_CODE, HANDLE_PERSON, STATUS, TASK_STATUS, REMARK, CREATE_PERSON, 
+    UPDATE_PERSON, CREATE_TIME, UPDATE_TIME,HANDLE_DEPT
+    from SYS_TASK
+    where TASK_STATUS=#{taskStatus,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, TASK_CODE, HANDLE_PERSON, STATUS, TASK_STATUS, REMARK, CREATE_PERSON, 
+    UPDATE_PERSON, CREATE_TIME, UPDATE_TIME,HANDLE_DEPT
+    from SYS_TASK
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from SYS_TASK where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.system.domain.SysTask" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into SYS_TASK (SEQ_ID, TASK_CODE, HANDLE_PERSON, 
+      STATUS, TASK_STATUS, REMARK, 
+      CREATE_PERSON, UPDATE_PERSON, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{seqId,jdbcType=BIGINT}, #{taskCode,jdbcType=VARCHAR}, #{handlePerson,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{taskStatus,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+</mapper>

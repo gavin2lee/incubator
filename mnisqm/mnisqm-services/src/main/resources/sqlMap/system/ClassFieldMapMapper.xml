@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.system.dao.ClassFieldMapMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.system.domain.ClassFieldMap" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="CLASS_NAME" property="className" jdbcType="VARCHAR" />
+    <result column="FIELD_NAME" property="fieldName" jdbcType="VARCHAR" />
+    <result column="CHINESE_NAME" property="chineseName" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from CLASS_FIELD_MAP
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.system.domain.ClassFieldMap" >
+    insert into CLASS_FIELD_MAP (SEQ_ID, CLASS_NAME, FIELD_NAME, 
+      CHINESE_NAME)
+    values (#{seqId,jdbcType=BIGINT}, #{className,jdbcType=VARCHAR}, #{fieldName,jdbcType=VARCHAR}, 
+      #{chineseName,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.system.domain.ClassFieldMap" >
+    update CLASS_FIELD_MAP
+    set CLASS_NAME = #{className,jdbcType=VARCHAR},
+      FIELD_NAME = #{fieldName,jdbcType=VARCHAR},
+      CHINESE_NAME = #{chineseName,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, CLASS_NAME, FIELD_NAME, CHINESE_NAME
+    from CLASS_FIELD_MAP
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <!--根据 类名 查找 -->
+  <select id="selectByClassName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select SEQ_ID, CLASS_NAME, FIELD_NAME, CHINESE_NAME
+    from CLASS_FIELD_MAP
+    where CLASS_NAME = #{className,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, CLASS_NAME, FIELD_NAME, CHINESE_NAME
+    from CLASS_FIELD_MAP
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from CLASS_FIELD_MAP where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.system.domain.ClassFieldMap" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into CLASS_FIELD_MAP (SEQ_ID, CLASS_NAME, FIELD_NAME, 
+      CHINESE_NAME)
+    values (#{seqId,jdbcType=BIGINT}, #{className,jdbcType=VARCHAR}, #{fieldName,jdbcType=VARCHAR}, 
+      #{chineseName,jdbcType=VARCHAR})
+  </insert>
+</mapper>

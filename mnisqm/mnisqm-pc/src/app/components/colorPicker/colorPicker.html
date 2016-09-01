@@ -1,0 +1,8 @@
+<div class="color-picker-wrapper">
+  <div class="color-picker-item color-picker-current" ng-click="toggle()" ng-style="{'background-color': current}"></div>
+  <div class="color-picker-selector">
+    <div class="color-picker-box" ng-repeat="item in colorArr">
+      <div class="color-picker-item" ng-style="{'background-color': item}" ng-click="choose(item)"></div>
+    </div>
+  </div>
+</div>

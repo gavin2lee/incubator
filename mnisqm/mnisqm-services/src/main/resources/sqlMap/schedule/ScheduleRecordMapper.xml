@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.schedule.dao.ScheduleRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.schedule.domain.ScheduleRecord" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="RECORD_CODE" property="recordCode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="VARCHAR" />
+    <result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 逻辑删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.lachesis.mnisqm.module.schedule.domain.ScheduleRecord" >
+    update SCHEDULE_RECORD
+    set 
+      STATUS = #{status,jdbcType=CHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <!-- 数据插入 -->
+  <insert id="insert" parameterType="ScheduleRecord" >
+    insert into SCHEDULE_RECORD (
+    	RECORD_CODE, 
+    	DEPT_CODE,
+    	DEPT_NAME,
+    	STATUS, 
+      	START_DATE, 
+      	END_DATE, 
+      	CREATE_TIME, 
+      	UPDATE_TIME,
+      	WEEKS,
+      	WEEK1,
+      	WEEK2,
+      	WEEK3,
+      	WEEK4,
+      	WEEK5,
+      	WEEK6,
+      	WEEK7,
+      	CREATE_PERSON, 
+      	UPDATE_PERSON
+      )
+    values (
+    	#{recordCode,jdbcType=VARCHAR}, 
+    	#{deptCode,jdbcType=VARCHAR}, 
+    	#{deptName,jdbcType=VARCHAR}, 
+    	#{status,jdbcType=CHAR}, 
+      	#{startDate,jdbcType=VARCHAR},
+      	#{endDate,jdbcType=VARCHAR}, 
+      	GETDATE(), 
+      	GETDATE(),
+      	#{weeks,jdbcType=VARCHAR}, 
+      	#{week1,jdbcType=VARCHAR}, 
+      	#{week2,jdbcType=VARCHAR}, 
+      	#{week3,jdbcType=VARCHAR}, 
+      	#{week4,jdbcType=VARCHAR}, 
+      	#{week5,jdbcType=VARCHAR}, 
+      	#{week6,jdbcType=VARCHAR}, 
+      	#{week7,jdbcType=VARCHAR}, 
+      	#{createPerson,jdbcType=VARCHAR}, 
+      	#{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <!-- 数据更新 -->
+  <update id="updateByPrimaryKey" parameterType="ScheduleRecord" >
+    update SCHEDULE_RECORD
+    set 
+      STATUS = #{status,jdbcType=CHAR},
+      START_DATE = #{startDate,jdbcType=VARCHAR},
+      END_DATE = #{endDate,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <!-- 通过科室和周数查询排班信息 -->
+  <select id="selectByWeeks" resultType="ScheduleRecord" parameterType="ScheduleRecord" >
+    select 
+    	SEQ_ID					as seqId,
+    	DEPT_CODE				as deptCode,
+    	DEPT_NAME				as deptName,
+    	WEEKS					as weeks,
+    	RECORD_CODE				as recordCode,
+    	STATUS					as status, 
+    	START_DATE				as startDate,
+    	END_DATE				as endDate,
+    	WEEK1					as week1,
+    	WEEK2					as week2,
+    	WEEK3					as week3,
+    	WEEK4					as week4,
+    	WEEK5					as week5,
+    	WEEK6					as week6,
+    	WEEK7					as week7
+    from SCHEDULE_RECORD
+    where STATUS !='09'
+    <if test="deptCode != null">
+    	and DEPT_CODE = #{deptCode}
+    </if>
+    <if test="weeks != null">
+    	and WEEKS = #{weeks}
+    </if>
+    <if test="year != null">
+    	and SUBSTRING(START_DATE, 1, 4) = #{year}
+    </if>
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, RECORD_CODE, STATUS, START_DATE, END_DATE, CREATE_TIME, UPDATE_TIME, 
+    CREATE_PERSON, UPDATE_PERSON
+    from SCHEDULE_RECORD
+  </select>
+  
+  <!-- 查询统计积假数据 -->
+  <select id="selectUserLeave" resultType="ComDeptNurse" parameterType="java.util.Map">
+  	SELECT d.USER_CODE as userCode,COUNT(1)-5 as leave FROM SCHEDULE_RECORD_DETAIL d
+		inner join SCHEDULE_DEPT_CLASS c on d.CLASS_CODE=c.CLASS_CODE
+		where RECORD_CODE=#{recordCode}
+		group by d.USER_CODE
+	having COUNT(1)>5
+  </select>
+</mapper>

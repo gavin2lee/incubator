@@ -1,0 +1,136 @@
+<td colspan="{{tdLen}}">
+  <uib-tabset active="active">
+    <uib-tab index="0" heading="岗位职责">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>岗位名称</th>
+          <th>工作概要</th>
+          <th>上下关系</th>
+          <th>工作职责</th>
+          <th>工作标准</th>
+          <th>其他要求</th>
+          <th>开始时间</th>
+          <!-- <th>状态</th> -->
+          <th>审核人</th>
+          <th>备注</th>
+        </tr>
+        <tr ng-repeat="item in vm.detail.posStatement">
+          <td>{{item.positionName}}</td>
+          <td>{{item.jobSummary}}</td>
+          <td>{{item.leaderMemberRelation}}</td>
+          <td>{{item.responsibilities}}</td>
+          <td>{{item.jobStandard}}</td>
+          <td>{{item.otherRequirements}}</td>
+          <td>{{item.beginTime}}</td>
+          <td>{{item.auditor}}</td>
+          <td>{{item.remark}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="1" heading="岗前培训">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>级别</th>
+          <th>培训名称</th>
+          <th>开始时间</th>
+          <th>结束时间</th>
+          <th>考核情况</th>
+          <th>合格证书</th>
+          <th>审核人</th>
+          <th>备注</th>
+        </tr>
+        <tr ng-repeat="item in vm.detail.preJobTrain">
+          <td>{{item.rank}}</td>
+          <td>{{item.trainName}}</td>
+          <td>{{item.beginTime}}</td>
+          <td>{{item.endTime}}</td>
+          <td>{{item.assessmentCondition}}</td>
+          <td>{{item.certificateQualification}}</td>
+          <td>{{item.auditor}}</td>
+          <td>{{item.remark}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="2" heading="评估考核">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>考核内容</th>
+          <th>考核时间</th>
+          <th>考核结果</th>
+          <!-- <th>状态</th> -->
+          <th>审核人</th>
+          <!-- <th>备注</th> -->
+        </tr>
+        <tr ng-repeat="item in vm.detail.assessment">
+          <td>{{item.assessmentContent}}</td>
+          <td>{{item.assessmentTime}}</td>
+          <td>{{item.assessmentResult}}</td>
+          <td>{{item.auditor}}</td>
+          <!-- <td>{{item.remark}}</td> -->
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="3" heading="继续教育">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>级别</th>
+          <th>教育名称</th>
+          <th>开始时间</th>
+          <th>结束时间</th>
+          <th>审核人</th>
+          <th>备注</th>
+        </tr>
+        <tr ng-repeat="item in vm.detail.conEducation">
+          <td>{{item.rank}}</td>
+          <td>{{item.educationName}}</td>
+          <td>{{item.beginTime}}</td>
+          <td>{{item.endTime}}</td>
+          <td>{{item.auditor}}</td>
+          <td>{{item.remark}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="4" heading="CPR/ACLS证书">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>培训时间</th>
+          <th>培训名称</th>
+          <th>考核情况</th>
+          <th>合格证书</th>
+          <th>审核人</th>
+          <th>备注</th>
+        </tr>
+        <tr ng-repeat="item in vm.detail.cprAcls">
+          <td>{{item.trainTime}}</td>
+          <td>{{item.trainName}}</td>
+          <td>{{item.assessmentContent}}</td>
+          <td>{{item.certificateQualification}}</td>
+          <td>{{item.auditor}}</td>
+          <td>{{item.remark}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="5" heading="教育记录与考核">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>开始时间</th>
+          <th>结束时间</th>
+          <th>级别</th>
+          <th>培训名称</th>
+          <th>考核结果</th>
+          <th>审核人</th>
+          <th>备注</th>
+        </tr>
+        <tr ng-repeat="item in vm.detail.eduRecord">
+          <td>{{item.beginTime}}</td>
+          <td>{{item.endTime}}</td>
+          <td>{{item.rank}}</td>
+          <td>{{item.trainName}}</td>
+          <td>{{item.assessmentResult}}</td>
+          <td>{{item.auditor}}</td>
+          <td>{{item.remark}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+  </uib-tabset>
+</td>

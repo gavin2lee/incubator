@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.system.dao.SysDicMapperExt" >
+  <resultMap id="simpleSysDic" type="com.lachesis.mnisqm.module.system.domain.SimpleSysDic" extends="com.lachesis.mnisqm.module.system.dao.SysDicMapper.BaseResultMap" />
+  
+  <!-- 查询所有有效的数据库字典 -->
+  <select id="selectAllDics" resultMap="simpleSysDic">
+  	SELECT 
+  		DIC_TYPE,
+  		DIC_CODE,
+  		DIC_NAME
+  	FROM SYS_DIC
+  	WHERE STATUS != '09'
+  </select>
+  <select id="queryDicTypes" resultType="String">
+    select DISTINCT DIC_TYPE
+    from SYS_DIC
+  </select>
+</mapper>

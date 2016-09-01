@@ -1,0 +1,25 @@
+<div class="baseinfo-wrapper">
+  <div class="page-left-menu" print-remove>
+    <div class="panel pull-left dept-wrapper panel-default" full-height>
+      <div class="panel-heading">
+        <i class="fa fa-bars"></i>
+        <span>科室列表</span>
+      </div>
+      <div class="panel-body dept-list">
+        <div class="list-filter">
+          <!-- <input type="text" class="form-control input-sm" ng-model="vm.filterText.deptName" placeholder="输入关键字搜索"> -->
+          <input type="text" class="form-control input-sm" ng-model="vm.filterText" placeholder="输入姓名关键字搜索">
+        </div>
+        <div class="list-content">
+          <treecontrol class="tree-light" tree-model="vm.treeData" on-selection="vm.select(node)" filter-expression="vm.filterText" expanded-nodes="vm.expandedNodes" selected-node="vm.selectedNode" options="vm.treeOption">
+            {{node.deptName}}
+          </treecontrol>
+          <loading type="tree"></loading>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-right-content">
+    <div ui-view></div>
+  </div>
+</div>

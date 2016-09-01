@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html>
+<head runat="server">
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/showBodyTempSheet.css')" />
+<script type="text/javascript" src="#url('/resources/js/nur/showBodyTempSheet.js?1472534366479')"></script>
+</head>
+<body>
+	<div class="wrapper f_yahei">
+		<div class="insp-top top-tools" style="height:40px">
+		    <div class="top-tools-box">
+                <div class="top-title">
+                    <span>体温单查看</span>
+                </div>
+		    	<div class="btn-box fr mgr10" >
+                    <div class="time-box fl">
+                        <input id="startDate" name="startDate" class="Wdate"  onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})" readonly="readonly" style="width: 90px;">
+                        &nbsp;
+                    </div>
+                   <!--  <input type="button" value="删除"> -->
+                    <input type="button" value="查询" onclick="getPatientJSONInfo()">
+                    <input type="button" value="转抄">
+                </div>
+		        <!-- <div class="top-title">
+		            <span>入院</span>
+		        </div>
+		        <div class="btn-text fl">
+		        	<span class="btn-area">手术（今日）<i></i></span>
+		        </div>
+		        <div class="btn-text fl">
+		        	<span class="btn-area">出院（今日）<i></i></span>
+		        </div> -->
+		    </div>
+		</div>
+		<div class="content">
+			<table id="info-tab" class="easyui-datagrid" 
+              data-options="
+                iconCls: 'icon-edit',
+                singleSelect: true,
+                fit:true,
+                method:'get',
+                onClickCell: onClickCell
+          ">
+            <thead>
+	            <tr>
+                <th sortable="true" data-options="field:'c1',width:45,align:'center'">床号</th>
+                <th sortable="true" data-options="field:'c2',width:65,align:'center'">患者</th>
+                <th sortable="true" data-options="field:'s1',width:65,align:'center'">住院号</th>
+                <th sortable="true" data-options="field:'s2',width:60,align:'center',editor:{type:'numberbox',options: {validType:'length[1,5]',precision:1}}">体温(°C)</th>
+                <th data-options="field:'cooled',width:60,align:'center',formatter:cooledCheckbox">是否降温</th>
+                <!-- <th data-options="field:'cooled',align:'center',checkbox:true,"></th> -->
+                <th sortable="true" data-options="field:'s3',width:70,align:'center',editor:{type:'numberbox',options: {validType:'length[1,3]',precision:0}}">脉搏(次/分)</th>
+                <th sortable="true" data-options="field:'s4',width:70,align:'center',editor:{type:'numberbox',options: {validType:'length[1,3]',precision:0}}">呼吸(次/分)</th>
+                <th sortable="true" data-options="field:'s31',width:70,align:'center',editor:{type:'numberbox',options: {validType:'length[1,3]',precision:0}}">心率(次/分)</th>
+                <th sortable="true" data-options="field:'s5',width:80,align:'center',editor:'numberbox'">血压(mmHg)</th>
+                <th sortable="true" data-options="field:'s6',width:60,align:'center',editor:{type:'numberbox',options: {validType:'length[1,5]',precision:0}}">出量(ml)</th>
+                <th sortable="true" data-options="field:'s7',width:60,align:'center',editor:{type:'numberbox',options: {validType:'length[1,5]',precision:0}}">入量(ml)</th>
+                <th sortable="true" data-options="field:'s8',width:60,align:'center',editor:{type:'numberbox',options: {validType:'length[1,5]',precision:0}}">尿量(ml)</th>
+                <th sortable="true" data-options="field:'s9',width:80,align:'center',editor:{type:'numberbox',options: {validType:'length[1,2]',precision:0}}">大便(次/天)</th>
+                <th sortable="true" data-options="field:'s10',width:60,align:'center',editor:{type:'numberbox',options: {validType:'length[1,5]',precision:1}}">身高(cm)</th>
+                <th sortable="true" data-options="field:'s11',width:60,align:'center',editor:{type:'numberbox',options: {validType:'length[1,6]',precision:1}}">体重(kg)</th>
+                <th sortable="true" data-options="field:'s12',width:150,align:'center',formatter:skin,styler:skinStyler">皮试</th>
+                <th sortable="true" data-options="field:'s13',width:150,align:'center',formatter:event">事件</th>
+                <th data-options="field:'s14',width:80,align:'center',formatter:opreation">操作</th>
+            	</tr>
+            </thead>
+      		</table>
+		</div>
+	</div>
+    <div id="box1" class="easyui-dialog" data-options="closed:true">
+        <div style="padding:15px;">
+            <div class="dlg-panel">
+                <p>
+                    <span class="dlg-title">药物名：</span>
+                    <input type="text" id="drugName" size="16"/>
+                </p>
+                <p>
+                    <span class="dlg-title">皮试结果：</span>
+                    <select id="testResult">
+                        <option >
+                            阴性
+                        </option>
+                        <option >
+                            阳性
+                        </option>
+                    </select>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="box2" class="easyui-dialog" data-options="closed:true">
+        <div style="padding:10px 15px;">
+            <div class="dlg-panel">
+                <p>
+                    <span class="dlg-title">
+                        事件：
+                    </span>
+                    <select id="problem">
+                        <option value ="">空</option>
+                        <option value ="ry">入院</option>
+                        <option value ="cy">出院</option>
+                        <option value ="zr">转入</option>
+                        <option value ="zc">转出</option>
+                        <option value ="ss">手术</option>
+                        <option value ="fm">分娩</option>
+                        <option value ="cs">出生</option>
+                        <option value ="bw">病危</option>
+                        <option value ="bz">病重</option>
+                        <option value ="sw">死亡</option>
+                    </select>
+                </p>
+                <!-- <p>
+                    <span class="dlg-title">
+                        干预措施：
+                    </span>
+                    <input type="text" id="intervention" size="16"/>
+                </p> -->
+                <p>
+                    <span class="dlg-title">
+                        时间：
+                    </span>
+                    <input class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm:ss'})" type="text" id="recordDate" size="16" style="margin-top:0px;width:95px;"/>
+                </p>
+            </div>
+        </div>
+    </div>
+ 	#parse("test/allergyDrugPanel.vm") 
+</body>
+</html>

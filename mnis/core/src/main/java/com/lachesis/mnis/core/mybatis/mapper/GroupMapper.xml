@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.GroupMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnis.core.identity.entity.SysGroup" >
+    <id column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    <result column="group_code" property="groupCode" jdbcType="VARCHAR" />
+    <result column="group_type" property="groupType" jdbcType="TINYINT" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="modify_user_id" property="modifyUserId" jdbcType="INTEGER" />
+    <result column="modify_datetime" property="modifyDatetime" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    group_id, group_name, group_code, group_type, create_user_id, create_datetime, modify_user_id, 
+    modify_datetime, description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_group
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </select>
+    <select id="getAllGroup" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_group
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_group
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnis.core.identity.entity.SysGroup" >
+    insert into sys_group (group_name, group_code, 
+      group_type, create_user_id, create_datetime, 
+      modify_user_id, modify_datetime, description
+      )
+    values (#{groupName,jdbcType=VARCHAR}, #{groupCode,jdbcType=VARCHAR}, 
+      #{groupType,jdbcType=TINYINT}, #{createUserId,jdbcType=INTEGER}, #{createDatetime,jdbcType=TIMESTAMP}, 
+      #{modifyUserId,jdbcType=INTEGER}, #{modifyDatetime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lachesis.mnis.core.identity.entity.SysGroup" >
+    insert into sys_group <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="groupName != null" >
+        group_name,
+      </if>
+      <if test="groupCode != null" >
+        group_code,
+      </if>
+      <if test="groupType != null" >
+        group_type,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="modifyUserId != null" >
+        modify_user_id,
+      </if>
+      <if test="modifyDatetime != null" >
+        modify_datetime,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupCode != null" >
+        #{groupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groupType != null" >
+        #{groupType,jdbcType=TINYINT},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDatetime != null" >
+        #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lachesis.mnis.core.identity.entity.SysGroup" >
+    update sys_group <set >
+      <if test="groupName != null" >
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupCode != null" >
+        group_code = #{groupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groupType != null" >
+        group_type = #{groupType,jdbcType=TINYINT},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDatetime != null" >
+        modify_datetime = #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnis.core.identity.entity.SysGroup" >
+    update sys_group set group_name = #{groupName,jdbcType=VARCHAR},
+      group_code = #{groupCode,jdbcType=VARCHAR},
+      group_type = #{groupType,jdbcType=TINYINT},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+      modify_datetime = #{modifyDatetime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR}
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </update>
+   <insert id="insertUserGroup" parameterType="Map">
+      insert into sys_user_group(user_id,group_id)
+      (
+			<foreach collection="groupId" item="item" separator="union all">
+				select #{userId},#{item}
+			</foreach>
+			)
+  </insert>
+  <delete id="deleteUserGroup" parameterType="Map">
+      delete sys_user_group where user_id=#{userId}
+      <if test="groupId != null">
+      		and group_id in 
+		    <foreach collection="groupId" item="item"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			</if>
+  </delete>
+  <select id="getUserGroups" parameterType="Integer" resultMap="BaseResultMap">
+      select g.* from sys_user_group ug
+      inner join sys_group g on ug.group_id=g.group_id
+      inner join sys_user u on ug.user_id=u.user_id
+      where ug.user_id=#{userId}
+  </select>
+  <insert id="insertRoleGroup" parameterType="Map">
+       insert into sys_role_group(role_id,group_id)
+      (
+			<foreach collection="roleId" item="item" separator="union all">
+				select #{item},#{group_id}
+			</foreach>
+			)
+  </insert>
+    <delete id="deleteRoleGroup" parameterType="Map">
+      delete sys_role_group where group_id=#{groupId}
+      <if test="roleId != null">
+      		and role_id in 
+		    <foreach collection="roleId" item="item"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			</if>
+  </delete>
+    <select id="getRoleGroups" parameterType="Integer" resultMap="BaseResultMap">
+      select r.* from sys_role_group rg
+      inner join sys_role r on r.role_id=rg.role_id
+      inner join sys_group g on g.group_id=rg.group_id
+      where rg.group_id=#{groupId}
+  </select>
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.trainExamManage.dao.TemAttendanceManageMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.trainExamManage.domain.TemAttendanceManage" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="TRAIN_CODE" property="trainCode" jdbcType="VARCHAR" />
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="ATTENDANCE_SITUATION" property="attendanceSituation" jdbcType="INTEGER" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from TEM_ATTENDANCE_MANAGE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.trainExamManage.domain.TemAttendanceManage" >
+    insert into TEM_ATTENDANCE_MANAGE (TRAIN_CODE, DEPT_CODE, 
+      USER_CODE, USER_NAME, ATTENDANCE_SITUATION, 
+      REMARK, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_TIME, UPDATE_PERSON)
+    values (#{trainCode,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{attendanceSituation,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.trainExamManage.domain.TemAttendanceManage" >
+    update TEM_ATTENDANCE_MANAGE
+    set TRAIN_CODE = #{trainCode,jdbcType=VARCHAR},
+      DEPT_CODE = #{deptCode,jdbcType=VARCHAR},
+      USER_CODE = #{userCode,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      ATTENDANCE_SITUATION = #{attendanceSituation,jdbcType=INTEGER},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, TRAIN_CODE, DEPT_CODE, USER_CODE, USER_NAME, ATTENDANCE_SITUATION, 
+    REMARK, CREATE_TIME, CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+    from TEM_ATTENDANCE_MANAGE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, TRAIN_CODE, DEPT_CODE, USER_CODE, USER_NAME, ATTENDANCE_SITUATION, 
+    REMARK, CREATE_TIME, CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+    from TEM_ATTENDANCE_MANAGE
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from TEM_ATTENDANCE_MANAGE where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.trainExamManage.domain.TemAttendanceManage" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into TEM_ATTENDANCE_MANAGE (TRAIN_CODE, DEPT_CODE, 
+      USER_CODE, USER_NAME, ATTENDANCE_SITUATION, 
+      REMARK, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_TIME, UPDATE_PERSON)
+    values (#{trainCode,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{attendanceSituation,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+</mapper>

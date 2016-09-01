@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.qualityForm.dao.QualityTeamMapper" >
+	<!-- 逻辑插入 -->
+	<insert id="insert" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityTeam">
+		insert into QUALITY_TEAM
+		(TEAM_NAME, USER_CODE, TEAM_LEADER, STATUS, CREATE_TIME,
+		UPDATE_TIME, CREATE_PERSON,  UPDATE_PERSON, TEAM_CODE)
+		values
+		(#{teamName},#{userCode},#{teamLeader},#{status},
+		GETDATE(),GETDATE(),#{createPerson},#{updatePerson}, #{teamCode})
+	</insert>
+	<!-- 逻辑修改 -->
+	<update id="update" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityTeam">
+		update QUALITY_TEAM
+		set 
+		TEAM_NAME = #{teamName},
+		TEAM_LEADER = #{teamLeader},
+		UPDATE_TIME = GETDATE(),
+		UPDATE_PERSON = #{updatePerson}
+		where
+		TEAM_CODE = #{teamCode}
+	</update>
+	<!-- 根据组名查询 -->
+	<select id="selectByTeamCode" parameterType="java.lang.String"
+	resultType="com.lachesis.mnisqm.module.qualityForm.domain.QualityTeam">
+		select 
+		SEQ_ID		seqId,
+		TEAM_NAME	teamName,
+		USER_CODE	userCode,
+		TEAM_LEADER teamLeader,
+		STATUS		status,
+		TEAM_CODE	teamCode
+		from 
+		QUALITY_TEAM
+		where 
+		STATUS !='09'
+		<if test="teamCode != null">
+		and
+		TEAM_CODE = #{teamCode}
+		</if>
+		<if test="userCode != null">
+		and
+		USER_CODE = #{userCode}
+		</if>
+	</select>
+	<!-- 逻辑删除 -->
+	<update id="deleteByPrimaryKey" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityTeam">
+		update QUALITY_TEAM
+		set
+		TEAM_LEADER = #{teamLeader},
+		STATUS = '09'
+		where
+		TEAM_CODE = #{teamCode}
+		<if test="userCode != null">
+		and 
+		USER_CODE = #{userCode}
+		</if>
+	</update>
+	
+	<select id="selectUniqueTeamCode" resultType="com.lachesis.mnisqm.module.qualityForm.domain.QualityTeam">
+		select distinct TEAM_CODE teamCode
+		from QUALITY_TEAM
+		where 
+		STATUS !='09'
+	</select>
+</mapper>

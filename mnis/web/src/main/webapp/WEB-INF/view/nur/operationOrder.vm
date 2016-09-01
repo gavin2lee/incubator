@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="#url('/resources/js/nur/operationOrder.js?1472534366478')" charset="utf-8"></script>
+<style type="text/css">
+.long-medi,.tmp-medi{
+	position: relative;
+	float: left;
+	height: 38px;
+	line-height: 38px;
+	margin-left: 30px;
+	padding-right: 30px;
+	font-size: 16px;
+	cursor: pointer;
+	overflow: hidden;
+}
+.long-medi i,.tmp-medi i{
+	position: absolute;
+	top: 18px;
+	right: 5px;
+	width: 5px;
+	height: 5px;
+	background-color: #333;
+}
+.long-medi{padding-right:50px;border-right:1px dotted #fff;}
+.long-medi i{right: 25px;}
+.long-medi div {
+	position: absolute;
+	top: 40px;
+	left: 50%;
+	width: 115px;
+	background-color: #587c91;
+	color: #fff;
+	font-size: 14px;
+	z-index: 1111;
+}
+.long-medi div p {
+	height: 25px;
+	line-height: 25px;
+	padding: 5px 10px;
+}
+.circle2 {
+background-position: -20px -165px;
+}
+element.style {
+}
+
+.circle {
+display: inline-block;
+width: 18px;
+height: 19px;
+margin-right: 10px;
+background: url(../../../resources/img/MNIS.png) 0 -166px no-repeat;
+cursor: pointer;
+vertical-align: text-bottom;
+}
+.circle2 {
+	background-position: -20px -165px;
+}
+</style>
+<title>手术执行单</title>
+</head>
+
+<body id="medicalOrderLayout" class="easyui-layout">
+	
+	<div  data-options="region:'center',fit:true" style="height:934px;overflow: hidden;">
+		<div class="top-tools" style="height:39px">
+            <div class="top-tools-box">
+                <!-- <div class="top-title">
+                    <span>医嘱执行单</span>
+                </div> -->
+                
+                <input type="hidden" id="pid" value = "$!id" />
+                <div class="btn-box">
+       
+
+                    <div class="btn-nm pdf-print-btn" onclick="">
+                        <span class="btm">打印</span>
+                    </div>
+                    <div class="btn-nm pdf-print-btn" onclick="">
+                        <span class="btm">续打</span>
+                    </div>
+                    <div class="btn-nm pdf-print-btn" onclick="">
+                        <span class="btm">打印全部</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="mid-show-box">
+			<table id="medicalOrderTable" class="easyui-datagrid">
+	            <thead>
+	                <tr>
+	                     <th data-options="field:'mId',width:60,align:'center'">手术状态</th>
+	                     <th data-options="field:'prestype',width:90,align:'center'">计划手术时间</th>
+	                     <th data-options="field:'prescate',width:100,align:'left'">手术名称</th>
+	                     <th data-options="field:'planexedate',width:50,align:'center'">手术部位</th>
+	                     <th data-options="field:'presinfo',width:50,align:'center'">主刀医生</th>
+	                     <th data-options="field:'norms',width:50,align:'left'">助手医生</th>
+	                     <th data-options="field:'dosage',width:70,align:'left'">送病人护士</th>
+	                     <th data-options="field:'usage',width:90,align:'left'">送病人时间</th>
+	                     <th data-options="field:'hz',width:70,align:'left'">接病人护士</th>
+	                     <th data-options="field:'createdate',width:90,align:'left'">接病人时间</th>
+	                     <th data-options="field:'createdoc',width:50,align:'left'">开立医生</th>
+	                     <th data-options="field:'comment',width:290,align:'left'">术前医嘱</th>
+	                     <th data-options="field:'exedoc',width:60,align:'left'">执行护士</th>
+						 <th data-options="field:'exedate',width:90,align:'left'">执行时间</th>
+	                </tr>
+	            </thead>
+	        </table>
+        </div>
+	</div>
+</body>
+</html>

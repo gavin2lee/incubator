@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+th, td {
+	word-break: break-word;
+}
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+	}
+}
+</style>
+<title>防跌倒护理单</title>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper">
+	<div class="paper-content">
+		#fallNurse()
+		<div class="doc-content">
+			<table class="doc-table">
+				<thead>
+					<tr>
+			            <th rowspan="2" style="width: 45px;">日期</th>
+			            <th rowspan="2" style="width: 45px;">时间</th>
+						<th colspan="8">常规措施</th>
+						<th colspan="8">加强措施</th>
+						<th colspan="2">补充措施</th>
+			            <th rowspan="2" style="width: 50px;">签名</th>
+					</tr><tr>
+			            <th style="width: 35px;">病房内光线充足，地面干净不潮湿，保持道路通畅</th>
+			            <th style="width: 35px;">引导患者熟悉病房环境，危险环境有警示标识</th>
+			            <th>悬挂跌倒风险警示牌</th>
+			            <th style="width: 35px;">把患者需要的物品（水杯、眼镜、纸巾、尿壶等）放置在易取用的地方</th>
+			            <th style="width: 35px;">放低床身，固定床刹，加床栏，指导患者勿跨越床栏</th>
+			            <th style="width: 35px;">提供呼叫器并教会使用，放在易于取得的位置</th>
+			            <th style="width: 130px;">指导家属、陪人、病人预防跌倒的方法及注意事项：a当患者头晕时，确保其在床上休息。注意做到“起床三部曲”：醒后卧床1分钟，坐起1分钟后再站起，站起1分钟后再行走；b穿大小合适的鞋及长短合适的衣裤，鞋底应防滑；c切勿靠在不稳定的家具上，善用扶手</th>
+			            <th>加强巡视，晚上使用夜灯</th>
+			            <th style="width: 35px;">留陪护，陪同患者入厕，及时换尿片，给便盆、尿壶</th>
+			            <th style="width: 35px;">患者在行走或功能训练过程中给予帮助、监督</th>
+			            <th>轮椅/座椅，使用安全腰带</th>
+			            <th style="width: 35px;">对于烦躁、谵妄的患者，调床位至靠近护士站的病房，便于观察</th>
+			            <th style="width: 35px;">对于烦躁、谵妄的患者，通知医生进一步处理</th>
+			            <th style="width: 55px;">离床活动、外出检查必须有人陪同。无人陪伴的情况下，不要擅自下床，不要随意离开病房</th>
+			            <th>给予安全背心或约束</th>
+			            <th style="width: 35px;">观察药物的反应及副作用（如镇静催眠、降压、降糖、利尿等药物）</th>
+			            <th style="width: 20px;">$!{doc.hold1}</textarea></th>
+			            <th style="width: 20px;">$!{doc.hold2}</textarea></th>
+			        </tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		#fallNurseComment()
+	</div>
+	#pageFoot()
+</div>
+</div>
+<script type="text/javascript">
+function getRowDatas(row, isFirstRow, lastDate) {
+	return [
+		getDate(row['date'], isFirstRow, lastDate),
+		getTime(row['date']),
+		row['dry'],
+		row['familiar'],
+		row['warn'],
+		row['staff'],
+		row['bed'],
+		row['call'],
+		row['method'],
+		row['patrol'],
+		row['company'],
+		row['assist'],
+		row['belt'],
+		row['watch'],
+		row['treat'],
+		row['with'],
+		row['restraint'],
+		row['observe'],
+		row['hold1'],
+		row['hold2'],
+		row['sign']
+	];
+}
+$(function() {
+	fillTable('#url("/doc/fallNurse/view/datas")', '$!{patient.cureNo}', 21, getRowDatas);
+});
+</script>
+</body>
+</html>

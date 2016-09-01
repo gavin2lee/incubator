@@ -1,0 +1,55 @@
+<style id="style1">
+    table tr th span {
+        font-size: 14px;
+        color: #f00;
+    }
+</style>
+
+<div id="printHeadDiv" style="display:none">
+    <DIV style="LINE-HEIGHT: 30px" class=size16 align=center><STRONG><font
+            color="#0000FF">深圳市第三人民医院护士交接班记录</font></STRONG>
+    </DIV>
+    <TABLE border=0 cellSpacing=0 cellPadding=0 width="100%">
+        <TBODY>
+        <TR>
+            <TD width="43%"><font color="#0000FF">科室：<SPAN
+                    id=rpt_Pro_Order_List_ctl00_lbl_eShop_Name>${deptName}</SPAN></font></TD>
+            <TD width="33%"><font color="#0000FF">日期：<SPAN id="printDate"></SPAN></font></TD>
+        </TR>
+        </TBODY>
+    </TABLE>
+</div>
+
+<div id="printTableDiv" style="display:none;font-size:14px;">
+    <table border=1 width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse" bordercolor="#000000">
+        <thead>
+        <tr>
+            <th style="width:40px;halign:center"><span>床号</span></th>
+            <th style="width:40px;halign:center">姓名</th>
+            <th style="width:80px;halign:center">诊断</th>
+            <th style="width:40px;halign:center">病人状态</th>
+            <th>凌晨00:00至上午08:00时</th>
+            <th style="width:40px;halign:center">记录护士</th>
+            <th style="width:40px;halign:center">记录时间</th>
+            <th>上午08:01至下午16:00时</th>
+            <th style="width:40px;halign:center">记录护士</th>
+            <th style="width:40px;halign:center">记录时间</th>
+            <th>下午16:00至23:59时</th>
+            <th style="width:40px;halign:center">记录护士</th>
+            <th style="width:40px;halign:center">记录时间</th>
+        </tr>
+        </thead>
+        <tbody id="printTableBody">
+
+        <tbody>
+        <tfoot>
+        <tr>
+            <th align="right" colspan="13">
+                <p align="right"><span tdata="pageNO" format="#">第#页</span>
+                    ，<span tdata="pageCount" format="#">共#页</span></p>
+            </th>
+        </tr>
+
+        </tfoot>
+    </table>
+</div>

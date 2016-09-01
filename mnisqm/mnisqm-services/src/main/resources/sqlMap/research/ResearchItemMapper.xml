@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.research.dao.ResearchItemMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.research.domain.ResearchItem" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+    <result column="ITEM_SOURCE" property="itemSource" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="VARCHAR" />
+    <result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
+    <result column="COST" property="cost" jdbcType="DECIMAL" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="SUBJECT_HEAD" property="subjectHead" jdbcType="VARCHAR" />
+    <result column="SUBJECT_PARTICIPANT" property="subjectParticipant" jdbcType="VARCHAR" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 逻辑删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    update RESEARCH_ITEM
+    set
+      STATUS = '09',
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <!-- 输出插入 -->
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.research.domain.ResearchItem" >
+    insert into RESEARCH_ITEM (DEPT_CODE, SUBJECT_NAME, 
+      ITEM_SOURCE, START_DATE, END_DATE, 
+      COST, STATUS, SUBJECT_HEAD, 
+      SUBJECT_PARTICIPANT, CREATE_TIME, UPDATE_TIME, 
+      CREATE_PERSON, UPDATE_PERSON)
+    values (#{deptCode,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}, 
+      #{itemSource,jdbcType=VARCHAR}, #{startDate,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR}, 
+      #{cost,jdbcType=DECIMAL}, #{status,jdbcType=CHAR}, #{subjectHead,jdbcType=VARCHAR}, 
+      #{subjectParticipant,jdbcType=VARCHAR}, GETDATE(), GETDATE(), 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <!-- 更新数据 -->
+  <update id="updateByPrimaryKey" parameterType="ResearchItem" >
+    update RESEARCH_ITEM
+    set 
+      SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      ITEM_SOURCE = #{itemSource,jdbcType=VARCHAR},
+      START_DATE = #{startDate,jdbcType=VARCHAR},
+      END_DATE = #{endDate,jdbcType=VARCHAR},
+      COST = #{cost,jdbcType=DECIMAL},
+      STATUS = #{status,jdbcType=CHAR},
+      SUBJECT_HEAD = #{subjectHead,jdbcType=VARCHAR},
+      SUBJECT_PARTICIPANT = #{subjectParticipant,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, DEPT_CODE, SUBJECT_NAME, ITEM_SOURCE, START_DATE, END_DATE, COST, 
+    STATUS, SUBJECT_HEAD, SUBJECT_PARTICIPANT, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, 
+    UPDATE_PERSON
+    from RESEARCH_ITEM
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <!-- 查询科室下所有的 数据 -->
+  <select id="selectItemsByDept" resultMap="BaseResultMap" parameterType="ResearchItem">
+    select SEQ_ID, DEPT_CODE, SUBJECT_NAME, ITEM_SOURCE, START_DATE, END_DATE, COST, 
+    STATUS, SUBJECT_HEAD, SUBJECT_PARTICIPANT, CREATE_PERSON, 
+    UPDATE_PERSON
+    from RESEARCH_ITEM
+    WHERE STATUS != '09'
+    and DEPT_CODE =#{deptCode}
+  </select>
+</mapper>

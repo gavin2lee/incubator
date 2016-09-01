@@ -1,0 +1,141 @@
+<div class="wrapper" ng-controller="DeptTreeCtrl as vm">
+  <div class="page-left-menu" print-remove ng-if="vm.treeData[0].children && vm.treeData[0].children.length">
+    <div class="panel pull-left dept-wrapper panel-default" full-height>
+      <div class="panel-heading">
+        <i class="fa fa-sitemap"></i>
+        <span>科室列表</span>
+      </div>
+      <div class="panel-body dept-list">
+        <div class="list-filter">
+          <input type="text" class="form-control input-sm" ng-model="vm.filterText" placeholder="输入关键字搜索">
+        </div>
+        <div class="list-content">
+          <treecontrol class="tree-light" tree-model="vm.treeData" on-selection="vm.select(node)" filter-expression="vm.filterText" expanded-nodes="vm.expandedNodes" selected-node="vm.selectedNode" options="vm.treeOption">
+          {{node.deptName}}
+          </treecontrol>
+          <loading type="tree"></loading>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-class="{'page-right-content': vm.treeData[0].children && vm.treeData[0].children.length, 'padding-content': !(vm.treeData[0].children && vm.treeData[0].children.length)}">
+  <uib-tabset active="active">
+    <uib-tab index="0" heading="请假">
+      <div class="leave-wrapper" ng-controller="DepartmentManagerLeaveController as vm">
+        <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+          <div class="tool-wrapper container-fluid">
+            <div class="pull-right">
+              <button class="btn btn-sm btn-primary" ng-click="vm.open()">请假</button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <table st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered no-border">
+              <thead>
+                <tr class="header-export">
+                  <th>员工姓名</th>
+                  <th>开始时间</th>
+                  <th>结束时间</th>
+                  <th>天数</th>
+                  <th>请假类型</th>
+                  <th>请假原因</th>
+                  <th>审批状态</th>
+                  <th>备注</th>
+                  <th print-remove>操作</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="row in vm.list">
+                <tr class="row-{{$index}}">
+                  <td class="text-center">{{row.userName}}</td>
+                  <td class="text-center">{{row.startTime}}</td>
+                  <td class="text-center">{{row.endTime}}</td>
+                  <td class="text-center">{{row.days}}</td>
+                  <td class="text-center">{{getDicName('leaveType', row.leaveType)}}</td>
+                  <td class="text-center">{{row.leaveWhy}}</td>
+                  <td class="text-center">{{getDicName('approveStatus', row.approveStatus)}}</td>
+                  <td class="text-center">{{row.approveRemark}}</td>
+                  <td class="print-remove">
+                    <button class="btn btn-primary btn-xs classes-handler-btn" ng-click="vm.review(row)" ng-show="row.permission == '02'">
+                      <span class="fa fa-pencil"></span>审核
+                    </button>
+                    <button class="btn btn-success btn-xs classes-handler-btn" ng-click="vm.upload(row)" ng-show="row.permission == '01'">
+                      <span class="fa fa-upload"></span>提交
+                    </button>
+                    <button class="btn btn-primary btn-xs classes-handler-btn" ng-click="vm.open(row)" ng-show="row.permission == '01'">
+                      <span class="fa fa-edit"></span>编辑
+                    </button>
+                    <button class="btn btn-danger btn-xs classes-handler-btn" ng-click="vm.del(row.seqId)" ng-show="row.permission == '01'">
+                      <span class="fa fa-trash"></span>删除
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <none-data-info list="vm.list"></none-data-info>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+    <uib-tab index="1" heading="调班">
+      <div class="attemper-wrapper" ng-controller="DepartmentManagerAttemperController as vm">
+        <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+          <div class="tool-wrapper container-fluid">
+            <div class="pull-right">
+              <button class="btn btn-sm btn-primary" ng-click="vm.add()">调班</button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <table st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered no-border">
+              <thead>
+                <tr class="header-export">
+                  <th>申请人</th>
+                  <th>申请时间</th>
+                  <th>申请原因</th>
+                  <th>申请人班次</th>
+                  <th>申请人班次日期</th>
+                  <th>调班人</th>
+                  <th>调班人班次</th>
+                  <th>调班人班次日期</th>
+                  <th>处理状态</th>
+                  <th>处理备注</th>
+                  <th print-remove>操作</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="row in vm.list | filter : vm.filter">
+                <tr class="row-{{$index}}">
+                  <td>{{vm.getUserName(row.applyUserCode)}}</td>
+                  <td>{{row.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td>{{row.changeCause}}</td>
+                  <td>{{vm.getClassName(row.applyClass)}}</td>
+                  <td>{{row.applyClassDate}}</td>
+                  <td>{{vm.getUserName(row.changeUserCode)}}</td>
+                  <td>{{vm.getClassName(row.changeClass)}}</td>
+                  <td>{{row.changeClassDate}}</td>
+                  <td>{{getDicName('approveStatus', row.status)}}</td>
+                  <td>{{row.refuseCause}}</td>
+                  <td>
+                    <button class="btn btn-primary btn-xs classes-handler-btn" ng-click="vm.handler(row)" ng-show="row.permission == '02'">
+                      <span class="fa fa-pencil"></span>审核
+                    </button>
+                    <button class="btn btn-success btn-xs classes-handler-btn" ng-click="vm.upload(row)" ng-show="row.permission == '01'">
+                      <span class="fa fa-upload"></span>提交
+                    </button>
+                    <button class="btn btn-primary btn-xs classes-handler-btn" ng-click="vm.edit(row)" ng-show="row.permission == '01'">
+                      <span class="fa fa-edit"></span>编辑
+                    </button>
+                    <button class="btn btn-danger btn-xs classes-handler-btn" ng-click="vm.del(row.seqId)" ng-show="row.permission == '01'">
+                      <span class="fa fa-trash"></span>删除
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <none-data-info list="vm.list"></none-data-info>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+  </uib-tabset>
+  </div>
+</div>
+

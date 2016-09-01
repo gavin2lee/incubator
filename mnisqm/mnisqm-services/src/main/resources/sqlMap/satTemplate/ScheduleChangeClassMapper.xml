@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.schedule.dao.ScheduleChangeClassMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.schedule.domain.ScheduleChangeClass" >
+    <result column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="APPLY_USER_CODE" property="applyUserCode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CHANGE_USER_CODE" property="changeUserCode" jdbcType="VARCHAR" />
+    <result column="APPLY_CLASS" property="applyClass" jdbcType="VARCHAR" />
+    <result column="APPLY_CLASS_DATE" property="applyClassDate" jdbcType="VARCHAR" />
+    <result column="CHANGE_CLASS" property="changeClass" jdbcType="VARCHAR" />
+    <result column="CHANGE_CLASS_DATE" property="changeClassDate" jdbcType="VARCHAR" />
+    <result column="CHANGE_CAUSE" property="changeCause" jdbcType="VARCHAR" />
+    <result column="REFUSE_CAUSE" property="refuseCause" jdbcType="VARCHAR" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.schedule.domain.ScheduleChangeClass" >
+    insert into SCHEDULE_CHANGE_CLASS (APPLY_USER_CODE, STATUS, 
+      CHANGE_USER_CODE, APPLY_CLASS, APPLY_CLASS_DATE, 
+      CHANGE_CLASS, CHANGE_CLASS_DATE, CHANGE_CAUSE, 
+      REFUSE_CAUSE, CREATE_TIME, UPDATE_TIME, 
+      CREATE_PERSON, UPDATE_PERSON)
+    values (#{applyUserCode,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{changeUserCode,jdbcType=VARCHAR}, #{applyClass,jdbcType=VARCHAR}, #{applyClassDate,jdbcType=VARCHAR}, 
+      #{changeClass,jdbcType=VARCHAR}, #{changeClassDate,jdbcType=VARCHAR}, #{changeCause,jdbcType=VARCHAR}, 
+      #{refuseCause,jdbcType=VARCHAR}, GETDATE(), GETDATE(), 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select SEQ_ID, APPLY_USER_CODE, STATUS, CHANGE_USER_CODE, APPLY_CLASS, APPLY_CLASS_DATE, 
+    CHANGE_CLASS, CHANGE_CLASS_DATE, CHANGE_CAUSE, REFUSE_CAUSE, 
+    CREATE_PERSON, UPDATE_PERSON
+    from SCHEDULE_CHANGE_CLASS
+    <if test="deptCode != null">
+    	where 
+    		CHANGE_USER_CODE in (select USER_CODE from 
+    		COM_DEPT_USER where DEPT_CODE=#{deptCode})
+    	or
+    		APPLY_USER_CODE in (select USER_CODE from 
+    		COM_DEPT_USER where DEPT_CODE=#{deptCode})
+    </if>
+  </select>
+  <!-- 逻辑删除 -->
+  <update id="deleteByKey" parameterType="java.lang.Long">
+  	update SCHEDULE_CHANGE_CLASS
+  		set STATUS ='09',
+  		UPDATE_TIME = GETDATE()
+  	WHERE SEQ_ID = #{seqId}
+  </update>
+  <!-- 逻辑修改 -->
+  <update id="update" parameterType="com.lachesis.mnisqm.module.schedule.domain.ScheduleChangeClass">
+  	update SCHEDULE_CHANGE_CLASS
+  		set APPLY_USER_CODE = #{applyUserCode}, 
+  			STATUS 			= #{status},
+      		CHANGE_USER_CODE = #{changeUserCode}, 
+      		APPLY_CLASS = #{applyClass}, 
+      		APPLY_CLASS_DATE = #{applyClassDate}, 
+      		CHANGE_CLASS = #{changeClass}, 
+      		CHANGE_CLASS_DATE = #{changeClassDate}, 
+      		CHANGE_CAUSE = #{changeCause}, 
+      		REFUSE_CAUSE = #{refuseCause}, 
+      		UPDATE_TIME = GETDATE(), 
+      		UPDATE_PERSON = #{updatePerson}
+      	where 
+      		SEQ_ID = #{seqId}
+      		
+  </update>
+</mapper>

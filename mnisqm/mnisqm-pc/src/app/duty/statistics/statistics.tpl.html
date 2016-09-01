@@ -1,0 +1,102 @@
+<div class="wrapper duty-statistics-wrapper padding-content">
+  <div ng-controller="DepartmentManagerStatisticsController as vm">
+    <uib-tabset active="active">
+      <uib-tab index="0" heading="排班记录">
+        <div class="panel panel-layout panel-default">
+          <div class="tool-wrapper filter-bar form-inline">
+            <div class="filter-item">
+              <label >统计类别： </label>
+              <select name="" ng-model="vm.queryParams.type" class="form-control input-sm">
+                <option value="leave">考勤数据</option>
+                <option value="class">班次数据</option>
+                <option value="days">值班数据</option>
+              </select>
+            </div>
+
+            <div class="filter-item">
+              <label >月份： </label>
+              <span class="input-group">
+                <input ng-model="vm.queryParams.month" type="text" id="month" name="month" required uib-datepicker-popup datepicker-options="vm.options.month" on-open-focus="true" is-open="vm.monthOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" common-picker="month" readonly>
+
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-sm btn-default" ng-click="vm.monthOpen = true">
+                    <i class="fa fa-calendar"></i>
+                  </button>
+                </span>
+              </span>
+            </div>
+
+            <div class="filter-item">
+              <label >科室： </label>
+              <select class="form-control input-sm" ng-model="vm.queryParams.deptCode" name="deptCode">
+                <option value="">全部</option>
+                <option ng-repeat="item in vm.deptData" value="{{item.deptCode}}">{{item.deptName}}</option>
+              </select>
+            </div>
+
+            <div class="filter-item">
+              <button class="btn btn-primary btn-sm" ng-click="vm.load.func()">查询</button>
+            </div>
+
+          </div>
+          <div class="panel-body" loading-wrapper loading-type="content" loading-options="vm.load">
+            <!-- <div id="grid1" ui-grid="vm.gridOptions" class="grid"></div> -->
+            <table class="table table-hover table-condensed table-bordered table-striped no-border">
+              <thead>
+                <tr class="header-export">
+                  <!-- <th>
+                    <grid-check-all all="vm.statisticsData"></grid-check-all>
+                  </th> -->
+                  <!-- <th></th> -->
+                  <!--<th st-sort="rowNumber">序号</th>
+                  <th st-sort="month">月份</th>-->
+                 <!-- <th st-sort="deptCode">病区</th>-->
+                  <th>HIS工号</th>
+                  <th>姓名</th>
+                  <th ng-if="vm.current === 'leave'">病假（天）</th>
+                  <th ng-if="vm.current === 'leave'">事假（天）</th>
+                  <th ng-if="vm.current === 'leave'">年假（天）</th>
+                  <th ng-if="vm.current === 'leave'">婚假（天）</th>
+                  <th ng-if="vm.current === 'leave'">调休假（天）</th>
+                  <th ng-if="vm.current === 'leave'">丧假（天）</th>
+                  <th ng-if="vm.current === 'leave'">产假（天）</th>
+                  <th ng-if="vm.current === 'days'">节假日上班（天）</th>
+                  <th ng-repeat="c in vm.classesList" ng-if="vm.current == 'class'">{{c.className}}</th>
+                </tr>
+                <!-- <tr ng-show="vm.statisticsData.length > 0">
+                  <th colspan="5">
+                    <input st-search="" class="form-control input-sm" placeholder="检索关键字" type="text" />
+                  </th>
+                </tr> -->
+              </thead>
+              <tbody ng-repeat="row in vm.statisticsData">
+                <tr>
+                  <!-- <td grid-checkbox="row"></td> -->
+                  <!-- <td grid-expand-trigger class="trigger">
+                    <i class="fa fa-caret-right"></i>
+                  </td> -->
+                  <!--<td>{{row.rowNumber}}</td>
+                  <td>{{row.month}}</td>-->
+                  <!--<td>{{row.deptName}}</td>-->
+                  <td>{{row.hisCode}}</td>
+                  <td>{{row.userName}}</td>
+                  <td ng-if="vm.current === 'leave'">{{row.bj}}</td>
+                  <td ng-if="vm.current === 'leave'">{{row.shj}}</td>
+                  <td ng-if="vm.current === 'leave'">{{row.nj}}</td>
+                  <td ng-if="vm.current === 'leave'">{{row.hj}}</td>
+                  <td ng-if="vm.current === 'leave'">{{row.txj}}</td>
+                  <td ng-if="vm.current === 'leave'">{{row.sj}}</td>
+                  <td ng-if="vm.current === 'leave'">{{row.cj}}</td>
+                  <td ng-repeat="c in row.classList" ng-if="vm.current === 'class'">{{c.count || 0}}</td>
+                  <td ng-if="vm.current === 'days'">{{row.jjr}}</td>
+                </tr>
+                <!-- <tr grid-expand tpl-src="app/departmentManager/statistics/detail.grid.html" ng-show="expandArr[$index]"></tr> -->
+              </tbody>
+            </table>
+            <none-data-info list="vm.statisticsData"></none-data-info>
+          </div>
+        </div>
+      </uib-tab>
+    </uib-tabset>
+  </div>
+</div>

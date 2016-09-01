@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.patientManage.dao.BedInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.patientManage.domain.BedInfo" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="WARD_CODE" property="wardCode" jdbcType="VARCHAR" />
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="BED_TYPE" property="bedType" jdbcType="VARCHAR" />
+    <result column="BED_TYPE_NAME" property="bedTypeName" jdbcType="VARCHAR" />
+    <result column="BED_PRICE" property="bedPrice" jdbcType="DECIMAL" />
+    <result column="TAGS" property="tags" jdbcType="VARCHAR" />
+    <result column="FLAG" property="flag" jdbcType="VARCHAR" />
+    <result column="SYNC_CREATE" property="syncCreate" jdbcType="TIMESTAMP" />
+    <result column="SYNC_UPDATE" property="syncUpdate" jdbcType="TIMESTAMP" />
+    <result column="HIS_CODE" property="hisCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from COM_BED
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.patientManage.domain.BedInfo" >
+    insert into COM_BED (CODE, WARD_CODE, DEPT_CODE,
+      BED_TYPE, BED_TYPE_NAME, BED_PRICE, 
+      TAGS, FLAG, SYNC_CREATE, 
+      SYNC_UPDATE, HIS_CODE)
+    values ( #{code,jdbcType=VARCHAR}, #{wardCode,jdbcType=VARCHAR},#{deptCode,jdbcType=VARCHAR}, 
+      #{bedType,jdbcType=VARCHAR}, #{bedTypeName,jdbcType=VARCHAR}, #{bedPrice,jdbcType=DECIMAL}, 
+      #{tags,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{syncCreate,jdbcType=TIMESTAMP}, 
+      #{syncUpdate,jdbcType=TIMESTAMP}, #{hisCode,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.patientManage.domain.BedInfo" >
+    update COM_BED
+    set CODE = #{code,jdbcType=VARCHAR},
+      WARD_CODE = #{wardCode,jdbcType=VARCHAR},
+      DEPT_CODE = #{deptCode,jdbcType=VARCHAR},
+      BED_TYPE = #{bedType,jdbcType=VARCHAR},
+      BED_TYPE_NAME = #{bedTypeName,jdbcType=VARCHAR},
+      BED_PRICE = #{bedPrice,jdbcType=DECIMAL},
+      TAGS = #{tags,jdbcType=VARCHAR},
+      FLAG = #{flag,jdbcType=VARCHAR},
+      SYNC_CREATE = #{syncCreate,jdbcType=TIMESTAMP},
+      SYNC_UPDATE = #{syncUpdate,jdbcType=TIMESTAMP},
+      HIS_CODE = #{hisCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select ID, CODE, WARD_CODE, DEPT_CODE, BED_TYPE, BED_TYPE_NAME, BED_PRICE, TAGS, FLAG, SYNC_CREATE, 
+    SYNC_UPDATE, HIS_CODE
+    from COM_BED
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, CODE, WARD_CODE, DEPT_CODE, BED_TYPE, BED_TYPE_NAME, BED_PRICE, TAGS, FLAG, SYNC_CREATE, 
+    SYNC_UPDATE, HIS_CODE
+    from COM_BED
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from COM_BED where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.patientManage.domain.BedInfo" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into COM_BED (CODE, WARD_CODE, DEPT_CODE,
+      BED_TYPE, BED_TYPE_NAME, BED_PRICE, 
+      TAGS, FLAG, SYNC_CREATE, 
+      SYNC_UPDATE, HIS_CODE)
+    values (#{code,jdbcType=VARCHAR}, #{wardCode,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR}, 
+      #{bedType,jdbcType=VARCHAR}, #{bedTypeName,jdbcType=VARCHAR}, #{bedPrice,jdbcType=DECIMAL}, 
+      #{tags,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{syncCreate,jdbcType=TIMESTAMP}, 
+      #{syncUpdate,jdbcType=TIMESTAMP}, #{hisCode,jdbcType=VARCHAR})
+  </insert>
+  <select id="getByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select ID, CODE, WARD_CODE, DEPT_CODE, BED_TYPE, BED_TYPE_NAME, BED_PRICE, TAGS, FLAG, SYNC_CREATE, 
+    SYNC_UPDATE, HIS_CODE
+    from COM_BED
+    where CODE = #{code}
+  </select>
+  <update id="updateByCode" parameterType="com.lachesis.mnisqm.module.patientManage.domain.BedInfo" >
+    update COM_BED
+    set CODE = #{code,jdbcType=VARCHAR},
+      WARD_CODE = #{wardCode,jdbcType=VARCHAR},
+      DEPT_CODE = #{deptCode,jdbcType=VARCHAR},
+      BED_TYPE = #{bedType,jdbcType=VARCHAR},
+      BED_TYPE_NAME = #{bedTypeName,jdbcType=VARCHAR},
+      BED_PRICE = #{bedPrice,jdbcType=DECIMAL},
+      TAGS = #{tags,jdbcType=VARCHAR},
+      FLAG = #{flag,jdbcType=VARCHAR},
+      SYNC_CREATE = #{syncCreate,jdbcType=TIMESTAMP},
+      SYNC_UPDATE = #{syncUpdate,jdbcType=TIMESTAMP},
+      HIS_CODE = #{hisCode,jdbcType=VARCHAR}
+    where CODE = #{code,jdbcType=BIGINT}
+  </update>
+</mapper>

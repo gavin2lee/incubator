@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-table tbody td:nth-child(6) {
+	text-align: left;
+}
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+	}
+}
+</style>
+<title>指测血糖监测记录单</title>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper">
+	<div class="paper-content">
+		#bloodSugar()
+<!-- 		<div class="doc-content" style="height: 1020px;"> -->
+		<div class="doc-content">
+			<table class="doc-table">
+				<colgroup>
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>日期</th>
+						<th>监测时间</th>
+						<th>监测血糖时段</th>
+						<th>指测血糖值<br>(mmol/L)</th>
+						<th>签名</th>
+						<th>备注</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		#bloodSugarComment()
+	</div>
+	#pageFoot()
+</div>
+</div>
+<script type="text/javascript">
+function getRowDatas(row, isFirstRow, lastDate) {
+	return [
+		getDate(row['date'], isFirstRow, lastDate),
+		getTime(row['date']),
+		row['period'],
+		row['value'],
+		row['sign'],
+		row['remark']
+	];
+}
+$(function() {
+	fillTable('#url("/doc/bloodSugar/view/datas")', '$!{patient.cureNo}', 6, getRowDatas);
+});
+</script>
+</body>
+</html>

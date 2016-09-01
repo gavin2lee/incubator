@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.DictModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnis.core.identity.entity.SysModule" >
+    <id column="module_id" property="moduleId" jdbcType="INTEGER" />
+    <result column="module_code" property="moduleCode" jdbcType="VARCHAR" />
+    <result column="module_name" property="moduleName" jdbcType="VARCHAR" />
+    <result column="module_parent_id" property="moduleParentId" jdbcType="INTEGER" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="modify_user_id" property="modifyUserId" jdbcType="INTEGER" />
+    <result column="modify_datetime" property="modifyDatetime" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    module_id, module_code,module_name, module_parent_id, create_user_id, create_datetime, modify_user_id, 
+    modify_datetime, description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_module
+    where module_id = #{moduleId,jdbcType=INTEGER}
+  </select>
+    <select id="getAllModule" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_module
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_module
+    where module_id = #{moduleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnis.core.identity.entity.SysModule" >
+    insert into sys_module (module_code,module_name, module_parent_id, 
+      create_user_id, create_datetime, modify_user_id, 
+      modify_datetime, description)
+    values (#{moduleCode,jdbcType=VARCHAR}, #{moduleName,jdbcType=VARCHAR}, #{moduleParentId,jdbcType=INTEGER}, 
+      #{createUserId,jdbcType=INTEGER}, #{createDatetime,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=INTEGER}, 
+      #{modifyDatetime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lachesis.mnis.core.identity.entity.SysModule" >
+    insert into sys_module
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="moduleCode != null" >
+        module_code,
+      </if>
+      <if test="moduleName != null" >
+        module_name,
+      </if>
+      <if test="moduleParentId != null" >
+        module_parent_id,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="modifyUserId != null" >
+        modify_user_id,
+      </if>
+      <if test="modifyDatetime != null" >
+        modify_datetime,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="moduleName != null" >
+        #{moduleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleName != null" >
+        #{moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleParentId != null" >
+        #{moduleParentId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDatetime != null" >
+        #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lachesis.mnis.core.identity.entity.SysModule" >
+    update sys_module
+    <set >
+        <if test="moduleCode != null" >
+        module_code = #{moduleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleName != null" >
+        module_name = #{moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleParentId != null" >
+        module_parent_id = #{moduleParentId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDatetime != null" >
+        modify_datetime = #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where module_id = #{moduleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnis.core.identity.entity.SysModule" >
+    update sys_module
+    set module_code = #{moduleCode,jdbcType=VARCHAR},
+      module_name = #{moduleName,jdbcType=VARCHAR},
+      module_parent_id = #{moduleParentId,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+      modify_datetime = #{modifyDatetime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR}
+    where module_id = #{moduleId,jdbcType=INTEGER}
+  </update>
+</mapper>

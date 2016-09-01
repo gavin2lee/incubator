@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.training.dao.NurseLevelTrainingMapper" >
+  <resultMap id="ResultMap" type="com.lachesis.mnisqm.module.training.domain.NurseLevelTraining" >
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="HEAD_NURSE" property="headNurse" jdbcType="VARCHAR" />
+    <result column="NURSE_SUM" property="nurseSum" jdbcType="INTEGER" />
+    <result column="N0_NUM" property="n0Num" jdbcType="INTEGER" />
+    <result column="N1_NUM" property="n1Num" jdbcType="INTEGER" />
+    <result column="N2_NUM" property="n2Num" jdbcType="INTEGER" />
+    <result column="N3_NUM" property="n3Num" jdbcType="INTEGER" />
+    <result column="N4_NUM" property="n4Num" jdbcType="INTEGER" />
+    <result column="N5_NUM" property="n5Num" jdbcType="INTEGER" />
+    <result column="N6_NUM" property="n6Num" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.training.domain.NurseLevelTraining" >
+    insert into NURSE_LEVEL_TRAINING (DEPT_CODE, DEPT_NAME, HEAD_NURSE, 
+      NURSE_SUM, N0_NUM, N1_NUM, 
+      N2_NUM, N3_NUM, N4_NUM, 
+      N5_NUM, N6_NUM)
+    values (#{deptCode,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, #{headNurse,jdbcType=VARCHAR}, 
+      #{nurseSum,jdbcType=INTEGER}, #{n0Num,jdbcType=INTEGER}, #{n1Num,jdbcType=INTEGER}, 
+      #{n2Num,jdbcType=INTEGER}, #{n3Num,jdbcType=INTEGER}, #{n4Num,jdbcType=INTEGER}, 
+      #{n5Num,jdbcType=INTEGER}, #{n6Num,jdbcType=INTEGER})
+  </insert>
+  <select id="selectAll" resultMap="ResultMap" >
+    select DEPT_CODE, DEPT_NAME, HEAD_NURSE, NURSE_SUM, N0_NUM, N1_NUM, N2_NUM, N3_NUM, 
+    N4_NUM, N5_NUM, N6_NUM
+    from NURSE_LEVEL_TRAINING
+  </select>
+  <insert parameterType="com.lachesis.mnisqm.module.training.domain.NurseLevelTraining" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into NURSE_LEVEL_TRAINING (DEPT_CODE, DEPT_NAME, HEAD_NURSE, 
+      NURSE_SUM, N0_NUM, N1_NUM, 
+      N2_NUM, N3_NUM, N4_NUM, 
+      N5_NUM, N6_NUM)
+    values (#{deptCode,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, #{headNurse,jdbcType=VARCHAR}, 
+      #{nurseSum,jdbcType=INTEGER}, #{n0Num,jdbcType=INTEGER}, #{n1Num,jdbcType=INTEGER}, 
+      #{n2Num,jdbcType=INTEGER}, #{n3Num,jdbcType=INTEGER}, #{n4Num,jdbcType=INTEGER}, 
+      #{n5Num,jdbcType=INTEGER}, #{n6Num,jdbcType=INTEGER})
+  </insert>
+</mapper>

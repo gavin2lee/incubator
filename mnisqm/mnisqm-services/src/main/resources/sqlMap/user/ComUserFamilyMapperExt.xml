@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.user.dao.ComUserFamilyMapperExt" >
+  <resultMap id="simpleComUserFamily" type="com.lachesis.mnisqm.module.user.domain.SimpleComUserFamily" extends="com.lachesis.mnisqm.module.user.dao.ComUserFamilyMapper.BaseResultMap" />
+  <select id="selectByUsercode" parameterType="java.lang.String" resultMap="simpleComUserFamily">
+    SELECT SEQ_ID, USER_CODE, STATUS, RELATION, NAME, PHONE, EMAIL, REMARK, 
+    CREATE_PERSON, UPDATE_PERSON
+    FROM COM_USER_FAMILY F
+    WHERE F.USER_CODE = #{userCode}
+    AND F.STATUS != '09'
+  </select>
+</mapper>

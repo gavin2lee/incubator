@@ -1,0 +1,56 @@
+<!-- begin 质控检查表单管理 -->
+<div class="wrapper quality-check-wrapper padding-content">
+  <ul class="page-nav clearfix">
+    <li class="active"><a ui-sref="home.qualityForm">质控组设置</a></li>
+    <li><a ui-sref="home.qualityModel">模板设置</a></li>
+  </ul>
+      <div class="group-teimplate-wrapper" ng-controller="QualityGroupCtrl as vm">
+        <div class="panel panel-layout panel-default">
+          <div class="tool-wrapper container-fluid form-inline">
+            <div class="pull-right">
+              <button class="btn btn-sm btn-primary" ng-click="vm.open()">新增质控组</button>
+            </div>
+          </div>
+          <div class="panel-body" loading-wrapper loading-type="content" loading-options="vm.load">
+            <table print-table="vm.list" st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered no-border">
+              <thead>
+                <tr class="header-export">
+                  <th>序号</th>
+                  <th>名称</th>
+                  <th>组长</th>
+                  <th>组员</th>
+                  <th print-remove>操作</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="row in vm.list">
+                <tr class="row-{{$index}}">
+                  <td class="text-center">
+                    {{ $index + 1 }}
+                  </td>
+                  <td class="text-center">
+                    {{ row.teamName }}
+                  </td>
+                  <td class="text-center">
+                    {{ vm.userHelper.getUserName(row.teamLeader) }}
+                  </td>
+                  <td class="text-center">
+                    <span ng-repeat="item in row.userList track by $index">{{vm.userHelper.getUserName(item)}}<span ng-if="$index !== row.userList.length - 1">，</span></span>
+                  </td>
+                  <td class="text-center">
+                    <button class="btn btn-primary btn-xs" ng-click="vm.open(row)" ng-if="!row.isEditing">
+                      <span class="fa fa-pencil"></span>编辑
+                    </button>
+                    <button class="btn btn-danger btn-xs" ng-click="vm.del(row.teamCode)">
+                      <span class="fa fa-trash"></span>删除
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <none-data-info list="vm.list"></none-data-info>
+          </div>
+        </div>
+      </div>
+
+</div>
+<!-- end 质控检查表单管理 -->

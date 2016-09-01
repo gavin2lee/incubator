@@ -1,0 +1,74 @@
+<div class="col-md-12 handle-wrapper" ng-if="vm.state.current.name == 'home.fix'">
+  <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+    <div class="panel-heading">
+      <i class="fa fa-list-alt"></i>
+      <span>不良事件列表</span>
+      <!-- <div class="pull-right">
+        <button ng-click="vm.open()" class="btn btn-primary btn-xs">
+          <i class="fa fa-upload"></i>
+          事件上报
+        </button>
+      </div> -->
+    </div>
+    <div class="panel-body">
+
+      <table print-table="vm.list" st-table="vm.displayList" st-safe-src="vm.list" class="table table-hover table-condensed table-bordered">
+        <thead>
+          <tr class="header-export form-inline">
+            <th st-sort="hisCode">级别</th>
+            <th>类型</th>
+            <th st-sort-default="reverse" st-sort="eventTime">发生时间</th>
+            <th>上报科室</th>
+            <th>报告人
+              <select st-search="userName" class="form-control input-sm">
+                    <option value="">全部</option>
+                    <option ng-repeat="row in vm.list | unique:'userName'" value="{{row.userName}}">{{row.userName}}</option>
+                </select>
+            </th>
+
+            <th print-remove>操作</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="row in vm.displayList">
+          <tr class="row-{{$index}}">
+            <td>
+              {{ row.damageLevelName }}
+            </td>
+            <td>
+              {{row.eventTypeName}}
+            </td>
+            <td>
+              {{row.eventTime}}
+            </td>
+            <td>
+              {{row.deptName}}
+            </td>
+            <td>
+              {{row.userName}}
+            </td>
+            <td>
+              <a class="btn btn-default btn-xs" href="javascript:;" ui-sref=".fixCenter.requirement({reportCode: row.reportCode})">要求</a>
+              <a class="btn btn-default btn-xs" href="javascript:;" ui-sref=".fixCenter.measures({reportCode: row.reportCode})">措施</a>
+              <a class="btn btn-default btn-xs" href="javascript:;" ui-sref=".fixCenter.estimate({reportCode: row.reportCode})" >效果评估</a>
+              <!-- <button class="btn btn-default btn-xs" ui-sref="home.dispose({reportCode: row.reportCode})" ng-if="!row.isEditing"><i class="fa fa-flash"></i>  处理</button> -->
+              <!-- <button class="btn btn-default btn-xs" ng-click="vm.open(row)" ng-if="!row.isEditing"><i class="fa fa-eraser"></i>  整改</button>
+              <button class="btn btn-default btn-xs" ng-click="vm.open(row)" ng-if="!row.isEditing"><i class="fa fa-pencil"></i>  效果评估</button> -->
+            </td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td colspan="11">
+              <div st-pagination="" st-items-by-page="15" st-displayed-pages="5"></div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <none-data-info list="vm.list"></none-data-info>
+    </div>
+  </div>
+</div>
+
+<div ui-view></div>

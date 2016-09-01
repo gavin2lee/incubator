@@ -1,0 +1,49 @@
+<div class="hr-wrapper hr-add-wrapper">
+  <uib-tabset active="active">
+    <uib-tab index="0" heading="员工查询">
+      <form class="form-horizontal" role="form" novalidate w5c-form-validate="vm.validationOption" name="userForm">
+        <div class="tool-wrapper container-fluid">
+          <span class="col-sm-2">
+            <input type="text" class="form-control input-sm" placeholder="姓名" ng-model="vm.params.userName">
+          </span>
+          <span class="col-sm-2">
+            <input type="text" class="form-control input-sm" placeholder="编号" ng-model="vm.params.userCode">
+          </span>
+          <span class="col-sm-2">
+            <select class="form-control input-sm" ng-model="vm.params.deptCode">
+              <option value="">所有科室</option>
+              <option ng-repeat="item in vm.deptData" value="{{item.deptCode}}">{{item.deptName}}</option>
+            </select>
+          </span>
+          <span class="col-sm-1 text-left">
+            <button ng-click="vm.search()" class="btn btn-success btn-sm">
+              查询
+            </button>
+          </span>
+        </div>
+      </form>
+      <table st-table="vm.userData" st-safe-src="rowCollection" class="table table-condensed table-bordered table-striped">
+        <thead>
+          <tr class="header-export">
+            <th>用户名</th>
+            <th>工号</th>
+            <th>性别</th>
+            <th>用户类型</th>
+            <th>目前所在科室</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.userData">
+              <td>{{item.userName}}</td>
+              <td>{{item.userCode}}</td>
+              <td>{{getDicName('gender', item.gender)}}</td>
+              <td>{{getDicName('nature', item.userType)}}</td>
+              <td>{{vm.getDeptName(item.deptCode)}}</td>
+              <td><a ui-sref="home.baseInfo.detail({id: item.userCode, dept: item.deptCode})" class="btn btn-sm btn-primary"><span class="fa fa-edit"></span></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </uib-tab>
+  </uib-tabset>
+</div>

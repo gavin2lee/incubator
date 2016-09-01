@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.qualityForm.dao.QualityInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.qualityForm.domain.QualityInfo" >
+    <result column="COMPLETION_RATE" property="completionRate" jdbcType="VARCHAR" />
+    <result column="AGREEMENT_RATE" property="agreementRate" jdbcType="VARCHAR" />
+    <result column="WEEK" property="week" jdbcType="VARCHAR" />
+    <result column="MONTH" property="month" jdbcType="VARCHAR" />
+    <result column="YEAR" property="year" jdbcType="VARCHAR" />
+    <result column="INDICATORS" property="indicators" jdbcType="VARCHAR" />
+    <result column="ISSUE" property="issue" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityInfo" >
+    insert into QUALITY_INFO (COMPLETION_RATE, AGREEMENT_RATE, WEEK, 
+      MONTH, YEAR, INDICATORS, 
+      ISSUE)
+    values (#{completionRate,jdbcType=VARCHAR}, #{agreementRate,jdbcType=VARCHAR}, #{week,jdbcType=VARCHAR}, 
+      #{month,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{indicators,jdbcType=VARCHAR}, 
+      #{issue,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select COMPLETION_RATE, AGREEMENT_RATE, WEEK, MONTH, YEAR, INDICATORS, ISSUE
+    from QUALITY_INFO
+  </select>
+  <insert parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityInfo" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into QUALITY_INFO (COMPLETION_RATE, AGREEMENT_RATE, WEEK, 
+      MONTH, YEAR, INDICATORS, 
+      ISSUE)
+    values (#{completionRate,jdbcType=VARCHAR}, #{agreementRate,jdbcType=VARCHAR}, #{week,jdbcType=VARCHAR}, 
+      #{month,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{indicators,jdbcType=VARCHAR}, 
+      #{issue,jdbcType=VARCHAR})
+  </insert>
+</mapper>

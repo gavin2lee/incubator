@@ -1,0 +1,88 @@
+<nav class="navbar header-top navbar-default navbar-fixed-top navbar-lx">
+  <div class="navbar-header">
+    <div class="logo-wrapper pull-left">
+      <a ui-sref="home" ui-sref-opts="{ reload: true }" class="logo">
+        <i class="fa fa-foursquare"></i>
+      </a>
+    </div>
+  </div>
+  <!-- {{hd.currentRole}} -->
+
+  <div class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+      <li class="home-link"><a href="#"><i class="fa fa-dashboard"></i>
+        管理控制台</a></li>
+      <li class="header-time"><i class="fa fa-calendar"></i>
+        {{hd.time_now}}</li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <!-- <li>
+        <a>
+          <i class="fa fa-calendar"></i> {{hd.time_now}}
+        </a>
+      </li> -->
+      <li uib-dropdown>
+        <a id="msg-button" class="dropdown-link" uib-dropdown-toggle ng-disabled="disabled">
+          <i class="fa fa-flag"></i> {{(hd.userRoleList | filter: hd.currentRole.roleCode)[0].roleName}}
+          <i class="fa fa-caret-down"></i>
+        </a>
+
+        <ul uib-dropdown-menu role="menu" aria-labelledby="msg-button">
+          <li ng-repeat="role in hd.userRoleList">
+            <a href="javascript:;" ng-click="hd.changeRole(role)">
+                {{role.roleName}}
+                <span class="label label-primary label-sm pull-right">{{role.deptName}}</span>
+              </a>
+          </li>
+        </ul>
+      </li>
+      <li uib-dropdown>
+        <a id="msg-button" class="dropdown-link" uib-dropdown-toggle ng-disabled="disabled">
+          <i class="fa fa-bell"></i> 消息
+          <i class="fa fa-caret-down"></i>
+
+        </a>
+        <ul uib-dropdown-menu role="menu" aria-labelledby="msg-button">
+          <li>
+            <a href>账号信息</a>
+          </li>
+          <li>
+            <a href>账号信息</a>
+          </li>
+          <li>
+            <a href>账号信息</a>
+          </li>
+          <li>
+            <a href>账号信息</a>
+          </li>
+        </ul>
+      </li>
+      <li uib-dropdown>
+        <a id="user-button" class="dropdown-link" uib-dropdown-toggle ng-disabled="disabled">
+          <i class="fa fa-user"></i> {{hd.user.loginName}}
+          <i class="fa fa-caret-down"></i>
+
+        </a>
+        <ul uib-dropdown-menu role="menu" aria-labelledby="user-button">
+          <li>
+            <a href="javascript:;">
+              <i class="fa fa-exclamation-circle"></i> 账号信息
+            </a>
+          </li>
+          <li>
+            <a href="javascript:;" ng-click="hd.openUserDialog()">
+              <i class="fa fa-users"></i>
+              <span>切换用户</span>
+            </a>
+          </li>
+          <li>
+            <a ng-click="hd.logout()" href="javascript:;">
+              <i class="fa fa-sign-out"></i>
+              <span>退出系统</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>

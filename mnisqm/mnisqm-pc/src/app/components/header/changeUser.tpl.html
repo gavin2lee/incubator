@@ -1,0 +1,30 @@
+<div>
+  <div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+      <!-- <i class="fa fa-edit"></i> -->
+      切换用户
+    </h5>
+  </div>
+  <form class="form w5c-form login-box__form change-user-form" novalidate w5c-form-validate="vm.validationOption" name="changeUserForm">
+    <div class="modal-body">
+
+      <div class="form-item form-item__sm">
+        <label class="name-label">
+          <span class="fa fa-user"></span>
+        </label>
+        <input autocomplete="off" ng-pattern="/^[0-9A-Za-z_]{1,19}$/" required type="text" ng-model="vm.formData.loginName" name="loginName" class="form-ctr input" id="user-name" placeholder="用户名">
+      </div>
+      <div class="form-item form-item__sm">
+        <label class="name-label" for="password">
+          <span class="fa fa-lock"></span>
+        </label>
+        <input autocomplete="off" type="password" required name="password" ng-model="vm.formData.password" class="form-ctr input" id="password" placeholder="密码">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-success {{vm.loginBtnStatus.state}}" type="button" {{vm.loginBtnStatus.state}} w5c-form-submit="vm.changeUser(vm.formData)">{{vm.loginBtnStatus.title}}</button>
+      <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+    </div>
+  </form>
+</div>

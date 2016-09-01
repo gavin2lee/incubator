@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.lachesis.mnisqm.module.profSkillDoc.dao.ContinuingEducationMapper">
+	
+	<!-- 逻辑添加 -->
+	<insert id="insert"
+		parameterType="ContinuingEducation">
+		insert into PTF_CONTINUING_EDUCATION
+		(USER_CODE, USER_NAME, RANK,
+		EDUCATION_NAME, BEGIN_TIME, END_TIME,
+		STATUS, AUDITOR, 
+		REMARK, CREATE_TIME, CREATE_PERSON, 
+		UPDATE_TIME, UPDATE_PERSON)
+		values
+		(#{userCode},#{userName},
+		#{rank},#{educationName},
+		#{beginTime},#{endTime},
+		'01',#{auditor},
+		#{remark},GETDATE(),
+		#{createPerson},GETDATE(),
+		#{updatePerson})
+	</insert>
+	<!-- 逻辑删除 -->
+	<update id="deleteByPrimaryKey"
+		parameterType="ContinuingEducation">
+		update
+		PTF_CONTINUING_EDUCATION
+		set
+		STATUS=#{status},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑修改 -->
+	<update id="update"
+		parameterType="ContinuingEducation">
+		update
+		PTF_CONTINUING_EDUCATION
+		set
+		USER_CODE=#{userCode},
+		USER_NAME=#{userName},
+		RANK=#{rank},
+		EDUCATION_NAME=#{educationName},
+		BEGIN_TIME=#{beginTime},
+		END_TIME=#{endTime},
+		AUDITOR=#{auditor},
+		REMARK=#{remark},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId,jdbcType=BIGINT}
+	</update>
+	<!-- 逻辑查找 -->
+	<select id="select"
+		parameterType="ContinuingEducation"
+		resultType="ContinuingEducation">
+		select
+		SEQ_ID				as seqId, 
+		USER_CODE			as userCode, 
+		USER_NAME			as userName,
+		RANK				as rank, 
+		EDUCATION_NAME		as educationName,
+		BEGIN_TIME			as beginTime, 
+		END_TIME			as endTime, 
+		STATUS				as status, 
+		AUDITOR				as auditor, 
+		REMARK				as remark
+		from
+		PTF_CONTINUING_EDUCATION
+		where STATUS='01'
+		<if test="userCode != null">
+			and USER_CODE=#{userCode}
+		</if>
+		<if test="userName != null">
+			and USER_NAME like #{userName}
+		</if>
+		<if test="rank != null">
+			and RANK = #{rank}
+		</if>
+		<if test="educationName != null">
+			and EDUCATION_NAME like #{educationName}
+		</if>
+		<if test="beginTime != null">
+			and BEGIN_TIME >= #{beginTime}
+		</if>
+		<if test="endTime != null">
+			and #{endTime} >= END_TIME
+		</if>
+		<if test="auditor != null">
+			and AUDITOR like #{auditor}
+		</if>
+	</select>
+</mapper>
+  

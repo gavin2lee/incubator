@@ -1,0 +1,36 @@
+<div>
+  <div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+      <!-- <i class="fa fa-edit"></i> -->
+      编辑用户角色信息
+    </h5>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal comUser-form w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="userForm">
+      <div class="container-fluid">
+        <div class="col-md-8">
+          <div class="form-group">
+            <label for="name" class="col-sm-3 control-label">角色名称：</label>
+            <div class="col-sm-9">
+              <select class="form-controll input-sm" ng-options="role.roleName for role in vm.metaData.roleList track by role.roleCode" name="userName" ng-model="vm.formData.role">
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email" class="col-sm-3 control-label">所属科室：</label>
+            <div class="col-sm-9">
+              <select class="form-controll input-sm" ng-options="dept.deptName for dept in vm.metaData.deptList track by dept.deptCode" name="dept" ng-model="vm.formData.dept">
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-success {{vm.roleBtnStatus.state}}" type="button" ng-click="vm.formData = {data: [{roleCode:vm.formData.role.roleCode,deptCode: vm.formData.dept.deptCode, userId: vm.metaData.currentUser.seqId}]}; vm.ok()">保存</button>
+    <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+  </div>
+</div>

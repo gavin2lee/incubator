@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.PatCureLocalInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnis.core.patientManage.entity.PatCureLocalInfo" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="PAT_ID" property="patId" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="LEAVE_HOSPITAL_TIME" property="leaveHospitalTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <result property="bedNo" column="BED_NO" />
+	<result property="age" column="AGE" />
+	<result property="sex" column="SEX" />
+	<result property="phone" column="PHONE" />
+	<result property="patientName" column="NAME" />
+    <collection property="patLeaveGooutList" javaType="java.util.List"
+		ofType="com.lachesis.mnis.core.patientManage.entity.PatLeaveGoout"
+		column="PAT_ID" >
+		<id column="SEQID" property="seqId" jdbcType="BIGINT" />
+    	<result column="PAT_ID" property="patId" jdbcType="VARCHAR" />
+    	<result column="STATUS" property="status" jdbcType="INTEGER" />
+    	<result column="OCCUR_TIME" property="occurTime" jdbcType="TIMESTAMP" />
+    	<result column="ACTUALLY_COMEBACK_TIME" property="actuallyComebackTime" jdbcType="TIMESTAMP" />
+    	<result column="BEGIN_TIME" property="beginTime" jdbcType="TIMESTAMP" />
+    	<result column="PREDICT_END_TIME" property="predictEndTime" jdbcType="TIMESTAMP" />
+    	<result column="IS_ABNORMAL" property="isAbnormal" jdbcType="INTEGER" />
+    	<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    	<result column="EXEC_NURSE_ID" property="execNurseId" jdbcType="VARCHAR" />
+    	<result column="EXEC_NURSE_PHONE" property="execNursePhone" jdbcType="VARCHAR" />
+    	<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    	<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    	<result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+	</collection>
+  </resultMap>
+  
+  
+  <resultMap id="MainResultMap" type="com.lachesis.mnis.core.patientManage.entity.PatNdaManageInfo" >
+    <result column="INOUT_SUM" property="inoutSum" jdbcType="INTEGER" />
+    <result column="OPERATION_SUM" property="operationSum" jdbcType="INTEGER" />
+    <result column="GOOUT_SUM" property="gooutSum" jdbcType="INTEGER" />
+  </resultMap>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PAT_CURE_LOCAL_INFO
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnis.core.patientManage.entity.PatCureLocalInfo" >
+    insert into PAT_CURE_LOCAL_INFO (PAT_ID, STATUS, 
+      LEAVE_HOSPITAL_TIME, REMARK, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{patId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{leaveHospitalTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnis.core.patientManage.entity.PatCureLocalInfo" >
+    update PAT_CURE_LOCAL_INFO
+    set PAT_ID = #{patId,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=INTEGER},
+      LEAVE_HOSPITAL_TIME = #{leaveHospitalTime,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, PAT_ID, STATUS, LEAVE_HOSPITAL_TIME, REMARK, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from PAT_CURE_LOCAL_INFO
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, PAT_ID, STATUS, LEAVE_HOSPITAL_TIME, REMARK, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from PAT_CURE_LOCAL_INFO
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from PAT_CURE_LOCAL_INFO where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnis.core.patientManage.entity.PatCureLocalInfo" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into PAT_CURE_LOCAL_INFO (PAT_ID, STATUS, 
+      LEAVE_HOSPITAL_TIME, REMARK, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values ( #{patId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{leaveHospitalTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <select id="queryAllOutPatientByDateAndStatus" resultMap="BaseResultMap">
+    select pc.SEQ_ID, pc.PAT_ID, pc.STATUS, pc.LEAVE_HOSPITAL_TIME, pc.REMARK, pc.CREATE_TIME, pc.CREATE_PERSON, 
+    pc.UPDATE_TIME, pc.UPDATE_PERSON, pl.SEQ_ID SEQID, pl.PAT_ID, pl.STATUS, pl.OCCUR_TIME, pl.ACTUALLY_COMEBACK_TIME, pl.BEGIN_TIME, pl.PREDICT_END_TIME, 
+    pl.IS_ABNORMAL, pl.REMARK, pl.EXEC_NURSE_ID,pl.CREATE_TIME, pl.CREATE_PERSON, pl.UPDATE_TIME, pl.UPDATE_PERSON,
+    pci.BED_CODE BED_NO, pci.BIRTH_DATE AGE, pci.GENDER SEX, pci.CONTACT_PHONE PHONE,cu.PHONE EXEC_NURSE_PHONE,pci.NAME
+    from PAT_CURE_LOCAL_INFO pc, PAT_LEAVE_GOOUT pl, PAT_CURE_INFO pci, COM_USER cu
+    where pc.STATUS = '1'
+    and pc.PAT_ID = pl.PAT_ID
+    AND pc.PAT_ID = pci.PAT_ID
+    AND cu.CODE = pl.EXEC_NURSE_ID
+    <if test="beginTime != null">
+    	and pl.OCCUR_TIME > #{beginTime}
+    </if>
+    <if test="endTime != null">
+    	and #{endTime} >= pl.OCCUR_TIME
+    </if>
+    <if test="status != null">
+    	and pl.STATUS = #{status}
+    </if>
+  </select>
+  
+  <select id="queryNdaManageInfo" resultMap="MainResultMap">
+    select (  
+   select COUNT(*) from PAT_OPERATION_INFO where OPERATION_TIME >= #{beginTime}
+   and #{endTime} >= OPERATION_TIME) OPERATION_SUM,
+   (
+   select COUNT(*) from PAT_EVENT where EVENT_CODE in ('cy','ry') and RECORD_DATE >= #{beginTime} 
+   and #{endTime} >= RECORD_DATE ) INOUT_SUM,
+   (select COUNT(*) from PAT_LEAVE_GOOUT WHERE BEGIN_TIME >= #{beginTime}
+   and #{endTime} >= BEGIN_TIME ) GOOUT_SUM
+  </select>
+  
+  
+</mapper>

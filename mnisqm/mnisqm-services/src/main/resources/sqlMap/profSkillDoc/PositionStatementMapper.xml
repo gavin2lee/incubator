@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.lachesis.mnisqm.module.profSkillDoc.dao.PositionStatementMapper">
+	
+	<!-- 逻辑添加 -->
+	<insert id="insert"
+		parameterType="PositionStatement">
+		insert into PTF_POSITION_STATEMENT
+		(USER_CODE, USER_NAME, POSITION_NAME,
+		JOBSUMMARY, LEADERMEMBER_RELATION,
+		RESPONSIBILITIES, JOBSTANDARD,
+		OTHER_REQUIREMENTS, BEGIN_TIME,
+		STATUS, AUDITOR, 
+		REMARK, CREATE_TIME, CREATE_PERSON, 
+		UPDATE_TIME, UPDATE_PERSON)
+		values
+		(#{userCode},
+		#{userName},
+		#{positionName},
+		#{jobSummary},
+		#{leaderMemberRelation},
+		#{responsibilities},
+		#{jobStandard},
+		#{otherRequirements},
+		#{beginTime},
+		'01',
+		#{auditor},
+		#{remark},
+		GETDATE(),
+		#{createPerson},
+		GETDATE(),
+		#{updatePerson})
+	</insert>
+	<!-- 逻辑删除 -->
+	<update id="deleteByPrimaryKey"
+		parameterType="PositionStatement">
+		update
+		PTF_POSITION_STATEMENT
+		set
+		STATUS=#{status},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑修改 -->
+	<update id="update"
+		parameterType="PositionStatement">
+		update
+		PTF_POSITION_STATEMENT
+		set
+		USER_CODE=#{userCode},
+		USER_NAME=#{userName},
+		POSITION_NAME=#{positionName},
+		JOBSUMMARY=#{jobSummary},
+		LEADERMEMBER_RELATION=#{leaderMemberRelation},
+		RESPONSIBILITIES=#{responsibilities},
+		JOBSTANDARD=#{jobStandard},
+		OTHER_REQUIREMENTS=#{otherRequirements},
+		BEGIN_TIME=#{beginTime},
+		AUDITOR=#{auditor},
+		REMARK=#{remark},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑查找 -->
+	<select id="select"
+		parameterType="PositionStatement"
+		resultType="PositionStatement">
+		select
+		SEQ_ID						as seqId, 
+		USER_CODE					as userCode, 
+		USER_NAME					as userName,
+		POSITION_NAME				as positionName, 
+		JOBSUMMARY					as jobSummary, 
+		LEADERMEMBER_RELATION		as leaderMemberRelation,
+		RESPONSIBILITIES			as responsibilities, 
+		JOBSTANDARD					as jobStandard,
+		OTHER_REQUIREMENTS			as otherRequirements,
+		BEGIN_TIME					as beginTime, 
+		STATUS						as status, 
+		AUDITOR						as auditor, 
+		REMARK						as remark
+		from
+		PTF_POSITION_STATEMENT
+		where STATUS='01'
+		<if test="userCode != null">
+			and USER_CODE=#{userCode}
+		</if>
+		<if test="userName != null">
+			and USER_NAME like #{userName}
+		</if>
+		<if test="positionName != null">
+			and POSITION_NAME like #{positionName}
+		</if>
+		<if test="jobSummary != null">
+			and JOBSUMMARY like #{jobSummary}
+		</if>
+		<if test="leaderMemberRelation != null">
+			and LEADERMEMBER_RELATION like #{leaderMemberRelation}
+		</if>
+		<if test="responsibilities != null">
+			and RESPONSIBILITIES like #{responsibilities}
+		</if>
+		<if test="jobStandard != null">
+			and JOBSTANDARD like #{jobStandard}
+		</if>
+		<if test="otherRequirements != null">
+			and OTHER_REQUIREMENTS = #{otherRequirements}
+		</if>
+		<if test="beginTime != null">
+			and BEGIN_TIME = #{beginTime}
+		</if>
+		<if test="auditor != null">
+			and AUDITOR like #{auditor}
+		</if>
+	</select>
+</mapper>
+  

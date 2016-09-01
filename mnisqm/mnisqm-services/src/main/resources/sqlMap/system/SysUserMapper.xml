@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.system.dao.SysUserMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.system.domain.SysUser" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="COM_USER_CODE" property="comUserCode" jdbcType="VARCHAR" />
+    <result column="FLAG" property="flag" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_USER
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.system.domain.SysUser" >
+    insert into SYS_USER (LOGIN_NAME, PASSWORD, 
+      USER_CODE, STATUS, UPDATE_TIME, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_PERSON
+      )
+    values (#{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, GETDATE(), 
+      GETDATE(), #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.system.domain.SysUser" >
+    update SYS_USER
+    set LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      USER_CODE = #{userCode,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from SYS_USER where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="SysUser" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into SYS_USER (SEQ_ID, LOGIN_NAME, PASSWORD, 
+      USER_CODE, FLAG, UPDATE_TIME, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_PERSON
+      )
+    values (#{seqId,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR},GETDATE(), 
+      GETDATE(), #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <!-- 获取科室下面用户列表 -->
+  <select id="getSysUsers" parameterType="java.lang.String"   resultType="SysUser" >
+  		select su.SEQ_ID seqId, su.LOGIN_NAME loginName, su.PASSWORD password, 
+			su.USER_CODE userCode, su.status status,cu.USER_NAME userName
+		 from dbo.SYS_USER su
+		 inner join dbo.COM_USER cu on su.USER_CODE=cu.USER_CODE
+		 inner join dbo.COM_DEPT_USER du on cu.USER_CODE = du.USER_CODE 
+		 where du.DEPT_CODE=#{param2} 
+		 and su.status !='09'
+  </select>
+  
+  <!-- 更新数据-状态变化 -->
+  <update id="updateSysUserForDelete" parameterType="SysUser">
+  		update SYS_USER
+	    set 
+	      STATUS = #{status,jdbcType=CHAR}
+	    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 查询系统用户，通过员工编号 -->
+  <select id="selectSysUserByCode" parameterType="SysUser" resultMap="BaseResultMap">
+  		select 
+  			SEQ_ID,
+  			LOGIN_NAME,
+  			PASSWORD,
+  			USER_CODE,
+  			STATUS,
+  			UPDATE_TIME,
+  			CREATE_TIME,
+    		CREATE_PERSON,
+    		UPDATE_PERSON
+    	from SYS_USER
+    	where USER_CODE = #{userCode}
+    	and STATUS != '09'
+  </select>
+</mapper>

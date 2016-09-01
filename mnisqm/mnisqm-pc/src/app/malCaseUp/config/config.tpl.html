@@ -1,0 +1,47 @@
+<div class="col-md-12">
+  <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+    <div class="panel-heading">
+      <i class="fa fa-send"></i>
+      <span>上报类型列表</span>
+      <button class="btn btn-sm btn-default">增加类型</button>
+    </div>
+    <div class="panel-body">
+      <table print-table="vm.list" st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered">
+        <thead>
+          <tr class="header-export">
+            <th st-sort="hisCode">上报类型编号</th>
+            <th>上报类型名称</th>
+            <th>最后更新人</th>
+            <th>最后更新时间</th>
+            <th>
+              操作
+            </th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="row in vm.list">
+          <tr class="row-{{$index}}">
+            <td>
+            <em>{{row.eventTypeCode}}</em>
+            </td>
+            <td>
+              {{row.eventTypeName}}
+            </td>
+            <td>
+              {{ row.updatePerson }}
+            </td>
+            <td>
+              {{row.lastUpdateTime}}
+            </td>
+            <td>
+              <a href="javascript:;" ng-click="vm.open(row)">配置调查模板</a>
+              ｜
+              <button class="btn btn-danger btn-xs" ng-click="vm.openConfirm(row.seqId)">删除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <none-data-info list="vm.list"></none-data-info>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.system.dao.SysUserRoleMapperExt" >
+  <resultMap id="simpleSysUserRole" type="com.lachesis.mnisqm.module.system.domain.SimpleSysUserRole" extends="com.lachesis.mnisqm.module.system.dao.SysUserRoleMapper.BaseResultMap" />
+  
+  <!-- 查询登录的角色 -->
+  <select id="selectUserRoleByUserCode" parameterType="java.util.Map" resultType="SysUserRole">
+  	SELECT 
+  		ur.USER_ID			userId,
+  		ur.ROLE_CODE		roleCode,
+  		ur.DEPT_CODE		deptCode,
+  		d.DEPT_NAME			deptName,
+  		CASE when d.FATHER_DEPT IS null then 1
+  		else  0 end 		isTopDept
+	FROM SYS_USER_ROLE ur
+	INNER JOIN COM_DEPT d on ur.DEPT_CODE = d.DEPT_CODE
+	WHERE ur.USER_ID=#{userId}
+	AND ur.STATUS !='09' and ur.is_use=1
+  </select>
+  
+  <!-- 查询未使用的用户角色信息 -->
+  <select id="selectNoUseUserRole" parameterType="java.util.Map" resultType="SysUserRole">
+  	SELECT top 1
+  		ur.USER_ID			userId,
+  		ur.ROLE_CODE		roleCode,
+  		ur.DEPT_CODE		deptCode,
+  		d.DEPT_NAME			deptName,
+  		CASE when d.FATHER_DEPT IS null then 1
+  		else  0 end 		isTopDept
+	FROM SYS_USER_ROLE ur
+	INNER JOIN COM_DEPT d on ur.DEPT_CODE = d.DEPT_CODE
+	WHERE ur.USER_ID=#{userId}
+	AND ur.STATUS !='09' and ur.is_use=0
+  </select>
+  
+  <select id="selectUserRoleByRoleCode" parameterType="java.util.Map" resultType="SysUserRole">
+  	SELECT 
+  		USER_CODE		userCode,
+  		ROLE_CODE		roleCode,
+  		DEPT_CODE		deptCode
+	FROM SYS_USER_ROLE
+	WHERE ROLE_CODE=#{roleCode}
+	AND STATUS!='09'
+  </select>
+  
+  <!-- 更新系统用户角色信息 -->
+  <update id="updateSysUserRole" parameterType="SysUserRole">
+  		UPDATE SYS_USER_ROLE SET IS_USE='0' WHERE USER_ID=#{userId} AND IS_USE='1' 
+  		UPDATE SYS_USER_ROLE SET IS_USE='1' WHERE USER_ID=#{userId} AND SEQ_ID=#{seqId}
+  </update>
+</mapper>

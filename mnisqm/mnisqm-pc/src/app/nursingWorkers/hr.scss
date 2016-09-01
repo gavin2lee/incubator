@@ -1,0 +1,44 @@
+.hr-wrapper, .wrapper {
+  position: relative;
+  .nav {
+    font-size: 14px;
+    padding: 0 15px;
+    background-color: #F5F5F5;
+    border-bottom: 1px solid #ddd;
+    li {
+      a {
+        padding: 18px 15px;
+        color: $gray-base;
+        border: none;
+        &:hover, &:active, &:visited, &:focus {
+          border: none;
+        }
+      }
+      &.active {
+        a {
+          color: $base-color2;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+  .tab-content {
+    padding: 0;
+  }
+  .tool-wrapper {
+    @include clearfix();
+    padding: 10px 20px;
+    // text-align: right;
+    background-color: #FAFAFA;
+    border-bottom: 1px solid #ddd;
+  }
+  .control-label {
+    // font-size: 14px;
+    font-weight: normal;
+    white-space: pre-wrap;
+    // text-align-last: justify;
+  }
+  .form-group {
+    margin-bottom: 10px;
+  }
+}

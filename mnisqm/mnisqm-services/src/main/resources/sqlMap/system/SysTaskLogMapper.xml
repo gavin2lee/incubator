@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.system.dao.SysTaskLogMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.system.domain.SysTaskLog" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="TASK_CODE" property="taskCode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="LOG_STATUS" property="logStatus" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_TASK_LOG
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.system.domain.SysTaskLog" >
+    insert into SYS_TASK_LOG (TASK_CODE, STATUS, 
+      LOG_STATUS, REMARK, CREATE_PERSON, 
+      UPDATE_PERSON, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{taskCode,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{logStatus,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updatePerson,jdbcType=VARCHAR}, GETDATE(), GETDATE()
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.system.domain.SysTaskLog" >
+    update SYS_TASK_LOG
+    set TASK_CODE = #{taskCode,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      LOG_STATUS = #{logStatus,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, TASK_CODE, STATUS, LOG_STATUS, REMARK, CREATE_PERSON, UPDATE_PERSON, 
+    CREATE_TIME, UPDATE_TIME
+    from SYS_TASK_LOG
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, TASK_CODE, STATUS, LOG_STATUS, REMARK, CREATE_PERSON, UPDATE_PERSON, 
+    CREATE_TIME, UPDATE_TIME
+    from SYS_TASK_LOG
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from SYS_TASK_LOG where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.system.domain.SysTaskLog" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into SYS_TASK_LOG (SEQ_ID, TASK_CODE, STATUS, 
+      LOG_STATUS, REMARK, CREATE_PERSON, 
+      UPDATE_PERSON, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{seqId,jdbcType=BIGINT}, #{taskCode,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{logStatus,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updatePerson,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+</mapper>

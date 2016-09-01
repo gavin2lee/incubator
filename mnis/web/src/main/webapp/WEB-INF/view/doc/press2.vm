@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<title>压疮危险因素评估表(改良式诺顿评分表)</title>
+</head>
+<body class="doc">
+#docToolbar()
+<div class="doc-container">
+#press2()
+<div class="doc-content">
+    <div id="tb">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+<!--         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">保存</a> -->
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">还原</a>
+<!-- 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">GetChanges</a> -->
+    </div>
+    <table id="dg" style="height: 400px;width: 100%;" class="easyui-datagrid" data-options="
+    	nowrap: false,
+		singleSelect: true,
+		autoRowHeight: true,
+		fitColumns: true,
+		toolbar: '#tb',
+		showFooter: true,
+		onClickRow: onClickRow,
+		onBeginEdit: onBeginEdit,
+		onLoadSuccess: function(data) {
+		},
+		url: '#url("/doc/press2/datas")',
+		queryParams: {
+			cureNo: '$!{patient.cureNo}'
+		},
+		method: 'get',
+		idField: 'id'">
+	    <thead>
+			<tr>
+	            <th rowspan="3" data-options="field:'date',
+					align:'center',
+					resizable: false,
+					width:100,
+					formatter: function(value,row,index){
+						if (!value) {
+							return '';
+						}
+						if (index == 0) {
+	    					return value;
+						}
+						return formatDate(value, false, $('#dg').datagrid('getRows')[index-1]['date']);
+	    			},
+					editor: {
+						type: 'datetimebox',
+						options: {
+							editable: false,
+							showSeconds: false
+						}
+					}">日期时间</th>
+				<th colspan="4">配合程度</th>
+				<th colspan="4">年龄(岁)</th>
+				<th colspan="4">皮肤状况</th>
+				<th colspan="4">其他疾病</th>
+				<th colspan="4">生理状况</th>
+				<th colspan="4">精神状况</th>
+				<th colspan="4">活动程度</th>
+				<th colspan="4">灵活程度</th>
+				<th colspan="4">失禁分值</th>
+	            <th rowspan="3" data-options="width:20,field:'score',align:'center',resizable: false">总<br>评<br>分</th>
+	            <th rowspan="3" data-options="width:60,field:'sign',align:'center',resizable: false">签名</th>
+			</tr>
+			<tr>
+				<th>完<br>全</th>
+				<th>较<br>少</th>
+				<th>部<br>分</th>
+				<th>不<br>能</th>
+				
+				<th>&lt;<br>10</th>
+				<th>&lt;<br>30</th>
+				<th>&lt;<br>60</th>
+				<th>&gt;<br>60</th>
+				
+				<th>尚<br>好</th>
+				<th>干<br>燥<br>脱<br>屑</th>
+				<th>潮<br>湿</th>
+				<th>伤口<br>过敏<br>、破<br>口</th>
+				
+				<th>无</th>
+				<th>抵抗力<br>下降发<br>烧、糖<br>尿病</th>
+				<th>多发性<br>肝硬化<br>肥胖病</th>
+				<th>动<br>脉<br>栓<br>塞</th>
+				
+				<th>好</th>
+				<th>一<br>般</th>
+				<th>较<br>差</th>
+				<th>很<br>差</th>
+				
+				<th>警<br>觉</th>
+				<th>情<br>感<br>平<br>淡</th>
+				<th>情<br>绪<br>烦<br>躁</th>
+				<th>昏<br>迷</th>
+				
+				<th>走<br>动</th>
+				<th>帮助<br>下走<br>动</th>
+				<th>轮<br>椅<br>范<br>围</th>
+				<th>昏<br>迷</th>
+				
+				<th>完<br>全</th>
+				<th>轻<br>微<br>受<br>限</th>
+				<th>非<br>常<br>受<br>限</th>
+				<th>固<br>定</th>
+				
+				<th>无</th>
+				<th>偶<br>有</th>
+				<th>常<br>常</th>
+				<th>完<br>全</th>
+			</tr>
+			<tr>
+	            <th data-options="width:20,field:'coordinate4',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">4</th>
+	            <th data-options="width:20,field:'coordinate3',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">3</th>
+	            <th data-options="width:20,field:'coordinate2',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">2</th>
+	            <th data-options="width:20,field:'coordinate1',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            
+	            <th data-options="width:20,field:'age4',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">4</th>
+	            <th data-options="width:20,field:'age3',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">3</th>
+	            <th data-options="width:20,field:'age2',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">2</th>
+	            <th data-options="width:20,field:'age1',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            
+	            <th data-options="width:20,field:'skin4',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">4</th>
+	            <th data-options="width:20,field:'skin3',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">3</th>
+	            <th data-options="width:20,field:'skin2',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">2</th>
+	            <th data-options="width:30,field:'skin1',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            
+	            <th data-options="width:20,field:'ill4',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">4</th>
+	            <th data-options="width:40,field:'ill3',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">3</th>
+	            <th data-options="width:40,field:'ill2',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">2</th>
+	            <th data-options="width:20,field:'ill1',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            
+	            <th data-options="width:20,field:'physiology4',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">4</th>
+	            <th data-options="width:20,field:'physiology3',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">3</th>
+	            <th data-options="width:20,field:'physiology2',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">2</th>
+	            <th data-options="width:20,field:'physiology1',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            
+	            <th data-options="width:20,field:'aware4',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">4</th>
+	            <th data-options="width:20,field:'aware3',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">3</th>
+	            <th data-options="width:20,field:'aware2',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">2</th>
+	            <th data-options="width:20,field:'aware1',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            
+	            <th data-options="width:20,field:'move4',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">4</th>
+	            <th data-options="width:30,field:'move3',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">3</th>
+	            <th data-options="width:20,field:'move2',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">2</th>
+	            <th data-options="width:20,field:'move1',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            
+	            <th data-options="width:20,field:'agility4',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">4</th>
+	            <th data-options="width:20,field:'agility3',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">3</th>
+	            <th data-options="width:20,field:'agility2',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">2</th>
+	            <th data-options="width:20,field:'agility1',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	            
+	            <th data-options="width:20,field:'incontinence4',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">4</th>
+	            <th data-options="width:20,field:'incontinence3',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">3</th>
+	            <th data-options="width:20,field:'incontinence2',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">2</th>
+	            <th data-options="width:20,field:'incontinence1',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">1</th>
+	        </tr>
+	    </thead>
+	</table>
+</div>
+#press2Comment()
+</div>
+<!-- Diagnosis Window -->
+<div id="win"></div>
+<script type="text/javascript">
+var editIndex = undefined;
+function endEditing(index) {
+	if (editIndex == undefined) {
+		return true;
+	}
+	if ($("#dg").datagrid('validateRow', editIndex)) {
+		$("#dg").datagrid('endEdit', editIndex);
+		editIndex = undefined;
+		return true;
+	} else {
+		return false;
+	}
+}
+function onClickRow(index){
+    if (editIndex != index){
+        if (endEditing()) {
+        	// 本人,护理组长和护士长能修改
+        	var rows = $('#dg').datagrid('getRows');
+        	if ('$!{currentUser.code}' == rows[index]['userCode']
+        			|| 1 == '$!{currentUser.purview}'
+        			|| 2 == '$!{currentUser.purview}') {
+	            $('#dg').datagrid('selectRow', index)
+	                    .datagrid('beginEdit', index);
+	            editIndex = index;
+        	}
+        } else {
+            $('#dg').datagrid('selectRow', editIndex);
+        }
+    }
+}
+function append(){
+    if (endEditing()){
+        $('#dg').datagrid('appendRow',{
+        	date: datetimeToString(new Date()),
+        	sign: '$!{currentUser.name}',
+        	userCode: '$!{currentUser.code}',
+        	deptCode: '$!{currentUser.deptCode}',
+        	deptName: '$!{currentUser.deptName}'
+        });
+        editIndex = $('#dg').datagrid('getRows').length-1;
+        $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+    }
+}
+function removeit() {
+    var row = $('#dg').datagrid('getSelected');
+    if (!row){return}
+    var index = $('#dg').datagrid('getRowIndex', row);
+    if (index == undefined){return}
+    if ('$!{currentUser.code}' == row['userCode']) {
+	    $('#dg').datagrid('cancelEdit', index)
+	            .datagrid('deleteRow', index);
+	    editIndex = undefined;
+    } else {
+    	$.messager.alert('数据删除', '只有本人才允许删除', 'info');
+    }
+}
+function accept(){
+    if (endEditing()){
+    	var editable = '$!{doc.editable}' || true;
+    	if (editable) {
+	        $.ajax({
+	        	url: '#url("/doc/press2")',
+	        	type: 'POST',
+	        	data: {
+	        		cureNo: '$!{patient.cureNo}',
+	        		hospitalNo: '$!{patient.hospitalNo}',
+	        		inserted: JSON.stringify($('#dg').datagrid('getChanges', 'inserted')),
+	        		updated: JSON.stringify($('#dg').datagrid('getChanges', 'updated')),
+	        		deleted: JSON.stringify($('#dg').datagrid('getChanges', 'deleted'))
+	        	},
+	        	success: function(data, status) {
+	        		if (data && data.code) {
+	        			if ('1' == data.code) {
+				        	$('#dg').datagrid('acceptChanges').datagrid('reload').datagrid('unselectAll');
+		        		} else {
+			        		$.messager.alert('数据保存', data.message || '保存失败', 'error');
+	        			}
+	        		}
+	        	},
+	        	error: function(xhr, status, err) {
+	        		$.messager.alert('数据保存', '保存失败', 'error');
+	        	}
+	        });
+    	} else {
+    		$.messager.alert('数据保存', '不允许修改', 'error');
+    	}
+    }
+}
+function reject(){
+    $('#dg').datagrid('rejectChanges').datagrid('unselectAll');
+    editIndex = undefined;
+}
+var scores = {
+	coordinate4:4,
+	coordinate3:3,
+	coordinate2:2,
+	coordinate1:1,
+	age4:4,
+	age3:3,
+	age2:2,
+	age1:1,
+	skin4:4,
+	skin3:3,
+	skin2:2,
+	skin1:1,
+	ill4:4,
+	ill3:3,
+	ill2:2,
+	ill1:1,
+	physiology4:4,
+	physiology3:3,
+	physiology2:2,
+	physiology1:1,
+	aware4:4,
+	aware3:3,
+	aware2:2,
+	aware1:1,
+	move4:4,
+	move3:3,
+	move2:2,
+	move1:1,
+	agility4:4,
+	agility3:3,
+	agility2:2,
+	agility1:1,
+	incontinence4:4,
+	incontinence3:3,
+	incontinence2:2,
+	incontinence1:1
+};
+var groups = {
+	coordinate4:1,
+	coordinate3:1,
+	coordinate2:1,
+	coordinate1:1,
+	age4:2,
+	age3:2,
+	age2:2,
+	age1:2,
+	skin4:3,
+	skin3:3,
+	skin2:3,
+	skin1:3,
+	ill4:4,
+	ill3:4,
+	ill2:4,
+	ill1:4,
+	physiology4:5,
+	physiology3:5,
+	physiology2:5,
+	physiology1:5,
+	aware4:6,
+	aware3:6,
+	aware2:6,
+	aware1:6,
+	move4:7,
+	move3:7,
+	move2:7,
+	move1:7,
+	agility4:8,
+	agility3:8,
+	agility2:8,
+	agility1:8,
+	incontinence4:9,
+	incontinence3:9,
+	incontinence2:9,
+	incontinence1:9
+};
+function groupSiblings(field) {
+	var siblings = [];
+	for (var key in groups) {
+		if (key != field && groups[key] == groups[field]) {
+			siblings.push(key);
+		}
+	}
+	return siblings;
+}
+function onBeginEdit(index,row){
+	#[[
+    var editors = $('#dg').datagrid('getEditors', index);
+    row.score = row.score || 0;
+    for (var i = 1; i < 37; i++) {
+    	$(editors[i].target).change(function() {
+    		var $td = $(this).parents('td[field]');
+    		var field = $td.attr('field');
+    		if ($(this).is(':checked')) {
+	    		$.each(groupSiblings(field), function(idx, value) {
+	    			var editor = $('#dg').datagrid('getEditor', {index:index, field: value});
+	    			var $editor = $(editor.target);
+	    			if ($editor.is(':checked')) {
+	    				$editor.attr('checked', false);
+	    				row.score = parseInt(row.score) - scores[value];
+	    			}
+	    		});
+    			row.score = parseInt(row.score) + scores[field];
+    		} else {
+    			row.score = parseInt(row.score) - scores[field];
+    		}
+    		$td.siblings('td[field=score]').children('div').text(row.score);
+    		var level = '';
+    		if (0 < row.score && row.score <= 12) {
+    			level = 'H';
+    		} else if (13 <= row.score && row.score <= 18) {
+    			level = 'M';
+    		} else if (19 <= row.score && row.score <= 23) {
+    			level = 'L';
+    		} else if (24 <= row.score) {
+    			level = 'N';
+    		}
+    		row.level = level;
+    		$td.siblings('td[field=level]').children('div').text(level);
+    	});
+    }
+	]]#
+}
+// initialize page when loaded
+$(function() {
+	$('#save').click(accept);
+	$('#approve').click(function() {});
+	$('#print').val('预  览').click(function() {
+		var params = [
+   			'location=no',
+   			'height='+screen.availHeight,
+   			'width='+screen.availWidth,
+   			'scrollbars=yes',
+   			'resizable=yes',
+   			'fullscreen=yes' // only works in IE, but here for completeness
+   		].join(',');
+   		var new_window = window.open('#url("/doc/press2/view?cureNo=$!{patient.cureNo}")', '', params);
+   		new_window.resizeTo(screen.availWidth, screen.availHeight);
+	});
+	$('#diagnosisLabel').click(function() {
+		$('#win').window({
+			title: '诊断修正列表',
+		    width: 700,
+		    height: 500,
+		    minimizable: false,
+			href: '#url("/doc/diagnosis")?cureNo=$!{patient.cureNo}',
+			onClose: function() {
+				var rows = $('#dDg').datagrid('getRows');
+				if (rows && rows.length > 0) {
+					$('#pDiagnosis').text(rows[rows.length - 1]['diagnosis']);
+				} else {
+					$('#pDiagnosis').text('$!{patient.diagnose}');
+				}
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

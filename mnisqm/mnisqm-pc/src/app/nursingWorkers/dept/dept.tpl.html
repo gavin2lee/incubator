@@ -1,0 +1,36 @@
+<div class="panel panel-layout panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-user"></i>
+    <span>科室管理</span>
+    <div class="pull-right">
+      <button class="btn btn-success btn-xs" ng-click="vm.open()">新增科室</button>
+    </div>
+  </div>
+  <div class="panel-body">
+    <table st-table="vm.deptData" st-safe-src="rowCollection" class="table table-condensed table-bordered table-striped">
+      <thead>
+        <tr class="header-export">
+          <th></th>
+          <th>科室名</th>
+          <th>父部门</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="row in vm.deptData | filter: {status: '01'}">
+        <tr>
+          <!-- <td grid-checkbox="row"></td> -->
+          <td grid-expand-trigger grid-p="deptCode" grid-expand-method="loadDetail" class="trigger">
+            <i class="fa fa-caret-right"></i>
+          </td>
+          <td>{{row.deptName}}</td>
+          <td>{{vm.getDeptName(row.fatherDept)}}</td>
+          <td data-title="'操作'">
+            <button class="btn btn-primary btn-xs" ng-click="vm.open(row)" uib-tooltip="编辑"><span class="fa fa-edit"></span></button>
+            <button class="btn btn-danger btn-xs" ng-click="vm.del(row.seqId)" uib-tooltip="删除"><span class="fa fa-trash"></span></button>
+          </td>
+        </tr>
+        <tr grid-expand tpl-src="app/nursingWorkers/dept/dept.detail.html" ng-show="vm.expanedIndex == $index"></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head runat="server">
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/prescriptionExe.css')" />
+<script type="text/javascript" src="#url('/resources/js/nur/prescriptionExe.js?1472534366479')"></script>
+<script type="text/javascript">
+  var _patientId = '$!patientId';
+</script>
+</head>
+<body>
+	<div class="wrapper f_yahei">
+		<div class="insp-top top-tools" style="height:40px">
+	      <div class="top-tools-box">
+            <div class="top-title">
+                <span>医嘱执行</span>
+            </div>
+            <!-- <div class="btn-box fl mgl15">
+                医嘱类型：
+                <input type="button" value="查询" onclick="searchPatCrisValue()">
+            </div> -->
+  		    <div class="btn-box fr mgr10">
+                <div class="time-box fl mgr10">
+                    <input value="$!currentDate" id="startDate" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 85px;">
+                  至
+                    <input value="$!currentDate" id="endDate" name="endDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 85px;">
+                </div>
+                <select id="select1">
+	              <option value="">全部</option>
+	              <option value="CZ">长期</option>
+	              <option value="LZ">临时</option>
+                </select>
+                <select id="select2">
+                    <option value="">全部</option>
+                    <option value="1">输液</option>
+                    <option value="2">注射</option>
+                    <option value="3">口服药</option>
+                </select>
+                <input type="button" value="查询"  onclick="getPatOrderDetail()">
+            </div>
+	      </div>
+		</div>
+		<div class="content" style="height:100%;">
+      		<table id="info-tab">
+      		          
+      		</table>
+		</div>
+	</div>
+	
+    <div id="editorPlanDate" class="easyui-dialog" closed="true" title='修改计划时间' data-options="buttons:[{text:'保存',handler:savePlanDate},{text:'取消',handler:closeEditorPlanDateBox}]">
+        <div class="editPanel" style="padding:15px;"></div>
+    </div>
+	<script type="text/javascript">
+            document.body.removeChild(document.body.childNodes[0]);
+		
+	</script>
+</body>
+</html>

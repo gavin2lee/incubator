@@ -1,0 +1,135 @@
+// 颜色
+$base-color:              #48637d !default;
+$base-color2:             #3f78bf !default;
+// $base-color2:             #00CCFF !default;
+$base-color3:             #5eb104 !default;
+$body-bg:                 #e4e5e6 !default;
+$side-bg: #f7f7f7;
+$border-color: #ddd;
+$font-color: #333333;
+$md-black: #666666;
+$lt-black: #999999;
+
+//
+// 灰度颜色设置
+//
+$gray-base:              #333 !default;
+$gray-darker:            lighten($gray-base, 13.5%) !default; // #222
+$gray-dark:              lighten($gray-base, 20%) !default;   // #333
+$gray:                   lighten($gray-base, 33.5%) !default; // #555
+$gray-l:                 #ccc !default;
+$gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
+
+//
+//  提醒颜色设置
+//
+$primary:                 $base-color;
+$success:                 #5cb85c !default;
+$info:                    #5bc0de !default;
+$warning:                 #f0ad4e !default;
+$danger:                  #d9534f !default;
+
+$navbar-theme:            #28323F;
+
+//** 表格和单元格边框颜色
+$table-border-color:            #ddd !default;
+
+//
+//  表单样式设置
+//
+$input-bg:                       #fff !default;
+$input-bg-disabled:              $gray-lighter !default;
+
+$input-color:                    $gray !default;
+$input-border:                   #ccc !default;
+
+$input-border-radius:            $border-radius-base !default;
+$input-border-radius-large:      $border-radius-large !default;
+$input-border-radius-small:      $border-radius-small !default;
+
+$input-border-focus:             $base-color2 !default;
+
+$input-color-placeholder:        #999 !default;
+
+$input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
+$input-height-large:             (ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2) !default;
+$input-height-small:             (floor($font-size-base * $line-height-base) + ($padding-small-vertical * 2) + 3) !default;
+
+$form-group-margin-bottom:       15px !default;
+
+$legend-color:                   $gray-dark !default;
+$legend-border-color:            #e5e5e5 !default;
+
+$cursor-disabled:                not-allowed !default;
+
+//
+// 表单组件
+//
+//$form-item-padding-sm:           5em;
+
+$head-height:                 50px;
+$name-label-width:            5em;
+$nav-width:                   180px;
+$sub-nav-width:               180px;
+$content-width:               calc(100% - #{$nav-width});
+$page-left-width: 200px;
+
+@mixin form-item-width($value) {
+  @if $value == sm {
+    padding-left: $name-label-width;
+    & .name-label {
+      width: $name-label-width;
+    }
+  }
+  @if $value == md {
+    padding-left: $name-label-width + 3;
+    & .name-label {
+      width: $name-label-width + 3;
+    }
+  }
+  @if $value == lg {
+    padding-left: $name-label-width + 6;
+    & .name-label {
+      width: $name-label-width + 6;
+    }
+  }
+}
+
+@mixin input-focus($color: $input-border-focus) {
+  $color-rgba: rgba(red($color), green($color), blue($color), .6);
+  &:focus {
+    border-color: $color;
+    outline: 0;
+    box-shadow: inset 0 0 1px rgba(0,0,0,.075), 0 0 4px $color-rgba;
+  }
+}
+
+//屏幕断点
+//
+$XS:                             400px;
+$S:                              800px;
+$N:                              1366px;
+$L:                              1600px;
+$XL:                             1920px;
+
+@mixin MQ($width) {
+  @if $width == $S {
+    @media only screen and (min-width: $S) and (max-width: $N - 1) { @content; }
+  }
+  @else if $width == $N {
+    @media only screen and (min-width: $N) and (max-width: $L - 1) { @content; }
+  }
+  @else if $width == $L {
+    @media only screen and (min-width: $L) and (max-width: $XL - 1) { @content; }
+  }
+  @else if $width == $XL {
+    @media only screen and (min-width: $XL) { @content; }
+  }
+}
+
+@mixin transition-nav() {
+  transition: all .2s ease-in-out;
+  -ms-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+}

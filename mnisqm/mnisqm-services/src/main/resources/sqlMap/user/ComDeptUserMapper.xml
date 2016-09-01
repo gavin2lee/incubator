@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lachesis.mnisqm.module.user.dao.ComDeptUserMapper">
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.user.domain.ComDeptUser">
+    <id column="SEQ_ID" jdbcType="BIGINT" property="seqId" />
+    <result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+    <result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+    <result column="STATUS" jdbcType="CHAR" property="status" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_PERSON" jdbcType="VARCHAR" property="createPerson" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_PERSON" jdbcType="VARCHAR" property="updatePerson" />
+  </resultMap>
+  <!-- 部门员工信息插入 -->
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.user.domain.ComDeptUser">
+    insert into COM_DEPT_USER (DEPT_CODE, USER_CODE, 
+      STATUS, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_TIME, UPDATE_PERSON)
+    values (#{deptCode}, #{userCode}, 
+      #{status}, GETDATE(), #{createPerson}, 
+      GETDATE(), #{updatePerson})
+  </insert>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select SEQ_ID, DEPT_CODE, USER_CODE, STATUS, CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+    UPDATE_PERSON
+    from COM_DEPT_USER
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByUserCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select SEQ_ID, DEPT_CODE, USER_CODE, STATUS, CREATE_TIME, CREATE_PERSON, UPDATE_TIME,
+  	UPDATE_PERSON
+  	from COM_DEPT_USER
+  	where USER_CODE=#{userCode}
+  </select>
+  <!-- 员工离职 -->  
+  <update id="updateForLeave" parameterType="ComUser">
+  	update COM_DEPT_USER
+  	SET DEPT_CODE='0002'
+  	WHERE USER_CODE=#{userCode}
+  </update>
+  
+  <!-- 数据更新 -->
+  <update id="updateByPrimaryUser" parameterType="com.lachesis.mnisqm.module.user.domain.ComDeptUser">
+  	update COM_DEPT_USER
+  	SET DEPT_CODE=#{deptCode},
+  	UPDATE_TIME = GETDATE()
+  	WHERE USER_CODE=#{userCode}
+  </update>
+  
+</mapper>

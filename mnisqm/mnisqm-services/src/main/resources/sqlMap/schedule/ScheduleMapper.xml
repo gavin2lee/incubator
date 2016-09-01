@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.schedule.dao.ScheduleMapper">
+	<!-- 查询统计信息 -->
+	<select id="getScheduleCount" resultType="ScheduleLeave" parameterType="ScheduleLeave">
+		SELECT u.USER_CODE userCode,u.HIS_CODE hisCode,u.USER_NAME userName, l.LEAVE_TYPE leaveType, 
+		sum(DAYS) days 
+		FROM SCHEDULE_LEAVE l 
+		INNER JOIN COM_USER u on l.USER_CODE=u.USER_CODE
+		WHERE l.STATUS!='09' 
+		<if test="deptCode != null">
+			AND DEPT_CODE=#{deptCode}
+		</if>
+		GROUP BY u.USER_CODE,u.HIS_CODE,u.USER_NAME,LEAVE_TYPE ORDER BY u.USER_CODE 
+	</select>
+	
+	<!-- 统计工作天数 -->
+	<select id="getWorkDays" parameterType="java.util.Map" resultType="ScheduleCount">
+		SELECT 
+			dtl.USER_CODE			userCode,
+			u.HIS_CODE				hisCode,
+			u.USER_NAME				userName,
+			COUNT(1) 				jjr
+		FROM SCHEDULE_RECORD_DETAIL dtl
+		INNER JOIN SCHEDULE_RECORD r on dtl.RECORD_CODE = r.RECORD_CODE 
+		INNER JOIN COM_USER u on u.USER_CODE=dtl.USER_CODE
+		INNER JOIN SYS_DATE d on dtl.RECORD_DATE = d.DATE AND D.IS_HOLIDAY=1
+		WHERE dtl.STATUS != '09'
+		<if test="deptCode != null">
+			AND r.DEPT_CODE=#{deptCode}
+		</if>
+		GROUP BY dtl.USER_CODE,u.HIS_CODE,u.USER_NAME
+	</select>
+	
+	<!-- 查询班次统计 -->
+	<select id="getCountByClass" parameterType="java.util.Map" resultType="ScheduleCount">
+		SELECT 
+			dtl.USER_CODE	userCode,
+			u.USER_NAME		userName,
+			c.CLASS_CODE	classCode,
+			u.HIS_CODE		hisCode,
+			COUNT(1) 		yb
+		FROM SCHEDULE_RECORD_DETAIL dtl
+		INNER JOIN SCHEDULE_RECORD r on dtl.RECORD_CODE=r.RECORD_CODE
+		INNER JOIN SCHEDULE_DEPT_CLASS c on c.CLASS_CODE = dtl.CLASS_CODE
+		INNER JOIN COM_USER u on u.USER_CODE = dtl.USER_CODE
+		WHERE  dtl.CLASS_CODE is not null
+		<if test="deptCode != null">
+			AND r.DEPT_CODE=#{deptCode}
+		</if>
+		group by dtl.USER_CODE,u.USER_NAME,c.CLASS_CODE,u.HIS_CODE
+		order by dtl.USER_CODE
+	</select>
+</mapper>

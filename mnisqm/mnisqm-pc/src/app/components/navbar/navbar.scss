@@ -1,0 +1,277 @@
+
+.acme-navbar-text {
+  color: white;
+}
+.visible-switch {
+  cursor: pointer;
+  padding: 10px 15px;
+  border-bottom: 1px #ddd solid;
+}
+.left-nav {
+  position: fixed;
+  left: 0;
+  top: $head-height;
+  width: 180px;
+  height: 100%;
+  z-index: 999;
+  // background-color: #ffffff;
+  border-right: 1px $border-color solid;
+  @include transition-nav();
+
+  &.left-min {
+    width: calc(360px - 130px);
+  }
+
+  &.left-sub-min {
+    width: calc(360px - 180px);
+  }
+
+  &.left-sub-min.left-min {
+    width: 50px;
+  }
+}
+
+.nav-container {
+  position: relative;
+  height: 100%;
+}
+
+.nav-unexpanded {
+  width: 50px!important;
+  overflow: hidden;
+}
+.nav-wrapper {
+  width: $nav-width;
+  height: 100%;
+  // border-right: 1px #ddd solid;
+  float: left;
+  background: $navbar-theme;
+  @include transition-nav();
+
+  &.left-nav-min {
+    width: 50px;
+  }
+}
+
+.no-panel {
+  background: transparent;
+  border: 0;
+  overflow: hidden;
+}
+
+.nav-menu {
+  .panel-group {
+    .panel {
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+      .panel-heading {
+        padding: 0;
+      }
+    }
+    .panel-title {
+      font-size: 14px;
+      font-weight: normal;
+      a {
+        @include clearfix;
+      }
+    }
+    .panel-body {
+      padding: 0;
+      border: 0!important;
+    }
+  }
+}
+
+.nav-menu_sub-item {
+  background: darken($navbar-theme, 5%);
+  li {
+    line-height: 40px;
+    @include transition(background-color, .2s);
+    color: #e5e9ee;
+    cursor: pointer;
+
+    a {
+      //padding-left: 50px;
+      height: 40px;
+      color: #e5e9ee;
+      display: block;
+
+      &.active {
+        // background: #f9f9f9;
+        //padding-left: 47px;
+        // border-left: 3px $base-color2 solid;
+        background: darken($base-color2, 15%);
+        /*a {
+          color: #fca600;
+        }*/
+      }
+    }
+
+    &:hover {
+      background: $base-color2;
+    }
+  }
+}
+.nav-menu_item {
+  position: relative;
+  // padding: 10px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 12px;
+  margin: 0;
+  border-bottom: 0;
+  @include transition(background, .2s);
+
+
+  &:hover {
+    background: lighten($navbar-theme, 10%);
+
+    .sub-nav & {
+      background: #fff;
+    }
+  }
+  a {
+    display: inline-block;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    color: #e5e9ee;
+    .sub-nav & {
+      color: $navbar-theme;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &.active {
+    // background: $base-color2!important;
+    padding-left: 0px;
+
+    a {
+      color: #fff;
+    }
+  }
+
+  &.current {
+    border-left: 3px $base-color2 solid;
+    background: lighten($navbar-theme, 6%);
+  }
+}
+
+.nav-menu_item-arrow {
+  line-height: 40px;
+  margin-right: 10px!important;
+  font-size: 18px;
+}
+
+.sub-nav-list_item {
+  border:0;
+
+  a.active {
+    background: #fff;
+  }
+
+  &.nav-title {
+    height: 70px;
+    font-weight: bold;
+
+    .nav-menu_item-text {
+      line-height: 70px!important;
+      font-size: 14px;
+    }
+
+    .nav-menu_item-icon {
+      width: 20px;
+    }
+  }
+}
+.nav-menu_item-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: left;
+  width: 50px;
+  height: 100%;
+  font-size: 14px;
+  &.icomoon {
+    font-size: 24px;
+  }
+  .nav-view-trigger & {
+    width: 100%;
+    // color: $base-color2;
+  }
+
+  .sub-nav & {
+    width: 30px;
+  }
+}
+
+.nav-view-trigger {
+  height: 30px;
+  background: lighten($navbar-theme, 10%);
+}
+
+.nav-menu_item-text {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  .left-nav-min-remove &,.sub-nav-min-remove &{
+    // display: none;
+  }
+}
+
+.nav-menu_sub-item-text {
+  white-space: nowrap;
+}
+
+.sub-nav {
+  // float: left;
+  position: absolute;
+  // overflow: hidden;
+  left: $nav-width;
+  width: $sub-nav-width;
+  height: 100%;
+  background: #EAEDF1;
+  @include transition-nav();
+
+  &.sub-nav-min {
+    width: 0;
+    .sub-nav-list {
+      display: none;
+    }
+  }
+
+  &.nav-min {
+    left: 50px;
+  }
+
+}
+
+.sub-nav-trigger {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 0;
+  top: calc(50% - 50px);
+  position: absolute;
+  width: 12px;
+  height: 30px;
+  border-radius: 3px 0 0 3px;
+  z-index: 9999;
+  border: 1px #ddd solid;
+  border-right: 0;
+  background: #fff;
+  &:hover {
+    text-decoration: none;
+  }
+
+  &.outer {
+    right: -11px;
+    border-radius: 0 3px 3px 0;
+    border-right: 1px #ddd solid;
+    border-left: 0;
+  }
+
+}

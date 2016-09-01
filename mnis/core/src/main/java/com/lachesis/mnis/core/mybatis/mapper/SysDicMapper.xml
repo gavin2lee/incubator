@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.SysDicMapper">
+  <resultMap id="BaseResultMap" type="com.lachesis.mnis.core.sysDic.entity.SysDic">
+    <result column="SEQ_ID" jdbcType="BIGINT" property="seqId" />
+    <result column="DIC_TYPE" jdbcType="VARCHAR" property="dicType" />
+    <result column="DIC_CODE" jdbcType="VARCHAR" property="dicCode" />
+    <result column="DIC_NAME" jdbcType="VARCHAR" property="dicName" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_PERSON" jdbcType="VARCHAR" property="createPerson" />
+    <result column="UPDATE_PERSON" jdbcType="VARCHAR" property="updatePerson" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lachesis.mnis.core.sysDic.entity.SysDic">
+    insert into SYS_DIC (SEQ_ID, DIC_TYPE, DIC_CODE, 
+      DIC_NAME, STATUS, REMARK, 
+      UPDATE_TIME, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_PERSON)
+    values (#{seqId,jdbcType=BIGINT}, #{dicType,jdbcType=VARCHAR}, #{dicCode,jdbcType=VARCHAR}, 
+      #{dicName,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select SEQ_ID, DIC_TYPE, DIC_CODE, DIC_NAME, STATUS, REMARK, UPDATE_TIME, CREATE_TIME, 
+    CREATE_PERSON, UPDATE_PERSON
+    from SYS_DIC
+  </select>
+  <select id="queryDicTypes" resultType="String">
+    select DISTINCT DIC_TYPE
+    from SYS_DIC
+  </select>
+  <insert id="insertAndReturnKey" keyProperty="id" parameterType="com.lachesis.mnis.core.sysDic.entity.SysDic" useGeneratedKeys="true">
+    insert into SYS_DIC (SEQ_ID, DIC_TYPE, DIC_CODE, 
+      DIC_NAME, STATUS, REMARK, 
+      UPDATE_TIME, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_PERSON)
+    values (#{seqId,jdbcType=BIGINT}, #{dicType,jdbcType=VARCHAR}, #{dicCode,jdbcType=VARCHAR}, 
+      #{dicName,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+</mapper>

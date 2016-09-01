@@ -1,0 +1,15 @@
+<div class="tab-bread-wrapper">
+  <ul class="tab-bread">
+      <li ng-repeat="(id, name) in bc.tabTemp" uib-tooltip="{{name}}" tooltip-placement="bottom">
+    <!-- <li ng-repeat="(id, name) in bc.tabTemp" uib-popover="{{name}}" popover-trigger="mouseenter" popover-placement="bottom"> -->
+      <div ui-sref=".{{id}}" ui-sref-active="active" ng-class="{active: bc.isActive('{{id}}')}" class="tab-bread__item" href="#">
+        <span>
+          {{name}}
+        </span>
+        <a ng-click="bc.removeTab($event)" data-id="{{id}}" class="close-tab" href="javascript:;">
+          ×
+        </a>
+      </div>
+    </li>
+  </ul>
+</div>

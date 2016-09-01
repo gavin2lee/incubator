@@ -1,0 +1,189 @@
+## <div id="header" class="header" style="height:70px;">
+##     <div class="top">
+##         #parse("/nur/headerTop.vm")
+##     </div>
+##     <div class="bottom">
+##         <div class="center">
+##             <div class="coverBlock"></div>
+##             <div class="hosTitle f_yahei">
+##                 $!hospitalName
+##             </div>
+##             #parse("nur/menu.vm")
+##         </div>
+##     </div>
+## </div>
+## <!-- 阴影 -->
+## <div class="shadow hide" id="shadow"></div>
+
+<script>
+    var deptList = '$!user.deptList';
+    var isHeaderVisible = '$!viewHead';
+
+    console.log(deptList);
+
+    //数据重置按钮，如果配置为1，那么重置
+    function resetData() {
+        config = $.parseJSON(localStorage.getItem("config")) || null;
+        var isTestVesion = null;
+        if (null != config) {
+            isTestVesion = config.data.system.isTestVesion;
+        }
+        if ('1' == isTestVesion) {
+            $.get(ay.contextPath + '/nur/system/resetExecData.do').done(function(res) {
+                $.messager.alert('提示', res.msg);
+            });
+        }
+    }
+
+    $(function () {
+        var wHeight = $(window).height();
+
+        if (isHeaderVisible == '0') {
+            isHistoryDoc = true;
+            $('.navbar').hide();
+            $('.layout-panel-north').addClass('hide-header');
+            $('.layout-panel-west').addClass('tree-noheader');
+            $('.layout-panel-center').addClass('center-noheader');
+
+            $('.toolsBtnAndInfo .back-to-bedlist').hide();
+            $('body').data('isHistory', true);
+
+            $('#mainFrame, #fixcenterheight').css({
+                'height': wHeight - $('.toolsBtnAndInfo').height() + 'px!important;'
+            });
+        }
+    })
+</script>
+<script type="text/template" id="navTpl">
+<% _.each(obj.datas, function (item) { %>
+  <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <span class="icomoon icomoon-<%= iconMap[item.code] %>"></span>
+        <p><%= item.name %></p>
+      </a>
+      <ul class="dropdown-menu">
+        <% _.each(item.children, function (child) { %>
+          <li class="<%= location.href.indexOf(urlPrefix + child.url) > -1 ? 'active' : '' %>"><a href="<%= urlPrefix + child.url %><%= child.urlType && child.urlType == 0 ? firstPatId : '' %>"><%= child.name %></a></li>
+        <% }); %>
+      </ul>
+    </li>
+<% }); %>
+</script>
+#if(!$!viewHead)
+<nav class="navbar navbar-default">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand">$!hospitalName</a>
+            <div class="navbar-personal dropdown">
+                联新移动医疗
+                <input type="hidden" id="deptId" value="$!user.deptCode" />
+                <input type="hidden" id="nurseId" value="$!user.userId" />
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    $!deptName，<span id="nurseName">$!user.user.name</span>
+                    <span class="icomoon icomoon-triangledown"></span>
+                    <span class="icomoon icomoon-triangleup"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="javascript:void(0);" id="changeKs"><i></i>切换科室</a></li>
+                    <li><a href="/mnis/index/login"><i></i>切换账户</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right" id="navbarRight">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+#end
+
+<div style="display:none;" id="change-ks" data-options="">
+    <div class="dlg-panel">
+        <div class="form-group">
+            <label class="control-label" for="deptListWrapper">科室</label>
+            <select class="selector selector-bg" name="" id="deptListWrapper">
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label chk-label" for="isDefaultDept">默认科室</label>
+            <div class="chkbox-wrapper">
+              <input class="chkbox" type="checkbox" name="isDefaultDept" id="isDefaultDept">
+              <label for="isDefaultDept"></label>
+            </div>
+        </div>
+        <input type="hidden" id="deptId" value="$!deptCode" />
+        <input type="hidden" id="nurseId" value="$!user.userId" />
+    </div>
+</div>
+<div class="crisis-value easyui-dialog">
+    <table id="crisis-value-table"></table>
+    <table id="crisis-value-detail" title="危机详情"></table>
+</div>
+<div class="handle-dialog easyui-dialog" style="display:none;">
+    <div style="padding: 10px;">
+        <form id="check-crisis-form">
+            <p>
+                <span class="dlg-title" style="min-width: 60px;">用户名：</span>
+                <input name="handleUsername" id="handle-username" type="text">
+                <br />
+            </p>
+            <div style="padding:4px;">
+
+            </div>
+            <p>
+                <span class="dlg-title" style="min-width: 60px;">密码：</span>
+                <input name="handlePassword" id="handle-password" type="password">
+            </p>
+            <div style="padding:4px;">
+
+            </div>
+            <p>
+                <span class="dlg-title" style="min-width: 60px;">接报者：</span>
+                <input name="receiveName" id="receive-username" type="text">
+                <br />
+            </p>
+            <div style="padding:4px;"></div>
+            <p>
+                <span class="dlg-title" style="min-width: 60px;">报告医生：</span>
+                <input name="doctorName" id="report-doctor" type="text">
+                <br />
+            </p>
+            <div style="padding:4px;"></div>
+            <p>
+                <span class="dlg-title" style="min-width: 60px;">是否复述：</span>
+                <input name="isRepeat" id="isRepeat" type="checkbox">
+                <br />
+            </p>
+
+            <div style="padding:4px;"></div>
+            <p>
+                <span class="dlg-title" style="min-width: 60px;">处理意见：</span>
+                <textarea style="width: 163px;" row="4" id="handle-notice"></textarea>
+            </p>
+        </form>
+    </div>
+</div>
+<script>
+    $('#changeKs').on('click', function(e) {
+        $.get(ay.contextPath + '/deptAction/getDeptmentsByNurseCode.do?nurseCode=' + $('#nurseId').val()).done(function(res) {
+            var str = '';
+            var currentDept = localStorage.getItem('deptCode');
+
+            if (res) {
+                $.each(res, function(i, v) {
+                    if (v['code'] === currentDept) {
+                        str += '<option selected value="' + v['code'] + '">' + v['name'] + '</option>'
+                    } else {
+                        str += '<option value="' + v['code'] + '">' + v['name'] + '</option>'
+                    }
+                });
+
+                $('#deptListWrapper').html(str);
+            }
+        })
+    })
+</script>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.lachesis.mnis.core.mybatis.mapper.InspectionServiceMapper">
+	<resultMap id="inspectionDetailMap" type="InspectionRecordDetail">
+		<id property="detailRecordId" column="insp_detail_id" />
+		<result property="masRecordId" column="insp_mas_id" />
+		<result property="bodyParts" column="body_parts" />
+		<result property="inspectionResult" column="insp_result" />
+		<result property="inspSuggestion" column="insp_suggestion" />
+	</resultMap>
+
+	<resultMap id="inspectionMap" type="InspectionRecord">
+		<id property="masterId" column="insp_mas_id" />
+		<result property="patId" column="pat_id" />
+		<result property="applicant" column="applicant_name" />
+		<result property="applicantTime" column="applicant_time" />
+		<result property="reporter" column="reporter_name" />
+		<result property="reportTime" column="report_datetime"/>
+		<result property="checkName" column="check_name" />
+		<result property="checkDate" column="check_datetime"/>
+		<result property="subject" column="insp_subject" />
+		<result property="inspectionTime" column="insp_datetime"/>
+		<result property="patName" column="pat_name" />
+		<result property="bedNo" column="bed_code" />
+		<result property="inHospNo" column="HIS_PAT_NO" />
+		<result property="status" column="STATUS" />
+		<result property="priFlag" column="PRI_FLAG" />
+		<collection property="detailList" resultMap="inspectionDetailMap" />
+	</resultMap>
+
+	<sql id="insp_info_sql">
+		<!-- pp.diagrptid(报告ID) as insp_detail_id,si.studyscription(检查项目，检查部位的组合描述串) 
+			as body_parts,pp.reportdescribe(描述) as insp_result,pp.reportdiagnose(诊断) 
+			as insp_suggestion,si.diagrptid(报告编号) as insp_mas_id, p.infeepatientid(住院患者编号) 
+			as pat_id,si.doctorcode(申请医生) as applicant_name,pp.operatetime as report_datetime, 
+			si.studytime(检查时间) as insp_datetime,p.patientname(患者拼音名称) as pat_name,si.sickbed(病床) 
+			as bed_code, p.infeepatientid(住院患者编号) as his_pat_no,si.studyscription(检查项目，检查部位的组合描述串) 
+			as insp_subject,si.studystatus(检查状态见表 DICT_STUDYSTATUS) as status -->
+		p.EXAM_NO as insp_detail_id,
+		p.exam_item as body_parts,
+		p.exam_item as insp_subject,
+		pi.inspection_result as insp_result,
+		pi.inspection_suggestion as insp_suggestion,
+		pi.id as insp_mas_id,
+		pi.pat_id as pat_id,
+		pi.apply_user as applicant_name,
+		pi.apply_date as applicant_time,
+		pi.report_user as reporter_name,
+		pi.report_date as report_datetime,
+		pi.check_user as check_name,
+		pi.check_date as check_datetime,
+		pi.exam_date_time as insp_datetime,
+		pi.pat_name as pat_name,
+		pi.in_hosp_no as his_pat_no,
+		<!-- pci.bed_code as bed_code -->
+		pi.bed_code as bed_code
+	</sql>
+	<select id="getInspectionRecord" parameterType="Map" resultMap="inspectionMap">
+		SELECT
+		<include refid="insp_info_sql" />
+		FROM
+		PAT_INSPECTION pi 
+		LEFT JOIN PAT_INSPECTION_ITEM p on pi.exam_no = p.exam_no
+		<!-- LEFT JOIN PAT_CURE_INFO pci on pci.IN_HOSP_NO = pi.IN_HOSP_NO -->
+		WHERE pi.in_hosp_no= #{in_hosp_no}
+		<!-- pi.pat_id = #{patientId} --> <!-- end by qingzhi.liu 三院没有保存住院唯一标识，根据住院号、时间可以查询该患者所有报告 -->
+		<if test="startTime != null">
+		 <![CDATA[AND pi.REPORT_DATE >= #{startTime} ]]>
+		</if>
+		<if test="endTime != null">
+		 <![CDATA[AND pi.REPORT_DATE <=#{endTime} ]]>
+		</if>
+		order by pi.REPORT_DATE desc
+	</select>
+
+	<select id="getInspectionRecordByPatients" parameterType="Map"
+		resultMap="inspectionMap">
+		<foreach collection="patientIds" item="patientId" index="index"
+			separator=" union all">
+			SELECT
+			<include refid="insp_info_sql" />
+			FROM
+			PAT_INSPECTION pi 
+			LEFT JOIN PAT_INSPECTION_ITEM p on pi.exam_no = p.exam_no
+			<!-- LEFT JOIN PAT_CURE_INFO pci on pci.IN_HOSP_NO = pi.IN_HOSP_NO -->
+			WHERE  pi.in_hosp_no=#{in_hosp_no}
+			<!-- pi.pat_id=#{patientId} -->  <!-- end by qingzhi.liu 三院没有保存住院唯一标识，根据住院号、时间可以查询该患者所有报告 -->
+			<if test="startTime != null">
+		 <![CDATA[AND pi.REPORT_DATE >= #{startTime} ]]>
+			</if>
+			<if test="endTime != null">
+		 <![CDATA[AND pi.REPORT_DATE <=#{endTime} ]]>
+			</if>
+		</foreach>
+		order by pi.REPORT_DATE desc
+	</select>
+	
+	<select id="getPublishInspections" parameterType="Map"
+		resultMap="inspectionMap">
+		SELECT
+			p.EXAM_NO as insp_detail_id,
+			p.exam_item as body_parts,
+			p.exam_item as insp_subject,
+			pi.inspection_result as insp_result,
+			pi.inspection_suggestion as insp_suggestion,
+			pi.id as insp_mas_id,
+			pi.apply_user as applicant_name,
+			pi.apply_date as applicant_time,
+			pi.report_user as reporter_name,
+			pi.report_date as report_datetime,
+			pi.check_user as check_name,
+			pi.check_date as check_datetime,
+			pi.exam_date_time as insp_datetime,
+			pi.pat_name as pat_name,
+			pi.in_hosp_no as his_pat_no,
+			pc.pat_id as pat_id,
+			pc.bed_code as bed_code
+		FROM PAT_CURE_INFO pc
+			INNER JOIN PAT_INSPECTION pi on pc.IN_HOSP_NO = pi.IN_HOSP_NO 
+			LEFT JOIN SYS_MSG_PUBLISH mp on mp.oper_type=3 and mp.oper_id = pi.exam_no
+			LEFT JOIN PAT_INSPECTION_ITEM p on pi.exam_no = p.exam_no
+		WHERE  pc.ward_code = #{deptCode}
+		and pc.status = 1
+		and mp.seq_id is null
+		 <![CDATA[AND pi.REPORT_DATE >= #{startTime} ]]>
+		 <if test="endTime != null">
+			 <![CDATA[AND pi.REPORT_DATE <=#{endTime} ]]>
+		 </if>
+		order by pi.REPORT_DATE desc
+	</select>
+</mapper>

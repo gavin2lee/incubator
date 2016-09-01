@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lachesis.mnisqm.module.user.dao.ComUserMapper">
+  <!-- 逻辑删除 -->
+  <update id="deleteByPrimaryKey" parameterType="ComUser">
+    update COM_USER
+    set 
+      STATUS = #{status,jdbcType=CHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 插入员工基本信息 -->
+  <insert id="insert" parameterType="ComUser">
+    insert into COM_USER (USER_CODE, HIS_CODE, 
+      USER_NAME, STATUS, USER_TYPE, 
+      GENDER, PHONE, EMAIL, 
+      BIRTHDAY, INDUCTION_DATE, NATURE, 
+      PAPERS_TYPE, PAPERS_NO, NATION, 
+      COUNTRY, NATIVE_PLACE, GRADUATION_SCHOOL, 
+      PROFESSION, DEGREE, DEGREE_NO, 
+      EDUCATION, EDUCATION_NO, GRADUATION_DATE, 
+      LANGUAGE, HEALTH, PRACTICE_APPROVE_DATE, 
+      PRACTICE_TYPE, PRACTICE_NO, PRACTICE_VALID_DATE, 
+      POLITACAL_STATUS, TECHNICAL_POST, DUTY, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+      UPDATE_PERSON,MARRIAGE,BIRTH,H_EDUCATION,
+      H_GRADUATION_DATE,H_GRADUATION_SCHOOL,CLINICAL,TECHNICAL_POST_TIME,
+      DUTY_TIME,ENERGY_LEVEL,HAT_NO,DRESS_NO,SHOE_NO,PARTICIPATE_JOB_TIME,
+      COMPUTER_LEVEL,HEIGHT,NURSE_REGISTER_NO, TEACH_LEVEL,INSTITUTION)
+    values (#{userCode}, #{hisCode}, 
+      #{userName}, #{status}, #{userType}, 
+      #{gender}, #{phone}, #{email}, 
+      #{birthday}, #{inductionDate}, #{nature}, 
+      #{papersType}, #{papersNo}, #{nation}, 
+      #{country}, #{nativePlace}, #{graduationSchool}, 
+      #{profession}, #{degree}, #{degreeNo}, 
+      #{education}, #{educationNo}, #{graduationDate}, 
+      #{language}, #{health}, #{practiceApproveDate}, 
+      #{practiceType}, #{practiceNo}, #{practiceValidDate}, 
+      #{politacalStatus}, #{technicalPost}, #{duty}, 
+      GETDATE(), #{createPerson}, GETDATE(), 
+      #{updatePerson},#{marriage},#{birth},#{hEducation},
+      #{hGraduationDate},#{hGraduationSchool},#{clinical},
+      #{technicalPostTime},#{dutyTime},#{energyLevel},
+      #{hatNo},#{dressNo},#{shoeNo},#{participateJobTime},
+      #{computerLevel},#{height},#{nurseRegisterNo}, #{teachLevel},#{institution})
+  </insert>
+  
+  <!-- 修改员工基本信息 -->
+  <update id="updateByPrimaryKey" parameterType="ComUser">
+    update COM_USER
+    set 
+      HIS_CODE = #{hisCode},
+      USER_NAME = #{userName},
+      STATUS = #{status},
+      USER_TYPE = #{userType},
+      GENDER = #{gender},
+      PHONE = #{phone},
+      EMAIL = #{email},
+      BIRTHDAY = #{birthday},
+      INDUCTION_DATE = #{inductionDate},
+      NATURE = #{nature},
+      PAPERS_TYPE = #{papersType},
+      PAPERS_NO = #{papersNo},
+      NATION = #{nation},
+      COUNTRY = #{country},
+      NATIVE_PLACE = #{nativePlace},
+      GRADUATION_SCHOOL = #{graduationSchool},
+      PROFESSION = #{profession},
+      DEGREE = #{degree},
+      DEGREE_NO = #{degreeNo},
+      EDUCATION = #{education},
+      EDUCATION_NO = #{educationNo},
+      GRADUATION_DATE = #{graduationDate},
+      LANGUAGE = #{language},
+      HEALTH = #{health},
+      PRACTICE_APPROVE_DATE = #{practiceApproveDate},
+      PRACTICE_TYPE = #{practiceType},
+      PRACTICE_NO = #{practiceNo},
+      PRACTICE_VALID_DATE = #{practiceValidDate},
+      POLITACAL_STATUS = #{politacalStatus},
+      TECHNICAL_POST = #{technicalPost},
+      DUTY = #{duty},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson},
+      MARRIAGE = #{marriage},
+      BIRTH = #{birth},
+      H_EDUCATION = #{hEducation},
+      H_GRADUATION_DATE = #{hGraduationDate},
+      H_GRADUATION_SCHOOL = #{hGraduationSchool},
+      CLINICAL = #{clinical},
+      TECHNICAL_POST_TIME = #{technicalPostTime},
+      DUTY_TIME = #{dutyTime},
+      ENERGY_LEVEL = #{energyLevel},
+      HAT_NO = #{hatNo},
+      DRESS_NO = #{dressNo},
+      SHOE_NO = #{shoeNo},
+      PARTICIPATE_JOB_TIME = #{participateJobTime},
+      COMPUTER_LEVEL = #{computerLevel},
+      HEIGHT = #{height},
+      NURSE_REGISTER_NO = #{nurseRegisterNo},
+      TEACH_LEVEL = #{teachLevel},
+      INSTITUTION = #{institution}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <!-- 保存员工类型 -->
+  <update id="updateUserType" parameterType="java.lang.String">
+  	update COM_USER
+  	set 
+  	USER_TYPE = #{userType}
+  	where 
+  	USER_CODE = #{userCode}
+  </update>
+  
+  <!-- 保存员工临床层级-->
+  <update id="updateClinical" parameterType="ComUser">
+  	update COM_USER
+  	set 
+  	CLINICAL = #{clinical},
+  	UPDATE_TIME = GETDATE()
+  	where 
+  	USER_CODE = #{userCode}
+  </update>
+  
+  <!-- 更新职称 -->
+  <update id="updateTechnicalPost" parameterType="ComUser">
+  	update COM_USER
+  	set 
+  	TECHNICAL_POST = #{technicalPost},
+  	UPDATE_TIME = GETDATE()
+  	where 
+  	USER_CODE = #{userCode}
+  </update>
+  
+  <!-- 更新职务 -->
+  <update id="updateDuty" parameterType="ComUser">
+  	update COM_USER
+  	set 
+  	DUTY = #{duty},
+  	UPDATE_TIME = GETDATE()
+  	where 
+  	USER_CODE = #{userCode}
+  </update>
+  
+  <!-- 更新带教级别 -->
+  <update id="updateTeachLevel" parameterType="ComUser">
+  	update COM_USER
+  	set 
+  	TEACH_LEVEL = #{teachLevel},
+  	UPDATE_TIME = GETDATE()
+  	where 
+  	USER_CODE = #{userCode}
+  </update>
+  
+  <!-- 查询科室 -->
+  <select id="selectDeptByUser" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	SELECT COUNT(*) count  FROM COM_DEPT_USER du1
+		inner join COM_DEPT d on du1.DEPT_CODE=d.DEPT_CODE
+		inner join COM_DEPT_USER du2 on du2.DEPT_CODE=d.FATHER_DEPT
+		where du1.USER_CODE=#{createUser}
+		and du2.USER_CODE=#{loginUser}
+  </select>
+</mapper>

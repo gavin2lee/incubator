@@ -1,0 +1,38 @@
+<td colspan="{{tdLen}}">
+  <div class="tpl">
+    <table class="table table-hover table-condensed table-bordered table-striped">
+      <thead>
+        <tr>
+          <th st-sort="rowNumber">序号</th>
+          <th st-sort="month">月份</th>
+          <th st-sort="deptCode">病区</th>
+          <th st-sort="hisCode">HIS工号</th>
+          <th st-sort="userName">姓名</th>
+          <th st-sort="bj" ng-if="vm.queryParams.type === 'leave'">病假（天）</th>
+          <th st-sort="nj" ng-if="vm.queryParams.type === 'leave'">年假（天）</th>
+          <th st-sort="hj" ng-if="vm.queryParams.type === 'leave'">婚假（天）</th>
+          <th st-sort="txj" ng-if="vm.queryParams.type === 'leave'">调休假（天）</th>
+          <th st-sort="sj" ng-if="vm.queryParams.type === 'leave'">丧假（天）</th>
+          <th st-sort="cj" ng-if="vm.queryParams.type === 'leave'">产假（天）</th>
+          <th st-sort="yb" ng-if="vm.queryParams.type === 'class'">夜班（个）</th>
+          <th st-sort="jjr" ng-if="vm.queryParams.type === 'days'">节假日上班（天）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="row in vm.statisticsData">
+          <td>{{row.rowNumber}}</td>
+          <td>{{row.month}}</td>
+          <td>{{row.deptCode}}</td>
+          <td>{{row.hisCode}}</td>
+          <td>{{row.userName}}</td>
+          <td ng-if="vm.queryParams.type === 'leave'">{{row.bj}}</td>
+          <td ng-if="vm.queryParams.type === 'leave'">{{row.nj}}</td>
+          <td ng-if="vm.queryParams.type === 'leave'">{{row.hj}}</td>
+          <td ng-if="vm.queryParams.type === 'leave'">{{row.txj}}</td>
+          <td ng-if="vm.queryParams.type === 'leave'">{{row.sj}}</td>
+          <td ng-if="vm.queryParams.type === 'leave'">{{row.cj}}</td>
+          <td ng-if="vm.queryParams.type === 'class'">{{row.yb}}</td>
+          <td ng-if="vm.queryParams.type === 'days'">{{row.jjr}}</td>
+        </tr>
+  </div>
+</td>

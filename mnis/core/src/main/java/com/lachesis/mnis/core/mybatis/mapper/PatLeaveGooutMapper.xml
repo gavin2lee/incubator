@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.PatLeaveGooutMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnis.core.patientManage.entity.PatLeaveGoout" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="PAT_ID" property="patId" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="OCCUR_TIME" property="occurTime" jdbcType="TIMESTAMP" />
+    <result column="ACTUALLY_COMEBACK_TIME" property="actuallyComebackTime" jdbcType="TIMESTAMP" />
+    <result column="BEGIN_TIME" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="PREDICT_END_TIME" property="predictEndTime" jdbcType="TIMESTAMP" />
+    <result column="IS_ABNORMAL" property="isAbnormal" jdbcType="INTEGER" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="EXEC_NURSE_ID" property="execNurseId" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PAT_LEAVE_GOOUT
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnis.core.patientManage.entity.PatLeaveGoout" >
+    insert into PAT_LEAVE_GOOUT (PAT_ID, STATUS, 
+      OCCUR_TIME, ACTUALLY_COMEBACK_TIME, BEGIN_TIME, 
+      PREDICT_END_TIME, IS_ABNORMAL, REMARK, EXEC_NURSE_ID,
+      CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+      UPDATE_PERSON)
+    values (#{patId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{occurTime,jdbcType=TIMESTAMP}, #{actuallyComebackTime,jdbcType=TIMESTAMP}, #{beginTime,jdbcType=TIMESTAMP}, 
+      #{predictEndTime,jdbcType=TIMESTAMP}, #{isAbnormal,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{execNurseId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnis.core.patientManage.entity.PatLeaveGoout" >
+    update PAT_LEAVE_GOOUT
+    set PAT_ID = #{patId,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=INTEGER},
+      OCCUR_TIME = #{occurTime,jdbcType=TIMESTAMP},
+      ACTUALLY_COMEBACK_TIME = #{actuallyComebackTime,jdbcType=TIMESTAMP},
+      BEGIN_TIME = #{beginTime,jdbcType=TIMESTAMP},
+      PREDICT_END_TIME = #{predictEndTime,jdbcType=TIMESTAMP},
+      IS_ABNORMAL = #{isAbnormal,jdbcType=INTEGER},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      EXEC_NURSE_ID = #{execNurseId,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, PAT_ID, STATUS, OCCUR_TIME, ACTUALLY_COMEBACK_TIME, BEGIN_TIME, PREDICT_END_TIME, 
+    IS_ABNORMAL, REMARK,EXEC_NURSE_ID, CREATE_TIME, CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+    from PAT_LEAVE_GOOUT
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, PAT_ID, STATUS, OCCUR_TIME, ACTUALLY_COMEBACK_TIME, BEGIN_TIME, PREDICT_END_TIME, 
+    IS_ABNORMAL, REMARK,EXEC_NURSE_ID, CREATE_TIME, CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+    from PAT_LEAVE_GOOUT
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from PAT_LEAVE_GOOUT where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnis.core.patientManage.entity.PatLeaveGoout" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into PAT_LEAVE_GOOUT (PAT_ID, STATUS, 
+      OCCUR_TIME, ACTUALLY_COMEBACK_TIME, BEGIN_TIME, 
+      PREDICT_END_TIME, IS_ABNORMAL, REMARK,EXEC_NURSE_ID, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_TIME, 
+      UPDATE_PERSON)
+    values (#{patId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{occurTime,jdbcType=TIMESTAMP}, #{actuallyComebackTime,jdbcType=TIMESTAMP}, #{beginTime,jdbcType=TIMESTAMP}, 
+      #{predictEndTime,jdbcType=TIMESTAMP}, #{isAbnormal,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{execNurseId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+</mapper>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+		<setting name="cacheEnabled" value="true" />
+		<!-- 查询时，关闭关联对象即时加载以提高性能 -->
+		<setting name="lazyLoadingEnabled" value="true" />
+		<!-- 设置关联对象加载的形态，此处为按需加载字段(加载字段由SQL指定)，不会加载关联表的所有字段，以提高性能 -->
+		<setting name="aggressiveLazyLoading" value="false" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="false" />
+		<setting name="autoMappingBehavior" value="PARTIAL" />
+		<setting name="defaultExecutorType" value="SIMPLE" /> <!-- BATCH, REUSE -->
+		<setting name="defaultStatementTimeout" value="25000" />
+		<setting name="safeRowBoundsEnabled" value="false" />
+		<setting name="mapUnderscoreToCamelCase" value="false" />
+		<setting name="localCacheScope" value="SESSION" />
+		<setting name="jdbcTypeForNull" value="OTHER" />
+		<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString" />
+	</settings>
+    
+    <typeAliases>
+        <typeAlias alias="PatientEvent" type="com.lachesis.mnis.core.patient.entity.PatientEvent" />
+		<typeAlias alias="PatientSkinTest" type="com.lachesis.mnis.core.patient.entity.PatientSkinTest" />
+		<typeAlias alias="PatientPrint" type="com.lachesis.mnis.core.patient.entity.PatientPrint" />
+		<!-- Order Type Alias -->
+		<typeAlias alias="HisOrderGroup" type="com.lachesis.mnis.core.order.entity.HisOrderGroup"/>
+		<typeAlias alias="OrderExecGroup" type="com.lachesis.mnis.core.order.entity.OrderExecGroup"/>
+		<typeAlias alias="OrderBaseGroup" type="com.lachesis.mnis.core.order.entity.OrderGroup"/>
+		<typeAlias alias="OrderBaseInfo" type="com.lachesis.mnis.core.order.entity.OrderItem"/>
+		<typeAlias alias="OrderExecInfo" type="com.lachesis.mnis.core.order.entity.OrderExecLog"/>
+		<typeAlias alias="OrderFrepPlanTime" type="com.lachesis.mnis.core.order.entity.OrderFreqPlanTime"/>
+		<typeAlias alias="OrderExecCount" type="com.lachesis.mnis.core.order.entity.OrderExecCount"/>
+		<typeAlias alias="OrderBedInfo" type="com.lachesis.mnis.core.order.entity.OrderBedInfo"/>	
+		<typeAlias alias="OrderUnprintStatistic" type="com.lachesis.mnis.core.order.entity.OrderUnprintStatistic"/>
+		<typeAlias alias="OrderPrintInfo" type="com.lachesis.mnis.core.order.entity.OrderPrintInfo"/>	
+		
+		<!-- liquor -->
+		<typeAlias alias="DrugItem" type="com.lachesis.mnis.core.liquor.entity.DrugItem"/>	
+		<typeAlias alias="OrderLiquorItem" type="com.lachesis.mnis.core.liquor.entity.OrderLiquorItem"/>	
+		<typeAlias alias="OrderLiquor" type="com.lachesis.mnis.core.liquor.entity.OrderLiquor"/>
+		<typeAlias alias="OrderLiquorStatistic" type="com.lachesis.mnis.core.liquor.entity.OrderLiquorStatistic"/>
+		
+		<!-- BodySign Type Alias -->
+		<typeAlias alias="BodySignItem" type="com.lachesis.mnis.core.bodysign.entity.BodySignItem"/>
+		<typeAlias alias="BodySignDict" type="com.lachesis.mnis.core.bodysign.entity.BodySignDict" />
+		<typeAlias alias="BodySignRecord" type="com.lachesis.mnis.core.bodysign.entity.BodySignRecord" />
+		
+		<typeAlias alias="BodySignMsmentRule" type="com.lachesis.mnis.core.bodysign.entity.BodySignMsmentRule" />
+		<!-- LabTest Type Alias -->
+		<typeAlias alias="LabTestItem" type="com.lachesis.mnis.core.labtest.entity.LabTestRecord$LabTestItem" />
+		<typeAlias alias="LabTestRecord" type="com.lachesis.mnis.core.labtest.entity.LabTestRecord" />
+		
+		<!-- critical value -->
+		<typeAlias alias="CriticalValue" type="com.lachesis.mnis.core.critical.entity.CriticalValue" />	 
+		
+		<!-- Inspection Type Alias -->
+		<typeAlias alias="InspectionRecordDetail" type="com.lachesis.mnis.core.inspection.entity.InspectionRecord$InspectionRecordDetail" />
+		<typeAlias alias="InspectionRecord" type="com.lachesis.mnis.core.inspection.entity.InspectionRecord" />
+		
+		<!-- InfusionMonitor -->
+		<typeAlias alias="InfusionMonitorInfo" type="com.lachesis.mnis.core.infusionmonitor.entity.InfusionMonitorInfo"/>
+		<typeAlias alias="InfusionMonitorRecord" type="com.lachesis.mnis.core.infusionmonitor.entity.InfusionMonitorRecord"/>
+		
+		<!-- wardPatrol -->		
+		<typeAlias alias="WardPatrolInfo" type="com.lachesis.mnis.core.patrol.entity.WardPatrolInfo"/>
+		
+		<!-- skin test -->
+		<typeAlias alias="SkinTestInfoLx" type="com.lachesis.mnis.core.skintest.entity.SkinTestInfoLx"/>
+		<typeAlias alias="SkinTestDrugInfo" type="com.lachesis.mnis.core.skintest.entity.SkinTestDrugInfo"/>
+		<typeAlias alias="SkinTestGroup" type="com.lachesis.mnis.core.skintest.entity.SkinTestGroup"/>
+		<typeAlias alias="SkinTestItem" type="com.lachesis.mnis.core.skintest.entity.SkinTestItem"/>
+		
+		<!-- Nurse Record -->
+		<typeAlias alias="NurseRecordSpecItem" type="com.lachesis.mnis.core.nursing.NurseRecordSpecItem"/>
+		<typeAlias alias="NurseRecord" type="com.lachesis.mnis.core.nursing.NurseRecord"/>
+		<typeAlias alias="NurseRecordEntity" type="com.lachesis.mnis.core.nursing.NurseRecordEntity"/>
+		<!-- Nurse Item -->
+		<typeAlias alias="NurseItem" type="com.lachesis.mnis.core.nursing.NurseItem"/>
+		<typeAlias alias="NurseItemCategory" type="com.lachesis.mnis.core.nursing.NurseItemCategory"/>
+		<typeAlias alias="NurseItemRecordEntity" type="com.lachesis.mnis.core.nursing.NurseItemRecord"/>
+		<!-- Nurse Shift -->
+		<typeAlias alias="PatientEventInfo" type="com.lachesis.mnis.core.nursing.PatientEventInfo"/>
+		<typeAlias alias="NurseShiftEntity" type="com.lachesis.mnis.core.nursing.NurseShiftEntity"/>
+
+		<!-- task -->
+		<typeAlias alias="TaskWhiteRecord" type="com.lachesis.mnis.core.task.WhiteBoardRecord"/>
+		<typeAlias alias="TaskWhiteRecordItem" type="com.lachesis.mnis.core.task.WhiteBoardAtt"/>
+
+		<!-- document -->        
+		<typeAlias alias="DocumentDrugItem" type="com.lachesis.mnis.core.documents.entity.DocumentDrugItem"/>
+		<typeAlias alias="DocumentInfo" type="com.lachesis.mnis.core.documents.entity.DocumentInfo"/>
+		
+		<!-- whiteBoard -->
+	    <typeAlias alias="NurseWhiteBoardMetadata" type="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardMetadata"/>
+	    <typeAlias alias="NurseWhiteBoardMetadataValue" type="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardMetadataValue"/>
+		<typeAlias alias="NurseWhiteBoardRecord" type="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardRecord"/>
+		<typeAlias alias="NurseWhiteBoardRecordItem" type="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardRecordItem"/>
+		<typeAlias alias="NurseWhiteBoardRecordInfo" type="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardRecordInfo"/> 
+		<typeAlias alias="NurseWhiteBoardRecordItemInfo" type="com.lachesis.mnis.core.whiteBoard.entity.NurseWhiteBoardRecordItemInfo"/> 
+		
+		<!-- 出入量管理 -->
+		<typeAlias alias="InOutManager" type="com.lachesis.mnis.core.inoutmanager.entity.InOutManager"/> 
+		<typeAlias alias="InOutManagerStatistic" type="com.lachesis.mnis.core.inoutmanager.entity.InOutManagerStatistic"/> 
+
+
+    	
+    	<!-- Type Handlers -->
+		<typeAlias alias="DateToStringHandler" type="com.lachesis.mnis.core.mybatis.handler.DateToStringHandler"/>
+		<typeAlias alias="DateToStringYMDHMHandler" type="com.lachesis.mnis.core.mybatis.handler.DateToStringYMDHMHandler"/>
+		<typeAlias alias="PatientBarcodeHandler" type="com.lachesis.mnis.core.mybatis.handler.PatientBarcodeHandler"/>
+		<typeAlias alias="OrderBarcodeHandler" type="com.lachesis.mnis.core.mybatis.handler.OrderBarcodeHandler"/>
+		<typeAlias alias="DoubleToBoolHandler" type="com.lachesis.mnis.core.mybatis.handler.DoubleToBoolHandler"/>
+		<typeAlias alias="OrderExecTypeCodeHandler" type="com.lachesis.mnis.core.mybatis.handler.OrderExecTypeCodeHandler"/>
+		<typeAlias alias="OrderStatusCodeHandler" type="com.lachesis.mnis.core.mybatis.handler.OrderStatusCodeHandler"/>
+		<typeAlias alias="AgeHandler" type="com.lachesis.mnis.core.mybatis.handler.PatientAgeHandler"/>
+		<typeAlias alias="AgeDurationHandler" type="com.lachesis.mnis.core.mybatis.handler.PatientAgeDurationHandler"/>
+		<typeAlias alias="BedCodeHandler" type="com.lachesis.mnis.core.mybatis.handler.BedNoHandler"/>
+		<typeAlias alias="TendLevelHandler" type="com.lachesis.mnis.core.mybatis.handler.TendLevelHandler"/>
+		<typeAlias alias="GenderHandler" type="com.lachesis.mnis.core.mybatis.handler.GenderHandler"/>
+		<typeAlias alias="NurseLevelHandler" type="com.lachesis.mnis.core.mybatis.handler.NurseLevelHandler"/>
+		<!-- 血压监控 -->
+		<typeAlias alias="PatBloodPressMonitor" type="com.lachesis.mnis.core.bloodPressMonitor.entity.PatBloodPressMonitor"/>
+		<!-- 血糖监控 -->
+		<typeAlias alias="PatBloodSugarMonitor" type="com.lachesis.mnis.core.bloodSugarMonitor.entity.PatBloodSugarMonitor"/>
+    </typeAliases>
+	<mappers>
+	</mappers>
+</configuration>	

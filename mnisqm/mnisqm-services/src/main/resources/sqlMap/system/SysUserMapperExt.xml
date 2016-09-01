@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lachesis.mnisqm.module.system.dao.SysUserMapperExt">
+  <resultMap id="simpleSysUser" type="com.lachesis.mnisqm.module.system.domain.SimpleSysUser" extends="com.lachesis.mnisqm.module.system.dao.SysUserMapper.BaseResultMap" />
+	
+	<!-- 获取登录信息 -->
+	<select id="selectSysUserByName" parameterType="java.util.Map" resultType="SysUser">
+		SELECT 	s.SEQ_ID			seqId,
+				s.LOGIN_NAME		loginName,
+				s.PASSWORD			password,
+				s.USER_CODE			userCode,
+				c.USER_NAME			userName
+			FROM SYS_USER s 
+			LEFT JOIN COM_USER c 
+			on s.USER_CODE = c.USER_CODE
+			WHERE LOGIN_NAME = #{loginName}
+			and s.STATUS != '09'
+	</select>
+</mapper>

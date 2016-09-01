@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-health-table * {
+	line-height: 1.4;
+	font-size: 12pt;
+}
+.doc-health-table th, .doc-health-table td {
+	padding: 1px;
+	height: 20px;
+}
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+		margin-bottom: 5.5mm;
+	}
+}
+</style>
+<title>住院患者健康教育及评估单</title>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper">
+<div class="paper-content">
+#health()
+<div class="doc-content doc-health">
+	<table class="doc-health-table">
+		<thead>
+			<tr>
+				<th style="width: 40px;">项目</th>
+				<th>健康教育内容</th>
+				<th style="width: 72px;">宣教日期</th>
+				<th style="width: 64px;">宣教<br>方式</th>
+				<th style="width: 40px;">宣教<br>对象</th>
+				<th style="width: 104px;">宣教者</th>
+				<th style="width: 40px;">效果评价</th>
+				<th style="width: 72px;">评价日期</th>
+				<th style="width: 104px;">评价者</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td rowspan="3">入院宣教</td>
+				<td class="align-left">介绍住院须知（作息、探视、陪客、电视开放时间、自带物品及贵重物品管理等）</td>
+				<td><span name="declareDate1"></span></td>
+				<td><span name="way1"></span></td>
+				<td><span name="target1"></span></td>
+				<td><span name="declarer1"></span></td>
+				<td><span name="evaluate1"></span></td>
+				<td><span name="evaluateDate1"></span></td>
+				<td><span name="evaluater1"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">介绍主管医师、责任护士、护士长、科主任</td>
+				<td><span name="declareDate2"></span></td>
+				<td><span name="way2"></span></td>
+				<td><span name="target2"></span></td>
+				<td><span name="declarer2"></span></td>
+				<td><span name="evaluate2"></span></td>
+				<td><span name="evaluateDate2"></span></td>
+				<td><span name="evaluater2"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">介绍病房环境及呼叫器、病床使用方法</td>
+				<td><span name="declareDate3"></span></td>
+				<td><span name="way3"></span></td>
+				<td><span name="target3"></span></td>
+				<td><span name="declarer3"></span></td>
+				<td><span name="evaluate3"></span></td>
+				<td><span name="evaluateDate3"></span></td>
+				<td><span name="evaluater3"></span></td>
+			</tr>
+			<tr>
+				<td rowspan="6">疾病指导</td>
+				<td class="align-left">该病的特点及大致的治疗方案</td>
+				<td><span name="declareDate4"></span></td>
+				<td><span name="way4"></span></td>
+				<td><span name="target4"></span></td>
+				<td><span name="declarer4"></span></td>
+				<td><span name="evaluate4"></span></td>
+				<td><span name="evaluateDate4"></span></td>
+				<td><span name="evaluater4"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">饮食注意点</td>
+				<td><span name="declareDate5"></span></td>
+				<td><span name="way5"></span></td>
+				<td><span name="target5"></span></td>
+				<td><span name="declarer5"></span></td>
+				<td><span name="evaluate5"></span></td>
+				<td><span name="evaluateDate5"></span></td>
+				<td><span name="evaluater5"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">卧位、活动等相关知识及注意事项</td>
+				<td><span name="declareDate6"></span></td>
+				<td><span name="way6"></span></td>
+				<td><span name="target6"></span></td>
+				<td><span name="declarer6"></span></td>
+				<td><span name="evaluate6"></span></td>
+				<td><span name="evaluateDate6"></span></td>
+				<td><span name="evaluater6"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">心理或心态调适指导</td>
+				<td><span name="declareDate7"></span></td>
+				<td><span name="way7"></span></td>
+				<td><span name="target7"></span></td>
+				<td><span name="declarer7"></span></td>
+				<td><span name="evaluate7"></span></td>
+				<td><span name="evaluateDate7"></span></td>
+				<td><span name="evaluater7"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">本疾病特殊注意事项</td>
+				<td><span name="declareDate8"></span></td>
+				<td><span name="way8"></span></td>
+				<td><span name="target8"></span></td>
+				<td><span name="declarer8"></span></td>
+				<td><span name="evaluate8"></span></td>
+				<td><span name="evaluateDate8"></span></td>
+				<td><span name="evaluater8"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">功能锻炼</td>
+				<td><span name="declareDate9"></span></td>
+				<td><span name="way9"></span></td>
+				<td><span name="target9"></span></td>
+				<td><span name="declarer9"></span></td>
+				<td><span name="evaluate9"></span></td>
+				<td><span name="evaluateDate9"></span></td>
+				<td><span name="evaluater9"></span></td>
+			</tr>
+			<tr>
+				<td rowspan="2">检查指导</td>
+				<td class="align-left">化验检查及目的、注意事项</td>
+				<td><span name="declareDate10"></span></td>
+				<td><span name="way10"></span></td>
+				<td><span name="target10"></span></td>
+				<td><span name="declarer10"></span></td>
+				<td><span name="evaluate10"></span></td>
+				<td><span name="evaluateDate10"></span></td>
+				<td><span name="evaluater10"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">特殊检查项目及目的、注意事项</td>
+				<td><span name="declareDate11"></span></td>
+				<td><span name="way11"></span></td>
+				<td><span name="target11"></span></td>
+				<td><span name="declarer11"></span></td>
+				<td><span name="evaluate11"></span></td>
+				<td><span name="evaluateDate11"></span></td>
+				<td><span name="evaluater11"></span></td>
+			</tr>
+			<tr>
+				<td rowspan="5">术前指导</td>
+				<td class="align-left">术前指导戒烟</td>
+				<td><span name="declareDate12"></span></td>
+				<td><span name="way12"></span></td>
+				<td><span name="target12"></span></td>
+				<td><span name="declarer12"></span></td>
+				<td><span name="evaluate12"></span></td>
+				<td><span name="evaluateDate12"></span></td>
+				<td><span name="evaluater12"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">术前指导有效咳嗽、如何床上使用便器</td>
+				<td><span name="declareDate13"></span></td>
+				<td><span name="way13"></span></td>
+				<td><span name="target13"></span></td>
+				<td><span name="declarer13"></span></td>
+				<td><span name="evaluate13"></span></td>
+				<td><span name="evaluateDate13"></span></td>
+				<td><span name="evaluater13"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">术前准备项目及配合事项、包括术前饮食指导</td>
+				<td><span name="declareDate14"></span></td>
+				<td><span name="way14"></span></td>
+				<td><span name="target14"></span></td>
+				<td><span name="declarer14"></span></td>
+				<td><span name="evaluate14"></span></td>
+				<td><span name="evaluateDate14"></span></td>
+				<td><span name="evaluater14"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">手术名称、麻醉方式</td>
+				<td><span name="declareDate15"></span></td>
+				<td><span name="way15"></span></td>
+				<td><span name="target15"></span></td>
+				<td><span name="declarer15"></span></td>
+				<td><span name="evaluate15"></span></td>
+				<td><span name="evaluateDate15"></span></td>
+				<td><span name="evaluater15"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">术前心理指导</td>
+				<td><span name="declareDate16"></span></td>
+				<td><span name="way16"></span></td>
+				<td><span name="target16"></span></td>
+				<td><span name="declarer16"></span></td>
+				<td><span name="evaluate16"></span></td>
+				<td><span name="evaluateDate16"></span></td>
+				<td><span name="evaluater16"></span></td>
+			</tr>
+			<tr>
+				<td rowspan="6">术后指导</td>
+				<td class="align-left">术后进食的时间及饮食种类</td>
+				<td><span name="declareDate17"></span></td>
+				<td><span name="way17"></span></td>
+				<td><span name="target17"></span></td>
+				<td><span name="declarer17"></span></td>
+				<td><span name="evaluate17"></span></td>
+				<td><span name="evaluateDate17"></span></td>
+				<td><span name="evaluater17"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">术后卧位的选择、目的及配合</td>
+				<td><span name="declareDate18"></span></td>
+				<td><span name="way18"></span></td>
+				<td><span name="target18"></span></td>
+				<td><span name="declarer18"></span></td>
+				<td><span name="evaluate18"></span></td>
+				<td><span name="evaluateDate18"></span></td>
+				<td><span name="evaluater18"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">床上活动的目的及方法</td>
+				<td><span name="declareDate19"></span></td>
+				<td><span name="way19"></span></td>
+				<td><span name="target19"></span></td>
+				<td><span name="declarer19"></span></td>
+				<td><span name="evaluate19"></span></td>
+				<td><span name="evaluateDate19"></span></td>
+				<td><span name="evaluater19"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">各类导管放置目的及注意事项</td>
+				<td><span name="declareDate20"></span></td>
+				<td><span name="way20"></span></td>
+				<td><span name="target20"></span></td>
+				<td><span name="declarer20"></span></td>
+				<td><span name="evaluate20"></span></td>
+				<td><span name="evaluateDate20"></span></td>
+				<td><span name="evaluater20"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">下床活动/早期锻炼的时间、目的及注意事项</td>
+				<td><span name="declareDate21"></span></td>
+				<td><span name="way21"></span></td>
+				<td><span name="target21"></span></td>
+				<td><span name="declarer21"></span></td>
+				<td><span name="evaluate21"></span></td>
+				<td><span name="evaluateDate21"></span></td>
+				<td><span name="evaluater21"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">预防并发症须知、术后康复及功能锻炼</td>
+				<td><span name="declareDate22"></span></td>
+				<td><span name="way22"></span></td>
+				<td><span name="target22"></span></td>
+				<td><span name="declarer22"></span></td>
+				<td><span name="evaluate22"></span></td>
+				<td><span name="evaluateDate22"></span></td>
+				<td><span name="evaluater22"></span></td>
+			</tr>
+			<tr>
+				<td rowspan="7">出院指导</td>
+				<td class="align-left">休息活动指导</td>
+				<td><span name="declareDate23"></span></td>
+				<td><span name="way23"></span></td>
+				<td><span name="target23"></span></td>
+				<td><span name="declarer23"></span></td>
+				<td><span name="evaluate23"></span></td>
+				<td><span name="evaluateDate23"></span></td>
+				<td><span name="evaluater23"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">饮食注意点</td>
+				<td><span name="declareDate24"></span></td>
+				<td><span name="way24"></span></td>
+				<td><span name="target24"></span></td>
+				<td><span name="declarer24"></span></td>
+				<td><span name="evaluate24"></span></td>
+				<td><span name="evaluateDate24"></span></td>
+				<td><span name="evaluater24"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">指导患者建立良好的生活健康行为</td>
+				<td><span name="declareDate25"></span></td>
+				<td><span name="way25"></span></td>
+				<td><span name="target25"></span></td>
+				<td><span name="declarer25"></span></td>
+				<td><span name="evaluate25"></span></td>
+				<td><span name="evaluateDate25"></span></td>
+				<td><span name="evaluater25"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">出院带药指导</td>
+				<td><span name="declareDate26"></span></td>
+				<td><span name="way26"></span></td>
+				<td><span name="target26"></span></td>
+				<td><span name="declarer26"></span></td>
+				<td><span name="evaluate26"></span></td>
+				<td><span name="evaluateDate26"></span></td>
+				<td><span name="evaluater26"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">出院后遵嘱按时随访指导</td>
+				<td><span name="declareDate27"></span></td>
+				<td><span name="way27"></span></td>
+				<td><span name="target27"></span></td>
+				<td><span name="declarer27"></span></td>
+				<td><span name="evaluate27"></span></td>
+				<td><span name="evaluateDate27"></span></td>
+				<td><span name="evaluater27"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">带管出院的注意事项</td>
+				<td><span name="declareDate28"></span></td>
+				<td><span name="way28"></span></td>
+				<td><span name="target28"></span></td>
+				<td><span name="declarer28"></span></td>
+				<td><span name="evaluate28"></span></td>
+				<td><span name="evaluateDate28"></span></td>
+				<td><span name="evaluater28"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">指导伤口的管理方法</td>
+				<td><span name="declareDate29"></span></td>
+				<td><span name="way29"></span></td>
+				<td><span name="target29"></span></td>
+				<td><span name="declarer29"></span></td>
+				<td><span name="evaluate29"></span></td>
+				<td><span name="evaluateDate29"></span></td>
+				<td><span name="evaluater29"></span></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+#healthComment()
+</div>
+</div>
+</div>
+<script type="text/javascript">
+$(function() {
+	// init datas
+	$.ajax({
+		url: '#url("/doc/data?docType=HEALTH")',
+    	type: 'GET',
+    	data: {cureNo:'$!{patient.cureNo}'},
+    	success: function(data, status) {
+    		if (data) {
+    			$.each(data, function(index, obj) {
+    				var name = this['key'];
+    				var value = this['value'];
+    				if (value) {
+    					var $e = $('span[name=' + name + ']');
+    					$e.text(value);
+    				}
+    			});
+    		}
+			$.ajax({
+				url: '#url("/patient/getInpatientInfo")',
+		    	type: 'GET',
+		    	data: {patientId:'$!{patient.cureNo}'},
+		    	success: function(data, status) {
+		    		if (data && data['data'] && data['data']['admitDiagnosis']
+		    				&& data['data']['admitDiagnosis'][0]) {
+		    			$('#pDiagnosis').text(data['data']['admitDiagnosis'][0]);
+		    		}
+		    	},
+		    	error: function(xhr, status, err) {
+// 		    		$.messager.alert('数据', '获取数据失败', 'error');
+		    	}
+		    });
+    	},
+    	error: function(xhr, status, err) {
+    		$.messager.alert('数据', '获取数据失败', 'error');
+//     		initComponent();
+    	}
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+/*top*/
+
+/*logo*/
+#portal-title {
+	*position:relative; /*ie6换行问题*/
+	width: 100%;
+	height: 110px;
+	background: url('../img/portal_header_bg.png') repeat-x;	
+}
+
+/*footer*/
+#portal-footer{
+	font-family:Arial;
+	min-width: 1024px;
+	display: block;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 32px;
+	text-align:center;
+	float: left;
+	position: fixed;
+	background: #3d506e;
+}
+.resize_width{
+	text-align:left;
+}
+#portal-footer a{
+	text-decoration:none;
+}
+#portal-footer * {
+	color: #FFFFFF;
+}
+
+#portal-footer li{
+	margin: 0 2px;
+	list-style: none;
+	float: left; 
+}
+
+#portal-info{
+	font-size: 12px;
+	margin-top: 9px;
+	margin-top: 7px\9;/*ie高度*/
+	display: block;
+	top: 0;
+	bottom: 0;
+	float: left;
+}
+
+#portal-tradmark{
+	font-size: 12px;
+	margin-top: 9px;
+	margin-top: 7px\9;/*ie高度*/
+	display: block;
+	right: 0px;
+	bottom: 5px;
+	float: right;
+}

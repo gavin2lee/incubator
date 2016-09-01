@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="htt ://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:oxm="http://www.springframework.org/schema/oxm" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+				http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.2.xsd
+				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+	<!-- 它会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter 
+		这两个bean -->
+	 
+	<!-- <bean id="ConversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="com.lachesis.mnisqm.common.DateConverter"></bean>
+			</set>
+		</property>
+	</bean>
+	<mvc:annotation-driven conversion-service="ConversionService"/> -->
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<bean class="com.lachesis.mnisqm.spring.GsonHttpMessageConverter" />
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<bean
+				class="org.springframework.http.converter.ResourceHttpMessageConverter" />
+		</mvc:message-converters>
+		<mvc:argument-resolvers>
+			<bean
+				class="com.lachesis.mnisqm.spring.FormModelMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
+	<!-- 异常处理 -->
+	<bean id="handlerExceptionResolver"
+		class="com.lachesis.mnisqm.exception.AnnotationHandlerMethodExceptionResolver">
+	</bean>
+	
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/system/login"/>
+			<bean class="com.lachesis.mnisqm.common.CommonInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!-- 扫描对外接口 -->
+	<context:component-scan base-package="com.lachesis.mnisqm.controller">
+	</context:component-scan>
+	<!-- 自动扫描(自动注入) -->
+	<!-- <context:component-scan base-package="com.lachesis.bgms.out"
+		use-default-filters="false">
+		<context:include-filter type="regex"
+			expression="com.lachesis.bgms.out.(service|dao).*" />
+	</context:component-scan> -->
+</beans>

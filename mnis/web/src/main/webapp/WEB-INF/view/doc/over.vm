@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<title>翻身记录单</title>
+</head>
+<body class="doc">
+#docToolbar()
+<div class="doc-container">
+#over()
+<div class="doc-content">
+    <div id="tb">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+<!--         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">保存</a> -->
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">还原</a>
+<!-- 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">GetChanges</a> -->
+    </div>
+    <table id="dg" style="height: 400px;width: 100%;"></table>
+</div>
+</div>
+<!-- Diagnosis Window -->
+<div id="win"></div>
+<script type="text/javascript">
+var editIndex = undefined;
+function endEditing(index) {
+	if (editIndex == undefined) {
+		return true;
+	}
+	if ($("#dg").datagrid('validateRow', editIndex)) {
+		$("#dg").datagrid('endEdit', editIndex);
+		editIndex = undefined;
+		return true;
+	} else {
+		return false;
+	}
+}
+function onClickRow(index){
+    if (editIndex != index){
+        if (endEditing()) {
+        	// 本人,护理组长和护士长能修改
+        	var rows = $('#dg').datagrid('getRows');
+        	if ('$!{currentUser.code}' == rows[index]['userCode']
+        			|| 1 == $!{currentUser.purview}
+        			|| 2 == $!{currentUser.purview}) {
+	            $('#dg').datagrid('selectRow', index)
+	                    .datagrid('beginEdit', index);
+	            editIndex = index;
+        	}
+        } else {
+            $('#dg').datagrid('selectRow', editIndex);
+        }
+    }
+}
+function append(){
+    if (endEditing()){
+        $('#dg').datagrid('appendRow',{
+        	date: datetimeToString(new Date()),
+        	sign: '$!{currentUser.name}$!{currentUser.code}',
+        	userCode: '$!{currentUser.code}',
+        	deptCode: '$!{currentUser.deptCode}',
+        	deptName: '$!{currentUser.deptName}'
+        });
+        editIndex = $('#dg').datagrid('getRows').length-1;
+        $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+    }
+}
+function removeit() {
+    var row = $('#dg').datagrid('getSelected');
+    if (!row){return}
+    var index = $('#dg').datagrid('getRowIndex', row);
+    if (index == undefined){return}
+    if ('$!{currentUser.code}' == row['userCode']) {
+	    $('#dg').datagrid('cancelEdit', index)
+	            .datagrid('deleteRow', index);
+	    editIndex = undefined;
+    } else {
+    	$.messager.alert('数据删除', '只有本人才允许删除', 'info');
+    }
+}
+function accept(){
+    if (endEditing()){
+    	var editable = '$!{doc.editable}' || true;
+    	if (editable) {
+	        $.ajax({
+	        	url: '#url("/doc/over")',
+	        	type: 'POST',
+	        	data: {
+	        		cureNo: '$!{patient.cureNo}',
+	        		hospitalNo: '$!{patient.hospitalNo}',
+	        		inserted: JSON.stringify($('#dg').datagrid('getChanges', 'inserted')),
+	        		updated: JSON.stringify($('#dg').datagrid('getChanges', 'updated')),
+	        		deleted: JSON.stringify($('#dg').datagrid('getChanges', 'deleted'))
+	        	},
+	        	success: function(data, status) {
+	        		if (data && data.code) {
+	        			if ('1' == data.code) {
+				        	$('#dg').datagrid('acceptChanges').datagrid('reload').datagrid('unselectAll');
+		        		} else {
+			        		$.messager.alert('数据保存', data.message || '保存失败', 'error');
+	        			}
+	        		}
+	        	},
+	        	error: function(xhr, status, err) {
+	        		$.messager.alert('数据保存', '保存失败', 'error');
+	        	}
+	        });
+    	} else {
+    		$.messager.alert('数据保存', '不允许修改', 'error');
+    	}
+    }
+}
+function reject(){
+    $('#dg').datagrid('rejectChanges').datagrid('unselectAll');
+    editIndex = undefined;
+}
+function getChanges(){
+    var rows = $('#dg').datagrid('getChanges');
+    alert(rows.length+' rows are changed!');
+}
+// initialize page when loaded
+$(function() {
+	$("#dg").datagrid({
+		nowrap: false,
+		singleSelect: true,
+		autoRowHeight: true,
+		fitColumns: true,
+		toolbar: '#tb',
+		onClickRow: onClickRow,
+		onBeginEdit: function(index,row) {
+		},
+		url: '#url("/doc/over/datas")',
+		queryParams: {
+			cureNo: '$!{patient.cureNo}'
+		},
+		method: 'get',
+		idField: 'id',
+		columns: [[
+    		{
+				field:'date',
+				title:'日期时间',
+				align:'center',
+				resizable: false,
+				width:150,
+				formatter: function(value,row,index){
+					if (!value) {
+						return '';
+					}
+					if (index == 0) {
+    					return value;
+					}
+					return formatDate(value, false, $('#dg').datagrid('getRows')[index-1]['date']);
+    			},
+				editor: {
+					type: 'datetimebox',
+					options: {
+// 						required: true,
+						showSeconds: false,
+						editable: false,
+						validType:{
+							length:[0,16]
+						}
+					}
+				}
+			}, {
+				field:'lie',
+				title:'翻身后卧位',
+				align:'center',
+				resizable: false,
+				width:100,
+				editor: {
+					type: 'combobox',
+					options: {
+						url: "#url('/dict/children')?parentId=LIE",
+						method: 'get',
+						valueField: 'name',
+						textField: 'name',
+// 						hasDownArrow: false,
+						panelHeight: 'auto'
+					}
+				}
+			}, {
+				field:'skin',
+				title:'皮肤情况',
+				align:'center',
+				resizable: false,
+				width:200,
+				editor: {
+					type: 'combobox',
+					options: {
+						url: "#url('/dict/children')?parentId=SKIN",
+						method: 'get',
+						valueField: 'name',
+						textField: 'name',
+						panelHeight: 'auto'
+					}
+				}
+			}, {
+				field:'sign',
+				title:'签名',
+				align:'center',
+				resizable: false,
+				width:100
+			}
+		]]
+	});
+	$('#save').click(accept);
+	$('#approve').click(function() {});
+	$('#print').val('预  览').click(function() {
+		var params = [
+   			'location=no',
+   			'height='+screen.availHeight,
+   			'width='+screen.availWidth,
+   			'scrollbars=yes',
+   			'resizable=yes',
+   			'fullscreen=yes' // only works in IE, but here for completeness
+   		].join(',');
+   		var new_window = window.open('#url("/doc/over/view?cureNo=$!{patient.cureNo}")', '', params);
+   		new_window.resizeTo(screen.availWidth, screen.availHeight);
+	});
+	$('#diagnosisLabel').click(function() {
+		$('#win').window({
+			title: '诊断修正列表',
+		    width: 700,
+		    height: 500,
+		    minimizable: false,
+			href: '#url("/doc/diagnosis")?cureNo=$!{patient.cureNo}',
+			onClose: function() {
+				var rows = $('#dDg').datagrid('getRows');
+				if (rows && rows.length > 0) {
+					$('#pDiagnosis').text(rows[rows.length - 1]['diagnosis']);
+				} else {
+					$('#pDiagnosis').text('$!{patient.diagnose}');
+				}
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

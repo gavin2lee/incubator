@@ -1,0 +1,16 @@
+CREATE TABLE QUALITY_RESULT_DETAIL
+(
+SEQ_ID bigint identity(1,1) primary key,
+DETAIL_CODE varchar(20),
+RESULT_CODE varchar(100),
+ITEM varchar(100),
+POINTS int,
+STANTARD varchar(500),
+COUNT int,
+CAUSE varchar(200),
+STATUS varchar(2),
+CREATE_TIME datetime,
+UPDATE_TIME datetime,
+CREATE_PERSON varchar(100),
+UPDATE_PERSON varchar(100)
+)

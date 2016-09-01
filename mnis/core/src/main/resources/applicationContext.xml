@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+   		http://www.springframework.org/schema/aop
+   		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+   		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<context:component-scan base-package="com.lachesis.mnis.core" />
+	<!-- <context:property-placeholder location="classpath:mnis.properties" 
+		/> -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:mnis.properties</value>
+				<!-- <value>file:///D:/mnis_local.properties</value> -->
+			</list>
+		</property>
+	</bean>
+
+	<!-- <aop:aspectj-autoproxy proxy-target-class="true" /> -->
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="validationQuery">
+			<value>SELECT 1</value>
+		</property>
+		<property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mnis-mybatis.xml" />
+	</bean>
+
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- Mapper -->
+	<bean id="baseMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		abstract="true" lazy-init="true">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<!-- <property name="sqlSessionTemplate" ref="sqlSessionTemplate"/> -->
+	</bean>
+	<!-- 用户相关 -->
+	<bean id="identityMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.IdentityMapper" />
+	</bean>
+	<!-- 病人相关 -->
+	<bean id="patientMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.PatientMapper" />
+	</bean>
+	<!-- 生命体征 -->
+	<bean id="bodySignMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.BodySignMapper" />
+	</bean>
+
+	<bean id="criticalServiceMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.CriticalServiceMapper" />
+	</bean>
+
+	<bean id="wardPatrolMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.WardPatrolMapper" />
+	</bean>
+	<bean id="orderMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.OrderMapper" />
+	</bean>
+	<bean id="nurseRecordMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.NurseRecordMapper" />
+	</bean>
+	<bean id="nurseItemMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.NurseItemMapper" />
+	</bean>
+	<bean id="labTestServiceMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.LabTestServiceMapper" />
+	</bean>
+	<bean id="nurseShiftMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.NurseShiftMapper" />
+	</bean>
+
+	<bean id="skinTestMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.SkinTestMapper" />
+	</bean>
+
+	<bean id="infusionMonitorMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.InfusionMonitorMapper" />
+	</bean>
+
+	<bean id="taskMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.TaskMapper" />
+	</bean>
+
+	<bean id="dutyMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.DutyServiceMapper" />
+	</bean>
+
+	<bean id="orderLiquorMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.OrderLiquorMapper" />
+	</bean>
+
+	<bean id="documentsMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.DocumentsMapper" />
+	</bean>
+
+	<bean id="inspectionServiceMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.InspectionServiceMapper" />
+	</bean>
+
+	<bean id="nurseWhiteBoardMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.NurseWhiteBoardMapper" />
+	</bean>
+
+	<bean id="inOutManagerMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.InOutManagerMapper" />
+	</bean>
+
+	<!-- 血压监控 -->
+	<bean id="BloodPressMonitorMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.BloodPressMonitorMapper" />
+	</bean>
+
+	<!-- 血糖监控 -->
+	<bean id="bloodSugarMonitorMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.BloodSugarMonitorMapper" />
+	</bean>
+	<!-- pc端体温单文书 -->
+	<bean id="docTreeMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.DocTreeMapper" />
+	</bean>
+
+	<!-- 工作量统计 -->
+	<bean id="workLoadMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.WorkLoadMapper" />
+	</bean>
+
+	<!-- 护士扫描记录 -->
+	<bean id="nurseScanMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.NurseScanMapper" />
+	</bean>
+	
+	<bean id="redisMsgMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.RedisMsgMapper" />
+	</bean>
+	
+	<bean id="SysDicMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.SysDicMapper" />
+	</bean>
+	
+	<bean id="patOperationStatusMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.PatOperationStatusMapper" />
+	</bean>
+	
+	<bean id="patOperationInfoMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.PatOperationInfoMapper" />
+	</bean>
+	
+	<bean id="patOrderConfigurationMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.PatOrderConfigurationMapper" />
+	</bean>
+	
+	<bean id="patCureLocalInfoMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.PatCureLocalInfoMapper" />
+	</bean>
+	
+	<bean id="patLeaveGooutMapper" parent="baseMapper">
+		<property name="mapperInterface"
+			value="com.lachesis.mnis.core.mybatis.mapper.PatLeaveGooutMapper" />
+	</bean>
+	<!-- redis config start -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"
+		lazy-init="true">
+		<property name="maxTotal" value="${redis.poolConfig.maxTotal}" />
+		<property name="maxIdle" value="${redis.poolConfig.maxIdle}" />
+		<property name="maxWaitMillis" value="${redis.poolConfig.maxWaitMillis}" />
+		<property name="testOnBorrow" value="${redis.poolConfig.testOnBorrow}" />
+		<property name="testOnReturn" value="${redis.poolConfig.testOnReturn}" />
+
+	</bean>
+	<bean id="jedisConnectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<!-- redis所在的ip -->
+		<property name="hostName" value="${redis.pool.host}" />
+		<!-- redis的端口 -->
+		<property name="port" value="${redis.pool.port}" />
+		<!-- 是否启用连接池 -->
+		<property name="usePool" value="${redis.pool.usePool}" />
+		<!-- 连接池的配置参考 -->
+		<property name="poolConfig" ref="jedisPoolConfig" />
+	</bean>
+
+	<!-- redis模板配置 -->
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="jedisConnectionFactory" />
+		 <!-- 序列化方式 建议key/hashKey采用StringRedisSerializer。 -->  
+        <property name="keySerializer">  
+            <bean  
+                class="org.springframework.data.redis.serializer.StringRedisSerializer" />  
+        </property>  
+        <property name="hashKeySerializer">  
+            <bean  
+                class="org.springframework.data.redis.serializer.StringRedisSerializer" />  
+        </property>  
+        <property name="valueSerializer">  
+            <bean  
+                class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />  
+        </property>  
+        <property name="hashValueSerializer">  
+            <bean  
+                class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />  
+        </property>  
+	</bean>
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool"
+		lazy-init="true">
+		<constructor-arg index="0" ref="jedisPoolConfig" />
+		<constructor-arg index="1" value="${redis.pool.host}" />
+		<constructor-arg index="2" value="${redis.pool.port}" />
+	 	<constructor-arg index="3" value="${redis.pool.timeOut}" />
+		<constructor-arg index="4" value="${redis.pool.password}" />
+	</bean>
+	<bean id="redisServerInfo" class="com.lachesis.mnis.core.redis.RedisServerInfo"
+		lazy-init="true">
+		<property name="host" value="${redis.pool.host}" />
+		<property name="port" value="${redis.pool.port}" />
+		<property name="password" value="${redis.pool.password}" />
+	</bean>
+	<!-- redis config end -->
+
+	<bean id="mnisThreadPoolTaskExecutor" class="com.lachesis.mnis.core.event.MnisThreadPoolTaskExecutor">
+		<!-- 核心线程数，默认为1 -->
+		<property name="corePoolSize" value="10" />
+		<!-- 最大线程数，默认为Integer.MAX_VALUE -->
+		<property name="maxPoolSize" value="1000" />
+		<!-- 队列最大长度，一般需要设置值>=notifyScheduledMainExecutor.maxNum；默认为Integer.MAX_VALUE -->
+		<property name="queueCapacity" value="200" />
+		<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name="keepAliveSeconds" value="300"></property>
+	</bean>
+</beans>

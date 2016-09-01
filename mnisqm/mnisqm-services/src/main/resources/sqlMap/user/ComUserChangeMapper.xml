@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.lachesis.mnisqm.module.user.dao.ComUserChangeMapper">
+	
+	<!-- 逻辑添加 -->
+	<insert id="insert"
+		parameterType="com.lachesis.mnisqm.module.user.domain.ComUserChange">
+		insert into COM_USER_CHANGE
+		(USER_CODE, CHANGE_TYPE, FORE_NAME, 
+		REAR_NAME, CHANGE_TIME, STATUS, CREATE_TIME,
+		CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON)
+		values
+		(#{userCode},#{changeType},#{foreName},
+		#{rearName},#{changeTime}, #{status}, GETDATE(),
+		#{createPerson},GETDATE(),#{updatePerson})
+	</insert>
+	<!-- 逻辑删除 -->
+	<update id="deleteByPrimaryKey"
+		parameterType="com.lachesis.mnisqm.module.user.domain.ComUserChange">
+		update
+		COM_USER_CHANGE
+		set
+		STATUS=#{status},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑修改 -->
+	<update id="update"
+		parameterType="com.lachesis.mnisqm.module.user.domain.ComUserChange">
+		update
+		COM_USER_CHANGE
+		set
+		USER_CODE=#{userCode},
+		CHANGE_TYPE=#{changeType},
+		FORE_NAME=#{foreName},
+		REAR_NAME=#{rearName},
+		CHANGE_TIME=#{changeTime},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑查找 -->
+	<select id="selectAll" resultType="com.lachesis.mnisqm.module.user.domain.ComUserChange"
+		parameterType="com.lachesis.mnisqm.module.user.domain.ComUserChange">
+		select
+		u.SEQ_ID			as seqId,
+		u.USER_CODE		as userCode,
+		u.CHANGE_TYPE		as changeType,
+		case when u.CHANGE_TYPE='3' then d1.DEPT_NAME
+		else u.FORE_NAME end	as foreName,
+		case when u.CHANGE_TYPE='3' then d2.DEPT_NAME
+		else u.REAR_NAME	end	as rearName,
+		u.CHANGE_TIME		as changeTime
+		from
+		COM_USER_CHANGE u 
+		left join COM_DEPT d1 on u.FORE_NAME = d1.DEPT_CODE
+		left join COM_DEPT d2 on u.REAR_NAME = d2.DEPT_CODE
+		where u.STATUS='01'
+		and u.USER_CODE='000108'
+		<if test="userCode != null">
+			and u.USER_CODE=#{userCode}
+		</if>
+		<if test="changeType != null">
+			and u.CHANGE_TYPE=#{changeType}
+		</if>
+		
+	</select>
+</mapper>
+  

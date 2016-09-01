@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>$!{hospitalName}</title>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/patientGlance.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/bodyTempSheetCommon.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')"/>
+    <script type="text/javascript" src="#url('/resources/js/common.js?1472534366476')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/jsPlugin.js?1472534366476')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/main/main.js?1472534366476')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/map.js?1472534366476')"></script>
+    <script type="text/javascript" src="#url('/resources/js/dictionary.js?1472534366476')" charset="utf-8"></script>
+</head>
+
+<script type="text/javascript" language="javascript">
+    contextPath = "#url('')";
+    var menuId = "$!menuId";
+</script>
+<style type="text/css">
+    .top-title .btn-nm {
+        padding: 0px 16px;
+        height: 26px;
+        line-height: 26px;
+    }
+
+
+    ::-webkit-scrollbar {
+        /*display: none;*/
+        width: 3px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        background-color: #999;
+    }
+
+    .btn-box input {
+        margin: 0 !important;
+    }
+
+    .btn-box {
+        font-size: 14px;
+    }
+
+    .table-wrapper .btn {
+        padding: 3px 6px;
+    }
+
+    .btn.disabled {
+        cursor: not-allowed;
+    }
+
+    .exec-content ul {
+        display: table;
+        width: 100%;
+    }
+
+    .filter-wrapper > div, .show-style {
+        padding: 0 10px;
+        height: 28px !important;
+        line-height: 28px !important;
+        background: #fff;
+        border: 1px #ccc solid;
+        font-size: 12px !important;
+    }
+
+    .show-style {
+        margin-top: 4px;
+        margin-bottom: 4px;
+        font-size: 12px;
+    }
+
+    .filter-wrapper {
+        padding: 6px;
+        background: #EFF2F2;
+        font-size: 12px;
+        border-bottom: 1px #ABBBC1 solid;
+    }
+
+    .exec-wrapper .top-tools-box .top-title {
+        padding: 0 10px;
+        margin: 4px 0 4px 10px;
+        border-right: 1px solid #ccc;
+    }
+
+    .input-middle input[type="radio"], input[type="checkbox"] {
+        vertical-align: middle;
+        margin-bottom: 4px;
+    }
+
+    .login-content {
+        overflow-y: scroll;
+    }
+
+    .tabs-panels .panel {
+        padding: 0;
+    }
+</style>
+
+<body id="nurseLayout" class="easyui-layout">
+<div id="header">
+    #parse("nur/header.vm")
+</div>
+
+
+<div class="wrapper exec-wrapper f_yahei">
+    <div class="insp-top top-tools" style="height:40px">
+        <div class="top-tools-box input-middle">
+            <div class="center">
+                <div class="fl">登录牌管理</div>
+            </div>
+        </div>
+    </div>
+    <div class="main center" style="margin-top: 10px;">
+        <div class="content login-content">
+            <div class="easyui-tabs" style="width: 1257px">
+                <div title="登录牌打印" style="padding:10px">
+                    <table id="login-table">
+
+                    </table>
+                </div>
+                <div title="登录牌查看" style="padding:10px">
+                    <div style="margin-bottom: 10px;">
+                        护士姓名：<input type="text" name="nurseName" placeholder="护士姓名">
+                    </div>
+                    <table id="login-review">
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div id="print-temp"></div>
+    </div>
+</div>
+<div class="easyui-dialog" id="set-time">
+    <div style="padding: 10px;">
+        <p>
+            <span class="dlg-title">开始时间：</span>
+            <input id="startDate" type="text" class="easyui-datetimebox"></input>
+            <br />
+            <div style="height: 10px;">
+
+            </div>
+            <span class="dlg-title">结束时间：</span>
+            <input id="endDate" type="text" class="easyui-datetimebox"></input>
+        </p>
+    </div>
+</div>
+
+<iframe height="1000" width="970" id="printFrame" style="position:absolute;display: none;left: 200px; top: 60px;"></iframe>
+<script type="text/javascript" src="#url('/resources/js/jquery.qrcode-0.12.0.min.js?1472534366476')"></script>
+<!-- <script type="text/javascript" src="#url('/resources/js/easyui/plugins/datagrid-filter.js?1472534366476')"></script> -->
+<script type="text/javascript" src="#url('/resources/js/nur/loginCardManagerMain.js?1472534366476')"></script>
+
+</body>
+
+</html>

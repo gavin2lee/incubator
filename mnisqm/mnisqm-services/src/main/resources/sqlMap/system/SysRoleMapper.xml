@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.system.dao.SysRoleMapper" >
+  
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.system.domain.SysRole" >
+    insert into SYS_ROLE (ROLE_CODE, ROLE_NAME, 
+      STATUS, REMARK, UPDATE_TIME, 
+      CREATE_TIME, CREATE_PERSON, UPDATE_PERSON
+      )
+    values (#{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, GETDATE(), 
+      GETDATE(), #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="SysRole" >
+    update SYS_ROLE
+    set 
+      ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 获取用户下的角色信息 -->
+  <select id="getUserSysRoles" resultType="SysRole"  parameterType="java.lang.String" >
+		select ur.SEQ_ID	seqId, r.ROLE_CODE	roleCode, r.ROLE_NAME	roleName, r.STATUS	status, 
+		r.REMARK	remark, ur.DEPT_CODE	deptCode,d.DEPT_NAME deptName	
+		from dbo.SYS_USER_ROLE ur
+		inner join dbo.SYS_ROLE r on ur.ROLE_CODE=r.ROLE_CODE
+		inner join dbo.COM_DEPT d on ur.DEPT_CODE = d.DEPT_CODE and d.STATUS != '09'
+		where r.STATUS != '09' and ur.STATUS !='09' and ur.USER_ID=#{param1}
+  </select>
+  
+  <!-- 逻辑删除 -->
+  <update id="updateForDelete" parameterType="SysRole" >
+    update SYS_ROLE
+    set 
+      STATUS = '09'
+    where ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 通过角色编号获取角色 -->
+  <select id="selectRoleByCode" resultType="SysRole" parameterType="SysRole">
+    select ROLE_CODE	roleCode,
+    	SEQ_ID	seqId, ROLE_NAME	roleName, STATUS	status, REMARK	remark
+    from SYS_ROLE
+    where ROLE_CODE = #{roleCode}
+  </select>
+  
+  <!-- 获取所有角色 -->
+  <select id="getAllRoles" resultType="SysRole">
+		select SEQ_ID seqId, ROLE_CODE	roleCode, ROLE_NAME	roleName,REMARK	remark
+		from SYS_ROLE
+		where status != '09'
+  </select>
+</mapper>

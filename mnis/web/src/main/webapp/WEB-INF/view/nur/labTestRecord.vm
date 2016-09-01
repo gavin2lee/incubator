@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head runat="server">
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/inspection.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')" />
+
+<script type="text/javascript" src="#url('/resources/js/nur/labTestRecord.js?1472534366476')"></script>
+<script type="text/javascript" src="#url('/resources/js/Highcharts/js/highcharts.js?1472534366476')"></script>
+<script type="text/javascript" src="#url('/resources/js/flot/jquery.flot.js?1472534366476')"></script>
+<script type="text/javascript" src="#url('/resources/js/flot/jquery.flot.time.min.js?1472534366476')"></script>
+<script type="text/javascript">
+	var _patientId = '$!id';
+</script>
+</head>
+<body>
+	<div class="wrapper f_yahei">
+		<div class="insp-top top-tools" style="height:40px">
+		    <div class="top-tools-box">
+                <div class="top-title">
+                    <span>检验报告</span>
+                </div>
+                <div class="fl" style="position:relative;margin-left:20px;font-size:13px;overflow:hidden;white-space: nowrap;">
+                    <p id="nurPatientInfo" class="nurPatientInfo"></p>
+                    <div id="info-cover" class="info-cover">&lt;</div>
+                </div> 
+		    	<div class="btn-box fr mgr10">
+                    <div class="time-box fl mgr10">
+                        <input id="startDate" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 85px;">
+                        至
+                        <input id="endDate" name="endDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 85px;">
+                    </div>
+                    <!-- <select id="status">
+                        <option value="">全部</option>
+                        <option value="W">待执行</option>
+                        <option value="E">已执行未报告</option>
+                        <option value="R">已报告</option>
+                    </select> -->
+                    <div class="widget-wrap">
+                      <div class="btn-widget">
+                        <input type="button" class="_btn _btn-md middle" value="查询" onclick="reloadData();">
+                      </div>
+                    </div>
+                    
+                </div>
+		    </div>
+		</div>
+		<div class="content">
+            <table id="info-tab" class="easyui-datagrid" data-options="fit:true,fitColumns:true,onLoadSuccess:loadComplete,onSortColumn:loadComplete">
+		        <thead>
+		            <tr>
+	                    <th data-options="field:'status',width:80,align:'center',formatter:sta">状态</th>
+	                    <!-- <th data-options="field:'hospNo',width:80,sortable:true,align:'center'">住院号</th>
+						<th data-options="field:'patientName',width:80,sortable:true,align:'center'">患者姓名</th> -->
+	                    <th sortable="true" data-options="field:'subject',width:250,align:'center',formatter:checkItems">检验项目</th>
+	                    <th sortable="true" data-options="field:'reportTime',width:180,align:'center'">报告日期</th>
+                        <th data-options="field:'t',width:150,formatter:action">操作</th>
+	            	</tr>
+		         </thead>
+		    </table>
+		</div>
+	</div>
+	<div class="related-report-box" id="related-report-box">
+		<ul>
+			<li><input type="checkbox"><span>2014-04-23 11:00</span></li>
+            <!-- <li><span>无对比数据</span></li> -->
+		</ul>
+		<input style="width:80%;float:left;" type="button" value="对比" onclick="compare()">
+        <input style="width:20%;" onclick="this.parentNode.style.display='none'" type="button" value="关闭">
+	</div>
+
+    <div id="report-info-box" class="easyui-dialog" data-options="width:840,height:480,closed:true">
+        <div class="ua-b-content">
+            <div class="related-report-info">
+                  <ul>
+                        <li style="width:80px;" id="patientBedCode"></li>
+                        <li style="width:100px;" id="patName"></li>
+                        <li style="width:120px;" id="hospNo"></li>
+                        <li style="width:220px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" id="checkItem"></li>
+                        <li style="width:150px;text-align:center;" id="specimen"></li>
+                  </ul>
+            </div>
+            <div class="related-report-data" style="height:400px;width:840px;overflow-x:auto;">
+                  <table id="report-info"  class="easyui-datagrid"></table>
+            </div>
+        </div>
+    </div> 
+
+	<div id="related-report-compare" class="easyui-dialog" data-options="title:'关联报告时间对比',
+            width:800,height:500,closed:true,modal:true,draggable:false,buttons:[
+                {
+                    text:'关闭',
+                    handler:closeReportCompare
+                }
+            ]
+        ">
+        <div class="ua-b-content" style="height:100%;width:100%;">
+            <div class="related-report-info">
+            	<ul>
+            		<li id="bedNumber" style="width:75px;"></li>
+            		<li id="pName" style="width:100px;"></li>
+            		<li id="hospital" style="width:100px;"></li>
+            		<li id="testItem" style="width:155px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;"></li>
+            		<li id="sm" style="width:120px;text-align:center;"></li>
+            		<li style="width:55px;">
+                        <input class="_btn _btn-md" type="button" value="趋势图" style="width:50px;height:25px;line-height:25px;" onclick="showGraph();">
+                    </li>
+            	</ul>
+            </div>
+            <div class="related-report-data" style="height:383px;width:100%;">
+            	<table id="compare-tab"></table>
+            </div>
+        </div>
+	</div>
+
+    <div id="qst" class="easyui-dialog" data-options="title:'关联报告时间趋势图',width:950,height:560,draggable:false,closed:true">
+        <div class="qstInfo">
+            <ul></ul>
+        </div>
+        <div style="padding:10px;height:498px;">
+            <div id="chartBox" style="height:470px;width:900px;margin:20px auto 0;"></div>
+        </div>
+    </div>
+	<script type="text/javascript">
+        initMethod();
+	</script>
+</body>
+</html>

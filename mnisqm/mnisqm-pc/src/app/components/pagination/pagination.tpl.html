@@ -1,0 +1,17 @@
+<nav ng-if="pages.length >= 2" class="pagination-wrapper">
+  <div class="pagination-text">
+    共{{pages.length}}页
+  </div>
+  <ul class="pagination">
+    <li ng-class="{'disabled': currentPage == 1}"><a href="javascript:;" uib-tooltip="首页"  ng-click="selectPage(1)"><i class="fa fa-step-backward"></i></a>
+    </li>
+    <li ng-class="{'disabled': currentPage == 1}"><a href="javascript:;" uib-tooltip="上一页"  ng-click="selectPage(currentPage - 1)">&laquo;</a>
+    </li>
+    <li ng-repeat="page in pages" ng-class="{'active': currentPage == page}">
+      <a href="javascript:;" ng-click="selectPage(page)">{{page}}</a>
+    </li>
+    <li ng-class="{'disabled': currentPage == pages[pages.length - 1]}"><a href="javascript:;" uib-tooltip="下一页"  ng-click="selectPage(currentPage + 1)">&raquo;</a>
+    </li>
+    <li ng-class="{'disabled': currentPage == pages[pages.length - 1]}"><a href="javascript:;" uib-tooltip="末页" ng-click="selectPage(numPages)"><i class="fa fa-step-forward"></i></a></li>
+  </ul>
+</nav>

@@ -1,0 +1,1242 @@
+﻿html {
+  overflow-y: auto;
+  height: 100%;
+}
+
+body {
+  background-color: #eff0f2;
+  height: 100%;
+}
+
+.header {
+  position: relative;
+  height: 70px;
+}
+
+.header .bottom {
+  height: 41px;
+  background: url(../img/bg_header.jpg) 0 -29px repeat-x;
+}
+
+.header .bottom .center,
+.header .top .center {
+  position: relative;
+  line-height: 29px;
+}
+
+.header .bottom .center .hosTitle {
+  position: absolute;
+  top: -18px;
+  left: 0;
+  width: 337px;
+  line-height: 41px;
+  color: white;
+  font-size: 25px;
+  font-weight: normal;
+  text-align: center;
+}
+
+.header .bottom div > ul {
+  position: absolute;
+  top: 50px;
+  left: 340px
+}
+
+.header .bottom div > ul.nav1 {
+  top: 28px;
+}
+
+.header .bottom div > ul.nav1 li {
+  position: relative;
+  overflow: hidden;
+  height: 40px;
+}
+
+.coverBlock {
+  position: absolute;
+  top: -29px;
+  right: 960px;
+  width: 800px;
+  height: 70px;
+  background: url(../img/bg_header.jpg) 0 -1px repeat-x;
+}
+
+.header .bottom div > ul.nav1 > li.checked > a {
+  background: url(../img/hover_bg.png) 65px bottom no-repeat;
+}
+
+.header .bottom div > ul.nav1 > li.checked > a.menu-6 {
+  overflow: visible;
+  background: url(../img/hover_bg.png) 58px bottom no-repeat;
+}
+
+.header .bottom div > ul.nav1 > li.checked > a.menu-8 {
+  overflow: visible;
+  background: url(../img/hover_bg.png) 52px bottom no-repeat;
+}
+
+.header .bottom div > ul.nav1 > li:hover {
+  overflow: visible;
+}
+
+.header .bottom div > ul.nav1 > li:hover > a {
+  background: url(../img/hover_bg.png) 65px bottom no-repeat;
+}
+
+.header .bottom div > ul.nav1 > li a.click {
+  background: url(../img/hover_bg.png) 65px bottom no-repeat;
+}
+
+.header .bottom div > ul.nav1 > li.menu-6:hover > a {
+  overflow: visible;
+  background: url(../img/hover_bg.png) 58px bottom no-repeat;
+}
+
+.header .bottom div > ul.nav1 > li.menu-8:hover > a {
+  overflow: visible;
+  background: url(../img/hover_bg.png) 52px bottom no-repeat !important;
+}
+
+.header .bottom div > ul.nav1 > li#menu-6 a {
+  background-position: 58px bottom;
+}
+
+.header .bottom div > ul.nav1 > li#menu-8 a {
+  background-position: 52px bottom;
+}
+
+.header .bottom div > ul.nav1 li ul {
+  position: absolute;
+  top: 40px;
+  width: 150px;
+  z-index: 12;
+  background-color: #587085;
+  opacity: 0.9;
+  overflow: hidden;
+}
+
+.header .bottom div > ul.nav1 li li {
+  float: left;
+  width: 100%;
+  height: 40px;
+  margin-left: -1px;
+  border-bottom: 1px solid #ccc;
+}
+
+.header .bottom div > ul.nav1 li li a {
+  display: block;
+  width: 80%;
+  height: 32px;
+  line-height: 30px;
+  margin-top: 4px;
+  padding-left: 20%;
+  border-left: 1px solid #fff;
+  text-align: left;
+}
+
+
+/*.bg_header div > ul.nav1 li.menu-2 ul{left:-116px;}
+.bg_header div > ul.nav1 li.menu-3 ul{left:-232px;}
+.bg_header div > ul.nav1 li.menu-4 ul{left:-348px;}
+.bg_header div > ul.nav1 li.menu-5 ul{left:-464px;}
+.bg_header div > ul.nav1 li.menu-6 ul{left:-580px;}
+.bg_header div > ul.nav1 li.menu-7 ul{left:-696px;}
+.bg_header div > ul.nav1 li.menu-8 ul{left:-812px;}*/
+
+
+/*.bg_header div > ul.nav1 li.menu-1 li{width:50%;}
+.bg_header div > ul.nav1 li.menu-2 li{width:50%;}
+.bg_header div > ul.nav1 li.menu-3 li{width:25%;}
+.bg_header div > ul.nav1 li.menu-4 li{width:50%;}
+.bg_header div > ul.nav1 li.menu-5 li{width:33.3%;}
+.bg_header div > ul.nav1 li.menu-6 li{}
+.bg_header div > ul.nav1 li.menu-7 li{width:20%;}
+.bg_header div > ul.nav1 li.menu-8 li{width:20%;}*/
+
+.header .bottom div > ul.nav1 li > a {
+  display: inline-block;
+  padding: 0 10px 0 0;
+  height: 40px;
+  text-decoration: none;
+  color: #c5d4e9;
+  font-size: 14px;
+}
+
+.header .bottom div > ul.nav1 li > a:hover {
+  background: url(../img/hover_bg.png) 65px bottom no-repeat;
+}
+
+.header .bottom div > ul.nav1 li > a span.icon {
+  display: inline-block;
+  width: 30px;
+  height: 28px;
+  background: url(../img/MNIS.png) -98px -133px no-repeat;
+  margin: 5px 4px 0 11px;
+}
+
+#menu-2 a span.icon {
+  background-position: -128px -133px;
+}
+
+#menu-3 a span.icon {
+  background-position: -159px -133px;
+}
+
+#menu-4 a span.icon {
+  background-position: -189px -133px;
+}
+
+#menu-5 a span.icon {
+  background-position: -219px -133px;
+}
+
+#menu-6 a span.icon {
+  background-position: -248px -133px;
+}
+
+#menu-7 a span.icon {
+  background-position: -278px -133px;
+}
+
+#menu-8 a span.icon {
+  background-position: -310px -133px;
+}
+
+.header .bottom div > ul.nav1 li > a .font {
+  position: relative;
+  top: 5px;
+}
+
+.header .bottom div > ul li li.checked {
+  background: url(../img/hover_bg_right.png) 1px center no-repeat;
+}
+
+.header .bottom div > ul li li:hover {
+  background: url(../img/hover_bg_right.png) 1px center no-repeat;
+}
+
+.header .top {
+  width: 100%;
+  height: 29px;
+  background-color: #fff;
+}
+
+.header .top .bg {
+  width: 337px;
+  height: 29px;
+  background: url(../img/MNIS.png) 0 -571px no-repeat;
+}
+
+.header .top .font {
+  vertical-align: middle;
+  font-size: 13px;
+  font-family: "Microsoft YaHei";
+  color: #3e3a39;
+}
+
+.header .top .date {
+  margin-left: 7px;
+  margin-right: 12px;
+}
+
+.header .top .account {
+  position: relative;
+  display: inline-block;
+  z-index: 22;
+  height: 24px;
+  line-height: 24px;
+  padding-left: 6px;
+  -webkit-user-select: none;
+}
+
+.header .top .account2 {
+  background-color: #ebedf0;
+  border: 1px solid #b2b5b8;
+}
+
+.header .top .account div:hover {
+  cursor: pointer;
+}
+
+.header .top .account span {
+  display: inline-block;
+  width: 10px;
+  height: 5px;
+  background: url(../img/MNIS.png) 0 -1px no-repeat;
+  margin: 0 0 2px 8px;
+}
+
+.header .top .account2 .hide {
+  display: block;
+}
+
+.header .top .account .user-tools {
+  position: absolute;
+  right: -45px;
+  top: 26px;
+  position: absolute;
+  background-color: white;
+  width: 125px;
+  height: 68px;
+  margin: 3px 0 0 -7px;
+  border: 1px solid #a4afb4;
+  background-color: #587c91;
+  user-select: none;
+  z-index: 99;
+}
+
+.header .top .account .user-tools a {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  height: 31px;
+  line-height: 31px;
+  padding-left: 35px;
+  font-size: 13px;
+  color: #fff;
+}
+
+.header .top .account .user-tools a:hover {
+  background-color: #698da2;
+}
+
+.header .top .account .user-tools a i {
+  position: absolute;
+  left: 10px;
+  top: 6px;
+  width: 19px;
+  height: 19px;
+  background: url(../img/MNIS.png) 0 -165px no-repeat;
+}
+
+.header .top .account .user-tools a i.click {
+  background-position: -20px -165px;
+}
+
+
+/*.header .top .account .user-tools a:hover { color: #1e3443 !important; background-color: #c5ced5; }*/
+
+.header .top img {
+  margin-top: 5px;
+}
+
+.bg_header3 {
+  width: 330px;
+  margin-top: -29px;
+}
+
+.main {
+  position: relative;
+}
+
+.main,
+.main_r {}
+
+.main_l {
+  position: relative;
+  width: 206px;
+}
+
+.main_l .top {
+  height: 50px;
+  line-height: 50px;
+  background-color: #ebebeb;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent transparent #bebebe #bebebe;
+  border-top: none;
+  font-size: 16px;
+  text-align: center;
+}
+
+.main_l .top .edit {
+  width: 19px;
+  height: 20px;
+  background: url(../img/MNIS.png) -10px 0 no-repeat;
+  margin-top: 13px;
+  cursor: pointer;
+}
+
+.main_l .top .edit:hover,
+.main_l .top .click {
+  background-position: -30px 0;
+}
+
+.main_l .content {
+  position: relative;
+  height: 640px;
+  padding: 10px 0 6px 17px;
+  line-height: 21px;
+  background-color: #eff2f2;
+  border: 1px solid #bebebe;
+  border-right-color: transparent;
+  border-top: none;
+  overflow: scroll;
+}
+
+.main_l .content:hover {
+  overflow-y: auto;
+}
+
+.main_r .middle::-webkit-scrollbar-thumb,
+.main_l .content::-webkit-scrollbar-thumb {
+  background-color: #a9a9aa;
+  height: 50px;
+  /*outline-offset:-2px; */
+  /*outline:2px solid #fff; */
+  -webkit-border-radius: 4px;
+  /*border: 2px solid #fff; */
+}
+
+.main_r .middle::-webkit-scrollbar,
+.main_l .content::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.main_l .content .content_title div {
+  margin-top: 1px;
+}
+
+.main_l .content .content_title div span,
+.main_l .content .content_title div > strong {
+  display: inline-block;
+  width: 60px;
+  overflow: hidden;
+  text-align: justify;
+}
+
+.main_l .content .content_title span:after,
+.main_l .content .content_title div > strong:after {
+  display: inline-block;
+  content: '';
+  overflow: hidden;
+  width: 100%;
+  height: 0;
+}
+
+.main_l .content span,
+.main_l .content em,
+.main_l .content strong {
+  font-size: 12px;
+  vertical-align: top;
+}
+
+.main_l .content span {
+  color: #656a6e;
+}
+
+.main_l .content strong {
+  color: #057ec1;
+}
+
+
+/*
+* 提取到全局
+*/
+
+
+/*.messageBox .bg { position: absolute;z-index: 1;bottom: 0;left: 0; width: 45px; height: 36px;background: url(../img/MNIS.png) 0px -253px no-repeat; cursor: pointer;}
+.messageBox .speaker{background-position: -49px -253px;}
+.messageBox .speaking{background-position:0px -253px;}
+.messageBox .note{background-position: -49px -294px;}
+.messageBox .noting{background-position: 0px -294px;}
+.messageBox p.hasNews{background-position-x:0px;}
+
+.msgPrompt { position: absolute; z-index: 1; left: 0; bottom:35px; width: 428px;  color: #333840; font-size: 12px; }
+.msgPrompt div.msgcontent{background-color: #f2f2f2;}
+.msgPrompt .one { height: 32px; background: url(../img/msg_box_top_bg.png) repeat-x; border: 1px solid #dbe7ef; border-left-color: #d2dadf; border-bottom: none; opacity:0.75;}
+.msgPrompt .one .bg { width: 180px; height: 32px; line-height: 31px; text-align: center; color: #fff; font-size: 13px; cursor: pointer; }
+.msgPrompt .one .bg:hover, .msgPrompt .one .click { background: url(../img/hover_bg.png) center bottom no-repeat; }
+.msgPrompt .one .noticeMsg {  }
+.msgPrompt .one .taskList {}
+.msgPrompt .one .close { width: 52px;height: 32px; cursor: pointer; }
+.msgPrompt .one .close .border-left{float:left;width:4px;height:100%;background: url(../img/MNIS.png) -63px -133px no-repeat;}
+.msgPrompt .one .close .close-icon{float: right;width: 16px;height: 16px;background: url(../img/MNIS.png) -39px -148px no-repeat;margin: 7px 15px 0 0;}
+.msgPrompt .one .close:hover { background-position: -49px -132px; }
+.msgPrompt .two { height: 26px; padding-top: 8px; border-bottom: 1px solid #d8dce5; border-left: 1px solid #d2dadf; border-right: 1px solid #dbe7ef; background-color: #e0e4e8;} 
+.msgPrompt .two .bg { display: inline-block; width: 18px; height: 19px; background: url(../img/MNIS.png) no-repeat; cursor: pointer; }
+.msgPrompt .two .arrow_l { background-position: 0 -185px; margin: 0 -5px 0 16px; }
+.msgPrompt .two .arrow_r { background-position: -19px -185px; margin: 0 31px 0 -3px; }
+.msgPrompt .two .distance { position: relative; top: -4px; }
+.msgPrompt .two input { width: 78px; background-color: #dfe4e7; padding-left: 7px; color: #333840; font-size: 13px; border: none; cursor: pointer; }
+.msgPrompt .two .circle { background-position: 0 -166px; }
+.msgPrompt .two .circle2 { background-position: -20px -166px; }
+.msgPrompt .two .margin { margin: 0 6px 0 10px; }
+.msgPrompt .three { height: 193px; padding-top: 6px; overflow-x: hidden; overflow-y: auto; line-height: 20px; border-width: 1px; border-style: solid; border-color: #eceff1 #dbe7ef #c7cbce #d2dadf; }
+.msgPrompt .three ul { width: 425px; }
+.msgPrompt .three .time { margin: 0 25px 0 18px; }
+.msgPrompt .three .marginRight { margin-right: 27px; }*/
+
+.main_r {
+  position: absolute;
+  width: 1054px;
+  right: 0px;
+  border-right: 1px solid #bebebe;
+  border-left: 1px solid #bebebe;
+}
+
+.note .main_r {
+  position: relative;
+  width: 100%;
+}
+
+.note .middle {
+  height: 100%;
+}
+
+.main_r .arrow {
+  position: absolute;
+  top: 66px;
+  left: -23px;
+  width: 25px;
+  height: 34px;
+  background: url(../img/tool-icons.png) 0 -34px no-repeat;
+  cursor: pointer;
+}
+
+.main_r .nav {
+  position: relative;
+  left: 126px;
+}
+
+.main_r .nav li {
+  width: 231px;
+  height: 31px;
+  line-height: 31px;
+  text-align: center;
+  background: url(../img/bg_li.png) repeat-x;
+  border-left: 1px solid #c1c1c1;
+  border-bottom: 1px solid #bcbcbc;
+}
+
+.main_r .nav .first {
+  border-radius: 0 0 0 10px;
+}
+
+.main_r .nav .last {
+  border-radius: 0 0 10px;
+}
+
+.main_r .nav li a {
+  font-size: 14px;
+}
+
+.main_r .nav li a:hover,
+.main_r .nav li .click {
+  text-decoration: none;
+  color: #057ec1 !important;
+}
+
+.main_r .expand {
+  width: 100%;
+}
+
+.main_r .top {
+  height: 50px;
+  background-color: #ebebeb;
+  border-bottom: 1px solid #bebebe;
+}
+
+.main_r .top select {
+  width: 100px;
+  // height: 33px;
+  // line-height: 31px;
+  margin-left: 10px;
+}
+
+.main_r .top div.form {
+  height: 33px;
+  margin: 7px 34px 0 24px;
+  position: relative;
+}
+
+.main_r .top div.form .text {
+  width: 125px;
+  height: 31px;
+  padding-left: 4px;
+  border: 1px solid #aeadad;
+  font-size: 14px;
+  /*position: relative; top: 2px; width: 125px; height: 31px; padding-left: 6px; border: 1px solid #aeadad;*/
+}
+
+.main_r .top div.form .search {
+  position: absolute;
+  width: 35px;
+  height: 33px;
+  background: url(../img/MNIS.png) -208px -62px no-repeat;
+  border: none;
+  cursor: pointer;
+  /*position: relative; top: 14px; width: 35px; height: 33px; background: url(../img/MNIS.png) -208px -62px no-repeat; border: none; cursor: pointer; */
+}
+
+.main_r .top .marginTop {
+  margin-top: 9px;
+}
+
+.main_r .top .head {
+  width: 45px;
+  height: 33px;
+  background: url(../img/MNIS.png) -117px -62px no-repeat;
+  margin-left: 24px;
+}
+
+.main_r .top .head2 {
+  background-position: -116px -96px;
+  cursor: pointer;
+}
+
+.main_r .top .department {
+  width: 44px;
+  height: 33px;
+  background: url(../img/MNIS.png) -162px -62px no-repeat;
+  margin-right: 22px;
+  cursor: pointer;
+}
+
+.main_r .top .department2 {
+  background-position: -162px -96px;
+  cursor: auto;
+}
+
+.main_r .top .icon {
+  width: 45px;
+  height: 33px;
+  background: url(../img/MNIS.png) -233px 0 no-repeat;
+}
+
+.main_r .top .icon2 {
+  background-position: -469px 0;
+  cursor: pointer;
+}
+
+.main_r .top .list {
+  width: 44px;
+  height: 33px;
+  background: url(../img/MNIS.png) -278px 0 no-repeat;
+  cursor: pointer;
+}
+
+.main_r .top .list2 {
+  background-position: -515px 0;
+  cursor: auto;
+}
+
+.main_r .top p {
+  color: #333840;
+  font-size: 12px;
+  margin-right: 17px;
+  text-align: right;
+}
+
+.main_r .same em {
+  margin-right: 18px;
+}
+
+.main_r .top p .bgcolor {
+  display: inline-block;
+  width: 28px;
+  height: 6px;
+  margin: 0 6px 1px 0;
+}
+
+.bgcolor1 {
+  background-color: #7e4342;
+}
+
+.bgcolor2 {
+  background-color: #ff5d6f;
+}
+
+.bgcolor3 {
+  background-color: #00a7fb;
+}
+
+.bgcolor4 {
+  background-color: #f5c256;
+}
+
+.middle {
+  height: 610px;
+  background-color: white;
+  overflow: hidden;
+}
+
+.main_r .middle:hover {
+  overflow-y: auto;
+}
+
+.main_r .middle ul {
+  padding: 10px 0 0 12px;
+}
+
+.main_r .lists-view ul {
+  position: relative;
+  padding: 0;
+  margin-left: 12px;
+  margin-top: 28px;
+  border-bottom: 1px solid #d8dce5;
+}
+
+.main_r .middle li {
+  width: 195px;
+  margin: 0 10px 12px 0;
+}
+
+.main_r .patientBox {
+  background: #f9f9f9;
+}
+
+.main_r .middle li a {
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.main_r .middle li .bg {
+  float: left;
+  width: 176px;
+  height: 28px;
+  line-height: 28px;
+  padding: 0 11px 0 8px;
+  background-color: #cdd0d0;
+  /*background: url(../img/MNIS.png) 0 -526px no-repeat;*/
+}
+
+.main_r .middle li .bg .tdl1 {
+  padding-left: 5px;
+  border-left: 3px solid #ff5d6f;
+}
+
+.main_r .middle li .bg .tdl2 {
+  padding-left: 5px;
+  border-left: 3px solid #00a7fb;
+}
+
+.main_r .middle li .bg .tdl3 {
+  padding-left: 5px;
+  border-left: 3px solid #f5c256;
+}
+
+.main_r .middle li .bg .tdl0 {
+  padding-left: 5px;
+  border-left: 3px solid #7e4342;
+}
+
+.main_r .middle li .bg .duty {
+  width: 19px;
+  height: 19px;
+  background: url(../img/MNIS.png) -51px -206px no-repeat;
+  margin: 5px 0px 0 10px;
+}
+
+.main_r .middle li .bg .icomoon-star {
+  font-size: 28px;
+  color: #b0b0b0;
+}
+
+.main_r .middle li .bg .icomoon-star.active {
+  color: #2b65ad;
+}
+
+// .main_r .middle li .bg .star {
+//   width: 19px;
+//   height: 19px;
+//   background: url(../img/MNIS.png) 0 -146px no-repeat;
+//   margin: 5px 0px 0 13px;
+// }
+// .main_r .middle li .bg .star2 {
+//   background-position: -20px -146px;
+// }
+.main_r .bgcolor {
+  display: inline-block;
+  width: 42px;
+  height: 6px;
+  margin: 0 5px 2px 3px;
+}
+
+.main_r .child {
+  width: 11px;
+  height: 18px;
+  background: url(../img/MNIS.png) -91px -105px no-repeat;
+  margin-bottom: -3px;
+}
+
+.main_r .middle .bg .child {
+  margin-top: 5px;
+  margin-right: 7px;
+}
+
+.main_r .middle li em {
+  color: #065a3d;
+}
+
+.main_r .middle li .age_number {
+  float: left;
+  width: 160px;
+  height: 22px;
+  line-height: 21px;
+  padding: 0 23px 0 10px;
+  font-size: 12px;
+  border-right: 1px solid #d8dce5;
+  border-left: 1px solid #d8dce5;
+}
+
+.main_r .middle .age_number .span {
+  width: 12px;
+}
+
+.main_r .middle .age_number .woman {
+  background-position: -14px -129px;
+  margin: 5px 6px 0 0;
+}
+
+.main_r .middle .age_number .boy {
+  width: 11px;
+  height: 11px;
+  background-position: -35px -132px;
+  margin: 6px 6px 0 0;
+}
+
+.main_r .middle li .disease {
+  float: left;
+  border: 1px solid #d8dce5;
+}
+
+.main_r .middle .disease p {
+  height: 53px;
+  overflow: hidden;
+  padding-left: 4px;
+}
+
+.note .main_r .middle .disease p {
+  height: 56px;
+}
+
+.main_r .middle .disease .p1 {
+  font-size: 12px;
+  width: 116px;
+  border-right: 1px solid #d8dce5;
+}
+
+.main_r .middle .disease .p1 span.diet {
+  display: inline-block;
+  width: 100%;
+  line-height: 17px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.main_r .middle .disease .p1 span.diagnosis {
+  display: inline-block;
+  width: 100%;
+  line-height: 18px;
+  height: 36px;
+  white-space: pre-line;
+}
+
+.main_r .lists-view li .disease .p1 span.diet {
+  float: left;
+  line-height: 28px;
+  width: 38.75%;
+}
+
+.main_r .lists-view li .disease .p1 span.diagnosis {
+  line-height: 28px;
+  width: 60.07%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.main_r .middle .disease .p3 {
+  width: 68px;
+}
+
+.main_r .middle .disease .danger {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  background: url(../img/MNIS.png) -1px -129px no-repeat;
+  margin-left: 5px;
+}
+
+.main_r .middle li .explain {
+  float: left;
+  width: 184px;
+  font-size: 12px;
+  height: 21px;
+  line-height: 21px;
+  padding-left: 9px;
+  border: 1px solid #d8dce5;
+  border-top: none;
+}
+
+.main_r .middle .explain span {
+  margin-right: 6px;
+}
+
+.main_r .middle .explain .color2 {
+  color: #f32942;
+}
+
+.main_r .lists-view {}
+
+.main_r .list-view-top {
+  display: none;
+}
+
+.main_r .lists-view .list-view-top {
+  position: absolute;
+  top: 45px;
+  left: 0px;
+  display: block;
+  width: 1041px;
+  height: 28px;
+  line-height: 30px;
+  margin-left: 12px;
+  z-index: 11;
+  background-color: #efefef;
+  background: -webkit-linear-gradient(top, #F9F9F9 0, #efefef 100%);
+  background: linear-gradient(to bottom, #F9F9F9 0, #efefef 100%);
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.main_r .list-view-top div:nth-child(2) {
+  margin-left: 18px;
+}
+
+.main_r .middle li .bg,
+.main_r .middle li em {
+  color: white;
+}
+
+.main_r .middle li.level-0 .bg {
+  background: #7e4342;
+}
+
+.main_r .middle li.level-1 .bg {
+  background: #ff5d6f;
+}
+
+.main_r .middle li.level-2 .bg {
+  background: #00a7fb;
+}
+
+.main_r .middle li.level-3 .bg {
+  background: #f5c256;
+}
+
+.main_r .middle li em {
+  margin-right: 5px;
+}
+
+.main_r .list-view-top div {
+  float: left;
+  font-size: 12px;
+}
+
+.main_r .lists-view li {
+  width: 100%;
+  margin: 0 12px 0px 0;
+  border-top: 1px solid #d8dce5;
+}
+
+
+/*.main_r .lists-view li:last-child{border-bottom:1px solid #d8dce5;}*/
+
+.main_r .lists-view li .age_number {
+  height: 27px;
+  line-height: 28px;
+  border-bottom: none;
+}
+
+.main_r .lists-view li .disease {
+  width: 45%;
+  float: left;
+  border: none;
+}
+
+.main_r .lists-view li .disease p {
+  height: 28px;
+  line-height: 28px;
+}
+
+.main_r .lists-view li .disease p.p1 {
+  width: 55%;
+}
+
+.main_r .lists-view li .disease p.p3 {
+  width: 42%;
+}
+
+.main_r .lists-view li .explain {
+  float: left;
+  width: auto;
+  height: 28px;
+  line-height: 28px;
+  border: none;
+  border-left: 1px solid #d8dce5;
+}
+
+.main_r .bottom {
+  height: 40px;
+  line-height: 19px;
+  padding: 5px 0 0 30px;
+  color: #333840;
+  font-size: 12px;
+  background-color: #eceef1;
+  border: 1px solid #c2c2c2;
+  border-left: none;
+  text-align: right;
+}
+
+.main_r .bottom p {
+  padding-right: 25px;
+}
+
+.main_r .bottom .bg1 {
+  width: 11px;
+  height: 11px;
+  background: url(../img/MNIS.png) 0 -129px no-repeat;
+  margin-bottom: 0;
+}
+
+.main_r .bottom .text {
+  margin-right: 14px;
+}
+
+.shadow {
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+
+.prompt {
+  position: absolute;
+  z-index: 1;
+  background-color: #f9fafb;
+  font-size: 16px;
+  width: 475px;
+  height: 281px;
+  border-radius: 8px 8px 0 0;
+}
+
+.prompt h4 {
+  height: 50px;
+  line-height: 50px;
+  background: url(../img/bg_header.jpg) 0 -21px repeat-x;
+  color: white;
+  padding-left: 21px;
+  border-radius: 8px 8px 0 0;
+}
+
+.prompt .content {
+  position: relative;
+  padding: 27px 89px 33px 82px;
+  border: 1px solid #3e516b;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+
+.prompt .content input {
+  width: 209px;
+  height: 36px;
+  border: 1px solid #a1b5b5;
+  padding-left: 12px;
+  margin-left: 15px;
+  font-size: 16px;
+}
+
+.prompt .content .marginLeft {
+  margin-left: 15px;
+}
+
+.prompt .content .margin {
+  margin: 26px 0 33px 15px;
+}
+
+.prompt .content .bg_btn {
+  width: 145px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  background: url(../img/MNIS.png) no-repeat;
+  text-decoration: none;
+  color: white;
+}
+
+.prompt .content .bg_btn3 {
+  background-position: -249px -36px;
+}
+
+.prompt .content .bg_btn4 {
+  background-position: -324px 0;
+}
+
+.prompt .content .marginRight {
+  margin-right: 12px;
+}
+
+.option p {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #d2d2d2;
+  overflow: auto;
+  cursor: pointer;
+}
+
+.option p em {
+  display: block;
+  padding-left: 12px;
+}
+
+.option p em:hover {
+  background-color: #c5ced5;
+  color: #333840 !important;
+}
+
+.prompt1 p {
+  left: 160px;
+  top: 68px;
+  width: 221px;
+  height: 81px;
+}
+
+.prompt1 p em {
+  height: 27px;
+  line-height: 27px;
+}
+
+.prompt2 p {
+  width: 207px;
+  font-size: 23px;
+  margin: 35px auto 55px;
+}
+
+.prompt3 {
+  width: 570px;
+  height: 319px;
+}
+
+.prompt3 .content {
+  padding: 27px 0 27px 21px;
+}
+
+.prompt3 .content .margin {
+  margin: 20px 0 20px 15px;
+}
+
+.prompt3 .content .margin2 {
+  margin: 0 12px 0 15px;
+}
+
+.prompt3 .content .marginBottom {
+  margin-bottom: 27px;
+}
+
+.main_h_pat {
+  position: relative;
+  top: 35px;
+  left: 400px;
+  color: white;
+}
+
+.main_h_pat .margin-text {
+  margin-right: 5px !important;
+}
+
+.main_h_pat .margin-value {
+  margin-right: 30px !important;
+}
+
+.main_r .btn-nm {
+  line-height: 29px;
+}
+
+.overflow-txt {
+  display: inline-block;
+  vertical-align: text-bottom;
+  width: 85px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#menuHeadDiv {
+  overflow: hidden;
+}
+
+
+/*  临床检查报告样式 */
+
+.insp {
+  position: relative;
+  width: 100%;
+  height: 39px;
+  line-height: 39px;
+  border-bottom: 1px solid #adbac3;
+  background-color: #e0e4e8;
+  color: #1e3443;
+}
+
+.insp h4 {
+  line-height: 39px;
+}
+
+.insp input[type='checkbox'] {
+  position: absolute;
+  top: 11px;
+  left: 25px;
+  width: 16px;
+  height: 16px;
+  background: url("../img/checkOut.png");
+}
+
+.insp h4 {
+  text-align: center;
+  font-size: 16px;
+}
+
+.insp-patient-list {
+  padding: 5px;
+  font-size: 13px;
+}
+
+.insp-patient-list li {
+  height: 30px;
+  line-height: 30px;
+}
+
+.insp-patient-list li input[type='checkbox'] {
+  position: relative;
+  top: 3px;
+  width: 15px;
+  height: 15px;
+}
+
+.insp-patient-list li span.bed-num {
+  display: inline-block;
+  /*width: 26px;*/
+  margin-left: 10px;
+  padding: 0;
+  text-align: left;
+}
+
+.insp-patient-list li span.bed-name {
+  margin-left: 25px;
+}
+
+.icomoon-child {
+  line-height: 0;
+  position: relative;
+  top: 7px;
+  font-size: 28px;
+  color: #2b65ad;
+}

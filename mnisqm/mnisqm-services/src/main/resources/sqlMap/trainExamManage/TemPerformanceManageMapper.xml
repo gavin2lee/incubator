@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.trainExamManage.dao.TemPerformanceManageMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.trainExamManage.domain.TemPerformanceManage" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="EXAM_CODE" property="examCode" jdbcType="VARCHAR" />
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="SCORE" property="score" jdbcType="DECIMAL" />
+    <result column="ASSESS_SITUATION" property="assessSituation" jdbcType="INTEGER" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from TEM_PERFORMANCE_MANAGE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.trainExamManage.domain.TemPerformanceManage" >
+    insert into TEM_PERFORMANCE_MANAGE (EXAM_CODE, DEPT_CODE, 
+      USER_CODE, USER_NAME, SCORE, 
+      ASSESS_SITUATION, REMARK, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{examCode,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, 
+      #{assessSituation,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.trainExamManage.domain.TemPerformanceManage" >
+    update TEM_PERFORMANCE_MANAGE
+    set EXAM_CODE = #{examCode,jdbcType=VARCHAR},
+      DEPT_CODE = #{deptCode,jdbcType=VARCHAR},
+      USER_CODE = #{userCode,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      SCORE = #{score,jdbcType=DECIMAL},
+      ASSESS_SITUATION = #{assessSituation,jdbcType=INTEGER},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, EXAM_CODE, DEPT_CODE, USER_CODE, USER_NAME, SCORE, ASSESS_SITUATION, 
+    REMARK, CREATE_TIME, CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+    from TEM_PERFORMANCE_MANAGE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, EXAM_CODE, DEPT_CODE, USER_CODE, USER_NAME, SCORE, ASSESS_SITUATION, 
+    REMARK, CREATE_TIME, CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+    from TEM_PERFORMANCE_MANAGE
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from TEM_PERFORMANCE_MANAGE where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.trainExamManage.domain.TemPerformanceManage" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into TEM_PERFORMANCE_MANAGE (EXAM_CODE, DEPT_CODE, 
+      USER_CODE, USER_NAME, SCORE, 
+      ASSESS_SITUATION, REMARK, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{examCode,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, 
+      #{assessSituation,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+</mapper>

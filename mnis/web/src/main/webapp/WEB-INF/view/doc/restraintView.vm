@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-table th, .doc-table td {
+	width: 30px;
+/* 	padding: 0px; */
+}
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+	}
+}
+</style>
+<title>使用约束带观察记录表</title>
+</head>
+<body class="doc-view restraint">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper">
+	<div class="paper-content">
+		#restraint()
+		<div class="doc-content">
+			<table class="doc-table">
+				<thead>
+					<tr>
+			            <th rowspan="2" style="width: 65px;">日期</th>
+			            <th rowspan="2" style="width: 45px;">时间</th>
+						<th colspan="3">约束原因</th>
+						<th colspan="5">约束部位</th>
+						<th colspan="6">观察要点</th>
+						<th>措施</th>
+			            <th rowspan="2" style="width: 85px;">签名</th>
+					</tr>
+					<tr>
+			            <th style="width: 50px;">防意外拔管</th>
+			            <th>躁动</th>
+			            <th>防坠床</th>
+			            <th>左手腕</th>
+			            <th>右手腕</th>
+			            <th>左踝部</th>
+			            <th>右踝部</th>
+			            <th>胸部</th>
+			            <th>血运良好</th>
+			            <th>血运不良</th>
+			            <th>皮肤完整</th>
+			            <th>皮肤擦伤</th>
+			            <th>肢体不肿</th>
+			            <th>肢体肿胀</th>
+			            <th>定时观察</th>
+			        </tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		#restraintComment()
+	</div>
+	#pageFoot()
+</div>
+</div>
+<script type="text/javascript">
+function getRowDatas(row, isFirstRow, lastDate) {
+	return [
+		getDate(row['date'], isFirstRow, lastDate),
+		getTime(row['date']),
+		formatCheck(row['reasonDraw']),
+		formatCheck(row['reasonFret']),
+		formatCheck(row['reasonFall']),
+		formatCheck(row['partLeftHand']),
+		formatCheck(row['partRightHand']),
+		formatCheck(row['partLeftFoot']),
+		formatCheck(row['partRightFoot']),
+		formatCheck(row['partChest']),
+		formatCheck(row['pointGood']),
+		formatCheck(row['pointBad']),
+		formatCheck(row['pointIntact']),
+		formatCheck(row['pointBruise']),
+		formatCheck(row['pointNotSwell']),
+		formatCheck(row['pointSwell']),
+		formatCheck(row['observe']),
+		row['sign']
+	];
+}
+$(function() {
+	fillTable('#url("/doc/restraint/view/datas")', '$!{patient.cureNo}', 18, getRowDatas);
+});
+</script>
+</body>
+</html>

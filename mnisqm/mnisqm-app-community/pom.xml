@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>mnisqm-app-community</name>
+	<artifactId>mnisqm</artifactId>
+	<parent>
+		<groupId>com.lachesis.mnisqm</groupId>
+		<artifactId>mnisqm-parent-community</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../mnisqm-parent-community/pom.xml</relativePath>
+	</parent>
+	<packaging>war</packaging>
+
+	<properties>
+		<deploy.project.name>mnisqm</deploy.project.name>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.test.skip>true</maven.test.skip>
+		<jdk.version>1.7</jdk.version>
+		<lib.output.dir>lib/</lib.output.dir>
+
+		<org.springframework.version>3.2.0.RELEASE</org.springframework.version>
+		<org.slf4j.version>1.7.1</org.slf4j.version>
+		<org.apache.httpcomponents.version>4.2.2</org.apache.httpcomponents.version>
+		<org.apache.cxf.version>2.5.5</org.apache.cxf.version>
+		<org.codehaus.castor.version>1.3.1</org.codehaus.castor.version>
+		<com.lowagie.version>2.1.7</com.lowagie.version>
+		<org.apache.poi.version>3.9</org.apache.poi.version>
+		<com.google.zxing.version>2.2</com.google.zxing.version>
+		<jackson.version>2.0.6</jackson.version>
+		<org.aspectj.version>1.7.3</org.aspectj.version>
+		<commons-codec.version>1.8</commons-codec.version>
+
+		<commons-dbcp.version>1.4</commons-dbcp.version>
+		<sitemesh.version>2.4.2</sitemesh.version>
+		<log4j.version>1.2.17</log4j.version>
+		<commons-lang3.version>3.1</commons-lang3.version>
+		<guava.version>13.0.1</guava.version>
+		<joda-time.version>2.1</joda-time.version>
+		<junit.version>4.10</junit.version>
+		<mockito.version>1.9.0</mockito.version>
+		<mock.version>2.0.2</mock.version>
+		<selenium.version>2.25.0</selenium.version>
+		<jetty.version>7.6.7.v20120910</jetty.version>
+		<h2.version>1.3.168</h2.version>
+		<spring-data-jpa.version>1.3.4.RELEASE</spring-data-jpa.version>
+	</properties>
+
+	<dependencies>
+		<!-- 启动包 -->
+		<dependency>
+			<groupId>com.lachesis.mnisqm</groupId>
+			<artifactId>mnisqm-server-runner</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<!-- 服务包 -->
+		<dependency>
+			<groupId>com.lachesis.mnisqm</groupId>
+			<artifactId>mnisqm-services</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- <dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlets</artifactId>
+			<version>${jettyVersion}</version>
+		</dependency> -->
+		<dependency>
+			<groupId>jtds</groupId>
+			<artifactId>jtds</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>db</directory>
+				<targetPath>db</targetPath>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<charset>${project.build.sourceEncoding}</charset>
+					<port>8918</port>
+					<path>/${deploy.project.name}</path>
+					<warFile>${project.build.directory}/deploy/${deploy.project.name}-${project.version}</warFile>
+					<uriEncoding>${project.build.sourceEncoding}</uriEncoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<warName>${deploy.project.name}</warName>
+					<outputDirectory>${project.build.directory}/deploy/</outputDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

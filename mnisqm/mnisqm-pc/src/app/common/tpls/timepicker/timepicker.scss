@@ -1,0 +1,28 @@
+.uib-separator {
+  display: inline-block;
+}
+
+.uib-timepicker {
+  .form-group {
+    margin:0;
+    display: inline-block;
+  }
+
+  .form-control {
+    display: inline-block;
+  }
+
+  .time-spinner {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .am-pm {
+    display: inline-block;
+  }
+}
+.time-spinner_btn {
+  display: block;
+  line-height: 13px;
+  padding: 0;
+}

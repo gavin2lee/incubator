@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.PatOperationStatusMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnis.core.patientManage.entity.PatOperationStatus" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="OPERATION_ID" property="operationId" jdbcType="VARCHAR" />
+    <result column="PAT_ID" property="patId" jdbcType="VARCHAR" />
+    <result column="EXEC_NURSE_ID" property="execNurseId" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="OPERATION_TIME" property="operationTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PAT_OPERATION_STATUS
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnis.core.patientManage.entity.PatOperationStatus" >
+    insert into PAT_OPERATION_STATUS (OPERATION_ID, PAT_ID, EXEC_NURSE_ID,
+      STATUS,  CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{operationId,jdbcType=VARCHAR}, #{patId,jdbcType=VARCHAR},  #{execNurseId,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnis.core.patientManage.entity.PatOperationStatus" >
+    update PAT_OPERATION_STATUS
+    set OPERATION_ID = #{operationId,jdbcType=VARCHAR},
+      PAT_ID = #{patId,jdbcType=VARCHAR},
+      EXEC_NURSE_ID = #{execNurseId,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, OPERATION_ID, PAT_ID, EXEC_NURSE_ID, STATUS, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from PAT_OPERATION_STATUS
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, OPERATION_ID, PAT_ID, EXEC_NURSE_ID, STATUS, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from PAT_OPERATION_STATUS
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from PAT_OPERATION_STATUS where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnis.core.patientManage.entity.PatOperationStatus" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into PAT_OPERATION_STATUS (OPERATION_ID, PAT_ID, EXEC_NURSE_ID,
+      STATUS,  CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{operationId,jdbcType=VARCHAR}, #{patId,jdbcType=VARCHAR}, #{execNurseId,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER},  #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <select id="getRecentlyRecordByPatId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select top 1 SEQ_ID, OPERATION_ID, PAT_ID, EXEC_NURSE_ID, STATUS, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from PAT_OPERATION_STATUS
+    where PAT_ID = #{patId}
+    order by CREATE_TIME DESC
+  </select>
+</mapper>

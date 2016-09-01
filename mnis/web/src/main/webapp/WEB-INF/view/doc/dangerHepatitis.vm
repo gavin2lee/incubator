@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-health-table th, .doc-health-table td {
+	padding: 2px;
+}
+.beginer, .ender {
+	width: 50px;
+	text-align: center;
+}
+.extra {
+	width: 99%;
+}
+@media print{@page {size: portrait;}}
+</style>
+<title>肝病科重症肝炎患者护理计划单</title>
+</head>
+<body class="doc">
+#docToolbar()
+<div class="doc-container">
+#dangerHepatitis()
+<div class="doc-content doc-health">
+	<form>
+		<input type="hidden" name="cureNo" value="$!{patient.cureNo}">
+		<input type="hidden" name="hospitalNo" value="$!{patient.hospitalNo}">
+		<div>
+			责任护士：<input name="nurse">
+			高级责任护士：<input name="seniorNurse">
+		</div>
+		<table class="doc-health-table">
+			<thead>
+				<tr>
+					<th colspan="2">护理计划</th>
+					<th>起始日期</th>
+					<th>签名</th>
+					<th>停止日期</th>
+					<th>签名</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td rowspan="11" style="width: 35px;">基础护理</td>
+					<td class="align-left">严密观察患者生命体征和病情变化，每30-60min巡视一次</td>
+					<td><input id="beginDate1" name="beginDate1" class="date"></td>
+					<td><input id="beginer1" name="beginer1" class="beginer"></td>
+					<td><input id="endDate1" name="endDate1" class="date"></td>
+					<td><input id="ender1" name="ender1" class="ender"></td>
+					<input type="hidden" name="beginerCode1">
+					<input type="hidden" name="enderCode1">
+				</tr>
+				<tr>
+					<td class="align-left">根据病情需要保持舒适、合理的体位</td>
+					<td><input id="beginDate2" name="beginDate2" class="date"></td>
+					<td><input id="beginer2" name="beginer2" class="beginer"></td>
+					<td><input id="endDate2" name="endDate2" class="date"></td>
+					<td><input id="ender2" name="ender2" class="ender"></td>
+					<input type="hidden" name="beginerCode2">
+					<input type="hidden" name="enderCode2">
+				</tr>
+				<tr>
+					<td class="align-left">根据病情需要，合理氧疗</td>
+					<td><input id="beginDate3" name="beginDate3" class="date"></td>
+					<td><input id="beginer3" name="beginer3" class="beginer"></td>
+					<td><input id="endDate3" name="endDate3" class="date"></td>
+					<td><input id="ender3" name="ender3" class="ender"></td>
+					<input type="hidden" name="beginerCode3">
+					<input type="hidden" name="enderCode3">
+				</tr>
+				<tr>
+					<td class="align-left">翻身、拍背q2h-q4h一次，保持护理道通畅，预防肺部感染</td>
+					<td><input id="beginDate4" name="beginDate4" class="date"></td>
+					<td><input id="beginer4" name="beginer4" class="beginer"></td>
+					<td><input id="endDate4" name="endDate4" class="date"></td>
+					<td><input id="ender4" name="ender4" class="ender"></td>
+					<input type="hidden" name="beginerCode4">
+					<input type="hidden" name="enderCode4">
+				</tr>
+				<tr>
+					<td class="align-left">为留置胃管、禁食、高热等生活不能自理的患者进行口腔护理</td>
+					<td><input id="beginDate5" name="beginDate5" class="date"></td>
+					<td><input id="beginer5" name="beginer5" class="beginer"></td>
+					<td><input id="endDate5" name="endDate5" class="date"></td>
+					<td><input id="ender5" name="ender5" class="ender"></td>
+					<input type="hidden" name="beginerCode5">
+					<input type="hidden" name="enderCode5">
+				</tr>
+				<tr>
+					<td class="align-left">留置尿管的患者每日进行尿道口护理或会阴冲洗bid</td>
+					<td><input id="beginDate6" name="beginDate6" class="date"></td>
+					<td><input id="beginer6" name="beginer6" class="beginer"></td>
+					<td><input id="endDate6" name="endDate6" class="date"></td>
+					<td><input id="ender6" name="ender6" class="ender"></td>
+					<input type="hidden" name="beginerCode6">
+					<input type="hidden" name="enderCode6">
+				</tr>
+				<tr>
+					<td class="align-left">鼻饲的患者做好胃管护理（固定、冲洗、回抽胃内容物q4h），防止胃潴留</td>
+					<td><input id="beginDate7" name="beginDate7" class="date"></td>
+					<td><input id="beginer7" name="beginer7" class="beginer"></td>
+					<td><input id="endDate7" name="endDate7" class="date"></td>
+					<td><input id="ender7" name="ender7" class="ender"></td>
+					<input type="hidden" name="beginerCode7">
+					<input type="hidden" name="enderCode7">
+				</tr>
+				<tr>
+					<td class="align-left">保持静脉输液通畅，密切观察穿刺部位，使用输液泵注意观察滴速q1h</td>
+					<td><input id="beginDate8" name="beginDate8" class="date"></td>
+					<td><input id="beginer8" name="beginer8" class="beginer"></td>
+					<td><input id="endDate8" name="endDate8" class="date"></td>
+					<td><input id="ender8" name="ender8" class="ender"></td>
+					<input type="hidden" name="beginerCode8">
+					<input type="hidden" name="enderCode8">
+				</tr>
+				<tr>
+					<td class="align-left">加强各种引流管的护理：妥善管理、引流液观察和记录、保持通畅、宣教等</td>
+					<td><input id="beginDate9" name="beginDate9" class="date"></td>
+					<td><input id="beginer9" name="beginer9" class="beginer"></td>
+					<td><input id="endDate9" name="endDate9" class="date"></td>
+					<td><input id="ender9" name="ender9" class="ender"></td>
+					<input type="hidden" name="beginerCode9">
+					<input type="hidden" name="enderCode9">
+				</tr>
+				<tr>
+					<td class="align-left">严格准确记录出入量</td>
+					<td><input id="beginDate10" name="beginDate10" class="date"></td>
+					<td><input id="beginer10" name="beginer10" class="beginer"></td>
+					<td><input id="endDate10" name="endDate10" class="date"></td>
+					<td><input id="ender10" name="ender10" class="ender"></td>
+					<input type="hidden" name="beginerCode10">
+					<input type="hidden" name="enderCode10">
+				</tr>
+				<tr>
+					<td class="align-left">严格做好床旁交接班（生命体征、病情、管路等）</td>
+					<td><input id="beginDate11" name="beginDate11" class="date"></td>
+					<td><input id="beginer11" name="beginer11" class="beginer"></td>
+					<td><input id="endDate11" name="endDate11" class="date"></td>
+					<td><input id="ender11" name="ender11" class="ender"></td>
+					<input type="hidden" name="beginerCode11">
+					<input type="hidden" name="enderCode11">
+				</tr>
+				<tr>
+					<td rowspan="6">专科护理</td>
+					<td class="align-left">密切观察肝性脑病的早期征象</td>
+					<td><input id="beginDate12" name="beginDate12" class="date"></td>
+					<td><input id="beginer12" name="beginer12" class="beginer"></td>
+					<td><input id="endDate12" name="endDate12" class="date"></td>
+					<td><input id="ender12" name="ender12" class="ender"></td>
+					<input type="hidden" name="beginerCode12">
+					<input type="hidden" name="enderCode12">
+				</tr>
+				<tr>
+					<td class="align-left">预防及控制感染</td>
+					<td><input id="beginDate13" name="beginDate13" class="date"></td>
+					<td><input id="beginer13" name="beginer13" class="beginer"></td>
+					<td><input id="endDate13" name="endDate13" class="date"></td>
+					<td><input id="ender13" name="ender13" class="ender"></td>
+					<input type="hidden" name="beginerCode13">
+					<input type="hidden" name="enderCode13">
+				</tr>
+				<tr>
+					<td class="align-left">专人护理，以卧床休息为主</td>
+					<td><input id="beginDate14" name="beginDate14" class="date"></td>
+					<td><input id="beginer14" name="beginer14" class="beginer"></td>
+					<td><input id="endDate14" name="endDate14" class="date"></td>
+					<td><input id="ender14" name="ender14" class="ender"></td>
+					<input type="hidden" name="beginerCode14">
+					<input type="hidden" name="enderCode14">
+				</tr>
+				<tr>
+					<td class="align-left">用药观察及指导</td>
+					<td><input id="beginDate15" name="beginDate15" class="date"></td>
+					<td><input id="beginer15" name="beginer15" class="beginer"></td>
+					<td><input id="endDate15" name="endDate15" class="date"></td>
+					<td><input id="ender15" name="ender15" class="ender"></td>
+					<input type="hidden" name="beginerCode15">
+					<input type="hidden" name="enderCode15">
+				</tr>
+				<tr>
+					<td class="align-left">保持大便通畅，防止便秘</td>
+					<td><input id="beginDate16" name="beginDate16" class="date"></td>
+					<td><input id="beginer16" name="beginer16" class="beginer"></td>
+					<td><input id="endDate16" name="endDate16" class="date"></td>
+					<td><input id="ender16" name="ender16" class="ender"></td>
+					<input type="hidden" name="beginerCode16">
+					<input type="hidden" name="enderCode16">
+				</tr>
+				<tr>
+					<td class="align-left">疾病知识指导及心理护理</td>
+					<td><input id="beginDate17" name="beginDate17" class="date"></td>
+					<td><input id="beginer17" name="beginer17" class="beginer"></td>
+					<td><input id="endDate17" name="endDate17" class="date"></td>
+					<td><input id="ender17" name="ender17" class="ender"></td>
+					<input type="hidden" name="beginerCode17">
+					<input type="hidden" name="enderCode17">
+				</tr>
+				<tr>
+					<td rowspan="6">护理风险及并发症预防</td>
+					<td class="align-left">实施预防压疮的护理措施：定时翻身、保持皮肤清洁干燥、保护贴膜、气垫床等</td>
+					<td><input id="beginDate18" name="beginDate18" class="date"></td>
+					<td><input id="beginer18" name="beginer18" class="beginer"></td>
+					<td><input id="endDate18" name="endDate18" class="date"></td>
+					<td><input id="ender18" name="ender18" class="ender"></td>
+					<input type="hidden" name="beginerCode18">
+					<input type="hidden" name="enderCode18">
+				</tr>
+				<tr>
+					<td class="align-left">实施预防非计划性拔管的措施：评估、观察、固定、约束、宣教</td>
+					<td><input id="beginDate19" name="beginDate19" class="date"></td>
+					<td><input id="beginer19" name="beginer19" class="beginer"></td>
+					<td><input id="endDate19" name="endDate19" class="date"></td>
+					<td><input id="ender19" name="ender19" class="ender"></td>
+					<input type="hidden" name="beginerCode19">
+					<input type="hidden" name="enderCode19">
+				</tr>
+				<tr>
+					<td class="align-left">实施预防深静脉血栓的措施：观察、床上活动、驱动泵、宣教等</td>
+					<td><input id="beginDate22" name="beginDate22" class="date"></td>
+					<td><input id="beginer22" name="beginer22" class="beginer"></td>
+					<td><input id="endDate22" name="endDate22" class="date"></td>
+					<td><input id="ender22" name="ender22" class="ender"></td>
+					<input type="hidden" name="beginerCode22">
+					<input type="hidden" name="enderCode22">
+				</tr>
+				<tr>
+					<td class="align-left">实施预防跌倒坠床的措施：评估、加强巡视监护、床档、约束、宣教等</td>
+					<td><input id="beginDate23" name="beginDate23" class="date"></td>
+					<td><input id="beginer23" name="beginer23" class="beginer"></td>
+					<td><input id="endDate23" name="endDate23" class="date"></td>
+					<td><input id="ender23" name="ender23" class="ender"></td>
+					<input type="hidden" name="beginerCode23">
+					<input type="hidden" name="enderCode23">
+				</tr>
+				<tr>
+					<td class="align-left">实施预防误吸窒息的措施：评估、巡视观察、宣教</td>
+					<td><input id="beginDate24" name="beginDate24" class="date"></td>
+					<td><input id="beginer24" name="beginer24" class="beginer"></td>
+					<td><input id="endDate24" name="endDate24" class="date"></td>
+					<td><input id="ender24" name="ender24" class="ender"></td>
+					<input type="hidden" name="beginerCode24">
+					<input type="hidden" name="enderCode24">
+				</tr>
+				<tr>
+					<td class="align-left">备好急救物品：抢救车</td>
+					<td><input id="beginDate25" name="beginDate25" class="date"></td>
+					<td><input id="beginer25" name="beginer25" class="beginer"></td>
+					<td><input id="endDate25" name="endDate25" class="date"></td>
+					<td><input id="ender25" name="ender25" class="ender"></td>
+					<input type="hidden" name="beginerCode25">
+					<input type="hidden" name="enderCode25">
+				</tr>
+				<tr>
+					<td rowspan="3">特殊药物观察</td>
+					<td class="align-left">使用利尿剂时，观察尿量及有无电解质紊乱</td>
+					<td><input id="beginDate26" name="beginDate26" class="date"></td>
+					<td><input id="beginer26" name="beginer26" class="beginer"></td>
+					<td><input id="endDate26" name="endDate26" class="date"></td>
+					<td><input id="ender26" name="ender26" class="ender"></td>
+					<input type="hidden" name="beginerCode26">
+					<input type="hidden" name="enderCode26">
+				</tr>
+				<tr>
+					<td class="align-left">使用KCl、浓NACL、50%G.S，观察有无渗漏、静脉炎</td>
+					<td><input id="beginDate27" name="beginDate27" class="date"></td>
+					<td><input id="beginer27" name="beginer27" class="beginer"></td>
+					<td><input id="endDate27" name="endDate27" class="date"></td>
+					<td><input id="ender27" name="ender27" class="ender"></td>
+					<input type="hidden" name="beginerCode27">
+					<input type="hidden" name="enderCode27">
+				</tr>
+				<tr>
+					<td class="align-left"><textarea id="extra1" name="extra1" class="extra" rows="1"></textarea></td>
+					<td><input id="beginDate30" name="beginDate30" class="date"></td>
+					<td><input id="beginer30" name="beginer30" class="beginer"></td>
+					<td><input id="endDate30" name="endDate30" class="date"></td>
+					<td><input id="ender30" name="ender30" class="ender"></td>
+					<input type="hidden" name="beginerCode30">
+					<input type="hidden" name="enderCode30">
+				</tr>
+				<tr>
+					<td rowspan="5">个体化的护理措施</td>
+					<td class="align-left">保护性隔离措施：物表、空气消毒；手卫生等</td>
+					<td><input id="beginDate28" name="beginDate28" class="date"></td>
+					<td><input id="beginer28" name="beginer28" class="beginer"></td>
+					<td><input id="endDate28" name="endDate28" class="date"></td>
+					<td><input id="ender28" name="ender28" class="ender"></td>
+					<input type="hidden" name="beginerCode28">
+					<input type="hidden" name="enderCode28">
+				</tr>
+				<tr>
+					<td class="align-left"><textarea id="extra2" name="extra2" class="extra" rows="1"></textarea></td>
+					<td><input id="beginDate31" name="beginDate31" class="date"></td>
+					<td><input id="beginer31" name="beginer31" class="beginer"></td>
+					<td><input id="endDate31" name="endDate31" class="date"></td>
+					<td><input id="ender31" name="ender31" class="ender"></td>
+					<input type="hidden" name="beginerCode31">
+					<input type="hidden" name="enderCode31">
+				</tr>
+				<tr>
+					<td class="align-left"><textarea id="extra3" name="extra3" class="extra" rows="1"></textarea></td>
+					<td><input id="beginDate32" name="beginDate32" class="date"></td>
+					<td><input id="beginer32" name="beginer32" class="beginer"></td>
+					<td><input id="endDate32" name="endDate32" class="date"></td>
+					<td><input id="ender32" name="ender32" class="ender"></td>
+					<input type="hidden" name="beginerCode32">
+					<input type="hidden" name="enderCode32">
+				</tr>
+				<tr>
+					<td class="align-left"><textarea id="extra4" name="extra4" class="extra" rows="1"></textarea></td>
+					<td><input id="beginDate33" name="beginDate33" class="date"></td>
+					<td><input id="beginer33" name="beginer33" class="beginer"></td>
+					<td><input id="endDate33" name="endDate33" class="date"></td>
+					<td><input id="ender33" name="ender33" class="ender"></td>
+					<input type="hidden" name="beginerCode33">
+					<input type="hidden" name="enderCode33">
+				</tr>
+				<tr>
+					<td class="align-left"><textarea id="extra5" name="extra5" class="extra" rows="1"></textarea></td>
+					<td><input id="beginDate34" name="beginDate34" class="date"></td>
+					<td><input id="beginer34" name="beginer34" class="beginer"></td>
+					<td><input id="endDate34" name="endDate34" class="date"></td>
+					<td><input id="ender34" name="ender34" class="ender"></td>
+					<input type="hidden" name="beginerCode34">
+					<input type="hidden" name="enderCode34">
+				</tr>
+			</tbody>
+		</table>
+		<table class="doc-health-table" style="text-align: left;">
+			<tr>
+				<td>停病重/危日期：<input id="endDangerDate" name="endDangerDate" class="date2"></td>
+				<td>当班责任护士：<input name="endNurse"></td>
+				<td>患者出院日期：<input id="outDate" name="outDate" class="date2"></td>
+				<td>当班责任护士：<input name="outNurse"></td>
+			</tr>
+		</table>
+	</form>
+</div>
+#dangerHepatitisComment()
+</div>
+<div id="sc" class="easyui-calendar"></div>
+<script type="text/javascript">
+function accept() {
+   	var editable = '$!{doc.editable}' || true;
+   	if (editable) {
+        $.ajax({
+        	url: '#url("/doc/data?docType=DANGER_HEPATITIS")',
+        	type: 'POST',
+        	data: $('form').serialize(),
+        	success: function(data, status) {
+        		if (data && data.code) {
+        			if ('1' == data.code) {
+		        		$.messager.alert('数据保存', data.message || '保存成功', 'info');
+	        		} else {
+		        		$.messager.alert('数据保存', data.message || '保存失败', 'error');
+        			}
+        		}
+        	},
+        	error: function(xhr, status, err) {
+        		$.messager.alert('数据保存', '保存失败', 'error');
+        	}
+        });
+   	} else {
+   		$.messager.alert('数据保存', '不允许修改', 'error');
+   	}
+}
+function initComponent() {
+	$('.beginer').add('.ender').attr('readonly', true);
+	$('.date').datebox({
+		sharedCalendar: '#sc',
+		editable: false,
+		onChange: function(newValue, oldValue) {
+			var name = $(this).attr('textboxname');
+			var strs = name.split('Date');
+			var targetName = strs[0] + 'er' + strs[1];
+			var target = $('[name=' + targetName + ']');
+			var codeName = strs[0] + 'erCode' + strs[1];
+			var code = $('[name=' + codeName + ']');
+			if (newValue) {
+				code.val('$!{currentUser.code}');
+				target.val('$!{currentUser.name}');
+			} else {
+				code.val('');
+				target.val('');
+			}
+		}
+	});
+	$('.date2').datebox({
+		sharedCalendar: '#sc',
+		editable: false
+	});
+	$.ajax({
+    	url: '#url("/user")',
+    	type: 'GET',
+    	success: function(data, status) {
+    	},
+    	error: function(xhr, status, err) {
+    		$.messager.alert('获取数据', '获取用户数据失败', 'error');
+    	}
+    });
+}
+function defaultValue() {
+	$('.date').each(function(index,element) {
+		var value = $(this).datebox('getValue') || dateToString(new Date());
+		$(this).datebox('setValue', value);
+	});
+}
+$(function() {
+	$('#save').click(accept);
+	$('#approve').click(function() {});
+	$('#print').val('预  览').click(function() {
+		var params = [
+   			'location=no',
+   			'height='+screen.availHeight,
+   			'width='+screen.availWidth,
+   			'scrollbars=yes',
+   			'resizable=yes',
+   			'fullscreen=yes' // only works in IE, but here for completeness
+   		].join(',');
+   		var new_window = window.open('#url("/doc/dangerHepatitis/view?cureNo=$!{patient.cureNo}")', '', params);
+   		new_window.resizeTo(screen.availWidth, screen.availHeight);
+	});
+	// init datas
+	$.ajax({
+		url: '#url("/doc/data?docType=DANGER_HEPATITIS")',
+    	type: 'GET',
+    	data: {cureNo:'$!{patient.cureNo}'},
+    	success: function(data, status) {
+    		// 设置值
+    		initDocData(data);
+    		// 初始化控件
+    		initComponent();
+    		// 设置默认值
+//     		defaultValue();
+    		// 控制权限
+    		$('[name^=beginerCode]').each(function(index,element) {
+    			var name = $(element).attr('name');
+    			var num = name.substring(12);
+    			var value = $(element).val();
+    			if (value && '$!{currentUser.code}' != value
+		    			&& 1 != $!{currentUser.purview}
+		    			&& 2 != $!{currentUser.purview}) {
+		    		#[[
+		            $('#beginDate' + num).datetimebox('readonly');
+					]]#
+		    	}
+    		});
+    		$('[name^=enderCode]').each(function(index,element) {
+    			var name = $(element).attr('name');
+    			var num = name.substring(13);
+    			var value = $(element).val();
+    			if (value && '$!{currentUser.code}' != value
+		    			&& 1 != $!{currentUser.purview}
+		    			&& 2 != $!{currentUser.purview}) {
+		    		#[[
+		            $('#endDate' + num).datetimebox('readonly');
+					]]#
+		    	}
+    		});
+    	},
+    	error: function(xhr, status, err) {
+    		$.messager.alert('数据保存', '获取数据失败', 'error');
+    		initComponent();
+    	}
+    });
+	$('#diagnosisLabel').removeClass('diagnosisLabel');
+	autosize();
+});
+</script>
+</body>
+</html>

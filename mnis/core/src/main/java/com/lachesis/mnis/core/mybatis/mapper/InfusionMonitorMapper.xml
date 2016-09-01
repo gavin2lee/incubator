@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.InfusionMonitorMapper">
+	<resultMap type="InfusionMonitorInfo" id="infusionMonitorMap">
+		<id property="orderExecId" column="order_exec_id" />
+		<!-- <result property="items" column="order_content" typeHandler="com.lachesis.mnis.core.mybatis.handler.InfusionOrderItemHandler"/> -->
+		<result property="patientId" column="pat_id" />
+		<result property="deliverFreq" column="freq_code" />
+		<result property="usageName" column="usage_name" />
+		<result property="deptId" column="ward_code" />
+		<result property="bedNo" column="bed_code" />
+		<result property="patientName" column="pat_name" />
+		<result property="status" column="order_status" />
+		<result property="speedUnit" column="speed_unit" />
+		<collection property="records" resultMap="infusionMonitorRecordMap"></collection>
+		<collection property="items" resultMap="orderContentMap"></collection>
+	</resultMap>
+
+	<resultMap type="OrderBaseInfo" id="orderContentMap">
+		<id property="orderId" column="order_item_id" />
+		<result property="orderGroupNo" column="order_exec_id" />
+		<result property="orderSubNo" column="order_sub_no" />
+		<result property="orderName" column="item_name" />
+		<result property="orderItemCode" column="item_code" />
+		<result property="dosage" column="dosage" />
+		<result property="dosageUnit" column="dosage_unit" />
+		<result property="drugSpec" column="drug_specs" />
+	</resultMap>
+
+	<resultMap type="InfusionMonitorRecord" id="infusionMonitorRecordMap">
+		<id property="id" column="infu_monitor_id" />
+		<result property="orderExecId" column="order_exec_id" />
+		<result property="recordNurseId" column="rec_nurse_code" />
+		<result property="recordNurseName" column="rec_nurse_name" />
+		<result property="abnormal" column="abnormal" />
+		<result property="residue" column="residue" />
+		<result property="recordDate" column="rec_datetime" />
+		<result property="anomalyMsg" column="anomaly_msg" />
+		<result property="anomalyDisposal" column="anomaly_disposal" />
+		<result property="deliverSpeed" column="deliver_speed" />
+		<result property="speedUnit" column="speed_unit" />
+		<result property="status" column="status" />
+	</resultMap>
+
+	<resultMap type="InfusionMonitorRecord" id="infusionMonitorRecordSheetMap">
+		<id property="id" column="infu_monitor_id" />
+		<result property="orderExecId" column="order_exec_id" />
+		<result property="recordNurseId" column="rec_nurse_code" />
+		<result property="recordNurseName" column="rec_nurse_name" />
+		<result property="residue" column="residue" />
+		<result property="recordDate" column="rec_datetime" />
+		<result property="deliverSpeed" column="deliver_speed" />
+		<result property="status" column="status" />
+		<result property="speedUnit" column="speed_unit" />
+	</resultMap>
+
+	<sql id="monitorSelectSql">
+		m.pat_id,
+		m.pat_name,
+		m.bed_code,
+		m.ward_code,
+		m.order_exec_id,
+		m.freq_code,
+		m.usage_name,
+		m.order_content,
+		m.order_status,
+
+		n.infu_monitor_id,
+		n.rec_datetime,
+		n.rec_nurse_code,
+		n.rec_nurse_name,
+		n.abnormal,
+		n.anomaly_msg,
+		n.anomaly_disposal,
+		n.deliver_speed,
+		n.residue,
+		n.status,
+		n.speed_unit
+
+		,i.ORDER_GROUP_ID+'*' +CAST(i.ORDER_SUB_NO as varchar) as
+		order_item_id
+		,i.order_sub_no
+		,i.ITEM_CODE as item_code
+		,i.ITEM_NAME as
+		item_name
+		,i.SPECIFICATION as drug_specs
+		,i.DOSAGE as dosage
+		,i.DOSAGE_UNIT as dosage_unit
+	</sql>
+
+	<insert id="saveInfusionMonitor" parameterType="InfusionMonitorInfo">
+		INSERT into
+		PAT_INFUSION_MONITOR(
+		pat_id,
+		pat_name,
+		bed_code,
+		ward_code,
+		order_exec_id,
+		freq_code,
+		usage_name,
+		order_content,
+		ORDER_STATUS
+		)
+		VALUES (
+		#{patientId},
+		#{patientName},
+		#{bedNo},
+		#{deptId},
+		#{orderExecId},
+		#{deliverFreq},
+		#{usageName},
+		#{orderContent},
+		#{status}
+		)
+	</insert>
+
+	<insert id="addInfusionMonitorItem" parameterType="InfusionMonitorRecord" 
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT into
+		PAT_INFUSION_MONITOR_ITEM(
+		rec_datetime,
+		rec_nurse_code,
+		rec_nurse_name,
+		order_exec_id,
+		abnormal,
+		deliver_speed,
+		residue,
+		status,
+		speed_unit
+		)
+		VALUES (
+		#{recordDate},
+		#{recordNurseId},
+		#{recordNurseName},
+		#{orderExecId},
+		#{abnormal},
+		#{deliverSpeed},
+		#{residue},
+		#{status},
+		#{speedUnit}
+		)
+	</insert>
+
+	<select id="selectInfusionMonitorList" resultMap="infusionMonitorMap">
+		select
+		<include refid="monitorSelectSql" />
+		FROM PAT_INFUSION_MONITOR m inner join PAT_INFUSION_MONITOR_ITEM n on
+		m.order_exec_id = n.order_exec_id
+		inner join PAT_ORDER_GROUP g on g.order_bar = m.order_exec_id
+		inner join PAT_ORDER_ITEM i on g.pat_id = i.pat_id and g.order_no = i.order_no
+ 		and g.perform_no = i.perform_no
+		WHERE
+		m.ORDER_STATUS != 'F'
+		and n.rec_datetime <![CDATA[ >= #{param2} ]]>
+		AND n.rec_datetime <![CDATA[ < #{param3}  ]]>
+		and m.pat_id in (
+		<foreach collection="param1" item="item" index="index"
+			separator=",">
+			#{item}
+		</foreach>
+		)
+		order by n.rec_datetime
+	</select>
+
+	<select id="selectInfusionMonitorRecordList" resultMap="infusionMonitorRecordSheetMap">
+		select
+			n.order_exec_id,
+			n.infu_monitor_id,
+			n.rec_datetime,
+			n.rec_nurse_code,
+			n.rec_nurse_name,
+			n.abnormal,
+			n.deliver_speed,
+			n.residue,
+			n.status,
+			n.speed_unit
+		FROM PAT_INFUSION_MONITOR m inner join PAT_INFUSION_MONITOR_ITEM n on
+		m.order_exec_id = n.order_exec_id
+		WHERE
+		1 = 1
+		<if test="param3 != null">
+			and n.rec_datetime <![CDATA[ >= #{param3} ]]>
+		</if>
+		<if test="param4">
+			AND n.rec_datetime <![CDATA[ < #{param4}  ]]>
+		</if>
+		<if test="param1 != null">
+			and m.pat_id in (
+			<foreach collection="param1" item="item" index="index"
+				separator=",">
+				#{item}
+			</foreach>
+			)
+		</if>
+		<if test="param2 != null and param2.size > 0">
+			and n.order_exec_id in (
+				<foreach collection="param2" item="orderExecId" index="index"
+					separator=",">
+					#{orderExecId}
+				</foreach>
+			)
+		</if>
+		order by n.order_exec_id,n.rec_datetime
+	</select>
+
+	<update id="updateInfusionMonitorItem" parameterType="InfusionMonitorRecord">
+		update pat_infusion_monitor_item 
+		<set>
+			abnormal=#{abnormal},
+			<if test="deliverSpeed != null">
+				deliver_speed=#{deliverSpeed},
+			</if>
+			<if test="anomalyMsg != null">
+				anomaly_msg=#{anomalyMsg},
+			</if>
+			<if test="anomalyDisposal != null">
+				anomaly_disposal=#{anomalyDisposal},
+			</if>
+			<if test="residue != null">
+				residue=#{residue},
+			</if>
+			<if test="status != null">
+				status=#{status},
+			</if>
+			<if test="speedUnit != null">
+				speed_unit = #{speedUnit}
+			</if>
+		</set>
+		where infu_monitor_id = #{id}
+	</update>
+
+	<update id="updateInfusionMonitor" parameterType="InfusionMonitorInfo">
+		update
+		pat_infusion_monitor set
+		order_status=#{status}
+		where order_exec_id =
+		#{orderExecId}
+	</update>
+
+	<select id="selectInfusionMonitorForOrderExec" parameterType="String"
+		resultMap="infusionMonitorMap">
+		select
+		<include refid="monitorSelectSql" />
+		FROM pat_infusion_monitor m inner join pat_infusion_monitor_item n on
+		m.order_exec_id = n.order_exec_id
+		inner join PAT_ORDER_GROUP g on g.order_bar = m.order_exec_id
+		inner join PAT_ORDER_ITEM i on g.pat_id = i.pat_id and g.order_no = i.order_no
+ 		and g.perform_no = i.perform_no
+		WHERE m.order_exec_id = #{param1}
+	</select>
+
+	<select id="selectInfusionMonitor" resultMap="infusionMonitorMap">
+		select
+		<include refid="monitorSelectSql" />
+		FROM pat_infusion_monitor m inner join pat_infusion_monitor_item n on
+		m.order_exec_id = n.order_exec_id
+		inner join PAT_ORDER_GROUP g on g.order_bar = m.order_exec_id
+		inner join PAT_ORDER_ITEM i on g.pat_id = i.pat_id and g.order_no = i.order_no
+ 		and g.perform_no = i.perform_no
+		WHERE m.pat_id = #{param1}
+		and n.rec_datetime between #{param2} AND #{param3}
+		<if test="param4 != null">
+			and m.order_status = 'I'
+		</if>
+		<if test="param5 != null">
+			AND g.IS_LONGTERM = #{param5}
+		</if>
+		order by n.rec_datetime
+	</select>
+	
+	<select id="getInfusionMonitorRecordById" parameterType="String" resultMap="infusionMonitorRecordMap">
+		select
+			n.infu_monitor_id,
+			n.order_exec_id,
+			n.rec_datetime,
+			n.rec_nurse_code,
+			n.rec_nurse_name,
+			n.abnormal,
+			n.anomaly_msg,
+			n.anomaly_disposal,
+			n.deliver_speed,
+			n.residue,
+			n.status,
+			n.speed_unit
+		FROM PAT_INFUSION_MONITOR_ITEM n
+		WHERE n.infu_monitor_id = #{param1}
+	</select>
+	
+	<select id="getInfusionMonitorRecordByOrderId" parameterType="String" resultMap="infusionMonitorRecordMap">
+		select
+			n.infu_monitor_id,
+			n.order_exec_id,
+			n.rec_datetime,
+			n.rec_nurse_code,
+			n.rec_nurse_name,
+			n.abnormal,
+			n.anomaly_msg,
+			n.anomaly_disposal,
+			n.deliver_speed,
+			n.residue,
+			n.status,
+			n.speed_unit
+		FROM PAT_INFUSION_MONITOR_ITEM n
+		WHERE n.order_exec_id = #{param1} order by n.REC_DATETIME desc
+	</select>
+	
+	<select id="getMonitorCountByOrderExecId" parameterType="String" resultType="Integer">
+		SELECT 
+			count(m.order_exec_id)
+		FROM PAT_INFUSION_MONITOR m
+		WHERE 
+		m.order_exec_id = #{param1}
+		<if test="param2 != null">
+			AND m.ORDER_STATUS = 'P'
+		</if>
+	</select>
+</mapper>

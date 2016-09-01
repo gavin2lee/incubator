@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.DictOperateMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnis.core.identity.entity.SysOperate" >
+    <id column="operate_code" property="operateCode" jdbcType="VARCHAR" />
+    <result column="operate_name" property="operateName" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    operate_code, operate_name, description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_operate
+    where operate_code = #{operateCode,jdbcType=VARCHAR}
+  </select>
+  <select id="getAllOperate" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_operate
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_operate
+    where operate_code = #{operateCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnis.core.identity.entity.SysOperate" >
+    insert into sys_operate (operate_code, operate_name, description
+      )
+    values (#{operateCode,jdbcType=VARCHAR}, #{operateName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lachesis.mnis.core.identity.entity.SysOperate" >
+    insert into sys_operate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="operateCode != null" >
+        operate_code,
+      </if>
+      <if test="operateName != null" >
+        operate_name,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="operateCode != null" >
+        #{operateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operateName != null" >
+        #{operateName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lachesis.mnis.core.identity.entity.SysOperate" >
+    update sys_operate
+    <set >
+      <if test="operateName != null" >
+        operate_name = #{operateName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where operate_code = #{operateCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnis.core.identity.entity.SysOperate" >
+    update sys_operate
+    set operate_name = #{operateName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where operate_code = #{operateCode,jdbcType=VARCHAR}
+  </update>
+</mapper>

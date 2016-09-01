@@ -1,0 +1,115 @@
+<div class="col-md-8">
+  <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+    <div class="panel-heading">
+      <i class="fa fa-tasks"></i>
+      <span>填写不良事件上报表</span>
+    </div>
+    <div class="panel-body">
+      <table print-table="vm.list" st-table="vm.list" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered">
+        <thead>
+          <tr class="header-export">
+            <th st-sort="hisCode">等级</th>
+            <th>等级描述</th>
+            <th>处理流程</th>
+            <th print-remove>操作</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="row in vm.list">
+          <tr class="row-{{$index}}">
+            <td data-title="'等级'" ng-click="vm.edit(row)">
+              {{row.damageLevelName}}
+            </td>
+            <td data-title="'等级描述'" ng-click="vm.edit(row)">
+              {{row.remark}}
+            </td>
+            <td data-title="'处理流程'" ng-click="vm.edit(row)">
+              {{ row.flow }}
+            </td>
+
+            <td data-title="'操作'">
+              <button class="btn btn-danger btn-xs" ng-click="vm.del(row.seqId)" uib-tooltip="删除" ng-if="!row.isEditing"><span class="fa fa-trash"></span></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <none-data-info list="vm.list"></none-data-info>
+    </div>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-tasks"></i>
+      <span>填写分级标准信息</span>
+      <button class="btn btn-sm btn-success" type="button" ng-click="vm.save()" ng-disabled="addLevelForm.damageLevelName.$invalid || addLevelForm.remark.$invalid">保存</button>
+      <!-- <button ng-click="vm.add()" class="btn btn-primary btn-sm">
+        添加分级标准
+      </button> -->
+    </div>
+    <div class="panel-body">
+      <form class="form-horizontal w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="addLevelForm">
+        <!-- <div class="modal-body"> -->
+
+        <div class="container-fluid">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name" class="col-sm-3 control-label">等级</label>
+              <div class="col-sm-9">
+                <input class="form-control input-sm" required ng-model="vm.formData.damageLevelName" name="damageLevelName" type="text" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-sm-3 control-label">描述</label>
+              <div class="col-sm-9">
+                <textarea class="form-control input-sm" name="remark" ng-model="vm.formData.remark" required></textarea>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="col-sm-3 control-label">流程</label>
+              <div class="col-sm-9">
+                <div class="flow-list">
+                  <div ng-repeat="flowItem in vm.formData.flowList track by $index">
+                    <div class="btn-group btn-group-xs" role="group">
+                      <button type="button" class="btn btn-default btn-xs" name="button" ng-click="main.runApi(api)">
+                        {{flowItem}}
+                      </button>
+                      <a class="btn btn-danger btn-xs" ng-click="vm.removeFlow($index)">
+                        <i class="fa fa-times"></i>
+                      </a>
+                    </div>
+                    <i class="fa fa-long-arrow-right" ng-if="!$last"></i>
+
+                    <!-- <i class="fa fa-level-down fa-flip-horizontal" ng-if="!$last"></i>
+                    <span>{{flowItem}}</span>
+                    <a ng-click="vm.removeFlow($index)" href="javascript:;" class="text-danger">
+                      <i class="fa fa-times-circle"></i>
+                    </a> -->
+                  </div>
+                </div>
+                <div class="input-group">
+                  <input type="text" class="form-control input-sm" ng-model="vm.flowText" placeholder="填写流程">
+                  <span class="input-group-btn">
+                      <button ng-click="vm.addFlow()" class="btn btn-primary btn-sm" ng-disabled="vm.flowText === '' || !vm.flowText"><span class="fa fa-plus"></span></button>
+                    </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="form-group">
+              <label class="col-sm-3 control-label"></label>
+              <div class="col-sm-9">
+                <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.save()">保存</button>
+              </div>
+            </div> -->
+          </div>
+        </div>
+    </div>
+    <!-- <div class="modal-footer"> -->
+
+    <!-- </div> -->
+    </form>
+  </div>
+</div>
+</div>

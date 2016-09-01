@@ -1,0 +1,68 @@
+.dept-wrapper {
+  width: 100%;
+}
+.list {
+  padding: 0;
+  overflow-y: scroll;
+}
+.list-accordion {
+  & > div {
+    margin: 0;
+  }
+}
+.list__title {
+  box-shadow: none;
+  margin: 0 !important;
+  border-bottom: 1px #eee solid;
+  .panel-heading {
+    padding: 0;
+    background: #f9f9f9;
+    .panel-title {
+      font-size: 12px;
+      font-weight: normal;
+      a {
+        display: block;
+        padding: 8px 10px;
+        transition: background 0.1s;
+        &:hover {
+          text-decoration: none;
+          background: darken(#f9f9f9, 3%);
+        }
+      }
+    }
+  }
+  .panel-body {
+    border: none!important;
+    padding: 0;
+  }
+}
+.sublist__item {
+  padding: 6px 0 6px 16px;
+  display: block;
+  border-top: 1px #eee dotted;
+  cursor: pointer;
+  color: $font-color;
+  transition: background 0.1s;
+  &:hover {
+    text-decoration: none;
+    background: #f9f9f9;
+  }
+}
+
+.user-form {
+  @include clearfix;
+  margin-bottom: 10px;
+}
+
+.dynamic-form-item {
+  border-top: 1px $gray-l dotted;
+  padding-top: 10px;
+
+  .form-horizontal &:first-child {
+    border: 0;
+  }
+}
+
+.static-form-item {
+  padding-top: 10px;
+}

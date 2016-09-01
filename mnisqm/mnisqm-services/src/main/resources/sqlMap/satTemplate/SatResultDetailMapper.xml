@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.satTemplate.dao.SatResultDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.satTemplate.domain.SatResultDetail" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="DETAIL_CODE" property="detailCode" jdbcType="VARCHAR" />
+    <result column="RESULT_CODE" property="resultCode" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="OPTION_CODE" property="optionCode" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <collection property="satOptionList" javaType="java.util.List"
+		ofType="com.lachesis.mnisqm.module.satTemplate.domain.SatOption"
+		column="DETAIL_CODE" >
+		<id column="SEQID" property="seqId" jdbcType="BIGINT" />
+    	<result column="DETAIL_CODE" property="detailCode" jdbcType="VARCHAR" />
+    	<result column="OPTION_CODE" property="optionCode" jdbcType="VARCHAR" />
+    	<result column="OPTION_CONTENT" property="optionContent" jdbcType="VARCHAR" />
+    	<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    	<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    	<result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+	</collection>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SAT_RESULT_DETAIL
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatResultDetail" >
+    insert into SAT_RESULT_DETAIL (DETAIL_CODE, RESULT_CODE, 
+      CONTENT, OPTION_CODE, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{detailCode,jdbcType=VARCHAR}, #{resultCode,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{optionCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatResultDetail" >
+    update SAT_RESULT_DETAIL
+    set DETAIL_CODE = #{detailCode,jdbcType=VARCHAR},
+      RESULT_CODE = #{resultCode,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      OPTION_CODE = #{optionCode,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select srd.SEQ_ID, srd.DETAIL_CODE, srd.RESULT_CODE, srd.CONTENT, srd.OPTION_CODE, srd.CREATE_TIME, srd.CREATE_PERSON, 
+    srd.UPDATE_TIME, srd.UPDATE_PERSON, so.SEQ_ID SEQID, so.DETAIL_CODE, so.OPTION_CODE, so.OPTION_CONTENT, so.CREATE_TIME, so.CREATE_PERSON, 
+    so.UPDATE_TIME, so.UPDATE_PERSON
+    from SAT_RESULT_DETAIL srd LEFT JOIN SAT_OPTION so ON std.DETAIL_CODE = so.DETAIL_CODE
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, DETAIL_CODE, RESULT_CODE, CONTENT, OPTION_CODE, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from SAT_RESULT_DETAIL
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from SAT_RESULT_DETAIL where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.satTemplate.domain.SatResultDetail" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into SAT_RESULT_DETAIL (DETAIL_CODE, RESULT_CODE, 
+      CONTENT, OPTION_CODE, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{detailCode,jdbcType=VARCHAR}, #{resultCode,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{optionCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+</mapper>

@@ -1,0 +1,133 @@
+.baseinfo-wrapper {
+  .dept-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  .dept-list {
+    padding: 0;
+  }
+}
+.list-content {
+  overflow-y: scroll;
+}
+.page-left-menu {
+  width: $page-left-width;
+  padding: 0 10px;
+  position: fixed;
+  .panel-heading {
+    font-size: 14px;
+  }
+  treecontrol > ul {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    > li {
+      padding-left: 8px;
+    }
+  }
+}
+.page-right-content {
+  width: calc(100% - $page-left-width);
+  padding-right: 10px;
+  margin-left: $page-left-width;
+}
+.baseinfo-detail-wrapper {
+  background-color: white;
+  .baseinfo-form {
+    padding-top: 20px;
+  }
+}
+.info-time-wrapper {}
+.info-time_item {
+  &:hover {
+    .open-info-time {
+      display: inline-block;
+    }
+  }
+}
+.open-info-time {
+  display: none;
+  margin: 0 10px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.hr-tool {
+  border-bottom: 1px #ddd solid;
+  @include clearfix();
+  .btn {
+    width: 100%;
+    border: 0;
+    border-right: 1px #ddd solid;
+    border-radius: 0;
+  }
+  & > div:last-child {
+    .btn {
+      border-right: 0;
+    }
+  }
+}
+.file-type-switch {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 899;
+  border-top: 1px #ddd solid;
+}
+
+.chart-wrapper {
+  background: #fff;
+  // height: 234px;
+}
+
+.tree-selected {
+  background: $base-color2;
+  color: #fff;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.detail-list-item {
+  position: relative;
+  @include clearfix();
+  margin-bottom: 10px;
+  border-bottom: 1px #ccc dotted;
+
+  &:last-child {
+    border: 0;
+  }
+}
+
+.user-detail-item {
+  cursor: pointer;
+}
+
+.chart-wrapper {
+  & >  .row {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.chart_text {
+  padding: 0;
+  .value-label {
+    font-size: 18px;
+    padding: 0;
+  }
+}
+
+.chart-content {
+  & >  div {
+    border-left: 1px #ccc dotted;
+  }
+}
+.detail-list-item_del {
+  display: none;
+  position: absolute;
+  z-index: 9;
+  right: 0;
+  top: 0;
+
+  .form-editing .detail-list-item:hover & {
+    display: block;
+  }
+}

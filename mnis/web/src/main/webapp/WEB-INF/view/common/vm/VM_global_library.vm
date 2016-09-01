@@ -1,0 +1,501 @@
+#macro( pageHead $page )
+	<input type="hidden" name="curPage" id="curPage" value="$page.curPage">
+	<input type="hidden" name="totalPage" id="totalPage" value="$page.totalPage">
+	#commonPage($page)
+#end
+
+#macro( pageFoot $page )
+	#commonPage($page)
+#end
+
+#macro( commonPage $page )
+	<table class="pageTable" cellspacing="4px;" cellpadding="0" align="right">
+    	<tr>
+        	<td class="totalItem">#springMessage("uih.label.go.page")</td>
+        	<td><input type="text" value="$page.curPage" class="goPageText" onkeyup="if(event.keyCode == 13){if(!isNumeric(this)){alert('Please input numeric!')}else{go(this.value)}}"></td>
+        	<td class="totalItem">&nbsp;#springMessage("uih.label.total.page"):$page.totalPage&nbsp;</td>
+        	<td class="pageNo" onclick="javascript:go(1)" title="First Page"><img src="#url('/common/images/common/pageFirst.gif')"></td>
+        	<td class="pageNo" onclick="javascript:go($page.curPage - 1)" title="Previous Page"><img src="#url('/common/images/common/pagePre.gif')"></td>
+        	#foreach( $no in $page.pageNo)
+        		#if( $no == '...' )
+        			<td>$no</td>
+        		#else
+        			#if( $no == $page.curPage)
+        				<td class="curPage" onclick="javascript:go($no)" title="Page $no">$no</td>
+        			#else
+        				<td class="pageNo" onclick="javascript:go($no)" title="Page $no">$no</td>
+        			#end
+        		#end
+        	#end
+        	<td class="pageNo" onclick="javascript:go($page.curPage + 1)" title="Next Page"><img src="#url('/common/images/common/pageNext.gif')"></td>
+        	<td class="pageNo" onclick="javascript:go($page.totalPage)" title="Last Page"><img src="#url('/common/images/common/pageLast.gif')"></td>
+    	</tr>
+	</table>
+#end
+
+#macro( url $relativeUrl )
+#if( $request )${request.getContextPath()}$relativeUrl#else$springMacroRequestContext.getContextPath()$relativeUrl#end
+#end
+
+#macro( basePath )
+	#if( $request )${request.getContextPath()}#else$springMacroRequestContext.getContextPath()#end
+#end
+
+#macro( opType $id )
+#if($null.isNull($id) || $id == '')#springMessage("uih.label.add")#else#springMessage("uih.label.edit")#end
+#end
+
+#macro( getDictionary $id )
+    $application.get("dictionary").get($id)
+#end
+
+#macro( getErrorMessage $modelName )
+	#springBind($modelName)
+	<span style="color:red">
+	#foreach($error in $status.errorMessages)	
+	<li style="color:red">$error</li>
+	#end
+	</span>
+#end
+
+#macro( mandatory)
+<span class="mandatory">*</span>
+#end
+
+#macro( online $online)
+	#if($online) yes #else no #end
+#end
+
+#macro( onlineInput $id $online)
+	<input type="radio" name="online" id="online" value="1" #if($online || $!id == '') checked #end>yes
+	<input type="radio" name="online" id="online" value="0" #if(!$online && $!id !='') checked #end>no
+#end
+
+#macro(search $name $value)
+	<input type="text" name="$name" value="$!value" class="searchInput">
+	<img src="#url('/common/images/common/search.gif')" onclick="search()" class="cursorStyle">
+#end
+
+#macro(searchWithoutIcon $name $value)
+	<input type="text" name="$name" value="$!value" class="searchInput" onKeyDown="searchInputKeyDown()">	
+#end
+
+#macro(createMenu $resource)
+	#if($resource.leaf)
+		#if($resource.value.indexOf("http") == 0)
+			<li><a href="javascript:directUrl('$resource.value')">$resource.name</a><input type="hidden" id="menuUrl" name="menuUrl" value="$resource.value"></li>
+		#else
+			<li><a href="javascript:directUrl('#url("$resource.value")')">$resource.name</a><input type="hidden" id="menuUrl" name="menuUrl" value="#url("$resource.value")"></li>
+		#end
+	#else
+		<li>
+			<a>$resource.name</a>
+    		<ul>
+    			#foreach($subResource in $resource.children)
+    				#createMenu($subResource)
+    			#end
+            </ul>
+		</li>
+	#end
+#end
+
+########################## doc ##################################
+#macro(defaultIfBlank $value $default)
+#if("$!{value}"=="")$!{default}#else$!{value}#end
+#end
+
+#macro(docHead)
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- <link rel="stylesheet" href="#url('/component/easyui/themes/anyi/easyui.css')" /> -->
+<link rel="stylesheet" href="#url('/component/easyui/themes/default/easyui.css')" />
+<link rel="stylesheet" href="#url('/component/easyui/themes/icon.css')" />
+<link rel="stylesheet" href="#url('/theme/doc.css')"/>
+<script src="#url('/js/jquery-1.8.3.js?1472534366480')"></script>
+<!-- <script src="#url('/component/easyui/jquery.easyui.js?1472534366480')"></script> -->
+<script src="#url('/component/easyui/jquery.easyui.min.js?1472534366480')"></script>
+<script src="#url('/component/easyui/locale/easyui-lang-zh_CN.js?1472534366480')"></script>
+<script src="#url('/js/jquery.autosize.js?1472534366480')"></script>
+<!-- <script src="#url('/js/utils.js?1472534366480')"></script> -->
+<script src="#url('/js/doc.js?1472534366480')"></script>
+#end
+
+#macro(docToolbar)
+<div class="toolbar-container">
+<div class="toolbar">
+	<input id="print" type="button" value="预&nbsp;&nbsp;览">
+	<input id="save" type="button" #if ($!APPROVE) disabled #end value="保&nbsp;&nbsp;存">
+	#if ($!approvePermission)
+		#if ($!APPROVE)
+			<input id="cancelApproveHospitalize" type="button" onclick="approveDoc(false)" style="display:inline" value="取消审签">
+			<input id="approveHospitalize" type="button" onclick="approveDoc(true)" style="display:none" value="审&nbsp;&nbsp;签">
+    	#else
+			<input id="cancelApproveHospitalize" type="button" onclick="approveDoc(false)" style="display:none" value="取消审签">
+			<input id="approveHospitalize" type="button" onclick="approveDoc(true)" style="display:inline" value="审&nbsp;&nbsp;签">
+		#end
+	#end
+</div>
+</div>
+#end
+
+#macro(docViewToolbar)
+<div class="toolbar-container">
+<div class="toolbar">
+	<input type="button" value="关&nbsp;&nbsp;闭" onclick="javascript:window.close();">
+	<input type="button" value="打&nbsp;&nbsp;印" onclick="javascript:window.print();">
+</div>
+</div>
+#end
+
+#macro(pageTitle $docName)
+	<div class="doc-hospital">$!{hospital}</div>
+	<div class="doc-title">$!{docName}</div>
+#end
+
+#macro(pagePatientWithoutDate $docName)
+		<span><label>病区：</label><span style="width: 130px;">#defaultIfBlank($!{doc.deptName}, $!{patient.wardArea})</span></span>
+		<span><label>床号：</label><span style="width: 40px;">$!{patient.bedNo}</span></span>
+		<span><label>姓名：</label><span style="width: 80px;">$!{patient.name}</span></span>
+		<span><label>住院号：</label><span style="width: 90px;">$!{patient.hospitalNo}</span></span>
+		<span><label>性别：</label><span style="width: 40px;">$!{patient.gender}</span></span>
+		<span class="doc-patient-last"><label>年龄：</label><span style="width: 50px;">$!{patient.age}</span></span>
+#end
+
+#macro(pagePatient $docName)
+#pagePatientWithoutDate()
+		<br>
+		<span><label>入院日期：</label><span style="width: 98px;">$!{patient.date}</span></span>
+#end
+
+#macro(pageHead $docName)
+<div class="doc-head">
+#pageTitle($docName)
+	<div class="doc-patient">
+#pagePatient()
+		<span><label id="diagnosisLabel" class="diagnosisLabel">诊断:&nbsp;</label><span id="pDiagnosis" class="value diagnosis">$!{patient.diagnose}</span></span>
+	</div>
+</div>
+#end
+
+#macro(pageHeadRestraint $docName)
+<div class="doc-head">
+#pageTitle($docName)
+	<div class="doc-patient">
+#pagePatient()
+		<span><label id="diagnosisLabel" class="diagnosisLabel">诊断:&nbsp;</label><span id="pDiagnosis" class="value diagnosis">$!{patient.diagnose}</span></span>
+		<span><label>约束首次应用日期:&nbsp;</label><span style="width: 85px; text-align: left;">$!{doc.hold1}</span></span>
+	</div>
+</div>
+#end
+
+#macro(pageHeadWithoutDiagnose $docName)
+<div class="doc-head">
+#pageTitle($docName)
+	<div class="doc-patient">
+#pagePatientWithoutDate()
+	</div>
+</div>
+#end
+
+#macro(pageHeadPain $docName)
+<div class="doc-head">
+#pageTitle($docName)
+	<div class="doc-patient">
+#pagePatient()
+		<span><label id="diagnosisLabel" class="diagnosisLabel">诊断:&nbsp;</label><span id="pDiagnosis" class="value diagnosis">$!{patient.diagnose}</span></span>
+	</div>
+	<div>
+		<div class="doc-pain-title">
+			<strong>采用疼痛评估表：</strong>
+			<input type="checkbox" id="hold1" name="hold1" #if($!{doc.hold1} == '√')checked="checked"#end><label for="hold1">NRS数字分级法</label>
+			<input type="checkbox" id="hold2" name="hold2" #if($!{doc.hold2} == '√')checked="checked"#end><label for="hold2">WONG-BAKER面部表情量表</label>
+			<input type="checkbox" id="hold3" name="hold3" #if($!{doc.hold3} == '√')checked="checked"#end><label for="hold3">行为学评估量表</label>
+		</div>
+		<div class="doc-pain-way">
+			<div class="nrs">
+			<strong>NRS评估法：</strong><br>
+			0：无痛；<br>
+			1-3：轻度疼痛（睡眠不受影响）<br>
+			4-6：中度疼痛（睡眠受影响）<br>
+			7-10：重度疼痛（严重影响睡眠）
+			</div>
+			<div style="padding-top: 22px;">
+			<strong>WONG-BAKER面部表情量表</strong><br>
+			<img src="#url('/img/wong-baker3.png')">
+			</div>
+			<div class="behavior">
+			<strong>行为学评估量表：</strong>——无法配合完成护理评估的成人。分值0-10分<br>
+			<table class="">
+				<tr>
+					<th style="width: 42px;">项目</th>
+					<th style="width: 100px;">0</th>
+					<th>1</th>
+					<th>2</th>
+				</tr>
+				<tr>
+					<td>脸部肌肉/表情</td>
+					<td>脸部肌肉放松</td>
+					<td>脸部肌肉紧张、皱眉、扭曲</td>
+					<td>经常或一直皱眉，紧咬牙床</td>
+				</tr>
+				<tr>
+					<td>休息</td>
+					<td>安静、表情安详，肢体活动正常</td>
+					<td>偶然有些休息不好，并改变体位</td>
+					<td>躁动不安，无法休息，频繁改变休息体位</td>
+				</tr>
+				<tr>
+					<td>肌紧张</td>
+					<td>肌张力正常，肌肉放松</td>
+					<td>肌张力增加，手指或脚趾屈曲</td>
+					<td>肌肉僵硬</td>
+				</tr>
+				<tr>
+					<td>发声</td>
+					<td>无异常发声</td>
+					<td>偶然发出呻吟声，哼声，哭泣或啜泣</td>
+					<td>频繁或持续地发出呻吟声，哼声，哭泣或啜泣声</td>
+				</tr>
+				<tr>
+					<td>安抚</td>
+					<td>满足的，放松的</td>
+					<td>通过谈话或分散注意力得到了安抚</td>
+					<td>很难通过抚摸或谈话得到安抚</td>
+				</tr>
+			</table>
+			</div>
+		</div>
+	</div>
+</div>
+#end
+
+#macro(pageFoot)
+<div class="page-foot">
+	<span>第&nbsp;<span class="pageNumber"></span>&nbsp;页</span>
+</div>
+#end
+
+#macro(bloodSugar)
+#pageHead('指测血糖监测记录单')
+#end
+
+#macro(bloodSugarComment)
+<div class="doc-comment">
+	注：此方法仅为快速筛查，确认需参考检验科的检验结果。
+</div>
+#end
+
+#macro(baseNurse)
+#pageHead('基&nbsp;础&nbsp;护&nbsp;理&nbsp;记&nbsp;录&nbsp;单')
+#end
+
+#macro(baseNurseComment)
+<div class="doc-comment">
+	注：1.以打钩形式记录。&nbsp;&nbsp;&nbsp;&nbsp;2.有专科增加项目请填写在空格栏内。
+</div>
+#end
+
+#macro(nurse)
+#pageHead('护&nbsp;&nbsp;理&nbsp;&nbsp;记&nbsp;&nbsp;录&nbsp;&nbsp;单')
+#end
+
+#macro(nurseComment)
+<div class="doc-comment">
+书写说明：
+<strong>意识：</strong>①清楚 ②嗜睡 ③昏睡 ④朦胧 ⑤浅昏迷 ⑥中昏迷 ⑦深昏迷 ⑧模糊&nbsp;&nbsp;&nbsp;&nbsp;<strong>瞳孔对光反应：</strong>灵敏↑、迟钝↓、消失0&nbsp;&nbsp;&nbsp;&nbsp;<strong>给氧方式：</strong>①鼻氧管 ②面罩 ③无创 ④有创<br>
+<strong>气道：</strong>吸痰以“√”示已完成并表示通畅&nbsp;&nbsp;<strong>痰液性状序号：</strong>①白粘痰 ②黄脓痰 ③血性痰&nbsp;&nbsp;&nbsp;&nbsp;<strong>皮肤：</strong>①完整 ②擦伤 ③皮疹 ④压疮<br>
+<strong>导管编号：</strong>①深静脉留置（a.颈部 b.锁骨下 c.PICC d.输液港 e.股静脉）②胃管 ③导尿管 ④止痛泵（a.硬膜外 b.静脉）⑤T管 ⑥负压引流 ⑦气插 ⑧气切 ⑨胸管 ⑩<input id="hold6" class="doc-hold-text" type="text" value="$!{doc.hold6}" maxlength="50"> ⑾<input id="hold7" class="doc-hold-text" type="text" value="$!{doc.hold7}" maxlength="50"><br>
+<strong>导管护理：</strong>以“√”示已完成并表示在位通畅，以“×”示不通畅予以通管，以“○”示不通畅予以更换&nbsp;<strong>引流液性状序号：</strong>①清 ②混浊 ③血性 ④淡血性 ⑤深黄 ⑥墨绿 ⑦咖啡色 ⑧<input id="hold8" class="doc-hold-text2" type="text" value="$!{doc.hold8}" maxlength="50"> ⑨<input id="hold9" class="doc-hold-text2" type="text" value="$!{doc.hold9}" maxlength="50"></div>
+#end
+
+#macro(hospitalize)
+#pageHeadWithoutDiagnose('护&nbsp;&nbsp;理&nbsp;&nbsp;入&nbsp;&nbsp;院&nbsp;&nbsp;评&nbsp;&nbsp;估&nbsp;&nbsp;单')
+#end
+
+#macro(health)
+#pageHead('住院患者健康教育及评估单')
+#end
+
+#macro(healthComment)
+<div class="doc-comment">
+	备注：1.宣教方式：①口头讲解  ②动作示范   ③书面资料分发 &nbsp; 2.宣教对象：①患者  ②家属
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.效果评价：A 已掌握，配合好；  B 能复述，能理解，或会演示；  C 需强化。
+</div>
+#end
+
+#macro(pain)
+#pageHeadPain('住院患者疼痛评估记录单')
+#end
+
+#macro(painComment)
+<div class="doc-comment">
+	注：<strong>疼痛的类型：</strong>Ⅰ 持续性 &nbsp; Ⅱ 阵发性 &nbsp; Ⅲ 间歇性 &nbsp; Ⅳ 进行性加重
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;<strong>疼痛的强度：</strong>“0”为无疼痛，“10”为患者能够想象的最强烈的疼痛；使用止痛剂后需及时评价止痛的效果。
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;<strong>疼痛的性质：</strong>①刀割样痛 ②绞痛 ③烧灼样痛 ④刺痛 ⑤压痛 ⑥胀痛 ⑦钝痛 ⑧酸痛 ⑨<input id="hold4" class="doc-hold-text" value="$!{doc.hold4}" maxlength="50">
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;<strong>疼痛对患者的影响：</strong>A影响睡眠 B翻转不安、无法入睡 C食欲低下 D生活自理能力（ADL低下） E无影响
+	<br>
+	1、所有患者在入院时均需进行疼痛评估。
+	<br>
+	2、住院患者每日评估疼痛并记录一次疼痛评分；中度疼痛（4－6分）需每班评估；重度疼痛（7－10分）需每小时评估，直至疼痛评分≤6分。
+	<br>
+	3、疼痛药物治疗后一小时左右需评价用药效果。
+</div>
+#end
+
+#macro(restraint)
+#pageHeadRestraint('使用约束带观察记录表')
+#end
+
+#macro(restraintComment)
+<div class="doc-comment">
+	说明：1. 表格内约束原因、约束部位、观察要点及措施栏在相应选项处以打钩形式记录。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 使用约束带患者每2小时评估记录一次，直至约束工具解除。
+</div>
+#end
+
+#macro(press)
+#pageHead('住院患者压疮评估及护理措施表')
+#end
+
+#macro(pressComment)
+<div class="doc-comment">
+	注：1、使用Norton改良量表评分进行压疮评估。H（高危险）:6~12分，M（中危险）:13~18分，L（低危险）:19~23分，N（无危险）:24分。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2、所有患者在入院时均需进行压疮危险因素评估，以后每日评估一次，但在病情变化（如意识清楚患者发生意识障碍等情况时）时需随时评估。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;3、对低危险和无危险分值的患者可不填写“预防压疮护理措施”栏；对中危险和高危险分值以及带入的压疮患者，需填写“预防压疮护理措施”栏，用“√”标识，同时落实相应的护理措施。
+</div>
+#end
+
+#macro(adultFall)
+#pageHead('住院患者跌倒/坠床危险因子评估及护理措施表（成人）')
+#end
+
+#macro(childFall)
+#pageHead('住院儿童跌倒/坠床危险因子评估及护理措施表')
+#end
+
+#macro(fallComment)
+<div class="doc-comment">
+	注：1、所有患者在入院时均需进行跌倒/坠床危险因素评估。总分≥4分的患者为高危跌倒/坠床患者，需在“护理措施”栏内勾选相应的护理措施（以“√”标识），并落实相应的护理措施。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2、住院患者每天进行评估并记录，在病情变化及跌倒/坠床危险因子项目发生改变时及时再评估并记录。
+</div>
+#end
+
+#macro(childFallComment)
+<div class="doc-comment">
+	注：1、所有患儿在入院时均需进行跌倒/坠床危险因素评估。总分≥4分的患儿为高危跌倒/坠床患儿，需在“护理措施”栏内勾选相应的护理措施（以“√”标识），并落实相应的护理措施。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2、住院患儿每天进行评估并记录，在病情变化及跌倒/坠床危险因子项目发生改变时及时再评估并记录。
+</div>
+#end
+
+#macro(over)
+#pageHead('翻&nbsp;&nbsp;身&nbsp;&nbsp;记&nbsp;&nbsp;录&nbsp;&nbsp;单')
+#end
+
+#macro(inOut)
+#pageHead('出&nbsp;入&nbsp;液&nbsp;量&nbsp;记&nbsp;录&nbsp;单')
+#end
+
+#macro(heart)
+#pageHead('心&nbsp;电&nbsp;监&nbsp;护&nbsp;记&nbsp;录&nbsp;单')
+#end
+
+#macro(barthel)
+#pageHead('Barthel指数(BL)评定量表')
+#end
+
+#macro(barthelComment)
+<div class="doc-comment">
+	备注：1、所有患者在入院时均需进行Barthel指数评估，在每个项目对应的得分上划“√”，以后每周评估一次，但在病情变化（如意识清楚患者发生意识障碍等情况）时需随时评估。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、Barthel指数总分≤40分时患者自理能力属重度依赖；Barthel指数总分41－60分时患者自理能力属中度依赖；Barthel指数总分61－99分时患者自理能力属轻度依赖；Barthel指数总分100分属无需依赖。
+</div>
+#end
+
+############################### 深圳市第三人民医院 #######################################
+
+#macro(liverFirst)
+#pageHeadWithoutDiagnose('首次护理记录单（肝病科）')
+<hr>
+#end
+
+#macro(liverNurse)
+#pageHead('护理记录单（肝病科）')
+#end
+
+#macro(liverNurseComment)
+<div class="doc-comment">
+注：
+<strong>意识：</strong>①清楚 ②嗜睡 ③昏睡 ④朦胧 ⑤浅昏迷 ⑥中昏迷 ⑦深昏迷 ⑧模糊
+&nbsp;<strong>皮肤：</strong>①完整 ②擦伤 ③皮疹 ④压疮
+#end
+
+#macro(fall)
+#pageHead('跌倒风险评估量表')
+#end
+
+#macro(fallComment2)
+<div class="doc-comment">
+	注：1、适用范围：（1）有跌倒史（2）存在跌倒风险因素的病人（3）不适用于0-14岁人群。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2、填写说明：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;（1）评估时机：患者入院时、病情发生变化时、使用可能导致跌倒的药物时、跌倒后。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;（2）评分说明：最高分14分。分值≥2分者，每周评估1次；分值≥4分者，每周评估2次 ；病情变化者随时评估，并提供预防跌倒护理措施。
+</div>
+#end
+
+#macro(fallNurse)
+#pageHead('防跌倒护理单')
+#end
+
+#macro(fallNurseComment)
+<div class="doc-comment">
+	注：跌倒风险：1分,使用常规措施 ； 跌倒高危风险: ≥2 分,常规措施+加强措施
+</div>
+#end
+
+#macro(badl)
+#pageHead('患者基本生活活动能力（BADL）评估表')
+#end
+
+#macro(badlComment)
+<div class="doc-comment">
+	评估结果：A: 100分  无需依赖； B: 61-99分为轻度依赖； C: 41-60分中度依赖； D: ≤40分为重度依赖<br>
+	备注：1、相关知识请参考《临床护理技术规范》（基础篇）第二版，P81-84。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2、此表由责任护士在入院时、患者自理能力改变时、出院时对患者进行评估并给予相应的护理。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;3、医护人员根据患者病情和（或）自理能力的变化动态调整患者的护理级别。
+</div>
+#end
+
+#macro(press2)
+#pageHead('压疮危险因素评估表(改良式诺顿评分表)')
+#end
+
+#macro(press2Comment)
+<div class="doc-comment">
+	注：1、① 9~13分非常危险，至少每3天评估一次； 14~18分高度危险，每3~5天评估一次；19~23分中度危险，每3~5天评估一次；24~25分低度危险及25分以上，每周评估一次。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;② 评估对象：所有入院病人，特别是：危重病人、大手术后、卧床或活动受限、严重营养不良、水肿或预计有发生压疮可能的病人。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2、所有住院患者均进行评估，无风险患者7天评估一次
+</div>
+#end
+
+#macro(dangerTumor)
+#pageHead('肿瘤患者危重患者护理计划单')
+#end
+
+#macro(dangerBrain)
+#pageHead('肝病科危重患者护理计划单（肝性脑病）')
+#end
+
+#macro(dangerHepatitis)
+#pageHead('肝病科重症肝炎患者护理计划单')
+#end
+
+#macro(dangerHepatitisComment)
+<div class="doc-comment">
+	注：危重患者入院时由当班责任护士负责拟定该计划内容，各班动态跟进和执行。正反两面均需动态填写。
+</div>
+#end
+
+#macro(dangerEnteron)
+#pageHead('肝病科危重患者护理计划单(上消化道出血）')
+#end

@@ -1,0 +1,247 @@
+<td colspan="{{tdLen}}">
+  <uib-tabset active="active">
+    <uib-tab index="0" heading="基本信息">
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">科室：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.deptName}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">员工编号：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.hisCode}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">员工姓名：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.userName}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">员工性别：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.genderName}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">出生日期：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.birthday | date: 'yyyy-MM-dd'}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">电话：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.phone}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">邮箱：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.email}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">到院日期：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.inductionDate | date: 'yyyy-MM-dd'}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">员工性质：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.natureName}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">国籍：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.country}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">籍贯：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.nativePlace}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">民族：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.nation}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">证件类型：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.papersTypeName}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">证件号码：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.papersNo}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">毕业学校：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.graduationSchool}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">所学专业：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.profession}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">学位：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.degree}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">学位证编号：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.degreeNo}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">学历：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.education}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">学历证编号：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.educationNo}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">毕业时间：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.graduationDate | date:'yyyy-MM-dd'}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">外语水平：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.language}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">健康状态：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.health}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">批准时间：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.practiceApproveDate | date:'yyyy-MM-dd'}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">执业类型：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.practiceTypeName}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">执业证号：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.practiceType}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">有效期致：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.practiceValidDate | date: 'yyyy-MM-dd'}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">政治面貌：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.politacalStatusName}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">职称：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.technicalPost}}</span>
+      </div>
+      <div class="form-group col-md-3">
+        <label class="col-sm-6 control-label">职务：</label>
+        <span class="col-sm-6">{{vm.detail.comUser.duty}}</span>
+      </div>
+    </uib-tab>
+    <uib-tab index="1" heading="职称职务" active="tab.active">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>职务名称</th>
+          <th>审批单位</th>
+          <th>起始日期</th>
+          <th>结束日期</th>
+        </tr>
+        <tr ng-repeat="dtl in vm.detail.comUserPosition">
+          <td class="text-left">{{dtl.positionName}}</td>
+          <td class="text-left">{{dtl.reviewUnit}}</td>
+          <td class="text-left">{{dtl.startDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-left">{{dtl.endDate | date:'yyyy-MM-dd'}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="2" heading="护理信息">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>工作单位</th>
+          <th>工作部门</th>
+          <th>职务</th>
+          <th>起始日期</th>
+          <th>结束日期</th>
+        </tr>
+        <tr ng-repeat="dtl in vm.detail.comUserNursing">
+          <td class="text-left">{{dtl.reviewUnit}}</td>
+          <td class="text-left">{{dtl.deptName}}</td>
+          <td class="text-left">{{dtl.position}}</td>
+          <td class="text-left">{{dtl.startDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-left">{{dtl.endDate | date:'yyyy-MM-dd'}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="3" heading="教育工作">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>代课类型</th>
+          <th>学时数</th>
+          <th>课程专题</th>
+          <th>课程内容</th>
+          <th>起始日期</th>
+          <th>结束日期</th>
+        </tr>
+        <tr ng-repeat="dtl in vm.detail.comUserEducation">
+          <td class="text-left">{{dtl.educationType}}</td>
+          <td class="text-left">{{dtl.leaningTime}}</td>
+          <td class="text-left">{{dtl.courseTopics}}</td>
+          <td class="text-left">{{dtl.courseContent}}</td>
+          <td class="text-left">{{dtl.startDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-left">{{dtl.endDate | date:'yyyy-MM-dd'}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="4" heading="继续教育">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>主办单位</th>
+          <th>学习内容</th>
+          <th>学时</th>
+          <th>主讲</th>
+          <th>学分类型</th>
+          <th>学分</th>
+          <th>经费</th>
+          <th>起始日期</th>
+          <th>结束日期</th>
+        </tr>
+        <tr ng-repeat="dtl in vm.detail.comUserTraining">
+          <td class="text-left">{{dtl.professional}}</td>
+          <td class="text-left">{{dtl.learnContent}}</td>
+          <td class="text-left">{{dtl.diploma}}</td>
+          <td class="text-left">{{dtl.speaker}}</td>
+          <td class="text-left">{{dtl.creditType}}</td>
+          <td class="text-left">{{dtl.credit}}</td>
+          <td class="text-left">{{dtl.funding}}</td>
+          <td class="text-left">{{dtl.startDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-left">{{dtl.endDate | date:'yyyy-MM-dd'}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="5" heading="学历信息">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>学校</th>
+          <th>专业</th>
+          <th>学历</th>
+          <th>学历证书编号</th>
+          <th>学位</th>
+          <th>学位证书编号</th>
+          <th>起始日期</th>
+          <th>结束日期</th>
+        </tr>
+        <tr ng-repeat="dtl in vm.detail.comUserLearning">
+          <td class="text-left">{{dtl.school}}</td>
+          <td class="text-left">{{dtl.professional}}</td>
+          <td class="text-left">{{dtl.diploma}}</td>
+          <td class="text-left">{{dtl.diplomaNo}}</td>
+          <td class="text-left">{{dtl.degree}}</td>
+          <td class="text-left">{{dtl.degreeNo}}</td>
+          <td class="text-left">{{dtl.startDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-left">{{dtl.endDate | date:'yyyy-MM-dd'}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="6" heading="家庭成员">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>亲属关系</th>
+          <th>姓名</th>
+          <th>联系电话</th>
+          <th>邮件</th>
+        </tr>
+        <tr ng-repeat="dtl in vm.detail.comUserFamily">
+          <td class="text-left">{{dtl.relation}}</td>
+          <td class="text-left">{{dtl.name}}</td>
+          <td class="text-left">{{dtl.phone}}</td>
+          <td class="text-left">{{dtl.email}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+  </uib-tabset>
+
+</td>

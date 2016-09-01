@@ -1,0 +1,79 @@
+<div class="mod-pop-dateForm clearfix editCheck">
+  <form class="form-inlne form-horizontal w5c-form"
+        name="addCheckForm"
+        role="form"
+        novalidate
+        w5c-form-validate="vm.role.validationOption"
+        form="addCheckForm">
+    <div class="modal-header">
+      <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h5 class="modal-title">
+        <!-- <i class="fa fa-edit"></i> -->
+        质控检查
+      </h5>
+    </div>
+    <div class="modal-body clearfix">
+      <div class="row">
+        <div class="form-group col-xs-4">
+          <label for="date" class="control-label col-xs-3 partial-label">表单：</label>
+          <div class="col-xs-9">
+            <select class="form-control input-sm" name="formName" id="formName" ng-model="vm.formData.formName">
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-xs-4">
+          <label for="date" class="control-label col-xs-3 partial-label">日期：</label>
+          <div class="col-xs-9">
+            <span class="input-group">
+              <input ng-model="vm.formData.taskDate" type="text" id="taskDate" name="taskDate" required uib-datepicker-popup on-open-focus="true" is-open="vm.dateOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" readonly>
+
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-sm btn-default" ng-click="vm.dateOpen = true">
+                  <i class="fa fa-calendar"></i>
+                </button>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="form-group col-xs-4">
+          <label for="dept" class="control-label  col-xs-3 partial-label">病区：</label>
+          <div class="col-xs-9">
+            <select class="input-sm" id="dept" ng-model="vm.formData.deptCode">
+              <option ng-repeat="item in vm.deptData" value="{{item.deptCode}}">{{item.deptName}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <table ng-table="vm.tableParams" class="table table-condensed table-bordered table-striped">
+          <tr ng-repeat="row in vm.formData.qualityResultDetailList">
+              <td data-title="'序号'" class="text-center">
+                <!-- {{ row.detailCode }} -->
+              </td>
+              <td data-title="'检查内容及要求'" class="text-center">
+                {{ row.item }}
+              </td>
+              <td data-title="'分值'" class="text-center">
+                {{ row.points }}
+              </td>
+              <td data-title="'得分'" class="col-xs-2 partial-td">
+                <input type="number"
+                       class="form-control input-sm text-center"
+                       ng-model="row.count"
+                       placeholder="点击填写"
+                        />
+              </td>
+              <td data-title="'扣分原因'" class="text-center col-xs-4 partial-td">
+                <textarea class="form-control input-sm"
+                          placeholder="点击填写"
+                          ng-model="row.cause">
+                </textarea>
+              </td>
+          </tr>
+      </table>
+    </div>
+    <div class="modal-footer clearfix">
+      <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok()">保存</button>
+      <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+    </div>
+  </form>
+</div>

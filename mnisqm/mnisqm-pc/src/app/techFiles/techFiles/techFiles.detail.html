@@ -1,0 +1,130 @@
+<td colspan="{{tdLen}}">
+  <uib-tabset active="active">
+    <uib-tab index="0" heading="护士分层分级登记">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>病区</th>
+          <th>开始时间</th>
+          <th>结束时间</th>
+          <th>层级</th>
+          <th>审核人</th>
+          <th>备注</th>
+        </tr>
+        <tr ng-repeat="item in vm.detail.nurseHirReg">
+          <td>{{vm.getDeptName(item.wardCode)}}</td>
+          <td>{{item.beginTime}}</td>
+          <td>{{item.endTime}}</td>
+          <td>{{item.hierarchy}}</td>
+          <td>{{item.auditor}}</td>
+          <td>{{item.remark}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="1" heading="专科护士经历">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>病区</th>
+          <th>开始时间</th>
+          <th>结束时间</th>
+          <th>级别</th>
+          <th>所属专科</th>
+          <th>审核人</th>
+          <th>备注</th>
+        </tr>
+        <tr ng-repeat="item in vm.detail.nurseExp">
+          <td>{{vm.getDeptName(item.wardCode)}}</td>
+          <td>{{item.beginTime}}</td>
+          <td>{{item.endTime}}</td>
+          <td>{{item.rank}}</td>
+          <td>{{item.juniorCollege}}</td>
+          <td>{{item.auditor}}</td>
+          <td>{{item.remark}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="2" heading="学术会议、学习班">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>病区</th>
+          <th>会议名称</th>
+          <th>会议时间</th>
+          <th>会议地点</th>
+          <th>主办单位</th>
+          <th>学分</th>
+          <th>审核人</th>
+          <th>备注</th>
+        </tr>
+        <tr ng-repeat="item in vm.detail.academic">
+          <td>{{vm.getDeptName(item.wardCode)}}</td>
+          <td>{{item.meetingName}}</td>
+          <td>{{item.meetingDate}}</td>
+          <td>{{item.meetingSite}}</td>
+          <td>{{item.hostUnit}}</td>
+          <td>{{item.credit}}</td>
+          <td>{{item.auditor}}</td>
+          <td>{{item.remark}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="3" heading="奖励情况">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>病区</th>
+          <th>奖励时间</th>
+          <th>奖励原因</th>
+          <th>奖励措施</th>
+          <th>审核人</th>
+          <th>备注</th>
+        </tr>
+        <tr ng-repeat="item in vm.detail.awardPunish | filter: {apType: 1}">
+          <td>{{vm.getDeptName(item.wardCode)}}</td>
+          <td>{{item.apTime}}</td>
+          <td>{{item.reason}}</td>
+          <td>{{item.measure}}</td>
+          <td>{{item.auditor}}</td>
+          <td>{{item.remark}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="4" heading="惩罚情况">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>病区</th>
+          <th>惩罚时间</th>
+          <th>惩罚原因</th>
+          <th>惩罚措施</th>
+          <th>审核人</th>
+          <th>备注</th>
+        </tr>
+        <tr ng-repeat="item in vm.detail.awardPunish | filter: {apType: 2}">
+          <td>{{vm.getDeptName(item.wardCode)}}</td>
+          <td>{{item.apTime}}</td>
+          <td>{{item.reason}}</td>
+          <td>{{item.measure}}</td>
+          <td>{{item.auditor}}</td>
+          <td>{{item.remark}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+    <uib-tab index="5" heading="个人考核结果">
+      <table class="table table-striped table-condensed table-no-border">
+        <tr>
+          <th>病区</th>
+          <th>考核时间</th>
+          <th>考核项目</th>
+          <th>考核结果</th>
+          <th>审核人</th>
+          <th>备注</th>
+        </tr>
+        <tr ng-repeat="item in vm.detail.perAssessment">
+          <td>{{vm.getDeptName(item.wardCode)}}</td>
+          <td>{{item.assessmentTime}}</td>
+          <td>{{item.assessmentItem}}</td>
+          <td>{{item.assessmentResult}}</td>
+          <td>{{item.auditor}}</td>
+          <td>{{item.remark}}</td>
+        </tr>
+      </table>
+    </uib-tab>
+  </uib-tabset>
+</td>

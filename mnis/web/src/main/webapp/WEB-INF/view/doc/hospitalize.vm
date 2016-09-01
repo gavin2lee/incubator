@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+	}
+}
+</style>
+<title>护理入院评估单</title>
+</head>
+<body class="hospitalize">
+#docToolbar()
+<div class="paper-container">
+<form>
+	<input type="hidden" name="userCode" value="$!{currentUser.code}">
+	<input type="hidden" name="userName" value="$!{currentUser.name}">
+	<input type="hidden" name="cureNo" value="$!{patient.cureNo}">
+	<input type="hidden" name="hospitalNo" value="$!{patient.hospitalNo}">
+<div class="paper">
+<div class="paper-content">
+#hospitalize()
+<div class="doc-content doc-only">
+	<table>
+		<tr>
+			<td class="head">基本<br>资料</td>
+			<td>
+				<span class="title">入病室时间：</span>
+				<span class="content">
+					<input class="easyui-datetimebox" name="hospitalizeDate" data-options="editable: false,showSeconds:false">
+<!-- 					<input type="text" name="hospitalizeYear" class="year">年 -->
+<!-- 					<input type="text" name="hospitalizeMonth" class="datetime">月 -->
+<!-- 					<input type="text" name="hospitalizeDate" class="datetime">日 -->
+<!-- 					<input type="text" name="hospitalizeHour" class="datetime">时 -->
+<!-- 					<input type="text" name="hospitalizeMinute" class="datetime">分 -->
+				</span>
+				<br>
+				<span class="title">入院方式：</span>
+				<span class="content">
+					<input type="radio" id="hospitalizeWay1" name="hospitalizeWay" value="1"><label for="hospitalizeWay1">急诊</label>
+					<input type="radio" id="hospitalizeWay2" name="hospitalizeWay" value="2"><label for="hospitalizeWay2">门诊</label>
+					<input type="radio" id="hospitalizeWay3" name="hospitalizeWay" value="3"><label for="hospitalizeWay3">转诊</label>
+					/
+					<input type="radio" id="hospitalizeWay4" name="hospitalizeWay2" value="1"><label for="hospitalizeWay4">步行</label>
+					<input type="radio" id="hospitalizeWay5" name="hospitalizeWay2" value="2"><label for="hospitalizeWay5">扶行</label>
+					<input type="radio" id="hospitalizeWay6" name="hospitalizeWay2" value="3"><label for="hospitalizeWay6">轮椅</label>
+					<input type="radio" id="hospitalizeWay7" name="hospitalizeWay2" value="4"><label for="hospitalizeWay7">平车</label>
+					<input type="radio" id="hospitalizeWay8" name="hospitalizeWay2" value="5"><label for="hospitalizeWay8">抱入</label>
+				</span>
+				<br>
+				<span class="title">入院诊断：</span>
+				<span class="content">
+					<input type="text" name="diagnose" class="data3" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">职&nbsp;&nbsp;&nbsp;&nbsp;业：</span>
+				<span class="content">
+					<input class="easyui-combobox" data-options="
+						url: '#url("/dict/children")?parentId=JOB',
+						method: 'get',
+						valueField: 'name',
+						textField: 'name',
+						panelHeight: 'auto'" type="text" name="job" style="width: 100px;">
+				</span>
+				<span class="title">民族：</span>
+				<span class="content">
+					<input type="text" name="nationality" value="汉族" class="data4" maxlength="2000">
+				</span>
+				<span class="title">婚姻状况：</span>
+				<span class="content">
+					<input type="radio" id="maritalStatus1" name="maritalStatus" value="1"><label for="maritalStatus1">已婚</label>
+					<input type="radio" id="maritalStatus2" name="maritalStatus" value="2"><label for="maritalStatus2">未婚</label>
+					<input type="radio" id="maritalStatus3" name="maritalStatus" value="3"><label for="maritalStatus3">离异</label>
+					<input type="radio" id="maritalStatus4" name="maritalStatus" value="4"><label for="maritalStatus4">丧偶</label>
+				</span>
+				<br>
+				<span class="title">文化程度：</span>
+				<span class="content">
+					<input type="radio" id="education1" name="education" value="1"><label for="education1">不识字</label>
+					<input type="radio" id="education2" name="education" value="2"><label for="education2">小学</label>
+					<input type="radio" id="education3" name="education" value="3"><label for="education3">初中</label>
+					<input type="radio" id="education4" name="education" value="4"><label for="education4">高中</label>
+					<input type="radio" id="education5" name="education" value="5"><label for="education5">中专</label>
+					<input type="radio" id="education6" name="education" value="6"><label for="education6">大专或大专以上</label>
+					<input type="radio" id="education7" name="education" value="7"><label for="education7">本科或本科以上</label>
+				</span>
+				<br>
+				<span class="title">宗&nbsp;&nbsp;&nbsp;&nbsp;教：</span>
+				<span class="content">
+					<input type="radio" id="religion1" name="religion" value="1" checked="checked"><label for="religion1">无</label>
+					<input type="radio" id="religion2" name="religion" value="2"><label for="religion2">基督</label>
+					<input type="radio" id="religion3" name="religion" value="3"><label for="religion3">天主教</label>
+					<input type="radio" id="religion4" name="religion" value="4"><label for="religion4">佛教</label>
+					<input type="radio" id="religion5" name="religion" value="5"><label for="religion5">其他</label>
+					<input type="text" name="religionExtra" class="data4" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">联&nbsp;系&nbsp;人：</span>
+				<span class="content">
+					<input type="text" name="contacter" style="width: 80px;" maxlength="2000">
+				</span>
+				<span class="title">联系人电话：</span>
+				<span class="content">
+					<input type="text" name="contactPhone" maxlength="2000">
+				</span>
+				<span class="title">与患者关系：</span>
+				<span class="content">
+					<input class="easyui-combobox" data-options="
+						url: '#url("/dict/children")?parentId=RELATIONSHIP',
+						method: 'get',
+						valueField: 'name',
+						textField: 'name',
+						panelHeight: 'auto'" type="text" name="contactRelation" style="width: 100px;">
+				</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="head">护理<br>评估</td>
+			<td>
+				<span class="title">T</span>
+				<span class="content">
+					<input type="text" name="temperature" class="data1" maxlength="5">℃ X
+				</span>
+				<span class="title">P</span>
+				<span class="content">
+					<input type="text" name="pulse" class="data1" maxlength="5">次/分
+				</span>
+				<span class="title">R</span>
+				<span class="content">
+					<input type="text" name="respiration" class="data1" maxlength="5">次/分
+				</span>
+				<span class="title">BP</span>
+				<span class="content">
+					<input type="hidden" name="bloodPressure">
+					<input type="text" id="bloodPressure1" class="data1" maxlength="5">/<input type="text" id="bloodPressure2" class="data1" maxlength="5">mmHg
+				</span>
+				<span class="title">体重</span>
+				<span class="content">
+					<input type="text" name="weight" class="data1" maxlength="5">Kg
+				</span>
+				<span class="title">身高</span>
+				<span class="content">
+					<input type="text" name="height" class="data1" maxlength="5">cm
+				</span>
+				<span class="content">
+					<input type="checkbox" id="lieBed" name="lieBed" value="√"><label for="lieBed">卧床 </label>
+				</span>
+				<br>
+				<span class="title">疼痛评估：</span>
+				<span class="content">
+					<input type="text" id="paininput" name="pain" class="data2" maxlength="2000">分
+					<input type="checkbox" id="painEvaluateLess" name="painEvaluateLess" value="√"><label for="painEvaluateLess">无法评估 </label>
+					（详见住院患者疼痛评估单）
+				</span>
+				<br>
+				<span class="title">意&nbsp;&nbsp;&nbsp;&nbsp;识：</span>
+				<span class="content">
+					<input type="radio" id="awareness1" name="awareness" value="1"><label for="awareness1">清楚</label>
+					<input type="radio" id="awareness2" name="awareness" value="2"><label for="awareness2">嗜睡</label>
+					<input type="radio" id="awareness3" name="awareness" value="3"><label for="awareness3">昏睡</label>
+					<input type="radio" id="awareness4" name="awareness" value="4"><label for="awareness4">浅昏迷</label>
+					<input type="radio" id="awareness5" name="awareness" value="5"><label for="awareness5">中昏迷</label>
+					<input type="radio" id="awareness6" name="awareness" value="6"><label for="awareness6">深昏迷</label>
+					<input type="radio" id="awareness7" name="awareness" value="7"><label for="awareness7">模糊</label>
+					<input type="radio" id="awareness8" name="awareness" value="8"><label for="awareness8">朦胧</label>
+				</span>
+				<br>
+				<span class="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span class="content">
+					<input type="radio" id="awareness9" name="awareness" value="9"><label for="awareness9">其他</label>
+					<input type="text" name="awarenessExtra" class="data4" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">呼吸系统：</span>
+				<span class="content">
+					<input type="radio" id="respireSystem1" name="respireSystem" value="1"><label for="respireSystem1">正常</label>
+					<input type="radio" id="respireSystem2" name="respireSystem" value="2"><label for="respireSystem2">气促</label>
+					<input type="radio" id="respireSystem3" name="respireSystem" value="3"><label for="respireSystem3">吸氧</label>
+					<input type="radio" id="respireSystem4" name="respireSystem" value="4"><label for="respireSystem4">慢</label>
+					<input type="radio" id="respireSystem5" name="respireSystem" value="5"><label for="respireSystem5">端坐</label>
+					<input type="radio" id="respireSystem6" name="respireSystem" value="6"><label for="respireSystem6">气切</label>
+					<input type="radio" id="respireSystem7" name="respireSystem" value="7"><label for="respireSystem7">插管</label>
+					<input type="radio" id="respireSystem8" name="respireSystem" value="8"><label for="respireSystem8">其他</label>
+					<input type="text" name="respireSystemExtra" class="data4" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">心&nbsp;血&nbsp;管：</span>
+				<span class="content">
+					<input type="radio" id="cardiovascular1" name="cardiovascular" value="1"><label for="cardiovascular1">规律心律</label>
+					<input type="radio" id="cardiovascular2" name="cardiovascular" value="2"><label for="cardiovascular2">不规则心律</label>
+					<input type="radio" id="cardiovascular3" name="cardiovascular" value="3"><label for="cardiovascular3">绌脉</label>
+					<input type="radio" id="cardiovascular4" name="cardiovascular" value="4"><label for="cardiovascular4">起搏器</label>
+					<input type="radio" id="cardiovascular5" name="cardiovascular" value="5"><label for="cardiovascular5">其他</label>
+					<input type="text" name="cardiovascularExtra" class="data4" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">小&nbsp;&nbsp;&nbsp;&nbsp;便：</span>
+				<span class="content">
+					<input type="radio" id="pee1" name="pee" value="1"><label for="pee1">否认问题</label>
+					<input type="radio" id="pee2" name="pee" value="2"><label for="pee2">尿频</label>
+					<input type="radio" id="pee3" name="pee" value="3"><label for="pee3">尿急</label>
+					<input type="radio" id="pee4" name="pee" value="4"><label for="pee4">尿痛</label>
+					<input type="radio" id="pee5" name="pee" value="5"><label for="pee5">尿失禁</label>
+					<input type="radio" id="pee6" name="pee" value="6"><label for="pee6">接尿套</label>
+					<input type="radio" id="pee7" name="pee" value="7"><label for="pee7">留置导尿</label>
+				</span>
+				<br>
+				<span class="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span class="content">
+					<input type="radio" id="pee8" name="pee" value="8"><label for="pee8">膀胱造瘘管</label>
+					<input type="radio" id="pee9" name="pee" value="9"><label for="pee9">其他</label>
+					<input type="text" name="peeExtra" class="data4" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">大&nbsp;&nbsp;&nbsp;&nbsp;便：</span>
+				<span class="content">
+					<input type="radio" id="defecate1" name="defecate" value="1"><label for="defecate1">否认问题</label>
+					<input type="radio" id="defecate2" name="defecate" value="2"><label for="defecate2">腹泻</label>
+					<input type="radio" id="defecate3" name="defecate" value="3"><label for="defecate3">便秘</label>
+					<input type="radio" id="defecate4" name="defecate" value="4"><label for="defecate4">大便失禁</label>
+					<input type="radio" id="defecate5" name="defecate" value="5"><label for="defecate5">造瘘</label>
+					<input type="radio" id="defecate6" name="defecate" value="6"><label for="defecate6">其他</label>
+					<input type="text" name="defecateExtra" class="data4" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">皮&nbsp;&nbsp;&nbsp;&nbsp;肤：</span>
+				<span class="content">
+					<input type="radio" id="skin1" name="skin" value="1" value="1"><label for="skin1">完整</label>
+					<input type="radio" id="skin2" name="skin" value="2" value="2"><label for="skin2">擦伤</label>
+					<input type="radio" id="skin3" name="skin" value="3" value="3"><label for="skin3">压疮</label>
+					<input type="radio" id="skin4" name="skin" value="4" value="4"><label for="skin4">烧伤</label>
+					<input type="radio" id="skin5" name="skin" value="5" value="5"><label for="skin5">皮疹</label>
+					<input type="radio" id="skin6" name="skin" value="6" value="6"><label for="skin6">伤口</label>
+					<input type="radio" id="skin7" name="skin" value="7" value="7"><label for="skin7">其他</label>
+					<input type="text" name="skinExtra" class="data4" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">活动能力：</span>
+				<span class="content">
+					<input type="radio" id="moveable1" name="moveable" value="1"><label for="moveable1">行动正常</label>
+					<input type="radio" id="moveable2" name="moveable" value="2"><label for="moveable2">使用助行器</label>
+					<input type="radio" id="moveable3" name="moveable" value="3"><label for="moveable3">偏瘫</label>
+					<input type="radio" id="moveable4" name="moveable" value="4"><label for="moveable4">假肢</label>
+					<input type="radio" id="moveable5" name="moveable" value="5"><label for="moveable5">无法行动</label>
+					<input type="radio" id="moveable6" name="moveable" value="6"><label for="moveable6">其他</label>
+					<input type="text" name="moveableExtra" class="data4" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">自理能力：</span>
+				<span class="content">
+					<input type="radio" id="selfCare1" name="selfCare" value="1"><label for="selfCare1">自理</label>
+					<input type="radio" id="selfCare2" name="selfCare" value="2"><label for="selfCare2">部分自理</label>
+					<input type="radio" id="selfCare3" name="selfCare" value="3"><label for="selfCare3">完全依赖</label>
+				</span>
+				<br>
+				<span class="title">睡眠习惯：</span>
+				<span class="content">
+					<input type="radio" id="sleep1" name="sleep" value="1"><label for="sleep1">正常</label>
+					<input type="radio" id="sleep2" name="sleep" value="2"><label for="sleep2">失眠</label>
+					<input type="radio" id="sleep3" name="sleep" value="3"><label for="sleep3">易醒</label>
+					<input type="radio" id="sleep4" name="sleep" value="4"><label for="sleep4">服镇静剂</label>
+				</span>
+				<span class="title">睡眠时间：</span>
+				<span class="content">
+					<input type="text" id="sleepTime" name="sleepTime" class="data1" maxlength="2000">小时/天
+				</span>
+				<br>
+				<span class="title">语言沟通：</span>
+				<span class="content">
+					<input type="radio" id="communication1" name="communication" value="1"><label for="communication1">正常</label>
+					<input type="radio" id="communication2" name="communication" value="2"><label for="communication2">失语</label>
+					<input type="radio" id="communication3" name="communication" value="3"><label for="communication3">语言困难</label>
+					<input type="radio" id="communication4" name="communication" value="4"><label for="communication4">聋</label>
+					<input type="radio" id="communication5" name="communication" value="5"><label for="communication5">哑</label>
+					<input type="radio" id="communication6" name="communication" value="6"><label for="communication6">其他</label>
+					<input type="text" name="communicationExtra" class="data4" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">心理反应：</span>
+				<span class="content">
+					<input type="radio" id="mentality1" name="mentality" value="1"><label for="mentality1">正常</label>
+					<input type="radio" id="mentality2" name="mentality" value="2"><label for="mentality2">开朗</label>
+					<input type="radio" id="mentality3" name="mentality" value="3"><label for="mentality3">焦虑</label>
+					<input type="radio" id="mentality4" name="mentality" value="4"><label for="mentality4">紧张</label>
+					<input type="radio" id="mentality5" name="mentality" value="5"><label for="mentality5">意识欠清，无法了解</label>
+				</span>
+				<br>
+				<span class="title">导&nbsp;&nbsp;&nbsp;&nbsp;管：</span>
+				<span class="content">
+					<input type="radio" id="pipe1" name="pipe" value="1"><label for="pipe1">无</label>
+					<input type="radio" id="pipe2" name="pipe" value="2"><label for="pipe2">有</label>
+				</span>
+				<br>
+				<span class="title">过&nbsp;敏&nbsp;史：</span>
+				<span class="content">
+					<input type="checkbox" id="allergy1" name="allergy1" value="√"><label for="allergy1">否认</label>
+					<input type="checkbox" id="allergy2" name="allergy2" value="√"><label for="allergy2">青霉素</label>
+					<input type="checkbox" id="allergy3" name="allergy3" value="√"><label for="allergy3">磺胺类</label>
+<!-- 					<input type="checkbox" id="allergy4" name="allergy4" value="√"><label for="allergy4">先锋类</label> -->
+					<input type="checkbox" id="allergy5" name="allergy5" value="√"><label for="allergy5">链霉素</label>
+<!-- 					<input type="checkbox" id="allergy6" name="allergy6" value="√"><label for="allergy6">氯霉素</label> -->
+					<input type="checkbox" id="allergy7" name="allergy7" value="√"><label for="allergy7">红霉素</label>
+					<input type="checkbox" id="allergy8" name="allergy8" value="√"><label for="allergy8">庆大霉素</label>
+<!-- 					<input type="checkbox" id="allergy9" name="allergy9" value="√"><label for="allergy9">阿莫西林</label> -->
+					<input type="checkbox" id="allergy10" name="allergy10" value="√"><label for="allergy10">酒精</label>
+				</span>
+				<br>
+				<span class="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span class="content">
+					<input type="checkbox" id="allergy11" name="allergy11" value="√"><label for="allergy11">氟喹诺酮类</label>
+					<input type="checkbox" id="allergy12" name="allergy12" value="√"><label for="allergy12">破伤风</label>
+					<input type="checkbox" id="allergy13" name="allergy13" value="√"><label for="allergy13">碘</label>
+<!-- 					<input type="checkbox" id="allergy14" name="allergy14" value="√"><label for="allergy14">可福乐</label> -->
+					<input type="checkbox" id="allergy15" name="allergy15" value="√"><label for="allergy15">普鲁卡因</label>
+					<input type="checkbox" id="allergy16" name="allergy16" value="√"><label for="allergy16">水杨酸类</label>
+<!-- 					<input type="checkbox" id="allergy17" name="allergy17" value="√"><label for="allergy17">氨苄青霉素</label> -->
+<!-- 					<input type="checkbox" id="allergy18" name="allergy18" value="√"><label for="allergy18">卡迪霉素</label> -->
+<!-- 					<input type="checkbox" id="allergy19" name="allergy19" value="√"><label for="allergy19">别嘌呤醇</label> -->
+					<input type="checkbox" id="allergy20" name="allergy20" value="√"><label for="allergy20">右旋糖酐</label>
+<!-- 					<input type="checkbox" id="allergy21" name="allergy21" value="√"><label for="allergy21">度冷丁</label> -->
+<!-- 					<input type="checkbox" id="allergy22" name="allergy22" value="√"><label for="allergy22">螺旋霉素</label> -->
+<!-- 					<input type="checkbox" id="allergy23" name="allergy23" value="√"><label for="allergy23">黄连素</label> -->
+				</span>
+				<br>
+				<span class="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span class="content">
+<!-- 					<input type="checkbox" id="allergy24" name="allergy24" value="√"><label for="allergy24">奴拂卡因</label> -->
+<!-- 					<input type="checkbox" id="allergy25" name="allergy25" value="√"><label for="allergy25">抗毒素</label> -->
+					<input type="checkbox" id="allergy26" name="allergy26" value="√"><label for="allergy26">维生素C</label>
+					<input type="checkbox" id="allergy27" name="allergy27" value="√"><label for="allergy27">食物海鲜</label>
+					<input type="checkbox" id="allergy28" name="allergy28" value="√"><label for="allergy28">牛奶</label>
+					<input type="checkbox" id="allergy29" name="allergy29" value="√"><label for="allergy29">花粉</label>
+					<input type="checkbox" id="allergy30" name="allergy30" value="√"><label for="allergy30">其他</label>
+					<input type="text" name="allergyExtra" class="data4" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">过敏反应表现：</span>
+				<span class="content">
+					<input type="text" name="allergyReaction" class="data3" style="width: 576px;" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">曾患疾病：</span>
+				<span class="content">
+					<input type="text" name="diseaseHistory" class="data3" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">曾做手术：</span>
+				<span class="content">
+					<input type="text" name="surgeryHistory" class="data3" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">饮&nbsp;&nbsp;&nbsp;&nbsp;酒：</span>
+				<span class="content">
+					<input type="radio" id="wine1" name="wine" value="1"><label for="wine1">否认</label>
+					<input type="radio" id="wine2" name="wine" value="2"><label for="wine2">很少</label>
+					<input type="radio" id="wine3" name="wine" value="3"><label for="wine3">常饮</label>
+					<input type="radio" id="wine4" name="wine" value="4"><label for="wine4">酗酒</label>
+					<input type="radio" id="wine5" name="wine" value="5"><label for="wine5">已戒酒</label>
+				</span>
+				<span class="title">饮酒年数：</span>
+				<span class="content">
+					<input type="text" name="wineYear" class="data1" maxlength="2000">年
+				</span>
+				<br>
+				<span class="title">吸&nbsp;&nbsp;&nbsp;&nbsp;烟：</span>
+				<span class="content">
+					<input type="radio" id="smoke1" name="smoke" value="1"><label for="smoke1">否认</label>
+					<input type="radio" id="smoke2" name="smoke" value="2"><label for="smoke2">偶尔</label>
+					<input type="radio" id="smoke3" name="smoke" value="3"><label for="smoke3">10支以下</label>
+					<input type="radio" id="smoke4" name="smoke" value="4"><label for="smoke4">10-20支</label>
+					<input type="radio" id="smoke5" name="smoke" value="5"><label for="smoke5">20支以上</label>
+					<input type="radio" id="smoke6" name="smoke" value="6"><label for="smoke6">已戒烟</label>
+				</span>
+				<span class="title">吸烟年数：</span>
+				<span class="content">
+					<input type="text" name="smokeYear" class="data1" maxlength="2000">年
+				</span>
+				<br>
+				<span class="title">压疮Norton评分：</span>
+				<span class="content">
+					<input type="text" name="norton" class="data2" maxlength="2000">分（详见住院患者压疮评估及护理措施表）
+				</span>
+				<br>
+				<span class="title">坠床或跌倒评分：</span>
+				<span class="content">
+					<input type="text" name="fall" class="data2" maxlength="2000">分（详见住院患者跌倒/坠床危险因子评估及护理措施表）
+				</span>
+				<br>
+				<span class="title">Barthel指数评定总分：</span>
+				<span class="content">
+					<input type="text" name="barthel" class="data2" maxlength="2000">分（详见Barthel指数评定量表）
+				</span>
+			</td>
+		</tr>
+	</table>
+</div>
+</div>
+</div>
+<hr class="break-page"/>
+<div class="paper">
+<div class="paper-content">
+#hospitalize()
+<div class="doc-content doc-only">
+	<table>
+		<tr>
+			<td colspan="2">
+				<span class="title">简要病情经过及目前主要状况（主诉、症状、体征、门诊有意义的检查结果）：</span>
+				<br>
+				<span class="content">
+					<textarea id="remark" name="remark" maxlength="2000"></textarea>
+				</span>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<span class="title">通知医生时间：</span>
+				<span class="content">
+					<input class="easyui-datetimebox" name="noticeDate" data-options="editable: false,showSeconds:false">
+<!-- 					<input type="text" name="noticeYear" class="year">年 -->
+<!-- 					<input type="text" name="noticeMonth" class="datetime">月 -->
+<!-- 					<input type="text" name="noticeDate" class="datetime">日 -->
+<!-- 					<input type="text" name="noticeHour" class="datetime">时 -->
+<!-- 					<input type="text" name="noticeMinute" class="datetime">分 -->
+				</span>
+				<br>
+				<span class="title">资料收集时间：</span>
+				<span class="content">
+					<input class="easyui-datetimebox" name="collectionDate" data-options="editable: false,showSeconds:false">
+<!-- 					<input type="text" name="collectionYear" class="year">年 -->
+<!-- 					<input type="text" name="collectionMonth" class="datetime">月 -->
+<!-- 					<input type="text" name="collectionDate" class="datetime">日 -->
+<!-- 					<input type="text" name="collectionHour" class="datetime">时 -->
+<!-- 					<input type="text" name="collectionMinute" class="datetime">分 -->
+				</span>
+				<br>
+				<span class="title">提供资料者：</span>
+				<span class="content">
+					<input type="radio" id="provider1" name="provider" value="1"><label for="provider1">病人</label>
+					<input type="radio" id="provider2" name="provider" value="2"><label for="provider2">家属</label>
+					<input type="radio" id="provider3" name="provider" value="3"><label for="provider3">其他</label>
+					<input type="text" name="providerExtra" class="data4" maxlength="2000">
+				</span>
+				<br>
+				<span class="title">评估护士签名：</span>
+				<span class="content">
+					<input type="text" name="nurse" value="$!{currentUser.name}$!{currentUser.code}" readonly="readonly" class="data4">
+				</span>
+				<span class="title">审核者签名：</span>
+				<span class="content">
+					<input id="approver" type="text" name="approver" readonly="readonly" class="data4">
+				</span>
+			</td>
+		</tr>
+	</table>
+</div>
+</div>
+<!-- #pageFoot() -->
+</div>
+</div>
+<script type="text/javascript">
+function accept() {
+   	var editable = '$!{doc.editable}' || true;
+   	if (editable) {
+        $.ajax({
+        	url: '#url("/doc/data?docType=HOSPITALIZE")',
+        	type: 'POST',
+        	data: $('form').serialize(),
+        	success: function(data, status) {
+        		if (data && data.code) {
+        			if ('1' == data.code) {
+		        		$.messager.alert('数据保存', data.message || '保存成功', 'info');
+	        		} else {
+		        		$.messager.alert('数据保存', data.message || '保存失败', 'error');
+        			}
+        		}
+        	},
+        	error: function(xhr, status, err) {
+        		$.messager.alert('数据保存', '保存失败', 'error');
+        	}
+        });
+   	} else {
+   		$.messager.alert('数据保存', '不允许修改', 'error');
+   	}
+}
+
+function approveDoc(approveStatus) {
+	var approveMessage = approveStatus ? '审核' : '取消审核';
+        $.ajax({
+        	url: '#url("/doc/approve")',
+        	type: 'GET',
+        	data: {
+				docType: 'HOSPITALIZE',
+				cureNo:'$!{patient.cureNo}',
+				approveStatus:approveStatus
+			},
+        	success: function(data, status) {
+        		if (data) {
+        			if ('0' == data.rslt) {
+						if (approveStatus) {
+							document.getElementById('cancelApproveHospitalize').style.display = 'inline';
+							document.getElementById('approveHospitalize').style.display = 'none';
+							document.getElementById('save').disabled = true;
+						} else {
+							document.getElementById('cancelApproveHospitalize').style.display = 'none';
+							document.getElementById('approveHospitalize').style.display = 'inline';
+							document.getElementById('save').disabled = false;
+						}
+// 						$.messager.alert(approveMessage, approveMessage + '成功', 'info');
+						document.location.reload();
+	        		} else {
+		        		$.messager.alert(approveMessage, approveMessage + '失败:' + data.msg, 'error');
+        			}
+        		}
+        	},
+        	error: function(xhr, status, err) {
+        		$.messager.alert(approveMessage, approveMessage + '失败', 'error');
+        	}
+        });
+}
+
+function setFormElementsDisabled(status) {
+	$('input').attr('readonly', true);
+	$('textarea').attr('readonly', true);
+	$('label').click(function(event) {
+		event.preventDefault();
+	});
+	/*
+    var form = document.forms[0];
+    for ( var i = 0; i < form.length; i++) {
+    	var element = form.elements[i];
+		element.disabled = status;
+    }
+    */
+}
+
+$.parser.auto = false;
+// initialize page when loaded
+$(function() {
+// 	setPageNumber();
+	$('#save').click(accept);
+	
+	#if ($!APPROVE)
+		setFormElementsDisabled(true);
+	#end
+	
+	$("#painEvaluateLess").bind("click", function () {
+				if ($('#painEvaluateLess').attr("checked")) {
+                	$('[name="pain"]').val('');
+                }
+            });
+            
+	$("#paininput").bind("change", function () {
+                $("[name = painEvaluateLess]:checkbox").attr("checked", false);
+            });
+            
+	$("#sleepTime").bind("change", function () {
+				var sleeptimehour = $(this).val();
+                if(!isNaN(sleeptimehour)){
+                	if (sleeptimehour > 24) {
+                		$(this).val('24');
+                	}
+                }
+            });            
+            
+		
+	$('#print').val('预  览').click(function() {
+		var params = [
+   			'location=no',
+   			'height='+screen.availHeight,
+   			'width='+screen.availWidth,
+   			'scrollbars=yes',
+   			'resizable=yes',
+   			'fullscreen=yes' // only works in IE, but here for completeness
+   		].join(',');
+   		var new_window = window.open('#url("/doc/hospitalize/view?cureNo=$!{patient.cureNo}")', '', params);
+   		new_window.resizeTo(screen.availWidth, screen.availHeight);
+	});
+	$('textarea').autosize({
+		append: '',
+		callback: function() {
+		}
+	});
+	$('#bloodPressure1').add('#bloodPressure2').change(function() {
+		if ($('#bloodPressure1').val() || $('#bloodPressure2').val()) {
+			$('[name="bloodPressure"]').val($('#bloodPressure1').val() + '/' + $('#bloodPressure2').val());
+		} else {
+			$('[name="bloodPressure"]').val('');
+		}
+	});
+	var oldWeight = $('[name="weight"]').val();
+	var oldHeight = $('[name="height"]').val();
+	$('#lieBed').change(function() {
+		if ($(this).is(':checked')) {
+			oldWeight = $('[name="weight"]').val();
+			oldHeight = $('[name="height"]').val();
+			$('[name="weight"]').val('/');
+			$('[name="height"]').val('/');
+// 			$('[name="weight"]').attr('readonly', true);
+// 			$('[name="height"]').attr('readonly', true);
+		} else {
+			$('[name="weight"]').val(oldWeight);
+			$('[name="height"]').val(oldHeight);
+// 			$('[name="weight"]').attr('readonly', false);
+// 			$('[name="height"]').attr('readonly', false);
+		}
+	});
+	// init datas
+	$.ajax({
+    	url: '#url("/doc/data?docType=HOSPITALIZE")',
+    	type: 'GET',
+    	data: {cureNo: '$!{patient.cureNo}'},
+    	success: function(data, status) {
+    		initDocData(data);
+    		$('textarea').trigger('autosize.resize');
+    		// init default value
+    		$.ajax({
+    	    	url: '#url("/doc/evaluateValues")',
+    	    	type: 'GET',
+    	    	data: {cureNo: '$!{patient.cureNo}'},
+    	    	success: function(data, status) {
+    	    		#[[
+    	    		if (data) {
+    	    			var $pain = $('[name=pain]');
+    	    			if (!$pain.val()) {
+    	    				$pain.val(data['PAIN'] || '');
+    	    			}
+    	    			var $norton = $('[name=norton]');
+    	    			if (!$norton.val()) {
+    	    				$norton.val(data['PRESS'] || '');
+    	    			}
+    	    			var $fall = $('[name=fall]');
+    	    			if (!$fall.val()) {
+    	    				$fall.val(data['ADULT_FALL'] || '');
+    	    			}
+    	    			var $barthel = $('[name=barthel]');
+    	    			if (!$barthel.val()) {
+    	    				$barthel.val(data['BARTHEL'] || '');
+    	    			}
+    	    		}
+    	    		]]#
+    	    	},
+    	    	error: function(xhr, status, err) {
+    	    		//$.messager.alert('获取评估分值', '获取评估分值失败', 'error');
+    	    	},
+    	    	complete: function(xhr, ts) {
+    	    	}
+    	    });
+    		$.ajax({
+    	    	url: '#url("/patient/getInpatientInfo")',
+    	    	type: 'GET',
+    	    	data: {patientId: '$!{patient.cureNo}'},
+    	    	success: function(result, status) {
+    	    		#[[
+    	    		if (result && result['rslt'] == 0 && result['data']) {
+    	    			var data = result['data'];
+    	    			if (data) {
+//         	    			var $hospitalizeDate = $('[name=hospitalizeDate]');
+//         	    			if (!$hospitalizeDate.val()) {// inDeptDate
+//         	    				var date = (data['admitDate'] || '').replace(/-/g, '.');
+//         	    				$hospitalizeDate.val(date);
+//         	    			}
+        	    			var $diagnose = $('[name=diagnose]');
+        	    			if (!$diagnose.val()) {
+    	    	    			var diagnosis = data['admitDiagnosis'];
+    	    	    			if (diagnosis) {
+    	    	    				if (diagnosis instanceof Array && diagnosis.length > 0) {
+    		    	    				$diagnose.val(diagnosis[0] || '');
+    	    	    				} else {
+    		    	    				$diagnose.val(diagnosis || '');
+    	    	    				}
+    	    	    			}
+        	    			}
+    	    				var info = data['patientBaseInfo'];
+    	    				if (info) {
+    	    	    			var $contacter = $('[name=contacter]');
+    	    	    			if (!$contacter.val()) {
+    	    	    				$contacter.val(info['connection'] || '');
+    	    	    			}
+    	    	    			var $contactPhone = $('[name=contactPhone]');
+    	    	    			if (!$contactPhone.val()) {
+    	    	    				$contactPhone.val(info['connectPhone'] || '');
+    	    	    			}
+    	    				}
+    	    			}
+    	    		}
+    	    		]]#
+    	    	},
+    	    	error: function(xhr, status, err) {
+    	    		//$.messager.alert('获取评估分值', '获取评估分值失败', 'error');
+    	    	},
+    	    	complete: function(xhr, ts) {
+    	    	}
+    	    });
+    	},
+    	error: function(xhr, status, err) {
+    		//$.messager.alert('数据保存', '获取数据失败', 'error');
+    	},
+    	complete: function(xhr, ts) {
+    		$.parser.onComplete = function() {
+    			// 回车模拟Tab
+    			enterSimulateTab($(":input:visible:not([readonly])"));
+    			textarea($('#remark'));
+    		};
+    		$.parser.parse();
+    		/*
+    		$('#approver').combobox({
+    			url: '#url("/user")',
+    			method: 'get',
+    			valueField:'id',
+    			textField:'name',
+    			keyHandler: $.extend({}, $.fn.combobox.defaults.keyHandler, {
+    				enter: function(row) {
+    					var opts = $(this).combobox('options');
+    					var text = $(this).combobox('getValues').join(opts.separator);
+    					$(this).combobox('setText', text);
+    					$(this).combobox('hidePanel');
+    				}
+    			}),
+    			onSelect: function(row) {
+    				var text = row['name'] + '' + row['code'];
+    				$(this).combobox('setText', text);
+    				$(this).combobox('setValue', text);
+    			}
+    		});
+    		*/
+    	}
+    });
+});
+</script>
+</body>
+</html>

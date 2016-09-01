@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-table th, .doc-table td {
+	padding: 0px;
+}
+.doc-table td {
+	height: 35px;
+}
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+	}
+}
+</style>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper">
+	<div class="paper-content">
+		#press()
+		<div class="doc-content">
+			<table class="doc-table">
+				<col width="65">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="50">
+				<thead>
+					<tr>
+			            <th rowspan="3">日期时间</th>
+						<th colspan="4">意识状态</th>
+						<th colspan="4">活动能力</th>
+						<th colspan="4">肢体活动度</th>
+						<th colspan="4">进食情况</th>
+						<th colspan="4">失禁/皮肤受潮</th>
+						<th colspan="4">皮肤状况</th>
+			            <th rowspan="3">总评分</th>
+			            <th rowspan="3">危险等级</th>
+						<th colspan="8">预防压疮护理措施</th>
+			            <th rowspan="3">签名</th>
+					</tr>
+					<tr>
+						<th>清醒</th>
+						<th>淡漠</th>
+						<th>混乱</th>
+						<th>昏迷</th>
+						
+						<th>行动自如</th>
+						<th>步行需扶助</th>
+						<th>能够起床</th>
+						<th>长期卧床</th>
+						
+						<th>完全自如</th>
+						<th>有些受限</th>
+						<th>极度受限</th>
+						<th>不能活动</th>
+						
+						<th>进食足够</th>
+						<th>进食不足</th>
+						<th>进食少量</th>
+						<th>不能进食</th>
+						
+						<th>皮肤干爽</th>
+						<th>偶有受湿</th>
+						<th>常有潮湿</th>
+						<th>一直受潮</th>
+						
+						<th>正常状况</th>
+						<th>颜色异常</th>
+						<th>温度异常</th>
+						<th>缺水<br>/<br>水肿</th>
+						
+			            <th rowspan="2">床单位整洁干燥</th>
+			            <th rowspan="2">Q<br>2<br>h<br>翻身</th>
+			            <th rowspan="2">使用气垫床</th>
+			            <th rowspan="2">使用局部减压</th>
+			            <th rowspan="2">使用压疮敷料</th>
+			            <th rowspan="2">换药</th>
+			            <th rowspan="2">予以警示标识</th>
+			            <th rowspan="2">健康宣教</th>
+					</tr>
+					<tr>
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			        </tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		#pressComment()
+	</div>
+	#pageFoot()
+</div>
+</div>
+<script type="text/javascript">
+function getRowDatas(row, isFirstRow, lastDate) {
+	return [
+		formatDate(row['date'], isFirstRow, lastDate),
+		formatCheck(row['awareClear']),
+		formatCheck(row['awareDim']),
+		formatCheck(row['awareConfuse']),
+		formatCheck(row['awareComa']),
+		
+		formatCheck(row['moveWell']),
+		formatCheck(row['moveHelp']),
+		formatCheck(row['moveGetUp']),
+		formatCheck(row['moveBed']),
+		
+		formatCheck(row['memberWell']),
+		formatCheck(row['memberBitLimit']),
+		formatCheck(row['memberLimit']),
+		formatCheck(row['memberCanNot']),
+		
+		formatCheck(row['eatEnough']),
+		formatCheck(row['eatNotEnough']),
+		formatCheck(row['eatLittle']),
+		formatCheck(row['eatCanNot']),
+		
+		formatCheck(row['incontinenceDry']),
+		formatCheck(row['incontinenceWetSometime']),
+		formatCheck(row['incontinenceWetOften']),
+		formatCheck(row['incontinenceWetAlways']),
+		
+		formatCheck(row['skinNormal']),
+		formatCheck(row['skinColor']),
+		formatCheck(row['skinTemperature']),
+		formatCheck(row['skinSwell']),
+		
+		row['score'],
+		row['level'],
+		
+		formatCheck(row['measureDry']),
+		formatCheck(row['measureOver']),
+		formatCheck(row['measureBed']),
+		formatCheck(row['measurePress']),
+		formatCheck(row['measureDressing']),
+		formatCheck(row['measureBill']),
+		formatCheck(row['measureMark']),
+		formatCheck(row['measureAnnounce']),
+		
+		row['sign']
+	];
+}
+$(function() {
+	fillTable('#url("/doc/press/view/datas")', '$!{patient.cureNo}', 36, getRowDatas);
+});
+</script>
+</body>
+</html>

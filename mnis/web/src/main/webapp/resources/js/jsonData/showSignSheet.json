@@ -1,0 +1,17 @@
+{"total":10,"rows":[
+	{"patientBedCode":"1","patientName":"金秀芝秀","patientId":"000001","date":"2014-8-12 14:50:00","pulse":"79次/分","breath":"19次/分","heartRate":"80次/分","pressure":"119/80mmHg","saturation":""},
+	{"patientBedCode":"2","patientName":"周雪","patientId":"000002","date":"2014-8-12 15:30:00","pulse":"73次/分","breath":"20次/分","heartRate":"73次/分","pressure":"115/77mmHg","saturation":""},
+	{"patientBedCode":"3","patientName":"孙娜娜","patientId":"000003","date":"2014-8-12 14:40:00","pulse":"73次/分","breath":"20次/分","heartRate":"73次/分","pressure":"115/80mmHg","saturation":""},
+	{"patientBedCode":"13","patientName":"王琳","patientId":"000014","date":"2014-8-12 13:10:00","pulse":"78次/分","breath":"21次/分","heartRate":"78次/分","pressure":"110/71mmHg","saturation":""},
+	{"patientBedCode":"15","patientName":"孙继祖","patientId":"000013","date":"2014-8-12 15:10:00","pulse":"70次/分","breath":"19次/分","heartRate":"70次/分","pressure":"114/73mmHg","saturation":""},
+	{"patientBedCode":"59","patientName":"郝永君","patientId":"000004","date":"2014-8-12 15:30:00","pulse":"80次/分","breath":"20次/分","heartRate":"80次/分","pressure":"119/70mmHg","saturation":""},
+	{"patientBedCode":"51","patientName":"周一","patientId":"000005","date":"2014-8-12 13:20:00","pulse":"75次/分","breath":"22次/分","heartRate":"75次/分","pressure":"108/73mmHg","saturation":""},
+	{"patientBedCode":"53","patientName":"杨华","patientId":"000006","date":"2014-8-12 14:10:00","pulse":"79次/分","breath":"18次/分","heartRate":"77次/分","pressure":"105/70mmHg","saturation":""},
+	{"patientBedCode":"52","patientName":"赵力","patientId":"000007","date":"2014-8-12 13:40:00","pulse":"78次/分","breath":"19次/分","heartRate":"78次/分","pressure":"114/77mmHg","saturation":""},
+	{"patientBedCode":"54","patientName":"黄子轩","patientId":"000008","date":"2014-8-12 15:20:00","pulse":"77次/分","breath":"21次/分","heartRate":"77次/分","pressure":"116/70mmHg","saturation":""},
+	{"patientBedCode":"55","patientName":"张瀚宇","patientId":"000009","date":"2014-8-12 14:40:00","pulse":"79次/分","breath":"20次/分","heartRate":"80次/分","pressure":"110/69mmHg","saturation":""},
+	{"patientBedCode":"62","patientName":"李言蹊","patientId":"000010","date":"2014-8-12 13:10:00","pulse":"76次/分","breath":"20次/分","heartRate":"76次/分","pressure":"103/78mmHg","saturation":""},
+	{"patientBedCode":"64","patientName":"刘璇","patientId":"000011","date":"2014-8-12 15:50:00","pulse":"77次/分","breath":"21次/分","heartRate":"77次/分","pressure":"116/79mmHg","saturation":""},
+	{"patientBedCode":"48","patientName":"李泽楷","patientId":"000012","date":"2014-8-12 13:10:00","pulse":"72次/分","breath":"19次/分","heartRate":"72次/分","pressure":"111/72mmHg","saturation":""},
+	{"patientBedCode":"72","patientName":"测试患者","patientId":"000020","date":"2014-8-12 13:50:00","pulse":"71次/分","breath":"20次/分","heartRate":"71次/分","pressure":"115/80mmHg","saturation":""}
+]}

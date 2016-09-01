@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/showBodyTempSheet.css')" />
+<script type="text/javascript" src="#url('/resources/Lodop/LodopFuncs.js?1472534366478')"></script>
+<script type="text/javascript" src="#url('/resources/js/map.js?1472534366478')"></script>
+<script type="text/javascript" src="#url('/resources/js/nur/previewTempSheet.js?1472534366478')"></script>
+<script type="text/javascript" src="#url('/resources/js/nur/showBodyTempSheetPDF.js?1472534366478')"></script>
+<script type="text/javascript">
+    
+</script>
+</head>
+<body>
+    <input type="hidden" id="startDate" >
+	<div class="wrapper f_yahei">
+		<div class="insp-top top-tools" style="height:40px">
+		    <div class="top-tools-box">
+                <div class="top-title">
+                    <span>体温单查看</span> 
+                </div>
+                <div class="fl" style="margin-left:20px;font-size:13px;">
+                  <p><span id="checkedPatientName" style="margin-right:15px;"></span><span id="checkedBedCode"></span></p>
+                </div>  
+		    </div>
+		</div>
+		<div class="content">
+            <div id="showTempSheetBox">
+                <div id="showTempSheetBtn">
+                    <div style="margin-left:10px;">
+                        <input id="prevBtn" type="button" value="<" onclick="prevWeekSheetPdf()">
+                        <input type="text" id="currentWeek" value="1" style="border:none;background:#e0e4e8;width:40px;margin:0;text-align: center;" />
+                        <input id="nextBtn" type="button" value=">" onclick="nextWeekSheetPdf()">
+                    </div>
+                </div>
+                <object  id="LODOP_OB" wmode="opaque" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=100% height=100%> 
+                    <embed id="LODOP_EM" wmode="transparent" type="application/x-print-lodop" width=100% height=100%></embed>
+                </object>
+            </div>
+		</div>
+	</div>
+    <!-- <div id="showTempSheet" class="easyui-dialog" data-options="closed:true" title="体温单查看" style="width:800px;height:500px;">
+        
+    </div> -->
+</body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.user.dao.DeptBedInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.user.domain.DeptBedInfo" >
+    <result column="LEADER_NURSE" property="leaderNurse" jdbcType="VARCHAR" />
+    <result column="DUTY_NURSE" property="dutyNurse" jdbcType="VARCHAR" />
+    <result column="MANAGE_BEDS" property="manageBeds" jdbcType="VARCHAR" />
+    <result column="CRITICAL_BEDS" property="criticalBeds" jdbcType="VARCHAR" />
+    <result column="SURGERY_BEDS" property="surgeryBeds" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryDeptManageBedInfo" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select cdn.USER_NAME LEADER_NURSE, cbg.BEDS MANAGE_BEDS
+    from YIHUI.numas.dbo.COM_BED_GROUP cbg, YIHUI.numas.dbo.COM_DEPT_NURSE cdn
+    where cbg.GROUP_CODE = cdn.GROUP_CODE
+    and cbg.DEPT_CODE = #{deptCode}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from DEPT_BED_INFO
+  </select>
+  <select id="queryDutyNames" resultType="java.lang.String" parameterType="java.lang.String">
+    select cdn.USER_NAME
+    from YIHUI.numas.dbo.COM_DEPT_NURSE cdn, YIHUI.numas.dbo.COM_USER_POSITION cup,
+    YIHUI.numas.dbo.COM_BED_GROUP cbg
+    where cdn.USER_CODE = cup.USER_CODE
+    and cbg.DEPT_CODE = cdn.DEPT_CODE
+    and cdn.DEPT_CODE = #{deptCode}
+    and cdn.GROUP_CODE = cbg.GROUP_CODE
+    and cup.POSITION_NAME = '责任护士'
+  </select>
+</mapper>

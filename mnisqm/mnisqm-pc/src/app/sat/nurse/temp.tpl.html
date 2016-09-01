@@ -1,0 +1,30 @@
+<div class="col-md-12">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-tasks"></i>
+      <span>护士满意度调查模板</span>
+      <div class="pull-right">
+        <button class="btn btn-xs btn-primary" ng-click="vm.open()">新增</button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <table ng-table="vm.tableParams" class="table table-condensed table-bordered table-striped">
+        <tr ng-repeat="row in vm.lst">
+          <td data-title="'编号'">{{row.formCode}}</td>
+          <td data-title="'类型'">{{ row.formType }}</td>
+          <td data-title="'表单名称'">{{ row.formName }}</td>
+          <td data-title="'创建时间'">{{ row.createTime }}</td>
+          <td data-title="'状态'">{{ row.status === '01' ? '在用': '废弃' }}</td>
+          <td data-title="'操作'" class="text-center">
+            <button class="btn btn-primary btn-xs classes-handler-btn" uib-tooltip="编辑" ng-click="vm.open(row)">
+              <span class="fa fa-edit"></span>
+            </button>
+            <button ng-show="row.status === '01'" class="btn btn-danger btn-xs classes-handler-btn" uib-tooltip="删除" ng-click="vm.del(row.seqId)">
+              <span class="fa fa-trash"></span>
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

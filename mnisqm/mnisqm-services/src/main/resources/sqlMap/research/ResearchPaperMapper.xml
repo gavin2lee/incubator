@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.research.dao.ResearchPaperMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.research.domain.ResearchPaper" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="PAPER_NAME" property="paperName" jdbcType="VARCHAR" />
+    <result column="AUTHOR" property="author" jdbcType="VARCHAR" />
+    <result column="PUBLICTION_NAME" property="publictionName" jdbcType="VARCHAR" />
+    <result column="PUBLICTION_NO" property="publictionNo" jdbcType="VARCHAR" />
+    <result column="WORDS_NUMBER" property="wordsNumber" jdbcType="INTEGER" />
+    <result column="CORE_PUBLICTION" property="corePubliction" jdbcType="VARCHAR" />
+    <result column="PUBLISH_DATE" property="publishDate" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 逻辑删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.lachesis.mnisqm.module.research.domain.ResearchPaper" >
+    update RESEARCH_PAPER
+    set 
+      STATUS = #{status,jdbcType=CHAR},
+      UPDATE_TIME = GETDATE()
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <!-- 数据录入 -->
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.research.domain.ResearchPaper" >
+    insert into RESEARCH_PAPER (DEPT_CODE, PAPER_NAME, 
+      AUTHOR, PUBLICTION_NAME, PUBLICTION_NO, 
+      WORDS_NUMBER, CORE_PUBLICTION, PUBLISH_DATE, 
+      STATUS, CREATE_TIME, UPDATE_TIME, 
+      CREATE_PERSON, UPDATE_PERSON)
+    values (#{deptCode,jdbcType=VARCHAR}, #{paperName,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{publictionName,jdbcType=VARCHAR}, #{publictionNo,jdbcType=VARCHAR}, 
+      #{wordsNumber,jdbcType=INTEGER}, #{corePubliction,jdbcType=VARCHAR}, #{publishDate,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, GETDATE(), GETDATE(), 
+      #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <!-- 数据更新 -->
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.research.domain.ResearchPaper" >
+    update RESEARCH_PAPER
+    set 
+      PAPER_NAME = #{paperName,jdbcType=VARCHAR},
+      AUTHOR = #{author,jdbcType=VARCHAR},
+      PUBLICTION_NAME = #{publictionName,jdbcType=VARCHAR},
+      PUBLICTION_NO = #{publictionNo,jdbcType=VARCHAR},
+      WORDS_NUMBER = #{wordsNumber,jdbcType=INTEGER},
+      CORE_PUBLICTION = #{corePubliction,jdbcType=VARCHAR},
+      PUBLISH_DATE = #{publishDate,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, DEPT_CODE, PAPER_NAME, AUTHOR, PUBLICTION_NAME, PUBLICTION_NO, WORDS_NUMBER, 
+    CORE_PUBLICTION, PUBLISH_DATE, STATUS, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON
+    from RESEARCH_PAPER
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectPaperByDept" resultMap="BaseResultMap" parameterType="com.lachesis.mnisqm.module.research.domain.ResearchPaper">
+    select SEQ_ID, DEPT_CODE, PAPER_NAME, AUTHOR, PUBLICTION_NAME, PUBLICTION_NO, WORDS_NUMBER, 
+    CORE_PUBLICTION, PUBLISH_DATE, STATUS, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON
+    from RESEARCH_PAPER
+    where status != '09'
+    and DEPT_CODE= #{deptCode}
+  </select>
+</mapper>

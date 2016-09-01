@@ -1,0 +1,19 @@
+<div class="chart-wrapper">
+  <div class="row filter">
+    <span class="input-group center col-md-2">
+      <input  type="text" id="date" name="date" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.pickerOpen" ng-model="vm.date" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" common-picker="month">
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-sm btn-default" ng-click="vm.pickerOpen = true">
+          <i class="fa fa-calendar"></i>
+        </button>
+      </span>
+    </span>
+  </div>
+  <div class="row data-panel">
+    <span class="col-md-3">护士总数：{{vm.baseData.total}}</span>
+    <span class="col-md-3">调动人次：{{vm.baseData.transfer}}</span>
+    <span class="col-md-3">新增人数：{{vm.baseData.increase}}</span>
+    <span class="col-md-3">离开人数：{{vm.baseData.leave}}</span>
+  </div>
+  <div class="echarts-wrap" echarts="vm.transfer.identity" echarts-dimension="vm.transfer.dimension" config="vm.transfer.config"></div>
+</div>

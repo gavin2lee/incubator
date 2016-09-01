@@ -1,0 +1,35 @@
+html,body{height:100%;}
+.insp-top div.top-tools-box{
+	padding-left:15px;
+	box-shadow: none;
+	font-size:13px;
+	line-height: 38px;
+}
+.insp-top div.top-tools-box .bg{
+	display: inline-block;
+	width: 18px;
+	height: 19px;
+	margin:10px 5px 0 10px ;
+	background: url(../img/MNIS.png) 0 -166px;;
+	cursor: pointer;
+}
+.insp-top div.top-tools-box .checkIn{
+	background-position: -20px -166px;
+}
+.insp-top div.top-tools-box .item-text{
+	vertical-align: super;
+}
+.starbox{
+	display: block;
+	height: 19px;
+	padding-left:5px;
+}
+.starbox i.star{
+	display: block;
+	width: 19px;
+	height: 19px;
+	background: url(../img/MNIS.png) 0px -146px no-repeat;
+}
+.starbox i.star2{
+	background-position: -20px -146px;
+}

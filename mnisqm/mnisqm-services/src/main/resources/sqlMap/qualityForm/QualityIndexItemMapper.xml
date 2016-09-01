@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.qualityForm.dao.QualityIndexItemMapper" >
+	<insert id="insert" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityIndexItem">
+		insert into QUALITY_INDEX_ITEM
+		(INDEX_ITEM_NAME, INDEX_ITEM_TYPE,
+		STATUS, CREATE_TIME, UPDATE_TIME,
+		CREATE_PERSON, UPDATE_PERSON)
+		values
+		(#{indexItemName},#{indexItemType},#{status},
+		GETDATE(), GETDATE(),
+		#{createPerson},#{updatePerson})
+	</insert>
+	<update id="update" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityIndexItem">
+		update QUALITY_INDEX_ITEM
+		set
+		INDEX_ITEM_NAME = #{indexItemName},
+		INDEX_ITEM_TYPE = #{indexItemType},
+		UPDATE_TIME = GETDATE(),
+		UPDATE_PERSON = #{updatePerson}
+		where
+		SEQ_ID = #{seqId}
+	</update>
+	<select id="select" parameterType="Map" resultType="com.lachesis.mnisqm.module.qualityForm.domain.QualityIndexItem">
+		select 
+		SEQ_ID				seqId,
+		INDEX_ITEM_NAME		indexItemName,
+		INDEX_ITEM_TYPE		indexItemType
+		from QUALITY_INDEX_ITEM
+		where 
+		STATUS != '09'
+		<if test="indexItemName != null">
+		and INDEX_ITEM_NAME like '%'+#{indexItemName}+'%'
+		</if>
+		<if test="indexItemType != null">
+		and INDEX_ITEM_TYPE = #{indexItemType}
+		</if>
+	</select>
+	<update id="deleteByUpdate" parameterType="java.lang.Long">
+		update
+		QUALITY_INDEX_ITEM
+		set
+		STATUS = '09'
+		where 
+		SEQ_ID = #{seqId}
+	</update>
+</mapper>

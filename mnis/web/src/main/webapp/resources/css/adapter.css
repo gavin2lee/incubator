@@ -1,0 +1,385 @@
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+a:hover,
+a:visited,
+a:active,
+a:focus {
+  text-decoration: none!important;
+}
+
+.container {
+  position: relative;
+}
+
+.navbar {
+  margin-bottom: 0;
+  height: 80px;
+}
+
+.navbar-header {
+  height: 80px;
+}
+
+.navbar-brand {
+  padding: 0!important;
+  font-size: 32px!important;
+  line-height: 50px!important;
+  cursor: default!important;
+}
+
+.navbar-brand:hover {
+  color: white!important;
+}
+
+.nav > li {
+  width: 112px;
+  text-align: center;
+}
+
+.nav > li > a {
+  padding-top: 10px!important;
+  padding-bottom: 10px!important;
+}
+
+.nav > li .icomoon {
+  font-size: 32px;
+}
+
+.nav > li .icomoon + p {
+  margin-top: 8px;
+}
+
+.navbar-personal {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding-bottom: 2px;
+  color: white;
+}
+
+.navbar-personal .dropdown-toggle {
+  color: white;
+  margin-left: 30px;
+  font-size: 12px;
+}
+
+.navbar-personal .dropdown-toggle .icomoon {
+  font-size: 30px;
+  vertical-align: middle;
+}
+
+.navbar-personal .dropdown-menu {
+  left: auto;
+  right: 0;
+  margin: 0;
+}
+
+.navbar-personal .icomoon-triangledown {
+  display: inline;
+}
+
+.navbar-personal .icomoon-triangleup {
+  display: none;
+}
+
+.navbar-personal.open .icomoon-triangledown {
+  display: none;
+}
+
+.navbar-personal.open .icomoon-triangleup {
+  display: inline;
+}
+
+.search-form {
+  display: inline-block;
+}
+
+.search-form input[type=text] {
+  width: 130px;
+}
+
+.margin-0 {
+  margin: 0!important;
+}
+
+.choice-group .icomoon {
+  font-size: 20px;
+}
+
+.choice-group {
+  margin-left: 10px;
+}
+
+.choice-group + .choice-group {
+  margin-left: 20px;
+}
+
+* {
+  box-sizing: content-box;
+}
+
+*:before,
+*:after {
+  box-sizing: content-box;
+}
+
+.navbar,
+.modal,
+.chkbox-wrapper,
+.rdobox-wrapper {
+  box-sizing: border-box;
+  * {
+    &:before,
+    &:after {
+      box-sizing: border-box;
+    }
+  }
+}
+
+.navbar *,
+.modal *,
+.chkbox-wrapper *,
+.rdobox-wrapper * {
+  box-sizing: border-box;
+}
+
+.navbar *:before,
+.modal *:before,
+.chkbox-wrapper *:before,
+.rdobox-wrapper *:before {
+  box-sizing: border-box;
+}
+
+.navbar *:after,
+.modal *:after,
+.chkbox-wrapper *:after,
+.rdobox-wrapper *:after {
+  box-sizing: border-box;
+}
+
+.panel.window {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.panel-title {
+  padding: 0 20px;
+  line-height: 42px;
+  background-color: #3473c0;
+  color: #fff;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.panel-body .panel {
+  padding: 22px 20px;
+}
+
+label {
+  font-weight: normal;
+}
+
+.panel-body .form-group {
+  text-align: center;
+}
+
+.panel-body .form-group + .form-group {
+  margin-top: 25px;
+}
+
+.panel-body .form-group .control-label {
+  font-weight: normal;
+  text-align: right;
+}
+
+.chk-label {
+  position: relative;
+  top: -2px;
+}
+
+.dialog-button {
+  text-align: center;
+}
+
+.dialog-button .l-btn {
+  display: inline-block;
+  padding: 0;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  color: #333333;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  background-color: #e0e0e0;
+  border: 1px solid #b3b3b3;
+  white-space: nowrap;
+  box-sizing: content-box;
+  width: 140px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.dialog-button {
+  padding: 13px 20px;
+}
+
+.dialog-button .l-btn span {
+  line-height: 30px;
+}
+
+.dialog-button .l-btn + .l-btn {
+  margin-left: 50px;
+}
+
+.dialog-button .l-btn:hover {
+  background: none;
+  background-color: #d3d3d3;
+  border: 1px solid #b3b3b3;
+}
+
+.dialog-button .l-btn:active {
+  outline: none;
+  background-image: none;
+  background-color: #c7c7c7;
+}
+
+.window .window-header .panel-tool {
+  margin-top: -9px;
+}
+
+.messager-body .messager-button .l-btn {
+  display: inline-block;
+  padding: 0;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  color: #333333;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  background-color: #e0e0e0;
+  border: 1px solid #b3b3b3;
+  white-space: nowrap;
+  box-sizing: content-box;
+  width: 70px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.messager-body .messager-button .l-btn span {
+  line-height: 30px;
+}
+
+.messager-body .messager-button .l-btn:hover {
+  background: none;
+  background-color: #d3d3d3;
+  border: 1px solid #b3b3b3;
+}
+
+.messager-body .messager-button .l-btn:active {
+  outline: none;
+  background: none;
+  background-color: #c7c7c7;
+}
+
+.datagrid-header-row {
+  background-color: #f5f5f5;
+  color: #666666;
+}
+
+.chkbox-wrapper .chkbox + label {
+  position: relative;
+  top: 2px;
+}
+
+.rdobox-wrapper .rdobox + label {
+  position: relative;
+  top: 2px;
+}
+
+.rdobox-wrapper .rdobox:checked + label:after {
+  top: 3px;
+  left: 3px;
+}
+
+.datagrid-toolbar .l-btn,
+.sp-choose {
+  display: inline-block!important;
+  padding: 0!important;
+  margin-bottom: 0!important;
+  font-weight: normal!important;
+  text-align: center!important;
+  color: #333333!important;
+  vertical-align: middle!important;
+  touch-action: manipulation!important;
+  cursor: pointer!important;
+  background-image: none!important;
+  background-color: #e0e0e0!important;
+  border: 1px solid #b3b3b3!important;
+  white-space: nowrap!important;
+  box-sizing: content-box!important;
+  height: 25px!important;
+  line-height: 25px!important;
+  font-size: 12px!important;
+}
+
+.sp-choose {
+  width: 40px;
+}
+
+.datagrid-toolbar .l-btn:hover,
+.sp-choose:hover {
+  background: none!important;
+  background-color: #d3d3d3!important;
+}
+
+.datagrid-toolbar .l-btn:active,
+.sp-choose:active {
+  outline: none!important;
+  background: none!important;
+  background-color: #c7c7c7!important;
+}
+
+input[readonly] {
+  cursor: not-allowed;
+  color: #666666;
+}
+
+input[readonly].Wdate {
+  cursor: default;
+  color: #333333;
+}
+
+.selector {
+  width: 100px;
+}
+
+.selector.selector-bg {
+  width: 150px;
+}
+
+.tree-node-selected {
+  background: #568dd1;
+  color: white;
+}
+
+.datagrid-row-selected {
+  background: #cedef2; //lighten 40
+}
+
+.crisis-value .panel-title {
+  height: 40px;
+  background: transparent;
+  color: #333333;
+  padding: 0;
+  height: 20px;
+  line-height: 20px
+}
+
+.crisis-value .panel-header {
+  background: white;
+}

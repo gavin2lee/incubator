@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lachesis.mnisqm.module.user.dao.ComUserFamilyMapper">
+  <resultMap id="BaseResultMap" type="ComUserFamily">
+    <id column="SEQ_ID" jdbcType="BIGINT" property="seqId" />
+    <result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+    <result column="STATUS" jdbcType="CHAR" property="status" />
+    <result column="RELATION" jdbcType="VARCHAR" property="relation" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="CREATE_PERSON" jdbcType="VARCHAR" property="createPerson" />
+    <result column="UPDATE_PERSON" jdbcType="VARCHAR" property="updatePerson" />
+  </resultMap>
+  <!-- 逻辑删除 -->
+  <update id="deleteByPrimaryKey" parameterType="ComUserFamily" >
+    update COM_USER_FAMILY
+    set 
+      STATUS = #{status,jdbcType=CHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <insert id="insert" parameterType="ComUserFamily">
+    insert into COM_USER_FAMILY (USER_CODE, STATUS, 
+      RELATION, NAME, PHONE, 
+      EMAIL, REMARK, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{userCode,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{relation,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, GETDATE(), 
+      #{createPerson,jdbcType=VARCHAR}, GETDATE(), #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="ComUserFamily">
+    update COM_USER_FAMILY
+    set USER_CODE = #{userCode,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      RELATION = #{relation,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.OrderLiquorMapper">
+	<resultMap id="drugItemResultMap" type="DrugItem">
+		<id property="orderItemId" column="lx_order_item_id" />
+		<result property="orderId" column="lx_order_id" />
+		<result property="drugId" column="lx_drug_id" />
+		<result property="drugName" column="lx_drug_name" />
+		<result property="drugDosage" column="lx_drug_dosage" />
+		<result property="drugFreq" column="lx_drug_freq" />
+		<result property="drugUnit" column="lx_drug_unit" />
+		<result property="drugUsage" column="lx_drug_usage" />
+	</resultMap>
+
+	<resultMap id="orderLiquorItemResultMap" type="OrderLiquorItem">
+		<id property="execOrderId" column="lx_exec_order_id" />
+		<result property="orderId" column="lx_order_id" />
+		<result property="isStop" column="is_stop" />
+		<result property="prepareNurseId" column="lx_prepare_nurse_id" />
+		<result property="prepareNurseName" column="lx_prepare_nurse_name" />
+		<result property="prepareTime" column="lx_prepare_time" />
+		<result property="execNurseId" column="lx_exec_nurse_id" />
+		<result property="execNurseName" column="lx_exec_nurse_name" />
+		<result property="execTime" column="lx_exec_time" />
+		<result property="verifyNurseId" column="lx_verify_nurse_id" />
+		<result property="verifyNurseName" column="lx_verify_nurse_name" />
+		<result property="verifyTime" column="lx_verify_time" />
+		<result property="state" column="lx_state" />
+	</resultMap>
+
+	<resultMap id="orderLiquorResultMap" type="OrderLiquor">
+		<id column="lx_order_id" />
+		<result property="patientNo" column="lx_patient_no" />
+		<result property="patientId" column="lx_patient_id" />
+		<result property="bedNo" column="bed_code" typeHandler="BedCodeHandler" />
+		<result property="patientName" column="lx_patient_name" />
+		<result property="nurseId" column="lx_nurse_id" />
+		<result property="nurseName" column="lx_nurse_name" />
+		<result property="plan_time" column="plan_time" />
+		<result property="drugUsage" column="lx_drug_usage" />
+		<result property="drugFreq" column="lx_drug_freq" />
+		
+		<association property="orderLiquorItem" resultMap="orderLiquorItemResultMap" />
+		<collection property="drugItems" resultMap="drugItemResultMap" />
+	</resultMap>
+	
+	<resultMap id="orderLiquorStatisticMap" type="orderLiquorStatistic">
+		<result property="prepareCount" column="prepare_count" />
+		<result property="verifyCount" column="verify_count" />
+		<result property="execCount" column="exec_count" />
+	</resultMap>
+	
+	<resultMap id="orderUnExecRecordItemMap" type="com.lachesis.mnis.core.liquor.entity.OrderUnExecRecordItem">
+		<id property="id" column="id"/>
+		<result property="patId" column="pat_id"/>
+		<result property="deptCode" column="dept_code"/>
+		<result property="barcode" column="lx_order_id"/>
+		<result property="recordNurseCode" column="record_nurse_code"/>
+		<result property="recordNurseName" column="record_nurse_name"/>
+		<result property="recordDate" column="record_date"/>
+		<result property="drugInfos" column="drug_infos"/>
+	</resultMap>
+	
+	<resultMap id="orderUnExecRecordMap" type="com.lachesis.mnis.core.liquor.entity.OrderUnExecRecord">
+		<id property="patId" column="pat_id"/>
+		<result property="deptCode" column="dept_code"/>
+		<result property="patName" column="pat_name"/>
+		<result property="bedCode" column="bed_code"/>
+		<collection property="orderUnExecRecordItems" resultMap="orderUnExecRecordItemMap"/>
+	</resultMap>
+
+	<select id="getOrderLiquorList" resultMap="orderLiquorResultMap" parameterType="java.util.HashMap">
+		select
+			g.plan_time,
+			g.order_bar as lx_order_id,
+			g.FREQ_NAME as lx_drug_freq,
+			g.CREATE_DOC_ID as lx_nurse_id,
+			g.CREATE_DOC_NAME as lx_nurse_name,
+			
+			p.PAT_ID as lx_patient_id,
+			p.IN_HOSP_NO as lx_patient_no,
+			p.NAME as lx_patient_name,
+			p.BED_CODE as bed_code,
+	
+			l.id as lx_exec_order_id,
+			CASE g.order_status_code WHEN 3
+			THEN 1 ELSE 0 END
+			as is_stop,
+			l.prepare_nurse_id as lx_prepare_nurse_id,
+			l.prepare_nurse_name as lx_prepare_nurse_name,
+			l.prepare_time as lx_prepare_time,
+			l.exec_nurse_id as lx_exec_nurse_id,
+			l.exec_nurse_name as lx_exec_nurse_name,
+			l.exec_time as lx_exec_time,
+			l.state as lx_state,
+			l.verify_nurse_id as lx_verify_nurse_id,
+			l.verify_nurse_name as lx_verify_nurse_name,
+			l.verify_time as lx_verify_time,
+	
+			i.ORDER_GROUP_ID + '*' + CAST(i.ORDER_SUB_NO as varchar) as lx_order_item_id,
+			i.ITEM_CODE as lx_drug_id,
+			i.ITEM_NAME as lx_drug_name,
+			i.usage_name as lx_drug_usage,
+			i.DOSAGE as lx_drug_dosage,
+			i.DOSAGE_UNIT as lx_drug_unit
+			
+		FROM PAT_ORDER_GROUP g
+			inner join PAT_ORDER_ITEM i on g.pat_id = i.pat_id and g.order_no = i.order_no
+			and g.perform_no = i.perform_no
+			inner join PAT_CURE_INFO p on p.pat_id = g.pat_id and p.STATUS=1
+			left join PAT_ORDER_EXEC e on g.order_bar = e.barcode
+			left join NURSE_LIQUOR l on g.order_bar = l.order_group_id
+			left join com_dic cd on cd.his_code = g.order_exec_type_code and cd.dic_type = 'USAGE'
+		WHERE
+			g.order_status_code != 3
+			and e.id is null
+			and i.USAGE_CODE is not null 
+			AND cd.liquor = '1'
+			<!-- AND g.is_longterm = 0 -->
+			<if test="patientIds != null and patientIds.size>0">
+				AND g.pat_id IN (
+				<foreach collection="patientIds" item="item" index="index"
+					separator=",">
+					#{item}
+				</foreach>
+				)
+			</if>
+			
+			<if test="deptId != null">
+				AND p.ward_code=#{deptId}
+			</if>
+			<if test = "startDate != null and endDate != null">
+				and g.plan_time between #{startDate} and #{endDate}
+			</if>
+			<if test = "orderTypeCode != null">
+				and g.is_longterm = #{orderTypeCode}
+			</if>
+			<if test="isAllStatus != true">
+				<choose>
+					<when test="liquorStatus == null">
+						and l.state is null
+					</when>
+					<otherwise>
+						and l.state = #{liquorStatus}
+					</otherwise>
+				</choose>
+			</if>
+			order by len(p.BED_CODE),p.bed_code,g.PLAN_TIME
+	</select>
+	
+	<select id="getDrugBagLiquorList" resultMap="orderLiquorResultMap" parameterType="java.util.HashMap">
+		SELECT  dg.DT_TAKEDATE plan_time ,
+		        dg.BARCODE lx_order_id ,
+		        dg.BARCODE + '*' + CAST(dg.N_ORDER_SUB_NO AS VARCHAR) lx_order_item_id ,
+		        '' lx_drug_freq,
+		        dg.drugcd lx_drug_id ,
+		        dg.drugnm lx_drug_name ,
+		        '口服' AS lx_drug_usage ,
+		        dg.D_DISPENSEDOSE lx_drug_dosage ,
+		        dg.UNITNM_D_D lx_drug_unit ,
+		        
+		        p.NAME lx_patient_name ,
+		        p.BED_CODE bed_code ,
+		        p.PAT_ID lx_patient_id ,
+		        p.IN_HOSP_NO lx_patient_no ,
+		        
+		        l.id AS lx_exec_order_id ,
+		        0 is_stop ,
+		        l.prepare_nurse_id lx_prepare_nurse_id ,
+		        l.prepare_nurse_name lx_prepare_nurse_name ,
+		        l.prepare_time lx_prepare_time ,
+		        l.exec_nurse_id lx_exec_nurse_id ,
+		        l.exec_nurse_name lx_exec_nurse_name ,
+		        l.exec_time lx_exec_time ,
+		        l.state lx_state ,
+		        l.verify_nurse_id lx_verify_nurse_id ,
+		        l.verify_nurse_name lx_verify_nurse_name ,
+		        l.verify_time lx_verify_time
+		FROM    PAT_DRUGBAGRECLIST dg
+		        INNER JOIN PAT_CURE_INFO p ON p.pat_id = dg.pat_id
+		                                      AND p.STATUS = 1
+		        LEFT JOIN PAT_ORDER_EXEC e ON dg.barcode = e.barcode
+		        LEFT JOIN NURSE_LIQUOR l ON dg.barcode = l.order_group_id
+		WHERE
+			e.id is null
+			<if test="patientIds != null and patientIds.size>0">
+				AND p.pat_id IN (
+				<foreach collection="patientIds" item="item" index="index"
+					separator=",">
+					#{item}
+				</foreach>
+				)
+			</if>
+			
+			<if test="deptId != null">
+				AND p.ward_code=#{deptId}
+			</if>
+			<if test = "startDate != null and endDate != null">
+				and dg.DT_TAKEDATE between #{startDate} and #{endDate}
+			</if>
+			<if test="isAllStatus != true">
+				<choose>
+					<when test="liquorStatus == null">
+						and l.state is null
+					</when>
+					<otherwise>
+						and l.state = #{liquorStatus}
+					</otherwise>
+				</choose>
+			</if>
+			order by len(p.BED_CODE),p.bed_code,dg.DT_TAKEDATE
+	</select>
+	
+	<select id="selectOrderLiquorByExecOrderId" resultMap="orderLiquorItemResultMap">
+		select
+		llt.id as lx_exec_order_id,
+		llt.order_group_id as lx_order_id,
+		llt.prepare_nurse_id
+		as lx_prepare_nurse_id,
+		llt.prepare_nurse_name as
+		lx_prepare_nurse_name,
+		llt.prepare_time as
+		lx_prepare_time,
+		llt.exec_nurse_id as lx_exec_nurse_id,
+		llt.exec_nurse_name as
+		lx_exec_nurse_name,
+		llt.exec_time as
+		lx_exec_time,
+		llt.state as lx_state,
+		llt.verify_nurse_id  as lx_verify_nurse_id,
+		llt.verify_nurse_name  as lx_verify_nurse_name,
+		llt.verify_time as lx_verify_time
+		from
+		NURSE_LIQUOR llt
+		where
+		llt.order_group_id = #{orderId}
+
+	</select>
+	
+	<select id="getOrderLiquorStatistic" parameterType="String" resultMap="orderLiquorStatisticMap">
+		WITH LIQOUR_ORDER_STATISTIC as (
+			select distinct * from (SELECT
+					g.PAT_ID lx_patient_id,
+					l.state lx_state
+				FROM PAT_ORDER_GROUP g
+					inner join PAT_ORDER_ITEM i on g.pat_id = i.pat_id and g.order_no = i.order_no
+					and g.perform_no = i.perform_no
+					inner join PAT_CURE_INFO p on p.pat_id = g.pat_id and p.STATUS=1
+					left join PAT_ORDER_EXEC e on g.order_bar = e.barcode
+					left join NURSE_LIQUOR l on g.order_bar = l.order_group_id
+					left join com_dic cd on cd.his_code = g.order_exec_type_code and cd.dic_type = 'USAGE'
+				
+				WHERE
+				g.order_status_code != 3
+				and e.id is null
+				AND cd.liquor = '1'
+				<if test="param1 != null">
+					AND p.ward_code=#{param1}
+				</if>
+				<if test = "param4 != null">
+					AND g.is_longterm = #{param4}
+				</if>
+				and g.plan_time between #{param2} and #{param3}
+				<if test="param5 == 'ORAL'">
+					UNION ALL
+					SELECT
+						dg.PAT_ID lx_patient_id,
+						l.state lx_state
+					FROM PAT_DRUGBAGRECLIST dg
+						inner join PAT_CURE_INFO p on p.pat_id = dg.pat_id and p.STATUS=1
+						left join PAT_ORDER_EXEC e on dg.barcode = e.barcode
+						left join NURSE_LIQUOR l on dg.barcode = l.order_group_id
+					WHERE
+						 e.id is null
+						<if test="param1 != null">
+							AND p.ward_code=#{param1}
+						</if>
+						and dg.DT_TAKEDATE between #{param2} and #{param3}
+				</if>
+				) ORDER_LIQUOR_INFO
+			)
+			
+			select 
+				sum(case when los.lx_state is null then 1 else 0 end) as prepare_count,
+				sum(case when los.lx_state = 'P' then 1 else 0 end) as verify_count,
+				sum(case when los.lx_state = 'V' then 1 else 0 end) as exec_count
+			from LIQOUR_ORDER_STATISTIC los
+	</select>
+
+	<insert id="insertOrderLiquorForPrepare" parameterType="OrderLiquorItem">
+		insert
+		into NURSE_LIQUOR (
+		order_group_id,
+		prepare_nurse_id,
+		prepare_nurse_name,
+		prepare_time,
+		state
+		)
+		values(
+		#{orderId},
+		#{prepareNurseId},
+		#{prepareNurseName},
+		#{prepareTime},
+		#{state}
+		)
+	</insert>
+
+	<insert id="insertOrderLiquorForVerify" parameterType="OrderLiquorItem">
+		insert
+		into NURSE_LIQUOR (
+		order_group_id,
+		verify_nurse_id,
+		verify_nurse_name,
+		verify_time,
+		state
+		)
+		values(
+		#{orderId},
+		#{verifyNurseId},
+		#{verifyNurseName},
+		#{verifyTime},
+		#{state}
+		)
+	</insert>
+
+	<insert id="insertOrderLiquorForExec" parameterType="OrderLiquorItem">
+		insert
+		into
+		NURSE_LIQUOR (
+		order_group_id,
+		exec_nurse_id,
+		exec_nurse_name,
+		exec_time,
+		state
+		)
+		values(
+		#{orderId},
+		#{execNurseId},
+		#{execNurseName},
+		#{execTime},
+		#{state}
+		)
+	</insert>
+
+	<update id="updateOrderLiquor" parameterType="OrderLiquorItem">
+		update
+		NURSE_LIQUOR
+		set
+		exec_nurse_id = #{execNurseId},
+		exec_nurse_name =
+		#{execNurseName},
+		exec_time = #{execTime},
+		state = #{state}
+		where
+		order_group_id = #{orderId}
+	</update>
+
+	<update id="updateOrderLiquorForVerify" parameterType="OrderLiquorItem">
+		update
+		NURSE_LIQUOR
+		set
+		verify_nurse_id = #{verifyNurseId},
+		verify_nurse_name = #{verifyNurseName},
+		verify_time = #{verifyTime},
+		state = #{state}
+		where
+		order_group_id = #{orderId}
+	</update>
+	
+	<select id="getOrderUnExecRecords" parameterType="String" resultMap="orderUnExecRecordMap">
+		select 
+			p.pat_id,p.name pat_name,p.bed_code,p.ward_code dept_code,
+			r.id,r.barcode lx_order_id,r.record_nurse_code,r.record_nurse_name,r.record_date,
+			r.drug_infos
+		from pat_cure_info p
+		inner join PAT_ORDER_UNEXEC_RECORD r on r.pat_id = p.pat_id
+		where p.status = 1
+		and p.ward_code = #{param1}
+		<if test="param2 != null and param2.size > 0">
+			AND g.pat_id IN (
+			<foreach collection="param2" item="item" index="index"
+				separator=",">
+				#{item}
+			</foreach>
+			)
+		</if>
+		<if test="param3 != null">
+			AND r.id =#{param3}
+		</if>
+		<if test="param4 != null">
+			AND r.record_date >= #{param4}
+		</if>
+		<if test="param5 != null">
+			AND r.record_date &lt; #{param5}
+		</if>
+		order by len(p.bed_code),p.bed_code,r.record_date,r.barcode
+	</select>
+	
+	<insert id="insertOrderUnExecRecordItem" parameterType="com.lachesis.mnis.core.liquor.entity.OrderUnExecRecordItem"
+	 	useGeneratedKeys="true" keyProperty="id">
+		insert into PAT_ORDER_UNEXEC_RECORD(pat_id,dept_code,barcode,drug_infos,
+			record_nurse_code,record_nurse_name,record_date,is_valid)
+		values(#{patId},#{deptCode},#{barcode},#{drugInfos},#{recordNurseCode},#{recordNurseName},#{recordDate},'1')
+	</insert>
+</mapper>

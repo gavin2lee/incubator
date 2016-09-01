@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.user.dao.ComDeptNurseMapper" >
+  <!-- 数据插入 -->
+  <insert id="insert" parameterType="ComDeptNurse" >
+    insert into COM_DEPT_NURSE (USER_CODE, STATUS, 
+      DEPT_CODE, GROUP_CODE, BEDS,COLOR, 
+      IS_SCHEDULE,CREATE_TIME, CREATE_PERSON, 
+      UPDATE_TIME, UPDATE_PERSON)
+    values (#{userCode}, #{status}, 
+      #{deptCode}, #{groupCode}, #{beds}, 
+      #{color},#{isSchedule}, GETDATE(), #{createPerson}, 
+      GETDATE(), #{updatePerson})
+  </insert>
+  <!-- 数据更新 -->
+  <update id="updateByPrimaryKey" parameterType="ComDeptNurse" >
+    update COM_DEPT_NURSE
+    set 
+      STATUS = #{status},
+      DEPT_CODE = #{deptCode},
+      GROUP_CODE = #{groupCode},
+      BEDS = #{beds},
+      COLOR =#{color},
+      IS_SCHEDULE = #{isSchedule},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson}
+    where SEQ_ID = #{seqId}
+  </update>
+  <!-- 查询科室护理人员信息 -->
+  <select id="selectUserNurses" resultType="ComDeptNurse" parameterType="ComDeptNurse">
+    select 
+		u.USER_CODE			userCode,
+		u.HIS_CODE			hisCode,
+		u.USER_NAME			userName,
+		d.DEPT_CODE			deptCode,
+    	n.SEQ_ID			seqId,
+    	n.STATUS			status,
+    	n.BEDS				beds,
+    	n.COLOR				color,
+    	n.IS_SCHEDULE		isSchedule,
+    	g.GROUP_CODE		groupCode,
+    	g.GROUP_NAME		groupName,
+    	n.LEAVE				leave
+    from COM_USER u
+    INNER JOIN COM_DEPT_USER d on d.USER_CODE = u.USER_CODE
+    LEFT JOIN COM_DEPT_NURSE n on n.USER_CODE = u.USER_CODE
+    LEFT JOIN COM_BED_GROUP g on n.GROUP_CODE = G.GROUP_CODE
+    WHERE d.DEPT_CODE=#{deptCode}
+    AND u.status!='09'
+    <if test="userCode != null">
+    	and u.USER_CODE = #{userCode}
+    </if>
+  </select>
+  
+  <!-- 获取病区护理人员信息 -->
+  <select id="selectUserNurseByDepot" parameterType="java.util.Map" resultType="ComDeptNurse">
+		SELECT 	
+				u.USER_CODE		userCode,
+				u.HIS_CODE		hisCode,
+				u.USER_NAME		userName,
+				n.COLOR			color,
+				g.GROUP_NAME	groupName,
+				u.CLINICAL		clinical,
+				n.LEAVE			leave,
+				n.beds			beds
+		FROM COM_USER u
+		INNER JOIN COM_DEPT_USER d on u.USER_CODE = d.USER_CODE
+		LEFT JOIN COM_DEPT_NURSE n on n.USER_CODE = u.USER_CODE
+		LEFT JOIN COM_BED_GROUP g on n.GROUP_CODE=g.GROUP_CODE
+		WHERE d.DEPT_CODE=#{deptCode}
+		AND u.STATUS != '09'
+		AND n.IS_SCHEDULE='1'
+	</select>
+	
+	<!-- 获取排班后病区新增人员的排班信息 -->
+  	<select id="selectUserAddNurseByDepot" parameterType="java.util.Map" resultType="ComDeptNurse">
+		SELECT 	
+				u.USER_CODE		userCode,
+				u.HIS_CODE		hisCode,
+				u.USER_NAME		userName,
+				n.COLOR			color,
+				g.GROUP_NAME	groupName,
+				u.CLINICAL		clinical,
+				n.LEAVE				leave
+		FROM COM_USER u
+		INNER JOIN COM_DEPT_USER d on u.USER_CODE = d.USER_CODE
+		LEFT JOIN COM_DEPT_NURSE n on n.USER_CODE = u.USER_CODE
+		LEFT JOIN COM_BED_GROUP g on n.GROUP_CODE=g.GROUP_CODE
+		LEFT JOIN SCHEDULE_RECORD_DETAIL l on u.USER_CODE = l.USER_CODE and l.RECORD_CODE=#{recordCode}
+		WHERE d.DEPT_CODE=#{deptCode}
+		AND u.STATUS != '09'
+		AND n.IS_SCHEDULE='1'
+		AND l.SEQ_ID is null
+	</select>
+	
+	<!-- 保存积假 -->
+	<update id="saveUserLeave" parameterType="ComDeptNurse">
+		update	COM_DEPT_NURSE
+		SET LEAVE = (case when LEAVE IS null then #{leave}
+			when LEAVE IS not null
+			then LEAVE + #{leave} end),
+		UPDATE_TIME = GETDATE()
+		where USER_CODE =#{userCode}
+	</update>
+</mapper>

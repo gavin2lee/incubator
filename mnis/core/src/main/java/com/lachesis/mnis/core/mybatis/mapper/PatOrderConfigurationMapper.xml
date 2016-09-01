@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.PatOrderConfigurationMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnis.core.patientManage.entity.PatOrderConfiguration" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="MODULENAME" property="modulename" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="BACKSTATUS" property="backstatus" jdbcType="VARCHAR" />
+    <result column="DESCRIBE" property="describe" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PAT_ORDER_CONFIGURATION
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnis.core.patientManage.entity.PatOrderConfiguration" >
+    insert into PAT_ORDER_CONFIGURATION (SEQ_ID, MODULENAME, STATUS, 
+      BACKSTATUS, DESCRIBE, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{seqId,jdbcType=BIGINT}, #{modulename,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{backstatus,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnis.core.patientManage.entity.PatOrderConfiguration" >
+    update PAT_ORDER_CONFIGURATION
+    set MODULENAME = #{modulename,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      BACKSTATUS = #{backstatus,jdbcType=VARCHAR},
+      DESCRIBE = #{describe,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, MODULENAME, STATUS, BACKSTATUS, DESCRIBE, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from PAT_ORDER_CONFIGURATION
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, MODULENAME, STATUS, BACKSTATUS, DESCRIBE, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    from PAT_ORDER_CONFIGURATION
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from PAT_ORDER_CONFIGURATION where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnis.core.patientManage.entity.PatOrderConfiguration" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into PAT_ORDER_CONFIGURATION (SEQ_ID, MODULENAME, STATUS, 
+      BACKSTATUS, DESCRIBE, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{seqId,jdbcType=BIGINT}, #{modulename,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{backstatus,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+</mapper>

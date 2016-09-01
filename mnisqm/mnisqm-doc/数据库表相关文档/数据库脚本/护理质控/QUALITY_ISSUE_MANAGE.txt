@@ -1,0 +1,26 @@
+CREATE TABLE QUALITY_ISSUE_MANAGE
+(
+SEQ_ID bigint identity(1,1) primary key,
+RESULT_CODE varchar(100),
+FORM_NAME varchar(100),
+ISSUE_CONTENT varchar(200),
+ISSUE_USER_CODE varchar(20),
+ISSUE_TIME datetime,
+REASON_ANALYSIS varchar(200),
+REASON_USER_CODE varchar(20),
+REASON_TIME datetime,
+RES_DESCRIBE varchar(200),
+RES_D_USER_CODE varchar(20),
+RES_D_TIME datetime,
+RES_PLAN varchar(200),
+RES_P_USER_CODE varchar(20),
+RES_P_TIME datetime,
+EVALUATION varchar(200),
+EVALUATION_USER_CODE varchar(20),
+EVALUATION_TIME datetime,
+STATUS varchar(2),
+CREATE_TIME datetime,
+UPDATE_TIME datetime,
+CREATE_PERSON varchar(100),
+UPDATE_PERSON varchar(100)
+)

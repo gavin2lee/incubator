@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.qualityForm.dao.QualityTaskMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.qualityForm.domain.QualityTask" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="TASK_CODE" property="taskCode" jdbcType="VARCHAR" />
+    <result column="TASK_DATE" property="taskDate" jdbcType="CHAR" />
+    <result column="FORM_CODE" property="formCode" jdbcType="VARCHAR" />
+    <result column="HAND_USER_NAME" property="handUserCode" jdbcType="VARCHAR" />
+    <result column="JOIN_USER_NAME" property="joinUserName" jdbcType="VARCHAR" />
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <result column="FORM_NAME" property="formName" jdbcType="VARCHAR" />
+    <result column="FORM_TYPE" property="formType" jdbcType="VARCHAR" />
+    <result column="IS_DONE" property="isDone"/>
+    <result column="PLAN_ID" property="planId"/>
+    <result column="REMARK" property="remark"/>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from QUALITY_TASK
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityTask" >
+    insert into QUALITY_TASK (TASK_CODE, TASK_DATE, 
+      FORM_CODE, HAND_USER_NAME, JOIN_USER_NAME, 
+      DEPT_CODE, STATUS, CREATE_TIME, 
+      UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON, IS_DONE, PLAN_ID, REMARK
+      )
+    values (#{taskCode,jdbcType=VARCHAR}, #{taskDate,jdbcType=CHAR}, 
+      #{formCode,jdbcType=VARCHAR}, #{handUserCode,jdbcType=VARCHAR}, #{joinUserName,jdbcType=VARCHAR}, 
+      #{deptCode,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR},
+      #{isDone}, #{planId}, #{remark}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityTask" >
+    update QUALITY_TASK
+    set TASK_CODE = #{taskCode,jdbcType=VARCHAR},
+      TASK_DATE = #{taskDate,jdbcType=CHAR},
+      FORM_CODE = #{formCode,jdbcType=VARCHAR},
+      HAND_USER_NAME = #{handUserCode,jdbcType=VARCHAR},
+      JOIN_USER_NAME = #{joinUserName,jdbcType=VARCHAR},
+      DEPT_CODE = #{deptCode,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      IS_DONE = #{isDone},
+      PLAN_ID = #{planId},
+      REMARK = #{remark}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, TASK_CODE, TASK_DATE, FORM_CODE, HAND_USER_NAME, JOIN_USER_NAME, DEPT_CODE, 
+    STATUS, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON, IS_DONE, PLAN_ID, REMARK
+    from QUALITY_TASK
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, TASK_CODE, TASK_DATE, FORM_CODE, HAND_USER_NAME, JOIN_USER_NAME, DEPT_CODE, 
+    STATUS, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON, IS_DONE, PLAN_ID, REMARK
+    from QUALITY_TASK
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from QUALITY_TASK where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityTask" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into QUALITY_TASK (TASK_CODE, TASK_DATE, 
+      FORM_CODE, HAND_USER_NAME, JOIN_USER_NAME, 
+      DEPT_CODE, STATUS, CREATE_TIME, 
+      UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON, IS_DONE, PLAN_ID, REMARK
+      )
+    values (#{taskCode,jdbcType=VARCHAR}, #{taskDate,jdbcType=CHAR}, 
+      #{formCode,jdbcType=VARCHAR}, #{handUserCode,jdbcType=VARCHAR}, #{joinUserName,jdbcType=VARCHAR}, 
+      #{deptCode,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, #{updatePerson,jdbcType=VARCHAR},
+      #{isDone}, #{planId}, #{remark}
+      )
+  </insert>
+  <update id="updateForDelete" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityTask" >
+	update QUALITY_TASK
+	set
+	UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}, 
+    UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+	STATUS = #{status,jdbcType=CHAR}
+	where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="queryByTimeAndTypeAndDeptCode" resultMap="BaseResultMap"  parameterType="Map">
+    select qt.SEQ_ID, qt.TASK_CODE, qt.TASK_DATE, qt.FORM_CODE, qt.HAND_USER_NAME, qt.JOIN_USER_NAME, qt.DEPT_CODE, 
+    qt.STATUS, qt.CREATE_TIME, qt.UPDATE_TIME, qt.CREATE_PERSON, qt.UPDATE_PERSON, qr.FORM_NAME, qr.FORM_TYPE, qt.IS_DONE, qt.PLAN_ID, qt.REMARK
+    from QUALITY_TASK qt, QUALITY_RESULT qr
+    where qt.TASK_CODE = qr.TASK_CODE
+    and qt.TASK_DATE like #{date}
+    <if test="deptCode!=null">
+        and qt.DEPT_CODE like #{deptCode}
+    </if>
+     <if test="type!=null">
+        and qr.FORM_TYPE = #{type}
+    </if>
+    and qt.STATUS = '01'
+    and qr.STATUS = '01'
+  </select>
+  <select id="queryByHandUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select SEQ_ID, TASK_CODE, TASK_DATE, FORM_CODE, HAND_USER_NAME, JOIN_USER_NAME, DEPT_CODE, 
+    STATUS, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON, IS_DONE, PLAN_ID, REMARK
+    from QUALITY_TASK
+    where 
+    HAND_USER_NAME = #{handUserCode}
+    and STATUS = '01'
+    and IS_DONE = '0'
+  </select>
+  <select id="queryByPlanId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+  	select SEQ_ID, TASK_CODE, TASK_DATE, FORM_CODE, HAND_USER_NAME, JOIN_USER_NAME, DEPT_CODE, 
+    STATUS, IS_DONE, PLAN_ID, REMARK
+    from QUALITY_TASK
+    where 
+    PLAN_ID = #{seqId}
+    and STATUS = '01'
+  </select>
+</mapper>

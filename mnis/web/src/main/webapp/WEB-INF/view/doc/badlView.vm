@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-table th, .doc-table td {
+	padding: 0px;
+}
+.doc-table td {
+	width: 15px;
+	height: 35px;
+}
+.doc-table * {
+	font-size: 10.5pt;
+}
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+	}
+}
+</style>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper">
+	<div class="paper-content">
+		#badl()
+		<div class="doc-content">
+			<table class="doc-table">
+				<thead>
+					<tr>
+			            <th rowspan="3">日期时间</th>
+						<th colspan="3">大便</th>
+						<th colspan="3">小便</th>
+						<th colspan="2">修饰</th>
+						<th colspan="3">用厕</th>
+						<th colspan="3">进食</th>
+						<th colspan="4">转移</th>
+						<th colspan="4">活动</th>
+						<th colspan="3">穿衣</th>
+						<th colspan="3">上下楼梯</th>
+						<th colspan="2">洗澡</th>
+			            <th rowspan="3">总评分</th>
+			            <th rowspan="3">自理能力等级</th>
+			            <th rowspan="3" style="width: 50px;">签名</th>
+					</tr>
+					<tr>
+						<th style="width: 20px;">控制</th>
+						<th>偶有失禁（每周<1次）</th>
+						<th>失禁或昏迷</th>
+						<th style="width: 20px;">控制</th>
+						<th>偶有失禁（每24h<1次）</th>
+						<th>失禁或昏迷或需由他人导尿</th>
+						<th style="width: 30px;">自理（洗脸、梳头、刷牙、剃须）</th>
+						<th>需要帮助</th>
+						<th style="width: 30px;">自理（去和离开厕所、使用厕纸、穿脱裤子）</th>
+						<th>需部分帮助</th>
+						<th>依赖他人</th>
+						<th style="width: 30px;">全面自理（能进食各种食物，但不包括取饭、做饭）</th>
+						<th style="width: 30px;">需部分帮助（切面包、抹黄油、夹菜、盛饭）</th>
+						<th>较大或完全依赖</th>
+						<th style="width: 20px;">自理</th>
+						<th style="width: 30px;">需少量帮助（言语或身体帮助）</th>
+						<th style="width: 30px;">需大量帮助（1-2人，身体帮助），能坐</th>
+						<th>完全依赖他人，无坐位平衡</th>
+						<th style="width: 30px;">独立步行（可用辅助器，在家及附近）</th>
+						<th style="width: 30px;">需1人帮助步行（言语或身体帮助）</th>
+						<th>在轮椅上能独立行动</th>
+						<th>不能步行</th>
+						<th style="width: 30px;">自理（自己系、解纽扣，关、开拉锁和穿鞋）</th>
+						<th>需一半帮助</th>
+						<th>依赖他人</th>
+						<th>独立上下楼梯</th>
+						<th style="width: 30px;">需帮助（言语、身体、手杖帮助）</th>
+						<th>不能</th>
+						<th style="width: 30px;">自理（无指导能进出浴池并自理洗澡）</th>
+						<th>依赖</th>
+					</tr>
+					<tr>
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            
+			            <th>5</th>
+			            <th>0</th>
+			            
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            
+			            <th>15</th>
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            
+			            <th>15</th>
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            
+			            <th>10</th>
+			            <th>5</th>
+			            <th>0</th>
+			            
+			            <th>5</th>
+			            <th>0</th>
+			        </tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		#badlComment()
+	</div>
+	#pageFoot()
+</div>
+</div>
+<script type="text/javascript">
+function getRowDatas(row, isFirstRow, lastDate) {
+	return [
+		formatDate(row['date'], isFirstRow, lastDate),
+		row['defecate1'],
+		row['defecate2'],
+		row['defecate3'],
+		row['pee1'],
+		row['pee2'],
+		row['pee3'],
+		row['attire1'],
+		row['attire2'],
+		row['wc1'],
+		row['wc2'],
+		row['wc3'],
+		row['eat1'],
+		row['eat2'],
+		row['eat3'],
+		row['shift1'],
+		row['shift2'],
+		row['shift3'],
+		row['shift4'],
+		row['walk1'],
+		row['walk2'],
+		row['walk3'],
+		row['walk4'],
+		row['dress1'],
+		row['dress2'],
+		row['dress3'],
+		row['stair1'],
+		row['stair2'],
+		row['stair3'],
+		row['bath1'],
+		row['bath2'],
+		row['score'],
+		row['level'],
+		row['sign']
+	];
+}
+$(function() {
+	fillTable('#url("/doc/badl/view/datas")', '$!{patient.cureNo}', 34, getRowDatas);
+});
+</script>
+</body>
+</html>

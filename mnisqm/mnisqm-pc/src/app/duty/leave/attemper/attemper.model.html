@@ -1,0 +1,240 @@
+<div class="attemper-modal-wrapper">
+    <div class="modal-header">
+        <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h5 class="modal-title">
+            填写调班信息
+        </h5>
+    </div>
+    <form class="w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="addLevelForm">
+        <div class="modal-body">
+
+            <div class="container-fluid">
+                <!-- <div class="form-group col-sm-6">
+                    <label  class="control-label col-sm-5">申请人</label>
+                    <div class="col-sm-7">
+                        <input class="form-control input-sm" ng-model="vm.formData.applyUserCode">
+                    </div>
+                </div> -->
+
+                <div class="form-group col-sm-4">
+                    <label  class="control-label col-sm-5">申请原因</label>
+                    <div class="col-sm-7">
+                        <input class="form-control input-sm" ng-model="vm.formData.changeCause">
+                    </div>
+                </div>
+                <!-- <div class="form-group col-sm-6">
+                    <label class="control-label col-sm-5">处理状态</label>
+                    <div class="col-sm-7">
+                        <select class="form-control input-sm" ng-model="vm.formData.status">
+                            <option  value="01">未处理</option>
+                            <option  value="02">已审批</option>
+                            <option  value="03">已拒绝</option>
+                        </select>
+                    </div>
+                </div> -->
+                <!-- <div class="form-group col-sm-6">
+                    <label class="control-label col-sm-5">处理备注</label>
+                    <div class="col-sm-7">
+                        <input  class="form-control input-sm" ng-model="vm.formData.remark">
+                    </div>
+                </div> -->
+                <!-- <div class="form-group col-sm-4">
+                    <label class="control-label col-sm-5">申请人班次</label>
+                    <div class="col-sm-7">
+                        <select class="form-control input-sm" ng-model="vm.formData.applyClass">
+                          <option ng-repeat="c in vm.classes" value="{{c.classCode}}">{{c.className}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label col-sm-5">申请人班次日期</label>
+                    <div class="col-sm-7">
+                        <span class="input-group">
+                            <input  type="text" id="applyClassDate" name="applyClassDate" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.applyClassDateOpen" ng-model="vm.formData.applyClassDate" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" timestamp-to-string>
+                            <span class="input-group-btn">
+                              <button type="button" class="btn btn-sm btn-default" ng-click="vm.applyClassDateOpen = true">
+                                <i class="fa fa-calendar"></i>
+                              </button>
+                            </span>
+                          </span>
+                    </div>
+                </div> -->
+                <div class="form-group col-sm-4">
+                    <label class="control-label col-sm-5">调班人</label>
+                    <div class="col-sm-7">
+                        <select class="form-control input-sm" ng-model="vm.formData.changeUserCode" ng-change="vm.changeUser()">
+                          <option ng-repeat="c in vm.users track by $index" value="{{c.userCode}}">{{c.userName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- <div class="form-group col-sm-4">
+                    <label class="control-label col-sm-5">调班人班次</label>
+                    <div class="col-sm-7">
+                        <select class="form-control input-sm" ng-model="vm.formData.changeClass">
+                          <option ng-repeat="c in vm.classes" value="{{c.classCode}}">{{c.className}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label col-sm-5">调班人班次日期</label>
+                    <div class="col-sm-7">
+                        <span class="input-group">
+                            <input  type="text" id="changeClassDate" name="changeClassDate" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.changeClassDateOpen" ng-model="vm.formData.changeClassDate" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" timestamp-to-string>
+                            <span class="input-group-btn">
+                              <button type="button" class="btn btn-sm btn-default" ng-click="vm.changeClassDateOpen = true">
+                                <i class="fa fa-calendar"></i>
+                              </button>
+                            </span>
+                          </span>
+                    </div>
+                </div> -->
+                
+            </div>
+            <div class="row">
+                <label class="col-sm-2 control-label">申请人班次</label>
+                <div class="col-sm-10">
+                    <div>
+                        <button class="btn btn-sm btn-default" ng-click="vm.prevWeek('apply')">上一周</button>
+                        <span>
+                            第{{vm.apply.params.weeks}}周
+                        </span>
+                        <button class="btn btn-sm btn-default" ng-click="vm.nextWeek('apply')">下一周</button>
+                    </div>
+                    <table class="table table-condensed table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th>{{vm.apply.data.week1}}</th>
+                          <th>{{vm.apply.data.week2}}</th>
+                          <th>{{vm.apply.data.week3}}</th>
+                          <th>{{vm.apply.data.week4}}</th>
+                          <th>{{vm.apply.data.week5}}</th>
+                          <th>{{vm.apply.data.week6}}</th>
+                          <th>{{vm.apply.data.week7}}</th>
+                          <!--<th>本周欠休</td>
+                            <th>累计欠休</td>
+                              <th>统计</td>-->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="row in vm.apply.list | filter: {userCode: vm.formData.applyUserCode}">
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week1" ng-click="vm.chooseClass(item, 'apply')" ng-class="{'active': vm.activeCell(item, 'apply')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                              <!-- <div class="turn-item-wrapper" ng-repeat="week1 in row.week1 track by $index" ng-click="vm.chooseClass(row.week1[$index], 'apply')" ng-class="{'active': vm.activeCell('apply') == 1}">
+                                <div>{{vm.getClassName(row.week1[$index].classCode)}}</div>
+                              </div> -->
+                          </td>
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week2" ng-click="vm.chooseClass(item, 'apply')" ng-class="{'active': vm.activeCell(item, 'apply')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week3" ng-click="vm.chooseClass(item, 'apply')" ng-class="{'active': vm.activeCell(item, 'apply')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week4" ng-click="vm.chooseClass(item, 'apply')" ng-class="{'active': vm.activeCell(item, 'apply')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week5" ng-click="vm.chooseClass(item, 'apply')" ng-class="{'active': vm.activeCell(item, 'apply')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week6" ng-click="vm.chooseClass(item, 'apply')" ng-class="{'active': vm.activeCell(item, 'apply')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week7" ng-click="vm.chooseClass(item, 'apply')" ng-class="{'active': vm.activeCell(item, 'apply')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                          </td>
+                        </tr>            
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row" ng-show="vm.formData.changeUserCode">
+                <label class="col-sm-2 control-label">调班人班次</label>
+                <div class="col-sm-10">
+                    <div>
+                        <button class="btn btn-sm btn-default" ng-click="vm.prevWeek('change')">上一周</button>
+                        <span>
+                            第{{vm.change.params.weeks}}周
+                        </span>
+                        <button class="btn btn-sm btn-default" ng-click="vm.nextWeek('change')">下一周</button>
+                    </div>
+                    <table class="table table-condensed table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th>{{vm.change.data.week1}}</th>
+                          <th>{{vm.change.data.week2}}</th>
+                          <th>{{vm.change.data.week3}}</th>
+                          <th>{{vm.change.data.week4}}</th>
+                          <th>{{vm.change.data.week5}}</th>
+                          <th>{{vm.change.data.week6}}</th>
+                          <th>{{vm.change.data.week7}}</th>
+                          <!--<th>本周欠休</td>
+                            <th>累计欠休</td>
+                              <th>统计</td>-->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="row in vm.change.list | filter: {userCode: vm.formData.changeUserCode}">
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week1" ng-click="vm.chooseClass(item, 'change')" ng-class="{'active': vm.activeCell(item, 'change')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week2" ng-click="vm.chooseClass(item, 'change')" ng-class="{'active': vm.activeCell(item, 'change')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week3" ng-click="vm.chooseClass(item, 'change')" ng-class="{'active': vm.activeCell(item, 'change')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week4" ng-click="vm.chooseClass(item, 'change')" ng-class="{'active': vm.activeCell(item, 'change')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week5" ng-click="vm.chooseClass(item, 'change')" ng-class="{'active': vm.activeCell(item, 'change')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week6" ng-click="vm.chooseClass(item, 'change')" ng-class="{'active': vm.activeCell(item, 'change')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="class-text-wrapper">
+                              <div class="class-text" ng-repeat="item in row.week7" ng-click="vm.chooseClass(item, 'change')" ng-class="{'active': vm.activeCell(item, 'change')}">{{vm.getClassName(item.classCode)}}</div>
+                            </div>
+                              <!-- <div class="turn-item-wrapper" ng-repeat="week7 in row.week7 track by $index" ng-click="vm.chooseClass(row.week7[$index], 'change')" ng-class="{'active': vm.activeCell('change') == 7}">
+                                <div>{{vm.getClassName(row.week7[$index].classCode)}}</div>
+                              </div> -->
+                          </td>
+                        </tr>            
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok()">保存</button>
+            <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+        </div>
+    </form>
+
+</div>

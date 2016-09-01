@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="htt ://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:oxm="http://www.springframework.org/schema/oxm" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+				http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.2.xsd
+				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+   
+    <!-- 启动对@AspectJ注解的支持 -->  
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+ 	
+	<!-- Activates @Autowired for Controller -->
+	<context:component-scan
+		base-package="com.lachesis.mnis.web"  use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<bean class="com.lachesis.mnis.web.common.spring.GsonHttpMessageConverter"/>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/>
+		</mvc:message-converters>
+		<mvc:argument-resolvers>
+		    <bean class="com.lachesis.mnis.web.common.spring.FormModelMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+	
+<!-- 	<mvc:default-servlet-handler /> -->
+	<mvc:resources location="/resources/" mapping="/resources/**" />
+	<mvc:resources location="/upload/" mapping="/upload/**" />
+	<mvc:resources location="/img/" mapping="/img/**" />
+	<mvc:resources location="/js/" mapping="/js/**" />
+	<mvc:resources location="/theme/" mapping="/theme/**" />
+	<mvc:resources location="/component/" mapping="/component/**" />
+	<!-- home page -->
+	<mvc:view-controller path="/" view-name="forward:/index/login" />
+	
+	<!-- Configures Handler Interceptors -->
+	<mvc:interceptors>
+		<bean class="com.lachesis.mnis.web.filter.SessionFilter" />
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
+	</mvc:interceptors>
+
+	<!-- Application Message Bundle -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:/config/properties/messages" />
+		<property name="cacheSeconds" value="0" />
+	</bean>
+
+	<!-- Configurer that sets up a shared VelocityEngine for Velocity views -->
+	<bean id="velocityConfigurer"
+		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath">
+			<value>/WEB-INF/view/</value>
+		</property>
+		<property name="velocityProperties">
+			<props>
+				<prop key="input.encoding">UTF-8</prop>
+				<prop key="output.encoding">UTF-8</prop>
+				<prop key="contentType">text/html;charset=UTF-8</prop>
+				<prop key="file.resource.loader.cache">true</prop>
+				<prop key="velocimacro.library.autoreload">true</prop>
+				<prop key="velocimacro.library">common/vm/VM_global_library.vm</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Simple ViewResolver for Velocity, appending ".vm" to logical view names -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+		<property name="suffix" value=".vm" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="exposeSessionAttributes" value="true" />
+		<property name="allowSessionOverride" value="true" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+	</bean>
+
+	<!-- redirect view to internal directory -->
+	<bean id="internalResourceViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.InternalResourceView" />
+		<property name="prefix" value="/WEB-INF/view" />
+		<property name="suffix" value=".vm" />
+	</bean>
+
+		<!-- 文件上传配置 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+		<!-- 最大2GB-->
+		<property name="maxUploadSize" value="2147483648"></property>
+	</bean>
+
+	<!-- 异常配置，待完善 -->
+	<bean id="exceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.springframework.web.multipart.MultipartException	">
+					forward:/view/error/unauth
+				</prop>									
+			</props>
+		</property>
+		<property name="defaultErrorView">
+			<value>forward:/view/error/error</value>
+		</property>
+		<property name="defaultStatusCode">
+			<value>200</value>
+		</property>
+		<property name="warnLogCategory">
+			<value>org.springframework.web.servlet.handler.SimpleMappingExceptionResolver</value>
+		</property>
+	</bean>
+</beans>

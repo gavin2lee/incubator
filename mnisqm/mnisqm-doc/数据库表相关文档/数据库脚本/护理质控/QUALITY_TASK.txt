@@ -1,0 +1,15 @@
+CREATE TABLE QUALITY_TASK
+(
+SEQ_ID bigint identity(1,1) primary key,
+TASK_CODE varchar(20),
+TASK_DATE char(10),
+FORM_CODE varchar(100),
+HAND_USER_NAME varchar(50),
+JOIN_USER_NAME varchar(10),
+DEPT_CODE varchar(100),
+STATUS varchar(2),
+CREATE_TIME datetime,
+UPDATE_TIME datetime,
+CREATE_PERSON varchar(100),
+UPDATE_PERSON varchar(100)
+)

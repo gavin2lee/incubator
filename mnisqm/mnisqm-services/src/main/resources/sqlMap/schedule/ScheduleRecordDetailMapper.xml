@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.schedule.dao.ScheduleRecordDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.schedule.domain.ScheduleRecordDetail" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="RECORD_CODE" property="recordCode" jdbcType="VARCHAR" />
+    <result column="RECORD_DETAIL_CODE" property="recordDetailCode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CLASS_CODE" property="classCode" jdbcType="VARCHAR" />
+    <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_LEVEL" property="userLevel" jdbcType="VARCHAR" />
+    <result column="RECORD_DATE" property="recordDate" jdbcType="VARCHAR" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SCHEDULE_RECORD_DETAIL
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <!-- 数据录入 -->
+  <insert id="insert" parameterType="ScheduleRecordDetail" >
+    insert into SCHEDULE_RECORD_DETAIL ( RECORD_CODE, RECORD_DETAIL_CODE, 
+      STATUS, CLASS_CODE, USER_CODE,
+      USER_NAME, USER_LEVEL, RECORD_DATE, 
+      CREATE_TIME, UPDATE_TIME, CREATE_PERSON, 
+      UPDATE_PERSON,BEDS)
+    values ( #{recordCode}, #{recordDetailCode}, 
+      #{status}, #{classCode}, #{userCode},
+      #{userName}, #{userLevel}, #{recordDate}, 
+      GETDATE(), GETDATE(), #{createPerson}, 
+      #{updatePerson},#{beds})
+  </insert>
+  <!-- 更新单个的排班 -->
+  <update id="updateByPrimaryKey" parameterType="ScheduleRecordDetail" >
+    update SCHEDULE_RECORD_DETAIL
+    set 
+      STATUS = #{status,jdbcType=CHAR},
+      CLASS_CODE = #{classCode,jdbcType=VARCHAR},
+      USER_LEVEL = #{userLevel,jdbcType=VARCHAR},
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <!-- 更新排班明细 -->
+  <update id="updateByRecordCode" parameterType="ScheduleRecord" >
+    update SCHEDULE_RECORD_DETAIL
+    set 
+      STATUS = '09',
+      UPDATE_TIME = GETDATE(),
+      UPDATE_PERSON = #{updatePerson}
+    where RECORD_CODE = #{recordCode}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, RECORD_CODE, RECORD_DETAIL_CODE, STATUS, CLASS_CODE, USER_CODE, USER_NAME, 
+    USER_LEVEL, RECORD_DATE, CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON
+    from SCHEDULE_RECORD_DETAIL
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  
+  <!-- 数据查询，通过主记录code查询 -->
+  <select id="selectByRecordCode" resultType="ScheduleRecordDetail" parameterType="ScheduleRecordDetail">
+     select 
+    	d.SEQ_ID						as seqId,
+    	d.RECORD_CODE					as recordCode,
+    	d.RECORD_DETAIL_CODE			as recordDetailCode, 
+    	d.STATUS						as status, 
+    	d.CLASS_CODE					as classCode, 
+    	d.USER_CODE						as userCode, 
+    	d.USER_NAME						as userName, 
+    	d.USER_LEVEL					as userLevel, 
+    	d.RECORD_DATE					as recordDate,
+    	n.COLOR							as color,
+    	g.GROUP_NAME					as groupName,
+    	u.CLINICAL						as clinical,
+    	d.BEDS							as beds
+    from SCHEDULE_RECORD_DETAIL d
+    inner join COM_USER u on u.USER_CODE=d.USER_CODE
+    left join COM_DEPT_NURSE n on d.USER_CODE=n.USER_CODE
+    left join COM_BED_GROUP g on n.GROUP_CODE=g.GROUP_CODE
+    where record_code = #{recordCode}
+    and d.status !='09'
+    ORDER BY d.USER_CODE
+  </select>
+</mapper>

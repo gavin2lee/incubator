@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.lachesis.mnisqm.module.profSkillDoc.dao.PreJobTrainingMapper">
+	
+	<!-- 逻辑添加 -->
+	<insert id="insert"
+		parameterType="PreJobTraining">
+		insert into PTF_PREJOB_TRAINING
+		(USER_CODE, USER_NAME, RANK, TRAIN_NAME,
+		BEGIN_TIME, END_TIME, ASSESSMENT_CONDITION,
+		CERTIFICATE_QUALIFICATION, STATUS, AUDITOR, 
+		REMARK, CREATE_TIME, CREATE_PERSON, 
+		UPDATE_TIME, UPDATE_PERSON)
+		values
+		(#{userCode},
+		#{userName},
+		#{rank},
+		#{trainName},
+		#{beginTime},
+		#{endTime},
+		#{assessmentCondition},
+		#{certificateQualification},
+		'01',
+		#{auditor},
+		#{remark},
+		GETDATE(),
+		#{createPerson},
+		GETDATE(),
+		#{updatePerson})
+	</insert>
+	<!-- 逻辑删除 -->
+	<update id="deleteByPrimaryKey"
+		parameterType="PreJobTraining">
+		update
+		PTF_PREJOB_TRAINING
+		set
+		STATUS=#{status},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑修改 -->
+	<update id="update"
+		parameterType="PreJobTraining">
+		update
+		PTF_PREJOB_TRAINING
+		set
+		USER_CODE=#{userCode},
+		USER_NAME=#{userName},
+		RANK=#{rank},
+		TRAIN_NAME=#{trainName},
+		BEGIN_TIME=#{beginTime},
+		END_TIME=#{endTime},
+		ASSESSMENT_CONDITION=#{assessmentCondition},
+		CERTIFICATE_QUALIFICATION=#{certificateQualification},
+		AUDITOR=#{auditor},
+		REMARK=#{remark},
+		UPDATE_TIME=GETDATE(),
+		UPDATE_PERSON=#{updatePerson}
+		where
+		SEQ_ID=#{seqId}
+	</update>
+	<!-- 逻辑查找 -->
+	<select id="select"
+		parameterType="PreJobTraining"
+		resultType="PreJobTraining">
+		select
+		SEQ_ID						as seqId, 
+		USER_CODE					as userCode, 
+		USER_NAME					as userName,
+		RANK						as rank, 
+		TRAIN_NAME					as trainName, 
+		BEGIN_TIME					as beginTime,
+		END_TIME					as endTime, 
+		ASSESSMENT_CONDITION		as assessmentCondition,
+		CERTIFICATE_QUALIFICATION	as certificateQualification, 
+		STATUS						as status, 
+		AUDITOR						as auditor, 
+		REMARK						as remark
+		from
+		PTF_PREJOB_TRAINING
+		where STATUS='01'
+		<if test="userCode != null">
+			and USER_CODE=#{userCode}
+		</if>
+		<if test="userName != null">
+			and USER_NAME like #{userName}
+		</if>
+		<if test="rank != null">
+			and RANK = #{rank}
+		</if>
+		<if test="trainName != null">
+			and TRAIN_NAME like #{trainName}
+		</if>
+		<if test="beginTime != null">
+			and BEGIN_TIME >= #{beginTime}
+		</if>
+		<if test="endTime != null">
+			and #{endTime} >= END_TIME
+		</if>
+		<if test="assessmentCondition != null">
+			and ASSESSMENT_CONDITION = #{assessmentCondition}
+		</if>
+		<if test="certificateQualification != null">
+			and CERTIFICATE_QUALIFICATION like #{certificateQualification}
+		</if>
+		<if test="auditor != null">
+			and AUDITOR like #{auditor}
+		</if>
+	</select>
+</mapper>
+  

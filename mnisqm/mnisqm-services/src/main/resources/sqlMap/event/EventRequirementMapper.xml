@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.event.dao.EventRequirementMapper">
+	<resultMap id="BaseResultMap"
+		type="com.lachesis.mnisqm.module.event.domain.EventRequirement">
+		<id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+		<result column="REPORT_CODE" property="reportCode" jdbcType="VARCHAR" />
+		<result column="REQ_CODE" property="reqCode" jdbcType="VARCHAR" />
+		<result column="REQ_TIME" property="reqTime" jdbcType="TIMESTAMP" />
+		<result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="CHAR" />
+		<result column="REQ_TYPE_CODE" property="reqTypeCode" jdbcType="VARCHAR" />
+		<result column="REQ_TYPE_NAME" property="reqTypeName" jdbcType="VARCHAR" />
+		<result column="REQ_CONTENT" property="reqContent" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="CREATE_PERSON" property="createPerson"
+			jdbcType="VARCHAR" />
+		<result column="UPDATE_PERSON" property="updatePerson"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<!--逻辑删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		update EVENT_REQUIREMENT
+		set
+			status = '09',
+			UPDATE_TIME = GETDATE()
+		where SEQ_ID = #{seqId}
+	</delete>
+	<insert id="insert"
+		parameterType="com.lachesis.mnisqm.module.event.domain.EventRequirement">
+		insert into EVENT_REQUIREMENT ( REPORT_CODE, REQ_CODE,
+		REQ_TIME, USER_CODE, STATUS,
+		REQ_TYPE_CODE, REQ_TYPE_NAME, REQ_CONTENT,
+		REMARK, CREATE_TIME, CREATE_PERSON,
+		UPDATE_TIME, UPDATE_PERSON)
+		values (#{reportCode,jdbcType=VARCHAR}, #{reqCode,jdbcType=VARCHAR},
+		GETDATE(), #{userCode,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
+		#{reqTypeCode,jdbcType=VARCHAR}, #{reqTypeName,jdbcType=VARCHAR},
+		#{reqContent,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR}, GETDATE(), #{createPerson,jdbcType=VARCHAR},
+		GETDATE(), #{updatePerson,jdbcType=VARCHAR})
+	</insert>
+	<!-- 修改要求 -->
+	<update id="updateByPrimaryKey" parameterType="EventRequirement">
+		update EVENT_REQUIREMENT
+		set
+		STATUS = #{status,jdbcType=CHAR},
+		REQ_TYPE_CODE = #{reqTypeCode,jdbcType=VARCHAR},
+		REQ_TYPE_NAME = #{reqTypeName,jdbcType=VARCHAR},
+		REQ_CONTENT = #{reqContent,jdbcType=VARCHAR},
+		REMARK = #{remark,jdbcType=VARCHAR},
+		UPDATE_TIME = GETDATE(),
+		UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+		where SEQ_ID = #{seqId,jdbcType=BIGINT}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select SEQ_ID, REPORT_CODE, REQ_CODE, REQ_TIME, USER_CODE, STATUS,
+		REQ_TYPE_CODE,
+		REQ_TYPE_NAME, REQ_CONTENT, REMARK, CREATE_TIME, CREATE_PERSON, UPDATE_TIME,
+		UPDATE_PERSON
+		from EVENT_REQUIREMENT
+		where SEQ_ID = #{seqId,jdbcType=BIGINT}
+	</select>
+	<!-- 查询要求列表 -->
+	<select id="selectRequireList" resultType="EventRequirement"
+		parameterType="EventRequirement">
+		select e.SEQ_ID seqId, e.REPORT_CODE reportCode, e.REQ_CODE reqCode,
+		e.REQ_TIME reqTime, e.USER_CODE userCode, e.STATUS status,
+		e.REQ_TYPE_CODE reqTypeCode,e.REQ_TYPE_NAME reqTypeName,
+		e.REQ_CONTENT reqContent,u.USER_NAME userName
+		from EVENT_REQUIREMENT e
+		left join COM_USER u
+		on e.USER_CODE = u.USER_CODE
+		where e.status !='09' and e.REPORT_CODE = #{reportCode}
+	</select>
+</mapper>

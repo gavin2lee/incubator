@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+	}
+}
+</style>
+<title>首次护理记录单（肝病科）</title>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<form>
+	<input type="hidden" name="cureNo" value="$!{patient.cureNo}">
+	<input type="hidden" name="hospitalNo" value="$!{patient.hospitalNo}">
+<div class="paper">
+<div class="paper-content">
+#liverFirst()
+<div class="doc-content doc-only">
+	<table class="grid">
+	<tr><td>
+		<span class="item">
+			<span class="title">婚姻状况：</span>
+			<span class="content">
+				<input type="text" name="MARITAL_STATUS" style="width: 80px;">
+			</span>
+		</span>
+	</td><td>
+		<span class="item">
+			<span class="title">职业：</span>
+			<span class="content">
+				<input type="text" name="JOB" style="width: 80px;">
+			</span>
+		</span>
+	</td><td>
+		<span class="item">
+			<span class="title">文化程度：</span>
+			<span class="content">
+				<input type="text" name="EDUCATION" style="width: 90px;">
+			</span>
+		</span>
+	</td><td>
+		<span class="item">
+			<span class="title">籍贯：</span>
+			<span class="content">
+				<input type="text" name="nativePlace" class="data2">
+			</span>
+		</span>
+	</td></tr>
+	<tr><td>
+		<span class="item">
+			<span class="title">宗教：</span>
+			<span class="content">
+				<input type="text" name="RELIGION" style="width: 80px;">
+			</span>
+		</span>
+	</td><td>
+		<span class="item">
+			<span class="title">付费方式：</span>
+			<span class="content">
+				<input type="text" name="payWay" class="data2">
+			</span>
+		</span>
+	</td><td>
+		<span class="item">
+			<span class="title">资料来源：</span>
+			<span class="content">
+				<input type="text" name="SOURCE" style="width: 80px;">
+			</span>
+		</span>
+	</td><td>
+		<span class="item">
+			<span class="title">日常照顾者：</span>
+			<span class="content">
+				<input type="text" name="minder" class="data2">
+			</span>
+		</span>
+	</td></tr>
+	<tr><td colspan="2">
+		<span class="title">入院时间：</span>
+		<span class="content">
+			<input type="text" name="hospitalizeDate" style="width: 150px;">
+		</span>
+	</td><td>
+		<span class="title">入院方式：</span>
+		<span class="content">
+			<input type="text" name="IN_WAY" style="width: 80px;">
+		</span>
+	</td><td>
+		<span class="item">
+			<span class="title">过敏史：</span>
+			<span class="content">
+				<input type="text" name="allergy" style="width: 200px;">
+			</span>
+		</span>
+	</td></tr>
+	<tr><td colspan="5">
+		<span class="item">
+			<span class="title">入院诊断：</span>
+			<span class="content">
+				<input type="text" name="diagnosis" style="width: 700px;">
+			</span>
+		</span>
+	</td></tr>
+	</table>
+	<div><span class="title">一、护理评估</span></div>
+	<div>
+		<span class="item">
+			<span class="title">生命体征：</span>
+			<span class="title">T</span>
+			<span class="content">
+				<input type="text" name="temperature" class="data1">℃
+			</span>
+			&nbsp;
+			<span class="title">P</span>
+			<span class="content">
+				<input type="text" name="pulse" class="data1">次/分
+			</span>
+			&nbsp;
+			<span class="title">R</span>
+			<span class="content">
+				<input type="text" name="respiration" class="data1">次/分
+			</span>
+			&nbsp;
+			<span class="title">BP</span>
+			<span class="content">
+				<input type="hidden" name="bloodPressure">
+				<input type="text" id="bloodPressure1" class="data1" maxlength="5">/<input type="text" id="bloodPressure2" class="data1" maxlength="5">mmHg
+			</span>
+			&nbsp;
+			<span class="title">体重</span>
+			<span class="content">
+				<input type="text" name="weight" class="data1">Kg
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">主诉：</span>
+			<span class="content">
+				<input type="text" name="complaint" style="width: 700px;">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="title">意识状态：</span>
+		<span class="item">
+			<span class="title">呼之：</span>
+			<span class="content">
+				<input type="radio" id="awarenessCall1" name="awarenessCall" value="1"><label for="awarenessCall1">能应</label>
+				<input type="radio" id="awarenessCall2" name="awarenessCall" value="2"><label for="awarenessCall2">不应</label>
+			</span>
+		</span>
+		<span class="item">
+			<span class="title">对答：</span>
+			<span class="content">
+				<input type="radio" id="awarenessAnswer1" name="awarenessAnswer" value="1"><label for="awarenessAnswer1">切题</label>
+				<input type="radio" id="awarenessAnswer2" name="awarenessAnswer" value="2"><label for="awarenessAnswer2">不切题</label>
+			</span>
+		</span>
+		<span class="item">
+			<span class="title">定向力：</span>
+			<span class="content">
+				<input type="radio" id="awarenessDirection1" name="awarenessDirection" value="1"><label for="awarenessDirection1">正确</label>
+				<input type="radio" id="awarenessDirection2" name="awarenessDirection" value="2"><label for="awarenessDirection2">不正确</label>
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">饮食：</span>
+			<span class="content">
+				<input type="radio" id="diet1" name="diet" value="1"><label for="diet1">自行进食</label>
+				<input type="radio" id="diet2" name="diet" value="2"><label for="diet2">协助进食</label>
+				<input type="radio" id="diet3" name="diet" value="3"><label for="diet3">经鼻胃管</label>
+				<input type="radio" id="diet4" name="diet" value="4"><label for="diet4">胃肠造瘘管</label>
+			</span>
+		</span>
+		<span class="item">
+			<span class="title">咀嚼困难：</span>
+			<span class="content">
+				<input type="radio" id="chaw1" name="chaw" value="1"><label for="chaw1">无</label>
+				<input type="radio" id="chaw2" name="chaw" value="2"><label for="chaw2">有</label>
+			</span>
+		</span>
+		<span class="item">
+			<span class="title">吞咽困难：</span>
+			<span class="content">
+				<input type="radio" id="swallow1" name="swallow" value="1"><label for="swallow1">无</label>
+				<input type="radio" id="swallow2" name="swallow" value="2"><label for="swallow2">有</label>
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">口腔粘膜：</span>
+			<span class="content">
+				<input type="radio" id="mucosa1" name="mucosa" value="1"><label for="mucosa1">完整</label>
+				<input type="radio" id="mucosa2" name="mucosa" value="2"><label for="mucosa2">溃疡</label>
+				<input type="radio" id="mucosa3" name="mucosa" value="3"><label for="mucosa3">白斑</label>
+				<input type="radio" id="mucosa4" name="mucosa" value="4"><label for="mucosa4">红肿</label>
+				<input type="radio" id="mucosa5" name="mucosa" value="5"><label for="mucosa5">其他</label>
+				<input type="text" name="mucosaExtra" class="data4">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">睡眠：</span>
+			<span class="content">
+				<input type="radio" id="sleep1" name="sleep" value="1"><label for="sleep1">正常</label>
+				<input type="radio" id="sleep2" name="sleep" value="2"><label for="sleep2">难入睡</label>
+				<input type="radio" id="sleep3" name="sleep" value="3"><label for="sleep3">易醒</label>
+				<input type="radio" id="sleep4" name="sleep" value="4"><label for="sleep4">早醒</label>
+				<input type="radio" id="sleep5" name="sleep" value="5"><label for="sleep5">多梦</label>
+				<input type="radio" id="sleep6" name="sleep" value="6"><label for="sleep6">使用辅助药物</label>
+				<input type="text" name="sleepExtra" class="data4">
+			</span>
+		</span>
+		<span class="item">
+			<span class="title">醒后疲劳感：</span>
+			<span class="content">
+				<input type="radio" id="tire1" name="tire" value="1"><label for="tire1">无</label>
+				<input type="radio" id="tire2" name="tire" value="2"><label for="tire2">有</label>
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">排尿：</span>
+			<span class="content">
+				<input type="radio" id="pee1" name="pee" value="1"><label for="pee1">正常</label>
+				<input type="radio" id="pee2" name="pee" value="2"><label for="pee2">尿频</label>
+				<input type="radio" id="pee3" name="pee" value="3"><label for="pee3">尿急</label>
+				<input type="radio" id="pee4" name="pee" value="4"><label for="pee4">尿痛</label>
+				<input type="radio" id="pee5" name="pee" value="5"><label for="pee5">尿失禁</label>
+				<input type="radio" id="pee6" name="pee" value="6"><label for="pee6">尿潴留</label>
+				<input type="radio" id="pee7" name="pee" value="7"><label for="pee7">留置尿管</label>
+				<input type="radio" id="pee8" name="pee" value="8"><label for="pee8">其他</label>
+				<input type="text" name="peeExtra" class="data4">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">排便：</span>
+			<span class="title">次数：</span>
+			<span class="content">
+				<input type="text" name="defecateTimes" class="data1">次/<input type="text" name="defecateDays" class="data1">天
+				<input type="radio" id="defecate1" name="defecate" value="1"><label for="defecate1">便秘</label>
+				<input type="radio" id="defecate2" name="defecate" value="2"><label for="defecate2">腹泻</label>
+				<input type="radio" id="defecate3" name="defecate" value="3"><label for="defecate3">失禁</label>
+				<input type="radio" id="defecate4" name="defecate" value="4"><label for="defecate4">造瘘</label>
+				<input type="radio" id="defecate5" name="defecate" value="5"><label for="defecate5">其他</label>
+				<input type="text" name="defecateExtra" class="data4">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">四肢活动：</span>
+			<span class="content">
+				<input type="radio" id="move1" name="move" value="1"><label for="move1">自如</label>
+				<input type="radio" id="move2" name="move" value="2"><label for="move2">无力</label>
+				<input type="radio" id="move3" name="move" value="3"><label for="move3">偏瘫</label>
+				(
+					<input type="checkbox" id="hemiplegia1" name="hemiplegia1" value="√"><label for="hemiplegia1">左上肢</label>
+					<input type="checkbox" id="hemiplegia2" name="hemiplegia2" value="√"><label for="hemiplegia2">左下肢</label>
+					<input type="checkbox" id="hemiplegia3" name="hemiplegia3" value="√"><label for="hemiplegia3">右上肢</label>
+					<input type="checkbox" id="hemiplegia4" name="hemiplegia4" value="√"><label for="hemiplegia4">右下肢</label>
+				)
+				<input type="radio" id="move4" name="move" value="4"><label for="move4">截瘫</label>
+				<input type="radio" id="move5" name="move" value="5"><label for="move5">全瘫</label>
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">自理能力：</span>
+			<span class="content">
+				<input type="radio" id="selfCare1" name="selfCare" value="1"><label for="selfCare1">完全自理</label>
+				<input type="radio" id="selfCare2" name="selfCare" value="2"><label for="selfCare2">部分自理</label>
+				<input type="radio" id="selfCare3" name="selfCare" value="3"><label for="selfCare3">完全不能自理</label>
+				<input type="text" name="selfCareExtra" class="data4">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">皮肤状况：</span>
+			<span class="content">
+				<input type="radio" id="skin1" name="skin" value="1"><label for="skin1">完整</label>
+				<input type="radio" id="skin2" name="skin" value="2"><label for="skin2">黄疸</label>
+					(<input type="radio" id="icterus1" name="icterus" value="1"><label for="icterus1">轻</label>
+					<input type="radio" id="icterus2" name="icterus" value="2"><label for="icterus2">中</label>
+					<input type="radio" id="icterus3" name="icterus" value="3"><label for="icterus3">重</label>)
+				<input type="radio" id="skin3" name="skin" value="3"><label for="skin3">晦暗</label>
+				<input type="radio" id="skin4" name="skin" value="4"><label for="skin4">湿冷</label>
+				<input type="radio" id="skin5" name="skin" value="5"><label for="skin5">出血点</label>
+				<input type="radio" id="skin6" name="skin" value="6"><label for="skin6">破损</label>
+				<input type="radio" id="skin7" name="skin" value="7"><label for="skin7">水肿</label>
+					(<input type="radio" id="dropsy1" name="dropsy" value="1"><label for="dropsy1">轻</label>
+					<input type="radio" id="dropsy2" name="dropsy" value="2"><label for="dropsy2">中</label>
+					<input type="radio" id="dropsy3" name="dropsy" value="3"><label for="dropsy3">重</label>)
+				<input type="radio" id="skin8" name="skin" value="8"><label for="skin8">皮疹</label>
+				<input type="radio" id="skin9" name="skin" value="9"><label for="skin9">瘀斑</label>
+				<input type="radio" id="skin10" name="skin" value="10"><label for="skin10">苍白</label>
+				<input type="radio" id="skin11" name="skin" value="11"><label for="skin11">压疮</label>
+				详细描述：<input type="text" name="skinExtra" style="width: 400px;">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">伤口：</span>
+			<span class="content">
+				<input type="radio" id="injure1" name="injure" value="1"><label for="injure1">无</label>
+				<input type="radio" id="injure2" name="injure" value="2"><label for="injure2">有</label>
+				部位：<input type="text" name="injureExtra" class="data4">
+			</span>
+		</span>
+		<span class="item">
+			<span class="title">敷料：</span>
+			<span class="content">
+				<input type="radio" id="dressing1" name="dressing" value="1"><label for="dressing1">干燥</label>
+				<input type="radio" id="dressing2" name="dressing" value="2"><label for="dressing2">渗血</label>
+				<input type="radio" id="dressing3" name="dressing" value="3"><label for="dressing3">渗液</label>
+				<input type="radio" id="dressing4" name="dressing" value="4"><label for="dressing4">其他</label>
+				部位：<input type="text" name="dressingExtra" class="data4">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">置管情况：</span>
+			<span class="content">
+				<input type="radio" id="pipe1" name="pipe" value="1"><label for="pipe1">无</label>
+				<input type="radio" id="pipe2" name="pipe" value="2"><label for="pipe2">有</label>
+				名称<input type="text" name="pipeName" class="data2">
+				部位<input type="text" name="pipePart" class="data2">
+			</span>
+			<span class="content">
+				<input type="radio" id="pipeFix1" name="pipeFix" value="1"><label for="pipeFix1">固定</label>
+				<input type="radio" id="pipeFix2" name="pipeFix" value="2"><label for="pipeFix2">不固定</label>
+				<input type="text" name="pipeFixExtra" class="data1">
+			</span>
+			<span class="content">
+				<input type="radio" id="pipeSmooth1" name="pipeSmooth" value="1"><label for="pipeSmooth1">通畅</label>
+				<input type="radio" id="pipeSmooth2" name="pipeSmooth" value="2"><label for="pipeSmooth2">不通畅</label>
+				<input type="text" name="pipeSmoothExtra" class="data1">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">食欲：</span>
+			<span class="content">
+				<input type="radio" id="appetite1" name="appetite" value="1"><label for="appetite1">正常</label>
+				<input type="radio" id="appetite2" name="appetite" value="2"><label for="appetite2">增加</label>
+				<input type="radio" id="appetite3" name="appetite" value="3"><label for="appetite3">亢进</label>
+				<input type="radio" id="appetite4" name="appetite" value="4"><label for="appetite4">下降</label>
+				<input type="radio" id="appetite5" name="appetite" value="5"><label for="appetite5">厌食</label>
+				<input type="radio" id="appetite6" name="appetite" value="6"><label for="appetite6">其他</label>
+				<input type="text" name="appetiteExtra" class="data4">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">胃肠道症状：</span>
+			<span class="content">
+				<input type="radio" id="bowel1" name="bowel" value="1"><label for="bowel1">无</label>
+				<input type="radio" id="bowel2" name="bowel" value="2"><label for="bowel2">腹胀</label>
+				<input type="radio" id="bowel3" name="bowel" value="3"><label for="bowel3">腹痛</label>
+				<input type="radio" id="bowel4" name="bowel" value="4"><label for="bowel4">恶心</label>
+				<input type="radio" id="bowel5" name="bowel" value="5"><label for="bowel5">呕吐</label>
+				颜色<input type="text" name="bowelColor" class="data1">
+				性质<input type="text" name="bowelQuale" class="data1">
+				次数<input type="text" name="bowelTimes" class="data1">
+				量<input type="text" name="bowelMeasure" class="data1">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">疼痛：</span>
+			<span class="content">
+				<input type="radio" id="pain1" name="pain" value="1"><label for="pain1">无</label>
+				<input type="radio" id="pain2" name="pain" value="2"><label for="pain2">有</label>
+				部位<input type="text" name="painPart" class="data2">
+				<input type="radio" id="painHold1" name="painHold" value="1"><label for="painHold1">间歇性</label>
+				<input type="radio" id="painHold2" name="painHold" value="2"><label for="painHold2">持续性</label>
+			</span>
+		</span>
+		<span class="item">
+			<span class="title">疼痛程度：</span>
+			<span class="content">
+				<input type="radio" id="painLevel1" name="painLevel" value="1"><label for="painLevel1">轻度</label>
+				<input type="radio" id="painLevel2" name="painLevel" value="2"><label for="painLevel2">中度</label>
+				<input type="radio" id="painLevel3" name="painLevel" value="3"><label for="painLevel3">重度</label>
+				性质<input type="text" name="painLevelColor" class="data2">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">语言沟通：</span>
+			<span class="title">最常用语言：</span>
+			<span class="content">
+				<input type="checkbox" id="language1" name="language1" value="√"><label for="language1">普通话</label>
+				<input type="checkbox" id="language2" name="language2" value="√"><label for="language2">粤语</label>
+				<input type="checkbox" id="language3" name="language3" value="√"><label for="language3">客家话</label>
+				<input type="checkbox" id="language4" name="language4" value="√"><label for="language4">其他</label>
+				<input type="text" name="languageExtra" class="data1">
+			</span>
+		</span>
+		<span class="item">
+			<span class="title">语言表达：</span>
+			<span class="content">
+				<input type="radio" id="express1" name="express" value="1"><label for="express1">清楚</label>
+				<input type="radio" id="express2" name="express" value="2"><label for="express2">含糊</label>
+				<input type="radio" id="express3" name="express" value="3"><label for="express3">失语</label>
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">生活习惯：</span>
+			<span class="title">吸烟：</span>
+			<span class="content">
+				<input type="radio" id="smoke1" name="smoke" value="1"><label for="smoke1">无</label>
+				<input type="radio" id="smoke2" name="smoke" value="2"><label for="smoke2">有</label>
+				<input type="text" name="smokeExtra" class="data1">支/天
+			</span>
+			<span class="title">嗜酒：</span>
+			<span class="content">
+				<input type="radio" id="drunk1" name="drunk" value="1"><label for="drunk1">无</label>
+				<input type="radio" id="drunk2" name="drunk" value="2"><label for="drunk2">有</label>
+				(
+					<input type="checkbox" id="wine1" name="wine1" value="√"><label for="wine1">白酒</label>
+					<input type="checkbox" id="wine2" name="wine2" value="√"><label for="wine2">红酒</label>
+					<input type="checkbox" id="wine3" name="wine3" value="√"><label for="wine3">啤酒</label>
+				)
+				<input type="text" name="drunkExtra" class="data1">两/天
+			</span>
+		</span>
+	</div>
+	<div><span class="title">二、专科评估及风险预警</span></div>
+	<div>
+		<span class="item">
+			<span class="title">专科评估：</span>
+			<span class="content">
+				1、患者自理能力评分（ADL）<input type="text" name="adlScore" class="data1">分
+				2、跌倒评分<input type="text" name="fallScore" class="data1">分
+				3、压疮评分<input type="text" name="pressScore" class="data1">分
+				4、疼痛评估<input type="text" name="painScore" class="data1">分
+				5、其他<input type="text" name="otherScore" class="data1">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">风险预警：</span>
+			<span class="content">
+				<input type="checkbox" id="risk1" name="risk1" value="√"><label for="risk1">防跌倒/坠床</label>
+				<input type="checkbox" id="risk2" name="risk2" value="√"><label for="risk2">防压疮</label>
+				<input type="checkbox" id="risk3" name="risk3" value="√"><label for="risk3">防脱管</label>
+				<input type="checkbox" id="risk4" name="risk4" value="√"><label for="risk4">防误吸</label>
+				<input type="checkbox" id="risk5" name="risk5" value="√"><label for="risk5">防走失</label>
+				<input type="checkbox" id="risk6" name="risk6" value="√"><label for="risk6">防烫伤</label>
+				<input type="checkbox" id="risk7" name="risk7" value="√"><label for="risk7">防自杀</label>
+				<input type="checkbox" id="risk8" name="risk8" value="√"><label for="risk8">防导管相关性感染</label>
+				<input type="checkbox" id="risk9" name="risk9" value="√"><label for="risk9">注意转运安全</label>
+				<input type="checkbox" id="risk10" name="risk10" value="√"><label for="risk10">其他</label>
+				<input type="text" name="riskExtra" class="data4">
+			</span>
+		</span>
+	</div>
+	<div><span class="title">三、护理重点</span></div>
+	<div>
+		<span class="item">
+			<span class="title">基础护理：</span>
+			<span class="content">
+				<input type="checkbox" id="baseNurse1" name="baseNurse1" value="√"><label for="baseNurse1">口腔护理</label>
+				<input type="checkbox" id="baseNurse2" name="baseNurse2" value="√"><label for="baseNurse2">头发清洁</label>
+				<input type="checkbox" id="baseNurse3" name="baseNurse3" value="√"><label for="baseNurse3">会阴护理</label>
+				<input type="checkbox" id="baseNurse4" name="baseNurse4" value="√"><label for="baseNurse4">卧位护理</label>
+				<input type="checkbox" id="baseNurse5" name="baseNurse5" value="√"><label for="baseNurse5">失禁护理</label>
+				<input type="checkbox" id="baseNurse6" name="baseNurse6" value="√"><label for="baseNurse6">防压疮护理</label>
+				<input type="checkbox" id="baseNurse7" name="baseNurse7" value="√"><label for="baseNurse7">其他</label>
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">饮食护理：</span>
+			<span class="content">
+				<input type="checkbox" id="dietNurse1" name="dietNurse1" value="√"><label for="dietNurse1">普食</label>
+				<input type="checkbox" id="dietNurse2" name="dietNurse2" value="√"><label for="dietNurse2">清淡饮食</label>
+				<input type="checkbox" id="dietNurse3" name="dietNurse3" value="√"><label for="dietNurse3">低盐</label>
+				<input type="checkbox" id="dietNurse4" name="dietNurse4" value="√"><label for="dietNurse4">低脂饮食</label>
+				<input type="checkbox" id="dietNurse5" name="dietNurse5" value="√"><label for="dietNurse5">低蛋白饮食</label>
+				<input type="checkbox" id="dietNurse6" name="dietNurse6" value="√"><label for="dietNurse6">糖尿病饮食</label>
+				<input type="checkbox" id="dietNurse7" name="dietNurse7" value="√"><label for="dietNurse7">禁食</label>
+				<input type="checkbox" id="dietNurse8" name="dietNurse8" value="√"><label for="dietNurse8">其他</label>
+				<input type="text" name="dietNurseExtra" class="data4">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">专科护理：</span>
+			<span class="content">
+				<input type="checkbox" id="specialNurse1" name="specialNurse1" value="√"><label for="specialNurse1">肝炎护理</label>
+				<input type="checkbox" id="specialNurse2" name="specialNurse2" value="√"><label for="specialNurse2">肝硬化护理</label>
+				<input type="checkbox" id="specialNurse3" name="specialNurse3" value="√"><label for="specialNurse3">肝癌护理</label>
+				<input type="checkbox" id="specialNurse4" name="specialNurse4" value="√"><label for="specialNurse4">上消化道出血护理</label>
+				<input type="checkbox" id="specialNurse5" name="specialNurse5" value="√"><label for="specialNurse5">肝性脑病护理</label>
+				<input type="checkbox" id="specialNurse6" name="specialNurse6" value="√"><label for="specialNurse6">糖尿病护理</label>
+				<input type="checkbox" id="specialNurse7" name="specialNurse7" value="√"><label for="specialNurse7">介入术前后护理</label>
+				<input type="checkbox" id="specialNurse8" name="specialNurse8" value="√"><label for="specialNurse8">腹腔引流管护理</label>
+				<input type="checkbox" id="specialNurse9" name="specialNurse9" value="√"><label for="specialNurse9">留置胃管/尿管护理</label>
+				<input type="checkbox" id="specialNurse10" name="specialNurse10" value="√"><label for="specialNurse10">肿瘤护理</label>
+				<input type="text" name="tumorNurse" class="data2">
+				<input type="checkbox" id="specialNurse11" name="specialNurse11" value="√"><label for="specialNurse11">其他</label>
+				<input type="text" name="specialNurseExtra" class="data4">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">护理交接班重点：</span>
+			<span class="content">
+				<input type="checkbox" id="relief1" name="relief1" value="√"><label for="relief1">生命体征监测</label>
+				<input type="checkbox" id="relief2" name="relief2" value="√"><label for="relief2">血糖监测</label>
+				<input type="checkbox" id="relief3" name="relief3" value="√"><label for="relief3">消化道症状监测</label>
+				<input type="checkbox" id="relief4" name="relief4" value="√"><label for="relief4">出血情况</label>
+				<input type="checkbox" id="relief5" name="relief5" value="√"><label for="relief5">特殊用药</label>
+				<input type="checkbox" id="relief6" name="relief6" value="√"><label for="relief6">记出入量</label>
+				<input type="checkbox" id="relief7" name="relief7" value="√"><label for="relief7">记尿量</label>
+				<input type="checkbox" id="relief8" name="relief8" value="√"><label for="relief8">测腹围</label>
+				<input type="checkbox" id="relief9" name="relief9" value="√"><label for="relief9">其他</label>
+				<input type="text" name="reliefExtra" class="data4">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">提醒家属给予关爱：</span>
+			<span class="content">
+				<input type="checkbox" id="care1" name="care1" value="√"><label for="care1">生活照顾</label>
+				<input type="checkbox" id="care2" name="care2" value="√"><label for="care2">经济支持</label>
+				<input type="checkbox" id="care3" name="care3" value="√"><label for="care3">精神支持</label>
+			</span>
+		</span>
+	</div>
+	<div><span class="title">四、住院告知</span></div>
+	<div>
+		<span class="item">
+			<span class="title">入院宣教：</span>
+			<span class="content">
+				<input type="checkbox" id="inDeclare1" name="inDeclare1" value="√"><label for="inDeclare1">住院须知</label>
+				<input type="checkbox" id="inDeclare2" name="inDeclare2" value="√"><label for="inDeclare2">安全告知</label>
+				<input type="checkbox" id="inDeclare3" name="inDeclare3" value="√"><label for="inDeclare3">物品管理</label>
+				<input type="checkbox" id="inDeclare4" name="inDeclare4" value="√"><label for="inDeclare4">作息</label>
+				<input type="checkbox" id="inDeclare5" name="inDeclare5" value="√"><label for="inDeclare5">探陪</label>
+				<input type="checkbox" id="inDeclare6" name="inDeclare6" value="√"><label for="inDeclare6">介绍科主任、护士长、主管医生、责任护士</label>
+				<input type="checkbox" id="inDeclare7" name="inDeclare7" value="√"><label for="inDeclare7">订餐</label>
+				<input type="checkbox" id="inDeclare8" name="inDeclare8" value="√"><label for="inDeclare8">其他</label>
+				<input type="text" name="inDeclareExtra" class="data4">
+			</span>
+		</span>
+	</div>
+</div>
+</div>
+</div>
+<hr class="break-page"/>
+<div class="paper">
+<div class="paper-content">
+#liverFirst()
+<div class="doc-content doc-only">
+	<table class="grid">
+		<tr><td>
+			<span class="title">记录时间：</span>
+			<span class="content">
+				<input type="text" name="inRecordYear" class="year">年
+				<input type="text" name="inRecordMonth" class="datetime">月
+				<input type="text" name="inRecordDate" class="datetime">日
+				<input type="text" name="inRecordHour" class="datetime">时
+				<input type="text" name="inRecordMinute" class="datetime">分
+			</span>
+		</td><td>
+			<span class="title">责任护士签名：</span>
+			<span class="content">
+				<input type="text" name="inNurse" class="data4">
+			</span>
+		</td></tr>
+		<tr><td>
+			<span class="title">审核时间：</span>
+			<span class="content">
+				<input type="text" name="inApproveYear" class="year">年
+				<input type="text" name="inApproveMonth" class="datetime">月
+				<input type="text" name="inApproveDate" class="datetime">日
+				<input type="text" name="inApproveHour" class="datetime">时
+				<input type="text" name="inApproveMinute" class="datetime">分
+			</span>
+		</td><td>
+			<span class="title">审核者签名：</span>
+			<span class="content">
+				<input id="inApprover" type="text" name="inApprover" class="data4">
+			</span>
+		</td></tr>
+	</table>
+	<br>
+	<br>
+	<div class="doc-title">出院记录（可续打）</div>
+	<div><span class="title">五、护理过程与结局</span></div>
+	<div>
+		<span class="item">
+			<span class="title">健康宣教：</span>
+			<span class="content">
+				<input type="checkbox" id="healthDeclare1" name="healthDeclare1" value="√"><label for="healthDeclare1">疾病宣教</label>
+				<input type="checkbox" id="healthDeclare2" name="healthDeclare2" value="√"><label for="healthDeclare2">护理操作说明</label>
+				<input type="checkbox" id="healthDeclare3" name="healthDeclare3" value="√"><label for="healthDeclare3">用药指导</label>
+				<input type="checkbox" id="healthDeclare4" name="healthDeclare4" value="√"><label for="healthDeclare4">检查、检验指导</label>
+				<input type="checkbox" id="healthDeclare5" name="healthDeclare5" value="√"><label for="healthDeclare5">饮食指导</label>
+				<input type="checkbox" id="healthDeclare6" name="healthDeclare6" value="√"><label for="healthDeclare6">作息指导</label>
+				<input type="checkbox" id="healthDeclare7" name="healthDeclare7" value="√"><label for="healthDeclare7">家属/陪护宣教</label>
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">住院期间发生情况：</span>
+			<span class="content">
+				<input type="radio" id="inSituation1" name="inSituation" value="1"><label for="inSituation1">无</label>
+				<input type="radio" id="inSituation2" name="inSituation" value="2"><label for="inSituation2">有：</label>
+				<input type="checkbox" id="situation1" name="situation1" value="√"><label for="situation1">跌倒</label>
+				<input type="checkbox" id="situation2" name="situation2" value="√"><label for="situation2">坠床</label>
+				<input type="checkbox" id="situation3" name="situation3" value="√"><label for="situation3">压疮</label>
+				<input type="checkbox" id="situation4" name="situation4" value="√"><label for="situation4">非计划脱管</label>
+				<input type="text" name="situationOff" class="data4">
+				<input type="checkbox" id="situation5" name="situation5" value="√"><label for="situation5">误吸/误食</label>
+				<input type="checkbox" id="situation6" name="situation6" value="√"><label for="situation6">走失</label>
+				<input type="checkbox" id="situation7" name="situation7" value="√"><label for="situation7">烫伤</label>
+				<input type="checkbox" id="situation8" name="situation8" value="√"><label for="situation8">自杀</label>
+				<input type="checkbox" id="situation9" name="situation9" value="√"><label for="situation9">导管相关性感染</label>
+				<input type="text" name="situationInfection" class="data4">
+				<input type="checkbox" id="situation10" name="situation10" value="√"><label for="situation10">注意转运安全</label>
+				<input type="checkbox" id="situation11" name="situation11" value="√"><label for="situation11">其他</label>
+				<input type="text" name="situationOther" class="data4">
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">管道植入：</span>
+			<span class="content">
+				<input type="radio" id="inSituation1" name="inSituation" value="1"><label for="inSituation1">无</label>
+				<input type="radio" id="inSituation2" name="inSituation" value="2"><label for="inSituation2">有：</label>
+			</span>
+		</span>
+		<div>
+			名称1<input type="text" name="embedName1" class="data1">
+			部位<input type="text" name="embedPart1" class="data1">
+			植入时间<input type="text" name="embedTime1" class="data2">
+			植入长度<input type="text" name="embedLength1" class="data1">
+			外露长度<input type="text" name="embedExposeLength1" class="data1">
+			拔管时间<input type="text" name="embedDrawTime1" class="data2">
+			拔管原因<input type="text" name="embedDrawReason1" class="data1">
+		</div>
+		<div>
+			名称2<input type="text" name="embedName2" class="data1">
+			部位<input type="text" name="embedPart2" class="data1">
+			植入时间<input type="text" name="embedTime2" class="data2">
+			植入长度<input type="text" name="embedLength2" class="data1">
+			外露长度<input type="text" name="embedExposeLength2" class="data1">
+			拔管时间<input type="text" name="embedDrawTime2" class="data2">
+			拔管原因<input type="text" name="embedDrawReason2" class="data1">
+		</div>
+		<div>
+			<input type="text" name="embedExtra" style="width: 100%;">
+		</div>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">转归：</span>
+			<span class="content">
+				<input type="radio" id="lapse1" name="lapse" value="1"><label for="lapse1">出院</label>
+				<input type="radio" id="lapse2" name="lapse" value="2"><label for="lapse2">自动出院</label>
+				<input type="radio" id="lapse3" name="lapse" value="3"><label for="lapse3">转院</label>
+				<input type="radio" id="lapse4" name="lapse" value="4"><label for="lapse4">死亡</label>
+			</span>
+		</span>
+	</div>
+	<div>
+		<span class="item">
+			<span class="title">六、出院宣教：</span>
+			<span class="content">
+				<input type="checkbox" id="outDeclare1" name="outDeclare1" value="√"><label for="outDeclare1">饮食</label>
+				<input type="checkbox" id="outDeclare2" name="outDeclare2" value="√"><label for="outDeclare2">作息、运动指导</label>
+				<input type="checkbox" id="outDeclare3" name="outDeclare3" value="√"><label for="outDeclare3">服药指导</label>
+				<input type="checkbox" id="outDeclare4" name="outDeclare4" value="√"><label for="outDeclare4">复诊时间</label>
+			</span>
+		</span>
+	</div>
+	<div>
+		<table class="grid">
+			<tr><td>
+				<span class="title">记录时间：</span>
+				<span class="content">
+					<input type="text" name="outRecordYear" class="year">年
+					<input type="text" name="outRecordMonth" class="datetime">月
+					<input type="text" name="outRecordDate" class="datetime">日
+					<input type="text" name="outRecordHour" class="datetime">时
+					<input type="text" name="outRecordMinute" class="datetime">分
+				</span>
+			</td><td>
+				<span class="title">责任护士签名：</span>
+				<span class="content">
+					<input type="text" name="outNurse" class="data4">
+				</span>
+			</td></tr>
+			<tr><td>
+				<span class="title">审核时间：</span>
+				<span class="content">
+					<input type="text" name="outApproveYear" class="year">年
+					<input type="text" name="outApproveMonth" class="datetime">月
+					<input type="text" name="outApproveDate" class="datetime">日
+					<input type="text" name="outApproveHour" class="datetime">时
+					<input type="text" name="outApproveMinute" class="datetime">分
+				</span>
+			</td><td>
+				<span class="title">审核者签名：</span>
+				<span class="content">
+					<input id="outApprover" type="text" name="outApprover" class="data4">
+				</span>
+			</td></tr>
+		</table>
+	</div>
+</div>
+</div>
+<!-- #pageFoot() -->
+</div>
+</div>
+<script type="text/javascript">
+// initialize page when loaded
+$(function() {
+	$('input').attr('readonly', true);
+	$('textarea').attr('readonly', true);
+	$('label').click(function(event) {
+		event.preventDefault();
+	});
+	$('textarea').autosize({
+		append: '',
+		callback: function() {
+		}
+	});
+	// init datas
+	$.ajax({
+    	url: '#url("/doc/data?docType=LIVER_FIRST")',
+    	type: 'GET',
+    	data: {cureNo: '$!{patient.cureNo}'},
+    	success: function(data, status) {
+    		#[[
+    		if (data) {
+    			$.each(data, function(index, obj) {
+    				var name = this['key'];
+    				var value = this['value'];
+    				if (value) {
+    					var $e = $('[name=' + name + ']');
+    					var type = $e.attr('type');
+    					if ('inRecordDate' == name
+    							|| 'inApproveDate' == name
+    							|| 'outRecordDate' == name
+    							|| 'outApproveDate' == name) {
+    						var prefix = name.substring(0, name.length - 4);
+    						var date = new Date(value);
+    						var y = date.getFullYear();
+    						var m = date.getMonth() + 1;
+    						var d = date.getDate();
+    						var h = date.getHours();
+    						var mi = date.getMinutes();
+    						$('[name=' + prefix + 'Year]').val(y);
+    						$('[name=' + prefix + 'Month]').val((m < 10 ? ("0" + m) : m));
+    						$('[name=' + prefix + 'Date]').val((d < 10 ? ("0" + d) : d));
+    						$('[name=' + prefix + 'Hour]').val((h < 10 ? ("0" + h) : h));
+    						$('[name=' + prefix + 'Minute]').val((mi < 10 ? ("0" + mi) : mi));
+    					} else if ('radio' == type) {
+    						$e.each(function(index,element) {
+    							var $ele = $(element);
+    							if (value == $ele.val()) {
+    								$ele.attr('checked', 'checked');
+    							}
+    						});
+    					} else if ('checkbox' == type) {
+    						$e.attr('checked', value);
+    					} else {
+    						$e.val(value);
+    					}
+    				}
+    			});
+    		}
+    		$('textarea').trigger('autosize.resize');
+    		]]#
+    	},
+    	error: function(xhr, status, err) {
+    		$.messager.alert('数据保存', '获取数据失败', 'error');
+    	}
+    });
+});
+</script>
+</body>
+</html>

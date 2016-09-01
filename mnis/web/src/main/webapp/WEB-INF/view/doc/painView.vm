@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-table td {
+	width: 15px;
+}
+/* .doc-table tbody td:nth-child(1) { */
+/* 	word-break: break-word; */
+/* } */
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+	}
+}
+</style>
+<title>住院患者疼痛评估记录单</title>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper">
+	<div class="paper-content">
+		#pain()
+		<div class="doc-content">
+			<table class="doc-table">
+				<thead>
+					<tr>
+			            <th rowspan="2" style="width: 85px;">日期</th>
+			            <th rowspan="2" style="width: 40px;">时间</th>
+			        	<th colspan="5">疼痛评估</th>
+			        	<th colspan="6">护理措施</th>
+			            <th rowspan="2">通知医生</th>
+			        	<th colspan="4">遵医嘱用药治疗</th>
+			            <th rowspan="2" style="width: 40px;">用药后再评估时间</th>
+			            <th rowspan="2" style="width: 20px;">用药后疼痛强度</th>
+			            <th rowspan="2" style="width: 55px;">签名</th>
+			        </tr>
+			        <tr>
+			            <th style="width: 73px;">部位</th>
+			            <th>类型</th>
+			            <th>强度</th>
+			            <th>性质</th>
+			            <th style="width: 40px;">疼痛对患者的影响</th>
+			            <th>安慰患者</th>
+			            <th>解释病情</th>
+			            <th>卧床休息</th>
+			            <th>分散注意力</th>
+			            <th style="width: 50px;">遵医嘱给予相应治疗护理措施</th>
+			            <th>$!{doc.hold5}</th>
+			            <th style="width: 40px;">时间</th>
+			            <th style="width: 65px;">药品</th>
+			            <th style="width: 40px;">用药途径</th>
+			            <th style="width: 37px;">用药频率</th>
+			        </tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		#painComment()
+	</div>
+	#pageFoot()
+</div>
+</div>
+<script type="text/javascript">
+function getRowDatas(row, isFirstRow, lastDate) {
+	return [
+		getDate(row['date'], isFirstRow, lastDate),
+		getTime(row['date']),
+		row['part'],
+		row['type'],
+		row['intensity'],
+		row['quale'],
+		row['effect'],
+		row['comfort'],
+		row['explain'],
+		row['rest'],
+		row['disperseAttention'],
+		row['cure'],
+		row['hold1'],
+		row['notice'],
+		row['time'],
+		row['pill'],
+		row['drugWay'],
+		row['drugRate'],
+		row['drugTime'],
+		row['drugIntensity'],
+		row['sign']
+	];
+}
+$(function() {
+	fillTable('#url("/doc/pain/view/datas")', '$!{patient.cureNo}', 21, getRowDatas);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<div class="sat-wrapper">
+  <div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+      <!-- <i class="fa fa-edit"></i> -->
+      患者满意度调查
+    </h5>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="form">
+      <div class="container-fluid">
+        <div class="">
+          <div class="form-group">
+            <label for="formCode" class="col-sm-1 control-label">日期</label>
+            <div class="input-group col-sm-3 pull-left">
+              <input type="text" id="surverDate" name="surverDate" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.surverDateOpen" ng-model="vm.detail.surverDate" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" timestamp-to-string>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-sm btn-default" ng-click="vm.surverDateOpen = true">
+                  <i class="fa fa-calendar"></i>
+                </button>
+              </span>
+            </div>
+            <label for="formName" class="col-sm-1 control-label">调查表</label>
+            <div class="col-sm-6">
+              <select class="form-control" name="formCode" id="formCode" ng-model="vm.tmpCode" ng-show="vm.isNew" ng-change="vm.reload()">
+                <option ng-repeat="item in vm.tmps" value="{{item.formCode}}">{{item.formName}}</option>
+              </select>
+              <input class="form-control input-sm" type="text" ng-model="vm.detail.resultName" ng-hide="vm.isNew" disabled>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="deptCode" class="col-sm-1 control-label">病区</label>
+            <div class="col-sm-3">
+              <select class="form-control" name="deptCode" id="deptCode" ng-model="vm.detail.deptCode">
+                <option ng-repeat="item in vm.deptData.belongedDepts" value="{{item.deptCode}}">{{item.deptName}}</option>
+              </select>
+            </div>
+            <label for="bedCode" class="col-sm-1 control-label">床号</label>
+            <div class="col-sm-1">
+              <input type="text" class="form-control input-sm" ng-model="vm.detail.bedCode">
+            </div>
+            <label for="name" class="col-sm-1 control-label">姓名</label>
+            <div class="col-sm-2">
+              <input type="text" class="form-control input-sm" ng-model="vm.detail.name">
+            </div>
+            <label for="inHospNo" class="col-sm-1 control-label">住院号</label>
+            <div class="col-sm-2">
+              <input type="text" class="form-control input-sm" ng-model="vm.detail.inHospNo">
+            </div>
+          </div>
+          <div>
+            <table class="sat-table">
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>调查问题</th>
+                  <th>调查选项1</th>
+                  <th>调查选项2</th>
+                  <th>调查选项3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in vm.detail.satResultDetailList">
+                  <td>{{$index + 1}}</td>
+                  <td>
+                    {{item.content}}
+                  </td>
+                  <td ng-repeat="option in item.satOptionList">
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="satOption{{item.seqId}}" value="{{option.optionCode}}" ng-model="item.optionCode"> {{option.optionContent}}
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="form-group text-center">
+            <button class="btn btn-sm btn-success" type="button" ng-click="vm.ok()">保存</button>
+            <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

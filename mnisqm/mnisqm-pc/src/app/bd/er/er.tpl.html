@@ -1,0 +1,122 @@
+<div class="col-md-12">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-pie-chart"></i> 近似差错率 （2016年8月）
+    </div>
+    <div class="panel-body">
+      <div class="chart-wrapper">
+        <div class="row">
+          <div class="col-md-3 chart_text bd-err-text">
+            <div class="form-group bd-err-text_title">
+              <span class="col-md-6 control-label">
+              近似差错率
+            </span>
+            </div>
+            <div class="form-group bd-err-text_main">
+              <span class="value-label">{{'1.35'}} ‰</span>
+            </div>
+            <div class="form-group">
+              <span class="col-md-5 control-label">
+              累计核对：
+            </span>
+              <span class="value-label">{{'2133454'}}次</span>
+            </div>
+            <div class="form-group">
+              <span class="col-md-5 control-label">
+              近似差错：
+            </span>
+              <span class="value-label">{{137}}</span>
+            </div>
+            <div class="form-group row">
+              <span class="col-md-3 control-label">同比：</span>
+              <span class="value-label col-md-3 success-text">16%  <i class="fa fa-long-arrow-up"></i></span>
+
+              <span class="col-md-3 control-label">环比：</span>
+              <span class="value-label col-md-3 danger-text">1.55%  <i class="fa fa-long-arrow-down"></i></span>
+            </div>
+
+          </div>
+          <div class="col-md-5 chart-content">
+            <div class="echarts-wrap" echarts="vm.stastics.err.identity" echarts-dimension="vm.stastics.err.dimension" config="vm.stastics.err.config"></div>
+          </div>
+          <div class="col-md-4">
+            <table st-table="vm.displayList1" st-safe-src="vm.table_1_list" class="table table-hover table-condensed table-bordered">
+              <thead>
+                <tr class="header-export">
+                  <th>颜色</th>
+                  <th>类别</th>
+                  <th>次数</th>
+                  <th>百分比</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="row in vm.displayList1">
+                  <td>{{row.name}}</td>
+                  <td>{{row.age}}</td>
+                  <td>{{row.sex}}</td>
+                  <td>{{row.job}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-layout panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-bar-chart"></i>
+      <span>科室情况</span>
+    </div>
+    <div class="panel-body">
+      <div class="echarts-wrap" echarts="vm.stastics.dept.identity" echarts-dimension="vm.stastics.dept.dimension" config="vm.stastics.dept.config"></div>
+      <!-- <none-data-info list="vm.userDataList"></none-data-info> -->
+    </div>
+  </div>
+
+  <div class="panel panel-layout panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-bar-chart"></i>
+      <span>业务流程</span>
+    </div>
+    <div class="panel-body no-padding">
+      <div class="echarts-wrap" echarts="vm.stastics.turns.identity" echarts-dimension="vm.stastics.turns.dimension" config="vm.stastics.turns.config"></div>
+      <!-- <none-data-info list="vm.userDataList"></none-data-info> -->
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-bar-chart"></i>
+      <span>班次情况</span>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-4">
+          <div class="echarts-wrap" echarts="vm.stastics.err.identity" echarts-dimension="vm.stastics.err.dimension" config="vm.stastics.err.config"></div>
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-bomb"></i>
+                <span>潜在风险</span>
+              </div>
+          <table st-table="vm.displayList1" st-safe-src="vm.table_1_list" class="table table-hover table-condensed table-bordered">
+            <thead>
+              <tr class="header-export">
+                <th>科室Top5</th>
+                <th>人员Top5</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="row in vm.displayList1">
+                <td>{{row.name}}</td>
+                <td>{{row.age}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+      <!-- <none-data-info list="vm.userDataList"></none-data-info> -->
+    </div>
+  </div>
+</div>

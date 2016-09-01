@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.system.dao.SysFunctionMapperExt" >
+  <resultMap id="simpleSysFunction" type="com.lachesis.mnisqm.module.system.domain.SimpleSysFunction" extends="com.lachesis.mnisqm.module.system.dao.SysFunctionMapper.BaseResultMap" />
+  
+  <!-- 通过角色获取所有的功能 -->
+  <select id="selectFunByRole" parameterType="java.util.Map" resultType="com.lachesis.mnisqm.module.system.domain.SysFunction">
+  	SELECT	f.FUN_CODE			funCode,
+			f.VIEW_NAME			funName,
+			f.FATHER_FUN_CODE		fatherFunCode,
+			f.FUN_URL				funUrl,
+			f.ICO_NAME			icoName
+	FROM SYS_FUNCTION f
+	INNER JOIN SYS_ROLE_FUN r on f.FUN_CODE =r.FUN_CODE and r.status !='09'
+	WHERE r.ROLE_CODE=#{roleCode} and f.status !='09'
+	ORDER BY FUN_INDEX
+  </select>
+  
+  <select id="selectNotHaveRole"  parameterType="java.util.Map" resultType="com.lachesis.mnisqm.module.system.domain.SysFunction">
+	select * from (SELECT	f.FUN_CODE			funCode,
+			f.VIEW_NAME			funName,
+			f.FATHER_FUN_CODE		fatherFunCode,
+			f.FUN_URL				funUrl,
+			f.ICO_NAME			icoName,
+			f.FUN_INDEX funIndex
+	FROM SYS_FUNCTION f
+	left JOIN SYS_ROLE_FUN r on f.FUN_CODE =r.FUN_CODE and r.status !='09' and r.ROLE_CODE=#{roleCode}
+	WHERE r.FUN_CODE is null
+	and f.status !='09'
+	union
+	select t.FUN_CODE funCode,
+			t.VIEW_NAME funName,
+			t.FATHER_FUN_CODE fatherFunCode,
+			t.FUN_URL funUrl,
+			t.ICO_NAME icoName,
+			t.FUN_INDEX funIndex 
+	from SYS_FUNCTION t
+	inner join (SELECT f.FATHER_FUN_CODE
+	FROM SYS_FUNCTION f
+	left JOIN SYS_ROLE_FUN r on f.FUN_CODE =r.FUN_CODE and r.status !='09' and r.ROLE_CODE=#{roleCode} 
+	where r.FUN_CODE is null and f.status !='09') t1 on t.FUN_CODE=t1.FATHER_FUN_CODE
+	group by t.FUN_CODE,
+			t.VIEW_NAME,
+			t.FATHER_FUN_CODE,
+			t.FUN_URL,
+			t.ICO_NAME,
+			t.FUN_INDEX)t2 order by t2.funIndex  
+  </select>
+  
+</mapper>

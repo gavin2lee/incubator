@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.qualityForm.dao.QualityResultDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.qualityForm.domain.QualityResultDetail" >
+    <id column="SEQ_ID" property="seqId" jdbcType="BIGINT" />
+    <result column="DETAIL_CODE" property="detailCode" jdbcType="VARCHAR" />
+    <result column="RESULT_CODE" property="resultCode" jdbcType="VARCHAR" />
+    <result column="ITEM" property="item" jdbcType="VARCHAR" />
+    <result column="POINTS" property="points" jdbcType="INTEGER" />
+    <result column="STANTARD" property="stantard" jdbcType="VARCHAR" />
+    <result column="COUNT" property="count" jdbcType="INTEGER" />
+    <result column="CAUSE" property="cause" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+    <result column="UPDATE_PERSON" property="updatePerson" jdbcType="VARCHAR" />
+    <result column="DETAIL_ID" property="detailId"/>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from QUALITY_RESULT_DETAIL
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityResultDetail" >
+    insert into QUALITY_RESULT_DETAIL (DETAIL_CODE, RESULT_CODE, 
+      ITEM, POINTS, STANTARD, 
+      COUNT, CAUSE, STATUS, 
+      CREATE_TIME, UPDATE_TIME, CREATE_PERSON, 
+      UPDATE_PERSON, DETAIL_ID)
+    values (#{detailCode,jdbcType=VARCHAR}, #{resultCode,jdbcType=VARCHAR}, 
+      #{item,jdbcType=VARCHAR}, #{points,jdbcType=INTEGER}, #{stantard,jdbcType=VARCHAR}, 
+      #{count,jdbcType=INTEGER}, #{cause,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updatePerson,jdbcType=VARCHAR}, #{detailId})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityResultDetail" >
+    update QUALITY_RESULT_DETAIL
+    set DETAIL_CODE = #{detailCode,jdbcType=VARCHAR},
+      RESULT_CODE = #{resultCode,jdbcType=VARCHAR},
+      ITEM = #{item,jdbcType=VARCHAR},
+      POINTS = #{points,jdbcType=INTEGER},
+      STANTARD = #{stantard,jdbcType=VARCHAR},
+      COUNT = #{count,jdbcType=INTEGER},
+      CAUSE = #{cause,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      DETAIL_ID	= #{detailId}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SEQ_ID, DETAIL_CODE, RESULT_CODE, ITEM, POINTS, STANTARD, COUNT, CAUSE, STATUS, 
+    CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON, DETAIL_ID
+    from QUALITY_RESULT_DETAIL
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SEQ_ID, DETAIL_CODE, RESULT_CODE, ITEM, POINTS, STANTARD, COUNT, CAUSE, STATUS, 
+    CREATE_TIME, UPDATE_TIME, CREATE_PERSON, UPDATE_PERSON, DETAIL_ID
+    from QUALITY_RESULT_DETAIL
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List" >
+    delete from QUALITY_RESULT_DETAIL where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityResultDetail" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into QUALITY_RESULT_DETAIL (DETAIL_CODE, RESULT_CODE, 
+      ITEM, POINTS, STANTARD, 
+      COUNT, CAUSE, STATUS, 
+      CREATE_TIME, UPDATE_TIME, CREATE_PERSON, 
+      UPDATE_PERSON, DETAIL_ID)
+    values (#{detailCode,jdbcType=VARCHAR}, #{resultCode,jdbcType=VARCHAR}, 
+      #{item,jdbcType=VARCHAR}, #{points,jdbcType=INTEGER}, #{stantard,jdbcType=VARCHAR}, 
+      #{count,jdbcType=INTEGER}, #{cause,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updatePerson,jdbcType=VARCHAR}, #{detailId})
+  </insert>
+  <update id="updateForDelete" parameterType="com.lachesis.mnisqm.module.qualityForm.domain.QualityResultDetail" >
+	update QUALITY_RESULT_DETAIL
+	set
+	UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}, 
+    UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+	STATUS = #{status,jdbcType=CHAR}
+	where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnis.board.his.mapper.NurseWhiteBoardHisMapper" >
+	<resultMap type="com.lachesis.mnis.board.dto.NwbRecordItemDto" id="nwbRecordItemDtoMap">
+		<id property="itemId" column="item_id"/>
+		<result property="code" column="code"/>
+		<result property="patId" column="pat_id"/>
+		<result property="patName" column="pat_name"/>
+		<result property="bedCode" column="bed_code"/>
+		<result property="value" column="value"/>
+	</resultMap>
+	<resultMap type="com.lachesis.mnis.board.dto.NwbRecordDto" id="nwbRecordDtoMap">
+		<id property="code" column="code"/>
+		<result property="name" column="name"/>
+		<result property="freq" column="freq"/>
+		<result property="deptCode" column="dept_code"/>
+		<collection property="nwbRecordItemDtos" resultMap="nwbRecordItemDtoMap" />
+	</resultMap>
+
+	<!-- his获取医嘱(1.根据科室和科室对应的code;2.长嘱非停,临嘱当天) -->	
+	<select id="getNurseWhiteBoardsByDeptCode" parameterType="java.util.HashMap" resultMap="nwbRecordMap">
+		select 
+		       o.item_code code,
+		       o.item_name name,
+		       o.nurse_cell_code dept_code,
+		       case
+		         when o.frequency_code is null then
+		          'QD'
+		         else
+		          o.frequency_code
+		       end freq,
+		       o.inpatient_no item_id,
+		       o.inpatient_no pat_id,
+		       p.name pat_name,
+		       substr(p.bed_no, 5, length(p.bed_no)) bed_code
+		
+		  from szhis.met_ipm_order o
+		 inner join szhis.fin_ipr_inmaininfo p on p.inpatient_no = o.inpatient_no
+		                                      and o.mo_date >= p.in_date
+		                                      and p.in_state in ('R', 'I')
+		 where o.nurse_cell_code = #{deptCode}
+		   and o.mo_stat in (0, 1, 2)
+		   and o.decmps_state = 1
+		   <if test="codes != null and codes.size>0">
+				 and o.item_code IN
+				(
+				<foreach collection="codes" item="item" index="index"
+					separator=",">
+					#{item}
+				</foreach>
+				)
+			</if>
+		union all
+		select 
+		       o.item_code code,
+		       o.item_name name,
+		       o.nurse_cell_code dept_code,
+		       case
+		         when o.frequency_code is null then
+		          'QD'
+		         else
+		          o.frequency_code
+		       end freq,
+		       o.inpatient_no item_id,
+		       o.inpatient_no pat_id,
+		       p.name pat_name,
+		       substr(p.bed_no, 5, length(p.bed_no)) bed_code
+		  from szhis.met_ipm_order o
+		 inner join szhis.fin_ipr_inmaininfo p on p.inpatient_no = o.inpatient_no
+		                                      and o.mo_date >= p.in_date
+		                                      and p.in_state in ('R', 'I')
+		 where o.nurse_cell_code = #{deptCode}
+		   and o.mo_stat = 3
+		   and o.decmps_state = 1
+		   <if test="codes != null and codes.size>0">
+				 and o.item_code IN
+				(
+				<foreach collection="codes" item="item" index="index"
+					separator=",">
+					#{item}
+				</foreach>
+				)
+			</if>
+		   and o.dc_date &lt; sysdate
+		union all
+		select o.item_code code,
+		       o.item_name name,
+		       o.nurse_cell_code dept_code,
+		       case
+		         when o.frequency_code is null then
+		          'QD'
+		         else
+		          o.frequency_code
+		       end freq,
+		       o.inpatient_no item_id,
+		       o.inpatient_no pat_id,
+		       p.name pat_name,
+		       substr(p.bed_no, 5, length(p.bed_no)) bed_code
+		  from szhis.met_ipm_order o
+		 inner join szhis.fin_ipr_inmaininfo p on p.inpatient_no = o.inpatient_no
+		                                      and o.mo_date >= p.in_date
+		                                      and p.in_state in ('R', 'I')
+		 where o.nurse_cell_code = #{deptCode}
+		   and o.mo_stat in (0, 1, 2)
+		   and o.decmps_state = 0
+		   <if test="codes != null and codes.size>0">
+				 and o.item_code IN
+				(
+				<foreach collection="codes" item="item" index="index"
+					separator=",">
+					#{item}
+				</foreach>
+				)
+			</if>
+		   and o.mo_date &lt;
+		       to_date(to_char(sysdate + 1, 'yyyy-MM-dd'), 'yyyy-MM-dd')
+		   and o.mo_date >= to_date(to_char(sysdate, 'yyyy-MM-dd'), 'yyyy-MM-dd')
+	
+	</select>
+
+</mapper>

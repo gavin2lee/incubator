@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body>
+<table id="importDg" style="width: 100%;height: 415px;" class="easyui-datagrid" method="GET"
+		url="#url('/doc/nurse/import/data')?cureNo=$!{cureNo}"
+		rownumbers="true" fitColumns="true" singleSelect="false" data-options="">
+    <thead>
+        <tr>
+            <th field="date" width="100" align="center">日期时间</th>
+            <th field="temperature" width="100" align="center">T ℃ X</th>
+            <th field="pulse" width="100" align="center">HR(次/分)</th>
+            <th field="breath" width="100" align="center">R(次/分)</th>
+            <th field="bloodPressure" width="100" align="center">BP(mmHg)</th>
+            <th field="bloodOxygen" width="100" align="center">SpO<sub>2</sub>(%)</th>
+            <th field="userCode" width="100" align="center">工号</th>
+            <th field="userName" width="100" align="center">姓名</th>
+        </tr>
+    </thead>
+</table>
+<div style="height: 40px;text-align: center;padding-top: 5px;">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="save()" style="width:90px">导入</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#importData').dialog('close')" style="width:90px">取消</a>
+</div>
+<script type="text/javascript">
+function save(){
+	$.ajax({
+    	url: '#url("/doc/nurse/import/save")',
+    	type: 'POST',
+    	data: {
+    		cureNo: '$!{cureNo}',
+    		data: JSON.stringify($('#importDg').datagrid('getSelections'))
+    	},
+    	success: function(data, status) {
+        	$('#dg').datagrid('reload').datagrid('unselectAll');
+        	$('#importData').dialog('close');
+    	},
+    	error: function(xhr, status, err) {
+    		$.messager.alert('数据导入', '导入失败', 'error');
+    	}
+    });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>$!{hospitalName}</title>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/bodyTempSheetCommon.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')"/>
+    <script type="text/javascript" src="#url('/resources/js/nur/executionOrder.js?1472534366474')"></script>
+</head>
+
+<script type="text/javascript" language="javascript">
+    contextPath = "#url('')";
+    var menuId = "$!menuId";
+</script>
+<style type="text/css">
+    .top-title .btn-nm {
+        padding: 0px 16px;
+        height: 26px;
+        line-height: 26px;
+    }
+
+    ::-webkit-scrollbar {
+        /*display: none;*/
+        width: 3px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        background-color: #999;
+    }
+
+    .btn-box input {
+        margin: 0 !important;
+    }
+
+    .btn-box {
+        font-size: 14px;
+    }
+
+    .table-wrapper .btn {
+        padding: 3px 6px;
+    }
+
+    .btn.disabled {
+        cursor: not-allowed;
+    }
+
+    .exec-content ul {
+        display: table;
+        width: 100%;
+    }
+
+    .filter-wrapper > div, .show-style{
+        padding: 0 10px;
+        height: 28px!important;
+        line-height: 28px!important;
+        background: #fff;
+        border: 1px #ccc solid;
+        font-size: 12px!important;
+    }
+
+    .show-style {
+        margin-top: 4px;
+        margin-bottom: 4px;
+        font-size: 12px;
+    }
+
+    .filter-wrapper {
+        padding: 6px;
+        background: #EFF2F2;
+        font-size: 12px;
+        border-bottom: 1px #ABBBC1 solid;
+    }
+
+    .exec-wrapper .top-tools-box .top-title {
+        padding: 0 10px;
+        margin: 5px 0 5px 10px;
+        border-right: 1px solid #ccc;
+    }
+
+    .input-middle input[type="radio"],input[type="checkbox"] {
+    	vertical-align:middle;
+    	margin-bottom:4px;
+	}
+    .top-tools-box ._btn {
+        height: 28px;
+        line-height: 28px;
+    }
+</style>
+
+<body id="nurseLayout" class="easyui-layout">
+<div class="wrapper exec-wrapper f_yahei">
+    <div class="insp-top top-tools" style="height:40px">
+        <div class="top-tools-box input-middle">
+            <div class="btn-box fl mgl10">
+                <div class="time-box fl mgr10">
+                    <input id="startDate" type="text" class="easyui-datebox" style="width: 100px;height:24px;"></input>
+                    -
+                    <input id="endDate" type="text" class="easyui-datebox" style="width: 100px;height:24px;"></input>
+                </div>
+            </div>
+            <div class="top-title show-style">
+                <span>样式：</span>
+                <input type="radio" id="show-style__normal" data-style="normal" name="style">
+                <label for="show-style__normal" class="mgr10">普通</label>
+
+                <input type="radio" id="show-style__exec" data-style="exec" name="style" checked="checked">
+                <label for="show-style__exec" class="mgr10">执行单</label>
+
+                <input type="radio" id="show-style__infusion" data-style="infusion" name="style">
+                <label for="show-style__infusion">输液单</label>
+            </div>
+            <div class="top-title show-type show-style">
+            	<input type="radio" id="type__all" data-type="all" checked="checked" name="type">
+            	<label for="type__all" class="mgr10">全部</label>
+
+            	<input type="radio" id="type__cz" data-type="1" name="type">
+            	<label for="type__cz" class="mgr10">长嘱</label>
+
+           		 <input type="radio" id="type__lz" data-type="0" name="type">
+            	<label for="type__lz">临嘱</label>
+        	</div>
+        	<div class="top-title is-printed show-style">
+            	<input type="radio" id="is-printed_all" checked checked="checked" name="isPrt">
+            	<label for="is-printed_all" class="mgr10">全部</label>
+
+            	<input type="radio" id="is-printed_yes" data-type="1" name="isPrt">
+            	<label for="is-printed_yes" class="mgr10">已打印</label>
+
+            	<input type="radio" id="is-printed_no" data-type="0" name="isPrt">
+            	<label for="is-printed_no">未打印</label>
+       		 </div>
+
+            <div class="fl mgl10">
+                <button class="_btn _btn-md" id="refresh">查询</button>
+                <button class="_btn _btn-md" id="print">打印</button>
+            </div>
+        </div>
+    </div>
+    <div class="filter-wrapper clearfix input-middle">
+        <div class="fl mgr10 is-execed">
+            <input type="radio" id="is-execed_all" data-type="0" checked="checked" name="isExeced">
+            <label for="is-execed_all" class="mgr10">全部</label>
+
+            <input type="radio" id="is-execed_yes" data-type="1" name="isExeced">
+            <label for="is-execed_yes" class="mgr10">已执行</label>
+
+            <input type="radio" id="is-execed_no" data-type="2" name="isExeced">
+            <label for="is-execed_no">未执行</label>
+        </div>
+        <div class="fl usage">
+            <span>用法：</span>
+
+            <input type="checkbox" id="usage__all" checked="checked">
+            <label for="usage__all" class="mgr10">全部</label>
+        </div>
+    </div>
+    <div class="content exec-content" style="height:80%;">
+    </div>
+</div>
+
+<div class="print-confirm">
+    <div style="padding: 10px; font-size: 16px;">您打印成功了吗？</div>
+</div>
+
+<div class="remark">
+	<textarea id="remarkText" style="padding:10;width:228px;height:108px;  font-size: 16px;" ></textarea>
+	<input type="hidden" id="remarkBarcode"/>
+</div>
+</body>
+
+</html>

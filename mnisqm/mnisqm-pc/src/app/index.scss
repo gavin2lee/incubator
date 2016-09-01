@@ -1,0 +1,521 @@
+/**
+ *  If you want to override some bootstrap variables, you have to change values here.
+ *  The list of variables are listed here bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss
+ */
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "sass/nqms_variables";
+@import "sass/forms"; // 变量设置
+$navbar-inverse-link-color: #5AADBB;
+$icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
+$panel-border-radius: 0 !default;
+$panel-body-padding: 10px !default;
+$panel-heading-padding: 8px 10px !default; // nav-tabs
+$border-radius-zero: 0 !default;
+$nav-link-padding: 6px 10px !default;
+/**
+ *  Do not remove the comments below. It's the markers used by wiredep to inject
+ *  sass dependencies when defined in the bower.json of your dependencies
+ */
+// bower:scss
+// endbower
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+.thumbnail {
+  height: 200px;
+  img.pull-right {
+    width: 50px;
+  }
+}
+.dropdown-menu {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.175);
+}
+// 弹层样式重置
+.modal-backdrop.in {
+  opacity: 0.3;
+}
+.modal-content {
+  border-radius: 4px 4px 3px 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.31);
+  border: 0;
+}
+.no-padding {
+  padding: 0;
+}
+.toast-top-center {
+  top: 30px;
+}
+.modal-header {
+  padding: 10px;
+  background: $base-color2;
+  color: white;
+  border-radius: 3px 3px 0 0;
+  .close {
+    color: white;
+    :hover {
+      color: rgb(200, 200, 200);
+    }
+  }
+}
+.modal-footer {
+  padding: 10px;
+}
+// 按钮样式重置
+.btn {
+  outline: 0;
+  &:active:focus,
+  &:focus {
+    outline: 0;
+  }
+  // .dropdown & {
+  //   background: #F0F0F0;
+  // }
+}
+.control-label {
+  // text-align-last: justify;
+  color: #888;
+  text-align: right;
+  line-height: 26px;
+  padding-top: 0 !important;
+  padding-left: 0 !important;
+}
+.form-control {
+  &:hover {
+    background: $gray-lighter;
+  }
+  &:focus {
+    background: #fff;
+  }
+}
+.tab-content {
+  padding-top: 10px;
+}
+.table-no-border {
+  td {
+    border: 0!important;
+  }
+}
+.st-sort-ascent:before {
+  margin: 0 6px 0 0;
+  color: $base-color3;
+  content: '\2191';
+}
+.st-sort-descent:before {
+  margin: 0 6px 0 0;
+  content: '\2193';
+  color: $base-color3;
+}
+.btn-group.open .dropdown-toggle {
+  box-shadow: none;
+}
+#toast-container {
+  & > div {
+    // border-radius: 0;
+  }
+  & > :hover {
+    box-shadow: 0 10px 20px transparentize(#000, 0.66);
+  }
+}
+// 日期样式重置
+.uib-datepicker-popup {
+  .btn {
+    border-radius: 0;
+    border: 0;
+  }
+}
+// 滚动条样式重置
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: $side-bg;
+}
+::-webkit-scrollbar-thumb {
+  // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #ccc;
+  border-radius: 3px;
+}
+.accordion-item {
+  &.active {
+    //background: lighten($base-color2, 46%);
+    a {
+      color: $base-color2;
+    }
+  }
+}
+// 样式重置
+html {
+  height: 100%;
+}
+body {
+  font-size: 12px;
+  height: 100%;
+  background-color: #E5E5E5;
+  color: #333;
+  font-family: Helvetica, Arial, sans-serif, "microsoft yahei", "宋体";
+}
+label {
+  font-weight: normal;
+}
+:focus {
+  outline: none;
+}
+a {
+  &:focus {
+    outline: none;
+    text-decoration: none;
+  }
+  &:visited {
+    text-decoration: none;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ng-view-main {
+  height: 100%;
+}
+.list__tile {
+  a {
+    display: block;
+    font-weight: bold;
+    color: $font-color;
+    text-decoration: none;
+    padding: 6px 10px;
+    &.active {
+      //background: lighten($base-color2, 46%);
+      color: $base-color2;
+    }
+  }
+}
+.list-filter {
+  .form-control {
+    border-radius: 0;
+    border: 0;
+    border-bottom: $table-border-color solid 1px;
+    // padding: 4px 12px;
+  }
+}
+.input-date {
+  width: 7em!important;
+}
+.table-wrap {
+  width: 100%;
+  margin-bottom: 10px;
+  //overflow-x: scroll;
+}
+// 信息展示
+.label-group {
+  margin-bottom: 0.6em;
+  .control-label {
+    padding: 0;
+  }
+}
+// tooltip样式覆盖
+.tooltip {
+  line-height: 2;
+}
+.tooltip-arrow {
+  .tooltip.right & {
+    border-right-color: #28323F;
+  }
+  .tooltip.top & {
+    border-top-color: #28323F;
+  }
+  .tooltip.left & {
+    border-left-color: #28323F;
+  }
+  .tooltip.bottom & {
+    border-bottom-color: #28323F;
+  }
+}
+.tooltip-inner {
+  background: #28323F;
+}
+// tooltip样式覆盖
+// well样式重置
+.well {
+  margin-bottom: 10px;
+  border-radius: 0;
+}
+// panel样式重置
+.panel {
+  border-radius: 0;
+  .panel-heading {
+    position: relative;
+    font-size: 14px;
+    border-color: #ddd;
+    .fa {
+      margin-right: 5px;
+    }
+    > .btn {
+      position: absolute;
+      right: 10px;
+      top: (40px - 26px) / 2;
+    }
+    > .pull-right {
+      .btn {
+        position: relative;
+        top: (40px - 26px) / 2 - 10px;
+      }
+    }
+    // padding: 10px 0;
+  }
+}
+.panel-layout {
+  border: 0;
+  .panel-body {
+    padding: 0;
+  }
+}
+.table {
+  margin: 0;
+  td:first-child,
+  th:first-child {
+    border-left: none;
+  }
+  td:last-child,
+  th:last-child {
+    border-right: none;
+  }
+  tbody {
+    tr:last-child {
+      td {
+        border-bottom: none;
+      }
+    }
+  }
+  &.no-border {
+    border: none;
+  }
+}
+.panel-default > .panel-heading {
+  background: #fff;
+  border-radius: 3px 3px 0 0;
+}
+// 表单中去除input样式
+.input-none,
+.input-none.error,
+.input-none:hover,
+.input-none[readonly] {
+  border: none;
+  box-shadow: none;
+  background:none {
+    color: transparent;
+  };
+}
+// // 弹框底部居中
+// .modal-footer {
+//   text-align: center;
+// }
+.f14 {
+  font-size: 14px;
+}
+.ng-leave {
+  display: none;
+}
+.table {
+  tbody,
+  thead {
+    tr {
+      th {
+        text-align: center;
+        font-weight: normal;
+        line-height: 1.7;
+        border-bottom-width: 1px;
+        border-top: none;
+        background-color: #f9f9f9;
+        vertical-align: middle;
+      }
+      td {
+        text-align: center;
+        vertical-align: middle;
+        .btn {
+          // margin: 0 5px;
+        }
+      }
+      &.tr-expand {
+        > td {
+          padding: 15px;
+        }
+      }
+    }
+  }
+  > tbody {
+    + tbody {
+      border-top: 0;
+    }
+  }
+  .index-cell {
+    width: 40px;
+  }
+  .input-tiny {
+    width: 66px;
+  }
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #fff;
+}
+.table-striped > tbody > tr:nth-of-type(even) {
+  background-color: #f9f9f9;
+}
+.checkbox-td {
+  width: 2em;
+  text-align: center;
+}
+// 文本颜色
+.danger-text {
+  color: $danger;
+  &a:hover {
+    color: darken($danger, 10%);
+  }
+}
+.success-text {
+  color: $success;
+  &a:hover {
+    color: darken($success, 10%);
+  }
+}
+.warning-text {
+  color: $warning;
+}
+/**
+ *  Do not remove the comments below. It's the markers used by gulp-inject to inject
+ *  all your sass files automatically
+ */
+// injector
+// endinjector
+.vert-box {
+  display: box;
+  display: -webkit-box;
+  .flex {
+    box-flex: 1;
+    -webkit-box-flex: 1;
+  }
+}
+.btn-theme {
+  color: white;
+  background-color: $base-color2;
+  &:hover {
+    color: white;
+  }
+}
+.toast {
+  width: 400px!important;
+  font-size: 14px;
+  word-break: break-all;
+  box-shadow: 0 10px 20px transparentize(#000, 0.8)!important;
+  &:hover {
+    // box-shadow: 5px 5px 12px #aaa!important;
+  }
+  + .toast {
+    margin-top: 3px !important;
+  }
+}
+.empty-placeholder {
+  > * {
+    line-height: 20;
+  }
+}
+.w5c-error {
+  position: absolute;
+}
+.form-group {
+  @include clearfix();
+  select {
+    width: 100%;
+  }
+}
+.modal-dialog {
+  margin-top: 80px;
+}
+.space-ignore {
+  font-size: 0;
+}
+.wrapper {
+  .dept-list {
+    padding: 0;
+  }
+  .page-nav {
+    font-size: 14px;
+    padding: 0 15px;
+    background-color: #F5F5F5;
+    border-bottom: 1px solid #ddd;
+    li {
+      float: left;
+      a {
+        position: relative;
+        display: block;
+        padding: 18px 15px;
+        color: $gray-base;
+        border: none;
+        &:active,
+        &:focus,
+        &:hover,
+        &:visited {
+          border: none;
+          background-color: #eee;
+        }
+      }
+      &.active {
+        a {
+          color: $base-color2;
+          background-color: transparent;
+          &:active,
+          &:focus,
+          &:hover,
+          &:visited {
+            border: none;
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+  .table {
+    .btn {
+      .fa {
+        margin-right: 5px;
+      }
+    }
+  }
+}
+.padding-content {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.grey-td {
+  background-color: #f9f9f9;
+}
+.select2-container {
+  padding: 0;
+  background-color: white;
+  border: none;
+  .select2-choices {
+    border-radius: $input-border-radius-small;
+    border: 1px solid $input-border;
+    background-image: none;
+  }
+}
+.disappear {
+  opacity: 0;
+}
+.no-padding {
+  padding: 0 !important;
+}
+.form-control2 {
+  width: 100%;
+}
+.echarts-wrap {
+  > div {
+    margin: 0 auto;
+  }
+}

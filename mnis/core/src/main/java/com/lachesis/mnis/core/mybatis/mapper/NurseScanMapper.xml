@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.NurseScanMapper">
+	<insert id="insertNurseScan" parameterType="com.lachesis.mnis.core.scan.entity.NurseScanInfo">
+		insert into nurse_scan(dept_code,nurse_code,nurse_name,pat_id,barcode,
+			scan_date,type,status,error_type,error,is_valid)
+		values(#{deptCode},#{nurseCode},#{nurseName},#{patId},#{barcode},
+			#{scanDate},#{type},#{status},#{errorType},#{error},'1')
+	</insert>
+</mapper>

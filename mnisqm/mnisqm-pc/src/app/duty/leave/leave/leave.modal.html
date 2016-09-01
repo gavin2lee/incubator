@@ -1,0 +1,67 @@
+<div class="mod-pop-dateForm addLeave">
+  <div class="modal-header">
+    <button type="button" ng-click="vm.cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">
+      请假
+    </h5>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal comUser-form w5c-form" role="form" novalidate w5c-form-validate="vm.role.validationOption" name="addleaveForm">
+      <div class="container-fluid">
+        <div class="form-wrapper">
+          <!--<div class="form-group">
+            <label  class="col-sm-2 control-label">姓名</label>
+            <div class="col-sm-6">
+              <span>{{vm.formData.userName}}</span>
+            </div>
+          </div>-->
+          <div class="form-group">
+            <label for="txt" class="col-sm-2 control-label">请假类型</label>
+            <div class="col-sm-10">
+              <select class="form-control input-sm" ng-model="vm.formData.leaveType">
+                <option value="{{item.dicCode}}" ng-repeat="item in dicInfo.leaveType">{{item.dicName}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="txt" class="col-sm-2 control-label">请假原因</label>
+            <div class="col-sm-10">
+              <textarea class="form-control input-sm partial-textarea" id="txt" ng-model="vm.formData.leaveWhy"></textarea>
+            </div>
+          </div>
+            <!-- <div class="form-group">
+                <label for="txt" class="col-sm-2 control-label">请假天数</label>
+                <div class="col-sm-10">
+                    <input class="form-control input-sm "
+                              ng-model="vm.formData.days"/>
+                </div>
+            </div> -->
+          <div class="form-group partial-form-group">
+            <label class="col-sm-2 control-label">请假时间</label>
+            <div class="col-sm-10 leave-time">
+              <input type="text" class="form-control input-sm partial-input partial-input-sm date-pick" uib-datepicker-popup="yyyy-MM-dd" ng-model="vm.formData.startDate" ng-change="vm.startChange()" datepicker-options="vm.startOptions" is-open="popup1" ng-click="popup1 = true" placeholder="年-月-日" required readonly />
+              <!-- <uib-timepicker class="timepick" ng-model="vm.formData.startTime" hour-step="1" minute-step="1" show-meridian="false" template-url="app/common/tpls/timepicker/timepicer.html" show-minutes="false"></uib-timepicker> -->
+              <span class="leave-time-text">到</span>
+              <input type="text" class="form-control input-sm partial-input partial-input-sm date-pick" uib-datepicker-popup="yyyy-MM-dd" ng-model="vm.formData.endDate" ng-change="vm.endChange()" datepicker-options="vm.endOptions" is-open="popup2" ng-click="popup2 = true" placeholder="年-月-日" readonly />
+              <span class="leave-time-text" ng-show="vm.formData.days">{{vm.formData.days}}天</span>
+              <!-- <uib-timepicker class="timepick" ng-model="vm.formData.endTime" hour-step="1" show-meridian="false" template-url="app/common/tpls/timepicker/timepicer.html" show-minutes="false"></uib-timepicker> -->
+            </div>
+          </div>
+          <!-- <div class="form-group partial-form-group">
+            <label class="col-sm-2 control-label">结束时间</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control input-sm partial-input partial-input-sm date-pick" uib-datepicker-popup="yyyy-MM-dd" ng-model="vm.formData.endDate" is-open="popup2" ng-click="popup2 = true" placeholder="年-月-日" readonly />
+              <uib-timepicker class="timepick" ng-model="vm.formData.endTime" hour-step="1" show-meridian="false" template-url="app/common/tpls/timepicker/timepicer.html" show-minutes="false"></uib-timepicker>
+            </div>
+          </div> -->
+          <div class="form-group clearfix">
+            <div class="pull-right">
+              <button class="btn btn-sm btn-success" type="button" w5c-form-submit="vm.ok()">保存</button>
+              <button class="btn btn-sm btn-default" type="button" ng-click="vm.cancel()">取消</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

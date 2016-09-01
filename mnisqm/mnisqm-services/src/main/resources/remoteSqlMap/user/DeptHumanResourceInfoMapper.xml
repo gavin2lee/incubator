@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.user.dao.DeptHumanResourceInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.user.domain.DeptHumanResourceInfo" >
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="BED_SUM" property="bedSum" jdbcType="INTEGER" />
+    <result column="NURSE_SUM" property="nurseSum" jdbcType="INTEGER" />
+    <result column="SUBJECT_NURSE_SUM" property="subjectNurseSum" jdbcType="INTEGER" />
+    <result column="LEADER_NURSE_SUM" property="leaderNurseSum" jdbcType="INTEGER" />
+    <result column="DUTY_NURSE_SUM" property="dutyNurseSum" jdbcType="INTEGER" />
+    <result column="POST_PEARSON_SUM" property="postPearsonSum" jdbcType="INTEGER" />
+    <result column="ON_JOB_NURSE_SUM" property="onJobNurseSum" jdbcType="INTEGER" />
+    <result column="ON_LEAVE_NURSE_SUM" property="onLeaveNurseSum" jdbcType="INTEGER" />
+    <result column="NIGHT_SHIFT_NURSE_SUM" property="nightShiftNurseSum" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="queryDeptHumanResourceInfo" resultMap="BaseResultMap" >
+    select n2.DEPT_NAME, n2.NURSE_SUM, n2.LEADER_NURSE_SUM, n2.DUTY_NURSE_SUM,
+    	n2.POST_PEARSON_SUM, n1.ON_JOB_NURSE_SUM, n1.ON_LEAVE_NURSE_SUM
+    from
+    (select  sdc.DEPT_CODE DEPT_NAME, 
+		sum(1) ON_JOB_NURSE_SUM,
+		sum(case when sl.APPROVE_USER is not null and #{dateTime} >= sl.START_TIME and sl.END_TIME > #{dateTime} then 1 else 0 end) ON_LEAVE_NURSE_SUM
+	from YIHUI.numas.dbo.SCHEDULE_RECORD_DETAIL srd left join YIHUI.numas.dbo.SCHEDULE_DEPT_CLASS sdc on sdc.CLASS_CODE = srd.CLASS_CODE
+		left join YIHUI.numas.dbo.SCHEDULE_LEAVE sl on srd.USER_CODE = sl.USER_CODE
+	where  #{dateTime} >= sdc.START_TIME 
+		and sdc.END_TIME > #{dateTime}
+		group by sdc.DEPT_CODE) as n1,
+	(select  vcu.DEPT_CODE DEPT_NAME, 
+		sum(1) NURSE_SUM,
+		sum(case when cup.POSITION_NAME = '护理组长' then 1 else 0 end) LEADER_NURSE_SUM,
+		sum(case when cup.POSITION_NAME = '责任护士' then 1 else 0 end) DUTY_NURSE_SUM,
+		sum(case when vcu.NATURE = '岗位培训生' then 1 else 0 end) POST_PEARSON_SUM,
+		sum(case when vcu.accessNightShift = 'Y' then 1 else 0 end) NIGHT_SHIFT_NURSE_SUM
+	from YIHUI.numas.dbo.v_COM_USER vcu left join YIHUI.numas.dbo.COM_USER_POSITION cup 
+		on vcu.user_code = cup.USER_CODE
+		group by vcu.DEPT_CODE) as n2
+	where n2.DEPT_NAME = n1.DEPT_NAME
+
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select * from DEPT_PATIENT_INFO
+  </select>
+</mapper>

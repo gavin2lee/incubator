@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.user.dao.ComDeptMapperExt" >
+  <resultMap id="simpleComDept" type="com.lachesis.mnisqm.module.user.domain.SimpleComDept" extends="com.lachesis.mnisqm.module.user.dao.ComDeptMapper.BaseResultMap" >
+          <!--<collection property="subDepts" column="CODE" select="selectSubDepts"/>-->
+  </resultMap>
+
+  <select id="selectSubDeptsByCode" parameterType="java.util.Map" resultMap="simpleComDept">
+    SELECT *
+    from COM_DEPT
+    WHERE FATHER_DEPT = #{deptCode}
+    AND STATUS != '09'
+    AND DEPT_CODE != '0002'
+    <if test="sysData != null">
+    	AND STATUS !='08'
+    </if>
+  </select>
+
+  <select id="selectDeptWithSubDepts" parameterType="String" resultMap="simpleComDept">
+    SELECT *
+    from COM_DEPT
+    WHERE FATHER_DEPT = #{deptCode}
+    AND STATUS != '0'
+  </select>
+  <select id="selectSubDepts" parameterType="string" resultMap="simpleComDept">
+    SELECT  *
+    FROM COM_DEPT
+    WHERE FATHER_DEPT = #{deptCode}
+    AND STATUS != '0'
+  </select>
+  
+  <!-- 数据查询，通过部门编号查询部门 -->
+  <select id="selectDeptByCode" parameterType="java.lang.String" resultMap="simpleComDept">
+    SELECT SEQ_ID, DEPT_CODE, DEPT_NAME, STATUS, FATHER_DEPT, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON
+    FROM COM_DEPT
+    where DEPT_CODE = #{deptCode}
+  </select>
+</mapper>

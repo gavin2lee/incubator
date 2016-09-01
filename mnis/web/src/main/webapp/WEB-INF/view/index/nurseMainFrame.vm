@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>$!{hospitalName}</title>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/patientGlance.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/nurseMainFrame.css')"/>
+    <script type="text/javascript" src="#url('/resources/js/main/nurseMainFrame.js?1472534366474')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/common.js?1472534366474')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/jsPlugin.js?1472534366474')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/main/main.js?1472534366474')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/map.js?1472534366474')"></script>
+    <script type="text/javascript" src="#url('/resources/js/d3.min.js?1472534366474')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/nur/previewTempSheet.js?1472534366474')"></script>
+</head>
+
+<script type="text/javascript" language="javascript">
+    contextPath = "#url('')";
+    var menuId = "$!menuId";
+</script>
+<style type="text/css">
+    div.layout-panel {
+        overflow: visible;
+    }
+
+    div div.panel-body {
+        overflow: visible;
+    }
+
+    .three li {
+        list-style: none;
+        overflow: hidden;
+    }
+
+    .smsg {
+        width: 345px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .backBedList {
+        margin: 3px 0 0 4em;
+        width: 64%;
+        line-height: 250%;
+    }
+</style>
+
+<body id="nurseLayout" class="easyui-layout">
+<div data-options="region:'north',href:''" style="border:none;">
+#parse("nur/header.vm")
+    <div id="header" class="header" style="height:70px;display:none;">
+        <input type="hidden" id="patientId" value="$!id"/>
+        <input type="hidden" id="deptName" value="$!deptName"/>
+        <input type="hidden" id="deptCode" value="$!deptCode"/>
+        <input type="hidden" id="userName" value="$!user.user.name"/>
+        <input type="hidden" id="userCode" value="$!user.userId"/>
+        <input type="hidden" id="nurseCode" value="$!user.userId"/>
+
+        <div class="top">
+            #parse("/nur/headerTop.vm")
+        </div>
+        <div class="bottom">
+            <div class="center">
+                <div class="coverBlock"></div>
+                <div class="hosTitle f_yahei">
+                    $!{hospitalName}
+                </div>
+                #parse("nur/menu.vm")
+            </div>
+        </div>
+    </div>
+</div>
+<div id="menuDiv">
+</div>
+<div data-options="region:'west',href:''"
+     style="position:relative;width: 200px;padding-bottom:40px;background-color:#eff2f2;">
+    <div id="menuHeadDiv" style="text-align: center;"></div>
+    <ul id="mainMenu" style="height:100%;padding-left:5px;padding-top:5px;overflow-y:auto;">
+    </ul>
+    <!--  <div class="msgPrompt hide" id="msgPrompt">
+             <div class="clearfix one">
+                 <span class="fl bg noticeMsg click" id="noticeMsg">通知</span><span class="fl bg taskList" id="taskList">提醒</span>
+                 <span class="fr close" id="close">
+                     <span class="border-left"></span>
+                     <span class="close-icon"></span>
+                 </span>
+             </div>
+             <div class="msgcontent" id="content1">
+                 <div class="two">
+                     <div style="display:inline-block;">
+                     <span class="bg arrow_l chooseDateBtn"></span>
+
+                     <input id="noticeMsgDate" name="startDate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})" readonly="readonly" style="width: 70px;margin-top:0px;height:18px;vertical-align:top;">
+                     <span class="bg arrow_r chooseDateBtn"></span>
+                     </div>
+
+                 </div>
+                 <div class="three" id="showMessage">
+                     <ul>
+                         <li class="clearfix"><span class="fl time">11:29</span><span class="fl">李科长：注意安全</span><span class="fr marginRight">全科消息</span></li>
+                         <li><span class="fl time">11:29</span><span class="fl">李科长：注意安全</span><span class="fr marginRight">全科消息</span></li>
+                     </ul>
+                 </div>
+             </div>
+             <div class="hide msgcontent" id="content2">
+                 <div class="two">
+                     <span class="bg arrow_l chooseDateBtn"></span>
+
+                     <input id="taskListDate" value="2014-09-28" name="startDate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})" readonly="readonly" style="width: 70px;margin-top:0px;height:18px;vertical-align:top;">
+                     <span class="bg arrow_r chooseDateBtn"></span>
+
+                 </div>
+                 <div class="three">
+                     <ul>
+                         <li class="clearfix"><span class="fl time">11:29</span><span class="fl">李科长：注意安全</span><span class="fr marginRight">全科消息</span></li>
+                     </ul>
+                 </div>
+             </div>
+     </div> -->
+</div>
+<div data-options="region:'center'" style="overflow: hidden;width:100%;">
+    <div id="mainTabs" style="height:100%;">
+        <div data-options="iconCls:'ext-icon-heart'" style="height:100%">
+            <iframe id="nurMainFrame" src="" allowTransparency="true" style="border: 0; width: 100%; height: 100%;"
+                    frameBorder="0" scrolling="no"></iframe>
+        </div>
+    </div>
+</div>
+<div data-options="region:'south',href:'',border:false" style="display:none;height: 30px; overflow: hidden;"></div>
+
+<div style="display:none" id="showTempSheet" data-options="" title="体温单查看">
+    <div id="showtempSheetPanel">
+        <div id="showTempSheetBtn">
+            <div style="margin-left:10px;">
+                <input class="_btn _btn-md" id="prevBtn" type="button" value="<" onclick="prevWeekSheetPdf()">
+                <input type="text" id="currentWeek" value="1"
+                       style="border:none;background:#e0e4e8;width:40px;margin:0;text-align: center;"/>
+                <input class="_btn _btn-md" id="nextBtn" type="button" value=">" onclick="nextWeekSheetPdf()">
+                 <select id="patList"  name="patList" style="width:120px;height:25px">    
+				</select> 
+                <input class="_btn _btn-md" id="printSheet" type="button" value="打印当前页" onclick="printPage()">
+                <input id="selectTempDate" type="hidden" ">
+                <input id="selectTempPatId" type="hidden"">
+            </div>
+        </div>
+        <div id="showPanel"></div>
+    </div>
+</div>
+<iframe height="1000" width="970" id="printFrame" style="position:absolute;display: none;left: 200px; top: 60px;"></iframe>
+<script type="text/javascript" src="#url('/resources/js/nur/msgBox.js?1472534366474')" charset="utf-8"></script>
+<script>
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<script>
+    var deptList = '$!user.deptList';
+    var isHeaderVisible = '$!viewHead';
+
+    console.log(deptList);
+
+    //数据重置按钮，如果配置为1，那么重置
+    function resetData() {
+        config = $.parseJSON(localStorage.getItem("config")) || null;
+        var isTestVesion = null;
+        if (null != config) {
+            isTestVesion = config.data.system.isTestVesion;
+        }
+        if ('1' == isTestVesion) {
+            $.get(ay.contextPath + '/nur/system/resetExecData.do').done(function(res) {
+                $.messager.alert('提示', res.msg);
+            });
+        }
+    }
+
+    $(function () {
+        var wHeight = $(window).height();
+
+        if (isHeaderVisible == '0') {
+            isHistoryDoc = true;
+            $('#header').hide();
+            $('.layout-panel-north').addClass('hide-header');
+            $('.layout-panel-west').addClass('tree-noheader');
+            $('.layout-panel-center').addClass('center-noheader');
+
+            $('.toolsBtnAndInfo .back-to-bedlist').hide();
+            $('body').data('isHistory', true);
+
+            $('#mainFrame, #fixcenterheight').css({
+                'height': wHeight - $('.toolsBtnAndInfo').height() + 'px!important;'
+            });
+        }
+    })
+</script>
+<div class="clearfix center">
+    <span class="fl bg"></span>
+    <span class="color font date">$!today</span><span id="deptName" class="font">$!deptName，</span>
+    <input type="hidden" id="deptId" value="$!user.deptCode" />
+    <input type="hidden" id="nurseId" value="$!user.userId" />
+    <div class="font account">
+        <em id="nurseName">$!user.user.name</em> ## <em>$!user.deptList</em> &nbsp; &nbsp;
+        <a href="javascript:void(0);" id="changeKs"><i></i>切换科室</a> &nbsp; &nbsp;
+        <a href="/mnis/index/login"><i></i>切换账户</a>
+    </div>
+    <img id="logo" src="#url('/resources/img/logo.png')" class="fr" alt="LACHESIS联新设备管理" onclick="resetData()" />
+</div>
+
+
+<div style="display:none;" id="change-ks" data-options="">
+    <div style="padding-left:20px;">
+        <div class="dlg-panel">
+            <p>
+                <span>科室</span>
+                <select name="" id="deptListWrapper">
+                </select>
+            </p>
+            <p>
+                <input type="checkbox" name="isDefaultDept" id="isDefaultDept">
+                <label for="isDefaultDept">默认科室</label>
+            </p>
+            <input type="hidden" id="deptId" value="$!deptCode" />
+            <input type="hidden" id="nurseId" value="$!user.userId" />
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#changeKs').on('click', function(e) {
+        $.get(ay.contextPath + '/deptAction/getDeptmentsByNurseCode.do?nurseCode=' + $('#nurseId').val()).done(function(res) {
+            var str = '';
+            var currentDept = localStorage.getItem('deptCode');
+
+            if (res) {
+                $.each(res, function(i, v) {
+                    if (v['code'] === currentDept) {
+                        str += '<option selected value="' + v['code'] + '">' + v['name'] + '</option>'
+                    } else {
+                        str += '<option value="' + v['code'] + '">' + v['name'] + '</option>'
+                    }
+                });
+
+                $('#deptListWrapper').html(str);
+            }
+        })
+    })
+</script>

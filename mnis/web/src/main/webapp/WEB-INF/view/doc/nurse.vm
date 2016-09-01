@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.fitem {
+	display:inline-block;
+ 	padding: 2px 0px;
+}
+.gap {
+	display:inline-block;
+	width: 10px;
+}
+fieldset {
+	display:inline-block;
+	border: #95B8E7 thin solid;
+}
+.data1 {
+	width: 40px;
+}
+.data2 {
+	width: 80px;
+}
+.data3 {
+	width: 702px;
+}
+textarea.datagrid-editable-input, td[field="record"] {
+	word-break: break-all;
+}
+</style>
+<title>护理记录单</title>
+</head>
+<body class="doc">
+#docToolbar()
+<div class="doc-container">
+#nurse()
+<div class="doc-content">
+    <div id="tb">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+<!--         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">保存</a> -->
+<!-- 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="edit()">编辑</a> -->
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">还原</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-back',plain:true" onclick="importData()">导入</a>
+    </div>
+    <table id="dg" style="height: 400px;width: 100%;" class="easyui-datagrid" data-options="
+    	nowrap: false,
+		singleSelect: true,
+		autoRowHeight: true,
+		fitColumns: true,
+		toolbar: '#tb',
+		showFooter: true,
+		onClickRow: onClickRow,
+		onBeginEdit: onBeginEdit,
+		onLoadSuccess: function(data) {
+		},
+		url: '#url("/doc/nurse/datas")',
+		queryParams: {
+			cureNo: '$!{patient.cureNo}'
+		},
+		method: 'get',
+		idField: 'id'">
+	    <thead>
+	        <tr>
+	            <th rowspan="2" data-options="field:'date',
+					align:'center',
+					resizable: false,
+					width:60,
+					formatter: function(value,row,index){
+						if (!value) {
+							return '';
+						}
+						if (index == 0) {
+	    					return value;
+						}
+						return formatDate(value, false, $('#dg').datagrid('getRows')[index-1]['date']);
+	    			},
+					editor: {
+						type: 'datetimebox',
+						options: {
+							showSeconds: false,
+							editable: false,
+							validType:{
+								length:[0,16]
+							}
+						}
+					}">日期时间</th>
+	            <th rowspan="2" data-options="width:30,field:'temperature',align:'center',resizable: false,editor:{type:'textbox',options:{validType:{length:[0,5]}}}">T<br>℃<br>X</th>
+	            <th rowspan="2" data-options="width:25,field:'pulse',align:'center',resizable: false,editor:{type:'textbox',options:{validType:{length:[0,5]}}}">P<br>次/分</th>
+	            <th rowspan="2" data-options="width:25,field:'breath',align:'center',resizable: false,editor:{type:'textbox',options:{validType:{length:[0,5]}}}">R<br>次/分</th>
+	            <th rowspan="2" data-options="width:50,field:'bloodPressure',align:'center',resizable: false,editor:{type:'bloodPressure',options:{validType:{length:[0,5]}}}">BP<br>(S/D)<br>mmHg</th>
+	            <th rowspan="2" data-options="width:25,field:'bloodOxygen',align:'center',resizable: false,editor:{type:'textbox',options:{validType:{length:[0,5]}}}">SpO<sub>2</sub><br>%</th>
+	            <th rowspan="2" data-options="width:20,field:'awareness',align:'center',resizable: false,editor:'text'">意识</th>
+	        	<th colspan="4">瞳孔</th>
+	            <th rowspan="2" data-options="width:20,field:'oxygenWay',align:'center',resizable: false,editor:'text'">给氧方式</th>
+	            <th rowspan="2" data-options="width:30,field:'oxygenFlow',align:'center',resizable: false,editor:{type:'textbox',options:{validType:{length:[0,5]}}}">氧流量<br>L/min</th>
+	        	<th colspan="2">气道</th>
+	            <th rowspan="2" data-options="width:20,field:'skin',align:'center',resizable: false,editor:'text'">皮肤情况</th>
+	        	<th colspan="6">导管护理</th>
+	            <th rowspan="2" data-options="width:200,field:'record',halign:'center',align:'left',resizable: false,editor:'textarea'">病情、治疗及护理记录</th>
+	            <th rowspan="2" data-options="width:50,field:'sign',align:'center',resizable: false">签名</th>
+	        </tr>
+	        <tr>
+	            <th data-options="width:30,field:'pupilSizeLeft',align:'center',resizable: false,editor:{type:'textbox',options:{validType:{length:[0,5]}}}">左侧大小<br>mm</th>
+	            <th data-options="width:20,field:'pupilLightLeft',align:'center',resizable: false,editor:'text'">左侧对光</th>
+	            <th data-options="width:30,field:'pupilSizeRight',align:'center',resizable: false,editor:{type:'textbox',options:{validType:{length:[0,5]}}}">右侧大小<br>mm</th>
+	            <th data-options="width:20,field:'pupilLightRight',align:'center',resizable: false,editor:'text'">右侧对光</th>
+	            <th data-options="width:20,field:'sputum',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">吸痰</th>
+	            <th data-options="width:20,field:'quale',align:'center',resizable: false,editor:'text'">性状</th>
+	            <th data-options="width:20,field:'pipe1',align:'center',resizable: false,editor:'text'"><span class="doc-header-hold"><input id="hold1" type="text" value="$!{doc.hold1}"></span></th>
+	            <th data-options="width:20,field:'pipe2',align:'center',resizable: false,editor:'text'"><span class="doc-header-hold"><input id="hold2" type="text" value="$!{doc.hold2}"></span></th>
+	            <th data-options="width:20,field:'pipe3',align:'center',resizable: false,editor:'text'"><span class="doc-header-hold"><input id="hold3" type="text" value="$!{doc.hold3}"></span></th>
+	            <th data-options="width:20,field:'pipe4',align:'center',resizable: false,editor:'text'"><span class="doc-header-hold"><input id="hold4" type="text" value="$!{doc.hold4}"></span></th>
+	            <th data-options="width:20,field:'pipe5',align:'center',resizable: false,editor:'text'"><span class="doc-header-hold"><input id="hold5" type="text" value="$!{doc.hold5}"></span></th>
+	            <th data-options="width:25,field:'urine',align:'center',resizable: false,editor:{type:'textbox',options:{validType:{length:[0,5]}}}">尿量<br>ml</th>
+	        </tr>
+	    </thead>
+	</table>
+</div>
+#nurseComment()
+</div>
+<div id="holdSelect" class="easyui-menu">
+	<div id="①">深静脉留置</div>
+	<div id="②">胃管</div>
+	<div id="③">导尿管</div>
+	<div id="④">止痛泵</div>
+	<div id="⑤">T管</div>
+	<div id="⑥">负压引流</div>
+	<div id="⑦">气插 </div>
+	<div id="⑧">气切</div>
+	<div id="⑨">胸管</div>
+</div>
+<div id="awareSelect" class="easyui-menu">
+	<div id="①">清楚</div>
+	<div id="②">嗜睡</div>
+	<div id="③">昏睡</div>
+	<div id="④">朦胧</div>
+	<div id="⑤">浅昏迷</div>
+	<div id="⑥">中昏迷</div>
+	<div id="⑦">深昏迷 </div>
+	<div id="⑧">模糊</div>
+</div>
+<div id="lightSelect" class="easyui-menu">
+	<div id="↑">灵敏</div>
+	<div id="↓">迟钝</div>
+	<div id="0">消失</div>
+</div>
+<div id="oxygenSelect" class="easyui-menu">
+	<div id="①">鼻氧管</div>
+	<div id="②">面罩</div>
+	<div id="③">无创</div>
+	<div id="④">有创</div>
+</div>
+<div id="qualeSelect" class="easyui-menu">
+	<div id="①">白粘痰</div>
+	<div id="②">黄脓痰</div>
+	<div id="③">血性痰</div>
+</div>
+<div id="skinSelect" class="easyui-menu">
+	<div id="①">完整</div>
+	<div id="②">擦伤</div>
+	<div id="③">皮疹</div>
+	<div id="④">压疮 </div>
+</div>
+<div id="pipeSelect" class="easyui-menu">
+	<div id="√">已完成并在位通畅</div>
+	<div id="×">不通畅予以通管</div>
+	<div id="○">不通畅予以更换</div>
+</div>
+<!-- pop up -->
+<div id="dlg" class="easyui-dialog" style="width:800px;height:500px;padding:10px;"
+        closed="true" buttons="#dlg-buttons">
+    <form id="fm" method="post" novalidate>
+    	<input type="hidden" name="id">
+        <div class="fitem">
+            <label>日期时间:</label>
+            <input name="date" class="easyui-datetimebox" data-options="editable: false,showSeconds: false">
+        </div>
+        <span class="gap"></span>
+        <div class="fitem">
+            <label>T ℃ X:</label>
+            <input name="temperature" type="text" class="data1">
+        </div>
+        <span class="gap"></span>
+        <div class="fitem">
+            <label>P 次/分:</label>
+            <input name="pulse" type="text" class="data1">
+        </div>
+        <span class="gap"></span>
+        <div class="fitem">
+            <label>R 次/分:</label>
+            <input name="breath" type="text" class="data1">
+        </div>
+        <span class="gap"></span>
+        <div class="fitem">
+            <label>BP (S/D) mmHg:</label>
+            <input name="bloodPressure" type="text" class="data2" value="/">
+        </div>
+        <span class="gap"></span>
+        <div class="fitem">
+            <label>SpO<sub>2</sub> %:</label>
+            <input name="bloodOxygen" type="text" class="data1">
+        </div>
+        <span class="gap"></span>
+        <div class="fitem">
+            <label>意识:</label>
+            <input name="awareness" type="text" class="data1">
+        </div>
+        <span class="gap"></span>
+        <div class="fitem">
+            <label>给氧方式:</label>
+            <input name="oxygenWay" type="text" class="data1">
+        </div>
+        <span class="gap"></span>
+        <div class="fitem">
+            <label>氧流量 L/min:</label>
+            <input name="oxygenFlow" type="text" class="data1">
+        </div>
+        <span class="gap"></span>
+        <div class="fitem">
+            <label>皮肤情况:</label>
+            <input name="skin" type="text" class="data1">
+        </div>
+        <span class="gap"></span>
+        <div class="fitem">
+            <label>签名:</label>
+            <input name="sign" type="text" class="data2">
+        </div>
+        <fieldset>
+        	<legend>瞳孔</legend>
+	        <div class="fitem">
+	            <label>左侧大小 mm:</label>
+	            <input name="pupilSizeLeft" type="text" class="data1">
+	        </div>
+	        <span class="gap"></span>
+	        <div class="fitem">
+	            <label>左侧对光:</label>
+	            <input name="pupilLightLeft" type="text" class="data1">
+	        </div>
+	        <span class="gap"></span>
+	        <div class="fitem">
+	            <label>右侧大小 mm:</label>
+	            <input name="pupilSizeRight" type="text" class="data1">
+	        </div>
+	        <span class="gap"></span>
+	        <div class="fitem">
+	            <label>右侧对光:</label>
+	            <input name="pupilLightRight" type="text" class="data1">
+	        </div>
+        </fieldset>
+        <fieldset>
+        	<legend>气道</legend>
+	        <div class="fitem">
+	            <label>吸痰:</label>
+	            <input name="sputum" type="checkbox" value="√">
+	        </div>
+	        <span class="gap"></span>
+	        <div class="fitem">
+	            <label>性状:</label>
+	            <input name="quale" type="text" class="data1">
+	        </div>
+        </fieldset>
+        <fieldset>
+        	<legend>导管护理</legend>
+	        <div class="fitem">
+	            <label><input name="hold1" type="text" value="$!{doc.hold1}">:</label>
+	            <input name="pipe1" type="text" class="data1">
+	        </div>
+	        <span class="gap"></span>
+	        <div class="fitem">
+	            <label><input name="hold2" type="text" value="$!{doc.hold2}">:</label>
+	            <input name="pipe2" type="text" class="data1">
+	        </div>
+	        <span class="gap"></span>
+	        <div class="fitem">
+	            <label><input name="hold3" type="text" value="$!{doc.hold3}">:</label>
+	            <input name="pipe3" type="text" class="data1">
+	        </div>
+	        <span class="gap"></span>
+	        <div class="fitem">
+	            <label><input name="hold4" type="text" value="$!{doc.hold4}">:</label>
+	            <input name="pipe4" type="text" class="data1">
+	        </div>
+	        <span class="gap"></span>
+	        <div class="fitem">
+	            <label><input name="hold5" type="text" value="$!{doc.hold5}">:</label>
+	            <input name="pipe5" type="text" class="data1">
+	        </div>
+	        <span class="gap"></span>
+	        <div class="fitem">
+	            <label>尿量 ml:</label>
+	            <input name="urine" type="text" type="text" class="data1">
+	        </div>
+        </fieldset>
+        <fieldset>
+        	<legend>病情、治疗及护理记录</legend>
+	        <textarea name="record" style="width: 736px; min-height: 100px;"></textarea>
+        </fieldset>
+        <fieldset>
+        	<legend>其他</legend>
+	        <div class="fitem">
+	            <label>诊断:</label>
+	            <input name="diagnosis" type="text" class="data3" style="text-align: left;">
+	        </div>
+        </fieldset>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="ok()" style="width:90px">确定</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+<div id="win"></div>
+<div id="importData"></div>
+<script type="text/javascript">
+function formatter(row) {
+	var opts = $(this).combobox('options');
+	return row[opts.valueField];
+}
+function onBeginEdit(index,row) {
+	$('textarea.datagrid-editable-input').autosize({
+		append: '',
+		callback: function() {
+			$('#dg').datagrid('resize');
+		}
+	});
+	$('td[field="awareness"] input').click(function() {
+		var hold = this;
+		$('#awareSelect').menu({
+		    onClick:function(item){
+		        $(hold).val(item.id);
+		    }
+		});
+		$('#awareSelect').menu('show', {
+		    left: $(hold).offset().left,
+		    top: $(hold).offset().top + $(hold).outerHeight()
+		});
+	});
+	$('td[field="pupilLightLeft"] input').click(function() {
+		var hold = this;
+		$('#lightSelect').menu({
+		    onClick:function(item){
+		        $(hold).val(item.id);
+		    }
+		});
+		$('#lightSelect').menu('show', {
+		    left: $(hold).offset().left,
+		    top: $(hold).offset().top + $(hold).outerHeight()
+		});
+	});
+	$('td[field="pupilLightRight"] input').click(function() {
+		var hold = this;
+		$('#lightSelect').menu({
+		    onClick:function(item){
+		        $(hold).val(item.id);
+		    }
+		});
+		$('#lightSelect').menu('show', {
+		    left: $(hold).offset().left,
+		    top: $(hold).offset().top + $(hold).outerHeight()
+		});
+	});
+	$('td[field="oxygenWay"] input').click(function() {
+		var hold = this;
+		$('#oxygenSelect').menu({
+		    onClick:function(item){
+		        $(hold).val(item.id);
+		    }
+		});
+		$('#oxygenSelect').menu('show', {
+		    left: $(hold).offset().left,
+		    top: $(hold).offset().top + $(hold).outerHeight()
+		});
+	});
+	$('td[field="quale"] input').click(function() {
+		var hold = this;
+		$('#qualeSelect').menu({
+		    onClick:function(item){
+		        $(hold).val(item.id);
+		    }
+		});
+		$('#qualeSelect').menu('show', {
+		    left: $(hold).offset().left,
+		    top: $(hold).offset().top + $(hold).outerHeight()
+		});
+	});
+	$('td[field="skin"] input').click(function() {
+		var hold = this;
+		$('#skinSelect').menu({
+		    onClick:function(item){
+		        $(hold).val(item.id);
+		    }
+		});
+		$('#skinSelect').menu('show', {
+		    left: $(hold).offset().left,
+		    top: $(hold).offset().top + $(hold).outerHeight()
+		});
+	});
+	$('td[field="pipe1"] input.datagrid-editable-input').click(function() {
+		var hold = this;
+		$('#pipeSelect').menu({
+		    onClick:function(item){
+		        $(hold).val(item.id);
+		    }
+		});
+		$('#pipeSelect').menu('show', {
+		    left: $(hold).offset().left,
+		    top: $(hold).offset().top + $(hold).outerHeight()
+		});
+	});
+	$('td[field="pipe2"] input.datagrid-editable-input').click(function() {
+		var hold = this;
+		$('#pipeSelect').menu({
+		    onClick:function(item){
+		        $(hold).val(item.id);
+		    }
+		});
+		$('#pipeSelect').menu('show', {
+		    left: $(hold).offset().left,
+		    top: $(hold).offset().top + $(hold).outerHeight()
+		});
+	});
+	$('td[field="pipe3"] input.datagrid-editable-input').click(function() {
+		var hold = this;
+		$('#pipeSelect').menu({
+		    onClick:function(item){
+		        $(hold).val(item.id);
+		    }
+		});
+		$('#pipeSelect').menu('show', {
+		    left: $(hold).offset().left,
+		    top: $(hold).offset().top + $(hold).outerHeight()
+		});
+	});
+	$('td[field="pipe4"] input.datagrid-editable-input').click(function() {
+		var hold = this;
+		$('#pipeSelect').menu({
+		    onClick:function(item){
+		        $(hold).val(item.id);
+		    }
+		});
+		$('#pipeSelect').menu('show', {
+		    left: $(hold).offset().left,
+		    top: $(hold).offset().top + $(hold).outerHeight()
+		});
+	});
+	$('td[field="pipe5"] input.datagrid-editable-input').click(function() {
+		var hold = this;
+		$('#pipeSelect').menu({
+		    onClick:function(item){
+		        $(hold).val(item.id);
+		    }
+		});
+		$('#pipeSelect').menu('show', {
+		    left: $(hold).offset().left,
+		    top: $(hold).offset().top + $(hold).outerHeight()
+		});
+	});
+	// 回车模拟Tab
+	enterSimulateTab($("td :input:visible"));
+	textarea($('td textarea'));
+}
+var editIndex = undefined;
+function endEditing(index) {
+	if (editIndex == undefined) {
+		return true;
+	}
+	if ($("#dg").datagrid('validateRow', editIndex)) {
+		$("#dg").datagrid('endEdit', editIndex);
+		editIndex = undefined;
+		return true;
+	} else {
+		return false;
+	}
+}
+function onClickRow(index){
+    if (editIndex != index){
+        if (endEditing()) {
+        	// 本人,护理组长和护士长能修改
+        	var rows = $('#dg').datagrid('getRows');
+        	if ('$!{currentUser.code}' == rows[index]['userCode']
+        			|| 1 == $!{currentUser.purview}
+        			|| 2 == $!{currentUser.purview}) {
+	            $('#dg').datagrid('selectRow', index)
+	                    .datagrid('beginEdit', index);
+	            editIndex = index;
+        	}
+        } else {
+            $('#dg').datagrid('selectRow', editIndex);
+        }
+    }
+}
+function append(){
+    if (endEditing()){
+        $('#dg').datagrid('appendRow',{
+        	date: datetimeToString(new Date()),
+        	sign: '$!{currentUser.name}$!{currentUser.code}',
+        	userCode: '$!{currentUser.code}',
+        	deptCode: '$!{currentUser.deptCode}',
+        	deptName: '$!{currentUser.deptName}'
+        });
+        editIndex = $('#dg').datagrid('getRows').length-1;
+        $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+    }
+}
+function removeit() {
+    var row = $('#dg').datagrid('getSelected');
+    if (!row){return}
+    var index = $('#dg').datagrid('getRowIndex', row);
+    if (index == undefined){return}
+    if ('$!{currentUser.code}' == row['userCode']) {
+	    $('#dg').datagrid('cancelEdit', index)
+	            .datagrid('deleteRow', index);
+	    editIndex = undefined;
+    } else {
+    	$.messager.alert('数据删除', '只有本人才允许删除', 'info');
+    }
+}
+function edit() {
+    var row = $('#dg').datagrid('getSelected');
+    if (row) {
+        $('#dlg').dialog('open').dialog('setTitle','编辑');
+//         $('#fm').form('load',row);
+    }
+}
+
+var url;
+function ok(){
+    $('#fm').form('submit',{
+        url: url,
+        onSubmit: function(){
+            return $(this).form('validate');
+        },
+        success: function(result){
+            var result = eval('('+result+')');
+            if (result.errorMsg){
+                $.messager.show({
+                    title: 'Error',
+                    msg: result.errorMsg
+                });
+            } else {
+                $('#dlg').dialog('close');        // close the dialog
+                $('#dg').datagrid('reload');    // reload the user data
+            }
+        }
+    });
+}
+
+function accept(){
+    if (endEditing()){
+    	var editable = '$!{doc.editable}' || true;
+    	if (editable) {
+	        $.ajax({
+	        	url: '#url("/doc/nurse")',
+	        	type: 'POST',
+	        	data: {
+	        		cureNo: '$!{patient.cureNo}',
+	        		hospitalNo: '$!{patient.hospitalNo}',
+	        		// TODO: 点击才编辑,点击其他地方则以文本显示,类似于行编辑
+	        		hold1: $('#hold1').val(),
+	        		hold2: $('#hold2').val(),
+	        		hold3: $('#hold3').val(),
+	        		hold4: $('#hold4').val(),
+	        		hold5: $('#hold5').val(),
+	        		hold6: $('#hold6').val(),
+	        		hold7: $('#hold7').val(),
+	        		hold8: $('#hold8').val(),
+	        		hold9: $('#hold9').val(),
+	        		inserted: JSON.stringify($('#dg').datagrid('getChanges', 'inserted')),
+	        		updated: JSON.stringify($('#dg').datagrid('getChanges', 'updated')),
+	        		deleted: JSON.stringify($('#dg').datagrid('getChanges', 'deleted'))
+	        	},
+	        	success: function(data, status) {
+	        		if (data && data.code) {
+	        			if ('1' == data.code) {
+				        	$('#dg').datagrid('acceptChanges').datagrid('reload').datagrid('unselectAll');
+		        		} else {
+			        		$.messager.alert('数据保存', data.message || '保存失败', 'error');
+	        			}
+	        		}
+	        	},
+	        	error: function(xhr, status, err) {
+	        		$.messager.alert('数据保存', '保存失败', 'error');
+	        	}
+	        });
+    	} else {
+    		$.messager.alert('数据保存', '不允许修改', 'error');
+    	}
+    }
+}
+function reject(){
+    $('#dg').datagrid('rejectChanges').datagrid('unselectAll');
+    editIndex = undefined;
+}
+function importData() {
+	$('#importData').dialog({
+		title: '从体温单导入数据',
+	    width: 700,
+	    height: 500,
+	    minimizable: false,
+		href: '#url("/doc/nurse/import")?cureNo=$!{patient.cureNo}',
+		onClose: function() {
+			
+		}
+	});
+}
+// 导管补充项
+function pipeMenu(id, text) {
+	var $item = $('#holdSelect #' + id);
+	if (text) {
+		if ($item.length == 0) {
+			$('#holdSelect').menu('appendItem', {
+				id: id,
+				text: text
+			});
+		} else {
+			var item = $('#holdSelect').menu('getItem', $item);
+			$('#holdSelect').menu('setText', {
+				target: item.target,
+				text: text
+			});
+		}
+	} else {
+		if ($item.length != 0) {
+			$('#holdSelect').menu('removeItem', $item).menu('resize', $('#holdSelect'));
+		}
+	}
+}
+// initialize page when loaded
+$(function() {
+	#[[
+	$('.doc-header-hold input').click(function() {
+		var hold = this;
+		$('#holdSelect').menu({
+		    onClick:function(item){
+		        $(hold).val(item.id);
+		    }
+		});
+		$('#holdSelect').menu('show', {
+// 			alignTo: hold // 当页面空间不足时，菜单不会覆盖alignTo元素，导致下面的菜单显示不了
+		    left: $(hold).offset().left,
+		    top: $(hold).offset().top + $(hold).outerHeight()
+		});
+	});
+	$('#hold6').change(function() {
+		pipeMenu('⑩', $(this).val());
+	});
+	$('#hold6').trigger('change');
+	$('#hold7').change(function() {
+		pipeMenu('⑾', $(this).val());
+	});
+	$('#hold7').trigger('change');
+	]]#
+	$('#save').click(accept);
+	$('#approve').click(function() {});
+	$('#print').val('预  览').click(function() {
+		var params = [
+			'location=no',
+			'height='+screen.availHeight,
+			'width='+screen.availWidth,
+			'scrollbars=yes',
+			'resizable=yes',
+			'fullscreen=yes' // only works in IE, but here for completeness
+		].join(',');
+		var new_window = window.open('#url("/doc/nurse/view?cureNo=$!{patient.cureNo}")', '', params);
+		new_window.resizeTo(screen.availWidth, screen.availHeight);
+	});
+	// 回车模拟Tab
+	enterSimulateTab($(":input"));
+	textarea($('textarea'));
+	$('#diagnosisLabel').click(function() {
+		$('#win').window({
+			title: '诊断修正列表',
+		    width: 700,
+		    height: 500,
+		    minimizable: false,
+			href: '#url("/doc/diagnosis")?cureNo=$!{patient.cureNo}',
+			onClose: function() {
+				var rows = $('#dDg').datagrid('getRows');
+				if (rows && rows.length > 0) {
+					$('#pDiagnosis').text(rows[rows.length - 1]['diagnosis']);
+				} else {
+					$('#pDiagnosis').text('$!{patient.diagnose}');
+				}
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

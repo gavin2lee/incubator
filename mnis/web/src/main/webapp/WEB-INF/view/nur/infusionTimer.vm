@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>输液监护</title>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/patientGlance.css')"/>
+    <link rel="stylesheet" type="text/css" href="#url('/resources/css/transfusionMonitor.css')"/>
+    <script type="text/javascript" src="#url('/resources/js/main/main.js?1472534366476')" charset="utf-8"></script>
+    <style type="text/css">
+        .layout-panel-north, .layout-panel-south {
+            z-index: 30;
+        }
+
+        div div.panel-body {
+            overflow: visible;
+        }
+    </style>
+</head>
+
+<body id="shftBookLayout">
+<input type="hidden" id="shiftRecordId" value="">
+
+<div data-options="region:'north'" style="height: 70px;">
+##公共头部 start
+    #parse("nur/header.vm")
+##公共头部 end
+</div>
+<!-- <div data-options="region:'east',href:'',border:false" style="width:200px;overflow: hidden;">
+        <div style="width:100%;height:100%;background-color:#eff2f2;"></div>
+</div> -->
+<div class="wrapper-body">
+    <div id="patCrisValueLayout" data-options="region:'center',fit:true" style="border:none;">
+        <div data-options="region:'north'" style="height: 39px; overflow: hidden;border-bottom:none;">
+            <div class="top-tools">
+                <div class="top-tools-box">
+                    <div class="btn-box fr mgr10">
+                        <div class="tool-widget">
+                            <div class="search-widget-1">
+                                <input id="searchKey" placeholder="请输入床号" data-bind-aaa="name">
+                                <button id="searchBtn"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-options="region:'center'" style="overflow: hidden;">
+            <div class="monitor-window">
+                <div class="monitor-wrap">
+                    <ul class="monitor-list scrollbar-style-1" id="monitorList">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script id="monitorItem" type="text/x-handlebars-template">
+            {{#data}}
+            <li class="monitor-item" data-mac="{{btAddress}}" data-monitor-index="{{@index}}" data-bed="{{bed}}"
+                data-inhospno="{{patId}}">
+                <div>
+                    <div class="top">
+                        <div class="pIcon {{pIcon}}"></div>
+                        <div class="infusion-bottle {{status}}">
+                            <div class="panel-msg">
+                                <div class="transfusion-msg">
+                                    <div class="tran-msg">
+                                        <div class="liquid"><span
+                                                data-bind-{{@index}}="liquid">{{liquid}}</span><span>ml</span></div>
+                                        <div class="time" data-bind-{{@index}}="time">{{time}}分</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tranStatus" class="tranStatus {{tranLow}}" style="{{tranStatus}}"></div>
+                            <div class="bottle"></div>
+                        </div>
+                        <div class="percent" data-bind-{{@index}}="percent">{{percent}}</div>
+                    </div>
+                    <div class="bottom">
+                        <div class="bedNo">{{bed}}床</div>
+                        <div class="pName">{{name}}</div>
+                        <div class="index" data-bind-{{@index}}="index">{{index}}</div>
+                    </div>
+                </div>
+            </li>
+            {{/data}}
+        </script>
+    </div>
+</div>
+<script type="text/javascript" src="#url('/resources/js/handlebars-v3.0.3.js?1472534366476')"></script>
+<script type="text/javascript" src="#url('/resources/js/nur/transfusionMonitor.js?1472534366476')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/nur/infusion-item.js?1472534366476')" charset="utf-8"></script>
+</body>
+</html>

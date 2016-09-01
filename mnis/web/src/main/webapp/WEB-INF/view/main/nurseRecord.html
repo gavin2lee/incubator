@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>护理记录单 - 联新</title>
+<link href="css/public.css" rel="stylesheet" type="text/css" />
+<link href="css/header.css" rel="stylesheet" type="text/css" />
+<link href="css/enter_keshi.css" rel="stylesheet" type="text/css" />
+<link href="css/inspect_device.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/main.js"></script>
+</head>
+
+<body>
+	<!-- 页眉 -->
+    <div class="bg_header">
+        <div class="clearfix center">
+            <img class="logo" alt="**人民医院" />
+            <div class="color account">
+            	<div id="user"><em>张三丰</em><span></span></div>
+                <p class="p hide">
+                	<a href="javascript:void(0)" class="color" id="changeAccount">切换账户</a>
+                    <a href="javascript:void(0)" class="color" id="quit">退出登录</a>
+                    <a href="javascript:void(0)" class="color" id="modifyPsd">修改密码</a>
+                </p>
+            </div>
+            <ul class="clearfix fr nav" id="header">
+            	<li class="nav_li"><a href="patientGlance.html" class="color">主页</a></li>
+                <li class="nav_li"><a href="javascript:void(0);" class="color a">床号</a></li>
+                <li class="nav_li"><a href="javascript:void(0)" class="color a">姓名</a></li>
+                <li class="nav_li"><a href="javascript:void(0)" class="color a">住院号</a></li>
+                <li class="nav_li"><a href="javascript:void(0)" class="color a">性别</a></li>
+                <li class="nav_li"><a href="javascript:void(0)" class="color a">年龄</a></li>
+                <li class="nav_li"><a href="javascript:void(0)" class="color a">入院诊断</a></li>
+                <li class="nav_li"><a href="javascript:void(0)" class="color a">入院日期</a></li>
+                <li class="nav_li"><a href="javascript:void(0)" class="color a">护理等级</a></li>
+                <li class="nav_li"><a href="javascript:void(0)" class="color a">饮食</a></li>
+                <li class="nav_li"><a href="javascript:void(0)" class="color a">高危评估</a></li>
+                <li class="nav_li functionList"><a href="javascript:void(0)" class="color a">药物过敏</a></li>
+            </ul>
+        </div> 
+	</div>
+    
+    <!-- 打印-打印全部 -->
+    <div class="clearfix bg_keshi option same4" id="keshi_history">
+    	<div class="clearfix center f_yahei">
+            <a href="javascript:void(0)" class="fr history">打印全部</a>
+            <a href="javascript:void(0)" class="fr history">续打</a>
+            <a href="javascript:void(0)" class="fr history">打印</a>
+    	</div>
+	</div>
+
+    <!-- 设备编号-搜索 -->
+    <div class="clearfix bg_keshi option hide" id="deviceNum">
+    	<div class="clearfix center f_yahei">
+            <form class="fl">
+               <input type="text" class="f_yahei text textGet user marginRight" value="设备编号" /><span class="arrow2 user marginLeft"></span>
+               <p class="color p pMenu p2 p3 hide">
+                   <em>1</em>
+                   <em>2</em>
+                   <em>3</em>
+                   <em>4</em>
+               </p>
+               <input type="text" class="text2" />
+               <input type="submit" value="" class="search" />
+            </form> 
+    	</div>
+	</div>
+    
+    <!-- 主要内容 -->
+    <div class="center f_yahei table">
+    	<!-- 默认 -->
+		<div class="clearfix default same4" id="default">
+        	<div class="fl left">
+                <dl>
+                	<dt>医嘱</dt>
+                	<dd>医嘱单</dd>
+                    <dd>医嘱执行单</dd>
+                </dl>
+                <dl>
+                	<dt>临床报告</dt>
+                	<dd>检验报告</dd>
+                    <dd>检查报告</dd>
+                    <dd>危急值</dd>
+                </dl>
+                <dl>
+                	<dt>生命体征</dt>
+                	<dd>体温单</dd>
+                    <dd>血糖监测单</dd>
+                    <dd>血压监测单</dd>
+                    <dd>心电监测单</dd>
+                    <dd>出入量记录单</dd>
+                </dl>
+                <dl>
+                	<dt>护理记录</dt>
+                	<dd>一般护理记录单</dd>
+                    <dd>危重护理记录单</dd>
+                </dl>
+                <dl>
+                	<dt>护理评估</dt>
+                	<dd>入院评估</dd>
+                    <dd>
+                    	<dl>
+                    		<dt>风险评估</dt>
+                            <dd>跌倒坠床评估</dd>
+                            <dd>导管滑脱评估</dd>
+                            <dd>自理能力评估</dd>
+                    	</dl>
+                	</dd>
+                </dl>
+                <dl>
+                	<dt>护理项目</dt>
+                </dl>
+                <dl>
+                	<dt>护理计划</dt>
+                </dl>
+                <dl>
+                	<dt>健康宣教</dt>
+                </dl>
+                <dl>
+                	<dt>护理单据</dt>
+                    <dd>配液单</dd>
+                    <dd>手术执行单</dd>
+                    <dd>输液巡视单</dd>
+                    <dd>病房巡视单</dd>  
+                </dl>
+                <dl>
+                	<dt>患者视图</dt>
+                </dl>
+            </div>
+            <table class="fl">
+            	<caption>护理记录单</caption>
+                <tr><th>日期</th><th>意识</th><th>体温</th><th>脉搏</th><th>呼吸</th><th>血压</th><th>血氧</th><th>吸氧</th><th>入量</th><th>出量</th><th>皮肤情况</th><th>管路护理</th><th>其他</th><th>病情观察及措施</th><th>护士签名</th></tr>
+                <tr><td>2014-06-09</td><td>123</td><td>30。C</td><td>次/分</td><td>次/分</td><td>mmHg</td><td>%</td><td>123</td><td>12</td><td>12</td><td>12</td><td>12</td></tr>
+                <tr><td>2014-06-09</td><td>123</td><td>30。C</td><td>次/分</td><td>次/分</td><td>mmHg</td><td>%</td><td>123</td><td>12</td><td>12</td><td>12</td><td>12</td></tr>
+                <tr><td>2014-06-09</td><td>123</td><td>30。C</td><td>次/分</td><td>次/分</td><td>mmHg</td><td>%</td><td>123</td><td>12</td><td>12</td><td>12</td><td>12</td></tr>
+                <tr><td>2014-06-09</td><td>123</td><td>30。C</td><td>次/分</td><td>次/分</td><td>mmHg</td><td>%</td><td>123</td><td>12</td><td>12</td><td>12</td><td>12</td></tr>
+                <tr><td>2014-06-09</td><td>123</td><td>30。C</td><td>次/分</td><td>次/分</td><td>mmHg</td><td>%</td><td>123</td><td>12</td><td>12</td><td>12</td><td>12</td></tr>
+            </table>
+            <div class="fl deleteModify">
+            	<input type="button" value="删除" /><input type="button" value="修改" />
+                <input type="button" value="删除" /><input type="button" value="修改" />
+                <input type="button" value="删除" /><input type="button" value="修改" />
+                <input type="button" value="删除" /><input type="button" value="修改" />
+                <input type="button" value="删除" /><input type="button" value="修改" />
+            </div>
+            <div class="fl recordWrite">
+            	<select>
+                	<option>样式1</option>
+                    <option>样式2</option>
+                    <option>样式3</option>
+                </select>
+                <input type="button" value="设置样式" /><br />
+                <span>日期</span><select><option>2014-06-09</option><option>2014-06-10</option></select><span>时间</span><input type="text" />
+                <span>意识</span><select><option>清醒</option><option>意识模糊</option><option>昏睡</option></select><br />
+                <span>体温</span><input type="text" /><select><option>腋温</option><option>意识模糊</option><option>昏睡</option></select><br />
+                <span>脉搏</span><input type="text" /><br />
+                <span>呼吸</span><input type="text" /><select><option>自主</option><option>意识模糊</option><option>昏睡</option></select><br />
+                <span>血压</span><input type="text" /><select><option>上肢</option><option>意识模糊</option><option>昏睡</option></select><br />
+                <span>血氧饱和度</span><input type="text" /><br />
+                <span>吸氧</span><input type="text" /><select><option>鼻导</option><option>意识模糊</option><option>昏睡</option></select><br />
+                <span>入量</span><select><option>鼻导</option><option>意识模糊</option><option>昏睡</option></select><input type="text" /><br />
+                <span>出量</span><select><option>大便</option><option>意识模糊</option><option>昏睡</option></select><input type="text" /><br />
+                <select><option>颜色</option><option>意识模糊</option><option>昏睡</option></select><select><option>性状</option><option>意识模糊</option><option>昏睡</option></select><br />
+                <span>皮肤情况</span><select><option>鼻导</option><option>意识模糊</option><option>昏睡</option></select><br />
+                <span>管理护理</span><select><option>鼻导</option><option>意识模糊</option><option>昏睡</option></select><br />
+                <span>其他1</span><input type="text" /><br />
+                <span>其他2</span><input type="text" /><br />
+                <span>病情观察及措施</span><br />
+                <textarea></textarea><br />
+                <input type="button" value="模板" /><input type="button" value="医嘱" /><input type="button" value="检验报告" /><input type="button" value="检查报告" /><br />
+                <input type="button" value="风险评估" /><input type="button" value="护理计划" /><input type="button" value="健康宣教" /><input type="button" value="护理项目" /><br />
+                <input type="button" value="保存" /><input type="button" value="清除" />
+            </div>
+    	</div>
+       
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.DocumentsMapper">
+	<resultMap id="documentDrugItemResultMap" type="DocumentDrugItem">
+		<id property="orderItemId" column="lx_order_item_id" />
+		<result property="orderId" column="lx_order_id" />
+		<result property="drugId" column="lx_drug_id" />
+		<result property="drugName" column="lx_drug_name" />
+		<result property="drugDosage" column="lx_drug_dosage" />
+		<result property="drugFreq" column="lx_drug_freq" />
+		<result property="drugUnit" column="lx_drug_unit" />
+		<result property="drugUsage" column="lx_drug_usage" />
+	</resultMap>
+
+	<resultMap id="liquorDocumentResultMap" type="DocumentInfo">
+		<id property="execOrderId" column="lx_exec_order_id" />
+
+		<result property="orderId" column="lx_order_id" />
+		<result property="patientId" column="lx_patient_id" />
+		<result property="bedNo" column="lx_bed_no" />
+		<result property="patientName" column="lx_patient_name" />
+
+		<result property="createName" column="lx_create_name" />
+		<result property="createTime" column="lx_create_time" />
+
+		<result property="prepareName" column="lx_prepare_nurse_name" />
+		<result property="prepareTime" column="lx_prepare_time" />
+
+		<result property="liquorName" column="lx_liquor_nurse_name" />
+		<result property="liquorTime" column="lx_liquor_time" />
+
+		<result property="execName" column="lx_exec_nurse_name" />
+		<result property="execTime" column="lx_exec_time" />
+
+		<collection property="drugItems" resultMap="documentDrugItemResultMap" />
+	</resultMap>
+
+	<resultMap id="persralDocumentResultMap" type="DocumentInfo">
+		<id property="execOrderId" column="lx_exec_order_id" />
+
+		<result property="orderId" column="lx_order_id" />
+		<result property="patientId" column="lx_patient_id" />
+		<result property="bedNo" column="lx_bed_no" />
+		<result property="patientName" column="lx_patient_name" />
+
+		<result property="createName" column="lx_create_name" />
+		<result property="createTime" column="lx_create_time" />
+
+		<result property="execName" column="lx_exec_nurse_name" />
+		<result property="execTime" column="lx_exec_time" />
+
+		<collection property="drugItems" resultMap="documentDrugItemResultMap" />
+	</resultMap>
+
+	<sql id="documentSql">
+		g.order_bar as lx_order_id
+		,g.PAT_ID as lx_patient_id
+		,g.IN_HOSP_NO as lx_patient_id
+		,p.NAME as lx_patient_name
+		,p.BED_CODE as lx_bed_no
+		
+		,i.ORDER_GROUP_ID + '*' + CAST(i.ORDER_SUB_NO as varchar) as lx_order_item_id
+		,i.ITEM_CODE as lx_drug_id
+		,i.ITEM_NAME as lx_drug_name
+		,i.usage_name as lx_drug_usage
+		,i.DOSAGE as lx_drug_dosage
+		,i.DOSAGE_UNIT as lx_drug_unit
+		,g.FREQ_CODE as lx_drug_freq
+		
+		,g.CREATE_DATETIME as lx_create_time
+		,g.CREATE_DOC_NAME as lx_create_name
+		
+		,e.id as lx_exec_order_id
+		,e.EXEC_USER_NAME as lx_exec_nurse_name
+		,e.EXEC_DATE as lx_exec_time
+		
+		FROM PAT_ORDER_GROUP g
+		inner join PAT_ORDER_ITEM i on g.PAT_ID=i.PAT_ID and g.ORDER_NO=i.ORDER_NO and g.PERFORM_NO=i.PERFORM_NO 
+		inner join PAT_CURE_INFO p on p.pat_id = g.pat_id AND p.BED_CODE is not null and p.OUT_DATE is null
+		left join PAT_ORDER_EXEC e on g.order_bar = e.barcode
+	</sql>
+	
+	<sql id="liquorSql">
+		liq.prepare_nurse_name as lx_prepare_nurse_name,
+		liq.prepare_time as lx_prepare_time,
+		liq.exec_nurse_name as lx_liquor_nurse_name,
+		liq.exec_time as lx_liquor_time,
+		liq.verify_nurse_name as lx_verify_nurse_name,
+		liq.verify_time as lx_verify_time
+	</sql>
+
+	<!-- 输液单 -->
+	<select id="selectLiquorDocument" resultMap="liquorDocumentResultMap">
+	    select
+	    	<include refid="liquorSql"/>
+			,<include refid="documentSql" />
+			
+			left join NURSE_LIQUOR liq on liq.order_group_id = e.order_group_id
+			WHERE
+				g.PAT_ID=#{param1}
+			AND
+				e.PAT_ID=#{param1}
+			AND
+				e.EXEC_USER_CODE IS NOT NULL
+			AND
+				e.EXEC_TYPE = 'INFUSION'
+		    AND 
+		    	e.EXEC_DATE BETWEEN #{param2} AND #{param3}
+		    order by e.EXEC_DATE DESC
+	    
+	</select>
+
+	<!-- 口服单 -->
+	<select id="selectPersralDocument" resultMap="persralDocumentResultMap">
+	  select
+			<include refid="documentSql" />
+			WHERE
+				g.PAT_ID=#{param2}
+			<if test="param1 != null and param1.size() > 0">
+				and i.order_sub_no not  in (
+				<foreach collection="param1" item="orderSubNo" index="index"
+						 separator=",">
+					#{orderSubNo}
+				</foreach>
+				)
+			</if>
+			AND
+				e.EXEC_USER_CODE IS NOT NULL
+			AND
+				e.EXEC_TYPE = 'ORAL'
+		    AND 
+		    	e.EXEC_DATE BETWEEN #{param3} AND #{param4}
+		    order by e.EXEC_DATE DESC
+	</select>
+	
+	<select id="selectDrugBagDocument" resultMap="persralDocumentResultMap">
+		select 
+				dg.barcode lx_order_id,
+				p.pat_id lx_patient_id,
+				p.bed_code lx_bed_no,
+				dg.n_bag_no lx_order_id,
+				dg.DT_TAKEDATE lx_create_time,
+			    
+			    dg.n_order_no lx_order_item_id,
+			    dg.drugcd AS lx_drug_id ,
+		        dg.drugnm AS lx_drug_name ,
+		        '口服' AS lx_drug_usage ,
+		        dg.D_DISPENSEDOSE AS lx_drug_dosage ,
+		        dg.UNITNM_D_D AS lx_drug_unit ,
+				
+				pe.barcode lx_exec_order_id,
+				pe.exec_date lx_exec_time,
+				pe.exec_user_name lx_exec_nurse_name
+				
+			from PAT_DRUGBAGRECLIST dg
+		         INNER JOIN PAT_CURE_INFO p ON p.pat_id = dg.PAT_ID
+		         LEFT JOIN PAT_ORDER_EXEC pe ON dg.BARCODE = pe.barcode
+		         
+			WHERE
+				p.PAT_ID=#{param1}
+			AND
+				pe.EXEC_USER_CODE IS NOT NULL
+			AND
+				pe.EXEC_TYPE = 'ORAL'
+		    AND 
+		    	pe.EXEC_DATE BETWEEN #{param2} AND #{param3}
+		    order by pe.EXEC_DATE DESC
+	</select>
+	
+	
+</mapper>

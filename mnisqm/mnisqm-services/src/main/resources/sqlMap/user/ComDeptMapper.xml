@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lachesis.mnisqm.module.user.dao.ComDeptMapper">
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.user.domain.ComDept">
+    <id column="SEQ_ID" jdbcType="BIGINT" property="seqId" />
+    <result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+    <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+    <result column="STATUS" jdbcType="CHAR" property="status" />
+    <result column="FATHER_DEPT" jdbcType="VARCHAR" property="fatherDept" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_PERSON" jdbcType="VARCHAR" property="createPerson" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_PERSON" jdbcType="VARCHAR" property="updatePerson" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from COM_DEPT
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.user.domain.ComDept">
+    insert into COM_DEPT (DEPT_CODE, DEPT_NAME, 
+      STATUS, FATHER_DEPT, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON, DEPT_NURSE_HEADER 
+      )
+    values (#{deptCode,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{fatherDept,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}, #{deptNurseHeader}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.lachesis.mnisqm.module.user.domain.ComDept">
+    update COM_DEPT
+    set DEPT_CODE = #{deptCode,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      FATHER_DEPT = #{fatherDept,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      DEPT_NURSE_HEADER = #{deptNurseHeader}
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select SEQ_ID, DEPT_CODE, DEPT_NAME, STATUS, FATHER_DEPT, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON, DEPT_NURSE_HEADER
+    from COM_DEPT
+    where SEQ_ID = #{seqId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select SEQ_ID, DEPT_CODE, DEPT_NAME, STATUS, FATHER_DEPT, CREATE_TIME, CREATE_PERSON, 
+    UPDATE_TIME, UPDATE_PERSON, DEPT_NURSE_HEADER
+    from COM_DEPT
+  </select>
+  <delete id="removeKeysWithSession" parameterType="java.util.List">
+    delete from COM_DEPT where id IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+  </delete>
+  <insert id="insertAndReturnKey" keyProperty="id" parameterType="com.lachesis.mnisqm.module.user.domain.ComDept" useGeneratedKeys="true">
+    insert into COM_DEPT (DEPT_CODE, DEPT_NAME, 
+      STATUS, FATHER_DEPT, CREATE_TIME, 
+      CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON
+      )
+    values (#{deptCode,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{fatherDept,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <select id="selectAllDeptCode" resultType="String">
+    select DEPT_CODE
+    from COM_DEPT
+    where STATUS = '01'
+  </select>
+  
+  <!-- 查询离职科室 -->
+  <select id="selectLeaveDept" resultType="ComDept" parameterType="ComDept">
+    select DEPT_CODE	as deptCode,
+    DEPT_NAME			as deptName,
+    FATHER_DEPT			as fatherDept    
+    from COM_DEPT
+    where 
+    DEPT_CODE = #{deptCode} 
+    AND FATHER_DEPT = #{fatherDept}
+  </select>
+  
+  
+  <!-- 查询职称统计数据 -->
+  <select id="selectTechnicalPostCount" resultType="com.lachesis.mnisqm.module.user.domain.Statistics" parameterType="ComDept">
+    SELECT 
+		case when s.DIC_NAME IS null then '未定级'
+		when s.DIC_NAME IS not null then s.DIC_NAME
+		end sticType,
+		COUNT(1) sitcValue FROM COM_USER u
+		inner join COM_DEPT_USER d on u.USER_CODE=d.USER_CODE
+		left join SYS_DIC s on u.TECHNICAL_POST = s.DIC_CODE and DIC_TYPE='technicalPost'
+		where u.STATUS!='09' and d.STATUS!='09'
+		<if test="deptCode != null and deptCode!=''">
+			and d.DEPT_CODE=#{deptCode}
+		</if>
+	group by s.DIC_NAME
+  </select>
+  
+  <!-- 查询职务统计数据 -->
+  <select id="selectPositionCount" resultType="com.lachesis.mnisqm.module.user.domain.Statistics" parameterType="ComDept">
+    SELECT 
+		case when s.DIC_NAME IS null then '未定级'
+		when s.DIC_NAME IS not null then s.DIC_NAME
+		end sticType,
+		COUNT(1) sitcValue FROM COM_USER u
+		inner join COM_DEPT_USER d on u.USER_CODE=d.USER_CODE
+		left join SYS_DIC s on u.duty = s.DIC_CODE and DIC_TYPE='position'
+		where u.STATUS!='09' and d.STATUS!='09'
+		<if test="deptCode != null and deptCode!=''">
+			and d.DEPT_CODE=#{deptCode}
+		</if>
+	group by s.DIC_NAME
+  </select>
+  
+  <!-- 查询临床层级统计数据 -->
+  <select id="selectClinicalCount" resultType="com.lachesis.mnisqm.module.user.domain.Statistics" parameterType="ComDept">
+    SELECT 
+		case when s.DIC_NAME IS null then '未定级'
+		when s.DIC_NAME IS not null then s.DIC_NAME
+		end sticType,
+		COUNT(1) sitcValue FROM COM_USER u
+		inner join COM_DEPT_USER d on u.USER_CODE=d.USER_CODE
+		left join SYS_DIC s on u.clinical = s.DIC_CODE and DIC_TYPE='clinical'
+		where u.STATUS!='09' and d.STATUS!='09'
+		<if test="deptCode != null and deptCode!=''">
+			and d.DEPT_CODE=#{deptCode}
+		</if>
+	group by s.DIC_NAME
+  </select>
+  
+  <!-- 查询带教级别统计数据 -->
+  <select id="selectTeachingCount" resultType="com.lachesis.mnisqm.module.user.domain.Statistics" parameterType="ComDept">
+    SELECT 
+		case when s.DIC_NAME IS null then '未定级'
+		when s.DIC_NAME IS not null then s.DIC_NAME
+		end sticType,
+		COUNT(1) sitcValue FROM COM_USER u
+		inner join COM_DEPT_USER d on u.USER_CODE=d.USER_CODE
+		left join SYS_DIC s on u.TEACH_LEVEL = s.DIC_CODE and DIC_TYPE='teaching'
+		where  u.STATUS!='09' and d.STATUS!='09'
+		<if test="deptCode != null and deptCode!=''">
+			and d.DEPT_CODE=#{deptCode}
+		</if>
+	group by s.DIC_NAME
+  </select>
+  <!-- 查询学历统计数据 -->
+  <select id="selectEducation" resultType="com.lachesis.mnisqm.module.user.domain.Statistics" parameterType="ComDept">
+    SELECT 
+		case when s.DIC_NAME IS null then '无学历'
+		when s.DIC_NAME IS not null then s.DIC_NAME
+		end sticType,
+		COUNT(1) sitcValue FROM COM_USER u
+		inner join COM_DEPT_USER d on u.USER_CODE=d.USER_CODE
+		left join SYS_DIC s on u.H_EDUCATION = s.DIC_CODE and DIC_TYPE='education'
+		where  u.STATUS!='09' and d.STATUS!='09'
+		<if test="deptCode != null and deptCode!=''">
+			and d.DEPT_CODE=#{deptCode}
+		</if>
+	group by s.DIC_NAME
+  </select>
+  <!-- 查询性别统计数据 -->
+  <select id="selectGender" resultType="com.lachesis.mnisqm.module.user.domain.Statistics" parameterType="ComDept">
+    SELECT 
+		case when s.DIC_NAME IS null then '无性别'
+		when s.DIC_NAME IS not null then s.DIC_NAME
+		end sticType,
+		COUNT(1) sitcValue FROM COM_USER u
+		inner join COM_DEPT_USER d on u.USER_CODE=d.USER_CODE
+		left join SYS_DIC s on u.GENDER = s.DIC_CODE and DIC_TYPE='gender'
+		where  u.STATUS!='09' and d.STATUS!='09'
+		<if test="deptCode != null and deptCode!=''">
+			and d.DEPT_CODE=#{deptCode}
+		</if>
+	group by s.DIC_NAME
+  </select>
+  
+  <!-- 查询性别统计数据 -->
+  <select id="selectUserType" resultType="com.lachesis.mnisqm.module.user.domain.Statistics" parameterType="ComDept">
+    SELECT 
+		case when s.DIC_NAME IS null then '未定义'
+		when s.DIC_NAME IS not null then s.DIC_NAME
+		end sticType,
+		COUNT(1) sitcValue FROM COM_USER u
+		inner join COM_DEPT_USER d on u.USER_CODE=d.USER_CODE
+		left join SYS_DIC s on u.USER_TYPE = s.DIC_CODE and DIC_TYPE='nature'
+		where  u.STATUS!='09' and d.STATUS!='09'
+		<if test="deptCode != null and deptCode!=''">
+			and d.DEPT_CODE=#{deptCode}
+		</if>
+	group by s.DIC_NAME
+  </select>
+  
+  <!-- 保存护士长 -->
+  <update id="saveDeptNurseHeader" parameterType="ComDept">
+  	update COM_DEPT
+  	set DEPT_NURSE_HEADER = #{deptNurseHeader},
+  	UPDATE_TIME = GETDATE(),
+    UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR}
+  	where DEPT_CODE=#{deptCode}
+  </update>
+  
+  <select id="getByDeptCode" resultType="String">
+    select *
+    from COM_DEPT
+    where DEPT_CODE = #{deptCode}
+    and STATUS = '01'
+  </select>
+  
+  <update id="updateByDeptCode" parameterType="com.lachesis.mnisqm.module.user.domain.ComDept">
+    update COM_DEPT
+    set DEPT_CODE = #{deptCode,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      FATHER_DEPT = #{fatherDept,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      DEPT_NURSE_HEADER = #{deptNurseHeader}
+    where DEPT_CODE = #{deptCode,jdbcType=BIGINT}
+  </update>
+</mapper>

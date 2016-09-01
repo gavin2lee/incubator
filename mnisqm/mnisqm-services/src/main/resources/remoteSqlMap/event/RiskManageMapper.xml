@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.event.dao.RiskManageMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.event.domain.RiskManage" >
+    <result column="ADVERSE_EVENT" property="adverseEvent" jdbcType="VARCHAR" />
+    <result column="WEEKS" property="weeks" jdbcType="VARCHAR" />
+    <result column="MONTH" property="month" jdbcType="VARCHAR" />
+    <result column="YEAR" property="year" jdbcType="VARCHAR" />
+    <result column="PRESSURE_SORES" property="pressureSores" jdbcType="VARCHAR" />
+    <result column="FALL_DOWN" property="fallDown" jdbcType="VARCHAR" />
+    <result column="PIPE_SLIP" property="pipeSlip" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lachesis.mnisqm.module.event.domain.RiskManage" >
+    insert into RISK_MANAGE (ADVERSE_EVENT, WEEKS, MONTH, 
+      YEAR, PRESSURE_SORES, FALL_DOWN, 
+      PIPE_SLIP)
+    values (#{adverseEvent,jdbcType=VARCHAR}, #{weeks,jdbcType=VARCHAR}, #{month,jdbcType=VARCHAR}, 
+      #{year,jdbcType=VARCHAR}, #{pressureSores,jdbcType=VARCHAR}, #{fallDown,jdbcType=VARCHAR}, 
+      #{pipeSlip,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ADVERSE_EVENT, WEEKS, MONTH, YEAR, PRESSURE_SORES, FALL_DOWN, PIPE_SLIP
+    from RISK_MANAGE
+  </select>
+  <insert parameterType="com.lachesis.mnisqm.module.event.domain.RiskManage" id="insertAndReturnKey" keyProperty="id" useGeneratedKeys="true" >
+    insert into RISK_MANAGE (ADVERSE_EVENT, WEEKS, MONTH, 
+      YEAR, PRESSURE_SORES, FALL_DOWN, 
+      PIPE_SLIP)
+    values (#{adverseEvent,jdbcType=VARCHAR}, #{weeks,jdbcType=VARCHAR}, #{month,jdbcType=VARCHAR}, 
+      #{year,jdbcType=VARCHAR}, #{pressureSores,jdbcType=VARCHAR}, #{fallDown,jdbcType=VARCHAR}, 
+      #{pipeSlip,jdbcType=VARCHAR})
+  </insert>
+</mapper>

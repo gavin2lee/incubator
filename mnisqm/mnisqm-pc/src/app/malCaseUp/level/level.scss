@@ -1,0 +1,7 @@
+@charset "UTF-8";
+.flow-list {
+  & > div {
+    display: inline-block;
+    margin: 0 .3em .6em 0;
+  }
+}

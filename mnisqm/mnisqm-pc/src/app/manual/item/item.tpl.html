@@ -1,0 +1,104 @@
+<!-- begin 分组管理内容 -->
+<div class="col-md-7">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-tasks"></i>
+        <span>工作项目表</span>
+      </div>
+      <div class="panel-body">
+        <table ng-table="vm.tableParams" class="table table-condensed table-bordered table-striped">
+          <tr ng-repeat="row in vm.lst" ng-class="{'info': vm.selectedItem.seqId == row.seqId}">
+              <td data-title="'工作项目'"
+                  class="text-center"
+                  ng-click="vm.edit(row)">
+                {{ row.itemName }}
+              </td>
+              <td data-title="'使用病区'"
+                  class="text-center"
+                  ng-click="vm.edit(row)">
+                {{ row.deptName }}
+              </td>
+              <td data-title="'频次'"
+                  class="text-center"
+                  ng-click="vm.edit(row)">
+                {{ row.frequencyName }} / {{ row.frequency }}
+              </td>
+              <td data-title="'操作'" class="text-center">
+                <button class="btn btn-danger btn-xs"
+                        ng-click="vm.deleteItem(row.itemCode)"
+                        uib-tooltip="删除"
+                        ng-if="!row.isEditing">
+                  <span class="fa fa-trash"></span>
+                </button>
+              </td>
+          </tr>
+        </table>
+      </div>
+  </div>
+</div>
+<div class="col-md-5">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-tasks"></i>
+        <span>项目信息</span>
+        <div class="pull-right">
+          <button ng-click="vm.add()" class="btn btn-primary btn-xs">添加项目</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal w5c-form"
+              role="form"
+              novalidate
+              w5c-form-validate="vm.role.validationOption"
+              name="workItemForm"
+              form="workItemForm">
+            <div class="container-fluid">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="itemName" class="col-sm-3 control-label">项目名称：</label>
+                  <div class="col-sm-9">
+                    <input class="form-control input-sm"
+                           autocomplete="off"
+                           ng-model="vm.formData.itemName"
+                           name="itemName"
+                           type="text"
+                           id="itemName" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">科室／病区：</label>
+                  <div class="col-sm-9">
+                    <select class="form-controll input-sm" ng-model="vm.formData.dept" ng-options="dept as dept.deptName for dept in vm.deptList track by dept.deptCode" name="dept">
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="frequencyName" class="col-sm-3 control-label">频次：</label>
+                  <div class="col-sm-9">
+                    <input class="form-control input-sm"
+                           name="frequencyName"
+                           required
+                           autocomplete="off"
+                           ng-model="vm.formData.frequencyName"
+                           type="text"
+                           id="frequencyName" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label"></label>
+                  <div class="col-sm-9">
+                    <button class="btn btn-sm btn-success"
+                            type="button"
+                            w5c-form-submit="vm.save()"
+                            ng-disabled="workItemForm.groupName.$invalid || workItemForm.groupCode.$invalid">保存</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </form>
+      </div>
+  </div>
+</div>
+<!-- {{ vm.lst }} -->
+
+<!-- end 分组管理内容 -->

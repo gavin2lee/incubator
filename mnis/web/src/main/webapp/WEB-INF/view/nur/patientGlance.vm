@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>病人一览 - 联新</title>
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/public.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/patientGlance.css')" />
+<script type="text/javascript" src="#url('/resources/js/map.js?1472534366478')" ></script>
+<script type="text/javascript" src="#url('/resources/js/dictionary.js?1472534366478')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/main/main.js?1472534366478')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/nur/patientGlance.js?1472534366478')" charset="utf-8"></script>
+<script type="text/javascript">
+    var currCheckedPatientId = null;
+</script>
+<style type="text/css">
+    .three li{
+        list-style:none;
+        overflow: hidden;
+    }
+    .smsg{
+        width:345px;
+        overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
+    }
+</style>
+</head>
+<body style="overflow:hidden;">
+  <!-- 页眉 -->
+        #parse("nur/header.vm")
+    <!-- 主要内容 -->
+    <div class="clearfix f_yahei main center">
+      <!-- 主要内容-左边 -->
+      <div class="fl main_l">
+          <div class="clearfix top">
+              患者信息
+               <!-- <span class="fl edit" title="编辑" id="edit"></span> -->
+            </div>
+            <div class="content">
+              <div class="content_title">
+          <div><span>姓&nbsp;&nbsp;&nbsp;&nbsp;名：</span><em class="color" id="view_patName"></em></div>
+          <div><span>床&nbsp;&nbsp;&nbsp;&nbsp;号：</span><em class="color" id="view_bedCode"></em></div>
+          <div><span>住&nbsp;院&nbsp;号：</span><em class="color" id="view_hospitalNo"></em></div>
+          <div><span>病人条码：</span><em class="color" id="view_patBcod"></em></div>
+          <div><span>性&nbsp;&nbsp;&nbsp;&nbsp;别：</span><em class="color" id="view_gender"></em></div>
+          <div><span>年&nbsp;&nbsp;&nbsp;&nbsp;龄：</span><em class="color" id="view_age"></em></div>
+                    <div><span>出生年月：</span><em class="color" id="view_birthday"></em></div>
+                    <!-- <div><span>住 址：</span><em class="color" id="view_address" ></em></div>
+                    <div><span>电 话：</span><em class="color" id="view_telephoneNo"></em></div>
+                    <div><span>联 系 人：</span><em class="color" id="view_contactPerson"></em></div>
+                    <div><span>关 系：</span><em class="color" id="view_relationship"></em></div>
+                    <div><span>联系人电话：</span><em class="color" id="view_contactTelephone"></em></div> -->
+                    <div><span>入院时间：</span><em class="color" id="view_admitDate"></em></div>
+                    <!-- <div><span>入院办理：</span><em class="color" id="view_adminDoc"></em></div> -->
+                    <div><span>入院诊断：</span><em class="color" id="view_adminDiag"></em></div>
+          <div><span>科&nbsp;&nbsp;&nbsp;&nbsp;室：</span><em class="color" id="view_workUnitName"></em></div>
+          <div><span>主管医师：</span><em class="color" id="view_dutyDoctorName"></em></div>
+          <div><span>责任护士：</span><em class="color" id="view_dutyNurseName"></em></div>
+          <div><span>饮&nbsp;&nbsp;&nbsp;&nbsp;食：</span><em class="color" id="view_diet"></em></div>
+          <div><span>护理等级：</span><em class="color" id="view_tendLevel"></em></div>
+                    <div><span>药物过敏：</span><em class="color" id="view_allergyDrugs" style="color:#f32942 !important;"></em></div>
+          <div><span>评&nbsp;&nbsp;&nbsp;&nbsp;估：</span><em class="color" id="view_evaluate"></em></div>
+          <div><span>付费方式：</span><em class="color" id="view_chargeType"></em></div>
+          <div><span>预&nbsp;交&nbsp;款：</span><em class="color" id="view_feePaid"></em></div>
+          <div><span>费用总计：</span><em class="color" id="view_feeUsed"></em></div>
+          <div><span>余&nbsp;&nbsp;&nbsp;&nbsp;额：</span><em class="color" id="view_restAmt"></em></div>
+          <div><span>备&nbsp;&nbsp;&nbsp;&nbsp;注：</span><em class="color" id="view_remark"></em></div>
+                </div>
+            </div>
+            <!-- <div class="msgPrompt hide" id="msgPrompt">
+              <div class="clearfix one">
+                  <span class="fl bg noticeMsg click" id="noticeMsg">通知</span><span class="fl bg taskList" id="taskList">提醒</span>
+                    <span class="fr close" id="close">
+                        <span class="border-left"></span>
+                        <span class="close-icon"></span>
+                    </span>
+                </div>
+                <div class="msgcontent" id="content1">
+                    <div class="two">
+                        <div style="display:inline-block;">
+                        <span class="bg arrow_l chooseDateBtn"></span>
+                        <input id="noticeMsgDate" name="startDate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})" readonly="readonly" style="width: 70px;margin-top:0px;height:18px;vertical-align:top;">
+                        <span class="bg arrow_r chooseDateBtn"></span>
+                        </div>
+                    </div>
+                    <div class="three" id="showMessage">
+                    </div>
+              </div>
+                <div class="hide msgcontent" id="content2">
+                    <div class="two">
+                        <span class="bg arrow_l chooseDateBtn"></span>
+                        <input id="taskListDate" value="2014-09-28" name="startDate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})" readonly="readonly" style="width: 70px;margin-top:0px;height:18px;vertical-align:top;">
+                        <span class="bg arrow_r chooseDateBtn"></span>
+                    </div>
+                    <div class="three">
+                        <ul>
+                            <li class="clearfix"><span class="fl time">11:29</span><span class="fl">李科长：注意安全</span><span class="fr marginRight">全科消息</span></li>
+                        </ul>
+                    </div>
+              </div>
+            </div> -->
+        </div>
+        
+        <!-- 主要内容-右边 -->
+        <div class="fl main_r">
+          <span class="arrow" id="arrow" title="展开/收缩"></span>
+          <div class="clearfix expand top" id="top">
+                <!-- <div class="fl orderlist marginTop">
+                    <div class="btn-nm btn-select">
+                        <span class="btm">床位</span>
+                        <span class="bt-ico-d"></span>
+                    </div>
+                </div> -->
+        <select id="searchCondition" class="fl marginTop selector">
+          <option value="searchBedCode">床号</option>
+          <option value="patientname">姓名</option>
+          <option value="inHospitalNo">住院号</option>
+        </select>
+        <div class="fl search-form">
+          <div class="form-group">
+            <input id="keyword" type="text" class="form-control">
+            <button type="submit" class="_btn _btn-sm _btn-theme" onclick="search()"><span class="icomoon-search"></span></button>
+          </div>
+        </div>
+        <div class="choice-group marginTop">
+          <span class="choice-item choice-people"><span class="icomoon icomoon-people"></span></span>
+          <span class="choice-item active choice-hospital"><span class="icomoon icomoon-hospital"></span></span>
+        </div>
+        <div class="choice-group marginTop">
+          <span class="choice-item active choice-table"><span class="icomoon icomoon-table"></span></span>
+          <span class="choice-item choice-list"><span class="icomoon icomoon-list"></span></span>
+        </div>
+        <input type="hidden" id="currPatientId" value="" />
+        <div class="fr same marginTop">
+          <p>
+            <span id="zyrs">住院人数：<em>$!workUnitStatis.inpatientCount</em></span>
+            <span id="kcs">空床数：<em>$!workUnitStatis.emptyBedCount</em></span>
+            <span id="qf">欠费：<em>$!workUnitStatis.inDebtCount</em></span>
+            <span id="frrs">发热人数：<em class="margin-0">$!workUnitStatis.highTempCount</em></span>
+          </p>
+          <p>
+            <span class="bgcolor bgcolor1"></span><em id="tjhl">$!workUnitStatis.tendLevelSuperCount</em>
+            <span class="bgcolor bgcolor2"></span><em id="yjhl">$!workUnitStatis.tendLevelOneCount</em>
+            <span class="bgcolor bgcolor3"></span><em id="ejhl">$!workUnitStatis.tendLevelTwoCount</em>
+            <span class="bgcolor bgcolor4"></span><em class="margin-0" id="sjhl">$!workUnitStatis.tendLevelThreeCount</em>
+          </p>
+        </div>
+      </div>
+      <div class="expand middle" id="middle">
+        <div class="list-view-top">
+          <div style="width: 86px;">床号/姓名</div>
+          <div style="width: 77px;">付费方式</div>
+          <div style="width: 86px;">性别&nbsp;年龄</div>
+          <div style="width: 124px;">住院号</div>
+          <div style="width: 8%;">饮食</div>
+          <div style="width: 16.3%;">入院诊断</div>
+          <div style="width: 20%;">高危评估</div>
+          <div style="width: 18%;">信息</div>
+        </div>
+        <ul class="clearfix">
+          #if ( $bedList && $bedList.size() > 0 ) #foreach($bedPatient in $bedList)
+          <li class="fl patientBox level-$bedPatient.tendLevel" data-patientName="$!bedPatient.patientName" data-bedCode="$!bedPatient.bedCode" data-inhospitalno="$!bedPatient.inHospitalNo" data-patientId="$bedPatient.patientId" data-searchBedCode="$!bedPatient.showBedCode">
+            <a href="javascript:getInPatInfoById('$bedPatient.patientId');" class="color">
+              <div class="clearfix bg">
+                <span class="tdl$bedPatient.tendLevel">$!bedPatient.showBedCode</span>.<span style="display: inline-block;width: 90px;overflow: hidden;vertical-align: bottom;white-space: nowrap;text-overflow: ellipsis;">$!bedPatient.patientName #if($!bedPatient.ageDuration == "Y" && $!bedPatient.age != "")
+                <span class="icomoon-child"></span> #end</span>  #if( $!bedPatient.dutyNurseCode == $!user.userId)
+                <span class="fr duty" data-dutyNurseCode="$bedPatient.dutyNurseCode" data-patientId="$bedPatient.patientId" data-bedCode="$!bedPatient.bedCode"></span> #else
+                <span class="fr star icomoon-star" data-dutyNurseCode="$bedPatient.dutyNurseCode" data-patientId="$bedPatient.patientId" data-bedCode="$!bedPatient.bedCode"></span> #end #if($!bedPatient.chargeType && $!bedPatient.chargeType != "")
+                <em class="fr">$bedPatient.chargeType.substring(0,1)</em> #else
+                <em class="fr">其他</em> #end 
+              </div>
+              <div class="clearfix age_number">
+                <div>
+                  #if($!bedPatient.gender == "M")
+                  <span class="fl span">男</span> #elseif($!bedPatient.gender == "F")
+                  <span class="fl span">女</span> #else
+                  <span class="fl span"></span> #end
+                  <span class="fl tar">$!bedPatient.age</span><span class="fr">$!bedPatient.inHospitalNo</span>
+                </div>
+              </div>
+              <div class="clearfix disease">
+                <p class="fl p1">
+                  #if($!bedPatient.diet)
+                  <span class="diet" title="$bedPatient.diet">$bedPatient.diet</span> #else
+                  <span class="diet" title="">&nbsp;</span> #end #if($!bedPatient.admitDiagnosis )
+                  <span class="diagnosis" title="$bedPatient.admitDiagnosis">$bedPatient.admitDiagnosis</span> #end
+                </p>
+                <p class="fl p3">
+                  #if($!bedPatient.patientCondition)
+                  <span>$bedPatient.patientCondition</span><span class="danger"></span> #end
+                </p>
+              </div>
+              <p class="clearfix explain">
+                #if($bedPatient.isDebit())
+                <span>欠</span> #end #if($bedPatient.hasExecOrder() )
+                <span>嘱</span> #end #if($bedPatient.isSensitive() )
+                <span class="color2">敏</span> #end #if($bedPatient.isSeparate() )
+                <span>隔</span> #end #if($bedPatient.isOperation() )
+                <span>术</span> #end #if($bedPatient.isHot() )
+                <span>热</span> #end #if($bedPatient.isNewest() )
+                <span>新</span> #end
+              </p>
+            </a>
+          </li>
+          #end #end
+        </ul>
+      </div>
+      <div class="same bottom">
+        <p>
+          <span>特级护理</span><span class="bgcolor bgcolor1"></span>
+          <span>一级护理</span><span class="bgcolor bgcolor2"></span>
+          <span>二级护理</span><span class="bgcolor bgcolor3"></span>
+          <span>三级护理</span><span class="bgcolor bgcolor4"></span>
+          <!-- <span>评估高危</span><span class="bgcolor bg1"></span> -->
+          <span>儿童</span><span class="bgcolor child"></span>
+        </p>
+        <p>
+          <span class="text">欠：欠费</span>
+          <!--<span class="text">嘱：医嘱状态改变</span>-->
+          <span class="text">敏：药物过敏</span>
+          <span class="text">隔：隔离</span>
+          <span class="text">术：手术</span>
+          <span class="text">热：发热</span>
+          <span class="text">新：新入科</span>
+          <span class="text">自：自费</span>
+          <span class="text">医：医保</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  #*
+  <!-- 阴影 -->
+  <div class="shadow hide" id="shadow"></div>
+  <!-- 切换账户弹出框 -->
+  <div class="easyui-dialog" id="prompt1" data-options="title:'切换账户',width:300,height:180,modal:true,closed:true,buttons : [ {
+                text : '确定',
+                handler :confirmPrompt1
+            },{
+                text : '取消',
+                handler : closePrompt1
+            }]">
+            <div style="padding-left: 15px;padding-top: 10px;">
+                <div class="dlg-panel">
+                    <form  id="newLoginForm"  action="#url('/index/doLogin.do')" method="post">
+                        <p>
+                            <label for="username">用户名</label>
+                            <input type="text"  name="userName" id="newUserName" value="" />
+                        </p>
+                        <p>
+                            <label for="password">密&nbsp;&nbsp;&nbsp;码</label>
+                            <input type="password"  name="password" id="newPassword" value="" autocomplete="off" />
+                        </p>
+                        <span style="color: #da6979;" id="error">
+                           $!error
+                        </span>
+                    </form>
+                </div>
+            </div>
+    </div>*#
+    
+    #*<!-- 退出登录弹出框 -->
+    <div id="quitBox" style="display:none;">
+        <div style="padding:15px;">
+        <form class="f_yahei" id="prompt2">
+            <div class="dlg-panel">
+                <p style="font-size:14px;">确定退出当前账号？</p>
+            </div>
+        </form>
+        </div>
+    </div>*#
+
+    <div class="easyui-dialog" id="edit-patient-info" data-options="width:800,height:450,title:'编辑患者信息',closed:'true',modal:true,buttons:[{
+    text:'确认',
+    handler:function(){
+        updatePatientInfo();
+    }
+    },{
+    text:'取消',
+    handler:function(){
+        
+    }
+    }]">
+        <div style="padding:5px 15px 15px;">
+            <div class="dlg-panel">
+                <form id="patientInfoForm">
+                    <table>
+                        <tbody> 
+                            <tr>
+                                <td>
+                                    <span class="text">姓&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
+                                    <input id="edit_patientId" type="hidden" name="patientBaseInfo.patientId" value=""/>
+                                    <input id="edit_patientName" type="hidden" name="patientBaseInfo.patientName" value=""/>
+                                    <label id="l_edit_patientName" for="edit_patientName" class="text"></label>
+                                </td>
+                                <td><span class="text">床&nbsp;&nbsp;&nbsp;&nbsp;号：</span>
+                                    <input type="hidden" id="edit_bedCode" name="bedCode" value="" />
+                                    <label for="edit_bedCode" id="l_edit_bedCode" class="text"></label>
+                                    &nbsp;床
+                                </td>
+                                <td>
+                                    <span class="text">住&nbsp;院&nbsp;号：</span>
+                                    <input type="hidden" id="edit_inHospitalNo" name="patientBaseInfo.inHospitalNo" value=""/>
+                                    <label id="l_edit_inHospitalNo" for="edit_inHospitalNo" class="text"></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="text">病人条码：</span>
+                                    <input type="hidden" id="edit_patientBarcode" name="patientBarcode" value=""/>
+                                    <label id="l_edit_patientBarcode" for="edit_patientBarcode" class="text"></label>
+                                </td>
+                                <td>
+                                    <span class="text">性&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
+                                    <input type="hidden" id="edit_gender" name="patientBaseInfo.gender" value=""/>
+                                    <label id="l_edit_gender" for="edit_gender" class="text"></label>
+                                </td>
+                                <td>
+                                    <span class="text">年&nbsp;&nbsp;&nbsp;&nbsp;龄：</span>
+                                    <label id="l_edit_age" class="text"></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="text">出生日期：</span>
+                                    <input id="edit_birthday" name="patientBaseInfo.birthday" class="Wdate easyui-validatebox" value="" data-options="required:true" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd', maxDate: '$!today', onpicked: setPatientAge() })" readonly="readonly" style="width: 134px;margin-top:0px;" />
+                                </td>
+                                <td>
+                                    <span class="text">电&nbsp;&nbsp;&nbsp;&nbsp;话：</span>
+                                    <input id="edit_telephone" name="patientBaseInfo.telephone" type="text" />
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <span class="text">地&nbsp;&nbsp;&nbsp;&nbsp;址：</span>
+                                    <input id="edit_address" name="patientBaseInfo.address" type="text" style="width:386px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="text">联&nbsp;系&nbsp;人：</span>
+                                    <input id="edit_contractPerson" name="patientBaseInfo.contactPerson" type="text" style="width:136px" />
+                                </td>
+                                <td>
+                                    <span class="text">关&nbsp;&nbsp;&nbsp;&nbsp;系：</span>
+                                    <input id="edit_relationship" name="patientBaseInfo.relationship" type="text" />
+                                </td>
+                                <td>
+                                    <span class="text">联系电话：</span>
+                                    <input id="edit_contactTelephone" name="patientBaseInfo.contactTelephone" type="text" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="text">入院时间：</span>
+                                    <input id="edit_admitDate" name="admitDate" class="Wdate easyui-validatebox" value="" data-options="required:true" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd', maxDate:'$!today'})" readonly="readonly" style="width: 134px;margin-top:0px;" />
+                                </td>
+                                <td>
+                                    <span class="text">办理护士：</span>
+                                    <input type="hidden" id="edit_admitNurseName" name="admitNurseName" />
+                                    <input type="text" id="edit_admitNurseCode" name="admitNurseCode" />
+                                    
+                                </td>
+                                <td>
+                                    <span class="text">入院诊断：</span>
+                                    <input name="admitDiagStr" id="edit_patient_diags" type="hidden" />
+                                    <label id="l_edit_admitDiag" class="text overflow-txt" ></label>
+                                    <div class="btn-nm btn-save" id="patDiagSelectBtn" style="width:50px;height:22px;" onclick="updateDiagsis();">
+                                        <span class="btm" >修改</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="text">入院科室：</span>
+                                    <input type="hidden" id="edit_workUnitName" name="workUnitName" />
+                                    <input id="edit_workUnit" class="easyui-combobox" name="workUnitCode" data-options="
+                                        required:true,
+                                        valueField: 'code',
+                                        textField: 'name',
+                                        panelHeight:'150',
+                                        onSelect: selectDept,
+                                        editable:false,
+                                        data: [
+                                                #foreach($dept in $deptList)
+                                                    {code: '$dept.code',name: '$dept.name'},
+                                                #end
+                                            ]" />
+                                </td>
+                                <td>
+                                    <span class="text">主管医师：</span>
+                                    <input type="hidden" id="edit_dutyDoctorName" name="dutyDoctorName" />
+                                    <input id="edit_dutyDoctor" class="easyui-combobox" name="dutyDoctorCode" data-options="
+                                        required:true,
+                                        valueField: 'code',
+                                        textField: 'name',
+                                        panelHeight:'150',
+                                        onSelect: selectDoctor,
+                                        editable:false,
+                                        data: [
+                                                #foreach($doc in $docList)
+                                                    {code: '$doc.code',name: '$doc.name'},
+                                                #end
+                                            ]" />
+                                </td>
+                                <td>
+                                    <span class="text">饮&nbsp;&nbsp;&nbsp;&nbsp;食：</span>
+                                    <input type="text" id="edit_diet" name="diet" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="text">护理级别：</span>
+                                    <input id="edit_tendLevel" class="easyui-combobox" name="tendLevel" data-options="
+                                        required:true,
+                                        valueField: 'code',
+                                        textField: 'name',
+                                        panelHeight:'90',
+                                        editable:false,
+                                        data: [
+                                                {code: '0',name: '特级护理'},
+                                                {code: '1',name: '一级护理'},
+                                                {code: '2',name: '二级护理'},
+                                                {code: '3',name: '三级护理'},
+                                            ]" />
+                                </td>
+                                <td>
+                                    <span class="text">过&nbsp;敏&nbsp;史：</span>
+                                    <input name="allergyListStr" id="edit_patient_allergys" type="hidden" />
+                                    <label id="l_edit_allergys" class="text overflow-txt" ></label>
+                                    <div class="btn-nm btn-save" id="patAllergySelectBtn" style="width:50px;height:22px;" onclick="updateAllergyBtn();">
+                                        <span class="btm" >修改</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="text">评&nbsp;&nbsp;&nbsp;&nbsp;估：</span>
+                                    <input name="evaluate" type="text" />
+                                </td>
+                            </tr>
+                            <tr >
+                                <td>
+                                    <span class="text">付费方式：</span>
+                                    <input type="hidden" id="edit_chargeType" name="chargeType" />
+                                    <label id="l_edit_chargeType" for="chargeType" class="text"></label>
+                                </td>
+                                <td colspan="3" class="line9">
+                                    <span>预交款 ：</span>
+                                    <input type="hidden" id="edit_freePaid" name="feePaid" />
+                                    <label class="text" id="l_edit_freePaid" style="width:65px;"></label>
+                                    <span >&nbsp;&nbsp;费用总计：</span>
+                                    <input type="hidden" id="edit_feeUsed" name="feeUsed" />
+                                    <label class="text" id="l_edit_feeUsed" style="width:75px;"></label>
+                                    <span >&nbsp;&nbsp;余额：</span>
+                                    <label class="text" id="l_edit_restAmt" style="width:75px;"></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <span class="text">备&nbsp;&nbsp;&nbsp;&nbsp;注：</span>
+                                    <input type="text" id="edit_remarks" name="remarks" style="width:386px" />
+                                </td>
+                            </tr>
+                        </tbody>    
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="messageBox">
+        <!-- <p class="bg speaker" title="消息通知" id="speaker" style="left:48px;"></p> -->
+        <p class="bg note" id="note" title="护理小白板"></p>
+    </div>
+    <div class="easyui-dialog" id="diagnosisBox" data-options="title:'选择诊断',closed:true,modal:true">
+        <div></div>
+    </div>
+    <div class="easyui-dialog" id="allergysBox" data-options="title:'选择药物',width:650,height:500,closed:true,modal:true"></div>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-health-table * {
+	line-height: 1.4;
+	font-size: 12pt;
+}
+.doc-health-table th, .doc-health-table td {
+	padding: 1px;
+	height: 20px;
+}
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+		margin-bottom: 5.5mm;
+	}
+}
+</style>
+<title>肝病科危重患者护理计划单（肝性脑病）</title>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper">
+<div class="paper-content">
+#dangerBrain()
+<div class="doc-content doc-health">
+	<table class="doc-health-table" style="text-align: left;">
+		<tr>
+			<td>告病重日期：<span name="beginDangerDate"></span></td>
+			<td>停病重日期：<span name="endDangerDate"></span></td>
+			<td>主管医生：<span name="doctor"></span></td>
+			<td>高责/责护：<span name="seniorNurse"></span>/<span name="nurse"></span></td>
+		</tr>
+		<tr>
+			<td colspan="4">简要病史：<span name="history"></span></td>
+		</tr>
+	</table>
+	<table class="doc-health-table">
+		<thead>
+			<tr>
+				<th colspan="2">护理计划</th>
+				<th style="width: 75px;">起始日期</th>
+				<th style="width: 55px;">签名</th>
+				<th style="width: 75px;">停止日期</th>
+				<th style="width: 55px;">签名</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td rowspan="10" style="width: 35px;">基础护理</td>
+				<td class="align-left">严密观察患者生命体征和病情变化，每 30min～60min 巡视一次</td>
+				<td><span id="beginDate1" name="beginDate1" class="date"></span></td>
+				<td><span id="beginer1" name="beginer1" class="beginer"></span></td>
+				<td><span id="endDate1" name="endDate1" class="date"></span></td>
+				<td><span id="ender1" name="ender1" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">根据病情需要保持舒适、合理的体位</td>
+				<td><span id="beginDate2" name="beginDate2" class="date"></span></td>
+				<td><span id="beginer2" name="beginer2" class="beginer"></span></td>
+				<td><span id="endDate2" name="endDate2" class="date"></span></td>
+				<td><span id="ender2" name="ender2" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">翻身、拍背 Q2H～Q4H 一次，保持呼吸道通畅，预防肺部感染</td>
+				<td><span id="beginDate3" name="beginDate3" class="date"></span></td>
+				<td><span id="beginer3" name="beginer3" class="beginer"></span></td>
+				<td><span id="endDate3" name="endDate3" class="date"></span></td>
+				<td><span id="ender3" name="ender3" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">为留置胃管、禁食、高热等生活不能自理的患者进行口腔护理 bid</td>
+				<td><span id="beginDate4" name="beginDate4" class="date"></span></td>
+				<td><span id="beginer4" name="beginer4" class="beginer"></span></td>
+				<td><span id="endDate4" name="endDate4" class="date"></span></td>
+				<td><span id="ender4" name="ender4" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">留置尿管的患者每日进行尿道口护理或会阴冲洗 bid</td>
+				<td><span id="beginDate5" name="beginDate5" class="date"></span></td>
+				<td><span id="beginer5" name="beginer5" class="beginer"></span></td>
+				<td><span id="endDate5" name="endDate5" class="date"></span></td>
+				<td><span id="ender5" name="ender5" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">鼻饲的患者做好胃管护理（固定、冲洗、回抽胃内容物 Q4H），防止胃潴留</td>
+				<td><span id="beginDate6" name="beginDate6" class="date"></span></td>
+				<td><span id="beginer6" name="beginer6" class="beginer"></span></td>
+				<td><span id="endDate6" name="endDate6" class="date"></span></td>
+				<td><span id="ender6" name="ender6" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">保持静脉输液通畅，密切观察穿刺部位，使用输液泵者注意观察滴速 Q1H</td>
+				<td><span id="beginDate7" name="beginDate7" class="date"></span></td>
+				<td><span id="beginer7" name="beginer7" class="beginer"></span></td>
+				<td><span id="endDate7" name="endDate7" class="date"></span></td>
+				<td><span id="ender7" name="ender7" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">加强各种引流管的护理：妥善固定、引流液观察和记录、保持通畅、宣教等</td>
+				<td><span id="beginDate8" name="beginDate8" class="date"></span></td>
+				<td><span id="beginer8" name="beginer8" class="beginer"></span></td>
+				<td><span id="endDate8" name="endDate8" class="date"></span></td>
+				<td><span id="ender8" name="ender8" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">严格准确记录出入量 11AM-4PM-10PM-7AM</td>
+				<td><span id="beginDate10" name="beginDate10" class="date"></span></td>
+				<td><span id="beginer10" name="beginer10" class="beginer"></span></td>
+				<td><span id="endDate10" name="endDate10" class="date"></span></td>
+				<td><span id="ender10" name="ender10" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">严格做好床旁交接班（生命体征、病情、管路等）</td>
+				<td><span id="beginDate11" name="beginDate11" class="date"></span></td>
+				<td><span id="beginer11" name="beginer11" class="beginer"></span></td>
+				<td><span id="endDate11" name="endDate11" class="date"></span></td>
+				<td><span id="ender11" name="ender11" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td rowspan="9">专科护理</td>
+				<td class="align-left">专人护理，以卧床休息为主</td>
+				<td><span id="beginDate12" name="beginDate12" class="date"></span></td>
+				<td><span id="beginer12" name="beginer12" class="beginer"></span></td>
+				<td><span id="endDate12" name="endDate12" class="date"></span></td>
+				<td><span id="ender12" name="ender12" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">严密观察肝性脑病的早期征象：意识障碍程度；扑翼样震颤；瞳孔变化</td>
+				<td><span id="beginDate13" name="beginDate13" class="date"></span></td>
+				<td><span id="beginer13" name="beginer13" class="beginer"></span></td>
+				<td><span id="endDate13" name="endDate13" class="date"></span></td>
+				<td><span id="ender13" name="ender13" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">烦躁病人加床栏，必要时使用约束带，防坠床、撞伤</td>
+				<td><span id="beginDate14" name="beginDate14" class="date"></span></td>
+				<td><span id="beginer14" name="beginer14" class="beginer"></span></td>
+				<td><span id="endDate14" name="endDate14" class="date"></span></td>
+				<td><span id="ender14" name="ender14" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">昏迷病人取仰卧位，头偏一侧，保持呼吸道通畅</td>
+				<td><span id="beginDate15" name="beginDate15" class="date"></span></td>
+				<td><span id="beginer15" name="beginer15" class="beginer"></span></td>
+				<td><span id="endDate15" name="endDate15" class="date"></span></td>
+				<td><span id="ender15" name="ender15" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">眼睑闭合不全、角膜外露的病人予生理盐水纱布覆盖眼部</td>
+				<td><span id="beginDate16" name="beginDate16" class="date"></span></td>
+				<td><span id="beginer16" name="beginer16" class="beginer"></span></td>
+				<td><span id="endDate16" name="endDate16" class="date"></span></td>
+				<td><span id="ender16" name="ender16" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">保持排便通畅，防止便秘</td>
+				<td><span id="beginDate17" name="beginDate17" class="date"></span></td>
+				<td><span id="beginer17" name="beginer17" class="beginer"></span></td>
+				<td><span id="endDate17" name="endDate17" class="date"></span></td>
+				<td><span id="ender17" name="ender17" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">用药观察及指导：使用利尿剂、脱水剂注意观察尿量及有无电解质紊乱；使用乳果糖等缓泻剂注意观察大便性状、次数及有无电解质紊乱</td>
+				<td><span id="beginDate18" name="beginDate18" class="date"></span></td>
+				<td><span id="beginer18" name="beginer18" class="beginer"></span></td>
+				<td><span id="endDate18" name="endDate18" class="date"></span></td>
+				<td><span id="ender18" name="ender18" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">预防及控制感染：物表、空气消毒BID；手卫生；遵医嘱及时准确应用抗生素</td>
+				<td><span id="beginDate19" name="beginDate19" class="date"></span></td>
+				<td><span id="beginer19" name="beginer19" class="beginer"></span></td>
+				<td><span id="endDate19" name="endDate19" class="date"></span></td>
+				<td><span id="ender19" name="ender19" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">疾病知识指导及心理护理，做好家属及病人临终前护理</td>
+				<td><span id="beginDate22" name="beginDate22" class="date"></span></td>
+				<td><span id="beginer22" name="beginer22" class="beginer"></span></td>
+				<td><span id="endDate22" name="endDate22" class="date"></span></td>
+				<td><span id="ender22" name="ender22" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td rowspan="7">护理风险及并发症预防</td>
+				<td class="align-left">实施预防坠积性肺炎的护理措施</td>
+				<td><span id="beginDate23" name="beginDate23" class="date"></span></td>
+				<td><span id="beginer23" name="beginer23" class="beginer"></span></td>
+				<td><span id="endDate23" name="endDate23" class="date"></span></td>
+				<td><span id="ender23" name="ender23" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">实施预防压疮的护理措施：定时翻身、保持皮肤清洁干燥、保护贴膜、气垫床</td>
+				<td><span id="beginDate24" name="beginDate24" class="date"></span></td>
+				<td><span id="beginer24" name="beginer24" class="beginer"></span></td>
+				<td><span id="endDate24" name="endDate24" class="date"></span></td>
+				<td><span id="ender24" name="ender24" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">实施预防非计划性拔管的措施：评估、观察、固定、约束、宣教</td>
+				<td><span id="beginDate25" name="beginDate25" class="date"></span></td>
+				<td><span id="beginer25" name="beginer25" class="beginer"></span></td>
+				<td><span id="endDate25" name="endDate25" class="date"></span></td>
+				<td><span id="ender25" name="ender25" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">实施预防深静脉血栓的措施：观察、床上活动、驱动泵、宣教等</td>
+				<td><span id="beginDate26" name="beginDate26" class="date"></span></td>
+				<td><span id="beginer26" name="beginer26" class="beginer"></span></td>
+				<td><span id="endDate26" name="endDate26" class="date"></span></td>
+				<td><span id="ender26" name="ender26" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">实施预防坠床与防跌倒的措施：加强监护、床档、约束、宣教等</td>
+				<td><span id="beginDate27" name="beginDate27" class="date"></span></td>
+				<td><span id="beginer27" name="beginer27" class="beginer"></span></td>
+				<td><span id="endDate27" name="endDate27" class="date"></span></td>
+				<td><span id="ender27" name="ender27" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">防止药物外渗的措施：中心静脉置管、使用留置针时5-10分钟巡视一次</td>
+				<td><span id="beginDate28" name="beginDate28" class="date"></span></td>
+				<td><span id="beginer28" name="beginer28" class="beginer"></span></td>
+				<td><span id="endDate28" name="endDate28" class="date"></span></td>
+				<td><span id="ender28" name="ender28" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left">备好急救物品</td>
+				<td><span id="beginDate29" name="beginDate29" class="date"></span></td>
+				<td><span id="beginer29" name="beginer29" class="beginer"></span></td>
+				<td><span id="endDate29" name="endDate29" class="date"></span></td>
+				<td><span id="ender29" name="ender29" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td rowspan="5">个体化的护理措施</td>
+				<td class="align-left"><span name="extra1"></span></td>
+				<td><span id="beginDate30" name="beginDate30" class="date"></span></td>
+				<td><span id="beginer30" name="beginer30" class="beginer"></span></td>
+				<td><span id="endDate30" name="endDate30" class="date"></span></td>
+				<td><span id="ender30" name="ender30" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left"><span id="extra2" name="extra2"></span></td>
+				<td><span id="beginDate31" name="beginDate31" class="date"></span></td>
+				<td><span id="beginer31" name="beginer31" class="beginer"></span></td>
+				<td><span id="endDate31" name="endDate31" class="date"></span></td>
+				<td><span id="ender31" name="ender31" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left"><span id="extra3" name="extra3"></span></td>
+				<td><span id="beginDate32" name="beginDate32" class="date"></span></td>
+				<td><span id="beginer32" name="beginer32" class="beginer"></span></td>
+				<td><span id="endDate32" name="endDate32" class="date"></span></td>
+				<td><span id="ender32" name="ender32" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left"><span id="extra4" name="extra4"></span></td>
+				<td><span id="beginDate33" name="beginDate33" class="date"></span></td>
+				<td><span id="beginer33" name="beginer33" class="beginer"></span></td>
+				<td><span id="endDate33" name="endDate33" class="date"></span></td>
+				<td><span id="ender33" name="ender33" class="ender"></span></td>
+			</tr>
+			<tr>
+				<td class="align-left"><span id="extra5" name="extra5"></span></td>
+				<td><span id="beginDate34" name="beginDate34" class="date"></span></td>
+				<td><span id="beginer34" name="beginer34" class="beginer"></span></td>
+				<td><span id="endDate34" name="endDate34" class="date"></span></td>
+				<td><span id="ender34" name="ender34" class="ender"></span></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+$(function() {
+	// init datas
+	$.ajax({
+		url: '#url("/doc/data?docType=DANGER_BRAIN")',
+    	type: 'GET',
+    	data: {cureNo:'$!{patient.cureNo}'},
+    	success: function(data, status) {
+    		if (data) {
+    			$.each(data, function(index, obj) {
+    				var name = this['key'];
+    				var value = this['value'];
+    				if (value) {
+    					var $e = $('span[name=' + name + ']');
+    					$e.text(value);
+    				}
+    			});
+    		}
+    	},
+    	error: function(xhr, status, err) {
+    		$.messager.alert('数据', '获取数据失败', 'error');
+//     		initComponent();
+    	}
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<div class="col-md-2" print-remove>
+  <div class="panel pull-left dept-wrapper panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-bars"></i>
+      <span>科室列表</span>
+    </div>
+    <div class="panel-body list">
+      <div class="list-filter">
+        <input type="text" class="form-control input-sm" ng-model="vm.filterText.deptName" placeholder="输入关键字搜索">
+      </div>
+      <div class="list__tile">
+        <a href="javascript:;" ng-class="{'active': vm.deptData.deptCode === vm.selectedDept}" ng-click="vm.load(vm.deptData.deptCode)">
+          <span class="list__text ng-binding ng-scope" role="button" tabindex="0">{{vm.deptData.deptName}}</span>
+          <i class="pull-right fa fa-angle-down"></i>
+        </a>
+      </div>
+      <ul class="sublist">
+        <li ng-repeat="subItem in vm.deptData.belongedDepts | filter: vm.filterText" class="accordion-item" ng-class="{'active': subItem.deptCode === vm.selectedDept}">
+          <a ng-click="vm.load(subItem.deptCode)" class="sublist__item">{{subItem.deptName}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="col-md-10">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-user"></i>
+      <span>人员数据</span>
+      <div class="pull-right">
+        <button print-btn class="btn btn-primary btn-xs">打印</button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <table st-table="vm.data" st-safe-src="rowCollection" class="table table-hover table-condensed table-bordered table-striped">
+        <thead>
+          <tr class="header-export">
+            <th></th>
+            <th st-sort="hisCode">工号</th>
+            <th>姓名</th>
+            <th>病区</th>
+            <th>出生时间</th>
+            <th>性别</th>
+            <th>毕业时间</th>
+            <th>毕业院校</th>
+            <th>获得学位</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="row in vm.data">
+          <tr>
+            <!-- <td grid-checkbox="row"></td> -->
+            <td grid-expand-trigger grid-p="userCode" grid-expand-method="loadDetail" class="trigger">
+              <i class="fa fa-caret-right"></i>
+            </td>
+            <td>{{row.hisCode}}</td>
+            <td>{{row.userName}}</td>
+            <td>{{vm.getDeptName(row.deptCode)}}</td>
+            <td>{{row.birthday}}</td>
+            <td>{{vm.genders[row.gender]}}</td>
+            <td>{{row.graduationDate}}</td>
+            <td>{{row.graduationSchool}}</td>
+            <td>{{row.education}}</td>
+            <td data-title="'操作'">
+              <button class="btn btn-default btn-xs" ng-click="vm.open(row)" uib-tooltip="编辑员工信息"><span class="fa fa-pencil"></span></button>
+            </td>
+          </tr>
+          <tr grid-expand tpl-src="app/techFiles/techFiles/techFiles.detail.html" ng-show="vm.expanedIndex == $index"></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

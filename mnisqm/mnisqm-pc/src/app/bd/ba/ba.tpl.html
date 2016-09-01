@@ -1,0 +1,80 @@
+<div class="wrapper bd-ba-wrapper padding-content">
+  <!-- <uib-tabset active="active"> -->
+    <!-- <uib-tab index="0" heading="护理业务分析"> -->
+    <ul class="page-nav">
+      <li class="active"><a>护理业务分析</a></li>
+    </ul>
+      <div class="panel panel-layout panel-default">
+        <div class="tool-wrapper container-fluid form-inline">
+          <div class="filter-item">
+            <label >月份： </label>
+            <span class="input-group">
+              <input ng-model="vm.queryParams.month" type="text" id="month" name="month" required uib-datepicker-popup datepicker-options="vm.options.month" on-open-focus="true" is-open="vm.monthOpen" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" common-picker="month" readonly>
+
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-sm btn-default" ng-click="vm.monthOpen = true">
+                  <i class="fa fa-calendar"></i>
+                </button>
+              </span>
+            </span>
+          </div>
+          <div class="filter-item">
+            <button class="btn btn-primary btn-sm" ng-click="vm.load()">查询</button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <table class="table table-bordered data-table no-border">
+            <tbody>
+              <tr>
+                <td class="data-title" colspan="2">闭环管理</td>
+                <td class="data-title" colspan="2">护理文书</td>
+              </tr>
+              <tr>
+                <td class="data-content" ng-click="vm.go('du')">覆盖闭环管理<br><span count-to="{{vm.baseData.bh}}" duration="0.5"></span>个</td>
+                <td class="data-content" ng-click="vm.go('er')">近似差错率<br><span count-to="{{vm.baseData.er}}" duration="0.5"></span>%</td>
+                <td class="data-content" ng-click="vm.go('du')">护理文书模板<br><span count-to="{{vm.baseData.ws}}" duration="0.5"></span>份</td>
+                <td class="data-content" ng-click="vm.go('du')"><div class="echarts-wrap" echarts="vm.pie.identity" echarts-dimension="vm.pie.dimension" config="vm.pie.config"></div></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-xs-6 no-padding">
+            <table class="table table-condensed table-bordered bh-table no-border">
+              <thead>
+                <tr class="header-export">
+                  <th>流程</th>
+                  <th>流程覆盖</th>
+                  <th>业务覆盖</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in vm.bhData">
+                  <td>{{item.lc}}</td>
+                  <td>{{item.lcfg}}</td>
+                  <td>{{(item.execNum / item.orderNum * 100 || 0).toFixed(2)}}%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-xs-6 no-padding">
+            <table class="table table-condensed table-bordered ws-table no-border">
+              <thead>
+                <tr class="header-export">
+                  <th>名称</th>
+                  <th>已创建</th>
+                  <th>转抄率</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in vm.wsData">
+                  <td>{{item.docName}}</td>
+                  <td>{{item.cNum}}</td>
+                  <td>{{(item.zcNum / item.cNum * 100 || 0).toFixed(2)}}%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    <!-- </uib-tab> -->
+  <!-- </uib-tabset> -->
+</div>

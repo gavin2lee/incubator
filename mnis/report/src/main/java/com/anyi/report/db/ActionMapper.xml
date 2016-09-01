@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.anyi.report.db.ActionMapper">
+        <insert id="saveActionRecord" parameterType="com.anyi.report.entity.ActionRecord">
+                INSERT INTO MODULE_ACTION_RECORD
+                (MODULE, INTERFACE, PARAM, CREATE_PERSON)
+                VALUES (#{moduleName}, #{interfaceName}, #{paramStr}, #{createPerson})
+        </insert>
+
+        <resultMap id="actionRecordMap" type="com.anyi.report.entity.ActionRecord">
+                <result property="seqID" column="SEQ_ID"/>
+                <result property="moduleName" column="MODULE"/>
+                <result property="interfaceName" column="INTERFACE"/>
+                <result property="paramStr" column="PARAM"/>
+                <result property="createTime" column="CREATE_TIME"/>
+                <result property="createPerson" column="CREATE_PERSON"/>
+        </resultMap>
+        <select id="getRecordsByModuleAndInterface" parameterType="java.lang.String" resultMap="actionRecordMap">
+                SELECT SEQ_ID, MODULE, INTERFACE, PARAM, CREATE_TIME, CREATE_PERSON
+                FROM MODULE_ACTION_RECORD
+                WHERE MODULE = #{param1}
+                <if test="param2 != null">
+                        AND INTERFACE = #{param2}
+                </if>
+        </select>
+</mapper>

@@ -1,0 +1,503 @@
+
+/*斑马病人腕带*/
+/* 
+.print .long-paper {
+	 margin-left: 150px; 
+	margin-top:8px;
+	margin-left:70px;
+	font-family:'SimHei' !important;
+	page-break-after:always;
+}
+
+.long-paper {
+	position: relative;
+	width: 90px;
+	height: 260px;
+	width: 160px;
+	height: 90px;
+	width: 315px;
+	height: 88px;
+	height: 80px;
+	background-color: #dedede;
+	overflow: hidden;
+	word-break: break-all;
+}
+
+.long-paper>div {
+	float: left;
+}
+
+.long-paper .mid {
+	height: 90px;
+	width: 150px;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+.long-paper .mid .info {
+	display: table-cell;
+	height: 85px;
+	vertical-align: middle;
+	line-height: 16px;
+	font-size: 0px;
+}
+
+.long-paper .mid .info p>span {
+	display: inline-block;
+	font-size: 10px;
+	font-family:'SimHei';
+}
+
+.long-paper .mid .info .base-info{
+	width:150px;
+}
+.long-paper .mid .info .base-info .name{
+	width: 45px;
+}
+.long-paper .mid .info .base-info .showBedCode{
+	width: 20px;
+}
+.long-paper .mid .info .base-info .sex{
+	width: 15px;
+}
+
+.long-paper .mid .info .base-info .age{
+	width: 30px;
+}
+
+.long-paper .mid .info .base-info .deptName{
+	width: 40px;
+}
+
+.long-paper .mid .info .base-info .inpNo{
+	width: 60px;
+}
+
+.long-paper .mid .info .base-info .inHospNo{
+	width: 70px;
+}
+
+.long-paper .right {
+	width: 50px;
+	text-align: center;
+}
+
+.long-paper .qr {
+	display: table-cell;
+	height: 85px;
+	vertical-align: middle;
+}
+
+.long-paper .qr img {
+	 width: 50px; 
+	vertical-align: middle;
+}
+
+.long-paper .left {
+	width: 50px;
+	text-align: center;
+	margin-right:20px;
+} */
+
+
+/*佐藤打印机*/
+.print .long-paper {
+	float:right;
+	margin-right:35px;
+	font-family:'SimHei' !important;
+	font-size:12px;
+	page-break-after:always;
+
+}
+
+.long-paper {
+	position: relative;
+	height: 92px;
+ 	width:500px; 
+	background-color: #dedede;
+	overflow: hidden;
+/* 	word-break: break-all;  */
+}
+
+.long-paper>div {
+	float: left;
+}
+
+.long-paper .mid {
+	height: 80px;
+	width: 220px;
+	vertical-align: middle;
+}
+
+.long-paper .mid .info {
+	display: table-cell;
+	height: 80px;
+	vertical-align: middle;
+	line-height: 12px;
+	font-size: 0px;
+}
+
+.long-paper .mid .info p>span {
+	display: inline-block;
+	font-size: 12px;
+	font-family:'SimHei';
+}
+
+.long-paper .mid .info .base-info{
+	width:220px;
+    padding-left:50px; 
+}
+.long-paper .mid .info .base-info .name{
+	width: 45px;
+}
+.long-paper .mid .info .base-info .showBedCode{
+	width: 20px;
+}
+.long-paper .mid .info .base-info .sex{
+	width: 15px;
+}
+
+.long-paper .mid .info .base-info .age{
+	width: 30px;
+}
+
+.long-paper .mid .info .base-info .deptName{
+	width: 40px;
+}
+
+.long-paper .mid .info .base-info .inpNo{
+	width: 60px;
+}
+
+.long-paper .mid .info .base-info .inHospNo{
+	width: 70px;
+}
+
+.long-paper .right {
+	width: 50px;
+	margin-right:20px;
+	text-align: center;
+}
+
+.long-paper .qr {
+	display: table-cell;
+	height: 80px;
+	vertical-align: middle;
+}
+
+.long-paper .qr img {
+	width: 40px; 
+	height:40px;
+	vertical-align: middle;
+}
+
+.long-paper .left {
+	width: 50px;
+	margin-left:160px;
+	text-align: center;
+} 
+
+/*床头卡*/
+/*床头卡*/
+.bed-card {
+	width: 254px;
+	height: 185px;
+	background-color: #dfdfdf;
+	page-break-after:always;
+}
+
+.bed-card hr {
+	width: 250px;
+	height: 0px;
+	margin: 0 auto;
+	margin-top:2px;
+	border: none;
+	border-bottom: 1px solid #000;
+}
+
+.bed-card .header {
+	position: relative;
+	height: 25px;
+}
+
+.bed-card .header>div {
+	position: absolute;
+	top: 0;
+	width: 270px;
+	height: 25px;
+	line-height: 25px;
+	text-align: center;
+}
+
+/* .bed-card .header hr {
+	position: absolute;
+	bottom: 0;
+	left: 2px;
+} */
+
+.bed-card .header .title {
+	left: 0;
+	width: 120px;
+	font-size: 16px;
+}
+
+.bed-card .header .admitDate {
+	right: 10px;
+	width: 130px;
+	font-size: 12px;
+}
+
+.bed-card .body {
+	position: relative;
+	width: 250px;
+	margin: 0 auto;
+}
+
+.bed-card .body>div {
+	position: absolute;
+	font-size: 12px;
+	height: 22px;
+	line-height: 22px;
+}
+
+.bed-card .body .pat-info{
+	top: 0;
+	left: 0;
+	width: 130px;
+	height: 43px;
+	line-height: 44px;
+	font-size: 16px;
+	text-align: center;
+}
+
+.bed-card .body .bedCode {
+	width: 40px;
+}
+.bed-card .body .name {
+	width: 90px;
+	margin-left:5px;
+}
+
+.bed-card .body .sex,.bed-card .body .age {
+	top: 0;
+	left: 130px;
+	width: 70px;
+	height: 22px;
+	line-height: 22px;
+}
+
+.bed-card .body .age {
+	left: 200px;
+}
+
+.bed-card .body .dutyNurseName {
+	left: 130px;
+	top: 20px;
+	width: 140px;
+}
+
+.bed-card .body .admitDiagnosis {
+	left: 10;
+	top: 44px;
+	width: 250px;
+	font-size: 13px;
+}
+
+.bed-card .body .inHospitalNo {
+	left: 10;
+	top: 66px;
+	width: 170px;
+	font-size: 12px;
+}
+
+.bed-card .body .allergyDrugs {
+	left: 10;
+	top: 88px;
+	width: 170px;
+	font-size: 12px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.bed-card .body .diet {
+	left: 10;
+	top: 110px;
+	width: 170px;
+	font-size: 12px;
+}
+
+.bed-card .body .tendLevel {
+	left: 10;
+	top: 132px;
+	width: 170px;
+	font-size: 12px;
+}
+
+.bed-card .body .qr {
+	left: 165px;
+	top: 80px;
+	width: 80px;
+	text-align: center;
+	font-size: 12px;
+}
+
+.bed-card .body .qr img {
+	width: 60px;
+}
+
+/*南方医院床头卡*/
+.nf_bed-card {
+	width: 254px;
+	height: 50px;
+	background-color: #dfdfdf;
+ 	margin-top:10px;
+}
+
+/* .nf_bed-card  div {
+	float:left;
+} */
+
+.nf_bed-card .pat-info{
+	margin-left:10px;
+	font-size: 16px;
+	float:left;
+	margin-top:5px;
+}
+
+.nf_bed-card .qr {
+	width:50px;
+	margin-left:30px;
+	font-size: 12px;
+	float:left;
+	margin-top:5px;
+}
+
+.nf_bed-card .qr img {
+	width: 40px;
+} 
+
+/*胸科床头卡*/
+.xk_bed-card {
+	width: 254px;
+	height: 200px;
+	background-color: #dfdfdf;
+	page-break-after:always;
+}
+.xk_bed-card .header {
+	position: relative;
+}
+
+.xk_bed-card .header>div {
+	/* position: absolute; */
+	top: 0;
+	left:10px;
+	width: 254px;
+}
+
+.xk_bed-card .header .title {
+	width: 90px;
+	font-size: 18px;
+	height: 30px;
+}
+
+.xk_bed-card .header .hospitalName {
+	width: 160px;
+	vertical-align:middle;
+}
+
+.xk_bed-card .body {
+	position: relative; 
+	width: 250px;
+	margin: 0 auto;
+	
+}
+
+.xk_bed-card .body>div {
+	/* position: absolute; */
+	height: 22px;
+	white-space: nowrap;
+	line-height: 22px;
+	
+}
+
+.xk_bed-card .body >div span {
+	display:inline-block;
+	font-size:15px;
+	overflow:hidden;
+}
+
+.xk_bed-card .body .deptName {
+	width: 8em;
+}
+.xk_bed-card .body .bedCode {
+	width: 8em;
+}
+.xk_bed-card .body .inHospNo {
+	width: 100px;
+}
+.xk_bed-card .body .name {
+	font-size:17px;
+	width: 7em;
+}
+.xk_bed-card .body .age {
+	width: 5em;
+}
+.xk_bed-card .body .sex {
+	width: 60px;
+}
+.xk_bed-card .body .blood {
+	width: 60px;
+}
+.xk_bed-card .body .xing {
+	width: 15px;
+}
+.xk_bed-card .body .allergy {
+	width: 160px;
+}
+.xk_bed-card .body .tendLevel {
+	width: 100px;
+}
+.xk_bed-card .body .chargeType {
+	width: 9em;
+}
+.xk_bed-card .body .photeTextClass {
+	float:left;
+}
+.xk_bed-card .body .admitDate {
+	width: 8em;
+}
+.xk_bed-card .body .transferDate {
+	width: 8em;
+}
+.xk_bed-card .body .backDate {
+	width: 12em;
+}
+.xk_bed-card .body .doctor {
+	width: 160px;
+}
+
+.xk_bed-card .body .dutyNurseName {
+	width: 160px;
+}
+
+.xk_bed-card .body .diet {
+	width: 160px;
+}
+
+
+.xk_bed-card .body .qr {
+	width: 80px;
+	text-align: center;
+	font-size: 12px;
+}
+
+.xk_bed-card .body .qr img {
+	width: 60px;
+	padding-top:10px;
+}
+
+.lineDisplay{
+	float:left; 
+	display:inline;
+}

@@ -1,0 +1,100 @@
+use MNIS_V2
+go
+
+
+-- 数据源
+INSERT INTO [DATA_SOURCE]
+           ([REFID],[DATA_SOURCE_TYPE],[SOURCE_NAME],JSON_PATH,[PRAGRME],[REMARK]
+           ,[CREATE_USER_REFID],[CREATE_DATE_TIME],[MODIFY_USER_REFID],[MODIFY_DATE_TIME],[VERSION],[ACTIVE])
+     VALUES
+           ('FROM_PATIENT','PAT','患者','patient','FromPatient',null
+            ,'admin','2014-05-30 00:00:00','admin','2014-05-30 00:00:00',0,1
+            )
+GO
+INSERT INTO [DATA_SOURCE]
+           ([REFID],[DATA_SOURCE_TYPE],[SOURCE_NAME],JSON_PATH,[PRAGRME],[REMARK]
+           ,[CREATE_USER_REFID],[CREATE_DATE_TIME],[MODIFY_USER_REFID],[MODIFY_DATE_TIME],[VERSION],[ACTIVE])
+     VALUES
+           ('FROM_SYSTEM','SYS','系统','system','FromSystem',null
+            ,'admin','2014-05-30 00:00:00','admin','2014-05-30 00:00:00',0,1
+            )
+GO
+INSERT INTO [DATA_SOURCE]
+           ([REFID],[DATA_SOURCE_TYPE],[SOURCE_NAME],JSON_PATH,[PRAGRME],[REMARK]
+           ,[CREATE_USER_REFID],[CREATE_DATE_TIME],[MODIFY_USER_REFID],[MODIFY_DATE_TIME],[VERSION],[ACTIVE])
+     VALUES
+           ('FROM_BEAN_PRESC','BEN','处方','prescription','FromPrescription',null
+            ,'admin','2014-05-30 00:00:00','admin','2014-05-30 00:00:00',0,1
+            )
+GO
+INSERT INTO [DATA_SOURCE]
+           ([REFID],[DATA_SOURCE_TYPE],[SOURCE_NAME],JSON_PATH,[PRAGRME],[REMARK]
+           ,[CREATE_USER_REFID],[CREATE_DATE_TIME],[MODIFY_USER_REFID],[MODIFY_DATE_TIME],[VERSION],[ACTIVE])
+     VALUES
+           ('FROM_SHARED','SHR','共享数据','shared','FromShared',null
+            ,'admin','2014-05-30 00:00:00','admin','2014-05-30 00:00:00',0,1
+            )
+GO
+INSERT INTO [DATA_SOURCE]
+           ([REFID],[DATA_SOURCE_TYPE],[SOURCE_NAME],JSON_PATH,[PRAGRME],[REMARK]
+           ,[CREATE_USER_REFID],[CREATE_DATE_TIME],[MODIFY_USER_REFID],[MODIFY_DATE_TIME],[VERSION],[ACTIVE])
+     VALUES
+           ('FROM_PRIVATE','PRV','文书数据','nursedoc','FromPrivate',null
+            ,'admin','2014-05-30 00:00:00','admin','2014-05-30 00:00:00',0,1
+            )
+GO
+
+--元数据
+INSERT INTO [METADATA]
+           ([REFID],[METADATA_NAME],[METADATA_SIMPLE_NAME],[METADATA_CODE],
+           [DATA_SOURCE_REFID],[R_DATA_SOURCE_TYPE],[DATA_SOURCE_PATH],[INPUT_TYPE],[DATA_TYPE],[SCOPE_TYPE],
+           [READONLY_FLAG],[TIME_KEY_FLAG],[MIN_VALUE],[MAX_VALUE],[VERIFY_POLICY_CODE],
+           [EVALUATE_TYPE],[EVALUATE_CODE],[EVALUATE_SCORE],[WIDTH],[HEIGHT],[UNIT],[PRECISION],[CREATE_USER_REFID],[CREATE_DATE_TIME],[MODIFY_USER_REFID],[MODIFY_DATE_TIME],[VERSION],[ACTIVE])
+     VALUES
+           ('CurrUser_ID','当前用户','当前用户','CURR_USER'
+           ,'FROM_SYSTEM','SYS','currUser','STR','STR','PRV'
+           ,'Y','N',null,null,null
+           ,'NOT',null,null,50,null,null,null
+           ,'admin','2014-05-30 00:00:00','admin','2014-05-30 00:00:00',0,1)
+GO
+INSERT INTO [METADATA]
+           ([REFID],[METADATA_NAME],[METADATA_SIMPLE_NAME],[METADATA_CODE],
+           [DATA_SOURCE_REFID],[R_DATA_SOURCE_TYPE],[DATA_SOURCE_PATH],[INPUT_TYPE],[DATA_TYPE],[SCOPE_TYPE],
+           [READONLY_FLAG],[TIME_KEY_FLAG],[MIN_VALUE],[MAX_VALUE],[VERIFY_POLICY_CODE],
+           [EVALUATE_TYPE],[EVALUATE_CODE],[EVALUATE_SCORE],[WIDTH],[HEIGHT],[UNIT],[PRECISION],[CREATE_USER_REFID],[CREATE_DATE_TIME],[MODIFY_USER_REFID],[MODIFY_DATE_TIME],[VERSION],[ACTIVE])
+     VALUES
+           ('CurrUserName_ID','当前用户名','当前用户名','CURR_USER_NAME'
+           ,'FROM_SYSTEM','SYS','currUserName','STR','STR','PRV'
+           ,'Y','N',null,null,null
+           ,'NOT',null,null,50,null,null,null
+           ,'admin','2014-05-30 00:00:00','admin','2014-05-30 00:00:00',0,1)
+GO
+INSERT INTO [METADATA]
+           ([REFID],[METADATA_NAME],[METADATA_SIMPLE_NAME],[METADATA_CODE],
+           [DATA_SOURCE_REFID],[R_DATA_SOURCE_TYPE],[DATA_SOURCE_PATH],[INPUT_TYPE],[DATA_TYPE],[SCOPE_TYPE],
+           [READONLY_FLAG],[TIME_KEY_FLAG],[MIN_VALUE],[MAX_VALUE],[VERIFY_POLICY_CODE],
+           [EVALUATE_TYPE],[EVALUATE_CODE],[EVALUATE_SCORE],[WIDTH],[HEIGHT],[UNIT],[PRECISION],[CREATE_USER_REFID],[CREATE_DATE_TIME],[MODIFY_USER_REFID],[MODIFY_DATE_TIME],[VERSION],[ACTIVE])
+     VALUES
+           ('InputTime_ID','输入时间','输入时间','INPUT_TIME'
+           ,'FROM_SYSTEM','SYS','inputTime','DAT_TIM','DAT_TIM','PRV'
+           ,'N','Y',null,null,null
+           ,'NOT',null,null,50,null,null,null
+           ,'admin','2014-05-30 00:00:00','admin','2014-05-30 00:00:00',0,1)
+GO
+
+
+-- 纸张
+INSERT INTO [PAGER]
+           ([REFID] ,[PAGER_NAME] ,[PAGER_CODE] ,[WIDTH] ,[HEIGHT]
+           ,[CREATE_USER_REFID] ,[CREATE_DATE_TIME] ,[MODIFY_USER_REFID] ,[MODIFY_DATE_TIME] ,[VERSION] ,[ACTIVE])
+     VALUES
+           ('A4_ID','A4','A4',752,1060
+           ,'admin','2014-05-30 00:00:00','admin','2014-05-30 00:00:00',0,1)
+GO
+INSERT INTO [PAGER]
+           ([REFID] ,[PAGER_NAME] ,[PAGER_CODE] ,[WIDTH] ,[HEIGHT]
+           ,[CREATE_USER_REFID] ,[CREATE_DATE_TIME] ,[MODIFY_USER_REFID] ,[MODIFY_DATE_TIME] ,[VERSION] ,[ACTIVE])
+     VALUES
+           ('A5_ID','A5','A5',530,752
+           ,'admin','2014-05-30 00:00:00','admin','2014-05-30 00:00:00',0,1)
+GO

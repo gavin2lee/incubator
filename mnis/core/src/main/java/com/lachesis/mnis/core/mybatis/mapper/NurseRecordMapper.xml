@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lachesis.mnis.core.mybatis.mapper.NurseRecordMapper">
+	<resultMap id="bodySignDictMap" type="BodySignDict">
+		<id property="itemCode" column="item_code" />
+		<result property="itemName" column="item_name" />
+		<result property="itemUnit" column="item_unit" />
+	</resultMap>
+	<resultMap id="nurseRecordItemMap" type="NurseRecordSpecItem">
+		<id property="itemCode" column="item_code"/>
+		<result property="itemName" column="item_name"/>
+		<collection resultMap="bodySignDictMap" property="subItemList" columnPrefix="s_"/>
+	</resultMap>
+	<resultMap id="bodySignItemMap" type="BodySignItem">
+		<id property="detailRecordId" column="nurse_record_detail_id" />
+		<result property="itemValue" column="item_value" />
+		<result property="measureNoteCode" column="measure_note_code" />
+		<result property="measureNoteName" column="measure_note_name" />
+		<result property="abnormalFlag" column="abnormal_flag" />
+		<association property="bodySignDict" resultMap="bodySignDictMap" />
+	</resultMap>
+	
+	<resultMap id="nurseRecordMap" type="NurseRecord" >
+		<id property="masRecordId" column="nurse_record_mas_id"/>
+		<result property="recordDate" column="rec_datetime"/>
+		<result property="recordNurseCode" column="rec_nurse_code"/>
+		<result property="recordNurseName" column="rec_nurse_name"/>
+		<result property="patientId" column="pat_id"/>
+		<result property="cooled" column="cooled"/>
+	</resultMap>
+	
+	<resultMap id="nurseRecordEntityMap" type="NurseRecordEntity" >
+		<id column="nurse_record_mas_id"/>
+ 		<association property="nurseRecord" resultMap="nurseRecordMap"/> 
+		<collection property="itemList" resultMap="bodySignItemMap" />
+	</resultMap>
+	
+	<select id="selectNurseRecordSpecItems" parameterType="String" resultMap="nurseRecordItemMap">
+		SELECT r.item_code,
+				r.item_name,
+				v.value_code as s_item_code,
+				v.value_name as s_item_name,
+				r.item_unit as s_item_unit
+		FROM dict_nurse_record r
+		LEFT JOIN dict_nurse_record_value v
+		ON r.item_code = v.item_code
+		WHERE (r.item_unit is null AND r.parent_code is null)
+		ORDER BY r.priority, v.seq_no
+	</select>
+	
+	<select id="selectNurseRecordTreeItems" parameterType="String" resultMap="nurseRecordItemMap">
+		SELECT r.item_code,
+				r.item_name,
+				sr.item_code as s_item_code,
+				sr.item_name as s_item_name,
+				sr.item_unit as s_item_unit
+		FROM dict_nurse_record r
+		JOIN dict_nurse_record sr
+		ON r.item_code = sr.parent_code
+		ORDER BY sr.priority
+	</select>
+	
+	<insert id="insertNurseRecord" parameterType="NurseRecordEntity">
+		<selectKey resultType="int" keyProperty="masterRecordId"
+			order="BEFORE">
+			INSERT INTO rec_nurse_record_mas
+			(rec_datetime,rec_nurse_code,pat_id,remark, record_type_code, cooled)
+			values(#{nurseRecord.recordDate},#{nurseRecord.recordNurseCode},#{nurseRecord.patientId},
+			#{nurseRecord.remark}, #{nurseRecord.recordTypeCode}, #{nurseRecord.cooled})
+			
+			SELECT SCOPE_IDENTITY() AS ID
+		</selectKey>
+		INSERT INTO rec_nurse_record_detail
+		(nurse_record_mas_id,item_code,item_value, measure_note_code,measure_note_name)
+		(
+		<foreach collection="itemList" item="item" index="index" separator="union all">
+			select #{masterRecordId},#{item.bodySignDict.itemCode},#{item.itemValue},
+				#{item.measureNoteCode},#{item.measureNoteName}
+		</foreach>
+		)
+	</insert>
+	
+	<update id="deleteNurseRecord" parameterType="String">
+		UPDATE rec_nurse_record_mas
+		SET is_valid = 0
+		WHERE 
+			nurse_record_mas_id = #{masterRecordId} 			
+	</update>
+	
+	<select id="selectNurseRecord" parameterType="String" resultMap="nurseRecordEntityMap">
+		SELECT m.nurse_record_mas_id,
+				m.rec_datetime,
+				m.rec_nurse_code,
+				e.empl_name as rec_nurse_name,
+				m.pat_id,
+				m.cooled,
+				d.nurse_record_detail_id,
+				d.item_code,
+				i.item_name,
+				d.item_value,
+				d.item_value_code,
+				i.item_unit,
+				d.measure_note_code,
+				d.measure_note_name
+		  FROM rec_nurse_record_mas AS m
+		  INNER JOIN rec_nurse_record_detail AS d
+		  ON m.nurse_record_mas_id = d.nurse_record_mas_id
+		  LEFT JOIN sys_employee AS e
+		  ON m.rec_nurse_code = e.empl_code	
+		  LEFT JOIN (
+		     SELECT item_code, item_name, item_unit
+			  FROM dict_nurse_record
+			  UNION 
+			  SELECT item_code, item_name, item_unit
+			  FROM dict_body_sign
+		  ) AS i
+		  ON i.item_code=d.item_code
+		  WHERE
+		  	m.is_valid = 1
+		  AND
+		  	m.pat_id = #{param1}
+		  <if test="param2 != null">
+		  	AND m.rec_datetime <![CDATA[ >= #{param2} ]]>
+		  </if> 
+		  <if test="param3 != null">
+		  	AND m.rec_datetime <![CDATA[ <= #{param3} ]]>
+		  </if>
+        order by   m.rec_datetime desc
+	</select>	
+</mapper>

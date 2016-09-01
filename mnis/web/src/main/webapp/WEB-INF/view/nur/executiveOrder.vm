@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="#url('/resources/js/nur/executiveOrder.js?1472534366474')" charset="utf-8"></script>
+<style type="text/css">
+.long-medi,.tmp-medi{
+	position: relative;
+	float: left;
+	height: 38px;
+	line-height: 38px;
+	margin-left: 30px;
+	padding-right: 30px;
+	font-size: 16px;
+	cursor: pointer;
+	overflow: hidden;
+}
+.long-medi i,.tmp-medi i{
+	position: absolute;
+	top: 18px;
+	right: 5px;
+	width: 5px;
+	height: 5px;
+	background-color: #333;
+}
+.long-medi{padding-right:50px;border-right:1px dotted #fff;}
+.long-medi i{right: 25px;}
+.long-medi div {
+	position: absolute;
+	top: 40px;
+	left: 50%;
+	width: 115px;
+	background-color: #587c91;
+	color: #fff;
+	font-size: 14px;
+	z-index: 1111;
+}
+.long-medi div p {
+	height: 25px;
+	line-height: 25px;
+	padding: 5px 10px;
+}
+.circle2 {
+background-position: -20px -165px;
+}
+element.style {
+}
+
+.circle {
+display: inline-block;
+width: 18px;
+height: 19px;
+margin-right: 10px;
+background: url(../../../resources/img/MNIS.png) 0 -166px no-repeat;
+cursor: pointer;
+vertical-align: text-bottom;
+}
+.circle2 {
+	background-position: -20px -165px;
+}
+</style>
+<script type="text/javascript">
+	var patientId = $!id;
+</script>
+<title>医嘱单</title>
+</head>
+
+<body id="medicalOrderLayout" class="easyui-layout">
+	
+	<div  data-options="region:'center',fit:true" style="height:934px;overflow: hidden;">
+		<div class="top-tools" style="height:39px">
+            <div class="top-tools-box ofh">
+                <div class="long-medi">
+                    长期医嘱单(<span>全部</span>)
+                    <i></i>
+                    <div>
+	                    <p><span class="circle circle2"></span>全部</p>
+	                    <p><span class="circle"></span>待审核</p>
+	                    <p><span class="circle"></span>无效</p>
+	                    <p><span class="circle"></span>有效</p>
+                    </div>
+                </div>
+                <div class="tmp-medi">
+                    临时医嘱单
+                </div>
+                <input type="hidden" id="pid" value = "$!id" />
+                <div class="btn-box mgr10 fr">
+
+                	<input type="button" value="退回医嘱">
+                	<input type="button" value="医嘱审核">
+                	<input type="button" value="打印">
+                	<input type="button" value="续打">
+                	<input type="button" value="打印全部">
+                	<input type="button" value="设置">
+                </div>
+            </div>
+        </div>
+        <div id="mid-show-box">
+			<table id="medicalOrderTable" class="easyui-datagrid">
+	            <thead>
+	                <tr>
+	                     <th data-options="field:'mId',width:40,align:'center',checkbox:true"></th>
+	                     <th data-options="field:'orderTypeName',width:60,align:'center'">医嘱类型</th>
+	                     <th data-options="field:'_planDate',width:150,align:'center'">计划执行时间</th>
+	                     <th data-options="field:'orderBaseInfoList',width:200,align:'center',formatter:getOrderBaseInfo">医嘱内容</th>
+	                     <th data-options="field:'_standard',width:50,align:'left'">规格</th>
+	                     <th data-options="field:'_dosage',width:60,align:'left'">剂量</th>
+	                     <th data-options="field:'usageName',width:60,align:'left'">用法</th>
+	                     <th data-options="field:'deliverFreq',width:60,align:'left'">频次</th>
+	                     <th data-options="field:'createDate',width:150,align:'left'">开立时间</th>
+	                     <th data-options="field:'createDoctorName',width:100,align:'left'">开立医生</th>
+	                     <th data-options="field:'comment',width:100,align:'left'">备注</th>
+	                     <th data-options="field:'exedoc',width:150,align:'left'">执行护士</th>
+	                     <th data-options="field:'exeTime',width:100,align:'left'">执行时间</th>
+	                </tr>
+	            </thead>
+	        </table>
+        </div>
+	</div>
+</body>
+</html>

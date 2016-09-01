@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lachesis.mnisqm.module.remote.user.dao.JuniorAskForLeaveMapper" >
+  <resultMap id="BaseResultMap" type="com.lachesis.mnisqm.module.user.domain.JuniorAskForLeave" >
+    <result column="NUM_DAYS" property="numDays" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="NURSE_CODE" property="nurseCode" jdbcType="VARCHAR" />
+    <result column="NURSE_NAME" property="nurseName" jdbcType="VARCHAR" />
+    <result column="HIERARCHY" property="hierarchy" jdbcType="VARCHAR" />
+    <result column="REASON" property="reason" jdbcType="VARCHAR" />
+    <result column="BEGIN_TIME" property="beginTime" jdbcType="VARCHAR" />
+    <result column="END_TIME" property="endTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryAllJuniorLeaveInfo" resultMap="BaseResultMap" >
+    select 
+    sl.DAY_SUM NUM_DAYS, 
+    sl.DEPT_NAME DEPT_NAME, 
+    sl.USER_CODE NURSE_CODE, 
+    vcu.user_name NURSE_NAME, 
+    cup.POSITION_NAME HIERARCHY, 
+    sl.LEAVE_WHY REASON,
+    sl.START_TIME BEGIN_TIME,
+    sl.END_TIME END_TIME
+    from YIHUI.numas.dbo.SCHEDULE_LEAVE sl LEFT JOIN  
+    	YIHUI.numas.dbo.COM_USER_POSITION cup on sl.USER_CODE = cup.USER_CODE,
+    	YIHUI.numas.dbo.v_COM_USER vcu
+    where sl.USER_CODE = vcu.USER_CODE
+    	and sl.STATUS = '1'
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select* from JUNIOR_ASK_FOR_LEAVE
+  </select>
+</mapper>

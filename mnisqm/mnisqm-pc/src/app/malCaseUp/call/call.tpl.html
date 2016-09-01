@@ -1,0 +1,83 @@
+<div class="col-md-12" ng-if="vm.state.current.name == 'home.call'">
+  <!-- <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load"> -->
+  <div class="panel panel-layout panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-list-alt"></i>
+      <span>不良事件列表</span>
+      <div class="pull-right">
+        <a ui-sref=".callForm" class="btn btn-sm btn-default">
+          <i class="fa fa-upload"></i> 新建上报
+        </a>
+      </div>
+    </div>
+    <div class="panel-body">
+      <table print-table="vm.list" st-table="vm.showList" st-safe-src="vm.list" class="table table-hover table-condensed table-bordered">
+        <thead>
+          <tr class="header-export form-inline">
+            <th>级别</th>
+            <th>类型</th>
+            <th>上报科室</th>
+            <th st-sort-default="reverse" st-sort="eventTime">发生时间</th>
+            <th>报告人
+              <select st-search="userName" class="form-control input-sm">
+                    <option value="">全部</option>
+                    <option ng-repeat="row in vm.list | unique:'userName'" value="{{row.userName}}">{{row.userName}}</option>
+                </select>
+            </th>
+            <th>
+              状态
+            </th>
+            <th print-remove>操作</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="row in vm.showList">
+          <tr class="row-{{$index}}" ng-class="{'info': row.reportCode === vm.currentRow.reportCode}" ng-click="vm.setCurrent(row)">
+            <td>{{ row.damageLevelName }}</td>
+            <td>{{row.eventTypeName}}</td>
+            <td>{{row.deptName}}</td>
+            <td>{{row.eventTime | date: "yyyy-MM-dd HH:mm"}}</td>
+            <td>{{row.userName}}</td>
+            <td>{{row.status}}</td>
+            <td>
+              <!-- TODO 操作权限控制显示操作按钮  -->
+              <!-- 护士操作 -->
+              <a class="btn btn-info btn-xs" ng-click="vm.loadDetail(row, 'caseInfo')">  事件详情</a>
+              <a class="btn btn-info btn-xs" ng-click="vm.loadDetail(row, 'surveyInfo')">  调查详情</a>
+              <a class="btn btn-info btn-xs" ng-if="row.permission === '01'" ui-sref=".callForm({reportCode:row.reportCode, report: row})">  修改</a>
+              <a class="btn btn-info btn-xs" ng-if="row.permission === '01'" ui-sref=".survey({reportCode:row.reportCode, report: row })">  填写调查</a>
+              <button ng-if="row.permission === '01'" class="btn btn-xs btn-danger" ng-click="vm.openConfirm(row, {type: 'del', title: '删除'})">
+                <i class="fa fa-times-circle"></i>删除
+              </button>
+              <div class="btn-group" uib-dropdown ng-if="row.permission === '01' || row.permission === '02'">
+                <button class="btn btn-xs btn-danger" type="button" uib-dropdown-toggle>
+                  <i class="fa fa-paper-plane"></i>上报至
+                </button>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                  <li role="menuitem" ng-if="row.permission === '01'"><a href="javascript:;" ng-click="vm.openConfirm(row, {type: 'report', value: 'submitEventReportToHeadNurse', title: '上报'})">护士长</a></li>
+                  <li role="menuitem" ng-if="row.permission === '01' || row.permission === '02'"><a href="javascript:;" ng-click="vm.openConfirm(row, {type: 'report', value: 'submitEventReportToNurseDept', title: '上报'})">护理部</a></li>
+                </ul>
+              </div>
+              <!-- 护士操作 -->
+              <!-- 护士长、护理部操作：审核／打回 -->
+              <button ng-if="row.permission === '03'" class="btn btn-xs btn-primary" ng-click="vm.openConfirm(row, {type: 'report', value: 'trackEventReport', title: '通过'})">  通过</button>
+              <button ng-if="row.permission === '02'" class="btn btn-xs btn-info" ng-click="vm.openConfirm(row, {type: 'report', value: 'returnEventReportToNurse', title: '打回'})">  打回</button>
+              <button ng-if="row.permission === '03'" class="btn btn-xs btn-info" ng-click="vm.openConfirm(row, {type: 'report', value: 'returnEventReportToHeadNurse', title: '打回'})">  打回</button>
+              <button ng-if="row.permission === '02' || row.permission === '03'" class="btn btn-xs btn-danger" ng-click="vm.openConfirm(row, {type: 'report', value: 'terminateEventReport', title: '终止'})">  终止</button>
+              <!-- 护士长、护理部操作：审核／打回 -->
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="12">
+              <div st-pagination="" st-items-by-page="15" st-displayed-pages="5"></div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <none-data-info list="vm.list"></none-data-info>
+    </div>
+  </div>
+</div>
+<div ui-view></div>

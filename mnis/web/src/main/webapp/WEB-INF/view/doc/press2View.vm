@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<style type="text/css">
+.doc-table th, .doc-table td {
+	padding: 0px;
+}
+.doc-table td {
+	height: 25px;
+}
+@media print{
+	@page {
+		size: portrait;
+		margin-top: 20mm;
+	}
+}
+</style>
+</head>
+<body class="doc-view">
+#docViewToolbar()
+<div class="paper-container">
+<div class="paper">
+	<div class="paper-content">
+		#press2()
+		<div class="doc-content">
+			<table class="doc-table">
+				<thead>
+					<tr>
+			            <th rowspan="3">日期时间</th>
+						<th colspan="4">配合程度</th>
+						<th colspan="4">年龄(岁)</th>
+						<th colspan="4">皮肤状况</th>
+						<th colspan="4">其他疾病</th>
+						<th colspan="4">生理状况</th>
+						<th colspan="4">精神状况</th>
+						<th colspan="4">活动程度</th>
+						<th colspan="4">灵活程度</th>
+						<th colspan="4">失禁分值</th>
+			            <th rowspan="3">总评分</th>
+			            <th rowspan="3" style="width: 50px;">签名</th>
+					</tr>
+					<tr>
+						<th>完全</th>
+						<th>较少</th>
+						<th>部分</th>
+						<th>不能</th>
+						
+						<th style="word-break: normal;">&lt;<br>10</th>
+						<th style="word-break: normal;">&lt;<br>30</th>
+						<th style="word-break: normal;">&lt;<br>60</th>
+						<th style="word-break: normal;">&gt;<br>60</th>
+						
+						<th>尚好</th>
+						<th>干燥脱屑</th>
+						<th>潮湿</th>
+						<th style="width: 35px;">伤口过敏、破口</th>
+						
+						<th>无</th>
+						<th style="width: 35px;">抵抗力下降发烧、糖尿病</th>
+						<th style="width: 35px;">多发性肝硬化肥胖病</th>
+						<th>动脉栓塞</th>
+						
+						<th>好</th>
+						<th>一般</th>
+						<th>较差</th>
+						<th>很差</th>
+						
+						<th>警觉</th>
+						<th>情感平淡</th>
+						<th>情绪烦躁</th>
+						<th>昏迷</th>
+						
+						<th>走动</th>
+						<th>帮助下走动</th>
+						<th>轮椅范围</th>
+						<th>昏迷</th>
+						
+						<th>完全</th>
+						<th>轻微受限</th>
+						<th>非常受限</th>
+						<th>固定</th>
+						
+						<th>无</th>
+						<th>偶有</th>
+						<th>常常</th>
+						<th>完全</th>
+					</tr>
+					<tr>
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			            
+			            <th>4</th>
+			            <th>3</th>
+			            <th>2</th>
+			            <th>1</th>
+			        </tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		#press2Comment()
+	</div>
+	#pageFoot()
+</div>
+</div>
+<script type="text/javascript">
+function getRowDatas(row, isFirstRow, lastDate) {
+	return [
+		formatDate(row['date'], isFirstRow, lastDate),
+		row['coordinate4'],
+		row['coordinate3'],
+		row['coordinate2'],
+		row['coordinate1'],
+		
+		row['age4'],
+		row['age3'],
+		row['age2'],
+		row['age1'],
+		
+		row['skin4'],
+		row['skin3'],
+		row['skin2'],
+		row['skin1'],
+		
+		row['ill4'],
+		row['ill3'],
+		row['ill2'],
+		row['ill1'],
+		
+		row['physiology4'],
+		row['physiology3'],
+		row['physiology2'],
+		row['physiology1'],
+		
+		row['aware4'],
+		row['aware3'],
+		row['aware2'],
+		row['aware1'],
+		
+		row['move4'],
+		row['move3'],
+		row['move2'],
+		row['move1'],
+		
+		row['agility4'],
+		row['agility3'],
+		row['agility2'],
+		row['agility1'],
+		
+		row['incontinence4'],
+		row['incontinence3'],
+		row['incontinence2'],
+		row['incontinence1'],
+		
+		row['score'],
+		row['sign']
+	];
+}
+$(function() {
+	fillTable('#url("/doc/press2/view/datas")', '$!{patient.cureNo}', 39, getRowDatas);
+});
+</script>
+</body>
+</html>

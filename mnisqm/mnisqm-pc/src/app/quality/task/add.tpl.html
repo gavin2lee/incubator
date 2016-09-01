@@ -1,0 +1,63 @@
+<div class="wrapper quality-add-form-wrapper padding-content">
+  <uib-tabset active="active">
+    <uib-tab index="0" heading="质量计划编辑">
+      <div class="panel panel-layout panel-default" loading-wrapper loading-type="content" loading-options="vm.load">
+        <div class="tool-wrapper container-fluid form-inline">
+          <div class="filter-item"><span class="filter-text">检查任务：{{vm.detail.qualityTaskList.length || 0}}个</span></div>
+          <div class="filter-item"><span class="filter-text">组长：{{vm.helper.user.getUserName(vm.currentTeam.teamLeader)}}</span></div>
+          <div class="filter-item"><span class="filter-text">组员：<span ng-repeat="item in vm.currentTeam.userList track by $index">{{vm.helper.user.getUserName(item)}}<span ng-if="$index !== vm.currentTeam.userList.length - 1">，</span></span></span></div>
+          <div class="filter-item">
+            <select class="form-control input-sm" ng-model="vm.userFilter">
+              <option value="">全部</option>
+              <option value="{{item}}" ng-repeat="item in vm.currentTeam.userList track by $index">{{vm.helper.user.getUserName(item)}}</option>
+            </select>
+          </div>
+          <div class="pull-right">
+            <button class="btn btn-primary btn-sm" ng-click="vm.open()">新增任务</button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <table class="table table-condensed table-bordered no-border">
+            <thead>
+              <tr class="header-export">
+                <th>时间</th>
+                <th>调查人</th>
+                <th>调查病区</th>
+                <th>备注</th>
+                <!-- <th>病区数</th> -->
+                <th print-remove>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-{{$index}}" ng-repeat="row in vm.detail.qualityTaskList | orderBy: 'taskDate' | filter: {handUserCode: vm.userFilter}">
+                <td class="text-center">
+                  {{ row.taskDate }}
+                </td>
+                <td class="text-center">
+                  {{ vm.helper.user.getUserName(row.handUserCode) }}
+                </td>
+                <td class="text-center">
+                  {{vm.helper.dept.getDeptName(row.deptCode)}}
+                </td>
+                <td class="text-center">
+                  {{ row.remark }}
+                </td>
+                <!-- <td class="text-center">
+                  {{ row.depts.length }}
+                </td> -->
+                <td class="text-center">
+                  <button class="btn btn-primary btn-xs" ng-click="vm.open(row)">
+                    <span class="fa fa-pencil"></span>编辑
+                  </button>
+                  <button class="btn btn-danger btn-xs" ng-click="vm.del(row.seqId)">
+                    <span class="fa fa-trash"></span>删除
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </uib-tab>
+  </uib-tabset>
+</div>

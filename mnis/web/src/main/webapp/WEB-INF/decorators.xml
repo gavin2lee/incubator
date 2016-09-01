@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="GBK" ?>
+<decorators defaultdir="/WEB-INF/view/common/decorators">
+	<!-- Any urls that are excluded will never be decorated by Sitemesh -->
+	<excludes>
+		<pattern>/common/error/*</pattern>
+		<!-- <pattern>/nur/bodySign/*/bodyTempSheetPdf.do</pattern> -->
+		<pattern>/doc/*</pattern>
+	</excludes>
+	<decorator name="main" page="main.jsp">
+		<pattern>/*</pattern>
+	</decorator>
+</decorators>

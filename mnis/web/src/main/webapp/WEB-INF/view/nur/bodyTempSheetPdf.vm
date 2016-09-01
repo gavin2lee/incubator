@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>体温单</title>
+    <script type="text/javascript" src="#url('/resources/js/handlebars-v3.0.3.js?1472534366475')"></script>
+    <script type="text/javascript" src="#url('/resources/js/nur/bodyTempSheet.js?1472534366475')"
+            charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/map.js?1472534366475')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/d3.min.js?1472534366475')" charset="utf-8"></script>
+    <script type="text/javascript" src="#url('/resources/js/nur/previewTempSheet.js?1472534366475')"
+            charset="utf-8"></script>
+</head>
+<style type="text/css">
+    .temp-header ._btn {
+        padding: 0 8px;
+        line-height: 22px;
+    }
+
+    #showPanel {
+        overflow: auto;
+    }
+
+    .drawTempBox {
+        padding: 10px;
+    }
+
+    .title, .titleType {
+        text-align: center;
+    }
+
+    .title {
+        font-size: 24px;
+        padding: 5px 0 0;
+    }
+
+    .titleType {
+        font-size: 17px;
+        padding: 3px 0 0;
+    }
+
+    .headInfo {
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .headInfo table {
+        width: 97%;
+        margin: 0 auto;
+    }
+
+    .headInfo table td {
+        font-size: 12px;
+    }
+
+    .headInfo table td span.info {
+        border-bottom: 1px solid #000;
+    }
+
+    #dialog-newTemp .dlg-title {
+        min-width: 90px;
+    }
+
+    .info-panel {
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+
+    #showPanel::-webkit-scrollbar, .info-panel::-webkit-scrollbar {
+        width: 7px;
+        height: 5px;
+    }
+
+    #showPanel::-webkit-scrollbar-thumb, .info-panel::-webkit-scrollbar-thumb {
+        background-color: #666;
+        height: 50px;
+        /* outline-offset: -2px; */
+        /* outline: 2px solid #fff; */
+        -webkit-border-radius: 4px;
+        /* border: 2px solid #fff; */
+    }
+
+    .top-tools-box .btn-box .btn-nm {
+        width: 40px;
+    }
+
+    .top-tools-box .btn-box .pdf-print-btn {
+        width: 80px;
+    }
+
+    .top-tools-box .btn-box span.span-icon {
+        float: left;
+        display: block;
+        width: 45px;
+        height: 33px;
+        background: url(../../../resources/img/MNIS.png) -233px 0 no-repeat;
+    }
+
+    .top-tools-box .btn-box span.span-list {
+        float: left;
+        display: block;
+        width: 44px;
+        height: 33px;
+        background: url(../../../resources/img/MNIS.png) -278px 0 no-repeat;
+        cursor: pointer;
+    }
+
+    .drawTempBox {
+        position: relative;
+    }
+
+    .mask-date-wrapper {
+        position: absolute;
+        width: 630px;
+        top: 0;
+        height: 100%;
+        right: 18px;
+    }
+
+    #sheetForm table tr td {
+        font-size: 12px;
+        padding: 4px 0;
+    }
+
+    #sheetForm table tr td span.text {
+        display: inline-block;
+        min-width: 47px;
+        height: 25px;
+        line-height: 25px;
+        margin: 6px 0;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    #sheetForm table tr td input[type='checkbox'], #sheetForm table tr td input[type='radio'] {
+        position: relative;
+        top: 1px;
+    }
+
+    #sheetForm table tr td select {
+        font-size: 13px;
+    }
+
+    #sheetForm table tr td input[type='text'] {
+        width: 50px;
+    }
+
+    #selectDate {
+        direction: rtl;
+    }
+
+    .week-switch {
+        float: left;
+        margin: 0 0 0 29%;
+    }
+
+    .temp-save-wrapper {
+
+    .btn-nm {
+        padding: 4px 10px;
+    }
+
+    }
+
+    #dialog-newTemp .panel {
+        padding: 10px 20px;
+    }
+</style>
+<body>
+<div class="tempSheetPdf" style="height:100%;">
+    <iframe height="0" width="0" id="printFrame" style="position:absolute;"></iframe>
+    <!--==================== start: top tools   ====================-->
+    <div class="top-tools" style="height:40px">
+        <div class="top-tools-box">
+            <div class="top-title">
+                <span>体温单</span>
+            </div>
+            <input type="hidden" value="$id" id="patientId"/>
+            <input type="hidden" value="" id="offsetWeek"/>
+            <input type="hidden" id="lastWeek"/>
+
+            <div class="week-switch">
+                <input class="_btn _btn-md" id="firstBtn" type="button" value="<<" onclick="firstWeekSheetPdf();"
+                       style="min-width: 50px;">
+                <input class="_btn _btn-md" id="prevBtn" type="button" value="<" onclick="prevWeekSheetPdf()"
+                       style="min-width: 50px;">
+                <input type="text" id="currentWeek" readonly
+                       style="border:none;background:#e0e4e8;width:40px;margin:0;text-align: center;"/>
+                <input class="_btn _btn-md" id="nextBtn" type="button" value=">" onclick="nextWeekSheetPdf()"
+                       style="min-width: 50px;">
+            </div>
+
+            <div class="btn-box fr mgr10">
+                <a href="javascript:;" class="_btn _btn-md" id="newTempRecord">新建</a>
+                <!-- <input  id="lastBtn"  disabled="disabled" type="button" value=">>" onclick="lastWeekSheetPdf()" style="min-width: 50px;"> -->
+                <!-- <div id="firstBtn" class="btn-nm" onclick="firstWeekSheetPdf();">
+                    <span class="btm"><<</span>
+                </div>
+                <div id="prevBtn" class="btn-nm" onclick="prevWeekSheetPdf()">
+                    <span class="btm"><</span>
+                </div> -->
+
+                <!-- <div id="nextBtn" class="btn-nm" onclick="nextWeekSheetPdf()">
+                    <span class="btm">></span>
+                </div>
+                <div id="lastBtn" class="btn-nm" onclick="lastWeekSheetPdf()">
+                    <span class="btm">>></span>
+                </div> -->
+                <!-- <span style="font-size:14px;margin-left:20px;vertical-align: middle;">跳转到</span>
+                <input type="text" id="searchWeek" value="" style="width:80px;height:23px;"/>
+                <input type="button" value="确定" onclick="queryByInput()"> -->
+                &nbsp;
+            ##                <select id="selectDate" onchange="loadDate(this);" style="width:110px;"></select>
+
+                <a href="javascript:;" class="_btn _btn-md" onclick="printPage();">打印</a>
+
+
+                <!-- <input type="button" value="打印本周" >
+                <input type="button" value="打印全部"> -->
+
+                <!-- <div class="btn-nm" onclick="queryByInput()">
+                    <span class="btm">确定</span>
+                </div>
+                <div class="btn-nm pdf-print-btn" onclick="">
+                    <span class="btm">打印本周</span>
+                </div>
+                <div class="btn-nm pdf-print-btn" onclick="">
+                    <span class="btm">打印全部</span>
+                </div> -->
+                <!--  <div style="display: inline-block;width: 90px;">
+                     <span class="span-icon marginTop" id="block-view" title="图标"></span>
+                     <span class="span-list marginTop" id="list-view" title="列表"></span>
+                 </div> -->
+
+            </div>
+        </div>
+    </div>
+    <!--==================== end: top tools   ====================-->
+    <div class="tsp-mid f_yahei" style="height:80%;">
+        <div id="print_area" style="float:left;width:100%;height:100%;" class="">
+            <div>
+                <div id="showPanel" style="width:100%;height:100%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 新增对话框 start-->
+<div class="easyui-dialog" id="dialog-newTemp">
+    <div style="padding:0 15px;">
+        <div style="padding: 0 0 10px 0;" class="temp-header">
+            日期
+            <input id="recordDay" name="recordDay" class="Wdate" value="$!currentDate" readonly="readonly"
+                   style="width: 78px;margin-top:5px;" onclick="WdatePicker({onpicking: function(dp){ getData(dp) }})"/>
+            &nbsp;&nbsp;&nbsp;
+            <div class="chkbox-wrapper">
+                <input class="chkbox" id="copyTo" name="copyTo" type="checkbox" value="Y"/>
+                <label for="copyTo"></label></div>
+            <label for="copyTo" class="text">&nbsp;&nbsp;转抄至护理记录</label>
+
+            <select id="getSyncTime" class="easyui-combobox">
+                <option value="">全天</option>
+                <option value="03:00">03:00</option>
+                <option value="07:00">07:00</option>
+                <option value="11:00">11:00</option>
+                <option value="15:00">15:00</option>
+                <option value="19:00">19:00</option>
+                <option value="23:00">23:00</option>
+            </select>
+            <a href="javascript:;" id="getSyncData" class="_btn">获取数据</a>
+            <div class="temp-save-wrapper" style="float: right">
+                <div id="svaBtn" class="_btn" style=" margin: 0 20px 0 0;">
+                    <span class="btm">保存</span>
+                </div>
+                <div class="_btn" onclick="clearData()"
+                     style="margin: 0 20px 0 0">
+                    <span class="btm">重置</span>
+                </div>
+                <div class="_btn" id="closeDialog">
+                    <span class="btm">关闭窗口</span>
+                </div>
+            </div>
+
+        </div>
+        <script id="formTpl" type="text/x-handlebars-template">
+            <div class="list-wrapper clearfix">
+                <ul class="label-list">
+                    <li>时间</li>
+                    <li>患者状态</li>
+                    <li>体温测量</li>
+                    <li>体温（℃）</li>
+                    <li>降温</li>
+                    <li>降温后（℃）</li>
+                    <li>脉搏测量</li>
+                    <li>脉博 （次/分）</li>
+                    <li>心率测量</li>
+                    <li>心率 （次/分）</li>
+                    <li>呼吸测量</li>
+                    <li>呼吸 （次/分）</li>
+                    <li>血压测量</li>
+                    <li>血压 （mmHg）</li>
+                    <li>血氧 （%）</li>
+                    <li>疼痛</li>
+                    <li>事件</li>
+                ##                    <li>事件时间</li>
+                </ul>
+                {{#each this.data.timeList}}
+                <ul class="list-item" data-id="{{timeId}}">
+                    <li>
+                        <input type="text" id="time_{{timeId}}" style="width:75px;" name="recordName" disabled readonly
+                               value="{{this.recordName}}"/>
+                    </li>
+                    <li>
+                        <select data-key="pat_status" id="pat_status_{{timeId}}" name="measureNoteCode"
+                                onchange="handleSelectChange('pat_status_{{timeId}}', this);" style="width:80px;">
+                                <option value="" data-key="pat_status"></option>
+                            {{#each ../dic.pat_status}}
+                                {{#select ../bodySignRecord.bodySignItemList}}
+                                <option value="{{dicCode}}" data-key="{{dicType}}">{{dicName}}</option>
+                                {{/select}}
+                            {{/each}}
+                            ## {{#select bodySignRecord.bodySignItemList}}
+                            ## <option value="" data-key="pat_status"></option>
+                            ## <option value="out">外出</option>
+                            ## <option value="qj">请假</option>
+                            ## {{/select}}
+                        </select>
+                    </li>
+                    <li>
+                        <select data-key="temperature" id="temperatureType_{{timeId}}" name="measureNoteCode"
+                                onchange="handleSelectChange('temperature_{{timeId}}', this);" style="width:80px;">
+                                {{#each ../dic.temperature}}
+                                    {{#select ../bodySignRecord.bodySignItemList}}
+                                    <option value="{{dicCode}}" data-key="{{dicType}}">{{dicName}}</option>
+                                    {{/select}}
+                                {{/each}}
+                            ## {{#select bodySignRecord.bodySignItemList}}
+                            ## <option data-key="temperature" value="yw">腋温</option>
+                            ## <option value="gw">肛温</option>
+                            ## <option value="kw">口温</option>
+                            ## <option value="bs">不升</option>
+                            ## <option value="jc">拒测</option>
+                            ## <!-- <option value="out">外出</option> -->
+                            ## <!-- <option value="qj">请假</option> -->
+                            ## <option value="ts">特殊值</option>
+                            ## {{/select}}
+                        </select>
+                    </li>
+                    <li>
+                        <input type="hidden" name="index" value="0"/>
+                        <input type="hidden" name="bodySignDict.itemCode" value="temperature"/>
+                        <input type="hidden" name="bodySignDict.itemName" value="体温"/>
+                        <input type="hidden" name="bodySignDict.itemUnit" value="℃"/>
+                        {{#input bodySignRecord.bodySignItemList}}
+                        <input type="text" data-key="temperature" id="temperature_{{timeId}}" name="itemValue" value=""
+                               style="width:75px;"/>
+                        {{/input}}
+                    ##                        <label for="bodySignDict.itemUnit">℃</label>
+                    </li>
+                    <li>
+                        <select data-key="coolway" id="coolwayType_{{timeId}}" name="measureNoteCode"
+                                onchange="handleSelectChange('coolway', this);" style="width:80px;">
+                            ## {{#select bodySignRecord.bodySignItemList}}
+                            ## <option data-key="coolway" value="">无</option>
+                            ## <option value="ice">冰敷</option>
+                            ## <option value="alcoholswab">酒精擦洗</option>
+                            ## <option value="waterswab">温水擦洗</option>
+                            ## {{/select}}
+                            {{#each ../dic.coolway}}
+                                {{#select ../bodySignRecord.bodySignItemList}}
+                                <option value="{{dicCode}}" data-key="{{dicType}}">{{dicName}}</option>
+                                {{/select}}
+                            {{/each}}
+                        </select>
+                    </li>
+                    <li>
+                        {{#checkbox bodySignRecord.bodySignItemList}}
+                        <div class="chkbox-wrapper">
+                            <input class="chkbox" data-key="cooledTemperature" type="checkbox" id="tempDown_{{timeId}}"
+                                   name="tempDown" value="down"/>
+                            <label for="tempDown_{{timeId}}"></label>
+                        </div>
+                        {{/checkbox}}
+                        {{#input bodySignRecord.bodySignItemList}}
+                        <input type="text" data-key="cooledTemperature" id="cooledTemperature_{{timeId}}"
+                               name="itemValue" value="" disabled="disabled" style="width:60px;"/>
+                        {{/input}}
+                        <!-- <label for="bodySignDict.itemUnit">℃</label> -->
+                    </li>
+                    <li>
+                        <select data-key="pulse" id="pulseType_{{timeId}}" name="measureNoteCode"
+                                onchange="handleSelectChange('pulse_{{timeId}}', this);" style="width:80px;">
+                            {{#each ../dic.pulse}}
+                                {{#select ../bodySignRecord.bodySignItemList}}
+                                <option value="{{dicCode}}" data-key="{{dicType}}">{{dicName}}</option>
+                                {{/select}}
+                            {{/each}}
+                            ## {{#select bodySignRecord.bodySignItemList}}
+                            ## <option data-key="pulse" value="moren">默认</option>
+                            ## <option value="jc">拒测</option>
+                            ## <!-- <option value="out">外出</option> -->
+                            ## <!-- <option value="qj">请假</option> -->
+                            ## <option value="ts">特殊值</option>
+                            ## {{/select}}
+                        </select>
+                    </li>
+                    <li>
+                        <input type="hidden" name="index" value="1"/>
+                        <input type="hidden" name="bodySignDict.itemCode" value="pulse"/>
+                        <input type="hidden" name="bodySignDict.itemName" value="脉博"/>
+                        <input type="hidden" name="bodySignDict.itemUnit" value="次/分"/>
+                        {{#input bodySignRecord.bodySignItemList}}
+                        <input id="pulse_{{timeId}}" data-key="pulse" name="itemValue" type="text" value=""
+                               style="width:75px;"/>
+                        {{/input}}
+                        <!-- <label for="bodySignDict.itemUnit">次/分</label> -->
+                    </li>
+                    <li>
+                        <select data-key="heartRate" id="heartRateType_{{timeId}}" name="measureNoteCode"
+                                onchange="handleSelectChange('heartRate_{{timeId}}', this);" style="width:80px;">
+                            {{#each ../dic.heartRate}}
+                                {{#select ../bodySignRecord.bodySignItemList}}
+                                <option value="{{dicCode}}" data-key="{{dicType}}">{{dicName}}</option>
+                                {{/select}}
+                            {{/each}}
+                            ## {{#select bodySignRecord.bodySignItemList}}
+                            ## <option data-key="heartRate" value="moren">默认</option>
+                            ## <option value="jc">拒测</option>
+                            ## <!-- <option value="out">外出</option> -->
+                            ## <!-- <option value="qj">请假</option> -->
+                            ## <option value="ts">特殊值</option>
+                            ## {{/select}}
+                        </select>
+                    </li>
+                    <li>
+                        <input type="hidden" name="index" value="2"/>
+                        <input type="hidden" name="bodySignDict.itemCode" value="heartRate"/>
+                        <input type="hidden" name="bodySignDict.itemName" value="心率"/>
+                        <input type="hidden" name="bodySignDict.itemUnit" value="次/分"/>
+                        {{#input bodySignRecord.bodySignItemList}}
+                        <input data-key="heartRate" id="heartRate_{{timeId}}" name="itemValue" type="text" value=""
+                               style="width:75px;"/>
+                        {{/input}}
+                        <!-- <label for="bodySignDict.itemUnit">次/分</label> -->
+                    </li>
+                    <li>
+                        <select data-key="breath" id="breathType_{{timeId}}" name="measureNoteCode"
+                                onchange="handleSelectChange('breath_{{timeId}}', this);" style="width:75px;">
+                            {{#each ../dic.breath}}
+                                {{#select ../bodySignRecord.bodySignItemList}}
+                                <option value="{{dicCode}}" data-key="{{dicType}}">{{dicName}}</option>
+                                {{/select}}
+                            {{/each}}
+                            ## {{#select bodySignRecord.bodySignItemList}}
+                            ## <option data-key="breath" value="moren">默认</option>
+                            ## <option value="hxj">呼吸机</option>
+                            ## <option value="fzhx">辅助呼吸</option>
+                            ## <option value="tfzhx">停辅助呼吸</option>
+                            ## <option value="cbc">测不出</option>
+                            ## <!-- <option value="out">外出</option> -->
+                            ## <option value="jc">拒测</option>
+                            ## <option value="ts">特殊值</option>
+                            ## {{/select}}
+                        </select>
+                    </li>
+                    <li>
+                        <input type="hidden" name="index" value="3"/>
+                        <input type="hidden" name="bodySignDict.itemCode" value="breath"/>
+                        <input type="hidden" name="bodySignDict.itemName" value="呼吸"/>
+                        <input type="hidden" name="bodySignDict.itemUnit" value="次/分"/>
+                        {{#input bodySignRecord.bodySignItemList}}
+                        <input data-key="breath" id="breath_{{timeId}}" name="itemValue" type="text" value=""
+                               style="width:75px;"/>
+                        {{/input}}
+                        <!-- <label for="bodySignDict.itemUnit">次/分</label> -->
+                    </li>
+                    <li>
+                        <select data-key="bloodPress" id="bloodPressType_{{timeId}}" name="measureNoteCode"
+                                onchange="handleSelectChange('bloodPress_{{timeId}}', this);" style="width:75px;">
+                            {{#each ../dic.bloodPress}}
+                                {{#select ../bodySignRecord.bodySignItemList}}
+                                <option value="{{dicCode}}" data-key="{{dicType}}">{{dicName}}</option>
+                                {{/select}}
+                            {{/each}}
+                            ## {{#select bodySignRecord.bodySignItemList}}
+                            ## <option data-key="bloodPress" value="sz">上肢</option>
+                            ## <option value="xz">下肢</option>
+                            ## <option value="cbc">测不出</option>
+                            ## <option value="kn">哭闹</option>
+                            ## <!-- <option value="out">外出</option> -->
+                            ## <!-- <option value="qj">请假</option> -->
+                            ## <option value="jc">拒测</option>
+                            ## <option value="ts">特殊值</option>
+                            ## {{/select}}
+                        </select>
+                    </li>
+                    <li>
+                        <input type="hidden" name="index" value="4"/>
+                        <input type="hidden" name="bodySignDict.itemCode" value="bloodPress"/>
+                        <input type="hidden" name="bodySignDict.itemName" value="血压"/>
+                        <input type="hidden" name="bodySignDict.itemUnit" value="mmHg"/>
+                        {{#input bodySignRecord.bodySignItemList}}
+                        <input data-key="bloodPress" id="bloodPress_{{timeId}}" name="itemValue" type="text" value=""
+                               style="width:75px;"/>
+                        {{/input}}
+                        <!-- <label for="bodySignDict.itemUnit">mmHg</label> -->
+                    </li>
+                    <li>
+                        <input type="hidden" name="index" value="4"/>
+                        <input type="hidden" name="bodySignDict.itemCode" value="oxygenSaturation"/>
+                        <input type="hidden" name="bodySignDict.itemName" value="血氧"/>
+                        <input type="hidden" name="bodySignDict.itemUnit" value="%"/>
+                        {{#input bodySignRecord.bodySignItemList}}
+                        <input data-key="oxygenSaturation" id="oxygenSaturation_{{timeId}}" name="itemValue" type="text"
+                               value="" style="width:75px;"/>
+                        {{/input}}
+                        <label for="bodySignDict.itemUnit">%</label>
+                    </li>
+                    <li>
+                        <select data-key="pain" id="painType_{{timeId}}" name="measureNoteCode"
+                                onchange="handleSelectChange('pain', this);" style="width:80px;">
+                            {{#each ../dic.pain}}
+                                {{#select ../bodySignRecord.bodySignItemList}}
+                                <option value="{{dicCode}}" data-key="{{dicType}}">{{dicName}}</option>
+                                {{/select}}
+                            {{/each}}
+                            ## {{#select bodySignRecord.bodySignItemList}}
+                            ## <option data-key="pain" value="">无</option>
+                            ## <option value="yjtt">1</option>
+                            ## <option value="ejtt">2</option>
+                            ## <option value="sjtt">3</option>
+                            ## <option value="fjtt">4</option>
+                            ## <option value="wjtt">5</option>
+                            ## <option value="ljtt">6</option>
+                            ## <option value="qjtt">7</option>
+                            ## <option value="bjtt">8</option>
+                            ## <option value="jjtt">9</option>
+                            ## <option value="shijtt">10</option>
+                            ## {{/select}}
+                        </select>
+                    </li>
+                    <li>
+                        {{#input bodySignRecord.bodySignItemList}}
+                        <input data-key="remark" id="remark" name="remark" type="hidden" value="" style="width:120px;"/>
+                        {{/input}}
+                    </li>
+                    <li>
+                        <select data-key="eventCode" id="eventSelect_{{timeId}}" name="measureNoteCode"
+                                style="width:60px;">
+                            {{#each ../dic.eventCode}}
+                                {{#select ../bodySignRecord.event}}
+                                <option value="{{dicCode}}" data-key="{{dicType}}">{{dicName}}</option>
+                                {{/select}}
+                            {{/each}}
+                            ## {{#select bodySignRecord.event}}
+                            ## <option data-key="eventCode" value="">空</option>
+                            ## <option value="ry">入院</option>
+                            ## <option value="cy">出院</option>
+                            ## <option value="zr">转入</option>
+                            ## <option value="zc">转出</option>
+                            ## <option value="ss">手术</option>
+                            ## <option value="fm">分娩</option>
+                            ## <option value="sw">死亡</option>
+                            ## <option value="cs">出生</option>
+                            ## <!--<option value ="bw">病危</option>
+                            ## <option value ="bz">病重</option>
+                            ##  -->
+                            ## {{/select}}
+                        </select>
+                        {{#input bodySignRecord.event}}
+                        <input data-key="recordDate" id="event_recordDate_{{timeId}}" name="event.recordDate"
+                               class="Wdate"
+                               value="$!currentTime" onclick="WdatePicker({readOnly:true,dateFmt:'HH:mm'})"
+                               readonly="readonly" style="min-width:50px;width: 50px;margin-top:0px;"/>
+                        {{/input}}
+                    </li>
+
+                </ul>
+                {{/each}}
+            </div>
+            <div>
+                <table class="table-{{this.data.onceItem.timeId}}">
+                    <tr data-item="PPD">
+                        <td>
+                            <span class="dlg-title">PPD</span>
+
+                            <select data-key="PPD" id="PPDType" name="measureNoteCode"
+                                    onchange="handleSelectChange('PPD', this);"
+                                    style="width:80px;">
+                                {{#each dic.PPD}}
+                                    {{#select ../data.onceItem.bodySignRecord.bodySignItemList}}
+                                    <option value="{{dicCode}}" data-key="{{dicType}}">{{dicName}}</option>
+                                    {{/select}}
+                                {{/each}}
+                                ## {{#select this.data.onceItem.bodySignRecord.bodySignItemList}}
+                                ## <option data-key="PPD" value="">无</option>
+                                ## <option value="ppdleft">左</option>
+                                ## <option value="ppdright">右</option>
+                                ## <option value="oneadd">+</option>
+                                ## <option value="twoadd">++</option>
+                                ## <option value="threeadd">+++</option>
+                                ## <option value="onesub">-</option>
+                                ## {{/select}}
+                            </select>
+                        </td>
+
+                        <td>
+                            <span class="dlg-title">其它排出量</span>
+                            <select data-key="otherOutput" id="otherOutputType" name="measureNoteCode"
+                                    onchange="handleSelectChange('otherOutput', this);" style="width:75px;">
+                                {{#each dic.otherOutput}}
+                                    {{#select ../data.onceItem.bodySignRecord.bodySignItemList}}
+                                    <option value="{{dicCode}}" data-key="{{dicType}}" data-unit="{{remark}}">{{dicName}}</option>
+                                    {{/select}}
+                                {{/each}}
+                                ## {{#select this.data.onceItem.bodySignRecord.bodySignItemList}}
+                                ## <option data-key="otherOutput" value="otw" data-unit="ml">呕吐物</option>
+                                ## <option value="fs" data-unit="ml">腹水</option>
+                                ## <option value="phlegm" data-unit="ml">痰液</option>
+                                ## <option value="sweat" data-unit="ml">汗水</option>
+                                ## <option value="gtb" data-unit="">便(成型)</option>
+                                ## <option value="ytb" data-unit="ml">便(水样)</option>
+                                ## <option value="xbjy" data-unit="ml">心包积液</option>
+                                ## <option value="hydrothorax" data-unit="ml">胸水</option>
+                                ## <option value="hydrothorax_z" data-unit="ml">胸水(左)</option>
+                                ## <option value="hydrothorax_y" data-unit="ml">胸水(右)</option>
+                                ## <option value="csf" data-unit="ml">脑脊液</option>
+                                ## <option value="ylw" data-unit="ml">引流物</option>
+                                ## <option value="dz" data-unit="ml">胆汁</option>
+                                ## <option value="ox" data-unit="ml">呕血</option>
+                                ## <option value="kx" data-unit="ml">咯血</option>
+                                ## <option value="ts" data-unit="">特殊治疗</option>
+                                ## {{/select}}
+                            </select>
+                            <input type="hidden" name="index" value="6"/>
+                            <input type="hidden" name="bodySignDict.itemCode" value="otherOutput"/>
+                            <input type="hidden" name="bodySignDict.itemName" value="其它排出量"/>
+                        ##                            <input type="hidden" name="bodySignDict.itemUnit" value="ml"/>
+                            {{#input this.data.onceItem.bodySignRecord.bodySignItemList}}
+                            <input data-key="otherOutput" id="otherOutput" name="itemValue" type="text" value=""
+                                   style="width:75px;"/>
+                            {{/input}}
+                            <label for="bodySignDict.itemUnit">ml</label>
+                        </td>
+
+                        <td>
+                            <span class="dlg-title">皮试</span>
+
+                            <select data-key="skinTestInfo_drugName" id="drugName_list" name="skinTest"
+                                    onchange="handleSelectChange('abdominalCir', this);">
+                                {{#each dic.skinTestInfo}}
+                                    {{#select ../data.onceItem.bodySignRecord.skinTestInfo}}
+                                    <option value="{{dicCode}}" data-key="{{dicType}}">{{dicName}}</option>
+                                    {{/select}}
+                                {{/each}}
+                                ## {{#select this.data.onceItem.bodySignRecord.skinTestInfo}}
+                                ## <option label="" data-key="skinTestInfo" value="">空</option>
+                                ## <option label="" value="qms">青霉素</option>
+                                ## <option label="" value="xlo">新朗欧</option>
+                                ## <option label="" value="tbmdz">头孢孟多酯</option>
+                                ## <option label="" value="tzx">特治星</option>
+                                ## <option label="" value="lsf">罗氏芬</option>
+                                ## <option label="" value="tbfx">头孢呋辛</option>
+                                ## <option label="" value="tbtd">头孢他啶</option>
+                                ## <option label="" value="sps">舒普深</option>
+                                ## <option label="" value="lms">链霉素</option>
+                                ## <option label="" value="ts">特殊值</option>
+                                ## {{/select}}
+                            </select>
+                            {{#input this.data.onceItem.bodySignRecord.skinTestInfo}}
+                            <input data-key="skinTestInfo_drugName" id="skinTestInfo_drugName" list="drugName_list"
+                                   name="itemValue" type="text" value="" style="display: none;;width:120px;"/>
+                            {{/input}}
+                            {{#radio this.data.onceItem.bodySignRecord.skinTestInfo}}
+                            <input name="testResult" type="radio" value="n"/>阴性
+                            <input name="testResult" type="radio" value="p"/><font style="color:#f00">阳性</font>
+                            {{/radio}}
+                        </td>
+                    </tr>
+                    <tr data-item="totalInput">
+                        <td>
+                            <span class="dlg-title">总入液量(mL)</span>
+
+                            <select data-key="totalInput" id="totalInputType" name="measureNoteCode"
+                                    onchange="handleSelectChange('totalInput', this);" style="width:75px;">
+                                {{#each dic.totalInput}}
+                                    {{#select ../data.onceItem.bodySignRecord.bodySignItemList}}
+                                    <option value="{{dicCode}}" data-key="{{dicType}}" data-unit="{{remark}}">{{dicName}}</option>
+                                    {{/select}}
+                                {{/each}}
+                                ## {{#select this.data.onceItem.bodySignRecord.bodySignItemList}}
+                                ## <option data-key="totalInput" value="moren" data-unit="ml">默认</option>
+                                ## <option value="ts" data-unit="">特殊值</option>
+                                ## {{/select}}
+                            </select>
+                            <input type="hidden" name="index" value="5"/>
+                            <input type="hidden" name="bodySignDict.itemCode" value="totalInput"/>
+                            <input type="hidden" name="bodySignDict.itemName" value="入量"/>
+                        ##                            <input type="hidden" name="bodySignDict.itemUnit" value="ml"/>
+                            {{#input this.data.onceItem.bodySignRecord.bodySignItemList}}
+                            <input data-key="totalInput" id="totalInput" name="itemValue" type="text" value=""
+                                   style="width:75px;"/>
+                            {{/input}}
+                            <label for="bodySignDict.itemUnit">ml</label>
+                        </td>
+
+                        <td>
+                            <span class="dlg-title">尿量(mL/24h)</span>
+
+                            <select data-key="urine" id="urineType" name="measureNoteCode"
+                                    onchange="handleSelectChange('urine', this);" style="width:75px;">
+                                {{#each dic.urine}}
+                                    {{#select ../data.onceItem.bodySignRecord.bodySignItemList}}
+                                    <option value="{{dicCode}}" data-key="{{dicType}}" data-unit="{{remark}}">{{dicName}}</option>
+                                    {{/select}}
+                                {{/each}}
+                                ## {{#select this.data.onceItem.bodySignRecord.bodySignItemList}}
+                                ## <option data-key="urine" value="moren" data-unit="ml">默认</option>
+                                ## <option value="dn" data-unit="ml">导尿</option>
+                                ## <option value="sj" data-unit="">失禁</option>
+                                ## <option value="ts" data-unit="">特殊值</option>
+                                ## {{/select}}
+                            </select>
+
+                            <input type="hidden" name="index" value="7"/>
+                            <input type="hidden" name="bodySignDict.itemCode" value="urine"/>
+                            <input type="hidden" name="bodySignDict.itemName" value="尿量"/>
+                        ##                            <input type="hidden" name="bodySignDict.itemUnit" value="ml"/>
+                            {{#input this.data.onceItem.bodySignRecord.bodySignItemList}}
+                            <input data-key="urine" id="urine" name="itemValue" type="text" value=""
+                                   style="width:75px;"/>
+                            {{/input}}
+                            <label id="measure-unit" for="bodySignDict.itemUnit">ml</label>
+                        </td>
+
+                        <td>
+                            <span class="dlg-title">其它①</span>
+
+                            <select data-key="OtherOne" id="OtherOneType" name="measureNoteCode"
+                                    onchange="handleSelectChange('OtherOne', this)" style="width:75px;">
+                                {{#each dic.OtherOne}}
+                                    {{#select ../data.onceItem.bodySignRecord.bodySignItemList}}
+                                    <option value="{{dicCode}}" data-key="{{dicType}}" data-unit="{{remark}}">{{dicName}}</option>
+                                    {{/select}}
+                                {{/each}}
+                            ##     {{#select this.data.onceItem.bodySignRecord.bodySignItemList}}
+                            ## ##                                <option data-key="OtherOne" value="">无</option>
+                            ##     <option data-key="OtherOne" value="tlone" data-unit="ml">24h痰量</option>
+                            ##     <option value="otlone" data-unit="ml">24h呕吐</option>
+                            ##     <option value="sgone" data-unit="cm">身高</option>
+                            ##     <option value="fwone" data-unit="cm">腹围</option>
+                            ##     <option value="otw" data-unit="ml">呕吐物</option>
+                            ##     <!-- <option value="oxygenSaturation" data-unit="%">血氧</option> -->
+                            ##     <option value="fs" data-unit="ml">腹水</option>
+                            ##     <option value="phlegm" data-unit="ml">痰液</option>
+                            ##     <option value="sweat" data-unit="ml">汗水</option>
+                            ##     <option value="gtb" data-unit="">便(成型)</option>
+                            ##     <option value="nsyly_z" data-unit="ml">脑室引流液(左)</option>
+                            ##     <option value="nsyly_y" data-unit="ml">脑室引流液(右)</option>
+                            ##     <option value="ytb" data-unit="ml">便(水样)</option>
+                            ##     <option value="xbjy" data-unit="ml">心包积液</option>
+                            ##     <option value="hydrothorax" data-unit="ml">胸水</option>
+                            ##     <option value="csf" data-unit="ml">脑脊液</option>
+                            ##     <option value="ylw" data-unit="ml">引流物</option>
+                            ##     <option value="dz" data-unit="ml">胆汁</option>
+                            ##     <option value="ox" data-unit="ml">呕血</option>
+                            ##     <option value="kx" data-unit="ml">咯血</option>
+                            ##     <option value="tszlone" data-unit="">特殊治疗</option>
+                            ##     {{/select}}
+                            </select>
+                            {{#input this.data.onceItem.bodySignRecord.bodySignItemList}}
+                            <input data-key="OtherOne" id="OtherOne" name="itemValue" type="text"
+                                   value="" style="width:75px;"/>
+                            {{/input}}
+                            <input type="hidden" name="bodySignDict.itemCode" value="OtherOne"/>
+                            <input type="hidden" name="bodySignDict.itemName" value="其它①"/>
+                            <label id="else1-unit" for="bodySignDict.itemUnit">ml</label>
+                        </td>
+                    </tr>
+                    <tr data-item="stool">
+                        <td>
+                            <span class="dlg-title">大便</span>
+
+                            <select data-key="stool" id="stoolType" name="measureNoteCode"
+                                    onchange="handleSelectChange('stool', this);" style="width:75px;">
+                                {{#each dic.stool}}
+                                    {{#select ../data.onceItem.bodySignRecord.bodySignItemList}}
+                                    <option value="{{dicCode}}" data-key="{{dicType}}" data-unit="{{remark}}">{{dicName}}</option>
+                                    {{/select}}
+                                {{/each}}
+                                ## {{#select this.data.onceItem.bodySignRecord.bodySignItemList}}
+                                ## <option data-key="stool" value="zxpb" data-unit="次">自主排便</option>
+                                ## <option value="gch1" data-unit="次">1/E</option>
+                                ## <option value="gch2" data-unit="次">2/E</option>
+                                ## <option value="gch3" data-unit="次">3/E</option>
+                                ## <option value="db1gch2" data-unit="次">1^2/E</option>
+                                ## <option value="gch0" data-unit="次">*/E</option>
+                                ## <option value="sj" data-unit="次">失禁(※)</option>
+                                ## <option value="rggm" data-unit="次">人工肛门(☆)</option>
+                                ## <option value="ts" data-unit="">特殊值</option>
+                                ## {{/select}}
+                            </select>
+
+                            <input type="hidden" name="index" value="8"/>
+                            <input type="hidden" name="bodySignDict.itemCode" value="stool"/>
+                            <input type="hidden" name="bodySignDict.itemName" value="大便"/>
+                            <input type="hidden" name="bodySignDict.itemUnit" value="次"/>
+                            {{#input this.data.onceItem.bodySignRecord.bodySignItemList}}
+                            <input data-key="stool" id="stool" name="itemValue" type="text" value=""
+                                   style="width:75px;"/>
+                            {{/input}}
+                            <label for="bodySignDict.itemUnit">次</label>
+                        </td>
+
+                        <td>
+                            <span class="dlg-title">体重(kg)</span>
+
+                            <select data-key="weight" id="weightType" name="measureNoteCode"
+                                    onchange="handleSelectChange('weight', this);" style="width:75px;">
+                                {{#each dic.weight}}
+                                    {{#select ../data.onceItem.bodySignRecord.bodySignItemList}}
+                                    <option value="{{dicCode}}" data-key="{{dicType}}" data-unit="{{remark}}">{{dicName}}</option>
+                                    {{/select}}
+                                {{/each}}
+                                ## {{#select this.data.onceItem.bodySignRecord.bodySignItemList}}
+                                ## <option data-key="weight" value="moren" data-unit="kg">默认</option>
+                                ## <option value="wc" data-unit="">卧床</option>
+                                ## <option value="ly" data-unit="">轮椅</option>
+                                ## <option value="pc" data-unit="">平车</option>
+                                ## <option value="ts" data-unit="">特殊值</option>
+                                ## {{/select}}
+                            </select>
+
+                            <input type="hidden" name="index" value="10"/>
+                            <input type="hidden" name="bodySignDict.itemCode" value="weight"/>
+                            <input type="hidden" name="bodySignDict.itemName" value="体重"/>
+                            <input type="hidden" name="bodySignDict.itemUnit" value="Kg"/>
+                            {{#input this.data.onceItem.bodySignRecord.bodySignItemList}}
+                            <input data-key="weight" id="weight" name="itemValue" type="text" value=""
+                                   style="width:75px;"/>
+                            {{/input}}
+                            <label for="bodySignDict.itemUnit">Kg</label>
+                        </td>
+
+                        <td>
+                            <span class="dlg-title">其它②</span>
+
+                            <select data-key="OtherTwo" id="OtherTwoType" name="measureNoteCode"
+                                    onchange="handleSelectChange('OtherTwo', this)" style="width:75px;">
+                                {{#each dic.OtherTwo}}
+                                    {{#select ../data.onceItem.bodySignRecord.bodySignItemList}}
+                                    <option value="{{dicCode}}" data-key="{{dicType}}" data-unit="{{remark}}">{{dicName}}</option>
+                                    {{/select}}
+                                {{/each}}
+                            ##     {{#select this.data.onceItem.bodySignRecord.bodySignItemList}}
+                            ## ##                                <option data-key="OtherTwo" value="">无</option>
+                            ##     <option data-key="OtherTwo" value="tltwo" data-unit="ml">24h痰量</option>
+                            ##     <option value="otltwo" data-unit="ml">24h呕吐</option>
+                            ##     <option value="sgtwo" data-unit="cm">身高</option>
+                            ##     <option value="fwtwo" data-unit="cm">腹围</option>
+                            ##     <option value="otw" data-unit="ml">呕吐物</option>
+                            ##     <!-- <option value="oxygenSaturation" data-unit="%">血氧</option> -->
+                            ##     <option value="fs" data-unit="ml">腹水</option>
+                            ##     <option value="phlegm" data-unit="ml">痰液</option>
+                            ##     <option value="sweat" data-unit="ml">汗水</option>
+                            ##     <option value="gtb" data-unit="">便(成型)</option>
+                            ##     <option value="ytb" data-unit="ml">便(水样)</option>
+                            ##     <option value="xbjy" data-unit="ml">心包积液</option>
+                            ##     <option value="hydrothorax" data-unit="ml">胸水</option>
+                            ##     <option value="csf" data-unit="ml">脑脊液</option>
+                            ##     <option value="ylw" data-unit="ml">引流物</option>
+                            ##     <option value="ymw_z" data-unit="">硬膜外(左)</option>
+                            ##     <option value="ymw_y" data-unit="">硬膜外(右)</option>
+                            ##     <option value="ymx_z" data-unit="">硬膜下(左)</option>
+                            ##     <option value="ymx_y" data-unit="">硬膜下(右)</option>
+                            ##     <option value="dz" data-unit="ml">胆汁</option>
+                            ##     <option value="ox" data-unit="ml">呕血</option>
+                            ##     <option value="kx" data-unit="ml">咯血</option>
+                            ##     <option value="tszltwo" data-unit="">特殊治疗</option>
+                            ##     {{/select}}
+                            </select>
+                            {{#input this.data.onceItem.bodySignRecord.bodySignItemList}}
+                            <input data-key="OtherTwo" id="OtherTwo" name="itemValue" type="text"
+                                   value="" style="width:75px;"/>
+                            {{/input}}
+                            <input type="hidden" name="bodySignDict.itemCode" value="OtherTwo"/>
+                            <input type="hidden" name="bodySignDict.itemName" value="其它②"/>
+                        ##                            <input type="hidden" name="bodySignDict.itemUnit" value="ml"/>
+                            <label id="else2-unit" for="bodySignDict.itemUnit">ml</label>
+                        </td>
+                    </tr>
+                    <tr data-item="fix" class="">
+                        <td colspan="7" style="text-align: center;">
+                            <span class="dlg-title"></span>
+
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </script>
+        <form id="sheetForm">
+        </form>
+    </div>
+
+   #* <div class="temp-save-wrapper" style="padding-top: 15px;padding-bottom:15px;">
+        <div id="svaBtn" class="_btn _btn-lg" style=" margin: 0 20px 0 0;">
+            <span class="btm">保存</span>
+        </div>
+        <div class="_btn _btn-lg" onclick="clearData()"
+             style="margin: 0 20px 0 0">
+            <span class="btm">重置</span>
+        </div>
+        <div class="_btn _btn-lg" id="closeDialog">
+            <span class="btm">关闭窗口</span>
+        </div>
+    </div>*#
+</div>
+<!-- 新增对话框 end -->
+</body>
+</html>

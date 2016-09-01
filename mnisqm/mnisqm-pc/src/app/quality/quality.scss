@@ -1,0 +1,130 @@
+.quality-add-group-wrapper {
+  .user-list {
+    overflow-y: scroll;
+    height: 300px;
+    &.choosed-user-list {
+      height: 330px;
+    }
+    li {
+      padding: 10px 15px;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer;
+    }
+  }
+  .user-filter {
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    height: 30px;
+  }
+
+  .text-input {
+    margin-bottom: 20px;
+  }
+}
+
+.quality-add-plan-wrapper {
+  form {
+    width: 360px;
+    margin: 0 auto;
+  }
+}
+
+.quality-filter {
+  margin-left: 30px;
+
+  select {width: 130px !important;}
+}
+
+//弹出框
+.addQualityForm {
+  .input-row .form-group {
+    vertical-align: top;
+
+    &:first-child {margin-left: 0;}
+  }
+
+  .error-row {padding-bottom: 14px;}
+
+  .has-error {margin-bottom: -14px;}
+
+  .w5c-error {padding-left: 38px;}
+
+  select {min-width: 140px;}
+
+  .table tr td {vertical-align: middle;}
+
+  .dept-row {
+    margin-top: 14px;
+
+    label {line-height: 24px;}
+  }
+
+  .dept-row-input {
+    float: left;
+  }
+
+  .partial-grid {
+    .col:nth-child(1) {width: 10%;}
+
+    .col:nth-child(2) {width: 30%;}
+
+    .col:nth-child(3) {width: 10%;}
+
+    .col:nth-child(4) {width: 40%;}
+
+    .col:nth-child(5) {width: 10%;}
+  }
+
+  .partial-list {
+    margin-bottom: 26px;
+
+    li {padding: 5px;}
+
+    textarea,
+    input {
+      max-width: 100%;
+      width: 100%;
+      // height: 34px;
+    }
+  }
+
+}
+
+.quality-add-form-wrapper {
+}
+
+.quality-add-form-modal-wrapper {
+  .cate-item {
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    &.active {
+      border-color: $base-color2;
+      background-color: $base-color2;
+      color: white;
+    }
+  }
+}
+
+.task {
+  .filter-row {padding-right: 22px;}
+
+  .partial-label {width: 14%;}
+}
+
+
+.date-input {
+  width: 100%;
+  height: 26px;
+
+  &[readonly] {background-color: white;}
+}

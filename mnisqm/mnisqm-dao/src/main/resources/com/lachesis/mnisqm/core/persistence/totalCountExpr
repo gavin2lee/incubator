@@ -1,0 +1,41 @@
+#macro(totalCountExpr $extraFields)
+    #ifnotnull($extraFields)
+        #repeat($extraFields $extraField) 
+            #novalexpr($extraField) 
+                ${extraField.operation} ${extraField.queryCount} 
+            #end 
+            #onevalexpr($extraField) 
+                ${extraField.operation} ${extraField.queryCount} @{extraField.value} 
+            #end
+            #betweenvalexpr($extraField)
+                ${extraField.operation} ${extraField.queryCount} @{extraField.value} AND @{extraField.secondValue} 
+            #end
+            #collectionvalexpr($extraField) 
+                ${extraField.operation} ${extraField.queryCount} 
+                #repeat(${extraField.value} $listItem "," "(" ")") 
+                    @{listItem} 
+                #end 
+            #end 
+            #compositionvalexpr($extraField)
+                ${extraField.operation} 
+                 #repeat(${extraField.fields} $subItem " OR " "(" ")")
+                    #novalexpr($subItem) 
+                        ${subItem.operation} ${subItem.queryCount} 
+                    #end 
+                    #onevalexpr($subItem) 
+                        ${subItem.operation} ${subItem.queryCount} @{subItem.value} 
+                    #end 
+                    #betweenvalexpr($extraField)
+                        ${extraField.operation} ${extraField.queryCount} @{extraField.value} AND @{extraField.secondValue} 
+                    #end
+                    #collectionvalexpr($subItem) 
+                        ${subItem.operation} ${subItem.queryCount} 
+                        #repeat(${subItem.value} $listItem "," "(" ")") 
+                            @{listItem} 
+                        #end 
+                    #end 
+                 #end
+            #end
+        #end 
+    #end
+#end

@@ -1,0 +1,28 @@
+<div class="statistics-wrapper">
+  <a class="stat-link" ui-sref="home.statistics"><span class="fa fa-table"></span></a>
+  <div class="chart-wrapper">
+    <div class="row filter">
+      <div class="center col-md-6 row">
+        <div class="col-md-4">
+          <select class="form-control" ng-model="vm.filter.deptCode">
+            <option value="">全部</option>
+            <option ng-repeat="item in vm.deptData.belongedDepts" value="{{item.deptCode}}">{{item.deptName}}</option>
+          </select>
+        </div>
+        <div class="col-md-4 pull-right">
+          <div class="input-group">
+            <input type="text" id="date" name="date" uib-datepicker-popup datepicker-options="vm.dateOptions" is-open="vm.pickerOpen" ng-model="vm.filter.date" close-text="关闭" current-text="今天" clear-text="清除" class="form-control input-sm" common-picker>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-sm btn-default" ng-click="vm.pickerOpen = true">
+                <i class="fa fa-calendar"></i>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="echarts-wrap" echarts="vm.mal.identity" echarts-dimension="vm.mal.dimension" config="vm.mal.config"></div>
+    </div>
+  </div>
+</div>

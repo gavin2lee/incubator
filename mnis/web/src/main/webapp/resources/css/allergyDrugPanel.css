@@ -1,0 +1,63 @@
+.allergyDrug-list{
+        overflow: hidden;
+        border-bottom:1px solid #ccc;
+    }
+    .allergyDrug-title{
+        width: 80px;
+        padding: 20px 10px 10px;
+        float: left;
+        display: table-cell;
+        font-size: 16px;
+    }
+    .allergyDrug-item{
+        float: left;
+        width: 500px;
+        min-height: 70px;
+        border-left:1px solid #ccc;
+        padding:15px 5px 15px 20px;
+    }
+    .allergyDrug-item ul{position:relative;overflow: hidden;}
+    .allergyDrug-item ul div{position:absolute;width:100%;height:100%;background-color:#fff;opacity:0.5;}
+    .allergyDrug-item ul li{float: left;line-height:30px;margin-right: 15px;font-size: 14px;}
+    .allergyDrug-item ul li input[type="checkbox"]{margin-right:3px;}
+    .checkedAllergyDrug{padding:5px 10px;border-bottom: 1px solid #ccc;}
+    .checkedAllergyDrug ul{overflow: hidden;}
+    .checkedAllergyDrug ul li{
+        float: left;padding:0 10px;
+        line-height:25px;
+    }
+    .checkedAllergyDrug ul li.green{
+        color: green;
+    }
+    .checkedAllergyDrug ul li.red{
+        color: red;
+    }
+    .skinBox{
+        overflow: hidden;
+    }
+    .skinBox:hover{
+        overflow: visible;
+    }
+    .allergyDrugList{
+        padding:5px 8px 0;
+        border-bottom:1px solid #dedede;
+        overflow: hidden;
+    }
+    .allergyDrugList li{
+        overflow: hidden;
+    }
+    .allergyDrugList li span:first-child{
+        float: left;
+        width: 110px;
+        text-align: left;
+        overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
+    }
+    .allergyDrugList li span:last-child{
+        float: right;
+    }
+    .allergyDrugList li span.green{
+        color: green;
+    }
+    .allergyDrugList li span.red{
+        color: red;
+     }

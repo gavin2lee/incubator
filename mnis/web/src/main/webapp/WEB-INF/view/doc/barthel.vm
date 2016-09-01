@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+#docHead()
+<title>Barthel指数(BL)评定量表</title>
+<style type="text/css">
+.datagrid-cell, .datagrid-cell-group,
+.datagrid-header-rownumber, .datagrid-cell-rownumber {
+	padding: 0px;
+}
+.doc-content input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+	margin: 3px 0px;
+}
+</style>
+</head>
+<body class="doc">
+#docToolbar()
+<div class="doc-container">
+#barthel()
+<div class="doc-content">
+    <div id="tb">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+<!--         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">保存</a> -->
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">还原</a>
+<!-- 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">GetChanges</a> -->
+    </div>
+    <table id="dg" style="height: 500px;width: 100%;" class="easyui-datagrid" data-options="
+    	nowrap: false,
+		singleSelect: true,
+		autoRowHeight: true,
+		fitColumns: true,
+		toolbar: '#tb',
+		showFooter: true,
+		onClickRow: onClickRow,
+		onBeginEdit: onBeginEdit,
+		onLoadSuccess: function(data) {
+		},
+		url: '#url("/doc/barthel/datas")',
+		queryParams: {
+			cureNo: '$!{patient.cureNo}'
+		},
+		method: 'get',
+		idField: 'id'">
+	    <thead>
+	        <tr>
+	            <th rowspan="3" data-options="field:'date',
+					align:'center',
+					resizable: false,
+					width:80,
+					formatter: function(value,row,index){
+						if (!value) {
+							return '';
+						}
+						if (index == 0) {
+	    					return value;
+						}
+						return formatDate(value, false, $('#dg').datagrid('getRows')[index-1]['date']);
+	    			},
+					editor: {
+						type: 'datetimebox',
+						options: {
+							editable: false,
+							showSeconds: false
+						}
+					}">日期时间</th>
+				<th colspan="4">进食</th>
+				<th colspan="4">洗澡</th>
+				<th colspan="4">修饰(洗脸、<br>刷牙、梳头等)</th>
+				<th colspan="4">穿衣</th>
+				<th colspan="4">控制大便</th>
+				<th colspan="4">控制小便</th>
+				<th colspan="4">如厕</th>
+				<th colspan="4">床椅转移</th>
+				<th colspan="4">平地行走45米</th>
+				<th colspan="4">上下楼梯</th>
+	            <th rowspan="3" data-options="width:20,field:'score',align:'center',resizable: false">总评分</th>
+	            <th rowspan="3" data-options="width:50,field:'level',align:'center',resizable: false">自理能力等级(重度依赖、中度依赖、轻度依赖、无需依赖)</th>
+	            <th rowspan="3" data-options="width:40,field:'sign',align:'center',resizable: false">签名</th>
+			</tr>
+			<tr>
+				<th>完<br>全<br>独<br>立</th>
+				<th>需<br>部<br>分<br>帮<br>助</th>
+				<th>需<br>极<br>大<br>帮<br>助</th>
+				<th>完<br>全<br>依<br>赖</th>
+				<th>完<br>全<br>独<br>立</th>
+				<th>需<br>部<br>分<br>帮<br>助</th>
+				<th>需<br>极<br>大<br>帮<br>助</th>
+				<th>完<br>全<br>依<br>赖</th>
+				<th>完<br>全<br>独<br>立</th>
+				<th>需<br>部<br>分<br>帮<br>助</th>
+				<th>需<br>极<br>大<br>帮<br>助</th>
+				<th>完<br>全<br>依<br>赖</th>
+				<th>完<br>全<br>独<br>立</th>
+				<th>需<br>部<br>分<br>帮<br>助</th>
+				<th>需<br>极<br>大<br>帮<br>助</th>
+				<th>完<br>全<br>依<br>赖</th>
+				<th>完<br>全<br>独<br>立</th>
+				<th>需<br>部<br>分<br>帮<br>助</th>
+				<th>需<br>极<br>大<br>帮<br>助</th>
+				<th>完<br>全<br>依<br>赖</th>
+				<th>完<br>全<br>独<br>立</th>
+				<th>需<br>部<br>分<br>帮<br>助</th>
+				<th>需<br>极<br>大<br>帮<br>助</th>
+				<th>完<br>全<br>依<br>赖</th>
+				<th>完<br>全<br>独<br>立</th>
+				<th>需<br>部<br>分<br>帮<br>助</th>
+				<th>需<br>极<br>大<br>帮<br>助</th>
+				<th>完<br>全<br>依<br>赖</th>
+				<th>完<br>全<br>独<br>立</th>
+				<th>需<br>部<br>分<br>帮<br>助</th>
+				<th>需<br>极<br>大<br>帮<br>助</th>
+				<th>完<br>全<br>依<br>赖</th>
+				<th>完<br>全<br>独<br>立</th>
+				<th>需<br>部<br>分<br>帮<br>助</th>
+				<th>需<br>极<br>大<br>帮<br>助</th>
+				<th>完<br>全<br>依<br>赖</th>
+				<th>完<br>全<br>独<br>立</th>
+				<th>需<br>部<br>分<br>帮<br>助</th>
+				<th>需<br>极<br>大<br>帮<br>助</th>
+				<th>完<br>全<br>依<br>赖</th>
+			</tr>
+			<tr>
+	            <th data-options="width:20,field:'eatIndependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">10</th>
+	            <th data-options="width:20,field:'eatLittleHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">5</th>
+	            <th data-options="width:20,field:'eatExtremelyHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            <th data-options="width:20,field:'eatDependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            
+	            <th data-options="width:20,field:'bathIndependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">5</th>
+	            <th data-options="width:20,field:'bathLittleHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            <th data-options="width:20,field:'bathExtremelyHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            <th data-options="width:20,field:'bathDependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            
+	            <th data-options="width:20,field:'attireIndependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">5</th>
+	            <th data-options="width:20,field:'attireLittleHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            <th data-options="width:20,field:'attireExtremelyHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            <th data-options="width:20,field:'attireDependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            
+	            <th data-options="width:20,field:'dressIndependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">10</th>
+	            <th data-options="width:20,field:'dressLittleHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">5</th>
+	            <th data-options="width:20,field:'dressExtremelyHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            <th data-options="width:20,field:'dressDependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            
+	            <th data-options="width:20,field:'defecateIndependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">10</th>
+	            <th data-options="width:20,field:'defecateLittleHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">5</th>
+	            <th data-options="width:20,field:'defecateExtremelyHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            <th data-options="width:20,field:'defecateDependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            
+	            <th data-options="width:20,field:'peeIndependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">10</th>
+	            <th data-options="width:20,field:'peeLittleHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">5</th>
+	            <th data-options="width:20,field:'peeExtremelyHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            <th data-options="width:20,field:'peeDependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            
+	            <th data-options="width:20,field:'wcIndependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">10</th>
+	            <th data-options="width:20,field:'wcLittleHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">5</th>
+	            <th data-options="width:20,field:'wcExtremelyHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            <th data-options="width:20,field:'wcDependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            
+	            <th data-options="width:20,field:'shiftIndependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">15</th>
+	            <th data-options="width:20,field:'shiftLittleHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">10</th>
+	            <th data-options="width:20,field:'shiftExtremelyHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">5</th>
+	            <th data-options="width:20,field:'shiftDependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            
+	            <th data-options="width:20,field:'walkIndependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">15</th>
+	            <th data-options="width:20,field:'walkLittleHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">10</th>
+	            <th data-options="width:20,field:'walkExtremelyHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">5</th>
+	            <th data-options="width:20,field:'walkDependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            
+	            <th data-options="width:20,field:'stairIndependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">10</th>
+	            <th data-options="width:20,field:'stairLittleHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">5</th>
+	            <th data-options="width:20,field:'stairExtremelyHelp',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	            <th data-options="width:20,field:'stairDependently',align:'center',resizable: false,editor:{type:'checkbox',options:{on:'√',off:''}}">0</th>
+	        </tr>
+	    </thead>
+	</table>
+</div>
+#barthelComment()
+</div>
+<!-- Diagnosis Window -->
+<div id="win"></div>
+<script type="text/javascript">
+var editIndex = undefined;
+function endEditing(index) {
+	if (editIndex == undefined) {
+		return true;
+	}
+	if ($("#dg").datagrid('validateRow', editIndex)) {
+		$("#dg").datagrid('endEdit', editIndex);
+		editIndex = undefined;
+		return true;
+	} else {
+		return false;
+	}
+}
+function onClickRow(index){
+    if (editIndex != index){
+        if (endEditing()) {
+        	// 本人,护理组长和护士长能修改
+        	var rows = $('#dg').datagrid('getRows');
+        	if ('$!{currentUser.code}' == rows[index]['userCode']
+        			|| 1 == $!{currentUser.purview}
+        			|| 2 == $!{currentUser.purview}) {
+	            $('#dg').datagrid('selectRow', index)
+	                    .datagrid('beginEdit', index);
+	            editIndex = index;
+        	}
+        } else {
+            $('#dg').datagrid('selectRow', editIndex);
+        }
+    }
+}
+function append(){
+    if (endEditing()){
+        $('#dg').datagrid('appendRow',{
+        	date: datetimeToString(new Date()),
+        	sign: '$!{currentUser.name}$!{currentUser.code}',
+        	userCode: '$!{currentUser.code}',
+        	deptCode: '$!{currentUser.deptCode}',
+        	deptName: '$!{currentUser.deptName}'
+        });
+        editIndex = $('#dg').datagrid('getRows').length-1;
+        $('#dg').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+    }
+}
+function removeit() {
+    var row = $('#dg').datagrid('getSelected');
+    if (!row){return}
+    var index = $('#dg').datagrid('getRowIndex', row);
+    if (index == undefined){return}
+    if ('$!{currentUser.code}' == row['userCode']) {
+	    $('#dg').datagrid('cancelEdit', index)
+	            .datagrid('deleteRow', index);
+	    editIndex = undefined;
+    } else {
+    	$.messager.alert('数据删除', '只有本人才允许删除', 'info');
+    }
+}
+function accept(){
+    if (endEditing()){
+    	var editable = '$!{doc.editable}' || true;
+    	if (editable) {
+	        $.ajax({
+	        	url: '#url("/doc/barthel")',
+	        	type: 'POST',
+	        	data: {
+	        		cureNo: '$!{patient.cureNo}',
+	        		hospitalNo: '$!{patient.hospitalNo}',
+	        		inserted: JSON.stringify($('#dg').datagrid('getChanges', 'inserted')),
+	        		updated: JSON.stringify($('#dg').datagrid('getChanges', 'updated')),
+	        		deleted: JSON.stringify($('#dg').datagrid('getChanges', 'deleted'))
+	        	},
+	        	success: function(data, status) {
+	        		if (data && data.code) {
+	        			if ('1' == data.code) {
+				        	$('#dg').datagrid('acceptChanges').datagrid('reload').datagrid('unselectAll');
+		        		} else {
+			        		$.messager.alert('数据保存', data.message || '保存失败', 'error');
+	        			}
+	        		}
+	        	},
+	        	error: function(xhr, status, err) {
+	        		$.messager.alert('数据保存', '保存失败', 'error');
+	        	}
+	        });
+    	} else {
+    		$.messager.alert('数据保存', '不允许修改', 'error');
+    	}
+    }
+}
+function reject(){
+    $('#dg').datagrid('rejectChanges').datagrid('unselectAll');
+    editIndex = undefined;
+}
+var scores = {
+	eatIndependently:10,
+	eatLittleHelp:5,
+	eatExtremelyHelp:0,
+	eatDependently:0,
+	bathIndependently:5,
+	bathLittleHelp:0,
+	bathExtremelyHelp:0,
+	bathDependently:0,
+	attireIndependently:5,
+	attireLittleHelp:0,
+	attireExtremelyHelp:0,
+	attireDependently:0,
+	dressIndependently:10,
+	dressLittleHelp:5,
+	dressExtremelyHelp:0,
+	dressDependently:0,
+	defecateIndependently:10,
+	defecateLittleHelp:5,
+	defecateExtremelyHelp:0,
+	defecateDependently:0,
+	peeIndependently:10,
+	peeLittleHelp:5,
+	peeExtremelyHelp:0,
+	peeDependently:0,
+	wcIndependently:10,
+	wcLittleHelp:5,
+	wcExtremelyHelp:0,
+	wcDependently:0,
+	shiftIndependently:15,
+	shiftLittleHelp:10,
+	shiftExtremelyHelp:5,
+	shiftDependently:0,
+	walkIndependently:15,
+	walkLittleHelp:10,
+	walkExtremelyHelp:5,
+	walkDependently:0,
+	stairIndependently:10,
+	stairLittleHelp:5,
+	stairExtremelyHelp:0,
+	stairDependently:0
+};
+var groups = {
+		eatIndependently:1,
+		eatLittleHelp:1,
+		eatExtremelyHelp:1,
+		eatDependently:1,
+		bathIndependently:2,
+		bathLittleHelp:2,
+		bathExtremelyHelp:2,
+		bathDependently:2,
+		attireIndependently:3,
+		attireLittleHelp:3,
+		attireExtremelyHelp:3,
+		attireDependently:3,
+		dressIndependently:4,
+		dressLittleHelp:4,
+		dressExtremelyHelp:4,
+		dressDependently:4,
+		defecateIndependently:5,
+		defecateLittleHelp:5,
+		defecateExtremelyHelp:5,
+		defecateDependently:5,
+		peeIndependently:6,
+		peeLittleHelp:6,
+		peeExtremelyHelp:6,
+		peeDependently:6,
+		wcIndependently:7,
+		wcLittleHelp:7,
+		wcExtremelyHelp:7,
+		wcDependently:7,
+		shiftIndependently:8,
+		shiftLittleHelp:8,
+		shiftExtremelyHelp:8,
+		shiftDependently:8,
+		walkIndependently:9,
+		walkLittleHelp:9,
+		walkExtremelyHelp:9,
+		walkDependently:9,
+		stairIndependently:10,
+		stairLittleHelp:10,
+		stairExtremelyHelp:10,
+		stairDependently:10
+};
+function groupSiblings(field) {
+	var siblings = [];
+	for (var key in groups) {
+		if (key != field && groups[key] == groups[field]) {
+			siblings.push(key);
+		}
+	}
+	return siblings;
+}
+function onBeginEdit(index,row){
+	#[[
+    var editors = $('#dg').datagrid('getEditors', index);
+    row.score = row.score || 0;
+    for (var i = 1; i < 41; i++) {
+    	$(editors[i].target).change(function() {
+    		var $td = $(this).parents('td[field]');
+    		var field = $td.attr('field');
+    		if ($(this).is(':checked')) {
+	    		$.each(groupSiblings(field), function(idx, value) {
+	    			var editor = $('#dg').datagrid('getEditor', {index:index, field: value});
+	    			var $editor = $(editor.target);
+	    			if ($editor.is(':checked')) {
+	    				$editor.attr('checked', false);
+	    				row.score = parseInt(row.score) - scores[value];
+	    			}
+	    		});
+    			row.score = parseInt(row.score) + scores[field];
+    		} else {
+    			row.score = parseInt(row.score) - scores[field];
+    		}
+    		$td.siblings('td[field=score]').children('div').text(row.score);
+    		var level = '';
+    		if (row.score <= 40) {
+    			level = '重度依赖';
+    		} else if (41 <= row.score && row.score <= 60) {
+    			level = '中度依赖';
+    		} else if (61 <= row.score && row.score <= 99) {
+    			level = '轻度依赖';
+    		} else if (100 <= row.score) {
+    			level = '无需依赖';
+    		}
+    		row.level = level;
+    		$td.siblings('td[field=level]').children('div').text(level);
+    	});
+    }
+	]]#
+}
+// initialize page when loaded
+$(function() {
+	$('#save').click(accept);
+	$('#approve').click(function() {});
+	$('#print').val('预  览').click(function() {
+		var params = [
+   			'location=no',
+   			'height='+screen.availHeight,
+   			'width='+screen.availWidth,
+   			'scrollbars=yes',
+   			'resizable=yes',
+   			'fullscreen=yes' // only works in IE, but here for completeness
+   		].join(',');
+   		var new_window = window.open('#url("/doc/barthel/view?cureNo=$!{patient.cureNo}")', '', params);
+   		new_window.resizeTo(screen.availWidth, screen.availHeight);
+	});
+	$('#diagnosisLabel').click(function() {
+		$('#win').window({
+			title: '诊断修正列表',
+		    width: 700,
+		    height: 500,
+		    minimizable: false,
+			href: '#url("/doc/diagnosis")?cureNo=$!{patient.cureNo}',
+			onClose: function() {
+				var rows = $('#dDg').datagrid('getRows');
+				if (rows && rows.length > 0) {
+					$('#pDiagnosis').text(rows[rows.length - 1]['diagnosis']);
+				} else {
+					$('#pDiagnosis').text('$!{patient.diagnose}');
+				}
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

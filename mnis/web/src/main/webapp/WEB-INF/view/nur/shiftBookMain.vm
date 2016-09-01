@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>交班本</title>
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/patientGlance.css')" />
+<link rel="stylesheet" type="text/css" href="#url('/resources/css/shiftBookMain.css')" />	
+<script type="text/javascript" language="javascript" charset="utf-8" src="#url('/resources/Lodop/LodopFuncs.js?1472534366479')" ></script>
+<script type="text/javascript" src="#url('/resources/js/main/main.js?1472534366479')" charset="utf-8"></script>
+<script type="text/javascript" src="#url('/resources/js/nur/shiftBook.js?1472534366479')" charset="utf-8"></script>
+<style type="text/css">
+    div div.panel-body{
+    	overflow: visible;
+    }
+</style>
+</head>
+
+<body id="shftBookLayout" class="easyui-layout f_yahei">
+	<input type="hidden" id="shiftRecordId" value="">
+	<div data-options="region:'north'" style="height: 70px;" >
+
+		<div id="header" class="header" style="height:70px;">
+			<input type="hidden" id="patientId" value="$!id" />
+	        <div class="top">
+	            <div class="clearfix center">
+	                <span class="fl bg"></span>
+	                <span class="color font date">$!today</span><span class="font">$!deptName，</span>
+	                <input type="hidden" id="deptId" value="$!deptCode" />
+	                <div class="font account">
+	                    <div id="user"><em>$!user.name </em><span></span></div>
+	                    <input type="hidden" id="nurseId" value="$!user.emplCode" />
+	                    <div class="user-tools hide">
+	                        <a href="javascript:void(0)" id="quit"><i></i>退出登录</a>
+	                        <a href="javascript:void(0)" id="changeKs"><i></i>切换科室</a>
+	                        <a href="javascript:void(0)" id="changeAccount"><i></i>切换账户</a>
+	                        <a href="javascript:void(0)" id="modifyPsd"><i></i>修改密码</a>
+	                    </div>
+	                </div>
+	                <img id="logo" src="#url('/resources/img/logo.png')" class="fr" alt="LACHESIS联新设备管理" />
+	            </div>
+	        </div>
+	        <div class="bottom">
+	            <div class="center">
+	                <div class="coverBlock"></div>
+	                <div class="hosTitle f_yahei">
+	                    $!{hospitalName}
+	                </div>
+	                #parse("nur/menu.vm")
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<!-- <div data-options="region:'east',href:'',border:false" style="width:200px;overflow: hidden;">
+			<div style="width:100%;height:100%;background-color:#eff2f2;"></div>
+	</div> -->
+	
+	<div id="shiftBookContent" data-options="region:'center',fit:true" style="border:none;">
+		<div class="shift-book-top">
+			<div class="shift-book-top-one">
+				<div class="one-title fl">病区一览</div>
+				<div class="one-info">
+					<div class="fr" style="width:125px;">
+						<div style="display:inline-block; width:60px;margin:0;"><span class="bgcolor bgcolor1"></span><em id="tjhl"></em></div>
+	                    <div style="display:inline-block; width:60px;margin:0;"><span class="bgcolor bgcolor2"></span><em id="yjhl"></em></div>
+	                    <br>
+	                    <div style="display:inline-block; width:60px;margin:0;"><span class="bgcolor bgcolor3"></span><em id="ejhl"></em></div>
+	                    <div style="display:inline-block; width:60px;margin:0;"><span class="bgcolor bgcolor4"></span><em id="sjhl"></em></div>
+					</div>
+					<ul class="fr" id="tjxx">
+					</ul>
+					
+				</div>
+			</div>
+			<div class="shift-book-top-two">
+				<div class="two-title fl">交班本</div>
+				<div class="btn-box fr mgr10" style="height: 43px;line-height: 43px;">
+                    <div class="time-box fl" style="">
+                        <input id="startDate" name="startDate" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 80px;padding-left:5px;">
+                        &nbsp;
+                    </div>
+                    <input type="button" value="查询" onclick="search();">
+                    <!-- <input type="button" value="打印" onclick="PrintMytable()">
+                    <input disabled="disabled" type="button" value="EXCEL导出" onclick="exportExcl();"> -->
+                    <input type="button" value="删除" onclick="del()">
+                </div>
+			</div>
+		</div>
+		#parse("nur/shiftBookPrint.vm")
+			
+		<div class="shift-book-content">
+			<script type="text/javascript">
+				$('.shift-book-content').height($(window).height()-$('.shift-book-content').offset().top);
+			</script>
+			<div class="content-left fl">
+				<div>
+					<table id="shiftBookTable" class="easyui-datagrid" fit="true" style="table-layout:fixed;" data-options="
+			                onLoadSuccess:loadRecordSuccess,
+			                collapsible: true,
+			                striped:true,
+			                singleSelect:true">
+			            <thead>	
+							<tr>
+								<th data-options="field:'bedNo',width:40,halign:'center'" rowspan="2">床号</th>
+								<th data-options="field:'patientName',width:50,halign:'center'" rowspan="2">姓名</th>
+								<th data-options="field:'diagnose',width:110,halign:'center'" rowspan="2">诊断</th>
+								<th data-options="field:'shiftStatus',width:50,align:'center',formatter:shiftStatus" rowspan="2">状态</th>
+								<th >凌晨00:00至上午07:59时</th>
+								<th data-options="field:'nursName1',width:45,align:'center'" rowspan="2">护士</th>
+								<th data-options="field:'time1',width:60,align:'center',formatter:shiftTime" rowspan="2">时间</th>
+								<th >上午08:00至下午15:59时</th>
+								<th data-options="field:'nursName2',width:45,align:'center'" rowspan="2">护士</th>
+								<th data-options="field:'time2',width:60,align:'center',formatter:shiftTime" rowspan="2">时间</th>
+								<th >下午16:00至23:59时</th>
+								<th data-options="field:'nursName3',width:45,align:'center'" rowspan="2">护士</th>
+								 <th data-options="field:'time3',width:60,align:'center',formatter:shiftTime" rowspan="2">时间</th>
+							</tr>
+							
+			                <tr>
+			                     <th data-options="field:'problem1',width:200,align:'left'">病情交班</th>
+								 <th data-options="field:'problem2',width:200,align:'left'">病情交班</th>
+								 <th data-options="field:'problem3',width:200,align:'left'">病情交班</th>
+			                </tr>
+			            </thead>
+			        </table>
+				</div>
+			</div>
+			<div class="content-right fr">
+				<div class="content-right-box">
+					<div class="c-r-b-title" id="operationType">
+						新增
+					</div>
+					<div class="c-r-b-content">
+						<select style="width:156px;" id="selPatient">
+						</select>
+						<p id="editorTime" style="margin-top:10px;display:none;"><span style="line-height:16px;">录入时间</span><input id="shiftTime" class="Wdate" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm'})" readonly="readonly" style="width: 135px;padding-left:5px;"></p>
+						<p style="height:30px;line-height:30px;margin-top:5px;font-size:14px;">病情变化</p>
+						<textarea id="shiftDesc" style="width:154px;height:250px;resize:none;"></textarea>
+						<div class="c-r-b-c-btn-tool">
+							<div class="btn-nm" onclick="showTemplate();">
+		                        <span class="btm">模板</span>
+		                    </div>
+		                    <div class="btn-nm" onclick="showPrescription();">
+		                        <span class="btm">医嘱</span>
+		                    </div>
+		                    <br>
+		                    <div class="btn-nm" onclick="showTemplate();">
+		                        <span class="btm">生命体征</span>
+		                    </div>
+		                    <div class="btn-nm" onclick="showReferenceNurseDoc('RCD')">
+		                        <span class="btm">护理记录</span>
+		                    </div>
+		                    <br>
+		                    <div class="btn-nm" onclick="showCheckReport();">
+		                        <span class="btm">检验报告</span>
+		                    </div>
+		                    <div class="btn-nm" onclick="showInspectionReport();">
+		                        <span class="btm">检查报告</span>
+		                    </div>
+		                    <br>
+		                    <div class="btn-nm" onclick="showReferenceNurseDoc('EVT')">
+		                        <span class="btm">风险评估</span>
+		                    </div>
+		                    <div class="btn-nm" onclick="">
+		                        <span class="btm">护理计划</span>
+		                    </div>
+		                    <br>
+		                    <div class="btn-nm" onclick="showReferenceNurseDoc('EDU')">
+		                        <span class="btm">健康宣教</span>
+		                    </div>
+		                    <div class="btn-nm" onclick="">
+		                        <span class="btm">护理项目</span>
+		                    </div>
+		                    <div style="margin-top: 20px;border-top: 1px dotted #ccc;">
+		                    	<div class="btn-nm" onclick="saveData();">
+			                        <span class="btm">保存</span>
+			                    </div>
+			                    <div class="btn-nm" onclick="clearing();">
+			                        <span class="btm">清除</span>
+			                    </div>
+			                </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div></div>
+	
+	<div id="referenceDlg" class="easyui-dialog" style="width:800px;height:500px;" data-options="title:'引用',modal:true,closed:true,
+			buttons:[{
+				text:'Save',
+				handler:insertReference
+			},{
+				text:'Close',
+				handler:function(){$('#referenceDlg').dialog('close');}
+			}]">
+        <input id="templateType"  type="hidden"  />
+    	<div class="toolbar-box">
+        	<div class="btn-nm fr" style="width:40px;height:20px;line-height:18px;margin:8px 0 0 8px;">
+                <span class="btm" onclick="searchshiftBooks()">确定</span>
+            </div>
+        	<div class="fr">
+                <span>
+                    <input id="referenceBeginDate" class="Wdate" value="" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;padding-left:5px;">
+                    至
+                    <input id="referenceEndDate" class="Wdate" value="" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;padding-left:5px;">
+                </span>
+            </div>
+        	<table id="referenceTable" fit="true" class="easyui-datagrid" style="width:100%;height:100%"
+                data-options="fitColumns:true,singleSelect:false">
+                <thead>
+                    <tr>
+						<th data-options="checkbox:true"></th>
+                        <th data-options="field:'recTime',width:100">记录时间</th>
+                        <th data-options="field:'refValue',width:300">引用内容</th>
+                        <th data-options="field:'nurserName',width:100,align:'right'">记录护士</th>
+                    </tr>
+                </thead>
+        	</table>			
+        </div>
+ 
+        
+	</div>	
+	<div class="ua-box hide" id="nur-plan-box" style="width:880px;margin-top:-212px;margin-left:-440px;">
+		<div class="ua-b-top">
+            <span class="title">插入护理计划</span>
+            <span class="close btn-close" onclick="this.parentNode.parentNode.style.display='none';"></span>
+        </div>
+        <div class="ua-b-content">
+            <div class="ua-b-c-toolbar">
+            	<div class="toolbar-box">
+	            	<div class="btn-nm fr" style="width:40px;height:20px;line-height:18px;margin:8px 0 0 8px;">
+		                <span class="btm">确定</span>
+		            </div>
+	            	<div class="fr">
+	                    <span>
+	                        <input id="startDate" name="startDate" class="Wdate" value="2014-08-01" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;padding-left:5px;">
+	                        至
+	                        <input id="endDate" name="endDate" class="Wdate" value="2014-08-01" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;padding-left:5px;">
+	                    </span>
+	                </div>
+                </div>
+            </div>      
+            <div class="nur-plan">
+            	<ul>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span title="注意预防跌倒注意预防跌倒注意预防跌倒注意预防跌倒注意预">注意预防跌倒注意预防跌倒注意预防跌倒注意预防跌倒注<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意压疮<span></li>
+            		<li><input type="checkbox"><em>2014-03-15 12:11</em><span>注意窒息<span></li>
+            	</ul>
+            </div>
+        </div>
+        <div class="ua-b-bottom" style="height:46px;">
+        	<input type="button" value="确定">
+        	<input type="button" value="取消">
+        </div>
+	</div>
+	<!-- 插入规则 -->
+	<div class="ua-box hide" id="nur-plan-box" style="width:880px;margin-top:-212px;margin-left:-440px;">
+		<div class="ua-b-top">
+            <span class="title">插入规则</span>
+            <span class="close btn-close" onclick="this.parentNode.parentNode.style.display='none';"></span>
+        </div>
+        <div class="ua-b-content">
+            <div class="rule f_yahei">
+            	<div class="rule-box f">
+            		<div class="rule-list">
+            			<div class="rule-title">
+            				患者信息
+            			</div>
+            			<ul>
+            				<li>
+            					<input type="checkbox"><span>【长嘱】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【性别】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【年龄】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【电话】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【出生日期】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【地址】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【联系人】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【联系人电话】</span>
+            				</li>
+            			</ul>
+            		</div>
+            		<div class="rule-list">
+            			<div class="rule-title">
+            				住院信息
+            			</div>
+            			<ul>
+            				<li>
+            					<input type="checkbox"><span>【科室】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【床号】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【住院号】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【入院时间】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【入院诊断】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【主管医师】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【饮食】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【护理级别】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【药物过敏】</span>
+            				</li>
+            			</ul>
+            		</div>
+            		<div class="rule-list">
+            			<div class="rule-title">
+            				生命体征
+            			</div>
+            			<ul>
+            				<li>
+            					<input type="checkbox"><span>【第一次体温】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【第一次血压】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【第一次呼吸】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【第一次脉搏】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【体温】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【血压】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【呼吸】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【心率】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【脉搏】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【血糖】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【血氧饱和度】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【尿量】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【大便】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【出量】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【入量】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【体重】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【身高】</span>
+            				</li>
+            			</ul>
+            		</div>
+            		<div class="rule-list">
+            			<div class="rule-title">
+            				护理评估
+            			</div>
+            			<ul>
+            				<li>
+            					<input type="checkbox"><span>【压疮评估】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【跌倒评估】</span>
+            				</li>
+            				<li>
+            					<input type="checkbox"><span>【窒息评估】</span>
+            				</li>
+            			</ul>
+            		</div>
+            	</div>
+            </div>
+        </div>
+        <div class="ua-b-bottom" style="height:46px;">
+        	<input type="button" value="确定">
+        	<input type="button" value="取消">
+        </div>
+	</div>
+
+	<!-- 新建模板 -->
+	<div id="createTemp">
+        <div class="ua-b-content">
+            <div class="template f_yahei" style="height:458px;">
+            	<div class="temp-box">
+	            	<div class="temp-left" style="width:189px;height:100%;padding:0px;">
+	            		<div class="tree-top-tool">
+	            			<span class="add-folder"></span>
+            				<span class="sub-folder"></span>
+            				<span class="add-file"></span>
+            				<span class="sub-file"></span>
+	            		</div>
+	            		<div class="tree-main-box">
+	            			<div class="temp-tree">
+	            				<ul id="tree2"></ul>
+	            			</div>
+	            		</div>
+	            	</div>
+	            	<div class="temp-right" style="width:558px;height:100%;">
+	            		<div class="editor-top-tool" >
+	            			<div style="padding-left:10px;line-height:41px;">
+	            				<span onclick="this.childNodes[1].checked='checked';">
+		            				<input type="radio" name="mb">个人模板
+	            				</span>
+	            				<span onclick="this.childNodes[1].checked='checked';">
+	            					<input type="radio" name="mb">科室模板
+	            				</span>
+	            				<span onclick="this.childNodes[1].checked='checked';">
+	            					<input type="radio" name="mb">全院模板
+	            				</span>
+	            				<input type="button" value="插入规则" class="add-rule">
+	            			</div>
+	            		</div>
+
+	            		<div class="editor-main-box">
+	            			<div>
+	            				<textarea class="editor-two"></textarea>
+	            			</div>
+	            		</div>
+	            	</div>
+	            </div>
+            </div>
+        </div>
+	</div>
+
+
+	<!-- 模板 -->
+	<div class="ua-box hide" id="template-box" style="width:720px;margin-top:-212px;margin-left:-375px;">
+		<div class="ua-b-top">
+            <span class="title">交班本模板</span>
+            <span class="close btn-close" onclick="this.parentNode.parentNode.style.display='none';"></span>
+        </div>
+        <div class="ua-b-content">
+            <div class="template f_yahei">
+            	<div class="temp-box">
+	            	<div class="temp-left">
+	            		<div class="temp-tree">
+	            			<ul id="existTemplate"></ul>
+	            		</div>
+	            	</div>
+	            	<div class="temp-right">
+	            		<div class="temp-editor">
+	            			<textarea class="editor-one" ></textarea>
+	            		</div>
+	            	</div>
+	            </div>
+            </div>
+        </div>
+        <div class="ua-b-bottom" style="height:46px;">
+        	<input type="button" value="新建模板" id="createTempBtn">
+        	<input type="button" value="确定">
+        	<input type="button" value="取消">
+        </div>
+	</div>
+
+	<div class="ua-box hide" id="nur-record-box" style="width:880px;margin-top:-212px;margin-left:-440px;">
+		<div class="ua-b-top">
+            <span class="title">插入护理记录</span>
+            <span class="close btn-close" onclick="this.parentNode.parentNode.style.display='none';"></span>
+        </div>
+        <div class="ua-b-content">
+            <div class="ua-b-c-toolbar">
+            	<div class="toolbar-box">
+	            	<div  class="record-time fl f_yahei" style="color:#333840;font-size:13px;">
+	            		记录时间（2014-03-15 12:11）
+	            	</div>
+	            	<div class="btn-nm fr" style="width:40px;height:20px;line-height:18px;margin:8px 0 0 8px;">
+		                <span class="btm">确定</span>
+		            </div>
+	            	<div class="fr">
+	                    <span>
+	                        <input id="startDate" name="startDate" class="Wdate" value="2014-08-01" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;padding-left:5px;">
+	                        至
+	                        <input id="endDate" name="endDate" class="Wdate" value="2014-08-01" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;padding-left:5px;">
+	                    </span>
+	                </div>
+                </div>
+            </div>      
+            <div class="nur-record-list">
+            	<div class="n-r-left">
+            		<div class="arrow top-arrow" onclick="moveTop()">^</div>
+            		<div class="arrow bottom-arrow" onclick="moveDown()">+</div>
+            		<div style="position:relative;height:280px;margin-top:10px;overflow:hidden;background-color:#f8f8f8;">
+	            		<ul class="left-items" id="left-items">
+	            			<li>2014-03-15 12:11</li>
+	            			<li class="checked">2014-03-15 12:11</li>
+	            			<li>2014-03-15 12:11</li>
+	            			<li>2014-03-15 12:11</li>
+	            			<li>2014-03-15 12:11</li>
+	            			<li>2014-03-15 12:11</li>
+	            			<li>2014-03-15 12:11</li>
+	            			<li>2014-03-15 12:00</li>
+	            			<li>2014-03-15 12:11</li>
+	            			<li>2014-03-15 11:11</li>
+	            			<li>2014-03-15 12:11</li>
+	            			<li>2014-03-15 12:11</li>
+	            			<li>2014-03-15 12:11</li>
+	            			<li>2014-03-15 12:11</li>
+	            			<li>2014-03-15 16:00</li>
+	            			<li>2014-03-15 12:11</li>
+	            			<li>2014-03-15 12:11</li>
+	            		</ul>
+            		</div>
+            	</div>
+            	<div class="n-r-right">
+            		<div style="height:100%;">
+            			<ul>
+            				<li><input type="checkbox">意识：清醒</li>
+            				<li><input type="checkbox">吸氧：8L/min</li>
+            				<li><input type="checkbox">体温：36°C</li>
+            				<li><input type="checkbox">脉搏：90次/分</li>
+            				<li><input type="checkbox">呼吸：20次/分</li>
+            				<li><input type="checkbox">血压：120/80/mmHg</li>
+            				<li><input type="checkbox">血氧饱和度：98%</li>
+            				<li><input type="checkbox">意识：清醒</li>
+            			</ul>
+            			<p style="line-height:40px;margin-top:10px;font-size:14px;">病情观察措施及效果</p>
+            			<textarea></textarea>
+            		</div>
+            	</div>
+            </div>
+        </div>
+        <div class="ua-b-bottom" style="height:46px;">
+        	<div class="btn-nm btn-save">
+                <span class="btm">确定</span>
+            </div>
+            <div class="btn-nm btn-close">
+                <span class="btm">取消</span>
+            </div>
+        </div>
+	</div>
+	<div class="ua-box hide" id="inspection-report-box" style="width:880px;margin-top:-212px;margin-left:-440px;">
+		<div class="ua-b-top">
+            <span class="title">插入检查报告</span>
+            <span class="close btn-close" onclick="this.parentNode.parentNode.style.display='none';"></span>
+        </div>
+        <div class="ua-b-content">
+            <div class="ua-b-c-toolbar">
+            	<div class="toolbar-box">
+	            	<div  class="record-time fl f_yahei" style="color:#333840;font-size:13px;">
+	            		检查类型（2014-03-15 12:11 胸部X光）
+	            	</div>
+	            	<div class="btn-nm fr" style="width:40px;height:20px;line-height:18px;margin:8px 0 0 8px;">
+		                <span class="btm">确定</span>
+		            </div>
+	            	<div class="fr">
+	                    <span>
+	                        <input id="startDate" name="startDate" class="Wdate" value="2014-08-01" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;padding-left:5px;">
+	                        至
+	                        <input id="endDate" name="endDate" class="Wdate" value="2014-08-01" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;padding-left:5px;">
+	                    </span>
+	                </div>
+                </div>
+            </div>      
+            <div class="inspection-report-list">
+            	<div class="n-r-left">
+            		<div class="arrow top-arrow" onclick="moveTop()" style="height:25px;">^</div>
+            		<div class="arrow bottom-arrow" onclick="moveDown()" style="height:25px;">+</div>
+            		<div style="position:relative;height:250px;margin-top:25px;overflow:hidden;background-color:#f8f8f8;">
+	            		<ul class="left-items" id="left-items">
+	            			<li class="checked">
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:00</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 11:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 16:00</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            		</ul>
+            		</div>
+            	</div>
+            	<div class="n-r-right">
+            		<div style="height:100%;">
+            			<!-- <ul>
+            				<li><input type="checkbox">意识：清醒</li>
+            				<li><input type="checkbox">吸氧：8L/min</li>
+            				<li><input type="checkbox">体温：36°C</li>
+            				<li><input type="checkbox">脉搏：90次/分</li>
+            				<li><input type="checkbox">呼吸：20次/分</li>
+            				<li><input type="checkbox">血压：120/80/mmHg</li>
+            				<li><input type="checkbox">血氧饱和度：98%</li>
+            				<li><input type="checkbox">意识：清醒</li>
+            			</ul> -->
+            			<p style="line-height:30px;margin-top:0px;font-size:14px;">检查所见</p>
+            			<textarea></textarea>
+            			<p style="line-height:30px;margin-top:0px;font-size:14px;">检查所见</p>
+            			<textarea></textarea>
+            		</div>
+            	</div>
+            </div>
+        </div>
+        <div class="ua-b-bottom" style="height:46px;">
+        	<div class="btn-nm btn-save">
+                <span class="btm">确定</span>
+            </div>
+            <div class="btn-nm btn-close">
+                <span class="btm">取消</span>
+            </div>
+        </div>
+	</div>
+	<div class="ua-box hide" id="check-report-box" style="width:880px;margin-top:-212px;margin-left:-440px;">
+		<div class="ua-b-top">
+            <span class="title">插入检验报告</span>
+            <span class="close btn-close" onclick="this.parentNode.parentNode.style.display='none';"></span>
+        </div>
+        <div class="ua-b-content">
+            <div class="ua-b-c-toolbar">
+            	<div class="toolbar-box">
+	            	<div  class="record-time fl f_yahei" style="color:#333840;font-size:13px;">
+	            		检查类型（2014-03-15 12:11 胸部X光）
+	            	</div>
+	            	<div class="btn-nm fr" style="width:40px;height:20px;line-height:18px;margin:8px 0 0 8px;">
+		                <span class="btm">确定</span>
+		            </div>
+	            	<div class="fr">
+	                    <span>
+	                        <input id="startDate" name="startDate" class="Wdate" value="2014-08-01" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;padding-left:5px;">
+	                        至
+	                        <input id="endDate" name="endDate" class="Wdate" value="2014-08-01" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;padding-left:5px;">
+	                    </span>
+	                </div>
+                </div>
+            </div>      
+            <div class="check-report-list">
+            	<div class="n-r-left">
+            		<div class="arrow top-arrow" onclick="moveTop()" style="height:25px;">^</div>
+            		<div class="arrow bottom-arrow" onclick="moveDown()" style="height:25px;">+</div>
+            		<div style="position:relative;height:250px;margin-top:25px;overflow:hidden;background-color:#f8f8f8;">
+	            		<ul class="left-items" id="left-items">
+	            			<li class="checked">
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:00</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 11:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 16:00</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            		</ul>
+            		</div>
+            	</div>
+            	<div class="n-r-right" style="width:710px;height:300px;padding:0;">
+            		<div style="height:100%;">
+            			<table id="cr"></table>
+            		</div>
+            	</div>
+            </div>
+        </div>
+        <div class="ua-b-bottom" style="height:46px;">
+        	<div class="btn-nm btn-save">
+                <span class="btm">确定</span>
+            </div>
+            <div class="btn-nm btn-close">
+                <span class="btm">取消</span>
+            </div>
+        </div>
+	</div>
+	<div class="ua-box hide" id="add-prescription-box" style="width:880px;margin-top:-212px;margin-left:-440px;">
+		<div class="ua-b-top">
+            <span class="title">插入医嘱</span>
+            <span class="close btn-close" onclick="this.parentNode.parentNode.style.display='none';"></span>
+        </div>
+        <div class="ua-b-content">
+            <div class="ua-b-c-toolbar">
+            	<div class="toolbar-box">
+	            	<div  class="record-time fl f_yahei" style="color:#333840;font-size:13px;">
+	            		检查类型（2014-03-15 12:11 胸部X光）
+	            	</div>
+	            	<div class="btn-nm fr" style="width:40px;height:20px;line-height:18px;margin:8px 0 0 8px;">
+		                <span class="btm">确定</span>
+		            </div>
+	            	<div class="fr">
+	                    <span>
+	                        <input id="startDate" name="startDate" class="Wdate" value="2014-08-01" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;padding-left:5px;">
+	                        至
+	                        <input id="endDate" name="endDate" class="Wdate" value="2014-08-01" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" style="width: 90px;padding-left:5px;">
+	                    </span>
+	                </div>
+                </div>
+            </div>      
+            <div class="add-prescription-list">
+            	<div class="n-r-left">
+            		<!-- <div class="arrow top-arrow" onclick="moveTop()" style="height:25px;">^</div>
+            		<div class="arrow bottom-arrow" onclick="moveDown()" style="height:25px;">+</div> -->
+            		<div class="prescription-item" style="">
+            			<p>
+            				<span><input type="radio" name="long-or-short">长嘱</span>
+            				<span><input type="radio" name="long-or-short">临嘱</span>
+            			</p>
+            			<p>
+            				<span><input type="radio" name="done-or-not">已执行</span>
+            				<span><input type="radio" name="done-or-not">未执行</span>
+            			</p>
+            			<div>
+            				<input type="checkbox">输液医嘱<br>
+            				<input type="checkbox">口服液医嘱<br>
+            				<input type="checkbox">检验医嘱<br>
+            				<input type="checkbox">检查医嘱<br>
+            				<input type="checkbox">医疗医嘱<br>
+            				<input type="checkbox">其他医嘱<br>
+            			</div>
+	            		<!-- <ul class="left-items" id="left-items">
+	            			<li class="checked">
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:00</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 11:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 16:00</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            			<li>
+	            				<p>2014-03-15 12:11</p>
+	            				<p>胸部X光</p>
+	            			</li>
+	            		</ul> -->
+            		</div>
+            	</div>
+            	<div class="n-r-right" style="width:710px;height:300px;padding:0;">
+            		<div style="height:100%;">
+            			<table id="yz"></table>
+            		</div>
+            	</div>
+            </div>
+        </div>
+        <div class="ua-b-bottom" style="height:46px;">
+        	<div class="btn-nm btn-save">
+                <span class="btm">确定</span>
+            </div>
+            <div class="btn-nm btn-close">
+                <span class="btm">取消</span>
+            </div>
+        </div>
+	</div>
+	<script>
+		if( $(".content-right-box").height() < 636){
+			$(".c-r-b-content").css({
+				'height':($(".content-right-box").height()-62)+"px",
+				'overflowY':'scroll'
+			});
+		}
+	</script>
+	<script type="text/javascript" src="#url('/resources/js/nur/msgBox.js?1472534366479')" charset="utf-8"></script>
+</body>
+</html>
