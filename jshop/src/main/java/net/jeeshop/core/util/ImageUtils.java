@@ -20,8 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-import com.sun.image.codec.jpeg.JPEGCodec;
+//import com.sun.image.codec.jpeg.JPEGImageEncoder;
+//import com.sun.image.codec.jpeg.JPEGCodec;
 /**
  * 等比缩放图片、裁剪图片的 图片处理工具类
  * @author huangf
@@ -224,11 +224,15 @@ public class ImageUtils {
 	     
 	        tag.getGraphics().drawImage(src.getScaledInstance(widthdist, heightdist,  Image.SCALE_SMOOTH), 0, 0,  null);      
 //	        tag.getGraphics().drawImage(src.getScaledInstance(widthdist, heightdist,  Image.SCALE_AREA_AVERAGING), 0, 0,  null);      
-	              
+	       /*       
 	        FileOutputStream out = new FileOutputStream(imgdist);      
 	        JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);      
 	        encoder.encode(tag);      
-	        out.close();      
+	        out.close();   
+	        */   
+	        
+	        String formatName = imgdist.substring(imgdist.lastIndexOf(".") + 1);
+	        ImageIO.write(tag,  formatName  , new File(imgdist) ); 
 	     
 	    } catch (IOException ex) {      
 	        ex.printStackTrace();      
@@ -274,10 +278,15 @@ public class ImageUtils {
 	   BufferedImage bfImage= new BufferedImage(newWidth,newHeight,BufferedImage.TYPE_INT_RGB);
 	   bfImage.getGraphics().drawImage(image.getScaledInstance(newWidth, newHeight,Image.SCALE_SMOOTH),0,0,null);
 	   
+	   /*
 	   FileOutputStream os = new FileOutputStream(dist);
 	   JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(os);
 	   encoder.encode(bfImage);
 	   os.close(); 
+	   */
+	   
+	   String formatName = dist.getName().substring(dist.getName().lastIndexOf(".") + 1);
+       ImageIO.write(bfImage,  formatName  , dist ); 
 	   System.out.println("创建缩略图成功");
 	  }
 	  catch(Exception e)
