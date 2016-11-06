@@ -5,13 +5,13 @@ Act 1.
 Robbie: Where's Mom?
 Grandpa: She went to a school-board meeting.
 Robbie: I don't know how she does it. She sure keeps busy.
-Grandpa: It's import to her.There are lots of places to go, lots of things to do. She can't sit around and do nothings to do. She can't sit around and do nothing. Philip works late.
+Grandpa: It's important to her.There are lots of places to go, lots of things to do. She can't sit around and do nothing. Philip works late.
 Robbie: I guess you're right. I wish I had her energy.
 Philip: Anybody home?
 Robbie: We're in here, Dad.
 Philip: Oh. Hi, gang.
 Grandpa: Hello, Philip. How was your day?
-Philip: My day was just fine. So was my night. It's almost ten 0'clock. Mmm.I'm starving. Um...where's Mom?
+Philip: My day was just fine. So was my night. It's almost ten 0'clock. Mm...I'm starving. Um...where's Mom?
 Robbie: She went to a school-board meeting.
 Grandpa: There's a note for you on the refrigerator.
 Philip: Oh?
@@ -133,11 +133,11 @@ Ellen: He gives his harness bells a shake
 To ask if there is some mistake.
 The only other sound's the sweep
 Of easy wind and downy flake.
-Ellen&Philip: The woods are lovely, dark and deep, 
+Ellen&Philip: The woods are lovely, dark and deep,
 But I have promises to keep,
-And miles to go before I sleep, 
+And miles to go before I sleep,
 And miles to go before I sleep.
-Grandpa: You two belong on stage! That was wonderful! 
+Grandpa: You two belong on stage! That was wonderful!
 Ellen: Grandpa!
 Philip: Dad...Robbie. When did you come?
 Grandpa: We've been listening to you both. These are lucky kids.
@@ -145,4 +145,3 @@ Robbie: Do you enjoy reading together?
 Philip: Well, we may read together aloud at home.
 Grandpa: You were right, Robbie.
 Robbie: I know.
-
