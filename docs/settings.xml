@@ -267,7 +267,9 @@
 					<id>central-avatar</id>
 					<url>http://repo.maven.apache.org/maven2</url>
 					<layout>default</layout>
-					<snapshotPolicy>always</snapshotPolicy>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
 				</pluginRepository>
 			</pluginRepositories>
 		</profile>
