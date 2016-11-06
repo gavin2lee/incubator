@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.project.dao.PaasProjectDeployPortMapper">
+
+	<delete id="deleteByDeployId">
+		delete from os_project_deploy_port where deploy_id = #{param}
+	</delete>
+	
+	<insert id="batchSave"  parameterType="java.util.List" >
+		 insert into os_project_deploy_port (port_id,deploy_id,node_port,target_port,port_key,port_remark,port_protocol)   
+		 values
+		 <foreach collection="list"  item="item"  index="index" separator="," >  
+	        (#{item.portId},#{item.deployId},#{item.nodePort},#{item.targetPort},#{item.portKey},#{item.portRemark},#{item.portProtocol})  
+	     </foreach>  
+	</insert>
+	
+	<select id="findByDeployId"  resultType="com.harmazing.openbridge.paas.deploy.model.PaasProjectDeployPort">
+		select 
+		port_id portId,
+		deploy_id deployId,
+		node_port nodePort,
+		target_port targetPort,
+		port_key portKey,
+		port_remark portRemark,
+		port_protocol portProtocol
+		from os_project_deploy_port where deploy_id = #{param}
+	</select>
+	
+	<select id="getMaxPort"  resultType="int">
+		SELECT case when MAX(node_port) is null then 0 else MAX(node_port) end port from os_project_deploy_port;
+	</select>
+</mapper>

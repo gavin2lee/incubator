@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	<tlib-version>2.0</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<short-name>auth</short-name>
+	<uri>http://www.harmazing.com/tags/auth</uri>
+	<tag>
+		<name>role</name>
+		<tag-class>com.harmazing.framework.web.tablibs.auth.RoleTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>has</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[不包含]]></description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[区段名称]]></description>
+		</attribute>
+	</tag>
+	<tag>
+		<name>validator</name>
+		<tag-class>com.harmazing.framework.web.tablibs.auth.ValidatorTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[区段名称]]></description>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>url</name>
+		<tag-class>com.harmazing.framework.web.tablibs.auth.UrlTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[区段名称]]></description>
+		</attribute>
+	</tag>
+</taglib>

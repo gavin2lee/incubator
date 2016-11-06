@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.sys.user.dao.SysGroupMapper">
+	<select id="groupPage" resultType="java.util.HashMap">
+		select	
+			g.group_id as groupId,
+			g.group_name as groupName,
+			g.create_time as createTime,
+			g.create_user as createrId,
+			u.user_name as createrName
+		from sys_group g left join sys_user u on g.create_user=u.user_id
+		<where> 
+			<if test="keyword != null">
+				AND g.group_name like concat(concat('%',#{keyword}),'%')
+			</if>
+		</where>
+		order by g.create_time desc limit #{start},#{size}
+	</select>
+	<select id="groupPageRecordCount" resultType="java.lang.Integer">
+		select 
+			ifnull(count(group_id),0) as ccc
+		from sys_group g left join sys_user u on g.create_user=u.user_id
+		<where> 
+			<if test="keyword != null">
+				AND g.group_name like concat(concat('%',#{keyword}),'%')
+			</if>
+		</where>
+	</select>
+	<select id="getUsersByGroupId" resultType="java.util.HashMap">
+		select ug.relation_id as relationId,ug.group_id as groupId,ug.user_id as userId, u.user_name as userName
+		from sys_user_group ug left join sys_user u on ug.user_id =u.user_id where ug.group_id=#{groupId}
+	</select>
+	<insert id="addGroup">
+		insert into sys_group(group_id,group_name,create_time,create_user) values(#{groupId},#{groupName},#{createTime},#{createrId})
+	</insert>
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.imgbuild.dao.PaasOsImageMapper">
+	<insert id="insert"
+		parameterType="com.harmazing.openbridge.paasos.imgbuild.model.PaasOsImage">
+		INSERT INTO
+		`os_image`(`image_id`,`image_type`,`image_name`,`image_version`,
+		`ports`,`command`,`args`,`workdir`,`docker_file`,`build_type`,`build_file`,`build_status`)
+		VALUES
+		(#{imageId},#{imageType},#{imageName},#{imageVersion},
+		#{ports},#{command},#{args},#{workdir},#{dockerFile},#{buildType},#{buildFile},#{buildStatus})
+	</insert>
+
+	<update id="update"
+		parameterType="com.harmazing.openbridge.paasos.imgbuild.model.PaasOsImage">
+		update os_image set
+		image_type=#{imageType},image_name=#{imageName},image_version=#{imageVersion},ports=#{ports},command=#{command},args=#{args},workdir=#{workdir},docker_file=#{dockerFile},build_type=#{buildType},build_file=#{buildFile},build_status=#{buildStatus}
+		where image_id = #{imageId}
+	</update>
+
+	<select id="findById" parameterType="java.lang.String"
+		resultType="com.harmazing.openbridge.paasos.imgbuild.model.PaasOsImage">
+		SELECT `image_id` imageId,
+		`image_type` imageType,
+		`image_name` imageName,
+		`image_version` imageVersion,
+		`ports` ports,
+		`command` command,
+		`args` args,
+		`workdir` workdir,
+		`docker_file` dockerFile,
+		`build_type` buildType,
+		`build_file` buildFile,
+		`build_status` buildStatus
+		FROM `os_image`
+		where image_id=#{param}
+	</select>
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.project.dao.PaasProjectBuildMapper">
+	<select id="pageCount" parameterType="java.util.Map"  resultType="int">
+		select count(*) from os_project_build  b where b.project_id = #{projectId}
+	</select>
+	
+	<select id="page" parameterType="java.util.Map" resultType="java.util.Map">
+		select 
+			op.project_type,
+			pb.version_code,
+			pb.file_name,
+			pb.file_path,
+			pb.status,
+			pb.build_id,
+			pb.build_name,
+			pb.build_tag,
+			pb.build_time,
+			pb.delete_status,
+			pb.project_id,
+			oi.image_name remote_url
+		from os_project_build pb
+			inner join os_project op on  pb.project_id = op.project_id
+			left outer join os_image oi on pb.image_id = oi.image_id
+		where pb.project_id = op.project_id
+			and op.project_id = #{projectId}
+		order by pb.create_date desc
+		limit #{start},#{size}
+	</select>
+
+	<update id="updateStatus"  parameterType="java.util.Map">
+		update os_project_build 
+			set 
+			build_id=#{buildId}
+			<if test="status != null">
+			,status=#{status} 	
+			</if>
+			<if test="buildLogs!=null ">
+			,build_logs=CONCAT(case when build_logs is null then '' else build_logs end,#{buildLogs})
+			</if>
+			<if test="imageId !=null">
+			,image_id=#{imageId}
+			</if>
+			<if test="buildTime !=null">
+			,build_time=#{buildTime}
+			</if>
+			<if test="buildSuccess !=null ">
+			,build_success=#{buildSuccess}
+			</if>
+			<if test="deleteStatus !=null ">
+			,delete_status=#{deleteStatus}
+			</if>
+		where build_id=#{buildId}
+	</update>
+	
+	<select id="findAlreadyCount"  resultType="java.lang.Integer"  parameterType="java.util.Map">
+		select count(*) from os_project_build
+			where version_id = #{versionId}
+			and build_name = #{buildName}
+			and build_tag = #{buildTag}
+			<if test="buildId!=null">
+				and build_id != #{buildId}
+			</if>
+	</select>
+	
+	<select id="getBuildImageByBusinessId"   resultType="java.util.Map" parameterType="java.lang.String">
+		select 
+			oi.image_id imageId,
+			pb.build_id buildId,
+			pb.build_name buildName,
+			oi.image_name imageName,
+			pb.build_tag buildVersion,
+			oi.image_version imageVersion,
+			pb.file_name fileName,
+			oi.ports ports,
+			pb.version_code versionCode,
+			pb.version_id versionId
+		from 
+			os_project_build pb,os_image oi,os_project op
+			where pb.image_id = oi.image_id
+			and pb.project_id = op.project_id
+			and op.business_id = #{param}
+			and pb.status =10
+		order by pb.create_date desc
+	</select>
+	
+	<select id="data" parameterType="java.util.Map" resultType="java.util.Map">
+		select 
+		pb.build_id buildId,
+		pb.build_no buildNo,
+		pb.status status,
+		oi.image_name imageName,
+		pb.build_name buildName,
+		pb.build_tag buildVersion,
+		pb.build_success buildSuccess
+		from os_project_build pb inner join os_project op on pb.project_id = op.project_id
+		left outer join os_image oi on pb.image_id = oi.image_id
+		where 1=1
+		<if test="businessId!=null and businessId!=''">
+			 and op.business_id = #{businessId}
+		</if>
+		<if test="versionId !=null and versionId!=''">
+			and pb.version_id = #{versionId}
+		</if>
+		<if test="buildNo !=null and buildNo !=''">
+			 and pb.build_no = #{buildNo}
+		</if>
+	</select>
+	
+	<select id="findAlreadBuildVersionList" parameterType="java.util.Map" resultType="java.util.Map">
+		select op.build_tag as buildTag from os_project_build op where op.project_id = #{projectId}
+	</select>
+	
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.nginx.dao.PaasNginxHostMapper">
+	<select id="queryHostCount" resultType="java.lang.Integer">
+		select ifnull(count(host_id),0) as ccc
+		from os_nginx_host
+		<where> 
+			<if test="keyword != null">
+				AND (host_ip like concat(concat('%',#{keyword}),'%') 
+				or directory_name like concat(concat('%',#{keyword}),'%') or backup_host like concat(concat('%',#{keyword}),'%')
+				or virtual_host like concat(concat('%',#{keyword}),'%'))
+			</if>
+			<if test="hosttype != null">
+				And host_type = #{hosttype}
+			</if>
+			<if test="hostPlatform != null">
+				And host_platform = #{hostPlatform}
+			</if>
+		</where>
+	</select>
+	<select id="queryHostPage" resultType="com.harmazing.openbridge.paas.nginx.model.PaasHost">
+		select *
+		from os_nginx_host
+		<where> 
+			<if test="keyword != null">
+				And (host_ip like concat(concat('%',#{keyword}),'%') 
+				or directory_name like concat(concat('%',#{keyword}),'%') or backup_host like concat(concat('%',#{keyword}),'%')
+				or virtual_host like concat(concat('%',#{keyword}),'%'))
+			</if>
+			<if test="hosttype != null">
+				And host_type = #{hosttype}
+			</if>
+			<if test="hostPlatform != null">
+				And host_platform = #{hostPlatform}
+			</if>
+		</where>
+		order by host_type desc,host_id limit #{start},#{size}
+	</select>
+	<select id="getcountHostByIp" resultType="int">
+		select count(*)
+		from os_nginx_host
+			where host_ip=#{hostIp}
+	     And host_type = #{hostType}
+	</select>
+	<select id="getcountHostByName" resultType="int">
+		select count(*)
+		from os_nginx_host
+			where host_platform=#{hostPlatform}
+	     And directory_name = #{directoryName}
+	</select>
+</mapper>

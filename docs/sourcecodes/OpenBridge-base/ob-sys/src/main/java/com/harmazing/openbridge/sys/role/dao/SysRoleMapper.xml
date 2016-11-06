@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.sys.role.dao.SysRoleMapper">
+	<sql id="selectField">
+		r.role_id roleId,
+		r.role_name roleName,
+		r.role_desc roleDesc
+	</sql>
+
+
+	<insert id="save" parameterType="com.harmazing.openbridge.sys.role.model.SysRole">
+		INSERT INTO sys_role
+		(role_id,role_name,role_desc,role_system)
+		VALUES
+		(#{roleId},#{roleName},#{roleDesc},#{roleSystem})
+	</insert>
+
+	<update id="update" parameterType="com.harmazing.openbridge.sys.role.model.SysRole">
+		UPDATE sys_role
+		SET
+		role_name =
+		#{roleName},
+		role_desc = #{roleDesc}
+		WHERE role_id = #{roleId}
+	</update>
+	<delete id="delete" parameterType="string">
+		delete from sys_role where
+		role_id = #{roleId}
+	</delete>
+	<delete id="deleteFuncRelation" parameterType="string">
+		delete from
+		sys_role_func where role_id = #{roleId}
+	</delete>
+	<insert id="addFuncRelation" parameterType="String">
+		insert into
+		sys_role_func(id,role_id,func_id) values(#{id},#{roleId},#{funcId})
+	</insert>
+	<insert id="saveFuncRelations" parameterType="ArrayList">
+		insert into sys_role_func(id,role_id,func_id)
+		values
+		<foreach collection="list" item="obj" separator=",">
+			(#{obj.id},#{obj.roleId},#{obj.funcId})
+		</foreach>
+	</insert>
+
+	<delete id="deleteUserRelationByUserId" parameterType="string">
+		delete
+		from sys_user_role where user_id = #{userId}
+	</delete>
+	<delete id="deleteUserRelation" parameterType="string">
+		delete from
+		sys_user_role where role_id = #{roleId}
+	</delete>
+	<insert id="saveUserRelation" parameterType="ArrayList">
+		insert into sys_user_role(id,role_id,user_id)
+		values
+		<foreach collection="list" item="obj" separator=",">
+			(#{obj.id},#{obj.roleId},#{obj.userId})
+		</foreach>
+	</insert>
+
+	<select id="findById" parameterType="string"
+		resultType="com.harmazing.openbridge.sys.role.model.SysRole">
+		select
+		<include refid="selectField"></include>
+		from sys_role r where r.role_id = #{roleId}
+	</select>
+
+	<select id="findByName" parameterType="string"
+		resultType="com.harmazing.openbridge.sys.role.model.SysRole">
+		select
+		<include refid="selectField"></include>
+		from sys_role r where r.role_name = #{roleName}
+	</select>
+
+	<select id="findUserByRoleId" parameterType="string" resultType="java.util.HashMap">
+		SELECT
+		u.user_id as userId,
+		u.user_name as userName
+		FROM
+		sys_user u,
+		sys_user_role ur
+		WHERE
+		u.user_id = ur.user_id
+		AND ur.role_id = #{roleId}
+	</select>
+
+	<select id="findByEntity" parameterType="com.harmazing.openbridge.sys.role.model.SysRole"
+		resultType="com.harmazing.openbridge.sys.role.model.SysRole">
+		select
+		<include refid="selectField"></include>
+		from sys_role r where
+		1=1
+		<if test="roleId !=null and roleId!=''">
+			and r.role_id = #{roleId}
+		</if>
+		<if test="roleName !=null and roleName!=''">
+			and r.role_name = #{roleName}
+		</if>
+		<if test="roleSystem !=null and roleSystem!=''">
+			and r.role_system = #{roleSystem}
+		</if>
+	</select>
+
+	<select id="findRoleByUserId" parameterType="String"
+		resultType="com.harmazing.openbridge.sys.role.model.SysRole">
+		select sur.role_id roleId,
+		case when
+		sur.role_id='administrator' then '超级管理员' else role_name end
+		roleName,
+		case when sur.role_id='administrator' then '超级管理员具有系统所有操作权限' else
+		role_desc end roleDesc
+		from sys_user_role sur
+		left JOIN sys_role sr on
+		sur.role_id = sr.role_id
+		left JOIN sys_user su on su.user_id =
+		sur.user_id
+		where
+		sur.user_id=#{userId}
+	</select>
+
+	<select id="getAllRoleFunctions" resultType="java.util.HashMap">
+		select role.role_id
+		roleId, GROUP_CONCAT(rfunction.func_id) functionId
+		from sys_role role
+		LEFT JOIN sys_role_func rfunction
+		on role.role_id= rfunction.role_id
+		GROUP BY role.role_id
+	</select>
+
+</mapper>

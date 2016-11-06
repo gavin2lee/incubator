@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>passos——策略模版详情</title>
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../assets/css/layout.css"/>
+    <link rel="stylesheet" href="../assets/css/welcom.css"/>
+    <link rel="stylesheet" href="../assets/css/style_passos.css"/>
+</head>
+
+<body>
+<!------pas头部------->
+<div class="app_top pas_top">
+    <div class="head">
+        <div class="app_logo sub_logo">
+            <a href="main.html"><img src="../assets/images/logo_pas.png" width="200" height="62"/></a>
+        </div>
+        <div class="nav_tips">
+            <div class="news app_number">
+                <a href="monitoring.html">
+                    <div class="news_img">
+                        <i class="icons rs_ico"></i>
+                    </div>
+                    <div class="title_name">智能监控</div>
+                </a>
+            </div>
+            <div class="news">
+                <a class="active" href="alarm.html">
+                    <div class="news_img">
+                        <i class="icons zygl_ico"></i>
+                    </div>
+                    <div class="title_name">告警设置</div>
+                </a>
+            </div>
+        </div>
+        <div class="app_user">
+            <div class="user_hits">
+                <div class="nav_user">
+                    <ul>
+                        <li class="menu2" onMouseOver="this.className='menu1'" onMouseOut="this.className='menu2'">
+                            <i class="icons user_ico"></i>
+
+                            <p class="user_name">admin</p>
+                            <i class="icons arrow-btm"></i>
+
+                            <div class="list">
+                                <a href="#">管理</a><br/>
+                                <a href="#">退出</a><br/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ob_sub_pro_btn">
+            <a href="javascript:$.pageslide({ direction: 'left', href: 'pro_list2.html' })">
+                <i class="icons ob_sub_pro"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!------passos内容------->
+<div class="app_content">
+    <div class="content_frame">
+        <div class="left_sub_menu left_sub_menu_pas">
+            <ul>
+                <li><a href="#">
+                    <i class="left_menu_ico l_ico_jk"></i>集群</a></li>
+                <li><a class="select" href="#">
+                    <i class="left_menu_ico l_ico_jdgl"></i>策略</a></li>
+                <li><a href="#">
+                    <i class="left_menu_ico l_ico_zjj"></i>用户组</a></li>
+            </ul>
+        </div>
+        <div class="app_name">
+            <a href="alarm.html"><i class="icons go_back_ico"></i></a>
+
+            <p class="app_a">告警设置</p>
+            <em>&gt;</em>
+
+            <p class="app_a"><a href="templates.html">策略</a></p><em>&gt;</em>
+
+            <p class="app_a">1</p>
+        </div>
+        <div class="plate">
+            <div class="project_r">
+                <div class="r_block p20">
+                    <div class="tem_con">
+                        <div class="xq_block">
+                            <h5>模板基本信息</h5>
+
+                        </div>
+                        <div class="app_active_num f14 alert alert_min">
+                            <p>
+                                <span><b>name：</b>1</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="tem_con">
+                        <div class="xq_block">
+                            <h5>该模板中的策略列表</h5>
+
+                        </div>
+                        <div class="app_active_num f14 alert alert_min">
+                            <p>
+                                <span><b>max：</b>最大报警次数</span> <em>|</em> <span><b>P：</b>报警级别（&lt;3: 既发短信也发邮件 &gt;=3: 只发邮件）</span>
+                                <em>|</em>
+                                <span><b>run：</b> 生效时间，不指定就是全天生效 </span>
+                            </p>
+
+                        </div>
+                        <table class="table_ob table_story">
+                            <thead>
+                            <tr>
+                                <th>metric/tags/note</th>
+                                <th>condition</th>
+                                <th>max</th>
+                                <th>P</th>
+                                <th>run</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td>cpu.idle</td>
+                                <td>all(#3)>=90</td>
+                                <td>3</td>
+                                <td>0</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tem_con">
+                        <div class="xq_block">
+                            <h5 class="text-yellow">模板报警配置，对模板中的所有策略生效</h5>
+                        </div>
+                        <div class="app_active_num f14 alert alert_min">
+                            <p>
+                                <span><b>uic：</b><a href="#"> adminteam </a></span>
+                                <span class="pull-right"><a href="#">去UIC修改报警组内成员</a></span>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    function adjustHeight() {
+        var h = $(window).height();
+        var h2 = $(".head").height();
+        $(".plate").css("height", h - 99);
+        $(".left_sub_menu").css("height", h - h2);
+    }
+    $(document).ready(function () {
+                adjustHeight();
+            }
+    )
+    $(window).resize(function () {
+        adjustHeight();
+    });
+</script>
+
+</body>
+</html>

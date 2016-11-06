@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>passos——镜像仓库</title>
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../assets/css/layout.css"/>
+    <link rel="stylesheet" href="../assets/css/welcom.css"/>
+    <link rel="stylesheet" href="../assets/css/style_passos.css"/>
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css"/>
+    <style>
+        .arrow_pos {
+            position: absolute;
+            top: 25px;
+            right: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+<!------pas头部------->
+<div class="app_top pas_top">
+    <div class="head">
+        <div class="app_logo sub_logo">
+            <a href="index_pas.html"><img src="../assets/images/logo_pas.png" width="200" height="62"/></a>
+        </div>
+        <div class="nav_tips">
+            <div class="news app_number">
+                <a href="project.html">
+                    <div class="news_img">
+                        <i class="icons item_ico"></i>
+                    </div>
+                    <div class="title_name">项目管理</div>
+                </a>
+            </div>
+            <div class="news app_number">
+                <a href="pre-applicationsnew.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">应用中心</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="resource.html">
+                    <div class="news_img">
+                        <i class="icons rs_ico"></i>
+                    </div>
+                    <div class="title_name">资源服务</div>
+                </a>
+            </div>
+            <div class="news">
+                <a class="active" href="mirror.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">镜像仓库</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="operation.html">
+                    <div class="news_img">
+                        <i class="icons zygl_ico"></i>
+                    </div>
+                    <div class="title_name">平台运维</div>
+                </a>
+            </div>
+        </div>
+        <div class="app_user">
+            <div class="user_hits">
+                <div class="nav_user">
+                    <ul>
+                        <li class="menu2" onMouseOver="this.className='menu1'" onMouseOut="this.className='menu2'">
+                            <i class="icons user_ico"></i>
+
+                            <p class="user_name">admin</p>
+                            <i class="icons arrow-btm"></i>
+
+                            <div class="list">
+                                <a href="manager.html">管理</a><br/>
+                                <a href="#">我开发的服务</a><br/>
+                                <a href="#">我消费的服务</a><br/>
+                                <a href="#">退出</a><br/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ob_sub_pro_btn">
+            <a href="javascript:$.pageslide({ direction: 'left', href: 'pro_list.html' })">
+                <i class="icons ob_sub_pro"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!------passos内容------->
+<div class="app_content">
+    <div class="content_frame">
+        <div class="left_sub_menu left_sub_menu_pas left_sub_menu_max">
+            <div class="sub_menu_title open selected"><span class="fa fa-magic"></span>镜像列表<i
+                    class="fa fa-angle-down"></i><i class="fa fa-angle-right"></i></div>
+            <ul class="sub_ul" style="display: block;">
+                <li class="selected"><a href="#">基础镜像</a></li>
+                <li><a href="#">项目构建</a></li>
+                <li><a href="#">应用中心</a></li>
+            </ul>
+            <div class="sub_menu_title"><span class="fa fa-star"></span>仓库使用</div>
+            <ul class="sub_ul" style="visibility: hidden;">
+            </ul>
+        </div>
+        <div class="app_name">
+            <a href="#"><i class="icons go_back_ico"></i></a>
+
+            <p class="app_a">项目管理</p>
+            <em>&gt;</em>
+
+            <p class="app_a">项目列表</p>
+        </div>
+        <div class="plate">
+            <div class="project_r">
+
+                <!--集群管理开始-->
+                <div class="r_block p20">
+                    镜像内容
+                </div>
+                <!--集群管理结束-->
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    function adjustHeight() {
+        var h = $(window).height();
+        var h2 = $(".head").height();
+        $(".plate").css("height", h - 99);
+        $(".left_sub_menu").css("height", h - h2);
+    }
+    $(document).ready(function () {
+                adjustHeight();
+            }
+    )
+    $(window).resize(function () {
+        adjustHeight();
+    });
+    $(".ser_bar2").hide();
+    $(".ser-adv").click(function () {
+        $(".ser_bar2").toggle(200);
+    });
+
+    //    隐藏按钮JS
+    //    $(".cluster-right").click(function(){
+    //        if($(this).hasClass("open")){
+    //            $(this).removeClass("open");
+    //        }else{
+    //            $(this).addClass("open");
+    //        }
+    //    });
+    $(".cluster-right").hover(function () {
+        $(this).addClass("open");
+    }, function () {
+        $(this).removeClass("open");
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".sub_menu_title").click(function () {
+            $(this).toggleClass("open").siblings(".sub_menu_title").removeClass("open")
+            $(this).toggleClass("selected").siblings(".sub_menu_title").removeClass("selected")
+
+            // 修改数字控制速度， slideUp(500)控制卷起速度
+            $(this).next(".sub_ul").slideToggle(500).siblings(".sub_ul").slideUp(500);
+        })
+    })
+</script>
+</body>
+</html>

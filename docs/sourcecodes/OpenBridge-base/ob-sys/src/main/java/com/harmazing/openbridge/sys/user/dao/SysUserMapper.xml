@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.sys.user.dao.SysUserMapper">
+	<select id="userPage" resultType="java.util.HashMap">
+		select	
+			s.user_id as userId,
+			s.user_name as userName,
+			s.login_name as loginName,
+			s.email,
+			s.mobile,
+			s.create_time as createTime,
+			s.activate
+		from sys_user s
+		<choose>
+		<when test="query == 'tenant' ">	
+		inner join sys_tenant_relation str on str.user_id = s.user_id and str.tenant_id = #{tenantId_user} 
+		</when>
+			</choose>
+		<where> 
+			<if test="keyword != null">
+				AND (s.user_name like concat(concat('%',#{keyword}),'%') or s.login_name like concat(concat('%',#{keyword}),'%') or s.email like concat(concat('%',#{keyword}),'%'))
+			</if>
+			<if test="sysUser != null">
+				AND s.sys_user = #{sysUser}
+			</if>
+			<if test="table != null">
+				AND not exists (select 1 from ${table} t where t.user_id = s.user_id 
+					<if test="tenantId">
+						and t.tenant_id &lt;&gt; #{tenantId}
+					</if>)
+			</if>
+		</where>
+		order by create_time desc limit #{start},#{size}
+	</select>
+	<select id="userPageRecordCount" resultType="java.lang.Integer">
+		select 
+			ifnull(count(s.user_id),0) as ccc
+		from sys_user s
+		<choose>
+		<when test="query =='tenant' ">	
+		inner join sys_tenant_relation str on str.user_id = s.user_id and str.tenant_id = #{tenantId_user} 
+		</when>
+			</choose>
+		<where> 
+			<if test="keyword != null">
+				AND (s.user_name like concat(concat('%',#{keyword}),'%') or s.login_name like concat(concat('%',#{keyword}),'%') or s.email like concat(concat('%',#{keyword}),'%'))
+			</if>
+			<if test="sysUser != null">
+				AND sys_user = #{sysUser}
+			</if>
+			<if test="table != null">
+				AND not exists (select 1 from ${table} t where t.user_id = s.user_id
+				<if test="tenantId">
+						and t.tenant_id &lt;&gt; #{tenantId}
+					</if>)
+			</if>
+		</where>
+	</select>
+	<insert id="create">
+		insert into sys_user(user_id,user_name,login_name,login_password,roles,create_time,activate,email,token,sys_user,api_auth_key,mobile) 
+		values
+		(#{userId},#{userName},#{loginName},#{loginPassword},#{roles},#{createTime},#{activate},#{email},#{token},#{sysUser},#{apiAuthKey},#{mobile})
+	</insert>
+	<select id="getUsersByIds" resultType="com.harmazing.openbridge.sys.user.model.SysUser">
+		select	
+			user_id as userId,
+			user_name as userName,
+			login_name as loginName,
+			email,
+			create_time as createTime,
+			activate
+		from sys_user
+		<where> 
+			user_id in 
+			<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+				#{item}  
+			</foreach> 
+		</where>
+	</select>
+</mapper>

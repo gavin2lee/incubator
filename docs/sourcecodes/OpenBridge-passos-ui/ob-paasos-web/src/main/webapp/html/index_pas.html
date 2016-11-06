@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>passos</title>
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../assets/css/layout.css"/>
+    <link rel="stylesheet" href="../assets/css/welcom.css"/>
+</head>
+
+<body>
+<!------pas头部------->
+<div class="app_top pas_top">
+    <div class="head">
+        <div class="app_logo sub_logo">
+            <a href="main.html"><img src="../assets/images/logo_pas.png" width="200" height="62"/></a>
+        </div>
+        <div class="nav_tips">
+            <div class="news app_number">
+                <a class="active" href="proiect_list.html">
+                    <div class="news_img">
+                        <i class="icons item_ico"></i>
+                    </div>
+                    <div class="title_name">项目管理</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="pre-applications.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">预置应用</div>
+                </a>
+            </div>
+            <div class="news app_number">
+                <a href="#">
+                    <div class="news_img">
+                        <i class="icons rs_ico"></i>
+                    </div>
+                    <div class="title_name">资源服务</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="resource_plan.html">
+                    <div class="news_img">
+                        <i class="icons zygl_ico"></i>
+                    </div>
+                    <div class="title_name">资源管理</div>
+                </a>
+            </div>
+        </div>
+        <div class="app_user">
+            <div class="user_hits">
+                <div class="nav_user">
+                    <ul>
+                        <li class="menu2" onMouseOver="this.className='menu1'" onMouseOut="this.className='menu2'">
+                            <i class="icons user_ico"></i>
+
+                            <p class="user_name">admin</p>
+                            <i class="icons arrow-btm"></i>
+
+                            <div class="list">
+                                <a href="#">管理</a><br/>
+                                <a href="#">我开发的服务</a><br/>
+                                <a href="#">我消费的服务</a><br/>
+                                <a href="#">退出</a><br/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ob_sub_pro_btn">
+            <a href="javascript:$.pageslide({ direction: 'left', href: 'pro_list.html' })">
+                <i class="icons ob_sub_pro"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!------paswelcome内容------->
+<div class="app_content">
+    <div class="content_frame">
+        <div class="plate plate_con plate_index plate_index_pas">
+            <div class="app_wel_block">
+                <div class="app_wel_text">
+                    <p>欢迎进入PaaSOS</p>
+                    <h2>您的企业级资源平台</h2>
+                </div>
+                <div class="app_wel_quick">
+                    <div class="quick_block">
+                        <div class="quick_ico">
+                            <i class="q_ico01"></i>
+                        </div>
+                        <div class="quick_nr">
+                            <dl>
+                                <dt>项目管理</dt>
+                                <dd>
+                                    <p>基于容器服务可快速制作</p>
+                                    <p>应用镜像及应用部署</p>
+                                </dd>
+                            </dl>
+                            <a href="proiect_list.html">马上查看所有项目 ></a>
+                        </div>
+                    </div>
+                    <div class="quick_block">
+                        <div class="quick_ico">
+                            <i class="q_ico02"></i>
+                        </div>
+                        <div class="quick_nr">
+                            <dl>
+                                <dt>资源服务</dt>
+                                <dd>
+                                    <p>数据库管理、快速缓存、负载均衡、</p>
+                                    <p>消息队列等与我相关的基础服务资源</p>
+                                </dd>
+                            </dl>
+                            <a href="mirrorRepo.html">马上要知道 ></a>
+                        </div>
+                    </div>
+                    <div class="quick_block">
+                        <div class="quick_ico">
+                            <i class="q_ico03"></i>
+                        </div>
+                        <div class="quick_nr">
+                            <dl>
+                                <dt>环境管理</dt>
+                                <dd>
+                                    <p>对租户、集群以及网络环境进行</p>
+                                    <p>统一管理分配调度</p>
+                                </dd>
+                            </dl>
+                            <a href="#">马上要知道 ></a>
+                        </div>
+                    </div>
+                    <div class="quick_block">
+                        <div class="quick_ico">
+                            <i class="q_ico04"></i>
+                        </div>
+                        <div class="quick_nr">
+                            <dl>
+                                <dt>预置应用</dt>
+                                <dd>
+                                    <p>从镜像可以一键生成对应的容器服务<br>快速投入应用</p>
+                                </dd>
+                            </dl>
+                            <a href="#">去看看 ></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--子产品切换菜单开始-->
+    <div id="modal" class="st-menu" style="display: none;">
+        <h2>OpenBridge</h2>
+            <ul>
+                <li>
+                    <a href="http://www.openbridge.cn"><span>Portal</span></a>
+
+                </li>
+                <li>
+                    <a href="#"><span>IaaSOS</span></a>
+
+                </li>
+                <li>
+                    <a href="#"><span>PaaSOS</span></a>
+
+                </li>
+                <li>
+                    <a href="http://demo.openbridge.cn/api/portal/home.do"><span>APIManager</span></a>
+
+                </li>
+                <li>
+                    <a class="" href="#"><span>BizNavi</span></a>
+
+                </li>
+            </ul>
+        <div class="close_slider"><a  href="javascript:$.pageslide.close()">×</a></div>
+    </div>
+    <!--子产品菜单切换结束-->
+</div>
+<script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
+<script src="../assets/js/icheck.min.js"></script>
+<script type="text/javascript">
+    function adjustHeight() {
+        var h = $(window).height();
+        var h2 = $(".app_wel_block").height();
+        var h3 = $(".head").height();
+        $(".plate").css("height", h - h3);
+        $(".app_wel_block").css("margin-top", ((h - h3 - h2) / 2));
+    }
+    $(document).ready(function () {
+                adjustHeight();
+            }
+    )
+    $(window).resize(function () {
+        adjustHeight();
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',  // 注意square和blue的对应关系,用于type=checkbox
+            radioClass: 'iradio_square-blue', // 用于type=radio
+            increaseArea: '20%' // 增大可以点击的区域
+        });
+    });
+
+    // 选中事件绑定
+    //    $('input').on('ifChecked', function(event){
+    //        alert('被选中了');
+    //    });
+
+    // 取消选中事件绑定
+    //    $('input').on('ifUnchecked', function(event){
+    //        alert('被取消了');
+    //    });
+
+    // 禁止选取
+    $('#example').iCheck('disable');
+
+    $(document).ready(function () {
+        $('.quick_block').mousemove(function () {
+            $(this).addClass("active");//可以自己修改速度
+        });
+        $('.quick_block').mouseleave(function () {
+            $(this).removeClass("active");
+        });
+
+    });
+</script>
+<script src="../assets/js/jquery.pageslide.js"></script>
+<script>
+    /* Default pageslide, moves to the right */
+    $(".first").pageslide();
+
+    /* Slide to the left, and make it model (you'll have to call $.pageslide.close() to close) */
+    $(".second").pageslide({ direction: "left", modal: true });
+</script>
+</body>
+</html>

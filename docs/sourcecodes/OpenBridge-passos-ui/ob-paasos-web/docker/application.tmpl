@@ -1,0 +1,15 @@
+#database
+jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://{{ default .Env.DB_HOST "localhost" }}:{{ default .Env.DB_PORT "3306" }}/{{ default .Env.DB_NAME "paasos" }}?useUnicode=true&characterEncoding=UTF-8
+jdbc.username={{ default .Env.DB_USER "root" }}
+jdbc.password={{ default .Env.DB_PSWD "" }}
+
+
+#file
+file.storage={{ default .Env.FILE_STORAGE "/data/resource" }}
+
+#paasos
+paasos.evntype=test|\u5F00\u53D1\u6D4B\u8BD5\u73AF\u5883;live|\u751F\u4EA7\u73AF\u5883
+paasos.evnmark={"test":[{"name":"UAT\u6D4B\u8BD5","code":"uat"},{"name":"\u57F9\u8BAD\u73AF\u5883","code":"training"},{"name":"\u9884\u53D1\u5E03\u73AF\u5883","code":"preproduct"}]}
+paasos.serviceips={{ default .Env.OS_SVR_IPS "172.20.0.0" }}
+paasos.publicPort={{ default .Env.OS_PUB_PORT "20001" }}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.sys.tag.dao.SysTagMapper">
+	<select id="tagPage" resultType="java.util.HashMap">
+		select	
+			t.tag_id as tagId,
+			t.tag_text as tagText,
+			t.create_time as createTime,
+			t.hot,ifnull(aaa.cnt,0) as cnt
+		from sys_tag t left join (
+			SELECT ifnull(count(*),0) as cnt,st.tag_id FROM mod_service_tag st group by st.tag_id
+        ) aaa on t.tag_id = aaa.tag_id
+		<where> 
+			<if test="keyword != null">
+				AND t.tag_text like concat(concat('%',#{keyword}),'%')
+			</if>
+		</where>
+		order by aaa.cnt desc limit #{start},#{size}
+	</select>
+	<select id="tagPageRecordCount" resultType="java.lang.Integer">
+		select 
+			ifnull(count(tag_id),0) as ccc
+		from sys_tag
+		<where> 
+			<if test="keyword != null">
+				AND tag_text like concat(concat('%',#{keyword}),'%')
+			</if>
+		</where>
+	</select>
+</mapper>

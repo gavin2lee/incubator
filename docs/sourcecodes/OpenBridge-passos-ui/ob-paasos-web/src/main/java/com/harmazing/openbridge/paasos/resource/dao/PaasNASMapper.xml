@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.resource.dao.PaasNASMapper">
+
+	<!-- 查询nas记录数，需要关联租户表 -->
+	<select id="QueryPaasNASByParamsCount" resultType="java.lang.Integer">
+		select count(distinct(nas_id)) from os_resource_nas nas where 1=1
+		and nas.tenant_id = #{params.tenantId}
+		<if test="params.nasType !=null and params.nasType !=''">
+			and nas.nas_type=#{params.nasType}
+		</if>
+		<if test="params.userId !=null &amp;&amp; params.userId !=''">
+			and creater = #{params.userId} 
+		</if>
+		<if test="params.onStatus !=null &amp;&amp; params.onStatus !=''">
+			and on_status = #{params.onStatus} 
+		</if>
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+	</select>
+	
+	<!-- 查询nas分页列表 -->
+	<select id="QueryPaasNASByParams" resultType="com.harmazing.openbridge.paasos.resource.model.PaasNAS">
+		select distinct	nas.*,tenant.tenant_name as `attach[tenantName]`,user.user_name as `attach[createrName]`
+		from os_resource_nas nas 
+		left join sys_tenant tenant on nas.tenant_id = tenant.tenant_id
+		left join sys_user user on nas.creater=user.user_id where 1=1
+		and nas.tenant_id = #{params.tenantId}
+		<if test="params.nasType !=null and params.nasType !=''">
+			and nas.nas_type=#{params.nasType}
+		</if>
+		<if test="params.userId !=null &amp;&amp; params.userId !=''">
+			and creater = #{params.userId}
+		</if>
+		<if test="params.onStatus !=null &amp;&amp; params.onStatus !=''">
+			and on_status = #{params.onStatus} 
+		</if>
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+		order by create_date desc limit #{params.start},#{params.size}
+	</select>
+	
+	<!-- 根据id查询nas基本信息 -->
+	<select id="getPaasNASInfoById" resultType="com.harmazing.openbridge.paasos.resource.model.PaasNAS">
+		select nas.*,tenant.tenant_name as `attach[tenantName]`,user.user_name as `attach[createrName]`
+		from os_resource_nas nas
+		left join sys_tenant tenant on nas.tenant_id = tenant.tenant_id
+		left join sys_user user on nas.creater=user.user_id
+		where nas.nas_id = #{nasId} 
+	</select>
+	
+	<!-- 新增nas -->
+	<insert id="addPaasNAS" parameterType="com.harmazing.openbridge.paasos.resource.model.PaasNAS">
+		insert into os_resource_nas(nas_id,instance_name,nas_source,apply_content,creater,create_date,
+		update_date,allocate_content,tenant_id,project_id,env_id,env_type,on_ready,on_status,nas_type,res_desc,apply_type,
+		cpu_,memory_,storage_) 
+				values (#{nasId},#{instanceName},#{nasSource},#{applyContent},#{creater},#{createDate},
+		#{updateDate},#{allocateContent},#{tenantId},#{projectId},#{envId},#{envType},#{onReady},#{onStatus},
+		#{nasType},#{resDesc},#{applyType},#{cpu},#{memory},#{storage}
+			)
+	</insert>
+	
+	<!-- 删除nas信息 -->
+	<delete id="deletePaasNASById">
+		delete from os_resource_nas where nas_id = #{nasId}
+	</delete>
+	
+	<!-- 更新nas信息 -->
+	<update id="updatePaasNASInfo" parameterType="com.harmazing.openbridge.paasos.resource.model.PaasNAS">
+		update os_resource_nas set instance_name=#{instanceName}, apply_content=#{applyContent},update_date=#{updateDate},
+		allocate_content=#{allocateContent},env_type=#{envType},on_ready=#{onReady},on_status=#{onStatus},res_desc=#{resDesc},
+		cpu_=#{cpu},memory_=#{memory},storage_=#{storage}
+		 where nas_id=#{nasId}
+	</update>
+	
+	<!-- 查询nas记录数，需要关联租户表 -->
+	<select id="QueryPaasNASsCount" resultType="java.lang.Integer">
+		select count(distinct(nas_id)) from os_resource_nas nas where 1=1
+		<if test="params.nasType !=null and params.nasType !=''">
+			and nas.nas_type=#{params.nasType}
+		</if>
+		<choose>
+			<when test="params.byTenantId!=null &amp;&amp; params.byTenantId !=''">
+				<if test="params.tenantId !=null &amp;&amp; params.tenantId !=''">
+					and nas.tenant_id = #{params.tenantId} 
+				</if>
+			</when>
+			<otherwise>
+				<if test="params.userId !=null &amp;&amp; params.userId !=''">
+					and creater = #{params.userId} 
+				</if>
+			</otherwise>
+		</choose>
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+		<if test="params.applyType !=null &amp;&amp; params.applyType !=''">
+			and apply_type = #{params.applyType} 
+		</if>
+		<if test="params.onStatus !=null &amp;&amp; params.onStatus !=''">
+			and on_status = #{params.onStatus} 
+		</if>
+	</select>
+	
+	<!-- 查询nas分页列表 -->
+	<select id="QueryPaasNASs" resultType="com.harmazing.openbridge.paasos.resource.model.PaasNAS">
+		select distinct	nas.*,tenant.tenant_name as `attach[tenantName]`,user.user_name as `attach[createrName]`
+		from os_resource_nas nas 
+		left join sys_tenant tenant on nas.tenant_id = tenant.tenant_id
+		left join sys_user user on nas.creater=user.user_id where 1=1
+		<choose>
+			<when test="params.byTenantId!=null &amp;&amp; params.byTenantId !=''">
+				<if test="params.tenantId !=null &amp;&amp; params.tenantId !=''">
+					and tenant.tenant_id = #{params.tenantId} 
+				</if>
+			</when>
+			<otherwise>
+				<if test="params.userId !=null &amp;&amp; params.userId !=''">
+					and creater = #{params.userId} 
+				</if>
+			</otherwise>
+		</choose>
+<!-- 		and nas.tenant_id = #{params.tenantId}  -->
+		<if test="params.nasType !=null and params.nasType !=''">
+			and nas.nas_type=#{params.nasType}
+		</if>
+<!-- 				<if test="params.userId !=null &amp;&amp; params.userId !=''"> -->
+<!-- 					and creater = #{params.userId}  -->
+<!-- 				</if> -->
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+		<if test="params.applyType !=null &amp;&amp; params.applyType !=''">
+			and apply_type = #{params.applyType} 
+		</if>
+		<if test="params.onStatus !=null &amp;&amp; params.onStatus !=''">
+			and on_status = #{params.onStatus} 
+		</if>
+		order by create_date desc limit #{params.start},#{params.size}
+	</select>
+	
+	<select id="getAlreadyUsed" parameterType="java.util.Map"  resultType="com.harmazing.openbridge.paasos.manager.model.vo.ResourceQuota">
+		SELECT sum(cpu_) cpu,sum(memory_) memory, sum(storage_) storage,count(1) count
+		FROM os_resource_nas
+		where tenant_id = #{tenantId}
+	</select>
+</mapper>

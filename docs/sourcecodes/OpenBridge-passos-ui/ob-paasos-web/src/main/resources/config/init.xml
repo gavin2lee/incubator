@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<!-- 系统安装好后第一次启动时执行的spring Bean -->
+	<initBean beanName="SysUserInitialBean" order="1" />
+	<initBean beanName="SysRoleInitialBean" order="2" />
+</root>

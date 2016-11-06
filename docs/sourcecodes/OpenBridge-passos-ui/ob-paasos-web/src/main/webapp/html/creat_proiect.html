@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>passos——创建项目</title>
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../assets/css/layout.css"/>
+    <link rel="stylesheet" href="../assets/css/app_deployment.css"/>
+    <link rel="stylesheet" href="../assets/css/welcom.css"/>
+    <link rel="stylesheet" href="../assets/css/style_passos.css"/>
+</head>
+
+<body>
+<!------passos头部------->
+<div class="app_top pas_top">
+    <div class="head">
+        <div class="app_logo sub_logo">
+            <a href="index_pas.html"><img src="../assets/images/logo_pas.png" width="200" height="62"/></a>
+        </div>
+        <div class="nav_tips">
+            <div class="news app_number">
+                <a class="active" href="proiect_list.html">
+                    <div class="news_img">
+                        <i class="icons item_ico"></i>
+                    </div>
+                    <div class="title_name">项目管理</div>
+                </a>
+            </div>
+            <div class="news app_number">
+                <a href="resource_service.html">
+                    <div class="news_img">
+                        <i class="icons dashboard_ico"></i>
+                    </div>
+                    <div class="title_name">资源服务</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="resource_plan.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">资源管理</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="pre-applications.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">预置应用</div>
+                </a>
+            </div>
+        </div>
+        <div class="app_user">
+            <div class="user_hits">
+                <div class="nav_user">
+                    <ul>
+                        <li class="menu2" onMouseOver="this.className='menu1'" onMouseOut="this.className='menu2'">
+                            <i class="icons user_ico"></i>
+
+                            <p class="user_name">admin</p>
+                            <i class="icons arrow-btm"></i>
+
+                            <div class="list">
+                                <a href="#">管理</a><br/>
+                                <a href="#">我开发的服务</a><br/>
+                                <a href="#">我消费的服务</a><br/>
+                                <a href="#">退出</a><br/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ob_sub_pro_btn">
+            <a href="javascript:$.pageslide({ direction: 'left', href: 'pro_list.html' })">
+                <i class="icons ob_sub_pro"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!------passos内容------->
+<div class="app_content">
+    <div class="content_frame">
+        <div class="app_name">
+            <a href="proiect_list.html"><i class="icons go_back_ico"></i></a>
+
+            <p class="app_a">项目管理</p>
+            <em>&gt;</em>
+
+            <p class="app_a">我的项目</p>
+        </div>
+        <div class="plate">
+            <div class="project_r">
+                <!--创建项目开始-->
+                <div class="r_block p20">
+                    <div class="r_title">
+                        <h3 class="f14 h3_color h3_btm_line"><i class="icons add_ico_blue mr5"></i>创建项目</h3>
+
+                        <div class="title_line"></div>
+                    </div>
+                    <div class="r_con p10_0">
+                        <div class="form_control p20">
+                            <div class="form_block">
+                                <label>项目来源</label>
+                                <div class="specList">
+                                    <p class="mb10"><span class="w200"><input type="radio" name="iCheck" checked>&nbsp;&nbsp;OpenBridge API</span>
+                                        <span class="w200"><input type="radio"
+                                                                  name="iCheck">&nbsp;&nbsp;OpenBridge APP</span>
+                                    <span class="w200"><input type="radio"
+                                                              name="iCheck">&nbsp;&nbsp;源码模式</span></p>
+                                </div>
+                            </div>
+
+                            <div class="form_block">
+                                <label>关联服务</label>
+
+                                <div class="specList">
+                                    <p class="mb10"><input type="text">
+                                        <button class="btn btn-default btn-yellow2 btn-sm">选择</button>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form_block mt10">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-default btn-yellow f16  mt10"><i class="ico_check"></i>创 建
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="r_con p10_0">
+                        <div class="form_control p20">
+                            <div class="form_block">
+                                <label>项目来源</label>
+                                <div class="specList">
+                                    <p class="mb10"><span class="w200"><input type="radio" name="iCheck" checked>&nbsp;&nbsp;OpenBridge API</span>
+                                        <span class="w200"><input type="radio"
+                                                                  name="iCheck">&nbsp;&nbsp;OpenBridge APP</span>
+                                    <span class="w200"><input type="radio"
+                                                              name="iCheck" checked>&nbsp;&nbsp;源码模式</span></p>
+                                </div>
+                            </div>
+                            <div class="form_block">
+                                <label>项目名称</label>
+                                <div class="specList">
+                                    <input type="text"><em>*</em>
+                                </div>
+                            </div>
+                            <div class="form_block">
+                                <label>项目编码</label>
+                                <div class="specList">
+                                    <input type="text"><em>*</em>
+                                </div>
+                            </div>
+                            <div class="form_block">
+                                <label>源码</label>
+                                <div class="specList">
+                                    <ul class="u-flavor">
+                                        <!--Regular list-->
+                                        <li class="selected">Github</li>
+                                        <li class="">GitLab</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form_block">
+                                <label>源码配置</label>
+                                <div class="specList">
+                                    <dl class="dl_label">
+                                        <dt>开发语言</dt>
+                                        <dd>
+                                            <span><label><input type="checkbox">Java</label></span>
+                                            <span><label><input type="checkbox">PHP</label></span>
+                                        </dd>
+                                    </dl>
+                                    <dl class="dl_label">
+                                        <dt>项目类型</dt>
+                                        <dd>
+                                            <span><label><input type="checkbox">Maven</label></span>
+                                            <span><label><input type="checkbox">Gradle</label></span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="form_block">
+                                <label>仓库授权</label>
+
+                                <div class="specList">
+                                  <input type="text">
+                                </div>
+                            </div>
+                            <div class="form_block mt10">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-default btn-yellow f16  mt10"><i class="ico_check"></i>创 建
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--创建项目结束-->
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    function adjustHeight() {
+        var h = $(window).height();
+        var h2 = $(".head").height();
+        $(".plate").css("height", h - 99);
+        $(".left_sub_menu").css("height", h - h2);
+    }
+    $(document).ready(function () {
+                adjustHeight();
+            }
+    )
+    $(window).resize(function () {
+        adjustHeight();
+    });
+</script>
+
+</body>
+</html>

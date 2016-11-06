@@ -1,0 +1,18 @@
+1、Sonar 版本使用5.3
+2、若Sonar服务器设置analysis不能匿名进行，需要在构建服务器的maven配置文件settings.xml中的<profiles>下加入以下配置：
+		<profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <sonar.host.url>http://localhost:9000</sonar.host.url><!--服务器地址-->
+                <sonar.login>admin</sonar.login><!--用户名或 access token-->
+                <sonar.password>admin</sonar.password><!--密码，使用access token 时为空-->
+                <sonar.svn.username>admin</sonar.svn.username><!--svn 用户名 -->
+                <sonar.svn.password.secured>admin</sonar.svn.password.secured><!--svn密码 -->
+            </properties>
+        </profile>
+
+3、jenkins deploy需配置nexus地址、用户名、密码
+4、jenkins 需配置全局环境变量  SVN_SERVER_URI 	为svn服务器地址（如 http://192.168.31.214:88/svn1）

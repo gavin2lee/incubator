@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.project.dao.PaasProjectEnvMapper">
+	
+	<select id="getenvListByMark" parameterType="java.util.Map" resultType="com.harmazing.openbridge.paas.env.model.PaasEnv">
+		select e.* from 
+		os_project_env e
+		where 1=1
+		<if test="projectId!=null and projectId!=''">
+			and e.project_id = #{projectId}
+		</if>
+		<if test="envType!=null and envType!=''">
+			and e.env_type = #{envType}
+		</if>
+		<if test="envMark!=null and envMark!=''">
+			and e.env_mark = #{envMark}
+		</if>
+		<if test="not_id!=null and not_id!=''">
+			and e.env_id != #{not_id}
+		</if>
+	</select> 
+	
+	<select id="getPaasOsInfo" resultType="java.util.HashMap">
+		select count(1) as osCount,'os' as osType from os_project
+		<where>
+			<if test="userId != null and userId!=''">
+				tenant_id = (select tenant_id from sys_tenant_relation where user_id = #{userId}) 
+			</if>
+		</where>
+	</select>
+	
+	<select id="getPaasOsDeployInfo" resultType="java.util.HashMap">
+		select count(1) as osCount,'os' as osType from os_project_deploy
+		<where>
+			<if test="userId != null and userId!=''">
+				tenant_id = (select tenant_id from sys_tenant_relation where user_id = #{userId}) 
+			</if>
+		</where>
+	</select>
+
+</mapper>

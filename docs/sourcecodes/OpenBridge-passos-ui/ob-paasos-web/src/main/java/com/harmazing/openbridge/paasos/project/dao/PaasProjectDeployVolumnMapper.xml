@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.project.dao.PaasProjectDeployVolumnMapper">
+
+	<delete id="deleteByDeployId">
+		delete from os_project_deploy_volumn where deploy_id = #{param}
+	</delete>
+	
+	<insert id="batchSave"  parameterType="java.util.List" >
+		 insert into os_project_deploy_volumn (id,name,type,mount,capacity,volumn_id,deploy_id,allocate_content)   
+		 values
+		 <foreach collection="list"  item="item"  index="index" separator="," >  
+	        (#{item.id},#{item.name},#{item.type},#{item.mount},#{item.capacity},#{item.volumnId},#{item.deployId},#{item.allocateContent})  
+	     </foreach>  
+	</insert>
+	
+	<select id="findByDeployId"  resultType="com.harmazing.openbridge.paas.deploy.model.PaasProjectDeployVolumn">
+		select 
+		id id,
+		name name,
+		type type,
+		mount mount,
+		capacity capacity,
+		volumn_id volumnId,
+		deploy_id deployId,
+		allocate_content allocateContent
+		from os_project_deploy_volumn where deploy_id = #{param}
+	</select>
+	
+	
+</mapper>

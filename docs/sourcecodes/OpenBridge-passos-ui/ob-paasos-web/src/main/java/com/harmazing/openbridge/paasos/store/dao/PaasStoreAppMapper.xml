@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.store.dao.PaasStoreAppMapper">
+	<sql id="field">
+		a.id,
+		a.name,
+		a.app_name as appName,
+		a.file_type,
+		a.file_path,
+		a.file_data,
+		a.icon_path,
+		a.version,
+		a.command,
+		a.work_dir,
+		a.ports,
+		a.config,
+		a.description,
+		a.create_time createTime,
+		a.update_time,
+		a.status,
+		a.image_id
+	</sql>
+	
+	<select id="getStoreList" parameterType="java.util.Map" resultType="java.util.Map">
+		select 
+		<include refid="field"></include>
+		from os_preset_app a
+		<where>
+
+			<if test="status !=null and status  !=''">
+				and a.status = #{status}
+			</if>
+			<if test="keyword !=null and keyword!=''">
+				and a.name like #{keyword}
+			</if>
+		</where>
+		order by a.create_time desc
+		limit #{start},#{size}
+	</select>
+	<select id="getStoreCount" parameterType="java.util.Map" resultType="int">
+		select 
+			count(1)
+		from os_preset_app a
+		where 1=1
+		<if test="status !=null and status  !=''">
+			and a.status = #{status}
+		</if>
+		<if test="keyword !=null and keyword!=''">
+			and a.name like #{keyword}
+		</if>
+	</select>
+	
+	<select id="getPageData" parameterType="java.util.Map" resultType="com.harmazing.openbridge.paasos.store.model.PaasStoreApp">
+		select  op.id,op.name,op.file_type,op.file_path,op.file_data,op.icon_path,op.version,op.command,op.work_dir,op.ports,
+				op.config,op.description,op.create_time,op.update_time,op.status,op.image_id,op.app_name,
+				op.documentation,op.dockerfile 
+			from os_preset_app op
+			inner join sys_tenant_preset sp on op.id = sp.preset_id
+				and sp.tenant_id = #{user.tenantId}
+			<where>
+				<if test="keyword != null and keyword != ''">
+					   upper(op.name) like CONCAT('%',upper(#{keyword}),'%') 
+					or  upper(op.app_name) like CONCAT('%',upper(#{keyword}),'%') 
+				</if>
+			</where>
+		 limit #{start},#{size}
+	</select>
+	
+	<select id="getPageCount" resultType="int">
+		select count(1) from os_preset_app op 
+			where op.id in (
+				select sp.preset_id from sys_tenant_preset sp 
+					where sp.tenant_id = #{iUser.tenantId}
+			)
+			<if test="keyword != null and keyword != ''">
+				 and	   upper(op.name) like CONCAT('%',upper(#{keyword}),'%') 
+					or  upper(op.app_name) like CONCAT('%',upper(#{keyword}),'%') 
+				</if>
+	</select>
+	
+	<update id="updateLogoAndDesc">
+		update os_preset_app set 
+				icon_path=#{build.iconPath},
+				description=#{build.description},
+				app_name=#{build.appName},
+				documentation=#{build.documentation},
+				dockerfile=#{build.dockerfile},
+				file_type=#{build.fileType},
+				file_path=#{build.filePath},
+				file_data=#{build.fileData}
+			where id=#{build.id}
+	</update>
+	
+</mapper>

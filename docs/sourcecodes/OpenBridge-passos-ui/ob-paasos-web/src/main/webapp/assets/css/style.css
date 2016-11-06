@@ -1,0 +1,339 @@
+@charset "utf-8";
+/* CSS Document */
+.api_content {
+    background: #516170;
+    background-size: cover;
+    width: 100%;
+    position: absolute;
+    height: auto;
+    bottom: 0;
+    top: 63px;
+}
+
+.d_nr_right {
+     margin-left:0;
+}
+.hj_block {
+    padding: 0 20px 0;
+}
+.app_active_num2 {
+    line-height: 19px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: auto;
+    overflow: hidden;
+}
+.details_nr {
+     padding-bottom:0;
+    height: auto;
+    overflow: hidden;
+}
+
+
+.label,
+.badge {
+    display: inline-block;
+    padding: 2px 4px;
+    font-size: 11.844px;
+    font-weight: normal;
+    line-height: 14px;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #999999;
+}
+
+.label {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.badge {
+    padding-right: 9px;
+    padding-left: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+}
+
+.label:empty,
+.badge:empty {
+    display: none;
+}
+
+a.label:hover,
+a.label:focus,
+a.badge:hover,
+a.badge:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.label-important,
+.badge-important {
+    background-color: #b94a48;
+}
+
+.label-important[href],
+.badge-important[href] {
+    background-color: #953b39;
+}
+
+.label-warning,
+.badge-warning {
+    background-color: #f89406;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+    background-color: #c67605;
+}
+
+.label-success,
+.badge-success {
+    background-color: #468847;
+}
+
+.label-success[href],
+.badge-success[href] {
+    background-color: #356635;
+}
+
+.label-info,
+.badge-info {
+    background-color: #3a87ad;
+}
+
+.label-info[href],
+.badge-info[href] {
+    background-color: #2d6987;
+}
+
+.label-inverse,
+.badge-inverse {
+    background-color: #333333;
+}
+
+.label-inverse[href],
+.badge-inverse[href] {
+    background-color: #1a1a1a;
+}
+
+.btn .label,
+.btn .badge {
+    position: relative;
+    top: -1px;
+}
+
+.btn-mini .label,
+.btn-mini .badge {
+    top: 0;
+}
+
+
+.menu_head .badge{
+    position: relative;
+    top:9px;
+}
+.menu_head{
+    padding-right: 5px;
+    padding-left: 8px;
+}
+.menu_body a{
+    padding: 10px 3px 10px 25px;
+}
+.app_details dl p{
+    text-align: right;
+}
+.app_details dl p em{
+    font-size: 12px;
+    color: #d1d1d1;
+    text-align: right;
+}
+
+.search-facet-box {
+    width: 230px;
+    padding: 0 12px!important;
+}
+.form_text .label{
+    line-height: 15px;
+    padding: 4px 7px;
+}
+.details_nr2 .d_nr_right {
+    margin-left: 10px;
+}
+
+
+.details_nr2 .app_details .app_active_num {
+    margin-right: 0;
+    float: none;
+    font-size: 13px !important;
+    height: auto;
+}
+.choose_version {
+    position: absolute;
+    right: 10px;
+    top: -7px;
+    font-size: 14px;
+}
+
+.xq_block {
+    font-size: 14px;
+    border-top: 0 solid #e4e4e4;
+    padding-bottom: 10px;
+    line-height: 24px;
+    padding-top: 5px;
+    height: auto;
+    overflow: hidden;
+}
+.xq_block h5{
+    position: relative;
+    border-bottom: 1px solid #ddd;
+}
+
+.api_top .news a.active {
+    background: rgba(14, 46, 69, .3);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr=#cce36625,endColorStr=#cce36625);
+}
+
+.table_blue td {
+    padding: 10px 5px;
+    text-align: left;
+    font-size: 13px;
+}
+
+.table_blue th {
+    padding: 5px 5px;
+    line-height: 30px;
+    font-size: 14px;
+    border-bottom: 2px solid #56a2cf;
+    text-align: left;
+    color: #323232;
+}
+.sub_td td{
+    background: #eaf3f5;
+    color: #999;
+    font-size: 13px;
+    padding: 8px 5px;
+}
+.sub_td td:first-child{
+    padding-left: 40px;
+}
+
+
+/*alert*/
+.alert {
+    padding: 14px 35px 14px 14px;
+    margin-bottom: 5px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    background-color: #fcf8e3;
+    border: 1px solid #fbeed5;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.fade {
+    opacity: 0;
+    -webkit-transition: opacity .15s linear;
+    -moz-transition: opacity .15s linear;
+    -o-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+}
+.fade.in {
+    opacity: 1;
+}
+
+.close {
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .2;
+    filter: alpha(opacity=20);
+}
+button.close {
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+}
+.alert .close {
+    position: relative;
+    top: 50%;
+    right: -21px;
+    line-height: 20px;
+    margin-top: -4px;
+}
+
+/*button*/
+.btn-link {
+    color: #08c;
+    cursor: pointer;
+    border-color: transparent;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+.btn-link, .btn-link:active, .btn-link[disabled] {
+    background-color: transparent;
+    background-image: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.service_btn{
+    position: absolute;
+    right: 20px;
+    top:-1px;
+    z-index: 2;
+}
+.service_btn button i{
+    font-style: normal;
+}
+.service_btn button{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 13px;
+    color: #eaeaea;
+    border:1px solid #f27934;
+    color: #e14a00;
+}
+.service_btn button:hover{
+    background: rgba(227, 102, 37, .68);
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr=#4ce36625,endColorStr=#4ce36625);
+    border:1px solid #f27934;
+}
+
+
+.btn-orange {
+    color: #f37b36;
+    border: 1px solid #f37b36;
+    background: #fcfcfc;
+}
+.btn-orange:hover {
+    background: #f37b36;
+    border: 1px solid #f37b36;
+    color: #fff;
+}
+
+.app_details dl dd {
+    line-height: 24px;
+    font-size: 12px;
+    color: #555;
+    min-height: 48px;
+}
+.app_details dl dd span{
+    margin-right: 200px;
+}
+.app_details dl dd em{
+    float: right;
+    color:#d1d1d1;
+}
+

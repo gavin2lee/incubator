@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.oslog.dao.PaasProjectLogMapper">
+	
+	<insert id="batchSave"  parameterType="java.util.List" >
+		 insert into os_project_log (id,key_,type_,message_,create_date_,create_user_,begin_,session_id)   
+		 values
+		 <foreach collection="list"  item="item"  index="index" separator="," >  
+	        (#{item.id},#{item.key},#{item.type},#{item.message},#{item.createDate},#{item.createUser},#{item.begin},#{item.sessionId})  
+	    </foreach>  
+	</insert>
+	
+	<select id="getLogHistory" 
+		resultType="com.harmazing.openbridge.paasos.oslog.model.PaasProjectLog"
+		parameterType="com.harmazing.openbridge.paasos.oslog.model.PaasProjectLog">
+		SELECT log.`id` id,
+    log.`key_` `key`,
+    log.`type_` `type`,
+    log.`message_` message,
+    log.`create_date_` createDate,
+    su.`user_name` createUser,
+    log.`begin_` `begin`,
+    log.session_id sessionId
+		FROM `os_project_log` log left outer join `sys_user` su on log.create_user_ = su.user_id
+		where 1=1
+		<if test="id!=null and id!=''">
+			and log.id = #{id}
+		</if>
+		<if test="key!=null and key!=''">
+			and log.key_ = #{key}
+		</if>
+		<if test="type!=null and type!=''">
+			and log.type_ = #{type}
+		</if>
+		<if test="begin!=null and begin!=''">
+			and log.begin_ = #{begin}
+		</if>
+		<if test="gteCreateDate!=null">
+			and log.create_date_ &gt;= #{gteCreateDate}
+		</if>
+		<if test="ltCreateDate!=null">
+			and log.create_date_  &lt; #{ltCreateDate}
+		</if>
+		<if test="neid!=null and neid!=''">
+			and log.id != #{neid}
+		</if>
+		<if test="sessionId !=null and sessionId!=''">
+			and log.session_id = #{sessionId}
+		</if>
+		order by log.`create_date_` ${sort} 
+		<if test="limit!=null">
+			limit 1
+		</if>
+	</select>
+	
+</mapper>

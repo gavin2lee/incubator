@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin:plugins xmlns:plugin="http://www.harmazing.com/schema/plugins"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.harmazing.com/schema/resource"
+	xsi:schemaLocation="http://www.harmazing.com/schema/plugins ../schema/plugins.xsd http://www.harmazing.com/schema/resource ../schema/resource.xsd">
+	
+	<plugin:extension-point name="资源扩展点" 
+		handler="com.harmazing.openbridge.paas.plugin.xml.ResourceNamespaceHandler" 
+		schema="http://www.harmazing.com/schema/resource" 
+		id="com.harmazing.paas.resource">
+	</plugin:extension-point>
+	<plugin:extension point="com.harmazing.paas.resource">
+		
+		<resource id="mysql51" category="database" 
+			bean="mysql51ResourceBridge" 
+			config="/plugin/resource/mysql51/config.jsp" name="MySQL">
+			<summary icon="/assets/images/resource/mysql.jpg" help="/plugin/resource/mysql51/help.jsp">
+				MySQL 是一个多用户，多线程的关系型数据库服务。
+			</summary>
+		</resource> 
+		
+<!-- 		<resource id="define" category="custom"  -->
+<!-- 			bean="userDefinedResourceBridge"  -->
+<!-- 			config="/plugin/resource/userDefined/config.jsp" name="自定义资源"> -->
+<!-- 			<summary icon="/assets/images/resource/java.jpg" help="/plugin/resource/userDefined/help.jsp"> -->
+<!-- 				用户输入资源键值对，如资源名称为mysql.host，资源值为127.0.0.1 -->
+<!-- 			</summary> -->
+<!-- 		</resource> -->
+		 
+	</plugin:extension>
+	 
+ 	<plugin:extension point="com.harmazing.paas.resource">
+	 
+		<resource id="redis" category="cache" 
+			bean="redisResourceBridge" 
+			config="/plugin/resource/redis/config.jsp" name="Redis">
+			<summary icon="/assets/images/resource/redis.jpg" help="/plugin/resource/redis/help.jsp">
+				Redis
+			</summary>
+		</resource>
+		 
+		<resource id="nas" category="storage" 
+			bean="nasResourceBridge" 
+			config="/plugin/resource/nas/config.jsp" name="NAS">
+			<summary icon="/assets/images/resource/nas.jpg" help="/plugin/resource/nas/help.jsp">
+				NAS 网络存储
+			</summary>
+		</resource>
+		
+	</plugin:extension> 
+	
+	<plugin:extension point="com.harmazing.paas.resource">
+	 
+		<resource id="rocket" category="mq" 
+			bean="rocketResourceBridge" 
+			config="/plugin/resource/rocket/config.jsp" name="Rocket">
+			<summary icon="/assets/images/resource/rocket.jpg" help="/plugin/resource/rocket/help.jsp">
+				Rocket消息中间件
+			</summary>
+		</resource>
+		<!--
+		<resource id="kafka" category="mq" 
+			bean="kafkaResourceBridge" 
+			config="/plugin/resource/kafka/config.jsp" name="Kafka">
+			<summary icon="/plugin/resource/kafka/icon.jpg" help="/plugin/resource/kafka/help.jsp">
+				高吞吐量的分布式发布订阅消息系统
+			</summary>
+		</resource>
+		 -->
+	</plugin:extension> 
+	
+</plugin:plugins>

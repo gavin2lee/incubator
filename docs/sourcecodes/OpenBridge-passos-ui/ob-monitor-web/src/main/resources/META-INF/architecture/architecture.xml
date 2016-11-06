@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE architectures [
+    <!ATTLIST architecture id      ID    #REQUIRED>
+    <!ATTLIST template     id      ID    #REQUIRED>
+]>
+<architectures>
+	<architecture id="api" code="apiManagerUrl" name="Api Manager">
+		<properties>
+			<property key="protocol">http</property>
+		</properties>
+		<children>
+			<architecture spec="redis" code="redis.host,redis.port" name="Redis">
+				<properties>
+					<property key="protocol">tcp</property>
+				</properties>
+			</architecture>
+			<architecture code="api.svn.url" name="Subversion" cluster="true">
+				<properties>
+					<property key="protocol">http</property>
+				</properties>
+			</architecture>
+			<architecture code="api.atlassian.oauth.serverBaseUr" name="Jira" cluster="true">
+				<properties>
+					<property key="protocol">http</property>
+				</properties>
+			</architecture>
+			<import ref="common"></import>
+		</children>
+	</architecture>
+	<architecture id="app" code="appManagerUrl" name="App Factory">
+		<properties>
+			<property key="protocol">http</property>
+		</properties>
+		<children>
+			<architecture code="app.svn.url" name="Subversion" cluster="true">
+				<properties>
+					<property key="protocol">http</property>
+				</properties>
+			</architecture>
+			<architecture code="app.atlassian.oauth.serverBaseUr" name="Jira" cluster="true">
+				<properties>
+					<property key="protocol">http</property>
+				</properties>
+			</architecture>
+			<import ref="common"></import>
+		</children>
+	</architecture>
+	
+	<template id="common">
+		<architecture code="zookeeper.live" name="Zookeeper生产" cluster="true">
+			<properties>
+				<property key="protocol">tcp</property>
+			</properties>
+		</architecture>
+		<architecture code="zookeeper.test" name="Zookeeper测试" cluster="true">
+			<properties>
+				<property key="protocol">tcp</property>
+			</properties>
+		</architecture>
+		<architecture code="jdbc.url" name="Database">
+			<properties>
+				<property key="protocol">tcp</property>
+			</properties>
+		</architecture>
+		<method class="com.harmazing.openbridge.monitor.service.impl.MonitorArchitectureServiceImpl" method="getPaas"></method>
+		<architecture code="maven" name="Maven" cluster="true">
+			<properties>
+				<property key="protocol">http</property>
+			</properties>
+		</architecture>
+		
+		<architecture code="sonar.serverUri" name="Sonar" cluster="true">
+			<properties>
+				<property key="protocol">http</property>
+			</properties>
+		</architecture>
+		
+		<architecture code="jenkins.serverUri" name="Jenkins" cluster="true">
+			<properties>
+				<property key="protocol">http</property>
+			</properties>
+		</architecture>
+		
+		<architecture code="nexus.url" name="Nexus" cluster="true">
+			<properties>
+				<property key="protocol">tcp</property>
+			</properties>
+		</architecture>
+		
+		
+		
+		
+		<architecture code="elasticsearch.url" name="Elasticsearch" cluster="true">
+			<properties>
+				<property key="protocol">tcp</property>
+			</properties>
+		</architecture>
+		
+		<architecture code="logstash.url" name="Logstash" cluster="true">
+			<properties>
+				<property key="protocol">tcp</property>
+			</properties>
+		</architecture>
+	</template>
+	
+	<architecture id="paasos" code="paasos.web.url" name="Paasos">
+		<properties>
+			<property key="protocol">http</property>
+		</properties>
+		<children>
+			<architecture code="paasos.docker.registry" name="仓库" cluster="true">
+				<properties>
+					<property key="protocol">http</property>
+				</properties>
+			</architecture>
+			<architecture code="paasos.k8s.apiserver" name="Kubernetes">
+				<properties>
+					<property key="protocol">http</property>
+				</properties>
+				<children>
+					<method class="com.harmazing.openbridge.monitor.service.impl.MonitorArchitectureServiceImpl" method="getPaasNodes"></method>
+				</children>
+			</architecture>
+			<architecture code="paasos.k8s.etcdserver" name="ETCD" cluster="true">
+				<properties>
+					<property key="protocol">http</property>
+				</properties>
+			</architecture>
+			<architecture code="paasos.webssh.url" name="WEBSSH" cluster="true">
+				<properties>
+					<property key="protocol">http</property>
+				</properties>
+			</architecture>
+			<architecture code="paasos.skydns" name="SKYDNS" cluster="true">
+				<properties>
+					<property key="protocol">http</property>
+				</properties>
+			</architecture>
+			<architecture  name="应用访问代理">
+				<properties>
+					<property key="protocol">tcp</property>
+				</properties>
+				<children>
+					<method class="com.harmazing.openbridge.monitor.service.impl.MonitorArchitectureServiceImpl" method="getPaasProxys"></method>
+				</children>
+			</architecture>
+			<architecture code="jdbc.url" name="Database">
+				<properties>
+					<property key="protocol">tcp</property>
+				</properties>
+			</architecture>
+			<architecture code="paasos.resRestfulUrl" name="Paas资源">
+				<properties>
+					<property key="protocol">http</property>
+				</properties>
+				<children>
+					<method class="com.harmazing.openbridge.monitor.service.impl.MonitorArchitectureServiceImpl" method="getPaasResources"></method>
+				</children>
+			</architecture>
+		</children>
+	</architecture>
+	
+	<architecture id="all" name="all">
+		<children>
+			<architecture id="api" code="apiManagerUrl" name="Api Manager">
+				<properties>
+					<property key="protocol">http</property>
+				</properties>
+				<children>
+					<architecture spec="redis" code="redis.host,redis.port" name="Redis">
+						<properties>
+							<property key="protocol">tcp</property>
+						</properties>
+					</architecture>
+					<architecture code="api.svn.url" name="APISubversion" cluster="true">
+						<properties>
+							<property key="protocol">http</property>
+						</properties>
+					</architecture>
+					<architecture code="api.atlassian.oauth.serverBaseUr" name="APIJira" cluster="true">
+						<properties>
+							<property key="protocol">http</property>
+						</properties>
+					</architecture>
+					<architecture code="app.svn.url" name="APPSubversion" cluster="true">
+						<properties>
+							<property key="protocol">http</property>
+						</properties>
+					</architecture>
+					<architecture code="app.atlassian.oauth.serverBaseUr" name="APPJira" cluster="true">
+						<properties>
+							<property key="protocol">http</property>
+						</properties>
+					</architecture>
+					<import ref="common"></import>
+				</children>
+			</architecture>
+			<architecture id="app" code="appManagerUrl" name="App Factory">
+				<properties>
+					<property key="protocol">http</property>
+				</properties>
+			</architecture>
+		</children>
+	</architecture>
+</architectures>

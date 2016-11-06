@@ -1,0 +1,151 @@
+elk重新整理，从命名上，存放位置上做规范化
+
+elasticsearch 结构
+1. index 默认为命名为logstash-yyyy.MM.dd (经logstash到elasticsearch之后自动产生的)
+2. index 下面包括 几种type
+    1） api_log                      api中应用经过nginx的日志收集
+    2） api_dubbo_log          api中应用经过dubbo服务的日志收集
+    3） app_log              app中经过nginx的日志收集
+    4） app_gc_log         app中应用的gc日志
+    5） api_gc_log          api中应用的gc日志
+
+注意事项
+
+
+附件:
+filebeat.yml    #filebeat 配置文件
+log.conf           #logstash配置文件
+gcpattern,logpattern #logstash日志正则
+
+
+
+
+
+
+
+curl -XPOST 'http://192.168.10.84:9200/_template/logstash' -d '{
+"template":   "logstash-*", 
+"mappings": {
+"_default_": {
+"_all" : {
+"enabled" : true,
+"omit_norms" : true
+},
+"dynamic_templates" : [ {
+          "message_field" : {
+            "mapping" : {
+              "fielddata" : {
+                "format" : "disabled"
+              },
+              "index" : "analyzed",
+              "omit_norms" : true,
+              "type" : "string"
+            },
+            "match" : "message",
+            "match_mapping_type" : "string"
+          }
+        }, {
+          "string_fields" : {
+            "mapping" : {
+              "fielddata" : {
+                "format" : "disabled"
+              },
+              "index" : "analyzed",
+              "omit_norms" : true,
+              "type" : "string",
+              "fields" : {
+                "raw" : {
+                  "ignore_above" : 256,
+                  "index" : "not_analyzed",
+                  "type" : "string",
+                  "doc_values" : true
+                }
+              }
+            },
+            "match" : "*",
+            "match_mapping_type" : "string"
+          }
+        }, {
+          "float_fields" : {
+            "mapping" : {
+              "type" : "float",
+              "doc_values" : true
+            },
+            "match" : "*",
+            "match_mapping_type" : "float"
+          }
+        }, {
+          "double_fields" : {
+            "mapping" : {
+              "type" : "double",
+              "doc_values" : true
+            },
+            "match" : "*",
+            "match_mapping_type" : "double"
+          }
+        }, {
+          "byte_fields" : {
+            "mapping" : {
+              "type" : "byte",
+              "doc_values" : true
+            },
+            "match" : "*",
+            "match_mapping_type" : "byte"
+          }
+        }, {
+          "short_fields" : {
+            "mapping" : {
+              "type" : "short",
+              "doc_values" : true
+            },
+            "match" : "*",
+            "match_mapping_type" : "short"
+          }
+        }, {
+          "integer_fields" : {
+            "mapping" : {
+              "type" : "integer",
+              "doc_values" : true
+            },
+            "match" : "*",
+            "match_mapping_type" : "integer"
+          }
+        }, {
+          "long_fields" : {
+            "mapping" : {
+              "type" : "long",
+              "doc_values" : true
+            },
+            "match" : "*",
+            "match_mapping_type" : "long"
+          }
+        }, {
+          "date_fields" : {
+            "mapping" : {
+              "type" : "date",
+              "doc_values" : true
+            },
+            "match" : "*",
+            "match_mapping_type" : "date"
+          }
+        }, {
+          "geo_point_fields" : {
+            "mapping" : {
+              "type" : "geo_point",
+              "doc_values" : true
+            },
+            "match" : "*",
+            "match_mapping_type" : "geo_point"
+          }
+        } ],
+"properties" : {
+"status" : {
+"type" : "long"
+},
+"request_time" : {
+"type" : "double"
+}
+}
+}
+}
+}'

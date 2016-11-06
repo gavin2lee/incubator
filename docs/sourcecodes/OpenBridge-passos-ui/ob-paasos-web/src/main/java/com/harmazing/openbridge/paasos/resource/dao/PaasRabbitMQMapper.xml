@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.resource.dao.PaasRabbitMQMapper">
+
+	<!-- 查询RabbitMQ记录数，需要关联租户表 -->
+	<select id="QueryPaasRabbitMQsByParamsCount" resultType="java.lang.Integer">
+		select count(distinct(mq_id)) from os_resource_rabbitmq mq 
+		where 1=1
+		and mq.tenant_id = #{params.tenantId}
+		<if test="params.userId !=null &amp;&amp; params.userId !=''">
+			and creater = #{params.userId} 
+		</if>
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+	</select>
+	
+	<!-- 查询RabbitMQ分页列表 -->
+	<select id="QueryPaasRabbitMQByParams" resultType="com.harmazing.openbridge.paasos.resource.model.PaasRabbitMQ">
+		select distinct	mq.*,tenant.tenant_name as `attach[tenantName]`,user.user_name as `attach[createrName]`
+		from os_resource_rabbitmq mq 
+		left join sys_tenant tenant on mq.tenant_id = tenant.tenant_id
+		left join sys_user user on mq.creater=user.user_id where 1=1
+		and mq.tenant_id = #{params.tenantId}
+		<if test="params.userId !=null &amp;&amp; params.userId !=''">
+			and creater = #{params.userId}
+		</if>
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+		order by create_date desc limit #{params.start},#{params.size}
+	</select>
+	
+	<!-- 根据id查询RabbiMQt基本信息 -->
+	<select id="getPaasRabbitMQInfoById" resultType="com.harmazing.openbridge.paasos.resource.model.PaasRabbitMQ">
+		select mq.*,tenant.tenant_name as `attach[tenantName]`,user.user_name as `attach[createrName]`
+		from os_resource_rabbitmq mq
+		left join sys_tenant tenant on mq.tenant_id = tenant.tenant_id
+		left join sys_user user on mq.creater=user.user_id
+		where mq.mq_id = #{mqId} 
+	</select>
+	
+	<!-- 新增RabbitMQ -->
+	<insert id="addPaasRabbitMq" parameterType="com.harmazing.openbridge.paasos.resource.model.PaasRabbitMQ">
+		insert into os_resource_rabbitmq(mq_id,mq_name,apply_content,creater,
+			create_date,update_date,allocate_content,tenant_id,	project_id,env_id,env_type,
+			on_ready,res_desc,apply_type,cpu_,memory_,storage_) 
+			values (#{mqId},#{mqName},#{applyContent},#{creater},
+			#{createDate},#{updateDate},#{allocateContent},#{tenantId},#{projectId},#{envId},#{envType},
+			#{onReady},#{resDesc},#{applyType},#{cpu},#{memory},#{storage}
+			)
+	</insert>
+	
+	<!-- 删除RabbitMQ信息 -->
+	<delete id="deletePaasRabbitMQById">
+		delete from os_resource_rabbitmq where mq_id = #{mqId}
+	</delete>
+	
+	<!-- 更新RabbitMQ信息 -->
+	<update id="updatePaasRabbitMQInfo" parameterType="com.harmazing.openbridge.paasos.resource.model.PaasRabbitMQ">
+		update os_resource_rabbitmq set apply_content=#{applyContent},update_date=#{updateDate},
+		allocate_content=#{allocateContent},on_ready=#{onReady},res_desc=#{resDesc},
+		cpu_=#{cpu},memory_=#{memory},storage_=#{storage} where mq_id=#{mqId}
+	</update>
+	
+	<select id="QueryPaasRabbitMQByEnvId" resultType="com.harmazing.openbridge.paasos.resource.model.PaasRabbitMQ">
+		select mq.* from os_resource_rabbitmq mq where env_id=#{envId} limit 0,1
+	</select>
+	
+	
+	<!-- 查询RabbitMQ记录数，需要关联租户表 -->
+	<select id="QueryPaasRabbitMQsCount" resultType="java.lang.Integer">
+		select count(distinct(mq_id)) from os_resource_rabbitmq mq 
+		where 1=1
+		<choose>
+			<when test="params.byTenantId!=null &amp;&amp; params.byTenantId !=''">
+				<if test="params.tenantId !=null &amp;&amp; params.tenantId !=''">
+					and mq.tenant_id = #{params.tenantId} 
+				</if>
+			</when>
+			<otherwise>
+				<if test="params.userId !=null &amp;&amp; params.userId !=''">
+					and creater = #{params.userId} 
+				</if>
+			</otherwise>
+		</choose>
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+		<if test="params.applyType !=null &amp;&amp; params.applyType !=''">
+			and apply_type = #{params.applyType} 
+		</if>
+	</select>
+	
+	<!-- 查询RabbitMQ分页列表 -->
+	<select id="QueryPaasRabbitMQs" resultType="com.harmazing.openbridge.paasos.resource.model.PaasRabbitMQ">
+		select distinct	mq.*,tenant.tenant_name as `attach[tenantName]`,user.user_name as `attach[createrName]`
+		from os_resource_rabbitmq mq 
+		left join sys_tenant tenant on mq.tenant_id = tenant.tenant_id
+		left join sys_user user on mq.creater=user.user_id where 1=1
+		<choose>
+			<when test="params.byTenantId!=null &amp;&amp; params.byTenantId !=''">
+				<if test="params.tenantId !=null &amp;&amp; params.tenantId !=''">
+					and tenant.tenant_id = #{params.tenantId} 
+				</if>
+			</when>
+			<otherwise>
+				<if test="params.userId !=null &amp;&amp; params.userId !=''">
+					and creater = #{params.userId} 
+				</if>
+			</otherwise>
+		</choose>
+<!-- 		and mq.tenant_id = #{params.tenantId}  -->
+<!-- 				<if test="params.userId !=null &amp;&amp; params.userId !=''"> -->
+<!-- 					and creater = #{params.userId}  -->
+<!-- 				</if> -->
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+		<if test="params.applyType !=null &amp;&amp; params.applyType !=''">
+			and apply_type = #{params.applyType} 
+		</if>
+		order by create_date desc limit #{params.start},#{params.size}
+	</select>
+	
+	<select id="getAlreadyUsed" parameterType="java.util.Map"  resultType="com.harmazing.openbridge.paasos.manager.model.vo.ResourceQuota">
+		SELECT sum(cpu_) cpu,sum(memory_) memory, sum(storage_) storage,count(1) count
+		FROM os_resource_rabbitmq
+		where tenant_id = #{tenantId}
+	</select>
+</mapper>

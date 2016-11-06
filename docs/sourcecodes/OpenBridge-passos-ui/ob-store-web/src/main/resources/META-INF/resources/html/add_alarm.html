@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>passos——新增节点组</title>
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../assets/css/layout.css"/>
+    <link rel="stylesheet" href="../assets/css/welcom.css"/>
+    <link rel="stylesheet" href="../assets/css/style_passos.css"/>
+</head>
+
+<body>
+<!------pas头部------->
+<div class="app_top pas_top">
+    <div class="head">
+        <div class="app_logo sub_logo">
+            <a href="main.html"><img src="../assets/images/logo_pas.png" width="200" height="62"/></a>
+        </div>
+        <div class="nav_tips">
+            <div class="news app_number">
+                <a href="monitoring.html">
+                    <div class="news_img">
+                        <i class="icons rs_ico"></i>
+                    </div>
+                    <div class="title_name">智能监控</div>
+                </a>
+            </div>
+            <div class="news">
+                <a class="active" href="alarm.html">
+                    <div class="news_img">
+                        <i class="icons zygl_ico"></i>
+                    </div>
+                    <div class="title_name">告警设置</div>
+                </a>
+            </div>
+        </div>
+        <div class="app_user">
+            <div class="user_hits">
+                <div class="nav_user">
+                    <ul>
+                        <li class="menu2" onMouseOver="this.className='menu1'" onMouseOut="this.className='menu2'">
+                            <i class="icons user_ico"></i>
+
+                            <p class="user_name">admin</p>
+                            <i class="icons arrow-btm"></i>
+
+                            <div class="list">
+                                <a href="#">管理</a><br/>
+                                <a href="#">退出</a><br/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ob_sub_pro_btn">
+            <a href="javascript:$.pageslide({ direction: 'left', href: 'pro_list2.html' })">
+                <i class="icons ob_sub_pro"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!------passos内容------->
+<div class="app_content">
+    <div class="content_frame">
+        <div class="left_sub_menu left_sub_menu_pas">
+            <ul>
+                <li><a class="select" href="alarm.html">
+                    <i class="left_menu_ico l_ico_jk"></i>节点组</a></li>
+                <li><a href="templates.html">
+                    <i class="left_menu_ico l_ico_jdgl"></i>策略</a></li>
+                <li><a href="#">
+                    <i class="left_menu_ico l_ico_zjj"></i>用户组</a></li>
+            </ul>
+        </div>
+        <div class="app_name">
+            <a href="alarm.html"><i class="icons go_back_ico"></i></a>
+
+            <p class="app_a">告警设置</p>
+            <em>&gt;</em>
+
+            <p class="app_a"><a href="alarm.html">节点组</a></p> <em>&gt;</em>
+
+            <p class="app_a">新增节点组</p>
+        </div>
+        <div class="plate">
+            <div class="project_r">
+                <div class="r_block p20">
+                    <div class="r_title">
+                        <h3 class="f14 h3_color h3_btm_line blue mr10">
+                            <a href="alarm_manager.html">
+                                <i class="icons add_ico mr5"></i>节点组
+                            </a>
+                        </h3>
+
+
+                        <div class="title_line"></div>
+                        <!--<div class="title_tab">-->
+                            <!--<h5 class="f14">-->
+                                <!--<a class="active_green" href="javascript:void(0);" onclick="queryMysqlsInfo()">-->
+                                    <!--<i class="icons add_ico_yellow mr5"></i>添加节点组</a>-->
+                            <!--</h5>-->
+                        <!--</div>-->
+                    </div>
+                    <div class="app_details">
+                        <div class="app_active_num">
+                            <p style="margin-bottom: 5px;">
+                                <span><b>节点组名称：</b>
+                                    <input type="text" placeholder="输入节点组名称"> </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="r_con p10_0">
+                        <div class="g-row">
+                            <div class="g-col g-col-6">
+                                <div class="m-card p10_20"  style="height: auto;">
+                                    <div class="sl_tit f14">策略</div>
+                                    <table class="table_ob">
+                                        <thead>
+                                        <tr>
+                                            <th>策略名称</th>
+                                            <th>创建人</th>
+                                            <th>报警接收组</th>
+                                            <th>操作</th>
+                                            <th><a class="f18 btn btn-yellow2 btn-sm ser-adv" style="padding:3px 9px;"
+                                                   href="#">+</a></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <!--<tr>-->
+                                            <!--<td><a href="#">cpu</a></td>-->
+                                            <!--<td>admin</td>-->
+                                            <!--<td>UI</td>-->
+                                            <!--<td><a class="mr10" href="#">修改</a></td>-->
+                                            <!--<td><a class="f18 btn btn-yellow2 btn-sm ser-adv" style="padding:3px 12px;"-->
+                                                   <!--href="#">-</a></td>-->
+                                        <!--</tr>-->
+
+                                        <!--<tr>-->
+                                            <!--<td><a href="#">cpu2</a></td>-->
+                                            <!--<td>liyang</td>-->
+                                            <!--<td>ceshi</td>-->
+                                            <!--<td><a class="mr10" href="#">修改</a></td>-->
+                                            <!--<td><a class="f18 btn btn-yellow2 btn-sm ser-adv" style="padding:3px 12px;"-->
+                                                   <!--href="#">-</a></td>-->
+                                        <!--</tr>-->
+                                        </tbody>
+                                    </table>
+                                    <p class="no-content-sm f14">暂无策略项，点击 <a href="#">添加一个</a></p>
+                                    <!--<div id="apps" class="table_page" style="margin: 10px 5px 0; ">-->
+                                        <!--<div class="pull-right pages_mun">-->
+                                            <!--<ul>-->
+                                                <!--<li class="active"><a href="#">1</a></li>-->
+                                                <!--<li><a href="#">2</a></li>-->
+                                            <!--</ul>-->
+                                        <!--</div>-->
+                                        <!--<div class="pull-left pages_info"><span> 页码 1/2 共 13</span></div>-->
+                                    <!--</div>-->
+                                </div>
+                            </div>
+                            <div class="g-col g-col-6">
+                                <div class="m-card p10_20" style="height: auto;">
+                                    <div class="sl_tit f14">节点</div>
+                                    <table class="table_ob">
+                                        <tbody>
+                                        <tr class="sub_td_title sub_td_title2">
+                                            <th>名称</th>
+                                            <th><a class="f18 btn btn-yellow2 btn-sm ser-adv" style="padding:3px 9px;"
+                                                   href="#">+</a></th>
+                                        </tr>
+                                        <tr>
+                                            <td><select>
+                                                <option>192.168.1.1</option>
+                                                <option>192.168.1.2</option>
+                                            </select></td>
+                                            <td><a class="f18 btn btn-yellow2 btn-sm ser-adv" style="padding:3px 12px;"
+                                                   href="#">-</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><select>
+                                                <option>192.168.1.1</option>
+                                                <option>192.168.1.2</option>
+                                            </select></td>
+                                            <td><a class="f18 btn btn-yellow2 btn-sm ser-adv" style="padding:3px 12px;"
+                                                   href="#">-</a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="no-content-sm f14">暂无策略项，点击 <a href="#">添加一个</a></p>
+                                    <div id="apps" class="table_page" style="margin: 10px 5px 0; ">
+                                        <div class="pull-right pages_mun">
+                                            <ul>
+                                                <li class="active"><a href="#">1</a></li>
+                                                <li><a href="#">2</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="pull-left pages_info"><span> 页码 1/2 共 13</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    function adjustHeight() {
+        var h = $(window).height();
+        var h2 = $(".head").height();
+        $(".plate").css("height", h - 99);
+        $(".left_sub_menu").css("height", h - h2);
+    }
+    $(document).ready(function () {
+                adjustHeight();
+            }
+    )
+    $(window).resize(function () {
+        adjustHeight();
+    });
+    $(".ser_bar2").hide();
+    $(".ser-adv").click(function () {
+        $(".ser_bar2").toggle(200);
+    })
+</script>
+
+</body>
+</html>

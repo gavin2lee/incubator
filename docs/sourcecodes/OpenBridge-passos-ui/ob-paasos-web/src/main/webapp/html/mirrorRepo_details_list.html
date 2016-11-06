@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>passos——镜像仓库详情_版本列表</title>
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../assets/css/layout.css"/>
+    <link rel="stylesheet" href="../assets/css/app_deployment.css"/>
+    <link rel="stylesheet" href="../assets/css/welcom.css"/>
+    <link rel="stylesheet" href="../assets/css/style_passos.css"/>
+</head>
+
+<body>
+<!------passos头部------->
+<div class="app_top pas_top">
+    <div class="head">
+        <div class="app_logo sub_logo">
+            <a href="index_pas.html"><img src="../assets/images/logo_pas.png" width="200" height="62"/></a>
+        </div>
+        <div class="nav_tips">
+            <div class="news app_number">
+                <a href="proiect_list.html">
+                    <div class="news_img">
+                        <i class="icons item_ico"></i>
+                    </div>
+                    <div class="title_name">项目管理</div>
+                </a>
+            </div>
+            <div class="news app_number">
+                <a href="resource_service.html">
+                    <div class="news_img">
+                        <i class="icons dashboard_ico"></i>
+                    </div>
+                    <div class="title_name">资源服务</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="resource_plan.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">资源管理</div>
+                </a>
+            </div>
+            <div class="news">
+                <a class="active" href="pre-applications.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">预置应用</div>
+                </a>
+            </div>
+        </div>
+        <div class="app_user">
+            <div class="user_hits">
+                <div class="nav_user">
+                    <ul>
+                        <li class="menu2" onMouseOver="this.className='menu1'" onMouseOut="this.className='menu2'">
+                            <i class="icons user_ico"></i>
+
+                            <p class="user_name">admin</p>
+                            <i class="icons arrow-btm"></i>
+
+                            <div class="list">
+                                <a href="#">管理</a><br/>
+                                <a href="#">我开发的服务</a><br/>
+                                <a href="#">我消费的服务</a><br/>
+                                <a href="#">退出</a><br/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ob_sub_pro_btn">
+            <a href="javascript:$.pageslide({ direction: 'left', href: 'pro_list.html' })">
+                <i class="icons ob_sub_pro"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!------passos内容------->
+<div class="app_content">
+    <div class="content_frame">
+        <!--<div class="left_sub_menu left_sub_menu_pas">-->
+            <!--<ul>-->
+                <!--<li><a href="resource_plan.html">-->
+                    <!--<i class="left_menu_ico l_ico00"></i>组织管理</a></li>-->
+                <!--<li><a href="cluster_manage.html">-->
+                    <!--<i class="left_menu_ico l_ico01"></i>集群管理</a></li>-->
+                <!--<li><a class="select" href="mirrorRepo.html">-->
+                    <!--<i class="left_menu_ico l_ico02"></i>基础镜像</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <div class="app_name">
+            <a href="pre-applications.html"><i class="icons go_back_ico"></i></a>
+            <p class="app_a">预置应用</p>
+            <em>&gt;</em>
+            <p class="app_a">node</p>
+        </div>
+        <div class="plate">
+            <div class="r_con hj_block_pas">
+                <div class="details_nr details_nr2">
+                    <div class="d_nr_left">
+                        <dl>
+                            <dt><img src="../assets/images/mirror/node.png" width="80" height="80"></dt>
+                        </dl>
+                    </div>
+                    <div class="d_nr_right">
+                        <div class="app_details">
+                            <div class="choose_version pull-right">
+                                <label>下载地址：</label>
+                                <span class="no_copy">docker pull hub.c.163.com/library/tomcat:latest</span>
+                                <a class="btn btn-default btn-yellow2 btn-sm f12" href="#">复制</a>
+                            </div>
+                            <div class="app_active_num">
+                                <p>
+                                    <span><b>更新时间：</b>2016-03-30 02:50:37</span> <em>|</em> <span><b>版本数：</b>30个</span>
+                                    <em>|</em>
+
+                                    <span><b>下载：</b> 20次 </span> <em>|</em> <span><b>收藏：</b> 11次</span>
+                                </p>
+
+                                <div class="action_btn">
+                                    <button class="btn btn-yellow f14 mt10"><i class="icon-favorite"></i> 收藏
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="r_title mb10">
+                    <div class="title_tab">
+                        <ul>
+                            <li>
+                                <h5 class="f14">
+                                    <a href="mirrorRepo_details.html">
+                                        <i class="tab_ico tab_ico01 mr5"></i>详细信息
+                                    </a>
+                                </h5>
+                            </li>
+                            <li>
+                                <h5 class="f14">
+                                    <a class="active" href="mirrorRepo_details_list.html"><i
+                                            class="tab_ico tab_ico03 mr5"></i>版 本</a>
+                                </h5>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="title_line"></div>
+                </div>
+                <div class="xq_con">
+                    <div class="xq_block">
+                        <table class="table_ob m-table">
+                            <thead>
+                            <tr>
+                                <th>版本</th>
+                                <th>大小</th>
+                                <th>状态</th>
+                                <th>更新时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>jre8</td>
+                                <td>309M</td>
+                                <td>可用</td>
+                                <td>2016-03-29</td>
+                                <td><a class="mr10" href="#">－</a></td>
+                            </tr>
+                            <tr>
+                                <td>8-jre8</td>
+                                <td>309M</td>
+                                <td>可用</td>
+                                <td>2016-03-29</td>
+                                <td><a class="mr10" href="#">－</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    function adjustHeight() {
+        var h = $(window).height();
+        var h2 = $(".head").height();
+        $(".plate").css("height", h - 99);
+        $(".left_sub_menu").css("height", h - h2);
+    }
+    $(document).ready(function () {
+                adjustHeight();
+            }
+    )
+    $(window).resize(function () {
+        adjustHeight();
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>passos——创建数据库实例</title>
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../assets/css/layout.css"/>
+    <link rel="stylesheet" href="../assets/css/app_deployment.css"/>
+    <link rel="stylesheet" href="../assets/css/welcom.css"/>
+    <link rel="stylesheet" href="../assets/css/style_passos.css"/>
+</head>
+
+<body>
+<!------passos头部------->
+<div class="app_top pas_top">
+    <div class="head">
+        <div class="app_logo sub_logo">
+            <a href="index_pas.html"><img src="../assets/images/logo_pas.png" width="200" height="62"/></a>
+        </div>
+        <div class="nav_tips">
+            <div class="news app_number">
+                <a href="proiect_list.html">
+                    <div class="news_img">
+                        <i class="icons item_ico"></i>
+                    </div>
+                    <div class="title_name">项目管理</div>
+                </a>
+            </div>
+            <div class="news app_number">
+                <a class="active" href="resource_service.html">
+                    <div class="news_img">
+                        <i class="icons dashboard_ico"></i>
+                    </div>
+                    <div class="title_name">资源服务</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="resource_plan.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">资源管理</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="pre-applications.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">预置应用</div>
+                </a>
+            </div>
+        </div>
+        <div class="app_user">
+            <div class="user_hits">
+                <div class="nav_user">
+                    <ul>
+                        <li class="menu2" onMouseOver="this.className='menu1'" onMouseOut="this.className='menu2'">
+                            <i class="icons user_ico"></i>
+
+                            <p class="user_name">admin</p>
+                            <i class="icons arrow-btm"></i>
+
+                            <div class="list">
+                                <a href="#">管理</a><br/>
+                                <a href="#">我开发的服务</a><br/>
+                                <a href="#">我消费的服务</a><br/>
+                                <a href="#">退出</a><br/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ob_sub_pro_btn">
+            <a href="javascript:$.pageslide({ direction: 'left', href: 'pro_list.html' })">
+                <i class="icons ob_sub_pro"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!------passos内容------->
+<div class="app_content">
+    <div class="content_frame">
+        <div class="left_sub_menu left_sub_menu_pas">
+            <ul>
+                <li><a class="select" href="resource_service.html">
+                    <i class="left_menu_ico l_ico_sjk"></i>数据库</a></li>
+                <li><a href="resource_service_zjj.html">
+                    <i class="left_menu_ico l_ico01"></i>消息中间件</a></li>
+                <li><a href="resource_service_hc.html">
+                    <i class="left_menu_ico l_ico_hc"></i>高速缓存</a></li>
+            </ul>
+        </div>
+        <div class="app_name">
+            <a href="resource_service.html"><i class="icons go_back_ico"></i></a>
+
+            <p class="app_a">资源服务</p>
+            <em>&gt;</em>
+
+            <p class="app_a"><a href="resource_service.html"> 数据库 </a></p>
+            <em>&gt;</em>
+
+            <p class="app_a">创建数据库实例</p>
+        </div>
+        <div class="plate">
+            <div class="project_r">
+                <!--创建数据库实例开始-->
+                <div class="r_block p20">
+                    <div class="r_title">
+                        <h3 class="f14 h3_color h3_btm_line blue">
+                            <a href="#">
+                                <i class="icons ico_title_list mr5"></i>申请数据库实例
+                            </a>
+                        </h3>
+
+                        <div class="title_line"></div>
+                    </div>
+                    <div class="r_con p10_0">
+                        <div class="form_control p20">
+                            <div class="form_block">
+                                <label>实例名称</label>
+                                <input type="text"><em>*</em>
+                            </div>
+                            <div class="form_block">
+                                <label>数据库引擎</label>
+                                <div class="specList">
+                                    <ul>
+                                        <li class="specCard specCard_sl">
+                                            <div class="spec_up">
+                                                <i class="ico_sl mysql_ico_sl"></i>
+                                            </div>
+                                            <div class="spec_down">
+                                                <p>MySql</p>
+                                                <p>5.5.30</p>
+                                            </div>
+                                        </li>
+                                        <li class="specCard specCard_sl checked">
+                                            <div class="spec_up">
+                                                <i class="ico_sl mysql_ico_sl"></i>
+                                            </div>
+                                            <div class="spec_down">
+                                                <p>MySql</p>
+                                                <p>5.6.19</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form_block">
+                                <label>类型</label>
+                                <div class="specList">
+                                    <ul class="u-flavor">
+                                        <!--Regular list-->
+                                        <li class="">单机</li>
+                                        <li class="">共享</li>
+                                        <li class="selected">集群</li>
+                                    </ul>
+                                    <div class="jq_set">
+                                        <span class="mr5"><input class="w100" type="text" value="1"> 主</span>
+
+                                        <span class="mr10"><input class="w100" type="text" value="2"> 从</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form_block">
+                                <label>内存</label>
+                                <div class="specList">
+                                    <ul class="u-flavor">
+                                        <!--Regular list-->
+                                        <li class="selected">1GB</li>
+
+                                        <li class="">2GB</li>
+
+                                        <li class="">4GB</li>
+
+                                        <li class="z-dis">8GB</li>
+
+                                        <li class="z-dis">16GB</li>
+
+                                        <li class="z-dis">32GB</li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form_block">
+                                <label>存储空间</label>
+                                <div class="specList">
+                                    <ul class="u-flavor">
+                                        <!--Regular list-->
+                                        <li class="selected">10G</li>
+
+                                        <li class="">20G</li>
+
+                                        <li class="">40G</li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form_block">
+                                <label>CPU</label>
+                                <div class="specList">
+                                    <ul class="u-flavor">
+                                        <!--Regular list-->
+                                        <li class="selected">1CPU</li>
+                                        <li class="">2CPU</li>
+                                        <li class="">4CPU</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form_block">
+                                <label>租户组织</label>
+                                <input type="text">
+                            </div>
+                            <div class="form_block mt10">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-default btn-yellow f16  mt10"><i class="ico_check"></i>创 建
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--创建数据库实例结束-->
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    function adjustHeight() {
+        var h = $(window).height();
+        var h2 = $(".head").height();
+        $(".plate").css("height", h - 99);
+        $(".left_sub_menu").css("height", h - h2);
+    }
+    $(document).ready(function () {
+                adjustHeight();
+            }
+    )
+    $(window).resize(function () {
+        adjustHeight();
+    });
+</script>
+
+</body>
+</html>

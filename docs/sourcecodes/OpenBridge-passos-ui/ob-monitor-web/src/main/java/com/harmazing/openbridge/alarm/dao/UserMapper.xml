@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.alarm.dao.UserMapper">
+
+	<select id="findUserCount"  resultType="int">
+	   select count(DISTINCT sys_user.user_id)    from grp_tpl,tpl,team,action,rel_team_user ,sys_user
+	   <where>
+        tpl.id=grp_tpl.tpl_id   AND tpl.action_id = action.id and  team.`name`=action.uic and team.id=rel_team_user.tid  
+        and rel_team_user.user_id=sys_user.user_id and  grp_tpl.grp_id=#{id}
+	  </where>
+	</select>
+	
+</mapper>

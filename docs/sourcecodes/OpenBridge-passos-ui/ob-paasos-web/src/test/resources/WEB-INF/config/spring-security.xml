@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+  http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean id="httpUserManager" class="com.harmazing.framework.authorization.impl.HttpUserSessionManager">
+		<property name="userService" ref="sysUserService" />
+	</bean>
+	<bean id="securityFilterChain"
+		class="com.harmazing.framework.authorization.filter.FilterChainProxy">
+		<property name="filters">
+			<list>
+				<bean
+					class="com.harmazing.framework.authorization.filter.HttpIntegrationFilter">
+					<property name="httpUserManager" ref="httpUserManager" />
+				</bean>
+				<bean
+					class="com.harmazing.framework.authorization.filter.SecurityCheckFilter">
+					<property name="anonymousPaths">
+						<value>
+							/portal/**;/docs/**;/auth/**;/metainfo/**;/common/**;/assets/**;/login.jsp*;/index.jsp*;/logout.jsp*;/login.do*;/mlogin.do*;/html/**
+						</value>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>

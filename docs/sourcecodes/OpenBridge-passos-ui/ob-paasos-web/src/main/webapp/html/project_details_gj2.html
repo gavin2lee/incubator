@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>passos——项目管理详情构建</title>
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../assets/css/layout.css"/>
+    <link rel="stylesheet" href="../assets/css/app_deployment.css"/>
+    <link rel="stylesheet" href="../assets/css/welcom.css"/>
+    <link rel="stylesheet" href="../assets/css/style_passos.css"/>
+</head>
+
+<body>
+<!------passos头部------->
+<div class="app_top pas_top">
+    <div class="head">
+        <div class="app_logo sub_logo">
+            <a href="index_pas.html"><img src="../assets/images/logo_pas.png" width="200" height="62"/></a>
+        </div>
+        <div class="nav_tips">
+            <div class="news app_number">
+                <a class="active" href="pass_index.html">
+                    <div class="news_img">
+                        <i class="icons item_ico"></i>
+                    </div>
+                    <div class="title_name">项目管理</div>
+                </a>
+            </div>
+            <div class="news app_number">
+                <a href="resource_service.html">
+                    <div class="news_img">
+                        <i class="icons dashboard_ico"></i>
+                    </div>
+                    <div class="title_name">资源服务</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="resource_plan.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">资源管理</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="pre-applications.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">预置应用</div>
+                </a>
+            </div>
+        </div>
+        <div class="app_user">
+            <div class="user_hits">
+                <div class="nav_user">
+                    <ul>
+                        <li class="menu2" onMouseOver="this.className='menu1'" onMouseOut="this.className='menu2'">
+                            <i class="icons user_ico"></i>
+
+                            <p class="user_name">admin</p>
+                            <i class="icons arrow-btm"></i>
+
+                            <div class="list">
+                                <a href="#">管理</a><br/>
+                                <a href="#">我开发的服务</a><br/>
+                                <a href="#">我消费的服务</a><br/>
+                                <a href="#">退出</a><br/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ob_sub_pro_btn">
+            <a href="javascript:$.pageslide({ direction: 'left', href: 'pro_list.html' })">
+                <i class="icons ob_sub_pro"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!------passos内容------->
+<div class="app_content">
+    <div class="content_frame">
+        <div class="left_sub_menu left_sub_menu_pas">
+            <ul>
+                <li><a href="project_details.html">
+                    <i class="left_menu_ico l_ico00"></i>概述</a></li>
+                <li><a class="select" href="project_details_gj.html">
+                    <i class="left_menu_ico l_ico01"></i>构建</a></li>
+                <li><a href="project_details_deploy.html">
+                    <i class="left_menu_ico l_ico03"></i>部署</a></li>
+                <li><a href="project_details_jk.html">
+                    <i class="left_menu_ico l_ico04"></i>监控</a></li>
+            </ul>
+        </div>
+        <div class="app_name">
+            <a href="proiect_list.html"><i class="icons go_back_ico"></i></a>
+
+            <p class="app_a">项目管理</p>
+            <em>&gt;</em>
+
+            <p class="app_a">CRM</p>
+            <em>&gt;</em>
+
+            <p class="app_a">构建</p>
+        </div>
+        <div class="plate">
+            <div class="project_r">
+                <div class="pas_info mb10 p20" style="background:#f0f0f0;">
+                    <a href="pass_creat_mirro.html" class="btn btn-default btn-oranger f16 mr20"> 镜像构建 </a>
+                    <em class="mr10 f14">|</em>
+                    <span class="f14">在该页面您可以部署容器应用，查看已经部署的应用列表，启动、停止、配置应用参数。<a href="#" class="btn btn-link yellow">如何创建应用？
+                        &gt;</a></span>
+                </div>
+                <!--项目概述开始-->
+                <div class="r_block p20">
+                    <div class="r_title">
+                        <h3 class="f14 h3_color h3_btm_line blue">
+                            <a href="#">
+                                <i class="icons add_ico mr5"></i>镜像管理
+                            </a>
+                        </h3>
+                        <div class="title_tab title_tab_radio">
+                            <ul>
+                                <li>
+                                    <h5 class="f14">
+                                        <input type="radio" name="iCheck" class="mr10"> 预览视图
+                                    </h5>
+                                </li>
+                                <li>
+                                    <h5 class="f14">
+                                        <input type="radio" name="iCheck" class="mr10"> 列表视图</h5>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="title_line"></div>
+                    </div>
+                    <!--来源2-->
+                    <div class="r_con p10_0">
+                        <div class="details_nr">
+                            <table class="table_ob">
+                                <tbody>
+                                <tr>
+                                    <th>镜像名称</th>
+                                    <th>项目来源</th>
+                                    <th>构建时间</th>
+                                    <th>镜像版本</th>
+                                    <th>关联文件</th>
+                                    <th>状态</th>
+                                    <th>tag</th>
+                                </tr>
+                                <tr>
+                                    <td><a href="project_details.html">name</a></td>
+                                    <td>openbridge API</td>
+                                    <td>20160419</td>
+                                    <td>1.0</td>
+                                    <td>2015062375.zip</td>
+                                    <td>
+                                        <span class="zt_span"><i class="pas_ico zt_ico done_ico"></i>完成</span></td>
+                                    <td><label class="badge">API</label></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="project_details.html">name</a></td>
+                                    <td>openbridge API</td>
+                                    <td>20160419</td>
+                                    <td>1.0</td>
+                                    <td>2015062375.zip</td>
+                                    <td><span class="zt_span"><i class="pas_ico zt_ico doing_ico"></i>进行中</span></td>
+                                    <td><label class="badge">API</label></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="project_details.html">name</a></td>
+                                    <td>openbridge API</td>
+                                    <td>20160419</td>
+                                    <td>1.0</td>
+                                    <td>2015062375.zip</td>
+                                    <td><span class="zt_span"><i class="pas_ico zt_ico waiting_ico"></i>未开始</span></td>
+                                    <td><label class="badge">API</label></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="project_details.html">name</a></td>
+                                    <td>openbridge API</td>
+                                    <td>20160419</td>
+                                    <td>1.0</td>
+                                    <td>2015062375.zip</td>
+                                    <td><span class="zt_span"><i class="pas_ico zt_ico fail_ico"></i>失败</span></td>
+                                    <td><label class="badge">API</label></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--来源2结束-->
+                </div>
+                <!--项目概述结束-->
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
+<script src="../assets/js/icheck.min.js"></script>
+<script type="text/javascript">
+    function adjustHeight() {
+        var h = $(window).height();
+        var h2 = $(".head").height();
+        $(".plate").css("height", h - 99);
+        $(".left_sub_menu").css("height", h - h2);
+    }
+    $(document).ready(function () {
+                adjustHeight();
+            }
+    )
+    $(window).resize(function () {
+        adjustHeight();
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',  // 注意square和blue的对应关系,用于type=checkbox
+            radioClass: 'iradio_square-blue', // 用于type=radio
+            increaseArea: '20%' // 增大可以点击的区域
+        });
+    });
+
+    // 选中事件绑定
+    //    $('input').on('ifChecked', function(event){
+    //        alert('被选中了');
+    //    });
+
+    // 取消选中事件绑定
+    //    $('input').on('ifUnchecked', function(event){
+    //        alert('被取消了');
+    //    });
+
+    // 禁止选取
+    $('#example').iCheck('disable');
+</script>
+</body>
+</html>

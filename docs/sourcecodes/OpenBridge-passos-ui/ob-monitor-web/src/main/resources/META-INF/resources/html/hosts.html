@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>passos——主机组</title>
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../assets/css/layout.css"/>
+    <link rel="stylesheet" href="../assets/css/welcom.css"/>
+    <link rel="stylesheet" href="../assets/css/style_passos.css"/>
+</head>
+
+<body>
+<!------pas头部------->
+<div class="app_top pas_top">
+    <div class="head">
+        <div class="app_logo sub_logo">
+            <a href="main.html"><img src="../assets/images/logo_pas.png" width="200" height="62"/></a>
+        </div>
+        <div class="nav_tips">
+            <div class="news app_number">
+                <a href="monitoring.html">
+                    <div class="news_img">
+                        <i class="icons rs_ico"></i>
+                    </div>
+                    <div class="title_name">智能监控</div>
+                </a>
+            </div>
+            <div class="news">
+                <a class="active" href="alarm.html">
+                    <div class="news_img">
+                        <i class="icons zygl_ico"></i>
+                    </div>
+                    <div class="title_name">告警设置</div>
+                </a>
+            </div>
+        </div>
+        <div class="app_user">
+            <div class="user_hits">
+                <div class="nav_user">
+                    <ul>
+                        <li class="menu2" onMouseOver="this.className='menu1'" onMouseOut="this.className='menu2'">
+                            <i class="icons user_ico"></i>
+
+                            <p class="user_name">admin</p>
+                            <i class="icons arrow-btm"></i>
+
+                            <div class="list">
+                                <a href="#">管理</a><br/>
+                                <a href="#">退出</a><br/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ob_sub_pro_btn">
+            <a href="javascript:$.pageslide({ direction: 'left', href: 'pro_list2.html' })">
+                <i class="icons ob_sub_pro"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!------passos内容------->
+<div class="app_content">
+    <div class="content_frame">
+        <div class="left_sub_menu left_sub_menu_pas">
+            <ul>
+                <li><a href="alarm.html">
+                    <i class="left_menu_ico l_ico_jk"></i>集群</a></li>
+                <li><a href="templates.html">
+                    <i class="left_menu_ico l_ico_jdgl"></i>策略</a></li>
+                <li><a class="select" href="hosts.html">
+                    <i class="left_menu_ico l_ico_zjj"></i>用户组</a></li>
+            </ul>
+        </div>
+        <div class="app_name">
+            <a href="alarm.html"><i class="icons go_back_ico"></i></a>
+            <p class="app_a">告警设置</p>
+            <em>&gt;</em>
+            <p class="app_a"><a href="alarm.html">用户组</a></p>
+        </div>
+        <div class="plate">
+            <div class="project_r">
+                <div class="pas_info mb10 p20" style="background:#f0f0f0;">
+                    <button class="btn btn-oranger f16 mr20 btnUser"> 添加用户组 </button>
+                    <em class="mr10 f14">|</em>
+                    <span class="f14">在该页面上可以查看管理所有策略模版。</span>
+                </div>
+                <div class="r_block p20">
+                    <div class="r_title">
+                        <h3 class="f14 h3_color h3_btm_line blue mr10">
+                            <a href="#">
+                                <i class="icons cy_ico mr5"></i>用户组
+                            </a>
+                        </h3>
+
+                        <div class="title_line"></div>
+                    </div>
+                    <div class="r_con p10_0">
+                        <div class="ser_bar mt10 mb10"><input type="text" placeholder="输入关键字查找.."><a class="btn btn-yellow2 btn-sm" href="#">查询</a></div>
+                        <table class="table_ob ">
+                            <thead>
+                            <tr>
+                                <th>接收组名称</th>
+                                <th>创建人</th>
+                                <th>组内成员</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>a</td>
+                                <td>liyang</td>
+                                <td><a class="userinfo" href="#">zm</a>，<a href="#">tangmingda</a>，<a href="#">liyang</a></td>
+                                <td><a class="mr10" href="#">修改</a><a class="mr10 btnDelete" href="#">删除</a></td>
+                            </tr>
+                            <tr>
+                                <td>a</td>
+                                <td>liyang</td>
+                                <td><a href="#">zm</a>，<a href="#">tangmingda</a>，<a href="#">liyang</a></td>
+                                <td><a class="mr10" href="#">修改</a><a class="mr10" href="#">删除</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--添加用户组弹层开始-->
+    <div class="m_message" id="divUser" style="display:none">
+        <div class="form_control p20">
+            <div class="form_block form_block-sm">
+                <label class="label-sm">名称</label>
+
+                <div class="specList"><input type="text" value="user"></div>
+            </div>
+            <div class="form_block form_block-sm">
+                <label class="label-sm">简介</label>
+
+                <div class="specList"><input type="text"></div>
+            </div>
+            <div class="form_block form_block-sm">
+                <label class="label-sm">成员</label>
+
+                <div class="specList"><input type="text"></div>
+            </div>
+            <div class="form_block form_block-sm mt10">
+                <label>&nbsp;</label>
+                <button class="btn btn-yellow f16 mt10"><i class="ico_check"></i>创 建
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--添加用户组弹层结束-->
+    <!--组内成员信息开始-->
+    <div class="m_message" id="divInfo" style="display:none">
+        <div class="form_control p20">
+            <div class="form_block form_block-xsm">
+                <label class="label-sm">邮箱：</label>
+                <div class="specList">
+                    <p class="f14" style="line-height: 26px;">mzhao@yihecloud.com</p>
+                </div>
+            </div>
+            <div class="form_block form_block-xsm">
+                <label class="label-sm">电话：</label>
+                <div class="specList">
+                    <p class="f14" style="line-height: 26px;">13401086059</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--组内成员信息结束-->
+</div>
+<script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="../assets/js/layer.js"></script>
+<script type="text/javascript" src="../assets/js/common.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".btnDelete").click(function () {
+            var txt = "确认删除用户user1";
+            common.confirm(txt, function(){
+
+            });
+        });
+        $(".btnUser").click(function(){
+            common.dialogDom("新增用户组",$("#divUser"),500,350,{
+
+            },null)
+        });
+        $(".userinfo").click(function(){
+            common.dialogDom("组内成员信息",$("#divInfo"),350,200,{
+
+            },null)
+        });
+    });
+</script>
+<script type="text/javascript">
+    function adjustHeight() {
+        var h = $(window).height();
+        var h2 = $(".head").height();
+        $(".plate").css("height", h - 99);
+        $(".left_sub_menu").css("height", h - h2);
+    }
+    $(document).ready(function () {
+                adjustHeight();
+            }
+    )
+    $(window).resize(function () {
+        adjustHeight();
+    });
+</script>
+
+</body>
+</html>

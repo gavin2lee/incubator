@@ -1,0 +1,1 @@
+alter table paasos.os_project_deploy add health_content mediumtext;

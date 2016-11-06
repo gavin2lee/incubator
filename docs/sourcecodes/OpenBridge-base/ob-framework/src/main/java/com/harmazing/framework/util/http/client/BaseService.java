@@ -1,0 +1,77 @@
+/*
+ * SonarQube
+ * Copyright (C) 2009-2016 SonarSource SA
+ * mailto:contact AT sonarsource DOT com
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+package com.harmazing.framework.util.http.client;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Strings.isNullOrEmpty;
+
+import java.io.InputStream;
+import java.util.List;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
+
+import com.harmazing.framework.util.http.MediaTypes;
+
+import com.google.common.base.Joiner;
+//import com.google.protobuf.Message;
+//import com.google.protobuf.Parser;
+
+public abstract class BaseService {
+
+  private static final Joiner MULTI_VALUES_JOINER = Joiner.on(",");
+
+  private final WsConnector wsConnector;
+  protected final String controller;
+
+  public BaseService(WsConnector wsConnector, String controllerPath) {
+    checkArgument(!isNullOrEmpty(controllerPath));
+    this.wsConnector = wsConnector;
+    this.controller = controllerPath;
+  }
+
+  /*protected <T extends Message> T call(BaseRequest request, Parser<T> parser) {
+    request.setMediaType(MediaTypes.PROTOBUF);
+    WsResponse response = call(request);
+    return convert(response, parser);
+  }*/
+
+  protected WsResponse call(WsRequest request) {
+    return wsConnector.call(request).failIfNotSuccessful();
+  }
+
+  /*public <T extends Message> T convert(WsResponse response, Parser<T> parser) {
+    try (InputStream byteStream = response.contentStream()) {
+      // HTTP header "Content-Type" is not verified. It may be different than protobuf.
+      return parser.parseFrom(byteStream);
+    } catch (Exception e) {
+      throw new IllegalStateException("Fail to parse protobuf response of " + response.requestUrl(), e);
+    }
+  }*/
+
+  protected String path(String action) {
+    return String.format("%s/%s", controller, action);
+  }
+
+  @CheckForNull
+  protected static String inlineMultipleParamValue(@Nullable List<String> values) {
+    return values == null ? null : MULTI_VALUES_JOINER.join(values);
+  }
+}

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.manager.dao.PaaSTenantMapper">
+    <resultMap type="PaasTenant" id="paasTenant">
+        <id property="tenantId" column="tenant_id"/>
+        <association property="deployCount" column="tenant_id" select="getDeployCount"/>
+        <association property="admin" column="admin_id" select="getAdmin"/>
+        <collection property="member" column="tenant_id" select="getMember"/>
+    </resultMap>
+	<select id="getMember" resultType="SysUser">
+		select su.user_id,su.user_name from sys_tenant_relation re left join sys_user su on 
+			re.user_id=su.user_id where tenant_id=#{tenant_id}
+	</select>
+	<select id="getAdmin" resultType="SysUser">
+		select su.user_id,su.user_name from sys_user su where user_id=#{admin_id}
+	</select>
+	<select id="getDeployCount" resultType="int">
+	    select count(*) from os_project_deploy where tenant_id=#{tenant_id}
+	</select>
+	<select id="getById" resultMap="paasTenant">
+	    select * from sys_tenant where tenant_id=#{id}
+	</select>
+	<select id="getPageData" resultMap="paasTenant">
+		select * from sys_tenant limit #{start},#{size}	    
+	</select>
+	<select id="getPageCount" resultType="int">
+		select count(*) from sys_tenant    
+	</select>
+	<select id="list" resultMap="paasTenant">
+	     select * from sys_tenant
+	</select>
+	<select id="getTenantByUserId" resultMap="paasTenant">
+	    select t.* from sys_tenant t left join sys_tenant_relation r on t.tenant_id=r.tenant_id
+	    	where r.user_id=#{userId} 
+	</select>
+	
+	<select id="getTenSysTenantCountByName" resultType="int">
+	    select count(*) from sys_tenant where tenant_name=#{tenantName}
+	    	<if test="tenantId!=null and tenantId!=''">
+	    		and tenant_id != #{tenantId}
+	    	</if>
+	</select>
+	
+	<select id="getTenantImageCount" resultType="int">
+		select count(*) from os_project_build pb , os_project p 
+		where pb.image_id is not null 
+		and pb.project_id=p.project_id 
+		and p.create_user in 
+		<foreach collection="users" item="user" open="(" close=")" separator=",">
+		    #{user.userId}
+		</foreach>
+	</select>
+	
+	<select id="findTenantItemList" resultType="java.util.Map">
+		select sl.id,sl.code,sl.parent_code as parentCode,sl.code_display as codeDisplay,sl.code_desc as codeDesc,sl.units,sl.default_value as defaultValue
+			 from sys_tenant_quota_item sl 
+		<where>
+			<if test="list!=null and list.size()>0">
+				sl.parent_code in 
+				<foreach collection="list" item="item" open="(" close=")" separator=",">
+				    #{item.code}
+				</foreach>
+			</if>
+			<if test="list==null or list.size()==0">
+				sl.parent_code is null
+			</if>
+		</where>
+	</select>
+	
+	<insert id="batchAddTenantQuota">
+		insert into sys_tenant_quota(id,tenant_id,category_type,sub_category_type,item_lookup_type,quota)values
+			<foreach collection="tenant.tenantQuotaList" item="item" index="index" separator=",">
+			    (#{item.id},#{tenant.tenantId},#{item.categoryType},#{item.subCategoryType},#{item.itemLookupType},#{item.quota})
+			</foreach>
+	</insert>
+	
+	<select id="getTenantQuotaListById" resultType="com.harmazing.openbridge.paasos.manager.model.PaaSTenantQuota">
+		select  sl.id,
+				sl.tenant_id as tenantTd,
+				sl.category_type as categoryType,
+				sl.sub_category_type as subCategoryType,
+				sl.item_lookup_type as itemLookupType,
+				sl.quota
+ 			FROM sys_tenant_quota sl where sl.tenant_id= #{id}
+	</select>
+	
+	<delete id="deleteTenantQuota">
+		delete from sys_tenant_quota  where  tenant_id = #{id}
+	</delete>
+	
+	<select id="getTenantQuotaInfo" resultType="java.util.Map">
+		select  sl.id,
+				sl.tenant_id as tenantId,
+				sl.category_type as categoryType,
+				sl.sub_category_type as subCategoryType,
+				sl.item_lookup_type as itemLookupType,
+				sl.quota
+ 			FROM sys_tenant_quota sl where sl.tenant_id= #{paramMap.tenantId}
+ 			<if test="paramMap.categoryType!=null and paramMap.categoryType!=''">
+ 				and sl.category_type = #{paramMap.categoryType}
+ 			</if>
+ 			<if test="paramMap.subCategoryType!=null and paramMap.subCategoryType!=''">
+ 				and sl.sub_category_type = #{paramMap.subCategoryType}
+ 			</if>
+ 			<if test="paramMap.itemLookupType!=null and paramMap.itemLookupType!=''">
+ 				and sl.item_lookup_type = #{paramMap.itemLookupType}
+ 			</if>
+	</select>
+	
+	<delete id="deleteTenantPreset">
+		delete from sys_tenant_preset  where  tenant_id = #{id}
+	</delete>
+	
+	<insert id="batchAddTenantPreset">
+		insert into sys_tenant_preset(id,tenant_id,preset_id)values
+			<foreach collection="tenant.presetList" item="item" index="index" separator=",">
+			    (#{item.id},#{tenant.tenantId},#{item.presetId})
+			</foreach>
+	</insert>
+	
+	<select id="getTenantPresetListById" resultType="com.harmazing.openbridge.paasos.manager.model.PaaSTenantPreset">
+		select  sl.id,
+				sl.tenant_id as tenantTd,
+				sl.preset_id as presetId,
+				op.app_name as appName
+		FROM sys_tenant_preset sl 
+			inner join os_preset_app op
+				on op.id = sl.preset_id
+ 			where sl.tenant_id= #{id}
+	</select>
+	
+	<select id="getDefaultQuotaInfo" resultType="java.util.Map">
+		SELECT
+				a. CODE AS categoryType,
+				b. CODE AS subCategoryType,
+				c. CODE AS itemLookupType,
+				c.default_value AS quota
+			FROM
+				sys_tenant_quota_item a
+			JOIN sys_tenant_quota_item b ON a. CODE = b.parent_code
+			JOIN sys_tenant_quota_item c ON c.parent_code = b. CODE
+			<where>
+				<if test="paramMap.categoryType!=null and paramMap.categoryType!=''">
+ 					and a.code = #{paramMap.categoryType}
+	 			</if>
+	 			<if test="paramMap.subCategoryType!=null and paramMap.subCategoryType!=''">
+	 				and b.code = #{paramMap.subCategoryType}
+	 			</if>
+	 			<if test="paramMap.itemLookupType!=null and paramMap.itemLookupType!=''">
+	 				and c.code = #{paramMap.itemLookupType}
+	 			</if>
+			</where>
+	</select>
+	
+</mapper>

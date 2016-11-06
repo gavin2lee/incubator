@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.project.dao.PaasProjectDeployEnvMapper">
+
+	<delete id="deleteByDeployId">
+		delete from os_project_deploy_env where deploy_id = #{param}
+	</delete>
+	
+	<insert id="batchSave"  parameterType="java.util.List" >
+		 insert into os_project_deploy_env (id,deploy_id,key_,value_,resource_id)   
+		 values
+		 <foreach collection="list"  item="item"  index="index" separator="," >  
+	        (#{item.id},#{item.deployId},#{item.key},#{item.value},#{item.resourceId})  
+	     </foreach>  
+	</insert>
+	
+	<select id="findByDeployId"  resultType="com.harmazing.openbridge.paas.deploy.model.PaasProjectDeployEnv">
+		select 
+		id id,
+		deploy_id deployId,
+		key_ `key`,
+		value_ `value`,
+		resource_id resourceId
+		from os_project_deploy_env where deploy_id = #{param}
+		order by resource_id asc
+	</select>
+	
+	
+</mapper>

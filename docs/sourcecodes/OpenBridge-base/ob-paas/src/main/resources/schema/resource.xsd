@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.harmazing.com/schema/resource"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:res="http://www.harmazing.com/schema/resource">
+
+	<element name="resource">
+		<complexType>
+			<sequence>
+				<element name="summary" maxOccurs="1" minOccurs="1">
+					<complexType mixed="true">
+						<attribute name="help" type="string"></attribute>
+						<attribute name="icon" type="string"></attribute>
+					</complexType>
+				</element>
+			</sequence>
+			<attribute name="id" type="string" use="required"></attribute>
+			<attribute name="name" type="string" use="required"></attribute>
+			<attribute name="config" type="string" use="required"></attribute>
+			<attribute name="bean" type="string" use="required"></attribute>
+			<attribute name="category">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="database"></enumeration>
+						<enumeration value="storage"></enumeration>
+						<enumeration value="cache"></enumeration>
+						<enumeration value="custom"></enumeration>
+						<enumeration value="mq"></enumeration>
+					</restriction>
+				</simpleType>
+			</attribute>
+		</complexType>
+	</element>
+</schema>

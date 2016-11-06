@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	<tlib-version>2.0</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<short-name>template</short-name>
+	<uri>http://www.harmazing.com/tags/template</uri>
+	<tag>
+		<name>block</name>
+		<tag-class>com.harmazing.framework.web.tablibs.template.BlockTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[区段名称]]></description>
+		</attribute>
+	</tag>
+	<tag>
+		<name>replace</name>
+		<tag-class>com.harmazing.framework.web.tablibs.template.ReplaceTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[区段名称]]></description>
+		</attribute>
+	</tag>
+	<tag>
+		<name>include</name>
+		<tag-class>com.harmazing.framework.web.tablibs.template.IncludeTag</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<attribute>
+			<name>file</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[模版JSP地址，file和ref必须设置其中一个参数]]></description>
+		</attribute>
+	</tag>
+	<tag>
+		<name>super</name>
+		<tag-class>com.harmazing.framework.web.tablibs.template.SuperTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+</taglib>

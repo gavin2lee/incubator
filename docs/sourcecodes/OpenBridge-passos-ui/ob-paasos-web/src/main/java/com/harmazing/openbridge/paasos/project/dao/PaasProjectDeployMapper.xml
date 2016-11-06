@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.project.dao.PaasProjectDeployMapper">
+	<sql id="field">
+			pd.`deploy_id`  deployId,
+	    pd.`project_id` projectId,
+	    pd.`deploy_name`  deployName,
+	    pd.`description`  description,
+	    pd.`tenant_id`  tenantId,
+	    pd.`env_type`  envType,
+	    pd.`create_user` createUser,
+	    pd.`create_time` createTime,
+	    pd.`service_ip`  serviceIp,
+	    pd.`public_ip`  publicIp,
+	    pd.`replicas`  replicas,
+	    pd.`restart_policy`  restartPolicy,
+	    pd.`modify_user`  modifyUser,
+	    pd.`modify_time`  modifyTime,
+	    pd.`cpu_`  cpu,
+	    pd.`memory_`  memory,
+	    pd.`compute_config`  computeConfig,
+	    pd.`build_id`  buildId,
+	    pd.`status`  status,
+	    pd.`delete_status`  deleteStatus,
+	    pd.`deploy_code` deployCode,
+	    pd.`image_id` imageId,
+	    pd.`resource_config` resourceConfig,
+	    pd.`env_id` envId,
+	    pd.`extra_data` extraData,
+	    pd.`extra_key` extraKey,
+	    pd.`deploy_time` deployTime,
+	    pd.`health_content` healthContent
+	</sql>
+	
+	<select id="findById"  resultType="com.harmazing.openbridge.paas.deploy.model.PaasProjectDeploy">
+		select 
+		<include refid="field"></include>
+		from os_project_deploy pd
+		where pd.deploy_id=#{param}
+	</select>
+	
+	<select id="findDeployByEntity"  
+		resultType="com.harmazing.openbridge.paas.deploy.model.PaasProjectDeploy"
+		parameterType="com.harmazing.openbridge.paas.deploy.model.PaasProjectDeploy">
+		select 
+		<include refid="field"></include>,
+		pe.env_name envName
+		from os_project_deploy pd left outer join os_project_env pe on pd.env_id = pe.env_id
+		where 1=1
+		<if test="deployId!=null and deployId!=''">
+			and pd.deploy_id=#{deployId}
+		</if>
+		<if test="status!=null and status!=''">
+			and pd.status=#{status}
+		</if>
+		<if test="projectId!=null and projectId!=''">
+			and pd.project_id=#{projectId}
+		</if>
+		<if test="buildId!=null and buildId!=''">
+			and pd.build_id=#{buildId}
+		</if>
+		<if test="envId!=null and envId!=''">
+			and pd.env_id=#{envId}
+		</if>
+		order by create_time desc
+	</select>
+	
+	<insert id="create"  parameterType="com.harmazing.openbridge.paas.deploy.model.PaasProjectDeploy">
+	INSERT INTO  `os_project_deploy`     (`deploy_id`,   `project_id` ,   `deploy_name`,   `description`,   `tenant_id`,   `env_type`,   `create_user`,   
+			`create_time`,   `service_ip`,   `public_ip`,      `replicas`,   `restart_policy`,   `modify_user`,   `modify_time`,  
+			 `cpu_`,   `memory_`,       `compute_config`,   `build_id`,   `status`,   `delete_status`,`deploy_code`,`image_id`,resource_config,`env_id`,
+			 `extra_key`,`extra_data`,`health_content`)      
+	VALUES     
+ 		(#{deployId},   #{projectId},   #{deployName},   #{description},   #{tenantId},   #{envType},   #{createUser},   
+ 		 	#{createTime},   #{serviceIp},   #{publicIp},     #{replicas},   #{restartPolicy},   #{modifyUser},   #{modifyTime},   
+ 		 	#{cpu},   #{memory},        #{computeConfig},   #{buildId},   #{status},   #{deleteStatus} ,#{deployCode},#{imageId},#{resourceConfig},#{envId},
+ 		 	#{extraKey},#{extraData},#{healthContent})
+ 
+	</insert>
+	
+	<update id="update" parameterType="com.harmazing.openbridge.paas.deploy.model.PaasProjectDeploy">
+		update os_project_deploy
+		SET
+		`deploy_name` = #{deployName},
+		`description` = #{description},
+		`env_type` = #{envType},
+		`public_ip` = #{publicIp},
+		`replicas` = #{replicas},
+		`restart_policy` = #{restartPolicy},
+		`modify_user` = #{modifyUser},
+		`modify_time` = #{modifyTime},
+		`cpu_` = #{cpu},
+		`memory_` = #{memory},
+		`compute_config` = #{computeConfig},
+		`build_id` = #{buildId},
+		`image_id` =#{imageId},
+		`health_content`=#{healthContent}
+		where deploy_id = #{deployId}
+	</update>
+	
+	<select id="pageCount"  parameterType="java.util.Map"  resultType="int">
+		select count(*) 
+		from os_project_deploy deploy
+		where 
+		1=1
+		<if test="projectId!=null and projectId!=''">
+				and deploy.project_id=#{projectId}
+			</if>
+			<if test="envId !=null and envId !=''">
+				and deploy.env_id =#{envId}
+			</if>
+			<if test="extraKey !=null and extraKey != '' ">
+				and deploy.extra_key =#{extraKey}
+			</if>
+	</select>
+	
+	<select id="page"  parameterType="java.util.Map"  resultType="java.util.Map">
+		select 
+		  deploy.deploy_id,
+			deploy.deploy_name,
+			deploy.deploy_code,
+			deploy.status,
+			deploy.service_ip,
+			deploy.public_ip,
+			deploy.delete_status,
+			deploy.owner_cluster,
+			deploy.env_type,
+			deploy.compute_config,
+			deploy.replicas,
+			build.build_name,
+			build.build_tag,
+			deploy.project_id,
+			oi.image_name,
+			deploy.extra_data extra_data
+		from os_project_deploy deploy 
+			left outer join os_project_build build on build.build_id = deploy.build_id 
+			inner  join os_image oi on oi.image_id = deploy.image_id
+		where 
+		1=1
+			 <if test="projectId!=null and projectId!=''">
+				and deploy.project_id=#{projectId}
+			</if>
+			<if test="envId !=null and envId !=''">
+				and deploy.env_id =#{envId}
+			</if>
+			<if test="extraKey !=null and extraKey != '' ">
+				and deploy.extra_key =#{extraKey}
+			</if>
+			order by deploy.create_time desc
+			limit #{start},#{size}
+	</select>
+	
+	<select id="getMaxServiceIp"  resultType="java.lang.String">
+		select case when max(service_ip) is null then '0' else INET_NTOA(max(INET_ATON(service_ip))) end serviceIp  from os_project_deploy
+	</select>
+	
+	<select id="getMaxPublicIp"  resultType="java.lang.String">
+		select case when max(public_ip) is null then '0' else INET_NTOA(max(INET_ATON(public_ip))) end publicIp  from os_project_deploy where public_ip like #{param}
+	</select>
+	
+	<update id="updateStatus"  parameterType="java.util.Map">
+		update os_project_deploy
+		SET status = #{status}
+		<if test="deployTime!=null and deployTime!=''">
+			,deploy_time = ${deployTime}
+		</if>
+		where deploy_id = #{deployId}
+	</update>
+	
+	<select id="getCountrun" parameterType="java.util.Map" resultType="int">
+		select count(*)
+		from os_project_deploy a,os_project op
+		where  op.tenant_id = #{tenantId}
+		and a.project_id=op.project_id
+		and a.status='10'
+	</select>
+	
+	<select id="getCountstop" parameterType="java.util.Map" resultType="int">
+		select count(*)
+		from os_project_deploy a,os_project op
+		where  op.tenant_id = #{tenantId}
+		and a.project_id=op.project_id
+		and a.status&lt;&gt;'10'
+        and a.delete_status is null
+	</select>
+	 <select id="getTopInstance"  parameterType="java.util.Map"  resultType="java.util.Map">
+	    select sum(opd.`value`) as 'value',op.business_id as 'key',op.project_name as keyName from (SELECT *,'1' as 'value' from os_project_deploy) opd,os_project op
+          where opd.project_id=op.project_id
+          and opd.`status`=10
+          and op.project_type='app'
+          group by op.business_id,op.project_name
+          LIMIT #{top}
+	</select> 
+	
+	<select id="getAlreadyUsed" parameterType="java.util.Map"  resultType="com.harmazing.openbridge.paasos.manager.model.vo.ResourceQuota">
+		SELECT 
+    SUM(pd.cpu_ * pd.replicas) cpu, SUM(pd.memory_ * pd.replicas) memory
+		FROM
+		    os_project_deploy pd,
+		    os_project op
+		WHERE
+		    pd.project_id = op.project_id
+		        AND op.tenant_id = #{tenantId}
+		        <if test="deployId!=null and deployId!=''">
+		        AND pd.deploy_id != #{deployId}
+		        </if>
+	</select>
+	
+	<select id="getAllDeployCount"  parameterType="java.util.Map"  resultType="int">
+		select count(*) 
+		from os_project_deploy deploy,os_project op,os_project_env pe
+		where 
+		deploy.project_id=op.project_id and deploy.env_id = pe.env_id
+		   <if test="projectType !=null and projectType !=''">
+				and op.project_type =#{projectType}
+			</if>
+			<if test="tenantId !=null and tenantId !=''">
+				and deploy.tenant_id =#{tenantId}
+			</if>
+			<if test="envType !=null and envType !=''">
+				and deploy.env_type =#{envType}
+			</if>
+			<choose>
+			<when test="status ==10 ">
+				and deploy.status =#{status}
+			</when>
+			<when test="status ==1 ">
+				and deploy.status &lt;&gt;'10'
+			</when>
+			</choose>
+			<choose>
+				<when test="envMark!=null and envMark==''">
+					and pe.env_mark is null
+				</when>
+				<when test="envDefault!=null and envDefault==1">
+					and (
+					pe.env_mark = #{envMark}
+					or pe.env_mark is null
+					)
+				</when>
+				<when test="envDefault==null and envMark!=null">
+					and pe.env_mark = #{envMark}
+				</when>
+			</choose>
+			<if test="keyword != null">
+				AND (op.project_name like concat(concat('%',#{keyword}),'%') or deploy.deploy_name like concat(concat('%',#{keyword}),'%') or op.project_code like concat(concat('%',#{keyword}),'%'))
+			</if>
+			<if test="userId != null and userId !=''">
+			and  deploy.create_user=#{userId}
+			</if>
+	</select>
+	
+	<select id="getAllDeploy"  parameterType="java.util.Map"  resultType="java.util.Map">
+		select op.project_type,
+		         op.project_name,
+		         st.tenant_name,
+		         su.user_name,
+		         pe.env_name,
+		         pe.env_mark,
+		     	 deploy.*
+		from os_project_deploy deploy ,os_project op,sys_user su,sys_tenant st ,os_project_env pe
+		where 
+		deploy.project_id=op.project_id and deploy.env_id = pe.env_id
+        and deploy.create_user=su.user_id
+        and deploy.tenant_id=st.tenant_id
+           <if test="projectType !=null and projectType !=''">
+				and op.project_type =#{projectType}
+			</if>
+			<if test="tenantId !=null and tenantId !=''">
+				and deploy.tenant_id =#{tenantId}
+			</if>
+			<if test="envType !=null and envType !=''">
+				and deploy.env_type =#{envType}
+			</if>
+			<choose>
+			<when test="status ==10 ">
+				and deploy.status =#{status}
+			</when>
+			<when test="status ==1 ">
+				and deploy.status &lt;&gt;'10'
+			</when>
+			</choose>
+			<choose>
+				<when test="envMark!=null and envMark==''">
+					and pe.env_mark is null
+				</when>
+				<when test="envDefault!=null and envDefault==1">
+					and (
+					pe.env_mark = #{envMark}
+					or pe.env_mark is null
+					)
+				</when>
+				<when test="envDefault==null and envMark!=null">
+					and pe.env_mark = #{envMark}
+				</when>
+			</choose>
+			<if test="keyword != null and keyword !=''">
+				AND (op.project_name like concat(concat('%',#{keyword}),'%') or deploy.deploy_name like concat(concat('%',#{keyword}),'%')  or op.project_code like concat(concat('%',#{keyword}),'%'))
+			</if>
+			<if test="userId != null and userId !=''">
+			and  deploy.create_user=#{userId}
+			</if>
+			order by deploy.project_id desc,deploy.deploy_id desc,pe.env_id desc,deploy.create_time desc
+			limit #{start},#{size}
+	</select>
+	
+	
+	
+</mapper>

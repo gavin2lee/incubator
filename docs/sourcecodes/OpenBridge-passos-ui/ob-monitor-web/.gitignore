@@ -1,0 +1,10 @@
+/target/
+/.settings/
+/.classpath
+/logs/
+/.project
+*.iml
+*.log
+*.log*
+*.tern-project
+*.DS_Store

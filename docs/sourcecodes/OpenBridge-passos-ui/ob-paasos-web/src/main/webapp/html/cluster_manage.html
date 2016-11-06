@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>passos——集群管理</title>
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../assets/css/layout.css"/>
+    <link rel="stylesheet" href="../assets/css/app_deployment.css"/>
+    <link rel="stylesheet" href="../assets/css/welcom.css"/>
+    <link rel="stylesheet" href="../assets/css/style_passos.css"/>
+</head>
+
+<body>
+<!------passos头部------->
+<div class="app_top pas_top">
+    <div class="head">
+        <div class="app_logo sub_logo">
+            <a href="index_pas.html"><img src="../assets/images/logo_pas.png" width="200" height="62"/></a>
+        </div>
+        <div class="nav_tips">
+            <div class="news app_number">
+                <a href="proiect_list.html">
+                    <div class="news_img">
+                        <i class="icons item_ico"></i>
+                    </div>
+                    <div class="title_name">项目管理</div>
+                </a>
+            </div>
+            <div class="news app_number">
+                <a href="resource_service.html">
+                    <div class="news_img">
+                        <i class="icons dashboard_ico"></i>
+                    </div>
+                    <div class="title_name">资源服务</div>
+                </a>
+            </div>
+            <div class="news">
+                <a class="active" href="resource_plan.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">资源管理</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="pre-applications.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">预置应用</div>
+                </a>
+            </div>
+        </div>
+        <div class="app_user">
+            <div class="user_hits">
+                <div class="nav_user">
+                    <ul>
+                        <li class="menu2" onMouseOver="this.className='menu1'" onMouseOut="this.className='menu2'">
+                            <i class="icons user_ico"></i>
+
+                            <p class="user_name">admin</p>
+                            <i class="icons arrow-btm"></i>
+
+                            <div class="list">
+                                <a href="#">管理</a><br/>
+                                <a href="#">我开发的服务</a><br/>
+                                <a href="#">我消费的服务</a><br/>
+                                <a href="#">退出</a><br/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ob_sub_pro_btn">
+            <a href="javascript:$.pageslide({ direction: 'left', href: 'pro_list.html' })">
+                <i class="icons ob_sub_pro"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!------passos内容------->
+<div class="app_content">
+    <div class="content_frame">
+        <div class="left_sub_menu left_sub_menu_pas">
+            <ul>
+                <li><a href="resource_plan.html">
+                    <i class="left_menu_ico l_ico00"></i>组织管理</a></li>
+                <li><a class="select" href="cluster_manage.html">
+                    <i class="left_menu_ico l_ico01"></i>集群管理</a></li>
+                <li><a href="mirrorRepo.html">
+                    <i class="left_menu_ico l_ico02"></i>基础镜像</a></li>
+            </ul>
+        </div>
+        <div class="app_name">
+            <a href="resource_plan.html"><i class="icons go_back_ico"></i></a>
+
+            <p class="app_a">资源分配</p>
+            <em>&gt;</em>
+
+            <p class="app_a">集群管理</p>
+        </div>
+        <div class="plate">
+            <div class="project_r">
+                <div class="pas_info mb10 p20" style="background:#f0f0f0;">
+                    <a href="add_cluster.html" class="btn btn-oranger f16 mr20"><em>+</em> 添加集群</a>
+                    <em class="mr10 f14">|</em>
+                    <span class="f14">在该页面上可以管理PAASOS管理的多个集群信息，在每个集群下添加、配置、卸载节点。<a href="#" class="btn btn-link yellow">如何创建集群？
+                        &gt;</a></span>
+                </div>
+                <!--项目概述开始-->
+                <div class="r_block p20">
+                    <div class="r_title">
+                        <h3 class="f14 h3_color h3_btm_line blue">
+                            <a href="#">
+                                <i class="icons ico_title_list mr5"></i>集群管理
+                            </a>
+                        </h3>
+                        <div class="title_line"></div>
+                    </div>
+                    <div class="r_con p10_0">
+                        <div class="details_nr">
+                            <div class="mirro_list">
+                                <div class="cluster_block_three text-center active">
+                                    <div class="cluster-header">
+                                        <h3 class="cluster_name">dev</h3>
+                                        <a href="cluster_manage_details.html" class="pull-right btn btn-yellow btn-sm">管理</a>
+                                    </div>
+                                    <div class="cluster-content">
+                                        <dl>
+                                            <dt><a href="#" class="txt-bright link-line">4</a></dt>
+                                            <dd>主机数</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt><a href="#" class="txt-safe link-line">3</a></dt>
+                                            <dd>实例数</dd>
+                                        </dl>
+                                    </div>
+                                    <a  class="btn btn-oranger f16 addhost" href="add_host.html">添加主机</a>
+                                </div>
+                                <div class="cluster_block_three text-center active">
+                                    <div class="cluster-header">
+                                        <h3 class="cluster_name">dev</h3>
+                                        <a href="#" class="pull-right btn btn-yellow btn-sm">管理</a>
+                                    </div>
+                                    <div class="cluster-content">
+                                        <dl>
+                                            <dt><a href="#" class="txt-bright link-line">2</a></dt>
+                                            <dd>主机数</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt><a href="#" class="txt-safe link-line">1</a></dt>
+                                            <dd>实例数</dd>
+                                        </dl>
+                                    </div>
+                                    <a  class="btn btn-oranger f16 addhost" href="add_host.html">添加主机</a>
+                                </div>
+                                <div class="cluster_block_three text-center active">
+                                    <div class="cluster-header">
+                                        <h3 class="cluster_name">dev</h3>
+                                        <a href="#" class="pull-right btn btn-yellow btn-sm">管理</a>
+                                    </div>
+                                    <div class="cluster-content">
+                                        <dl>
+                                            <dt><a href="#" class="txt-bright link-line">2</a></dt>
+                                            <dd>主机数</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt><a href="#" class="txt-safe link-line">1</a></dt>
+                                            <dd>实例数</dd>
+                                        </dl>
+                                    </div>
+                                    <a  class="btn btn-oranger f16 addhost" href="add_host.html">添加主机</a>
+                                </div>
+                            </div>
+                            <div id="apps" class="table_page">
+                                <div class="pull-right pages_mun">
+                                    <ul>
+                                        <li class="active"><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                    </ul>
+                                </div>
+                                <div class="pull-left pages_info"><span> 页码 1/2 共 13</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--项目概述结束-->
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    function adjustHeight() {
+        var h = $(window).height();
+        var h2 = $(".head").height();
+        $(".plate").css("height", h - 99);
+        $(".left_sub_menu").css("height", h - h2);
+    }
+    $(document).ready(function () {
+                adjustHeight();
+            }
+    )
+    $(window).resize(function () {
+        adjustHeight();
+    });
+</script>
+
+</body>
+</html>

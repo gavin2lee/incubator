@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>passos——创建预置应用</title>
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../assets/css/layout.css"/>
+    <link rel="stylesheet" href="../assets/css/app_deployment.css"/>
+    <link href="../assets/css/jquery.spinner.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="../assets/css/welcom.css"/>
+    <link rel="stylesheet" href="../assets/css/style_passos.css"/>
+</head>
+
+<body>
+<!------passos头部------->
+<div class="app_top pas_top">
+    <div class="head">
+        <div class="app_logo sub_logo">
+            <a href="index_pas.html"><img src="../assets/images/logo_pas.png" width="200" height="62"/></a>
+        </div>
+        <div class="nav_tips">
+            <div class="news app_number">
+                <a class="active" href="proiect_list.html">
+                    <div class="news_img">
+                        <i class="icons item_ico"></i>
+                    </div>
+                    <div class="title_name">应用管理</div>
+                </a>
+            </div>
+            <div class="news app_number">
+                <a href="resource_service.html">
+                    <div class="news_img">
+                        <i class="icons dashboard_ico"></i>
+                    </div>
+                    <div class="title_name">组件服务</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="resource_plan.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">资源管理</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="pre-applicationsnew.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">应用市场</div>
+                </a>
+            </div>
+        </div>
+        <div class="app_user">
+            <div class="user_hits">
+                <div class="nav_user">
+                    <ul>
+                        <li class="menu2" onMouseOver="this.className='menu1'" onMouseOut="this.className='menu2'">
+                            <i class="icons user_ico"></i>
+
+                            <p class="user_name">admin</p>
+                            <i class="icons arrow-btm"></i>
+
+                            <div class="list">
+                                <a href="#">管理</a><br/>
+                                <a href="#">我开发的服务</a><br/>
+                                <a href="#">我消费的服务</a><br/>
+                                <a href="#">退出</a><br/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ob_sub_pro_btn">
+            <a href="javascript:$.pageslide({ direction: 'left', href: 'pro_list.html' })">
+                <i class="icons ob_sub_pro"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!------passos内容------->
+<div class="app_content">
+    <div class="content_frame">
+        <div class="left_sub_menu left_sub_menu_pas">
+            <ul>
+                <li><a class="select" href="pre-applicationsnew.html">
+                    <i class="left_menu_ico l_ico00"></i>预置应用</a></li>
+                <li><a href="#">
+                    <i class="left_menu_ico l_ico01"></i>企业应用</a></li>
+                <li><a href="#">
+                    <i class="left_menu_ico l_ico02"></i>已安装应用</a></li>
+            </ul>
+        </div>
+        <div class="app_name">
+            <a href="pre-applicationsnew.html"><i class="icons go_back_ico"></i></a>
+
+            <p class="app_a">应用市场</p>
+            <em>&gt;</em>
+
+            <p class="app_a"><a href="pre-applicationsnew.html">预置应用</a></p>
+            <em>&gt;</em>
+
+            <p class="app_a">新增预置应用</p>
+        </div>
+        <div class="plate">
+            <div class="project_r">
+                <div class="r_block p20">
+                    <div class="r_block">
+                        <div class="r_title">
+                            <h3 class="f14 h3_color h3_btm_line"><i class="icons add_ico_blue mr5"></i>上传预置应用</h3>
+                            <div class="title_line"></div>
+                        </div>
+                        <div class="r_con p10_0">
+                            <div class="form_control p20">
+                                <div class="form_block">
+                                    <label>应用图标</label>
+                                    <div class="specList">
+                                        <input type="text"><em>*</em>
+                                    </div>
+                                </div>
+                                <div class="form_block">
+                                    <label>应用名称</label>
+                                    <div class="specList">
+                                        <input type="text"><em>*</em>
+                                    </div>
+                                </div>
+                                <div class="form_block">
+                                    <label>版本</label>
+                                    <div class="specList">
+                                        <table class="table_creat" style="width: 70%; min-width: 500px;">
+                                            <tr>
+                                                <th>版本号</th>
+                                                <th>创建时间</th>
+                                                <th><a href="pass_creat_mirroversion.html"><em class="f14 btn btn-yellow btn_sm">+</em></a></th>
+                                            </tr>
+                                            <tr>
+                                                <td>2.0</td>
+                                                <td>2016-08-05</td>
+                                                <td><a class="mr10" href="#">删除</a><a href="#">修改</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2.0</td>
+                                                <td>2016-08-05</td>
+                                                <td><a class="mr10" href="#">删除</a><a href="#">修改</a></td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="form_block">
+                                    <label>应用描述</label>
+                                    <textarea rows="3" cols="60"></textarea>
+                                </div>
+                                <div class="form_block">
+                                    <label>应用说明</label>
+                                    <textarea rows="3" cols="60"></textarea>
+                                </div>
+                                <div class="form_block mt10">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-default btn-yellow f16  mt10"><i class="ico_check"></i>创 建</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--创建镜像结束-->
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    function adjustHeight() {
+        var h = $(window).height();
+        var h2 = $(".head").height();
+        $(".plate").css("height", h - 99);
+        $(".left_sub_menu").css("height", h - h2);
+    }
+    $(document).ready(function () {
+                adjustHeight();
+            }
+    )
+    $(window).resize(function () {
+        adjustHeight();
+    });
+</script>
+<script type="text/javascript" src="../assets/js/jquery.spinner.js"></script>
+<script type="text/javascript">
+    $('.spinnerExample').spinner({});
+</script>
+</body>
+</html>

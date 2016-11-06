@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.project.dao.ApiGuideMapper">
+	
+	<select id="getDepenciesApiInfoList" resultType="com.harmazing.openbridge.project.vo.ApiVersionProtocol">
+		SELECT
+				pro.protocol_type AS protocolType,
+				pro.protocol_api AS protocolApi,
+				pro.protocol_name AS protocolName,
+				ms.project_name AS projectName,
+				ms.project_package AS projectPackage,
+				ms.service_public AS servicePublic,
+				ms.s_protocol AS sprotocol
+			FROM
+				mod_service_version_protocol pro
+			INNER JOIN mod_service_version sv ON sv.version_id = pro.version_id
+			INNER JOIN mod_service ms ON ms.service_id = sv.service_id
+			<where>
+				<if test="type=='app'">
+					pro.version_id IN (
+						SELECT
+								api.service_version_id
+							FROM
+								mod_app_version_api api
+							WHERE
+								api.version_id = #{versionId}
+					)
+				</if>
+				<if test="type=='api'">
+					sv.version_id  = #{versionId}
+				</if>
+			</where>
+	</select>
+	
+</mapper>

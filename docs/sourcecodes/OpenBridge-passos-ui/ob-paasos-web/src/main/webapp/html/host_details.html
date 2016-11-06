@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>passos——项目管理详情</title>
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../assets/css/layout.css"/>
+    <link rel="stylesheet" href="../assets/css/app_deployment.css"/>
+    <link rel="stylesheet" href="../assets/css/welcom.css"/>
+    <link rel="stylesheet" href="../assets/css/style_passos.css"/>
+</head>
+
+<body>
+<!------passos头部------->
+<div class="app_top pas_top">
+    <div class="head">
+        <div class="app_logo sub_logo">
+            <a href="index_pas.html"><img src="../assets/images/logo_pas.png" width="200" height="62"/></a>
+        </div>
+        <div class="nav_tips">
+            <div class="news app_number">
+                <a class="active" href="pass_index.html">
+                    <div class="news_img">
+                        <i class="icons item_ico"></i>
+                    </div>
+                    <div class="title_name">项目管理</div>
+                </a>
+            </div>
+            <div class="news app_number">
+                <a href="#">
+                    <div class="news_img">
+                        <i class="icons dashboard_ico"></i>
+                    </div>
+                    <div class="title_name">资源服务</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="resource_plan.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">资源管理</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="pre-applications.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">预置应用</div>
+                </a>
+            </div>
+        </div>
+        <div class="app_user">
+            <div class="user_hits">
+                <div class="nav_user">
+                    <ul>
+                        <li class="menu2" onMouseOver="this.className='menu1'" onMouseOut="this.className='menu2'">
+                            <i class="icons user_ico"></i>
+
+                            <p class="user_name">admin</p>
+                            <i class="icons arrow-btm"></i>
+
+                            <div class="list">
+                                <a href="#">管理</a><br/>
+                                <a href="#">我开发的服务</a><br/>
+                                <a href="#">我消费的服务</a><br/>
+                                <a href="#">退出</a><br/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ob_sub_pro_btn">
+            <a href="javascript:$.pageslide({ direction: 'left', href: 'pro_list.html' })">
+                <i class="icons ob_sub_pro"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!------passos内容------->
+<div class="app_content">
+    <div class="content_frame">
+        <div class="left_sub_menu left_sub_menu_pas">
+            <ul>
+                <li><a href="resource_plan.html">
+                    <i class="left_menu_ico l_ico_zzgl"></i>组织管理</a></li>
+                <li><a class="select" href="cluster_manage_details.html">
+                    <i class="left_menu_ico l_ico_jdgl"></i>节点管理</a></li>
+                <li><a href="mirrorRepo.html">
+                    <i class="left_menu_ico l_ico_jcjx"></i>基础镜像</a></li>
+            </ul>
+        </div>
+        <div class="app_name">
+            <a href="resource_plan.html"><i class="icons go_back_ico"></i></a>
+
+            <p class="app_a">资源分配</p>
+            <em>&gt;</em>
+
+            <p class="app_a"><a href="cluster_manage_details.html">节点管理</a></p>
+            <em>&gt;</em>
+
+            <p class="app_a">节点详情</p>
+        </div>
+        <div class="plate">
+            <div class="project_r">
+                <div class="pas_info mb10 p20" style="background:#f0f0f0;">
+                    <a href="pass_creat_yy.html" class="btn btn-default btn-oranger f16 mr20"> 编辑 </a>
+                    <em class="mr10 f14">|</em>
+                    <span class="f14">在该页面您可以部署容器应用，查看已经部署的应用列表，启动、停止、配置应用参数。<a href="#" class="btn btn-link yellow">如何创建应用？
+                        &gt;</a></span>
+                </div>
+                <!--项目概述开始-->
+                <div class="r_block p20">
+                    <div class="r_title">
+                        <h3 class="f14 h3_color h3_btm_line blue">
+                            <a href="#">
+                                <i class="icons ico_title_list mr5"></i>节点信息
+                            </a>
+                        </h3>
+
+                        <div class="title_line"></div>
+                    </div>
+                    <!--来源1-->
+                    <div class="r_con p10_0">
+                        <div class="details_nr">
+                            <div class="form_control p20 form_details">
+                                <div class="form_block">
+                                    <label>主机名称</label>
+
+                                    <p class="form_text">node01</p>
+                                </div>
+
+                                <div class="form_block">
+                                    <label>操作系统</label>
+
+                                    <p class="form_text">centos 7.1</p>
+                                </div>
+                                <div class="form_block">
+                                    <label>所属环境</label>
+
+                                    <p class="form_text">
+                                        测试环境
+                                    </p>
+                                </div>
+                                <div class="form_block">
+                                    <label>状态</label>
+
+                                    <p class="form_text">在线</p>
+                                </div>
+                                <div class="form_block">
+                                    <label>IP</label>
+
+                                    <p class="form_text">192.168.1.63</p>
+                                </div>
+                                <div class="form_block">
+                                    <label>CPU总量</label>
+
+                                    <p class="form_text"> 1个 </p>
+                                </div>
+                                <div class="form_block">
+                                    <label>内存总量</label>
+
+                                    <p class="form_text">1840.34 MB</p>
+                                </div>
+                                <div class="form_block">
+                                    <label>运行实例</label>
+
+                                    <p class="form_text"> 3个 </p>
+                                </div>
+                                <div class="form_block">
+                                    <label>关联租户</label>
+
+                                    <p class="form_text">租户1、租户2、租户3、租户4</p>
+                                </div>
+                            </div>
+                            <!--<div class="cluster_block_three active">-->
+                                <!--<div class="cluster-header">-->
+                                    <!--<h3 class="cluster_name">主机名称</h3>-->
+                                        <!--<span class="pull-right" style="margin-top: 8px;">-->
+                                            <!--<a href="#" class="btn btn-yellow btn_sm f12">编辑</a>-->
+                                        <!--</span>-->
+                                <!--</div>-->
+                                <!--<div class="cluster-content" style="height: auto;">-->
+                                    <!--<dl>-->
+                                        <!--<dt><span href="#" class="txt-bright">1</span></dt>-->
+                                        <!--<dd>CPU总量</dd>-->
+                                    <!--</dl>-->
+                                    <!--<dl>-->
+                                        <!--<dt><span href="#" class="txt-safe">3</span></dt>-->
+                                        <!--<dd>运行实例</dd>-->
+                                    <!--</dl>-->
+                                    <!--<dl>-->
+                                        <!--<dt><span href="#" class="txt-safe">1840.34 MB</span></dt>-->
+                                        <!--<dd>内存总量</dd>-->
+                                    <!--</dl>-->
+                                <!--</div>-->
+                                <!--<div class="cluster-content cluster-content2">-->
+                                    <!--<ul>-->
+                                        <!--<li>-->
+                                            <!--<label>操作系统</label>-->
+                                            <!--<p>centos 7.1</p>-->
+                                        <!--</li>-->
+                                        <!--<li>-->
+                                            <!--<label>所属环境</label>-->
+                                            <!--<p>测试环境</p>-->
+                                        <!--</li>-->
+                                        <!--<li>-->
+                                            <!--<label>IP</label>-->
+                                            <!--<p>192.168.1.63</p>-->
+                                        <!--</li>-->
+                                        <!--<li>-->
+                                            <!--<label>状态</label>-->
+                                            <!--<p><span class="zt_span"><i class="pas_ico zt_ico done_ico mt5"></i>在线</span></p>-->
+                                        <!--</li>-->
+                                        <!--<li>-->
+                                            <!--<label>关联租户</label>-->
+                                            <!--<p>-->
+                                                <!--&lt;!&ndash;<span class="badge">api</span>&ndash;&gt;-->
+                                               <!--租户1 、租户2、租户3、租户4-->
+                                            <!--</p>-->
+                                        <!--</li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                    <!--来源1结束-->
+                </div>
+                <!--项目概述结束-->
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    function adjustHeight() {
+        var h = $(window).height();
+        var h2 = $(".head").height();
+        $(".plate").css("height", h - 99);
+        $(".left_sub_menu").css("height", h - h2);
+    }
+    $(document).ready(function () {
+                adjustHeight();
+            }
+    )
+    $(window).resize(function () {
+        adjustHeight();
+    });
+</script>
+
+</body>
+</html>

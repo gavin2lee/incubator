@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<http>
+	<module prefix="/app">
+		<!-- 登录用户都可以访问 -->
+		<url pattern="/index.do*"></url>
+		<url pattern="/list.do*"></url>
+		
+		<url pattern="/store/**"></url>
+		<url pattern="/dashboard/**"></url>
+		
+		
+		<url pattern="/create.do*" validator="functionValidator(functionId=app.base.create)"></url>
+		<url pattern="/save.do*" validator="functionValidator(functionId=app.base.create)"></url>
+		
+		<!-- 只有管理员 或 (创建者，负责人) 能修改项目概述信息 -->
+		<url pattern="/edit.do*" validator="functionValidator(functionId=app.base.edit)|appAccessRight(appId=${request.param.appId},leader=true)"></url>
+		<url pattern="/update.do*" validator="functionValidator(functionId=app.base.edit)|appAccessRight(appId=${request.param.appId},leader=true)"></url> 
+		
+		<!-- 项目信息 -->
+		<url pattern="/project/**" validator="functionValidator(functionId=app.project.manage)|appAccessRight(appId=${request.param.appId})"></url>
+		<!-- 开发编译 -->
+		<url pattern="/dev/**" validator="functionValidator(functionId=app.dev.manage)|appAccessRight(appId=${request.param.appId})"></url>
+		<!-- 环境部署 -->
+		<url pattern="/env/**" validator="functionValidator(functionId=app.env.manage)|appAccessRight(appId=${request.param.appId})"></url>
+		<!-- 运营监控 -->
+		<url pattern="/monitor/**" validator="functionValidator(functionId=app.monitor.manage)|appAccessRight(appId=${request.param.appId})"></url>
+		
+		<!-- 系统管理员 或 （创建者，负责人，开发人员）能操作项目信息 -->
+		<url pattern="/**" validator="appAccessRight(appId=${request.param.appId})"></url>
+	</module>
+	<!-- 资源信息 -->	
+		
+	<module prefix="/paas"> 
+		<url pattern="/**" validator="roleValidator(role=administrator)" />
+	</module>
+	<!-- 系统管理 -->		
+	<module prefix="/sys">
+		<url pattern="/user/dialog.do*" validator=""></url>
+		<url pattern="/**" validator="roleValidator(role=administrator)" />
+	</module>
+</http>

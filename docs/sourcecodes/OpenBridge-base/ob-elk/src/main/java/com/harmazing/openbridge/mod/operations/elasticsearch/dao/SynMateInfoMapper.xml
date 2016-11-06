@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.mod.operations.elasticsearch.dao.SynMateInfoMapper">
+	<select id="getApiUrlMatchDict" resultType="java.util.HashMap">
+		SELECT 
+			cf.conf_content content,
+		    svi.protocol_api,
+		    sv.version_type,
+		    s.market_type,
+		    s.store_category,
+		    s.preset_category,
+		    s.service_id,
+		    svi.version_id,
+		    svi.protocol_id,
+		    cf.env_type
+		FROM
+		    paas_nginx_conf cf,
+		    mod_service_version sv,
+		    mod_service_version_protocol svi,
+		    mod_service s
+		WHERE
+		    cf.version_id = sv.version_id
+				and sv.service_id = s.service_id
+		        and svi.version_id = sv.version_id
+		        AND cf.business_type = 'api'
+		        AND svi.protocol_type = 'rest'
+	</select>
+	
+	<select id="getAppUrlMatchDict" resultType="java.util.HashMap">
+		SELECT 
+			cf.conf_content content,
+		    cf.service_id appid,
+		    cf.env_type env_type
+		FROM
+		    paas_nginx_conf cf
+		WHERE
+		    cf.business_type = 'app'
+	</select>
+	
+	
+	<select id="getDubboUrlMatchDict" resultType="java.util.HashMap">
+			 select 
+			   svi.protocol_api,
+		       sv.test_url,
+		       sv.live_url,
+		       sv.version_type,
+		       s.market_type,
+		       s.store_category,
+		       s.preset_category,
+		       s.service_id,
+		       sv.version_id,
+		       svi.protocol_id,
+		       sv.version_id,
+		       svi.protocol_id,
+		       c.container_ip,
+			   c.container_port ,
+		       c.env_type ,
+		       svi.protocol_name clasname
+		  from mod_service_version_protocol svi
+		  inner join mod_service_version sv on svi.version_id= sv.version_id
+		  inner join mod_service s on sv.service_id= s.service_id
+		  inner join paas_docker_container c on c.version_id = svi.version_id
+		 where svi.protocol_type= 'dubbo'
+		  union
+		 select 
+			   svi.protocol_api,
+		       sv.test_url,
+		       sv.live_url,
+		       sv.version_type,
+		       s.market_type,
+		       s.store_category,
+		       s.preset_category,
+		       s.service_id,
+		       sv.version_id,
+		       svi.protocol_id,
+		       sv.version_id,
+		       svi.protocol_id,
+		       vi.address_ as container_ip,
+               vi.port_ as container_port,
+               'live' as env_type,
+               svi.protocol_name clasname
+		  from mod_service_version_protocol svi
+		  inner join mod_service_version sv on svi.version_id= sv.version_id
+		  inner join mod_service s on sv.service_id= s.service_id
+          inner join mod_service_version_ip vi on vi.version_id = sv.version_id
+		 where svi.protocol_type= 'dubbo'
+	</select>
+</mapper>

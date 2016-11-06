@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<http>
+
+	<!-- 环境管理 -->	
+	<module prefix="/manager"> 
+		<url pattern="/tenant/**" validator="functionValidator(functionId=paasos.tenant.manager)"></url>
+		<url pattern="/node/**" validator="functionValidator(functionId=paasos.node.manager)"></url>
+		<url pattern="/baseimage/**" validator="functionValidator(functionId=paasos.baseimage.manager)"></url>
+	    <url pattern="/deploy/**" validator="functionValidator(functionId=paasos.deploy.manager)"></url>
+	</module>
+	
+	<!-- 项目信息 -->
+	<module prefix="/project">  
+		<url pattern="/list/**" ></url> 
+		<url pattern="/index.do*" ></url> 
+		<url pattern="/create.do*" ></url> 
+		<url pattern="/save.do*" ></url>
+		<!-- <url pattern="/build/create.do*" validator="functionValidator(functionId=paasos.project.build)"></url> -->
+		<url pattern="/env/rest/**"  ></url>
+		
+		<!--  <url pattern="/env/index.do*"  validator="ProjectValidator(projectId=${request.param.projectId})" ></url> -->
+		 
+		<url pattern="/env/create.do*"   validator="ProjectCreateEnvValidator(projectId=${request.param.projectId},envType=${request.param.envType})"></url> 
+		<url pattern="/env/save.do*"  validator="ProjectCreateEnvValidator(projectId=${request.param.projectId},envType=${request.param.envType})"></url>
+		
+		<!--<url pattern="/env/**"   validator="ProjectEnvValidator(projectId=${request.param.projectId},envId=${request.param.envId})"></url>-->
+		 
+		<url pattern="/build/**" validator="ProjectValidator(projectId=${request.param.projectId},businessId=${request.param.businessId},businessType=${request.param.businessType})"></url>
+		<url pattern="/deploy/**" validator="ProjectValidator(projectId=${request.param.projectId})"></url>
+	<!-- dengxq 监控不用管  /monitor/view 节点和项目监控 是同一个url
+		<url pattern="/monitor/view*" validator="functionValidator(functionId=paasos.node.manager)"></url>
+		<url pattern="/monitor/last/data*" validator="functionValidator(functionId=paasos.node.manager)"></url>
+		<url pattern="/monitor/data*" validator="functionValidator(functionId=paasos.node.manager)"></url>
+		<url pattern="/monitor/**" validator="ProjectValidator(projectId=${request.param.projectId})"></url>
+		 -->
+		<url pattern="/overview/**" validator="ProjectValidator(projectId=${request.param.projectId})"></url>
+	</module>
+	
+	<!-- 资源信息 -->
+	<module prefix="/resource">
+		<module prefix="/mysql">
+			<url pattern="/queryMysqlStatusInfo.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+			<url pattern="/info.do*" validator="ResourceValidator(resId=${request.param.mysqlId})"></url>
+			<url pattern="/delete.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+			<url pattern="/startMysql.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+			<url pattern="/stopMysql.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+			<url pattern="/**" ></url> 
+		</module>
+		<module prefix="/redis">
+			<url pattern="/queryRedisStatusInfo.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+			<url pattern="/info.do*" validator="ResourceValidator(resId=${request.param.redisId})"></url>
+			<url pattern="/delete.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+			<url pattern="/startRedis.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+			<url pattern="/stopRedis.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+			<url pattern="/**" ></url> 
+		</module>
+		<module prefix="/messagequeue">
+			<url pattern="/queryMQStatusInfo.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+			<url pattern="/info.do*" validator="ResourceValidator(resId=${request.param.mqId})"></url>
+			<url pattern="/delete.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+			<url pattern="/startRabbitMQ.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+			<url pattern="/stopRabbitMQ.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+			<url pattern="/**" ></url> 
+		</module>
+		<module prefix="/nas">
+			<module prefix="/iscsi">
+				<url pattern="/delete.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+				<url pattern="/info.do*" validator="ResourceValidator(resId=${request.param.nasId})"></url>
+				<url pattern="/**" ></url>
+			</module>
+			<module prefix="/nfs">
+				<url pattern="/delete.do*" validator="ResourceValidator(resId=${request.param.resId})"></url>
+				<url pattern="/info.do*" validator="ResourceValidator(resId=${request.param.nasId})"></url>
+				<url pattern="/**" ></url>
+			</module>
+		</module>
+	</module>
+	<!-- 系统管理 -->		
+	<module prefix="/sys">
+		<url pattern="/user/dialog.do*" validator=""></url>
+		<url pattern="/user/validatePwd.do*" validator=""></url>
+		<url pattern="/config/find.do*" validator=""></url>
+		<url pattern="/**" validator="roleValidator(role=administrator)" />
+	</module>
+</http>

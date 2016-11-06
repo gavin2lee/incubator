@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.harmazing.com/schema/plugins">
+
+	<element name="plugins">
+		<complexType>
+			<sequence>
+				<element name="extension-point" maxOccurs="unbounded"
+					minOccurs="0">
+					<complexType>
+                        <sequence>
+                        	<any minOccurs="0" maxOccurs="unbounded" namespace="##other"
+								processContents="strict"></any>
+                        </sequence>
+                        <attribute name="name" type="string" use="required"></attribute>
+						<attribute name="id" type="string" use="required"></attribute>
+						<attribute name="schema" type="string" use="required"></attribute>
+						<attribute name="handler" type="string" use="required"></attribute>
+					</complexType>
+				</element>
+				<element name="extension" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<sequence>
+							<any minOccurs="0" maxOccurs="unbounded" namespace="##other"
+								processContents="strict"></any>
+						</sequence>
+						<attribute name="point" type="string" use="required"></attribute>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+</schema>

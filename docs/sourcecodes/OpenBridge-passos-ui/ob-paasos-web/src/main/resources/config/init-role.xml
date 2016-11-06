@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <roles id="roles">
+		<role id="paasos.manager" system="passos" name="环境管理员" description="对环境进行管理"></role>
+		<role id="passos.store" system="paasos" name="预置应用管理员" description="对预置应用管理"></role>
+		<role id="passos.operations" system="paasos" name="运维人员" description="运维"></role>
+	</roles>
+	 	  
+	<roleFunctionMappers id="roleFunctionMappers">
+		<!-- 默认环境管理员拥有对环境的所有权限 -->
+		<roleFunctionMapper id="paasos.tenant.manager_manager" roleId="paasos.manager" functionId="paasos.tenant.manager"></roleFunctionMapper>
+		<roleFunctionMapper id="paasos.node.manager_manager" roleId="paasos.manager" functionId="paasos.node.manager"></roleFunctionMapper>
+		<roleFunctionMapper id="paasos.baseimage.manager_manager" roleId="paasos.manager" functionId="paasos.baseimage.manager"></roleFunctionMapper>
+	    <roleFunctionMapper id="paasos.deploy.manager_manager" roleId="paasos.manager" functionId="paasos.deploy.manager"></roleFunctionMapper>
+	</roleFunctionMappers> 
+</root>

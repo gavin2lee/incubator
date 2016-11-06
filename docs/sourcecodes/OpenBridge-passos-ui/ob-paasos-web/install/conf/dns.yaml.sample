@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: skydns-svc
+  labels:
+    app: skydns-svc
+    version: v9
+spec:
+  selector:
+    app: skydns
+    version: v9
+  type: ClusterIP
+  clusterIP: 10.1.130.1
+  ports:
+    - name: dns
+      port: 53
+      protocol: UDP
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: skydns
+  labels:
+    app: skydns
+    version: v9
+spec:
+  replicas: 1
+  selector:
+    app: skydns
+    version: v9
+  template:
+    metadata:
+      labels:
+        app: skydns
+        version: v9
+    spec:
+      containers:
+        - name: skydns
+          image: dns_image/skydns:1.4
+          command:
+            - "/skydns"
+          args:
+            - "--machines=http://dns_etcd"
+            - "--domain=dns_domain"
+            - "--addr=0.0.0.0:53"
+            - "--nameservers=114.114.114.114:53"
+          ports:
+            - containerPort: 53
+              name: dns-udp
+              protocol: UDP
+            - containerPort: 53
+              name: dns-tcp
+              protocol: TCP
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: kube2sky
+  labels:
+    app: kube2sky
+    version: v9
+spec:
+  replicas: 1
+  selector:
+    app: kube2sky
+    version: v9
+  template:
+    metadata:
+      labels:
+        app: kube2sky
+        version: v9
+    spec:
+      containers:
+        - name: kube2sky
+          image: dns_image/kube2sky:0.3
+          command:
+            - "/kube2sky"
+          args:
+            - "--etcd-server=http://dns_etcd"
+            - "--domain=dns_domain"
+            - "--kube_master_url=http://dns_kube"

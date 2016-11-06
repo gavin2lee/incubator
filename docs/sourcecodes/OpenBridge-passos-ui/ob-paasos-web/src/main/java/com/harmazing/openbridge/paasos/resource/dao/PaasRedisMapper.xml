@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.resource.dao.PaasRedisMapper">
+
+	<!-- 查询Redis记录数，需要关联租户表 -->
+	<select id="QueryPaasRedissByParamsCount" resultType="java.lang.Integer">
+		select count(distinct(redis_id)) from os_resource_redis redis 
+		where 1=1
+		and redis.tenant_id = #{params.tenantId}
+		<if test="params.userId !=null &amp;&amp; params.userId !=''">
+			and creater = #{params.userId} 
+		</if>
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+	</select>
+	
+	<!-- 查询Redis分页列表 -->
+	<select id="QueryPaasRedissByParams" resultType="com.harmazing.openbridge.paasos.resource.model.PaasRedis">
+		select distinct	redis.*,tenant.tenant_name as `attach[tenantName]`,user.user_name as `attach[createrName]`
+		from os_resource_redis redis 
+		left join sys_tenant tenant on redis.tenant_id = tenant.tenant_id
+		left join sys_user user on redis.creater=user.user_id where 1=1
+		and redis.tenant_id = #{params.tenantId}
+		<if test="params.userId !=null &amp;&amp; params.userId !=''">
+			and creater = #{params.userId}
+		</if>
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+		order by create_date desc limit #{params.start},#{params.size}
+	</select>
+	
+	<!-- 根据id查询Redis基本信息 -->
+	<select id="getPaasRedisInfoById" resultType="com.harmazing.openbridge.paasos.resource.model.PaasRedis">
+		select redis.*,tenant.tenant_name as `attach[tenantName]`,user.user_name as `attach[createrName]`
+		from os_resource_redis redis
+		left join sys_tenant tenant on redis.tenant_id = tenant.tenant_id
+		left join sys_user user on redis.creater=user.user_id
+		where redis.redis_id = #{redisId} 
+	</select>
+	
+	<!-- 新增Redis -->
+	<insert id="addPaasRedis" parameterType="com.harmazing.openbridge.paasos.resource.model.PaasRedis">
+		insert into os_resource_redis(redis_id,redis_name,apply_content,creater,create_date,
+		update_date,allocate_content,tenant_id,project_id,env_id,env_type,on_ready,res_desc,apply_type,cpu_,memory_,storage_) 
+				values (#{redisId},#{redisName},#{applyContent},#{creater},#{createDate},
+		#{updateDate},#{allocateContent},#{tenantId},#{projectId},#{envId},#{envType},#{onReady},#{resDesc},#{applyType},#{cpu},#{memory},#{storage}
+			)
+	</insert>
+	
+	<!-- 删除Redis信息 -->
+	<delete id="deletePaasRedisById">
+		delete from os_resource_redis where redis_id = #{redisId}
+	</delete>
+	
+	<!-- 更新Redis信息 -->
+	<update id="updatePaasRedisInfo" parameterType="com.harmazing.openbridge.paasos.resource.model.PaasRedis">
+		update os_resource_redis set apply_content=#{applyContent},update_date=#{updateDate},
+		allocate_content=#{allocateContent},on_ready=#{onReady},cpu_=#{cpu},memory_=#{memory},storage_=#{storage} where redis_id=#{redisId}
+	</update>
+	
+	<!-- 查询Redis记录数，需要关联租户表 -->
+	<select id="QueryPaasRedissCount" resultType="java.lang.Integer">
+		select count(distinct(redis_id)) from os_resource_redis redis 
+		where 1=1
+		<choose>
+			<when test="params.byTenantId!=null &amp;&amp; params.byTenantId !=''">
+				<if test="params.tenantId !=null &amp;&amp; params.tenantId !=''">
+					and tenant_id = #{params.tenantId} 
+				</if>
+			</when>
+			<otherwise>
+				<if test="params.userId !=null &amp;&amp; params.userId !=''">
+					and creater = #{params.userId} 
+				</if>
+			</otherwise>
+		</choose>
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+		<if test="params.applyType !=null &amp;&amp; params.applyType !=''">
+			and apply_type = #{params.applyType} 
+		</if>
+	</select>
+	
+	<!-- 查询Redis分页列表 -->
+	<select id="QueryPaasRediss" resultType="com.harmazing.openbridge.paasos.resource.model.PaasRedis">
+		select distinct	redis.*,tenant.tenant_name as `attach[tenantName]`,user.user_name as `attach[createrName]`
+		from os_resource_redis redis 
+		left join sys_tenant tenant on redis.tenant_id = tenant.tenant_id
+		left join sys_user user on redis.creater=user.user_id where 1=1
+		<choose>
+			<when test="params.byTenantId!=null &amp;&amp; params.byTenantId !=''">
+				<if test="params.tenantId !=null &amp;&amp; params.tenantId !=''">
+					and tenant.tenant_id = #{params.tenantId} 
+				</if>
+			</when>
+			<otherwise>
+				<if test="params.userId !=null &amp;&amp; params.userId !=''">
+					and creater = #{params.userId} 
+				</if>
+			</otherwise>
+		</choose>
+<!-- 		and redis.tenant_id = #{params.tenantId}  -->
+		
+<!-- 				<if test="params.userId !=null &amp;&amp; params.userId !=''"> -->
+<!-- 					and creater = #{params.userId}  -->
+<!-- 				</if> -->
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+		<if test="params.applyType !=null &amp;&amp; params.applyType !=''">
+			and apply_type = #{params.applyType} 
+		</if>
+		order by create_date desc limit #{params.start},#{params.size}
+	</select>
+	
+	<select id="getAlreadyUsed" parameterType="java.util.Map"  resultType="com.harmazing.openbridge.paasos.manager.model.vo.ResourceQuota">
+		SELECT sum(cpu_) cpu,sum(memory_) memory, sum(storage_) storage,count(1) count
+		FROM os_resource_redis
+		where tenant_id = #{tenantId}
+	</select>
+</mapper>

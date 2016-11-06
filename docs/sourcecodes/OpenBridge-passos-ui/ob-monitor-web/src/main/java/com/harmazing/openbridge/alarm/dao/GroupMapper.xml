@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.alarm.dao.GroupMapper">
+
+	<select id="getCountByName" resultType="int">
+		select count(*) from grp where grp_name=#{name}
+		<if test="id!=0">
+			and id != #{id}
+		</if>
+	</select>
+		
+	<!--  获得数量为grp.grp_type为0的数据 -->
+	<select id="getCount" resultType="int">
+		select count(*) from grp where grp.grp_type='0'	
+	</select>
+</mapper>

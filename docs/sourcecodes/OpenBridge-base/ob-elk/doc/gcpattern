@@ -1,0 +1,5 @@
+GC_TIME (\d+-\d+-\d+T\d+:\d+:\d+\.\d+)
+GC_TIMEZONE ([^:\s])+
+GC_JVMTIME (\d+\.+\d+):
+GC_NAME \[(\w+)
+FC_FILENAME [0-9ZA-Za-z]+

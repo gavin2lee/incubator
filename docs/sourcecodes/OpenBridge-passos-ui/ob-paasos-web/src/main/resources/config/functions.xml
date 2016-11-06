@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<function id="paasos.project.envlive" system="paasos" name="生产环境部署"
+		description="生产环境部署" module="项目管理" />
+	<function id="paasos.project.envtest" system="paasos" name="测试环境部署"
+		description="测试环境部署" module="项目管理" />
+	<function id="paasos.tenant.manager" system="paasos" name="组织管理"
+		description="组织管理" module="环境管理" />
+	<function id="paasos.node.manager" system="paasos" name="节点管理"
+		description="节点管理" module="环境管理" />
+	<function id="paasos.baseimage.manager" system="paasos" name="基础镜像"
+		description="基础镜像" module="环境管理" />
+	<function id="paasos.deploy.manager" system="paasos" name="部署列表"
+		description="部署列表" module="环境管理" />
+	<function id="paasos.store.manager" system="paasos" name="预置应用上传更新"
+		description="预置应用的上传和更新" module="预置应用管理员" />
+	<function id="paasos.store.deploy" system="paasos" name="预置应用构建部署"
+		description="预置应用的部署及构建" module="预置应用管理员" />
+
+	<function id="paasos.project.build" system="paasos" name="项目构建"
+		description="项目构建" module="项目构建" />
+</root>

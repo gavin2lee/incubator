@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.project.dao.ProjectJiraRelationMapper">
+	<select id="findByProperty" resultType="com.harmazing.openbridge.project.vo.ProjectJiraRelation">
+		select * from mod_project_jira_relation
+		<where>
+			<if test=" id!=null and id!='' "> id=#{id}</if>
+			<if test=" projectId!=null and projectId!='' "> and project_id=#{projectId}</if>
+			<if test=" jiraProjectKey!=null and jiraProjectKey!='' "> 
+			    and jira_project_key=#{jiraProjectKey}
+			</if>
+			<if test=" source!=null and source!='' "> and source=#{source}</if>
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,26 @@
+#依赖环境
+
+操作系统： centos7 64bit
+cpu： 2+
+内存： 4G+
+硬盘： 32G+
+
+#安装准备
+1. 关闭防火墙firewalld, iptables
+2. 关闭selinux
+3. 安装curl
+
+#安装步骤
+1. 使用root用户
+2. 解压 “k8s快速搭建脚本.gz” 到安装目录/opt/kube
+3. 安装master节点
+   运行 #sudo sh start_master.sh 脚本
+   脚本执行结束会添加自动添加本机为一个节点
+
+4. 如果要添加另一个node节点到master
+   运行 #sudo sh start_node.sh  --etcd_servers=<etcd_ip>:4012,  --api_server=<master_ip>
+   注意：要保留参数中那个逗号 “--etcd_servers=ip:port,”
+   etcd_ip 和 master_ip 默认是master节点的IP
+
+#更全命令
+cluster_ip_range

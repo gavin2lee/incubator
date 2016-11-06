@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>登录页</title>
+    <link rel="stylesheet" href="../assets/css/style_passos.css"/>
+    <link rel="stylesheet" href="../assets/css/onepage-scroll.css">
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.onepage-scroll.min.js"></script>
+    <script>
+        $(function () {
+            $('.main').onepage_scroll({
+                sectionContainer: '.page',
+                direction: 'horizontal'
+            });
+        });
+    </script>
+</head>
+
+<body>
+<div class="warp">
+    <div class="cloud-login">
+		<div class="login-cont">
+        	<div class="login-img">
+            	<img src="../assets/images/login/paas-1.png">
+            </div>
+            <div class="login-text">
+					<input type="text" placeholder="用户名">
+                  	<input type="password" name="password" placeholder="密码">
+            </div>
+            <div class="login-password">
+            		<input type="checkbox" ><span>记住密码</span>
+            </div>
+            <div class="login-btn">
+					<button class="login-button">登&nbsp;&nbsp;录</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="page page1">
+    </div>
+    <div class="page page2">
+    </div>
+</div>
+</body>
+</html>

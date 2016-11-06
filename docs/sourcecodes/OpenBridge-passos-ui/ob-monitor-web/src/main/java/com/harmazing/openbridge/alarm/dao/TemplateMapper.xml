@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.alarm.dao.TemplateMapper">
+
+	<select id="Page" resultType="java.util.HashMap">
+		select p.id, p.tpl_name, p.parent_id, p.action_id, p.create_user, p.create_at ,
+		if(a.uic is null,'',a.uic) as team_name FROM tpl as p left join action as a on p.action_id=a.id
+		<where> 
+			<if test="keyword != null">
+				AND (tpl_name like concat(concat('%',#{keyword}),'%'))
+			</if>
+		</where>
+		order by create_at desc limit #{start},#{size}
+	</select>
+	
+	<select id="PageRecordCount" resultType="java.lang.Integer">
+		select 
+			ifnull(count(t.id),0) as ccc
+		from tpl t
+		<where> 
+			<if test="keyword != null">
+				AND (tpl_name like concat(concat('%',#{keyword}),'%'))
+			</if>
+		</where>
+	</select>
+	
+	<select id="getTplCountByName" resultType="int">
+		select count(*) from tpl where tpl_name=#{name}
+		<if test="id!=null and id!=''">
+			and id != #{id}
+		</if>
+	</select>
+	
+	
+	<select id="getDToPageCountByGroupId" resultType="int">
+		 SELECT count(*) FROM tpl,grp_tpl 
+		<where>
+	     grp_tpl.tpl_id =tpl.id and  grp_tpl.grp_id=#{id}
+	    </where>
+	</select>
+</mapper>

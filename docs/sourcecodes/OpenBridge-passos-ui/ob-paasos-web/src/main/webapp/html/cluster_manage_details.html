@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>passos——集群管理详情</title>
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="../assets/css/layout.css"/>
+    <link rel="stylesheet" href="../assets/css/app_deployment.css"/>
+    <link href="../assets/css/jquery.spinner.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="../assets/css/welcom.css"/>
+    <link rel="stylesheet" href="../assets/css/style_passos.css"/>
+</head>
+
+<body>
+<!------passos头部------->
+<div class="app_top pas_top">
+    <div class="head">
+        <div class="app_logo sub_logo">
+            <a href="index_pas.html"><img src="../assets/images/logo_pas.png" width="200" height="62"/></a>
+        </div>
+        <div class="nav_tips">
+            <div class="news app_number">
+                <a href="proiect_list.html">
+                    <div class="news_img">
+                        <i class="icons item_ico"></i>
+                    </div>
+                    <div class="title_name">项目管理</div>
+                </a>
+            </div>
+            <div class="news app_number">
+                <a href="resource_service.html">
+                    <div class="news_img">
+                        <i class="icons dashboard_ico"></i>
+                    </div>
+                    <div class="title_name">组件服务</div>
+                </a>
+            </div>
+            <div class="news">
+                <a class="active" href="resource_plan.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">资源管理</div>
+                </a>
+            </div>
+            <div class="news">
+                <a href="pre-applications.html">
+                    <div class="news_img">
+                        <i class="icons app_ico"></i>
+                    </div>
+                    <div class="title_name">预置应用</div>
+                </a>
+            </div>
+        </div>
+        <div class="app_user">
+            <div class="user_hits">
+                <div class="nav_user">
+                    <ul>
+                        <li class="menu2" onMouseOver="this.className='menu1'" onMouseOut="this.className='menu2'">
+                            <i class="icons user_ico"></i>
+
+                            <p class="user_name">admin</p>
+                            <i class="icons arrow-btm"></i>
+
+                            <div class="list">
+                                <a href="#">管理</a><br/>
+                                <a href="#">我开发的服务</a><br/>
+                                <a href="#">我消费的服务</a><br/>
+                                <a href="#">退出</a><br/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ob_sub_pro_btn">
+            <a href="javascript:$.pageslide({ direction: 'left', href: 'pro_list.html' })">
+                <i class="icons ob_sub_pro"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!------passos内容------->
+<div class="app_content">
+    <div class="content_frame">
+        <div class="left_sub_menu left_sub_menu_pas">
+            <ul>
+                <li><a href="resource_plan.html">
+                    <i class="left_menu_ico l_ico_zzgl"></i>组织管理</a></li>
+                <li><a class="select" href="cluster_manage_details.html">
+                    <i class="left_menu_ico l_ico_jdgl"></i>节点管理</a></li>
+                <li><a href="mirrorRepo.html">
+                    <i class="left_menu_ico l_ico_jcjx"></i>基础镜像</a></li>
+            </ul>
+        </div>
+        <div class="app_name">
+            <a href="resource_plan.html"><i class="icons go_back_ico"></i></a>
+
+            <p class="app_a">资源分配</p>
+            <em>&gt;</em>
+
+            <p class="app_a"><a href="cluster_manage.html">节点管理</a></p>
+        </div>
+        <div class="plate">
+            <div class="project_r">
+                <div class="pas_info mb10 p20" style="background:#f0f0f0;">
+                    <a href="add_host.html" class="btn btn-oranger f16 mr20"> 添加主机 </a>
+                    <em class="mr10 f14">|</em>
+                    <span class="f14">在该页面上可以管理PAASOS管理的多个集群信息，在每个集群下添加、配置、卸载节点。<a href="#" class="btn btn-link yellow">如何创建主机？
+                        &gt;</a></span>
+                </div>
+                <div class="r_block p20">
+                    <div class="r_title">
+                        <h3 class="f14 h3_color h3_btm_line blue mr10">
+                            <a href="#">
+                                <i class="icons cy_ico mr5"></i>节点管理
+                            </a>
+                        </h3>
+
+                        <div class="title_line"></div>
+                    </div>
+                    <div class="r_con p10_0">
+                        <div class="ser_bar mt10 mb10"><input type="text" placeholder="输入主机名查找.."><a
+                                class="btn btn-yellow2 btn-sm" href="#">查询</a> <a class="btn btn-yellow2 btn-sm ser-adv"
+                                                                                  href="#">高级查询</a></div>
+                        <div class="ser_bar2">
+                            <div class="chose-lists">
+                                <div class="chose-item">
+                                    <span class="chose-title">部署环境：</span>
+
+                                    <div class="chose-options"><em class="active">全部</em><em>生产环境</em><em>测试环境</em></div>
+                                </div>
+                                <div class="chose-item">
+                                    <span class="chose-title">状态：</span>
+
+                                    <div class="chose-options"><em class="active">全部</em><em>在线</em><em>离线</em></div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table_ob">
+                            <thead>
+                            <tr>
+                                <th>主机名称</th>
+                                <th>IP</th>
+                                <th>CPU总量（个）</th>
+                                <th>内存总量（MB）</th>
+                                <th>运行实例（个）</th>
+                                <th>状态</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td><a href="host_details.html">node01</a></td>
+                                <td>192.168.1.63</td>
+                                <td>1</td>
+                                <td>1840.34</td>
+                                <td>1</td>
+                                <td><span class="txt-safe">在线</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="host_details.html">node02</a></td>
+                                <td>192.168.1.64</td>
+                                <td>4</td>
+                                <td>NaN</td>
+                                <td>1</td>
+                                <td><span class="txt-safe">在线</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">node03</a></td>
+                                <td ng-bind="node.ip">192.168.1.65</td>
+                                <td ng-bind="node.capacity.cpu">1</td>
+                                <td ng-bind="node.capacity.memory">1840.34</td>
+                                <td ng-bind="node.runningPods">1</td>
+                                <td ng-switch="node.status"><span class="txt-safe">在线</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">nodetest</a></td>
+                                <td>192.168.1.62</td>
+                                <td>1</td>
+                                <td>1840.34</td>
+                                <td>0</td>
+                                <td>
+                                    <span class="txt-prompt">离线</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--创建应用部署结束-->
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../assets/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    function adjustHeight() {
+        var h = $(window).height();
+        var h2 = $(".head").height();
+        $(".plate").css("height", h - 99);
+        $(".left_sub_menu").css("height", h - h2);
+    }
+    $(document).ready(function () {
+                adjustHeight();
+            }
+    )
+    $(window).resize(function () {
+        adjustHeight();
+    });
+    $(".ser_bar2").hide();
+    $(".ser-adv").click(function(){
+        $(".ser_bar2").toggle(200);
+    })
+</script>
+<script type="text/javascript" src="../assets/js/jquery.spinner.js"></script>
+<script type="text/javascript">
+    $('.spinnerExample').spinner({});
+</script>
+</body>
+</html>

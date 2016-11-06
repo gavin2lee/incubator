@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.resource.dao.PaasMysqlMapper">
+
+	<!-- 查询mysql记录数，需要关联租户表 -->
+	<select id="QueryPaasMysqlsByParamsCount" resultType="java.lang.Integer">
+		select count(distinct(mysql_id)) from os_resource_mysql mysql 
+		where 1=1
+		and mysql.tenant_id = #{params.tenantId}
+		<if test="params.userId !=null &amp;&amp; params.userId !=''">
+			and creater = #{params.userId} 
+		</if>
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+	</select>
+	
+	<!-- 查询mysql分页列表 -->
+	<select id="QueryPaasMysqlsByParams" resultType="com.harmazing.openbridge.paasos.resource.model.PaasMysql">
+		select distinct	orm.*,tenant.tenant_name as `attach[tenantName]`,user.user_name as `attach[createrName]`
+		from os_resource_mysql orm 
+		left join sys_tenant tenant on orm.tenant_id = tenant.tenant_id
+		left join sys_user user on orm.creater=user.user_id
+		where 1=1
+		and orm.tenant_id = #{params.tenantId}
+		<if test="params.userId !=null &amp;&amp; params.userId !=''">
+			and orm.creater = #{params.userId}
+		</if>
+		<!-- <if test="params.tenantId!=null &amp;&amp; params.tenantId !=''">
+			
+		</if> -->
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and orm.env_type = #{params.envType} 
+		</if>
+		order by create_date desc limit #{params.start},#{params.size}
+	</select>
+	
+	<!-- 根据id查询mysql基本信息 -->
+	<select id="getPaasMysqlInfoById" resultType="com.harmazing.openbridge.paasos.resource.model.PaasMysql">
+		select mysql.*,tenant.tenant_name as `attach[tenantName]`,user.user_name as `attach[createrName]`
+		from os_resource_mysql mysql
+		left join sys_tenant tenant on mysql.tenant_id = tenant.tenant_id
+		left join sys_user user on mysql.creater=user.user_id
+		where mysql.mysql_id = #{mysqlId} 
+	</select>
+	
+	<!-- 新增mysql -->
+	<insert id="addPaasMysql" parameterType="com.harmazing.openbridge.paasos.resource.model.PaasMysql">
+		insert into os_resource_mysql(mysql_id,instance_name,mysql_type,
+			apply_content,creater,create_date,update_date,allocate_content,tenant_id,
+			project_id,env_id,env_type,on_ready,res_desc,apply_type,cpu_,memory_,storage_) values (#{mysqlId},#{instanceName},#{mysqlType},#{applyContent},
+			#{creater},#{createDate},#{updateDate},#{allocateContent},#{tenantId},#{projectId},#{envId},#{envType},#{onReady},
+			#{resDesc},#{applyType},#{cpu},#{memory},#{storage}
+			)
+	</insert>
+	
+	<!-- 删除mysql信息 -->
+	<delete id="deletePaasMysqlById">
+		delete from os_resource_mysql where mysql_id = #{mysqlId}
+	</delete>
+	
+	<!-- 更新mysql信息 -->
+	<update id="updatePaasMysqlInfo" parameterType="com.harmazing.openbridge.paasos.resource.model.PaasMysql">
+		update os_resource_mysql set instance_name=#{instanceName},mysql_type=#{mysqlType},apply_content=#{applyContent},
+		 update_date=#{updateDate},allocate_content=#{allocateContent},env_type=#{envType},
+		on_ready=#{onReady},res_desc=#{resDesc},cpu_=#{cpu},memory_=#{memory},storage_=#{storage} where mysql_id=#{mysqlId}
+	</update>
+	
+	
+	<select id="QueryPaasMysqlByEnvId" resultType="com.harmazing.openbridge.paasos.resource.model.PaasMysql">
+		select mysql.* from os_resource_mysql mysql where env_id=#{envId} limit 0,1
+	</select>
+	
+	<!-- 查询mysql记录数 -->
+	<select id="QueryPaasMysqlsCount" resultType="java.lang.Integer">
+		select count(distinct(mysql_id)) from os_resource_mysql mysql 
+		where 1=1
+		<choose>
+			<when test="params.byTenantId!=null &amp;&amp; params.byTenantId !=''">
+				<if test="params.tenantId !=null &amp;&amp; params.tenantId !=''">
+					and mysql.tenant_id = #{params.tenantId} 
+				</if>
+			</when>
+			<otherwise>
+				<if test="params.userId !=null &amp;&amp; params.userId !=''">
+					and creater = #{params.userId} 
+				</if>
+			</otherwise>
+		</choose>
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+		<if test="params.applyType !=null &amp;&amp; params.applyType !=''">
+			and apply_type = #{params.applyType} 
+		</if>
+	</select>
+	
+	<!-- 查询mysql分页列表 -->
+	<select id="QueryPaasMysqls" resultType="com.harmazing.openbridge.paasos.resource.model.PaasMysql">
+		select distinct	mysql.*,tenant.tenant_name as `attach[tenantName]`,user.user_name as `attach[createrName]`
+		from os_resource_mysql mysql 
+		left join sys_tenant tenant on mysql.tenant_id = tenant.tenant_id
+		left join sys_user user on mysql.creater=user.user_id
+		where 1=1
+		<choose>
+			<when test="params.byTenantId!=null &amp;&amp; params.byTenantId !=''">
+				<if test="params.tenantId !=null &amp;&amp; params.tenantId !=''">
+					and tenant.tenant_id = #{params.tenantId} 
+				</if>
+			</when>
+			<otherwise>
+				<if test="params.userId !=null &amp;&amp; params.userId !=''">
+					and creater = #{params.userId} 
+				</if>
+			</otherwise>
+		</choose>
+		<if test="params.envType !=null &amp;&amp; params.envType !=''">
+			and env_type = #{params.envType} 
+		</if>
+		<if test="params.applyType !=null &amp;&amp; params.applyType !=''">
+			and apply_type = #{params.applyType} 
+		</if>
+		order by create_date desc limit #{params.start},#{params.size}
+	</select>
+	
+	<select id="getAlreadyUsed" parameterType="java.util.Map"  resultType="com.harmazing.openbridge.paasos.manager.model.vo.ResourceQuota">
+		SELECT sum(cpu_) cpu,sum(memory_) memory, sum(storage_) storage,count(1) count
+		FROM os_resource_mysql
+		where tenant_id = #{tenantId}
+		<if test="mysqlType !=null and mysqlType !=''">
+			and mysql_type = #{mysqlType}
+		</if>
+	</select>
+</mapper>

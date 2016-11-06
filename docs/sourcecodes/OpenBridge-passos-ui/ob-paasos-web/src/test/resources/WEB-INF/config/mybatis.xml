@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="logImpl" value="LOG4J" />
+		<setting name="cacheEnabled" value="false" />
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<setting name="callSettersOnNulls" value="true" />
+	</settings>
+    <typeHandlers>
+    	<typeHandler handler="com.harmazing.framework.common.mybatis.AttachHandler"/>
+    </typeHandlers>
+    <objectWrapperFactory type="com.harmazing.framework.common.mybatis.MyObjectWrapperFactory" />
+</configuration>	

@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nfs-web
+spec:
+  volumes:
+    - name: nfs-www
+      nfs:
+        server: "192.168.102.102"
+        path: "/mnt/nfs_web"
+  containers:
+    - name: nfs-web
+      image: "192.168.101.20:5000/nginx"
+      ports:
+        - name: nfs-web
+          containerPort: 80
+          protocol: TCP
+      volumeMounts:
+          # 'name' must match the volume name below.
+          - name: nfs-www
+            # Where to mount he volume.
+            mountPath: "/usr/share/nginx/html/"

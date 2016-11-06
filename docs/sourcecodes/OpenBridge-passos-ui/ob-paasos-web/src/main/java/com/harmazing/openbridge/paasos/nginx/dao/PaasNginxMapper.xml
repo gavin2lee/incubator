@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.nginx.dao.PaasNginxMapper">
+	<insert id="createNginxConf">
+		insert into os_nginx_conf
+		(`conf_id`,`host_id`,`conf_content`,`service_id`,`version_id`,`env_type`,`nginx_name`,`env_id`,`business_type`,`skip_auth`,`is_support_ssl`,ssl_crt_id,ssl_key_id)
+		values
+		(#{confId},#{hostId},#{confContent},#{serviceId},#{versionId},#{envType},#{nginxName},#{envId},#{businessType},#{skipAuth},#{isSupportSsl},#{sslCrtId},#{sslKeyId})
+	</insert>
+
+	<select id="findNginxConf"
+		resultType="com.harmazing.openbridge.paas.nginx.model.PaasNginxConf">
+		select * from os_nginx_conf
+		<where>
+			<if test="serviceId != null">
+				service_id=#{serviceId}
+			</if>
+			<if test="envType != null">
+				and env_type=#{envType}
+			</if>
+			<if test="versionId != null">
+				AND version_id=#{versionId}
+			</if>
+		</where>
+
+	</select>
+	
+		
+	<select id="queryNginxCount" resultType="java.lang.Integer">
+		select ifnull(count(n.host_id),0) as ccc
+		from os_nginx_conf n left join os_nginx_host h on n.host_id = h.host_id
+		<where> 
+			 <if test="keyword != null">
+				AND `nginx_name`=#{keyword}
+			</if>
+			<if test="hostPlatform != null">
+				And h.host_platform = #{hostPlatform}
+			</if>
+		</where>
+	</select>
+	<select id="queryNginxPage" resultType="com.harmazing.openbridge.paas.nginx.model.PaasNginxConf">
+		select n.*, h.host_ip as `attach[hostIp]`
+		from os_nginx_conf n left join os_nginx_host h on n.host_id = h.host_id
+		<where> 
+			<if test="keyword != null">
+				AND `nginx_name`=#{keyword}
+			</if>
+			<if test="hostPlatform != null">
+				And h.host_platform = #{hostPlatform}
+			</if>
+		</where>
+		order by conf_id limit #{start},#{size}
+	</select>
+	
+	<select id="findNginx" resultType="com.harmazing.openbridge.paas.nginx.model.PaasNginxConf"
+	 parameterType="com.harmazing.openbridge.paas.nginx.model.PaasNginxConf">
+		select nc.*,op.project_code projectCode from os_nginx_conf nc,os_project_env env,os_project op
+		where nc.env_id=env.env_id and env.project_id = op.project_id
+		and nc.env_type=#{envType}
+	</select>
+	
+	<select id="getNginxListByVersionIds" resultType="com.harmazing.openbridge.paas.nginx.model.PaasNginxConf">
+	SELECT 
+    nc.*, op.project_code projectCode
+	FROM
+	    os_nginx_conf nc,
+	    os_project_env pe,
+	    os_project op
+	WHERE
+	    nc.env_id = pe.env_id
+	        AND pe.project_id = op.project_id
+	        AND nc.env_type = #{envType}
+			AND nc.version_id in (
+			<foreach collection="collection" item="item" separator="," >#{item}</foreach>
+			)
+	        AND pe.env_mark is null
+	        <if test="envMark !=null and envMark!=''">
+			AND NOT exists(
+				SELECT 1 FROM os_nginx_conf ncf,os_project_env ope
+				 where 
+				 	ncf.env_id = ope.env_id  
+				 and	ncf.version_id = nc.version_id and ncf.env_type = nc.env_type
+	            and ope.env_mark = #{envMark}
+	        )
+	   union
+		   SELECT 
+			nc.*, op.project_code projectCode
+		FROM
+			os_nginx_conf nc,
+			os_project_env pe,
+			os_project op
+		WHERE
+			nc.env_id = pe.env_id
+				AND pe.project_id = op.project_id
+				AND nc.env_type = #{envType}
+				AND nc.version_id in (
+				<foreach collection="collection" item="item" separator="," >#{item}</foreach>
+				)
+				AND pe.env_mark = #{envMark}
+				</if>
+	</select>
+</mapper>

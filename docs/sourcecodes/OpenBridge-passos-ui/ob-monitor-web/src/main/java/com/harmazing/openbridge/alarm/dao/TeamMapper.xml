@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.alarm.dao.TeamMapper">
+	<resultMap type="com.harmazing.openbridge.alarm.model.Team"
+		id="team">
+		<id property="id" column="id" />
+		<collection property="member" column="id" select="getMember" />
+	</resultMap>
+
+	<select id="getMember" resultType="com.harmazing.openbridge.sys.user.model.SysUser">
+		select su.user_id,su.user_name
+		from rel_team_user re left join sys_user su on
+		re.user_id=su.user_id
+		where re.tid=#{id}
+	</select>
+	<select id="getPageCount" resultType="int">
+		select count(*) from team a where type=0
+	</select>
+	<select id="getTeamCountByName" resultType="int">
+		select count(*) from team where name=#{name}
+		<if test="id!=null and id!=''">
+			and id != #{id}
+		</if>
+	</select>
+	
+	<select id="Page" resultType="java.util.HashMap">
+		select t.id, t.name, t.resume, t.creator, t.created, t.creator_user FROM team t
+		<where> 
+		       type=0
+			<if test="keyword != null">
+				AND (name like concat(concat('%',#{keyword}),'%'))
+			</if>
+		</where>
+		order by created desc limit #{start},#{size}
+	</select>
+	
+	<select id="PageRecordCount" resultType="java.lang.Integer">
+		select 
+			ifnull(count(t.id),0) as ccc
+		from team t
+		<where> 
+		type=0
+			<if test="keyword != null">
+				AND (name like concat(concat('%',#{keyword}),'%'))
+			</if>
+		</where>
+	</select>
+
+</mapper>

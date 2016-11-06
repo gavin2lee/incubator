@@ -1,0 +1,100 @@
+﻿/* wangxuexia 2015-10-10 */
+body{ background-color: #fff; font-family: "Microsoft YaHei";}
+
+.warp{
+	height: 480px ; 
+	background-color: #ddf1fc ;
+	background-image: url(../images/bg-login.jpg) ;
+	background-position: center ;
+	background-repeat: no-repeat ; 
+	border-top: 1px solid #d5dce1 ;
+	border-bottom: 1px solid #d5dce1 ;
+}
+
+.login{
+    float: right ;
+	width: 300px ;
+	margin-right: 14% ;
+	border-top: 2px solid #008dcd ;
+}
+
+.login-title{ 
+    font-size: 25px ;
+	color: #007597 ;
+	line-height: 18px ;
+	margin-top: 80px ;
+}
+
+.login-mian{
+    height: 325px ;
+	margin-top: 15px ;
+	padding: 0px 15px ;
+	background-color: #fafafa ;	
+	border: 1px solid #f5f8fa ;
+}
+
+.login-mian .form-group{ overflow: hidden ; }
+
+.fs12{ font-size: 12px ; }
+
+.login-logo{
+    margin: 40px auto 40px auto ;
+	width:  177px ;
+	height: 18px ;
+	background-image: url(../images/login-logo.png) ;	
+}
+
+.ico-login{
+    float: left ;
+	width: 37px ;
+	height: 35px ;
+	color: #d2d2d2 ;
+	text-align: center ;
+	font-size: 20px ;
+	line-height: 35px ;
+	background-color: #f3f3f3 ;
+	border: 1px solid #e6e6e6 ; 
+	border-top-left-radius: 3px ;	
+	border-bottom-left-radius: 3px ;	
+}
+
+.login-inp{
+    float: right ;
+	width: 231px ;
+	height: 35px ;
+	line-height: 35px ;
+	text-indent: 8px ;
+	background-color: #fff ;
+	border: 1px solid #e6e6e6 ; 
+	border-left: 0px ;
+	border-top-right-radius: 3px ;	
+	border-bottom-right-radius: 3px ;	
+}
+
+.f-pw{  float: right ; font-size: 12px ; color: #0582c1 ; }
+
+.login-btn{ 
+    display: block ;
+	width: 100% ;
+    height: 40px ;
+	line-height: 30px ;
+	text-align: center ;
+	color: #fff ; 
+	font-size: 16px ;
+	margin-top: 40px ;
+	background-color: #007597 ;
+	border: 0px ;
+	border-radius: 4px ;
+}
+
+.login-btn:hover{ color: #fff ; text-decoration: none ; }
+
+.footer-login{
+	height: 115px ; 
+	line-height: 100px ;
+	overflow: hidden ;
+    text-align: center ;
+	font-size: 12px ;
+	color: #666 ;
+	border-top: 1px solid #e2e2e2 ;
+}

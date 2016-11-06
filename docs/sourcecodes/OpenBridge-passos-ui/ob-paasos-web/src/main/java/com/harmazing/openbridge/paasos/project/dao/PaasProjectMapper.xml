@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harmazing.openbridge.paasos.project.dao.PaasProjectMapper">
+	<select id="pageCount" parameterType="java.util.Map"  resultType="int">
+		select count(1) from os_project op
+				<where>
+				   op.tenant_id = #{tenantId}
+				   <if test="userId !=null and userId != ''">
+				     and op.create_user = #{userId}
+			       </if>
+					<if test="projectType !=null and projectType != ''">
+						and op.project_type = #{projectType}
+					</if>
+					<if test="keyword!=null and keyword != ''">
+						and (   upper(op.project_name) like CONCAT('%',upper(#{keyword}),'%') 
+							or  upper(op.project_code) like CONCAT('%',upper(#{keyword}),'%') 
+							or  upper(op.description) like CONCAT('%',upper(#{keyword}),'%') )
+					</if>
+					<!-- <if test="projectCode!=null and projectCode != ''">
+						and upper(op.project_code) like CONCAT('%',upper(#{projectCode}),'%') 
+					</if> -->
+				</where>
+	</select>
+	
+	<select id="page" parameterType="java.util.Map" resultType="java.util.Map">
+		select 
+			op.project_id as id,
+		    op.project_name as name ,
+		    op.create_date  as createDate,
+		    su.user_name as createUser,
+		    op.project_type as projectType,
+		    op.project_code as projectCode
+		from os_project op,sys_user su
+		<where>
+		  op.tenant_id = #{tenantId}
+		  and op.create_user=su.user_id
+			<if test="userId !=null and userId != ''">
+				and op.create_user = #{userId}
+			</if>
+			<if test="projectType !=null and projectType != ''">
+				and op.project_type = #{projectType,jdbcType=VARCHAR}
+			</if>
+			<if test="keyword!=null and keyword != ''">
+				and (   upper(op.project_name) like CONCAT('%',upper(#{keyword}),'%') 
+					or  upper(op.project_code) like CONCAT('%',upper(#{keyword}),'%') 
+					or  upper(op.description) like CONCAT('%',upper(#{keyword}),'%') )
+			</if>
+			<!-- <if test="projectName!=null and projectName != ''">
+				and upper(op.project_name) like CONCAT('%',upper(#{projectName}),'%') 
+			</if>
+			<if test="projectCode!=null and projectCode != ''">
+				and upper(op.project_code) like CONCAT('%',upper(#{projectCode}),'%') 
+			</if> -->
+		</where>
+		order by create_date desc
+		limit #{start},#{size}
+	</select>
+	
+	<select id="getCountCheckBusinessId" parameterType="java.util.Map" resultType="int">
+		select count(1) from os_project 
+		where business_id = #{businessId}
+		<if test="projectId!=null and projectId!=''">
+			and project_id != #{projectId}
+		</if>
+	</select> 
+	<select id="getCountapi" parameterType="java.util.Map"  resultType="int">
+		select count(*)
+		from os_project op
+		left join sys_user su on op.create_user = su.user_id
+			<if test="tenantId !=null and tenantId != ''"> 
+			inner join sys_tenant_relation str on str.user_id = op.create_user and str.tenant_id = #{tenantId} 
+			</if>
+		where  op.project_type='api'
+	</select>
+	<select id="getCountapp" parameterType="java.util.Map"  resultType="int">
+		select count(*)
+		from os_project op
+		left join sys_user su on op.create_user = su.user_id
+			<if test="tenantId !=null and tenantId != ''"> 
+			inner join sys_tenant_relation str on str.user_id = op.create_user and str.tenant_id = #{tenantId} 
+			</if>
+	   where  op.project_type='app'
+	</select>
+	<select id="getCountstore" parameterType="java.util.Map"  resultType="int">
+		select count(*)
+		from os_project op
+		where  op.project_type='store'
+		and op.tenant_id = #{tenantId}
+	</select>
+	
+	<select id="getCount" parameterType="java.util.Map" resultType="int">
+		select count(*)
+		from os_project op
+		where op.tenant_id = #{tenantId}
+	</select>
+	<select id="getPaasProjectList" parameterType="java.util.Map" resultType="java.util.Map">
+		select op.business_id as businessId from os_project op where op.project_type in ('app','api');
+	</select> 
+	
+
+</mapper>

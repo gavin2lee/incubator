@@ -1,0 +1,40 @@
+nginx 配置规范
+
+
+
+作用:
+nginx 现在主要用来收集api应用日志和app应用日志
+
+
+
+注意事项:
+1.由于需要收集的信息比较多，在原生的基础上加上了service_id,version_id,env_id,env_type 变量
+service_id : api或者app 服务/应用 ID
+version_id : api或者app 服务/应用 版本ID
+env_id     : api或者app 服务/应用 环境ID
+business_type : api或者app 环境类型 暂只有两值 api_log,app_log （后面作为elasticsearch的type）
+env_type   :  test,live,dev
+
+2.nginx日志路径
+/home/paas/log/nginx/access.log
+
+3.nginx子配置路径
+/home/paas/nginx/*.conf;
+
+4.nginx安装目录
+/usr/local/openresty
+
+5.nginx配置目录
+/usr/local/openresty/nginx/conf/nginx.conf
+
+6.nginx配置文件 详见同目录下nginx.conf
+
+
+安装过程
+scp paas@123.56.162.23:/home/paas/ngx_openresty_hm-1.9.3.1-1.el6.x86_64.rpm .
+paas@10112
+sudo  yum install openssl-devel 
+sudo yum install pcre-devel
+sudo rpm -i ngx_openresty_hm-1.9.3.1-1.el6.x86_64.rpm
+rpm -qa | grep ngx_openresty_hm
+sudo service nginx start
